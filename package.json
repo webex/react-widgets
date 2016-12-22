@@ -1,0 +1,62 @@
+{
+  "name": "react-ciscospark",
+  "version": "0.1.0",
+  "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
+  "scripts": {
+    "build": "babel-node scripts/build-packages.js",
+    "build:package": "babel-node --presets=stage-1,es2015 scripts/build-package.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --inline --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciscospark/react-ciscospark.git"
+  },
+  "author": "Bernie Zang <nzang@cisco.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ciscospark/react-ciscospark/issues"
+  },
+  "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "moment": "^2.17.1",
+    "react": "^15.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-env": "^1.1.4",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-1": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "child-process-promise": "^2.2.0",
+    "css-loader": "^0.26.1",
+    "denodeify": "^1.2.1",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.8.0",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "html-webpack-plugin": "^2.6.5",
+    "image-webpack-loader": "^3.1.0",
+    "inline-environment-variables-webpack-plugin": "^1.1.0",
+    "jest": "^18.0.0",
+    "json-loader": "^0.5.4",
+    "mkdirp": "^0.5.1",
+    "postcss": "^5.2.6",
+    "postcss-cssnext": "^2.9.0",
+    "postcss-loader": "^1.2.1",
+    "react-test-renderer": "^15.4.1",
+    "rimraf": "^2.5.4",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0-rc.1",
+    "webpack-dev-server": "^2.2.0-rc.0"
+  }
+}
