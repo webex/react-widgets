@@ -16,13 +16,8 @@ export default function build(pkgName) {
   return exec(`rimraf ${path.resolve(pkgPath, `dist`)}`)
     .then(() => Promise.all([
       exec(`cd ${pkgPath} && webpack --config ${webpackConfigPath}`)
-    ]))
-    .then((a1, a2) => {
-      console.log(a1);
-      console.log(a2);
-    },(a1, a2) => {
-      console.log(a1);
-      console.log(a2);
+    ])).catch((reason) => {
+      console.error(reason);
     });
 }
 

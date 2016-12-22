@@ -1,6 +1,4 @@
-import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import webpackBaseConfig from './webpack.base.babel';
 
@@ -11,19 +9,7 @@ const plugins = [
       warnings: false
     }
   }),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  // new HtmlWebpackPlugin({
-  //   hash: true,
-  //   minify: {
-  //     collapseWhitespace: false,
-  //     removeComments: true,
-  //     removeScriptTypeAttributes: true,
-  //     removeStyleLinkTypeAttributes: true,
-  //     sortAttributes: true,
-  //     sortClassName: true
-  //   },
-  //   template: path.resolve(__dirname, `..`, `src/index.html`)
-  // })
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 ];
 
 const config = webpackBaseConfig({

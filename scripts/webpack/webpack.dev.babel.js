@@ -1,10 +1,6 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpackConfigBase from './webpack.base.babel';
 
 const plugins = [
-  // new HtmlWebpackPlugin({
-  //   template: `index.html`
-  // })
 ];
 
 export default (options) => webpackConfigBase(Object.assign({
