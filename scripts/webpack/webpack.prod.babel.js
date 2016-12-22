@@ -36,7 +36,6 @@ const config = webpackBaseConfig({
     TO_PERSON_ID: ``
   },
   babelQuery: {
-    cacheDirectory: true,
     presets: [`react`, `es2015`]
   }
 });

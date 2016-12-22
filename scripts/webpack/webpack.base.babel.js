@@ -28,17 +28,24 @@ export default (options) => ({
   },
   target: `web`,
   resolve: {
-    extensions: [`.js`]
+    modules: [path.resolve(__dirname), `src`, `node_modules`],
+    extensions: [`.js`],
+    mainFields: [
+      `browser`,
+      `jsnext:main`,
+      `main`
+    ]
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules|dist/,
-        use: [{
-          loader: `babel-loader`,
-          options: options.babelQuery
-        }]
+        use: [
+          {
+            loader: `babel-loader`,
+            options: options.babelQuery
+          }
+        ]
       },
       {
         test: /\.css$/,

@@ -4,11 +4,6 @@
   ],
   "presets": [
     "es2015",
-    "react",
-    ["env", {
-      "targets": {
-        "node": true
-      }
-    }]
+    "react"
   ]
 }
