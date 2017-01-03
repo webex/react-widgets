@@ -1,3 +1,4 @@
+import path from 'path';
 import webpack from 'webpack';
 
 import webpackBaseConfig from './webpack.base.babel';
@@ -13,6 +14,7 @@ const plugins = [
 ];
 
 const config = webpackBaseConfig({
+  context: path.resolve(`./src`),
   entry: `./index.js`,
   devtool: `source-map`,
   plugins,
@@ -25,5 +27,6 @@ const config = webpackBaseConfig({
     presets: [`react`, `es2015`]
   }
 });
-
+console.log(`STUPID`);
+console.log(__dirname);
 export default config;

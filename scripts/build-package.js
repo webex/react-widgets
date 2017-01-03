@@ -25,18 +25,21 @@ export default function buildPackage(pkgName) {
         .then(() =>
           // Run webpack
           exec(`cd ${pkgPath} && webpack --config ${webpackConfigPath}`)
-        ).catch((reason) => {
-          console.error(reason);
+        ).catch((error) => {
+          console.error(error.stdout);
+          throw new Error(`Error when running webpack on ${pkgName}`, error);
         });
     })
     .catch((error) => {
-      throw new Error(`The ${pkgName} package does not exist`, error.stack);
+      console.error(error);
+      throw new Error(`Error building ${pkgName} package`, error);
     });
 }
 
 // Pass pkgName if running from command line
 if (require.main === module) {
   buildPackage(process.argv[process.argv.length - 1]).catch((err) => {
-    throw new Error(`build-package.js error \n ${err.stack}`);
+    console.error(err);
+    throw new Error(`build-package.js error \n ${err}`);
   });
 }

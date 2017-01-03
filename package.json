@@ -6,7 +6,8 @@
     "build": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-all.js",
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --hot"
+    "start": "webpack-dev-server --hot --inline --port 8000 --colors",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,11 @@
     "classnames": "^2.2.5",
     "lodash": "^4.17.2",
     "moment": "^2.17.1",
-    "react": "^15.4.1"
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.35.1",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
@@ -45,7 +48,7 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.8.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
-    "html-webpack-plugin": "^2.6.5",
+    "html-webpack-plugin": "^2.24.1",
     "image-webpack-loader": "^3.1.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^18.0.0",
@@ -54,6 +57,7 @@
     "postcss": "^5.2.6",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
+    "postcss-reporter": "^3.0.0",
     "react-test-renderer": "^15.4.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",

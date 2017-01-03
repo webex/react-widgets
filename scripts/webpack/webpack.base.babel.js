@@ -6,30 +6,42 @@ import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpac
 import cssnext from 'postcss-cssnext';
 
 export default (options) => ({
-  context: path.resolve(`src`),
+  context: options.context || path.resolve(__dirname, `..`, `..`, `src`),
   entry: options.entry,
   output: Object.assign({
     filename: `bundle.js`,
-    path: path.resolve(`dist`),
+    path: path.resolve(__dirname, `..`, `..`, `dist`),
     sourceMapFilename: `[file].map`
   }, options.output),
   devtool: options.devtool,
-  plugins: options.plugins.concat([
+  plugins: [
     new InlineEnviromentVariablesPlugin(Object.assign(process.env, options.env)),
-    new ExtractTextPlugin(`[name].css`),
+    new ExtractTextPlugin({filename: `[name].css`, disable: false, allCHunks: true}),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          cssnext
+        ].concat(options.postcss)
+      }
     })
-  ]),
+  ].concat(options.plugins),
   stats: {
     children: false
   },
   target: `web`,
   resolve: {
-    modules: [path.resolve(__dirname), `src`, `node_modules`],
-    extensions: [`.js`],
+    modules: [
+      path.resolve(__dirname, `..`, `..`, `node_modules`),
+      path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
+      `src`,
+      `node_modules`
+    ],
+    extensions: [`.js`, `.css`],
     mainFields: [
       `browser`,
       `jsnext:main`,
@@ -40,6 +52,9 @@ export default (options) => ({
     rules: [
       {
         test: /\.js$/,
+        exclude: [
+          path.resolve(__dirname, `..`, `..`, `node_modules`)
+        ],
         use: [
           {
             loader: `babel-loader`,
@@ -49,37 +64,27 @@ export default (options) => ({
       },
       {
         test: /\.css$/,
-        exclude: [/node_modules/],
-        use: [
-          ExtractTextPlugin.extract({
-            fallbackLoader: `style-loader`,
-            loader: [{
-              loader: `css-loader`,
-              options: {
-                camelCase: true,
-                modules: true,
-                localIdentName: `[local]--[hash:base64:5]`,
-                importLoaders: 1
-              }
-            }, {
-              loader: `postcss-loader`
-            }]
-          }), {
-            loader: `postcss-loader`,
+        exclude: [path.resolve(__dirname, `..`, `..`, `node_modules`)],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: `style-loader`,
+          loader: [{
+            loader: `css-loader`,
             options: {
-              plugins: [
-                cssnext({
-                  browsers: [`last 2 versions`, `IE > 10`]
-                })
-              ]
+              camelCase: true,
+              modules: true,
+              localIdentName: `[local]--[hash:base64:5]`,
+              importLoaders: 1
             }
-          }
-        ]
+          },
+          {
+            loader: `postcss-loader`
+          }]
+        })
       },
       {
         // Do not transform vendor`s CSS with CSS-modules
         test: /\.css$/,
-        include: [/node_modules/],
+        include: [path.resolve(__dirname, `..`, `..`, `node_modules`)],
         loaders: [`style-loader`, `css-loader`]
       },
       {
