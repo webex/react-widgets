@@ -10,15 +10,12 @@ const plugins = [
   })
 ];
 
-export default (options) => webpackConfigBase(Object.assign({
+export default webpackConfigBase({
   entry: `./index.js`,
   plugins,
   devtools: `cheap-module-eval-source-map`,
   postcss: [postcssReporter],
-  babelQuery: {
-    presets: [`es2015`, `react`]
-  },
   babelInclude: [
     path.resolve(__dirname, `packages`, `node_modules`)
   ]
-}, options));
+});

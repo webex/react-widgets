@@ -5,7 +5,7 @@
   "scripts": {
     "build": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-all.js",
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config=jest.config.json",
     "start": "webpack-dev-server --hot --inline --port 8000 --colors",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
