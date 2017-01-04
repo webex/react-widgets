@@ -12,8 +12,6 @@ general:
     - npm-debug.log
 
 dependencies:
-  override:
-    - npm install --dev
   cache_directories:
     - node_modules
 
