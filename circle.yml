@@ -19,8 +19,6 @@ dependencies:
 
 test:
   pre:
-    - npm run grunt:circle -- build:
-        parallel: true
+    - npm run build
   override:
-    - npm run grunt:circle -- static-analysis test:
-        parallel: true
+    - npm run test

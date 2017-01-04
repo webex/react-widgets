@@ -60,7 +60,7 @@ export default (options) => ({
           {
             loader: `babel-loader`,
             options: Object.assign({
-              presets: [`react`, `es2015`]
+              presets: [[`es2015`, {modules: false}], `react`]
             }, options.babelQuery)
           }
         ]
