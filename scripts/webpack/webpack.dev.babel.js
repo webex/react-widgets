@@ -18,6 +18,25 @@ export default webpackConfigBase({
   entry: `./demo.js`,
   plugins,
   devtool: `eval-source-map`,
+  devServer: {
+    port: 8000,
+    stats: {
+      colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: false,
+      chunks: false,
+      modules: false,
+      reasons: false,
+      children: false,
+      source: false,
+      errors: false,
+      errorDetails: false,
+      warnings: false,
+      publicPath: false
+    }
+  },
   babelInclude: [
     path.resolve(__dirname, `packages`, `node_modules`)
   ]

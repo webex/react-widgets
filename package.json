@@ -12,7 +12,7 @@
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
-    "start": "webpack-dev-server --hot --inline --port 8000 --colors",
+    "start": "webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "repository": {

@@ -13,6 +13,7 @@ export default (options) => ({
     sourceMapFilename: `[file].map`
   }, options.output),
   devtool: options.devtool,
+  devServer: options.devServer,
   plugins: [
     new InlineEnviromentVariablesPlugin(Object.assign(process.env, options.env)),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
