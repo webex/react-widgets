@@ -6,13 +6,18 @@
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
   "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "moduleNameMapper": {
-    "^.+\\.(css|less)$": "<rootDir>/test/style-mock.js",
-    "^.+\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/file-mock.js"
+    "^.+\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js",
+    "^.+\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/file-mock.js",
+    "@ciscospark/(.*)": "<rootDir>/packages/node_modules/@ciscospark/$1/src"
   },
   "testRegex": ".test.js$",
   "moduleDirectories": [
-    "<rootDir>/node_modules/",
-    "<rootDir>/packages/node_modules/"
+    "/node_modules/",
+    "/packages/node_modules/"
+  ],
+  "modulePaths": [
+    "<rootDir>/node_modules",
+    "<rootDir>/packages/node_modules"
   ],
   "haste": {
     "providesModuleNodeModules": [".*"]

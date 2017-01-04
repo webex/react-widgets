@@ -1,0 +1,26 @@
+machine:
+  environment:
+    COVERAGE: true
+    NODE_ENV: test
+    XUNIT: true
+    UNIT_ONLY: true
+  node:
+    version: 6
+
+general:
+  artifacts:
+    - npm-debug.log
+
+dependencies:
+  override:
+    - npm install --dev
+  cache_directories:
+    - node_modules
+
+test:
+  pre:
+    - npm run grunt:circle -- build:
+        parallel: true
+  override:
+    - npm run grunt:circle -- static-analysis test:
+        parallel: true

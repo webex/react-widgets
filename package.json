@@ -5,7 +5,11 @@
   "scripts": {
     "build": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-all.js",
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
-    "test": "jest --config=jest.config.json",
+    "test": "npm run static-analysis && npm run jest",
+    "jest": "jest --config=jest.config.json",
+    "static-analysis": "npm run eslint && npm run stylelint",
+    "eslint": "eslint packages",
+    "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
     "start": "webpack-dev-server --hot --inline --port 8000 --colors",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
@@ -61,6 +65,8 @@
     "react-test-renderer": "^15.4.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
+    "stylelint": "^7.7.1",
+    "stylelint-config-standard": "^15.0.1",
     "webpack": "^2.2.0-rc.1",
     "webpack-dev-server": "^2.2.0-rc.0"
   }
