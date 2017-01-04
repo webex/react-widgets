@@ -1,3 +1,7 @@
+/**
+ * Webpack config for building individual packages for distribution
+ */
+
 import path from 'path';
 import webpack from 'webpack';
 
@@ -17,6 +21,11 @@ const plugins = [
 
 export default webpackBaseConfig({
   entry: `./index.js`,
+  output: {
+    filename: `bundle.js`,
+    path: path.resolve(process.cwd(), `dist`),
+    sourceMapFilename: `[file].map`
+  },
   // Full source maps for production debugging
   devtool: `source-map`,
   plugins,

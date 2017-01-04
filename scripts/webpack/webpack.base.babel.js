@@ -3,8 +3,6 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
 
-import cssnext from 'postcss-cssnext';
-import postcssReporter from 'postcss-reporter';
 
 export default (options) => ({
   context: options.context || path.resolve(process.cwd(), `src`),
@@ -17,17 +15,10 @@ export default (options) => ({
   devtool: options.devtool,
   plugins: [
     new InlineEnviromentVariablesPlugin(Object.assign(process.env, options.env)),
-    new ExtractTextPlugin({filename: `[name].css`, disable: false, allCHunks: true}),
+    new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: [
-          cssnext, postcssReporter
-        ]
       }
     })
   ].concat(options.plugins),
@@ -50,7 +41,7 @@ export default (options) => ({
     ]
   },
   module: {
-    rules: [
+    loaders: [
       {
         test: /\.js$/,
         exclude: [
@@ -60,6 +51,7 @@ export default (options) => ({
           {
             loader: `babel-loader`,
             options: Object.assign({
+              plugins: [`transform-object-rest-spread`],
               presets: [[`es2015`, {modules: false}], `react`]
             }, options.babelQuery)
           }
@@ -69,18 +61,21 @@ export default (options) => ({
         test: /\.css$/,
         exclude: [path.resolve(__dirname, `..`, `..`, `node_modules`)],
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: `style-loader`,
           loader: [{
             loader: `css-loader`,
-            options: {
+            query: {
               camelCase: true,
               modules: true,
               localIdentName: `[local]--[hash:base64:5]`,
-              importLoaders: 1
+              importLoaders: 1,
+              sourceMap: true
             }
           },
           {
-            loader: `postcss-loader`
+            loader: `postcss-loader`,
+            query: {
+              sourceMap: true
+            }
           }]
         })
       },

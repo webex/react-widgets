@@ -17,7 +17,7 @@ const plugins = [
 export default webpackConfigBase({
   entry: `./demo.js`,
   plugins,
-  devtools: `cheap-module-eval-source-map`,
+  devtool: `eval-source-map`,
   babelInclude: [
     path.resolve(__dirname, `packages`, `node_modules`)
   ]

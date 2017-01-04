@@ -18,5 +18,3 @@ dependencies:
 test:
   pre:
     - npm run build
-  override:
-    - npm run test

@@ -20,7 +20,7 @@ export default function buildPackage(pkgName, pkgPath) {
         return false;
       }
       console.log(`Building ${pkgName} ...`.cyan);
-      const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.package.babel.js`);
+      const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.prod.babel.js`);
       // Delete dist folder
       return exec(`rimraf ${path.resolve(pkgPath, `dist`)}`)
         .then(() =>

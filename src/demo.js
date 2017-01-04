@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Icon, Button, ICON_TYPE_MESSAGE} from './';
+import {
+  Icon,
+  Button,
+  AddFileButton,
+  ICON_TYPE_MESSAGE
+} from './';
 
+import styles from './styles.css';
 
 export default function Root() {
   function onClick() {return false;}
   return (
     <div>
-      <Button label="BUTTON" onClick={onClick} />
-      <Icon type={ICON_TYPE_MESSAGE} />
+      <div className={styles.component} ><Button label="BUTTON" onClick={onClick} /></div>
+      <div className={styles.component} ><Icon type={ICON_TYPE_MESSAGE} /></div>
+      <div className={styles.component} ><AddFileButton /></div>
     </div>
   );
 }
