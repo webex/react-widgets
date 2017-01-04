@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
-    "build": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-all.js",
+    "build": "npm run build:packages && npm run build:bundle",
+    "build:packages": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-packages.js",
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
+    "build:bundle": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-bundle.js",
     "test": "npm run static-analysis && npm run jest",
     "jest": "jest --config=jest.config.json",
     "static-analysis": "npm run eslint && npm run stylelint",

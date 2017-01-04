@@ -8,7 +8,7 @@ import 'colors';
 
 let executionOptions = {
   dryRun: false,
-  verbose: false
+  verbose: true
 };
 
 /**
@@ -40,13 +40,9 @@ export function exec(command, options = {}) {
 
   const title = options.title || command;
 
-  function output(data, type) { // eslint-disable-line require-jsdoc
-    return logWithPrefix(`[${title}] ${type}:`, data);
-  }
-
   return proc.progress(({stdout, stderr}) => {
-    stdout.on(`data`, (data) => output(data, `stdout`));
-    stderr.on(`data`, (data) => output(data, `stderr`));
+    stdout.on(`data`, (data) => console.log(data));
+    stderr.on(`data`, (data) => console.log(data));
   })
   .then((result) => {
     logWithPrefix(`[${title}]`, `Complete`.cyan);

@@ -4,9 +4,10 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
 
 import cssnext from 'postcss-cssnext';
+import postcssReporter from 'postcss-reporter';
 
 export default (options) => ({
-  context: options.context || path.resolve(__dirname, `..`, `..`, `src`),
+  context: options.context || path.resolve(process.cwd(), `src`),
   entry: options.entry,
   output: Object.assign({
     filename: `bundle.js`,
@@ -25,8 +26,8 @@ export default (options) => ({
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: [
-          cssnext
-        ].concat(options.postcss)
+          cssnext, postcssReporter
+        ]
       }
     })
   ].concat(options.plugins),

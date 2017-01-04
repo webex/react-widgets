@@ -1,7 +1,11 @@
+/**
+ * In development we assume that the code generated is going to be consumed by
+ * webpack dev server and we are bundling into a single js file.
+ */
+
 import path from 'path';
 import webpackConfigBase from './webpack.base.babel';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import postcssReporter from 'postcss-reporter';
 
 
 const plugins = [
@@ -11,10 +15,9 @@ const plugins = [
 ];
 
 export default webpackConfigBase({
-  entry: `./index.js`,
+  entry: `./demo.js`,
   plugins,
   devtools: `cheap-module-eval-source-map`,
-  postcss: [postcssReporter],
   babelInclude: [
     path.resolve(__dirname, `packages`, `node_modules`)
   ]

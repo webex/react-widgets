@@ -8,10 +8,11 @@ const stat = denodeify(fs.stat);
 /**
  * Builds a specific package with Webpack
  * @param  {string} pkgName
+ * @param  {string} pkgPath
  * @returns {undefined}
  */
-export default function buildPackage(pkgName) {
-  const pkgPath = path.resolve(__dirname, `..`, `packages`, `node_modules`, `@ciscospark`, pkgName);
+export default function buildPackage(pkgName, pkgPath) {
+  pkgPath = pkgPath || path.resolve(__dirname, `..`, `packages`, `node_modules`, `@ciscospark`, pkgName);
   return stat(pkgPath)
     .then((statObj) => {
       // If the folder doesn't exist do nothing
@@ -19,7 +20,7 @@ export default function buildPackage(pkgName) {
         return false;
       }
       console.log(`Building ${pkgName} ...`.cyan);
-      const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.prod.babel.js`);
+      const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.package.babel.js`);
       // Delete dist folder
       return exec(`rimraf ${path.resolve(pkgPath, `dist`)}`)
         .then(() =>
