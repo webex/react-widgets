@@ -25,19 +25,16 @@ export default webpackConfigBase({
       hash: false,
       version: false,
       timings: false,
-      assets: false,
+      assets: true,
       chunks: false,
       modules: false,
       reasons: false,
       children: false,
       source: false,
-      errors: false,
-      errorDetails: false,
-      warnings: false,
+      errors: true,
+      errorDetails: true,
+      warnings: true,
       publicPath: false
     }
-  },
-  babelInclude: [
-    path.resolve(__dirname, `packages`, `node_modules`)
-  ]
+  }
 });

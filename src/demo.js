@@ -1,24 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
+import moment from 'moment';
 
 import {
   Icon,
   Button,
   AddFileButton,
   Avatar,
-  ICON_TYPE_MESSAGE
+  ICON_TYPE_MESSAGE,
+  ChipBase,
+  ChipFile,
+  ConfirmationModal,
+  ListSeparator,
+  DaySeparator
 } from './';
 
 import styles from './styles.css';
 
 export default function Root() {
   function onClick() {return false;}
+  const today = moment();
   return (
     <div>
       <div className={styles.component} ><Button label="BUTTON" onClick={onClick} /></div>
       <div className={styles.component} ><Icon type={ICON_TYPE_MESSAGE} /></div>
       <div className={styles.component} ><AddFileButton /></div>
       <div className={styles.component} ><Avatar name="Adam" /></div>
+      <div className={classNames(styles.component, styles.chipBase)} >
+        <ChipBase>{`Test Chip Base`}</ChipBase>
+      </div>
+      <div className={classNames(styles.component, styles.chipBase)} >
+        <ChipFile name="Test File" size="100MB" type="image" />
+      </div>
+      <div className={classNames(styles.component, styles.frame)} >
+        <ConfirmationModal
+          messages={{
+            actionButtonText: `Yes`,
+            body: `Are you sure?`,
+            cancelButtonText: `No`,
+            title: `Test Modal`
+          }}
+        />
+      </div>
+      <div className={styles.component} ><ListSeparator isInformative primaryText="Test 123" /></div>
+      <div className={styles.component} >
+        <DaySeparator
+          fromDate={moment(today).subtract(5, `days`)}
+          now={today}
+          toDate={moment(today).subtract(1, `days`)}
+        />
+      </div>
     </div>
   );
 }

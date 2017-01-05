@@ -8,7 +8,7 @@
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
     "build:bundle": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-bundle.js",
     "clean": "npm run clean:snapshots && npm run clean:dist",
-    "clean:snapshots": "rimraf \"packages/**/__snapshots/\"",
+    "clean:snapshots": "rimraf \"packages/**/__snapshots__/\"",
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
@@ -30,12 +30,17 @@
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
   "dependencies": {
     "classnames": "^2.2.5",
+    "immutable": "^3.8.1",
     "lodash": "^4.17.2",
     "moment": "^2.17.1",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-intl": "^2.2.2",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "@ciscospark/test-helper-file": "^0.7.31",
+    "@ciscospark/test-helper-server": "^0.7.31",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",

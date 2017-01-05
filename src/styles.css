@@ -3,3 +3,14 @@
   margin-bottom: 10px;
   clear: both;
 }
+
+.chip-base {
+  width: 300px;
+}
+
+.frame {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  overflow: auto;
+}

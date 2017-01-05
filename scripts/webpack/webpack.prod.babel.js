@@ -14,9 +14,7 @@ const plugins = [
     compress: {
       warnings: false
     }
-  }),
-  // Remove locales from moment, may need to add back in future
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  })
 ];
 
 export default webpackBaseConfig({

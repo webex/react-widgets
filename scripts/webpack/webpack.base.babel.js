@@ -21,22 +21,28 @@ export default (options) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
-    })
+    }),
+    // Remove locales from moment, may need to add back in future
+    // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    // new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
   ].concat(options.plugins),
   stats: {
-    children: false
+    children: false,
+    chunks: false,
+    modules: false,
+    colors: true
   },
   target: `web`,
   resolve: {
     modules: [
-      path.resolve(__dirname, `..`, `..`, `node_modules`),
       path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
       `src`,
       `node_modules`
     ],
-    extensions: [`.js`, `.css`],
+    extensions: [`.js`, `.css`, `.json`],
     mainFields: [
       `browser`,
+      `module`,
       `jsnext:main`,
       `main`
     ]
@@ -45,15 +51,15 @@ export default (options) => ({
     loaders: [
       {
         test: /\.js$/,
-        exclude: [
-          path.resolve(__dirname, `..`, `..`, `node_modules`)
+        include: [
+          path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
+          path.resolve(__dirname, `..`, `..`, `src`)
         ],
         use: [
           {
             loader: `babel-loader`,
             options: Object.assign({
-              plugins: [`transform-object-rest-spread`],
-              presets: [[`es2015`, {modules: false}], `react`]
+              presets: [`es2015`, `react`]
             }, options.babelQuery)
           }
         ]
@@ -96,7 +102,7 @@ export default (options) => ({
         // Set mimetype just in case.
         loader: `file-loader`,
         query: {
-          name: `fonts/[hash].[ext]`,
+          name: `fonts/[name].[ext]`,
           mimetype: `application/font-woff`
         }
       },
@@ -104,7 +110,7 @@ export default (options) => ({
         test: /\.ttf$|\.otf$|\.eot$|\.svg$/,
         loader: `file-loader`,
         query: {
-          name: `fonts/[hash].[ext]`
+          name: `fonts/[name].[ext]`
         }
       },
       {
