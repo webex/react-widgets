@@ -7,13 +7,16 @@
     "build:packages": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-packages.js",
     "build:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-package.js",
     "build:bundle": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/build-bundle.js",
+    "clean": "npm run clean:snapshots && npm run clean:dist",
+    "clean:snapshots": "rimraf \"packages/**/__snapshots/\"",
+    "clean:dist": "rimraf \"packages/**/dist/\"",
     "test": "npm run static-analysis && npm run jest",
+    "test:clean": "npm run clean && npm run test",
     "jest": "jest --config=jest.config.json",
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
-    "start": "webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "start": "webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -33,7 +36,6 @@
     "react-dom": "^15.4.1"
   },
   "devDependencies": {
-    "@kadira/storybook": "^2.35.1",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",

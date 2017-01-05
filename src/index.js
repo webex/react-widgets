@@ -11,3 +11,4 @@ export {
   ICON_TYPE_RIGHT_ARROW
 } from '@ciscospark/react-component-icon';
 export {default as AddFileButton} from '@ciscospark/react-component-add-file-button';
+export {default as Avatar} from '@ciscospark/react-component-avatar';

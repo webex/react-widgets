@@ -5,6 +5,7 @@ import {
   Icon,
   Button,
   AddFileButton,
+  Avatar,
   ICON_TYPE_MESSAGE
 } from './';
 
@@ -17,6 +18,7 @@ export default function Root() {
       <div className={styles.component} ><Button label="BUTTON" onClick={onClick} /></div>
       <div className={styles.component} ><Icon type={ICON_TYPE_MESSAGE} /></div>
       <div className={styles.component} ><AddFileButton /></div>
+      <div className={styles.component} ><Avatar name="Adam" /></div>
     </div>
   );
 }
