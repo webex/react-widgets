@@ -3,7 +3,6 @@
  * webpack dev server and we are bundling into a single js file.
  */
 
-import path from 'path';
 import webpackConfigBase from './webpack.base.babel';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 

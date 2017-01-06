@@ -17,7 +17,9 @@ import {
   ChipFile,
   ConfirmationModal,
   ListSeparator,
-  DaySeparator
+  DaySeparator,
+  LoadingScreen,
+  Spinner
 } from './';
 
 import styles from './styles.css';
@@ -25,6 +27,7 @@ import styles from './styles.css';
 export default function Root() {
   function onClick() {return false;}
   const today = moment();
+  addLocaleData(enLocaleData);
   return (
     <div>
       <div className={styles.component} ><Button label="BUTTON" onClick={onClick} /></div>
@@ -55,6 +58,8 @@ export default function Root() {
           toDate={moment(today).subtract(1, `days`)}
         />
       </div>
+      <div className={styles.component} ><Spinner /></div>
+      <div className={styles.component} ><LoadingScreen loadingMessage="Loading Cisco Spark" /></div>
     </div>
   );
 }
