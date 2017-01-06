@@ -28,6 +28,8 @@
     "url": "https://github.com/ciscospark/react-ciscospark/issues"
   },
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
+  "main": "src/index.js",
+  "devMain": "src/demo.js",
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",

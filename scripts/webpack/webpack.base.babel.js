@@ -21,7 +21,7 @@ export default (options) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
-    }),
+    })
     // Remove locales from moment, may need to add back in future
     // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     // new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
@@ -43,8 +43,9 @@ export default (options) => ({
     mainFields: [
       `browser`,
       `module`,
+      `main`,
       `jsnext:main`,
-      `main`
+      `devMain`
     ]
   },
   module: {

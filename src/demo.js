@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 
+import {addLocaleData, IntlProvider} from 'react-intl';
+import enLocaleData from 'react-intl/locale-data/en';
+import messages from './locales/en';
+
 import {
   Icon,
   Button,
@@ -56,6 +60,8 @@ export default function Root() {
 }
 
 ReactDOM.render(
-  <Root />,
+  <IntlProvider locale={`en`} messages={messages}>
+    <Root />
+  </IntlProvider>,
   document.getElementById(`main`)
 );
