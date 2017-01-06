@@ -20,7 +20,8 @@ import {
   NewMessagesSeparator,
   DaySeparator,
   LoadingScreen,
-  Spinner
+  Spinner,
+  ScrollToBottomButton
 } from './';
 
 import styles from './styles.css';
@@ -62,6 +63,7 @@ export default function Root() {
       </div>
       <div className={styles.component} ><Spinner /></div>
       <div className={styles.component} ><LoadingScreen loadingMessage="Loading Cisco Spark" /></div>
+      <div className={styles.component} ><ScrollToBottomButton onClick={onClick} /></div>
     </div>
   );
 }

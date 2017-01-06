@@ -21,3 +21,4 @@ export {default as NewMessagesSeparator} from '@ciscospark/react-component-new-m
 export {default as FileStagingArea} from '@ciscospark/react-component-file-staging-area';
 export {default as Spinner} from '@ciscospark/react-component-spinner';
 export {default as LoadingScreen} from '@ciscospark/react-component-loading-screen';
+export {default as ScrollToBottomButton} from '@ciscospark/react-component-scroll-to-bottom-button';
