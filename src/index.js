@@ -17,6 +17,7 @@ export {default as ChipFile} from '@ciscospark/react-component-chip-file';
 export {default as ConfirmationModal} from '@ciscospark/react-component-confirmation-modal';
 export {default as ListSeparator} from '@ciscospark/react-component-list-separator';
 export {default as DaySeparator} from '@ciscospark/react-component-day-separator';
+export {default as NewMessagesSeparator} from '@ciscospark/react-component-new-messages-separator';
 export {default as FileStagingArea} from '@ciscospark/react-component-file-staging-area';
 export {default as Spinner} from '@ciscospark/react-component-spinner';
 export {default as LoadingScreen} from '@ciscospark/react-component-loading-screen';

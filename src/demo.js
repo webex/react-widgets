@@ -17,6 +17,7 @@ import {
   ChipFile,
   ConfirmationModal,
   ListSeparator,
+  NewMessagesSeparator,
   DaySeparator,
   LoadingScreen,
   Spinner
@@ -51,6 +52,7 @@ export default function Root() {
         />
       </div>
       <div className={styles.component} ><ListSeparator isInformative primaryText="Test 123" /></div>
+      <div className={styles.component} ><NewMessagesSeparator /></div>
       <div className={styles.component} >
         <DaySeparator
           fromDate={moment(today).subtract(5, `days`)}
