@@ -1,0 +1,20 @@
+machine:
+  environment:
+    COVERAGE: true
+    NODE_ENV: test
+    XUNIT: true
+    UNIT_ONLY: true
+  node:
+    version: 6
+
+general:
+  artifacts:
+    - npm-debug.log
+
+dependencies:
+  cache_directories:
+    - node_modules
+
+test:
+  pre:
+    - npm run build
