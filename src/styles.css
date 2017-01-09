@@ -1,5 +1,7 @@
 .component {
+  position: relative;
   display: block;
+  min-height: 60px;
   margin-bottom: 10px;
   clear: both;
 }

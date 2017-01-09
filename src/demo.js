@@ -23,7 +23,9 @@ import {
   Spinner,
   ScrollToBottomButton,
   TextArea,
-  TitleBar
+  TitleBar,
+  TypingIndicator,
+  TypingAvatar
 } from './';
 
 import styles from './styles.css';
@@ -69,11 +71,13 @@ export default function Root() {
       <div className={styles.component} >
         <TextArea
           placeholder="TextArea Placeholder"
-          rows="2"
+          rows={2}
           value=""
         />
       </div>
-      <div className={styles.component} ><TitleBar displayName="Spock" /></div>
+      <div className={styles.component} ><TitleBar name="Spock" /></div>
+      <div className={styles.component} ><TypingAvatar isTyping name="Spock" /></div>
+      <div className={styles.component} ><TypingIndicator /></div>
     </div>
   );
 }

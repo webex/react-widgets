@@ -24,3 +24,5 @@ export {default as LoadingScreen} from '@ciscospark/react-component-loading-scre
 export {default as ScrollToBottomButton} from '@ciscospark/react-component-scroll-to-bottom-button';
 export {default as TextArea} from '@ciscospark/react-component-textarea';
 export {default as TitleBar} from '@ciscospark/react-component-title-bar';
+export {default as TypingAvatar} from '@ciscospark/react-component-typing-avatar';
+export {default as TypingIndicator} from '@ciscospark/react-component-typing-indicator';
