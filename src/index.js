@@ -23,3 +23,4 @@ export {default as Spinner} from '@ciscospark/react-component-spinner';
 export {default as LoadingScreen} from '@ciscospark/react-component-loading-screen';
 export {default as ScrollToBottomButton} from '@ciscospark/react-component-scroll-to-bottom-button';
 export {default as TextArea} from '@ciscospark/react-component-textarea';
+export {default as TitleBar} from '@ciscospark/react-component-title-bar';

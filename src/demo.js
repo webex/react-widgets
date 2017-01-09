@@ -22,7 +22,8 @@ import {
   LoadingScreen,
   Spinner,
   ScrollToBottomButton,
-  TextArea
+  TextArea,
+  TitleBar
 } from './';
 
 import styles from './styles.css';
@@ -72,6 +73,7 @@ export default function Root() {
           value=""
         />
       </div>
+      <div className={styles.component} ><TitleBar displayName="Spock" /></div>
     </div>
   );
 }
