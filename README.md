@@ -34,3 +34,9 @@ The basic components are just presentational React <https://github.com/facebook/
 ## Components
 
 ### Install
+
+
+## Limitations
+### Development
+
+* `stylelint` currently ignores all `node_modules` directories, and will not lint our packages. Discussion: <https://github.com/stylelint/stylelint/issues/2236>
