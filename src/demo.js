@@ -26,7 +26,7 @@ import {
   TitleBar,
   TypingIndicator,
   TypingAvatar
-} from './';
+} from './index';
 
 import styles from './styles.css';
 

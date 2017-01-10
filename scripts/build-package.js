@@ -13,12 +13,13 @@ const stat = denodeify(fs.stat);
  */
 export default function buildPackage(pkgName, pkgPath) {
   pkgPath = pkgPath || path.resolve(__dirname, `..`, `packages`, `node_modules`, `@ciscospark`, pkgName);
-  return stat(pkgPath)
+  return Promise.all([stat(pkgPath), stat(path.resolve(pkgPath, `package.json`))])
     .then((statObj) => {
       // If the folder doesn't exist do nothing
-      if (!statObj.isDirectory()) {
+      if (!statObj[0].isDirectory() || !statObj[1].isFile()) {
         return false;
       }
+
       console.log(`Building ${pkgName} ...`.cyan);
       const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.prod.babel.js`);
       // Delete dist folder
