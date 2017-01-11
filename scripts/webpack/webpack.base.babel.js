@@ -2,7 +2,10 @@ import path from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default (options) => {
   const plugins = [
@@ -13,9 +16,6 @@ export default (options) => {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
     })
-    // Remove locales from moment, may need to add back in future
-    // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    // new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
   ];
 
   return {

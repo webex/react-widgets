@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "transform-runtime"
+    "transform-runtime",
+    "transform-export-extensions"
   ],
   "presets": [
     "es2015",

@@ -36,6 +36,16 @@ The basic components are just presentational React <https://github.com/facebook/
 ### Install
 
 
+### Development
+
+#### Setup Environment Variables
+
+Setup your `.env` file with the following values:
+
+```
+CISCOSPARK_ACCESS_TOKEN=
+```
+
 ## Limitations
 ### Development
 
