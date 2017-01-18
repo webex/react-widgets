@@ -22,7 +22,10 @@
     "type": "git",
     "url": "git+https://github.com/ciscospark/react-ciscospark.git"
   },
-  "author": "Bernie Zang <nzang@cisco.com>",
+  "contributors": [
+    "Adam Weeks <adweeks@cisco.com>",
+    "Bernie Zang <nzang@cisco.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ciscospark/react-ciscospark/issues"
@@ -43,13 +46,16 @@
     "moment": "^2.17.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-dropzone": "^3.9.0",
     "react-intl": "^2.2.2",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "reselect": "^2.5.4",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "@ciscospark/eslint-config": "^0.7.31",
     "@ciscospark/test-helper-file": "^0.7.31",
     "@ciscospark/test-helper-server": "^0.7.31",
     "babel-cli": "^6.18.0",
@@ -68,12 +74,13 @@
     "css-loader": "^0.26.1",
     "denodeify": "^1.2.1",
     "dotenv": "^4.0.0",
-    "eslint": "^3.12.2",
+    "eslint": "^3.13.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-react": "^6.9.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "html-webpack-plugin": "^2.24.1",
     "image-webpack-loader": "^3.1.0",
@@ -86,6 +93,7 @@
     "postcss-loader": "^1.2.1",
     "postcss-reporter": "^3.0.0",
     "react-test-renderer": "^15.4.1",
+    "redux-logger": "^2.7.4",
     "redux-mock-store": "^1.2.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
