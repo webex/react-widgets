@@ -1,10 +1,16 @@
 {
   "plugins": [
-    "transform-runtime",
-    "transform-export-extensions"
+    ["transform-runtime", { "polyfill": false }],
+    "transform-export-extensions",
+    "lodash"
   ],
   "presets": [
     "es2015",
-    "react"
+    "react",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
+    }]
   ]
 }
