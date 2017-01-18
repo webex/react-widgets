@@ -34,6 +34,7 @@
   "main": "src/index.js",
   "devMain": "src/demo.js",
   "dependencies": {
+    "@ciscospark/helper-html": "^0.7.34",
     "@ciscospark/plugin-avatar": "^0.7.31",
     "@ciscospark/plugin-conversation": "^0.7.31",
     "@ciscospark/plugin-flag": "^0.7.31",
@@ -43,6 +44,7 @@
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "lodash": "^4.17.2",
+    "marked": "^0.3.6",
     "moment": "^2.17.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
@@ -61,6 +63,7 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-export-extensions": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.15.0",

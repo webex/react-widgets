@@ -52,6 +52,10 @@ export default (options) => {
             path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
             path.resolve(__dirname, `..`, `..`, `src`)
           ],
+          exclude: [
+            `/fixtures/`,
+            `/__mocks__/`
+          ],
           loader: `babel-loader`
         },
         {
