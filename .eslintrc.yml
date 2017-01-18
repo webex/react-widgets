@@ -1,0 +1,7 @@
+extends:
+  - .eslintrc.base.yml
+  - .eslintrc.es6.yml
+  - .eslintrc.react.yml
+env:
+  jest: true
+root: true
