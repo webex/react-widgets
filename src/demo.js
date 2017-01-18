@@ -27,7 +27,7 @@ import {
   TypingIndicator,
   TypingAvatar,
   WidgetMessageMeet
-} from './';
+} from '.';
 
 import styles from './styles.css';
 
