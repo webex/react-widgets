@@ -43,7 +43,7 @@ export default function Root() {
 
   return (
     <div>
-      <div className={styles.component} >
+      <div className={classNames(styles.component, styles.widget)} >
         <WidgetMessageMeet
           accessToken={config.accessToken}
           toPersonEmail={config.toPersonEmail}
