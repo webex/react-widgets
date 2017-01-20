@@ -16,7 +16,7 @@ const plugins = [
 export default webpackConfigBase({
   entry: `./demo.js`,
   plugins,
-  devtool: `eval-source-map`,
+  devtool: `source-map`,
   devServer: {
     port: 8000,
     stats: {
