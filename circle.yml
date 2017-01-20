@@ -16,5 +16,6 @@ dependencies:
     - node_modules
 
 test:
-  pre:
-    - npm run build
+  override:
+    - npm run static-analysis
+    - npm run jest -- --runInBand

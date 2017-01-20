@@ -1,7 +1,17 @@
 extends:
-  - .eslintrc.base.yml
-  - .eslintrc.es6.yml
-  - .eslintrc.react.yml
+  - "@ciscospark"
+  - "@ciscospark/eslint-config/react"
 env:
   jest: true
+  browser: true
 root: true
+rules:
+  require-jsdoc: 0
+  # turning off import/no-named-as-default because it breaks our current pattern
+  # of exporting the connected version as default and the non-connected version
+  # as named.
+  import/no-named-as-default: 0
+  func-style:
+    - 2
+    - declaration
+    - allowArrowFunctions: true
