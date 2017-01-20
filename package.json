@@ -12,7 +12,7 @@
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
-    "jest": "jest --config=jest.config.json",
+    "jest": "TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
