@@ -2,20 +2,17 @@ import path from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
-
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export default (options) => {
+  const packageJson = require(`../../package.json`);
   const plugins = [
     new InlineEnviromentVariablesPlugin(Object.assign(process.env, options.env)),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    })
+    // Adds use strict to prevent catch global namespace issues outside of chunks.
+    new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`)
   ];
 
   return {
