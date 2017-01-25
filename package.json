@@ -15,8 +15,9 @@
     "jest": "TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
+    "serve": "npm run start",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
-    "start": "webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline"
+    "start": "NODE_ENV=development webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -96,6 +97,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
     "postcss-reporter": "^3.0.0",
+    "react-router": "^3.0.2",
     "react-test-renderer": "^15.4.1",
     "redux-logger": "^2.7.4",
     "redux-mock-store": "^1.2.1",
