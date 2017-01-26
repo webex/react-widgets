@@ -1,6 +1,7 @@
 import React from 'react';
 import {IndexLink, Link} from 'react-router';
 import DemoHome from '../demo-home';
+import DemoWidgetMessageMeet from '../demo-widget-message-meet';
 import Components from '../components';
 
 const DemoWrapper = (props) => {
@@ -11,6 +12,7 @@ const DemoWrapper = (props) => {
       <ul>
         <li><IndexLink to={DemoHome.path}>{DemoHome.title}</IndexLink></li>
         <li><Link to={Components.path}>{Components.title}</Link></li>
+        <li><Link to={DemoWidgetMessageMeet.path}>{DemoWidgetMessageMeet.title}</Link></li>
       </ul>
       {props.children}
     </div>
