@@ -23,8 +23,7 @@ import {
   TextArea,
   TitleBar,
   TypingIndicator,
-  TypingAvatar,
-  WidgetMessageMeet
+  TypingAvatar
 } from '..';
 
 import styles from './styles.css';
@@ -34,19 +33,8 @@ const Components = () => {
   const today = moment();
   addLocaleData(enLocaleData);
 
-  const config = {
-    accessToken: process.env.CISCOSPARK_ACCESS_TOKEN,
-    toPersonEmail: process.env.TO_PERSON_EMAIL
-  };
-
   return (
     <div>
-      <div className={classNames(styles.component, styles.widget)} >
-        <WidgetMessageMeet
-          accessToken={config.accessToken}
-          toPersonEmail={config.toPersonEmail}
-        />
-      </div>
       <div className={styles.component} ><Button label="BUTTON" onClick={onClick} /></div>
       <div className={styles.component} ><Icon type={ICON_TYPE_MESSAGE} /></div>
       <div className={styles.component} ><AddFileButton /></div>
