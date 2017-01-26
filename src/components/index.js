@@ -93,4 +93,7 @@ const Components = () => {
   );
 };
 
+Components.path = `/components`;
+Components.title = `Components`;
+
 export default Components;
