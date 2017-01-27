@@ -168,7 +168,7 @@ class DemoWidgetMessageMeet extends Component {
   }
 }
 
-DemoWidgetMessageMeet.title = `Widget Message Meet Demo`;
+DemoWidgetMessageMeet.title = `Widget Message Meet`;
 DemoWidgetMessageMeet.path = `/wmm-demo`;
 
 export default DemoWidgetMessageMeet;
