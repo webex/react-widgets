@@ -16,3 +16,11 @@
   height: 600px;
   overflow: auto;
 }
+
+.widget,
+.widget > div {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+}

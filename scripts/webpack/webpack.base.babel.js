@@ -1,22 +1,21 @@
 import path from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 export default (options) => {
+  const packageJson = require(`../../package.json`);
   const plugins = [
-    new InlineEnviromentVariablesPlugin(Object.assign(process.env, options.env)),
+    new webpack.EnvironmentPlugin([
+      `NODE_ENV`
+    ]),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    })
-    // Remove locales from moment, may need to add back in future
-    // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    // new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
+    // Adds use strict to prevent catch global namespace issues outside of chunks.
+    new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`)
   ];
+
   return {
     context: options.context || path.resolve(process.cwd(), `src`),
     entry: options.entry,
@@ -51,11 +50,18 @@ export default (options) => {
             path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
             path.resolve(__dirname, `..`, `..`, `src`)
           ],
+          exclude: [
+            `/fixtures/`,
+            `/__mocks__/`
+          ],
           loader: `babel-loader`
         },
         {
           test: /\.css$/,
-          exclude: [path.resolve(__dirname, `..`, `..`, `node_modules`)],
+          include: [
+            path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
+            path.resolve(__dirname, `..`, `..`, `src`)
+          ],
           loader: ExtractTextPlugin.extract({
             loader: [{
               loader: `css-loader`,
