@@ -16,7 +16,7 @@
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
-    "start": "webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline"
+    "start": "NODE_ENV=development webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline"
   },
   "repository": {
     "type": "git",
