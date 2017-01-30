@@ -5,11 +5,12 @@ import classNames from 'classnames';
 import styles from './styles.css';
 
 import SparkLogo from '@ciscospark/react-component-spark-logo';
+import SparkOAuth from '@ciscospark/react-component-spark-oauth';
 
 import ExampleCode, {MODE_REACT, MODE_INLINE} from '../example-code';
 
 import WidgetMessageMeet from '@ciscospark/widget-message-meet';
-import SparkOAuth from '../spark-oauth';
+
 
 
 class DemoWidgetMessageMeet extends Component {
