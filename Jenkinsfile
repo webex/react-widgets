@@ -56,7 +56,7 @@ ansiColor('xterm') {
                     stage('Build'){
                          sh '''#!/bin/bash -ex
                          source ~/.nvm/nvm.sh
-                         nvm use v5
+                         nvm use v6
                          npm install
                          npm run build
                         '''
