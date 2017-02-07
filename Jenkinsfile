@@ -71,6 +71,7 @@ ansiColor('xterm') {
                          //npm test
                         //'''
                     }
+                  
                     archive 'dist/**/*'
                     
                     stage('Publish to CDN'){
