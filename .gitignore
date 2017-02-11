@@ -1,5 +1,6 @@
 **/dist/
 .DS_Store
+.idea
 *.log
 /node_modules
 .env
