@@ -13,12 +13,14 @@
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
     "jest": "TZ=utc jest --config=jest.config.json",
+    "jest:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/jest-package.js",
     "static-analysis": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages",
     "serve": "npm run start",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
     "start": "NODE_ENV=development webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback",
-    "start:demo": "NODE_ENV=development webpack-dev-server --config scripts/webpack/webpack.demo.babel.js --hot --inline --history-api-fallback"
+    "start:demo": "NODE_ENV=development webpack-dev-server --config scripts/webpack/webpack.demo.babel.js --hot --inline --history-api-fallback",
+    "start:package": "NODE_ENV=development babel-node --presets=stage-1,es2015 scripts/start-package.js"
   },
   "repository": {
     "type": "git",
