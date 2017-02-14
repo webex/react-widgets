@@ -1,6 +1,7 @@
 /* eslint-disable react/no-set-state */
 import React, {Component} from 'react';
 import classNames from 'classnames';
+import cookie from 'react-cookie';
 
 import SparkLogo from '@ciscospark/react-component-spark-logo';
 import SparkOAuth from '@ciscospark/react-component-spark-oauth';
@@ -19,8 +20,8 @@ class DemoWidgetMessageMeet extends Component {
     this.state = {
       authenticate: false,
       mode: MODE_INLINE,
-      accessToken: ``,
-      toPersonEmail: ``,
+      accessToken: cookie.load(`accessToken`) || ``,
+      toPersonEmail: cookie.load(`toPersonEmail`) || ``,
       running: false,
       clientId: process.env.MESSAGE_DEMO_CLIENT_ID,
       clientSecret: process.env.MESSAGE_DEMO_CLIENT_SECRET,
@@ -41,6 +42,8 @@ class DemoWidgetMessageMeet extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    cookie.save(`accessToken`, this.state.accessToken);
+    cookie.save(`toPersonEmail`, this.state.toPersonEmail);
     this.setState({running: true});
   }
 
