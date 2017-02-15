@@ -2,8 +2,8 @@ import runInPackage from './utils/base-package';
 
 /**
  * Test a specific package with jest
- * @param  {string} pkgName
- * @param  {string} pkgPath
+ * @param  {string} pkgName Name of package without @ciscospark (e.g. react-component-button)
+ * @param  {string} pkgPath Full path of package
  * @returns {Promise}
  */
 export default function jestPackage(pkgName, pkgPath) {
