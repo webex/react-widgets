@@ -1,17 +1,14 @@
 # Cisco Spark for React _(react-ciscospark)_
 
+* THIS REPO CONTAINS EXPERIMENTAL CODE *
+
 > The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.
 
 ## Table of Contents
 - [Background](#background)
 - [Widgets](#widgets)
-  - [Install](#install)
-    - [CDN](#cdn)
-    - [Build from Source](#build-from-source)
-  -   [Usage](#usage)
-      -   [Quick Start](#quick-start)
-      -   [HTML](#html)
-      -   [JSX](#jsx)
+- [Install](#install)
+  - [Build from Source](#build-from-source)
 - [Components](#components)
   - [Install](#install)
 -   [Browser Support](#browser-support)
@@ -24,27 +21,23 @@ The basic components are just presentational React <https://github.com/facebook/
 
 ## Widgets
 
-### Install
+While many of our components are purely presentational, some have extended functionality that provide a piece of the full Cisco Spark experience. These fully self contained elements are called `Widgets` and are available here:
 
-#### CDN
-#### Build From Source
+*  [Message and Meet Widget](./packages/node_modules/@ciscospark/widget-message-meet)
 
-### Usage
+## Install
 
-## Components
+### Build From Source
 
-### Install
+1.  Clone this repo using a git client (e.g. `git clone https://github.com/ciscospark/react-ciscospark.git`)
+1.  Run `npm install` from the root of the repo. You will want to run this every time you pull down any new updates.
+1.  From the root of the repo, run the following to build the widget:
 
+  ```sh
+  npm run build
+  ```
+1.  The built bundles are located at `packages/node_modules/@ciscospark/PACKAGE_NAME/dist`.
 
-### Development
-
-#### Setup Environment Variables
-
-Setup your `.env` file with the following values:
-
-```
-CISCOSPARK_ACCESS_TOKEN=
-```
 
 ## Limitations
 ### Development
