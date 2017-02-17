@@ -46,6 +46,7 @@
     "@ciscospark/plugin-phone": "^0.7.54",
     "@ciscospark/spark-core": "^0.7.54",
     "@ciscospark/storage-adapter-local-storage": "^0.7.54",
+    "ampersand-events": "^2.0.2",
     "browser-saveas": "^1.0.1",
     "classnames": "^2.2.5",
     "custom-event-polyfill": "^0.3.0",
