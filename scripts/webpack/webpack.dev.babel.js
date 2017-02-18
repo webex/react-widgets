@@ -21,7 +21,7 @@ const plugins = [
 ];
 
 export default webpackConfigBase({
-  entry: `./demo.js`,
+  entry: `./index.js`,
   plugins,
   devtool: `source-map`,
   devServer: {

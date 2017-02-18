@@ -1,16 +1,15 @@
 /* eslint-disable react/no-set-state */
 import React, {Component} from 'react';
 import classNames from 'classnames';
-
-import styles from './styles.css';
+import cookie from 'react-cookie';
+import autobind from 'autobind-decorator';
 
 import SparkLogo from '@ciscospark/react-component-spark-logo';
 import SparkOAuth from '@ciscospark/react-component-spark-oauth';
-
+import WidgetMessageMeet from '@ciscospark/widget-message-meet';
 import ExampleCode, {MODE_REACT, MODE_INLINE} from '../example-code';
 
-import WidgetMessageMeet from '@ciscospark/widget-message-meet';
-
+import styles from './styles.css';
 
 
 class DemoWidgetMessageMeet extends Component {
@@ -22,52 +21,53 @@ class DemoWidgetMessageMeet extends Component {
     this.state = {
       authenticate: false,
       mode: MODE_INLINE,
-      accessToken: ``,
-      toPersonEmail: ``,
+      accessToken: cookie.load(`accessToken`) || ``,
+      toPersonEmail: cookie.load(`toPersonEmail`) || ``,
       running: false,
       clientId: process.env.MESSAGE_DEMO_CLIENT_ID,
       clientSecret: process.env.MESSAGE_DEMO_CLIENT_SECRET,
       scope: `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`,
       redirectUri
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAccessTokenChange = this.handleAccessTokenChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleModeChange = this.handleModeChange.bind(this);
-    this.handleLoginOAuth = this.handleLoginOAuth.bind(this);
-    this.handleOnAuth = this.handleOnAuth.bind(this);
   }
 
   shouldComponentUpdate() {
     return true;
   }
 
+  @autobind
   handleSubmit(e) {
     e.preventDefault();
+    cookie.save(`accessToken`, this.state.accessToken);
+    cookie.save(`toPersonEmail`, this.state.toPersonEmail);
     this.setState({running: true});
   }
 
+  @autobind
   handleAccessTokenChange(e) {
     return this.setState({accessToken: e.target.value});
   }
 
+  @autobind
   handleEmailChange(e) {
     return this.setState({toPersonEmail: e.target.value});
   }
 
+  @autobind
   handleModeChange(e) {
     return this.setState({mode: e.target.value});
   }
 
+  @autobind
   handleLoginOAuth(e) {
     e.preventDefault();
     this.setState({authenticate: true});
   }
 
+  @autobind
   handleOnAuth(token) {
     return this.setState({accessToken: token, authenticate: false});
   }
-
 
   createWidget(e) {
     e.preventDefault();
