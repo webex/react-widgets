@@ -3,6 +3,7 @@
     ["transform-runtime", {
       "polyfill": false
     }],
+    "transform-decorators-legacy",
     "transform-export-extensions",
     "lodash"
   ],
