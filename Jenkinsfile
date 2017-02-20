@@ -45,13 +45,13 @@ ansiColor('xterm') {
                         }
                     }
 
-                    stage ('Checkout Code'){
-                        checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
-                        doGenerateSubmoduleConfigurations: false, extensions: [], 
-                        submoduleCfg: [], userRemoteConfigs: 
-                        [[credentialsId: '6c8a75fb-5e5f-4803-9b6d-1933a3111a34', 
-                        url: 'git@github.com:ciscospark/react-ciscospark.git']]])
-                    }
+                    //stage ('Checkout Code'){
+                    //    checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+                    //    doGenerateSubmoduleConfigurations: false, extensions: [], 
+                    //    submoduleCfg: [], userRemoteConfigs: 
+                    //    [[credentialsId: '6c8a75fb-5e5f-4803-9b6d-1933a3111a34', 
+                    //    url: 'git@github.com:ciscospark/react-ciscospark.git']]])
+                    //}
                     
                     stage('Build'){
                          sh '''#!/bin/bash -ex
