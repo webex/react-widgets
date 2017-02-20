@@ -72,7 +72,8 @@ ansiColor('xterm') {
                         //'''
                     }
                   
-                    archive 'dist/**/*'
+                    //archive 'dist/**/*'
+                    archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
                     
                     stage('Publish to CDN'){
                         // Need to create job(s) to publish to CDN
