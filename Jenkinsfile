@@ -28,25 +28,25 @@ ansiColor('xterm') {
                     stage('checkout') {
                         checkout scm
 
-                        //sh 'git config user.email spark-js-sdk.gen@cisco.com'
-                        //sh 'git config user.name Jenkins'
-                        sh 'git config --get user.name'
+                        sh 'git config user.email spark-js-sdk.gen@cisco.com'
+                        sh 'git config user.name Jenkins'
+                        //sh 'git config --get user.name'
 
 
-                        //GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
+                        GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
 
-                        //sh 'git fetch upstream'
-                        //sh 'git checkout upstream/master'
+                        sh 'git fetch upstream'
+                        sh 'git checkout upstream/master'
 
                         try {
-                          //sh "git merge --ff ${GIT_COMMIT}"
+                          sh "git merge --ff ${GIT_COMMIT}"
                         }
                         catch (err) {
                           currentBuild.description = 'not possible to fast forward'
                           throw err;
                         }
                     }
-
+                    //~~~~commenting out this stage for now~~~~~
                     //stage ('Checkout Code'){
                     //    checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
                     //    doGenerateSubmoduleConfigurations: false, extensions: [], 
