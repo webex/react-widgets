@@ -46,7 +46,7 @@ ansiColor('xterm') {
                           throw err;
                         }
                     }
-                    //~~~~commenting out this stage for now~~~~~
+                    //~~~~commenting out this stage for now~~~~
                     //stage ('Checkout Code'){
                     //    checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
                     //    doGenerateSubmoduleConfigurations: false, extensions: [], 
