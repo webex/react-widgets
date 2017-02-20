@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import cookie from 'react-cookie';
+import autobind from 'autobind-decorator';
 
 import SparkLogo from '@ciscospark/react-component-spark-logo';
 import SparkOAuth from '@ciscospark/react-component-spark-oauth';
@@ -28,18 +29,13 @@ class DemoWidgetMessageMeet extends Component {
       scope: `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`,
       redirectUri
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAccessTokenChange = this.handleAccessTokenChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleModeChange = this.handleModeChange.bind(this);
-    this.handleLoginOAuth = this.handleLoginOAuth.bind(this);
-    this.handleOnAuth = this.handleOnAuth.bind(this);
   }
 
   shouldComponentUpdate() {
     return true;
   }
 
+  @autobind
   handleSubmit(e) {
     e.preventDefault();
     cookie.save(`accessToken`, this.state.accessToken);
@@ -47,27 +43,31 @@ class DemoWidgetMessageMeet extends Component {
     this.setState({running: true});
   }
 
+  @autobind
   handleAccessTokenChange(e) {
     return this.setState({accessToken: e.target.value});
   }
 
+  @autobind
   handleEmailChange(e) {
     return this.setState({toPersonEmail: e.target.value});
   }
 
+  @autobind
   handleModeChange(e) {
     return this.setState({mode: e.target.value});
   }
 
+  @autobind
   handleLoginOAuth(e) {
     e.preventDefault();
     this.setState({authenticate: true});
   }
 
+  @autobind
   handleOnAuth(token) {
     return this.setState({accessToken: token, authenticate: false});
   }
-
 
   createWidget(e) {
     e.preventDefault();
