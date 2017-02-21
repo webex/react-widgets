@@ -75,16 +75,16 @@ ansiColor('xterm') {
                     cleanup()
                 }
 
-//                catch {
+                catch (error) {
                   // Sometimes an exception can get thrown without changing the build result
                   // from success. If we reach this point and the result is not UNSTABLE, then
                   // we need to make sure it's FAILURE
-//                    if (currentBuild.result != 'UNSTABLE') {
-//                        currentBuild.result = 'FAILURE'
-//                    }
-//                    cleanup()
-//                    throw error
-//                }
+                    if (currentBuild.result != 'UNSTABLE') {
+                        currentBuild.result = 'FAILURE'
+                    }
+                    cleanup()
+                    throw error
+                }
             }
         }
     }
