@@ -29,9 +29,11 @@ ansiColor('xterm') {
                         //sh 'git config user.name Jenkins'
 
                         GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
-
-                        sh 'git fetch upstream'
-                        sh 'git checkout upstream/master'
+                        
+                        sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
+                            sh 'git fetch upstream'
+                            sh 'git checkout upstream/master'
+                        }
 
                         try {
                             sh "git merge --ff ${GIT_COMMIT}"
