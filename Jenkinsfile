@@ -64,16 +64,26 @@ ansiColor('xterm') {
                     }
                     //archive 'dist/**/*'
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
-                    
-                    stage('Publish to CDN'){
-                        // Need to create job(s) to publish to CDN
-                        // If using a single job, job will need to be modified to copy artifacts
-                        // in different locations then upload to the correct folder structre on CDN
-                        // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: currentBuild.number]], propagate: false
-                        // if (cdnPublishBuild.result != 'SUCCESS') {
-                        //    warn('failed to publish to CDN')
-                        //}
-                    }
+
+                    println current.Build.result
+
+                    if (current.Build.result == 'SUCCESS'){
+                        stage('Push to github'){
+                            sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
+                           //     sh "git push upstream HEAD:master"
+                            }
+                        }
+
+                        stage('Publish to CDN'){
+                            // Need to create job(s) to publish to CDN
+                            // If using a single job, job will need to be modified to copy artifacts
+                            // in different locations then upload to the correct folder structre on CDN
+                            // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: currentBuild.number]], propagate: false
+                            // if (cdnPublishBuild.result != 'SUCCESS') {
+                            //    warn('failed to publish to CDN')
+                            //}
+                        }
+                    }                    
                     cleanup()
                 }
 
