@@ -25,8 +25,8 @@ ansiColor('xterm') {
                     stage('checkout') {
                         checkout scm
 
-                        //sh 'git config user.email spark-js-sdk.gen@cisco.com'
-                        //sh 'git config user.name Jenkins'
+                        sh 'git config user.email spark-js-sdk.gen@cisco.com'
+                        sh 'git config user.name Jenkins'
 
                         GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
                         
@@ -67,7 +67,7 @@ ansiColor('xterm') {
                             // Need to create job(s) to publish to CDN
                             // If using a single job, job will need to be modified to copy artifacts
                             // in different locations then upload to the correct folder structre on CDN
-                            // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: currentBuild.number]], propagate: false
+                            // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: "${currentBuild.number}"]], propagate: false
                             // if (cdnPublishBuild.result != 'SUCCESS') {
                             //    warn('failed to publish to CDN')
                             //}
