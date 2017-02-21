@@ -89,6 +89,7 @@ ansiColor('xterm') {
                   // we need to make sure it's FAILURE
                     if (currentBuild.result != 'UNSTABLE') {
                         currentBuild.result = 'FAILURE'
+                        echo "RESULT: ${currentBuild.result}"
                     }
                     cleanup()
                     throw error
