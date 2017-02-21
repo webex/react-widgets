@@ -25,8 +25,8 @@ ansiColor('xterm') {
                     stage('checkout') {
                         checkout scm
 
-                        sh 'git config user.email spark-js-sdk.gen@cisco.com'
-                        sh 'git config user.name Jenkins'
+                        //sh 'git config user.email spark-js-sdk.gen@cisco.com'
+                        //sh 'git config user.name Jenkins'
 
                         GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
 
