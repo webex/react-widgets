@@ -14,7 +14,7 @@
     "test:clean": "npm run clean && npm run test",
     "jest": "TZ=utc jest --config=jest.config.json",
     "jest:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/jest-package.js",
-    "static-analysis": "npm run eslint && npm run stylelint",
+    "static-analysis": "npm run eslint",
     "eslint": "eslint packages",
     "serve": "npm run start",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
