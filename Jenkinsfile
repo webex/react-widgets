@@ -48,10 +48,11 @@ ansiColor('xterm') {
                         echo "RESULT: ${currentBuild.result}"
                          sh '''#!/bin/bash -ex
                          source ~/.nvm/nvm.sh
-                         nvm use v6
-                         npm install
-                         npm run build
+                         //nvm use v6
+                         //npm install
+                         //npm run build
                         '''
+                        sh "exit 1"
                     }
                     
                     //archive 'dist/**/*'
@@ -61,12 +62,14 @@ ansiColor('xterm') {
 
                     if (current.Build.result == 'SUCCESS'){
                         stage('Push to github'){
+                            echo "RESULT: ${currentBuild.result}"
                             sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
                            //     sh "git push upstream HEAD:master"
                             }
                         }
 
                         stage('Publish to CDN'){
+                            echo "RESULT: ${currentBuild.result}"
                             // Need to create job(s) to publish to CDN
                             // If using a single job, job will need to be modified to copy artifacts
                             // in different locations then upload to the correct folder structre on CDN
@@ -80,6 +83,7 @@ ansiColor('xterm') {
                 }
 
                 catch (error) {
+                    echo "RESULT: ${currentBuild.result}"
                   // Sometimes an exception can get thrown without changing the build result
                   // from success. If we reach this point and the result is not UNSTABLE, then
                   // we need to make sure it's FAILURE
