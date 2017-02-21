@@ -21,7 +21,7 @@ ansiColor('xterm') {
                 def GIT_COMMIT
 
                 try {
-                    
+                    currentBuild.result = 'SUCCESS'
                     stage('checkout') {
                         checkout scm
 
@@ -57,8 +57,6 @@ ansiColor('xterm') {
                     
                     //archive 'dist/**/*'
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
-
-                    echo "RESULT: ${currentBuild.result}"
 
                     if (current.Build.result == 'SUCCESS'){
                         stage('Push to github'){
