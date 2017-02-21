@@ -59,7 +59,7 @@ ansiColor('xterm') {
                     if (current.Build.result == 'SUCCESS'){
                         stage('Push to github'){
                             sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-                                sh "git push upstream HEAD:master"
+                                //sh "git push upstream HEAD:master"
                             }
                         }
 
