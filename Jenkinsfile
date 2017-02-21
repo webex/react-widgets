@@ -45,6 +45,7 @@ ansiColor('xterm') {
                     }
                     
                     stage('Build'){
+                        echo "RESULT: ${currentBuild.result}"
                          sh '''#!/bin/bash -ex
                          source ~/.nvm/nvm.sh
                          nvm use v6
@@ -53,19 +54,10 @@ ansiColor('xterm') {
                         '''
                     }
                     
-                    stage('Run Tests'){
-                        // Confirm if tests should be part of the build step 
-                         //sh '''#!/bin/bash -ex
-                         //source ~/.nvm/nvm.sh
-                         //nvm use v5
-                         //npm install
-                         //npm test
-                        //'''
-                    }
                     //archive 'dist/**/*'
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
 
-                    println current.Build.result
+                    echo "RESULT: ${currentBuild.result}"
 
                     if (current.Build.result == 'SUCCESS'){
                         stage('Push to github'){
