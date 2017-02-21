@@ -23,6 +23,7 @@ ansiColor('xterm') {
                 try {
                     currentBuild.result = 'SUCCESS'
                     stage('checkout') {
+                        echo "RESULT: ${currentBuild.result}"
                         checkout scm
 
                         //sh 'git config user.email spark-js-sdk.gen@cisco.com'
@@ -81,14 +82,13 @@ ansiColor('xterm') {
                 }
 
                 catch (error) {
-                    echo "RESULT: ${currentBuild.result}"
                   // Sometimes an exception can get thrown without changing the build result
                   // from success. If we reach this point and the result is not UNSTABLE, then
                   // we need to make sure it's FAILURE
                     if (currentBuild.result != 'UNSTABLE') {
                         currentBuild.result = 'FAILURE'
-                        echo "RESULT: ${currentBuild.result}"
                     }
+                    echo "RESULT: ${currentBuild.result}"
                     cleanup()
                     throw error
                 }
