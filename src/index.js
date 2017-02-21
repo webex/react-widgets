@@ -27,3 +27,5 @@ export {default as TitleBar} from '@ciscospark/react-component-title-bar';
 export {default as TypingAvatar} from '@ciscospark/react-component-typing-avatar';
 export {default as TypingIndicator} from '@ciscospark/react-component-typing-indicator';
 export {default as WidgetMessageMeet} from '@ciscospark/widget-message-meet';
+
+import './demo';
