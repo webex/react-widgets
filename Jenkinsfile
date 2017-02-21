@@ -1,27 +1,24 @@
 #!groovy
+
+def cleanup = { ->
+    // cleanup can't be a stage because it'll throw off the stage-view on the job's main page
+    if (currentBuild.result != 'SUCCESS') {
+        withCredentials([usernamePassword(
+        credentialsId: '386d3445-b855-40e4-999a-dc5801336a69',
+        passwordVariable: 'GAUNTLET_PASSWORD',
+        usernameVariable: 'GAUNTLET_USERNAME'
+        )]) {
+            sh "curl -i --user ${GAUNTLET_USERNAME}:${GAUNTLET_PASSWORD} -X PUT 'https://gauntlet.wbx2.com/api/queues/react-ciscospark/master?componentTestStatus=failure&commitId=${GIT_COMMIT}'"
+        }
+    }
+}
+
 ansiColor('xterm') {
     timestamps {
         timeout(30) {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
-
-                def cleanup = { ->
-                  // cleanup can't be a stage because it'll throw off the stage-view on the
-                  // job's main page
-
-                  // ARCHIVE RELEVANT TEST REPORTS
-
-                  if (currentBuild.result != 'SUCCESS') {
-                    withCredentials([usernamePassword(
-                      credentialsId: '386d3445-b855-40e4-999a-dc5801336a69',
-                      passwordVariable: 'GAUNTLET_PASSWORD',
-                      usernameVariable: 'GAUNTLET_USERNAME'
-                    )]) {
-                      sh "curl -i --user ${GAUNTLET_USERNAME}:${GAUNTLET_PASSWORD} -X PUT 'https://gauntlet.wbx2.com/api/queues/react-ciscospark/master?componentTestStatus=failure&commitId=${GIT_COMMIT}'"
-                    }
-                  }
-                }
 
                 try {
                     
@@ -39,21 +36,13 @@ ansiColor('xterm') {
                         sh 'git checkout upstream/master'
 
                         try {
-                          sh "git merge --ff ${GIT_COMMIT}"
+                            sh "git merge --ff ${GIT_COMMIT}"
                         }
                         catch (err) {
-                          currentBuild.description = 'not possible to fast forward'
-                          throw err;
+                            currentBuild.description = 'not possible to fast forward'
+                            throw err;
                         }
                     }
-                    //~~~~commenting out this stage for now~~~~
-                    //stage ('Checkout Code'){
-                    //    checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
-                    //    doGenerateSubmoduleConfigurations: false, extensions: [], 
-                    //    submoduleCfg: [], userRemoteConfigs: 
-                    //    [[credentialsId: '6c8a75fb-5e5f-4803-9b6d-1933a3111a34', 
-                    //    url: 'git@github.com:ciscospark/react-ciscospark.git']]])
-                    //}
                     
                     stage('Build'){
                          sh '''#!/bin/bash -ex
@@ -83,12 +72,10 @@ ansiColor('xterm') {
                         // in different locations then upload to the correct folder structre on CDN
                         // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: currentBuild.number]], propagate: false
                         // if (cdnPublishBuild.result != 'SUCCESS') {
-                        // warn('failed to publish to CDN')
+                        //    warn('failed to publish to CDN')
                         //}
                     }
-
                 cleanup()
-
                 }
 
                 catch {
