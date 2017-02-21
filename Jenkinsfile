@@ -15,7 +15,7 @@ def cleanup = { ->
 
 ansiColor('xterm') {
     timestamps {
-        timeout(30) {
+        timeout(10) {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
@@ -27,8 +27,6 @@ ansiColor('xterm') {
 
                         sh 'git config user.email spark-js-sdk.gen@cisco.com'
                         sh 'git config user.name Jenkins'
-                        //sh 'git config --get user.name'
-
 
                         GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
 
@@ -62,7 +60,6 @@ ansiColor('xterm') {
                          //npm test
                         //'''
                     }
-                  
                     //archive 'dist/**/*'
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
                     
@@ -75,19 +72,19 @@ ansiColor('xterm') {
                         //    warn('failed to publish to CDN')
                         //}
                     }
-                cleanup()
+                    cleanup()
                 }
 
-                catch {
+//                catch {
                   // Sometimes an exception can get thrown without changing the build result
                   // from success. If we reach this point and the result is not UNSTABLE, then
                   // we need to make sure it's FAILURE
-                  if (currentBuild.result != 'UNSTABLE') {
-                    currentBuild.result = 'FAILURE'
-                  }
-                    cleanup()
-                    throw error
-                }
+//                    if (currentBuild.result != 'UNSTABLE') {
+//                        currentBuild.result = 'FAILURE'
+//                    }
+//                    cleanup()
+//                    throw error
+//                }
             }
         }
     }
