@@ -55,6 +55,7 @@ ansiColor('xterm') {
                     
                     //archive 'dist/**/*'
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
+                    archive 'dist/**/*'
 
                     if (currentBuild.result == 'SUCCESS'){
                         stage('Push to github'){
