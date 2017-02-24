@@ -109,6 +109,13 @@ export default (options) => {
           }
         },
         {
+          test: /\.mp3$|\.wav$/,
+          loader: `file-loader`,
+          query: {
+            name: `media/[name].[ext]`
+          }
+        },
+        {
           test: /.*\.(gif|png|jpg)$/,
           loaders: [
             `file-loader?name=[name].[ext]`,
