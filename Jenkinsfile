@@ -52,9 +52,9 @@ ansiColor('xterm') {
                          npm run build
                         '''
                     }
-                    
-                    //archive 'dist/**/*'
+
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
+                    archive 'dist/**/*'
 
                     if (currentBuild.result == 'SUCCESS'){
                         stage('Push to github'){
@@ -64,13 +64,10 @@ ansiColor('xterm') {
                         }
 
                         stage('Publish to CDN'){
-                            // Need to create job(s) to publish to CDN
-                            // If using a single job, job will need to be modified to copy artifacts
-                            // in different locations then upload to the correct folder structre on CDN
-                            // cdnPublishBuild = build job: 'spark-js-sdk--publish-chat-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: "${currentBuild.number}"]], propagate: false
-                            // if (cdnPublishBuild.result != 'SUCCESS') {
-                            //    warn('failed to publish to CDN')
-                            //}
+                            cdnPublishBuild = build job: 'publish-spark-js-sdk-react-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: "${currentBuild.number}"]], propagate: false
+                            if (cdnPublishBuild.result != 'SUCCESS') {
+                                warn('failed to publish to CDN')
+                            }
                         }
                     }                    
                     cleanup()
