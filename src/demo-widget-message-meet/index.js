@@ -13,19 +13,20 @@ import styles from './styles.css';
 
 
 class DemoWidgetMessageMeet extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const l = window.location;
     const redirectUri = `${l.protocol}//${l.host}${l.pathname}`.replace(/\/$/, ``);
-
+    const clientId = process.env.MESSAGE_DEMO_CLIENT_ID;
+    const clientSecret = process.env.MESSAGE_DEMO_CLIENT_SECRET;
     this.state = {
       authenticate: false,
       mode: MODE_INLINE,
       accessToken: cookie.load(`accessToken`) || ``,
       toPersonEmail: cookie.load(`toPersonEmail`) || ``,
       running: false,
-      clientId: process.env.MESSAGE_DEMO_CLIENT_ID,
-      clientSecret: process.env.MESSAGE_DEMO_CLIENT_SECRET,
+      clientId,
+      clientSecret,
       scope: `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`,
       redirectUri
     };
