@@ -9,7 +9,9 @@ export default (options) => {
   const packageJson = require(`../../package.json`);
   const plugins = [
     new webpack.EnvironmentPlugin([
-      `NODE_ENV`
+      `NODE_ENV`,
+      `MESSAGE_DEMO_CLIENT_ID`,
+      `MESSAGE_DEMO_CLIENT_SECRET`
     ]),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
@@ -106,6 +108,13 @@ export default (options) => {
           loader: `file-loader`,
           query: {
             name: `fonts/[name].[ext]`
+          }
+        },
+        {
+          test: /\.mp3$|\.wav$/,
+          loader: `file-loader`,
+          query: {
+            name: `media/[name].[ext]`
           }
         },
         {

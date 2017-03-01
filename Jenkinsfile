@@ -45,12 +45,14 @@ ansiColor('xterm') {
                     }
                     
                     stage('Build'){
-                         sh '''#!/bin/bash -ex
-                         source ~/.nvm/nvm.sh
-                         nvm use v6
-                         npm install
-                         npm run build
-                        '''
+                        withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
+                            sh '''#!/bin/bash -ex
+                            source ~/.nvm/nvm.sh
+                            nvm use v6
+                            npm install
+                            npm run build
+                            '''
+                        }
                     }
 
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
