@@ -1,37 +1,33 @@
-.demo-wrapper {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.demo-wrapper h2 {
-  font-family: 'CiscoSans TT Bold';
+.demo-login {
+  padding: 20px 0;
+  margin-top: 20px;
+  font-family: 'CiscoSans TT Light';
   text-align: center;
 }
 
-.widget-component-container {
-  position: absolute;
-  right: 10px;
-  bottom: 0;
-  width: 500px;
-  height: 600px;
+.demo-login h3 {
+  font-family: 'CiscoSans TT Bold';
 }
 
-.widget-component-container > div {
-  height: 100%;
+.header {
+  padding: 0 15px 20px;
 }
 
-.logo {
-  width: 30%;
-  height: 120px;
-  margin: auto;
+.content {
+  padding: 20px 5px 0;
+  text-align: center;
+}
+
+.menu {
+  padding-bottom: 20px;
+  background-color: #f2f2f2;
+  border-radius: 3px;
 }
 
 .demo-form {
   display: flex;
-  padding: 10px;
   margin: 0 auto;
   font-family: 'CiscoSans TT Light';
-  background: #fff;
   flex-direction: column;
   align-items: center;
 }
