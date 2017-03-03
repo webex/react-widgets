@@ -18,17 +18,17 @@ class DemoLogin extends Component {
     const clientId = process.env.MESSAGE_DEMO_CLIENT_ID;
     const clientSecret = process.env.MESSAGE_DEMO_CLIENT_SECRET;
     this.state = {
-      accessToken: ``,
       authenticate: false,
       clientId,
       clientSecret,
       scope: `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`,
-      redirectUri
+      redirectUri,
+      userAccessToken: ``
     };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.authenticate !== this.state.authenticate || nextState.accessToken !== this.state.accessToken;
+    return nextState.authenticate !== this.state.authenticate || nextState.userAccessToken !== this.state.userAccessToken;
   }
 
   @autobind
@@ -40,19 +40,19 @@ class DemoLogin extends Component {
   @autobind
   handleOnAuth(token) {
     return this.setState({accessToken: token, authenticate: false}, () => {
-      this.props.onLogin(this.state.accessToken);
+      this.props.onLogin(this.state.userAccessToken);
     });
   }
 
   @autobind
   handleSaveToken(e) {
     e.preventDefault();
-    this.props.onLogin(this.state.accessToken);
+    this.props.onLogin(this.state.userAccessToken);
   }
 
   @autobind
   handleAccessTokenChange(e) {
-    return this.setState({accessToken: e.target.value});
+    return this.setState({userAccessToken: e.target.value});
   }
 
   render() {
@@ -75,7 +75,7 @@ class DemoLogin extends Component {
                       onChange={this.handleAccessTokenChange}
                       placeholder="Your Access Token"
                       type="text"
-                      value={this.state.accessToken}
+                      value={this.state.userAccessToken}
                     />
                     <RaisedButton
                       label={`Save`}

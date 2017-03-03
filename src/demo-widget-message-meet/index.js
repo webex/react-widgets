@@ -4,6 +4,10 @@ import classNames from 'classnames';
 import cookie from 'react-cookie';
 import autobind from 'autobind-decorator';
 
+import TextField from 'material-ui/TextField';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import SparkLogo from '@ciscospark/react-component-spark-logo';
 import WidgetMessageMeet from '@ciscospark/widget-message-meet';
 
@@ -20,8 +24,10 @@ class DemoWidgetMessageMeet extends Component {
     const redirectUri = `${l.protocol}//${l.host}${l.pathname}`.replace(/\/$/, ``);
     const clientId = process.env.MESSAGE_DEMO_CLIENT_ID;
     const clientSecret = process.env.MESSAGE_DEMO_CLIENT_SECRET;
+    const hasToken = !!cookie.load(`accessToken`);
     this.state = {
       authenticate: false,
+      hasToken,
       mode: MODE_INLINE,
       accessToken: cookie.load(`accessToken`) || ``,
       toPersonEmail: cookie.load(`toPersonEmail`) || ``,
@@ -47,7 +53,7 @@ class DemoWidgetMessageMeet extends Component {
 
   @autobind
   handleAccessTokenChange(accessToken) {
-    return this.setState({accessToken});
+    return this.setState({accessToken, hasToken: !!accessToken});
   }
 
   @autobind
@@ -58,6 +64,11 @@ class DemoWidgetMessageMeet extends Component {
   @autobind
   handleModeChange(e) {
     return this.setState({mode: e.target.value});
+  }
+
+  @autobind
+  handleClearToken() {
+    return this.setState({hasToken: false}, () => cookie.remove(`accessToken`));
   }
 
   createWidget(e) {
@@ -78,60 +89,52 @@ class DemoWidgetMessageMeet extends Component {
         <div className={classNames(`logo`, styles.logo)}>
           <SparkLogo />
         </div>
-        { !this.state.accessToken &&
+        { !this.state.hasToken &&
           <DemoLogin onLogin={this.handleAccessTokenChange} />
         }
         {
-          this.state.accessToken &&
-          <form className={classNames(`demo-form`, styles.demoForm)}>
-            <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-              <input
-                className={classNames(`field-input`, styles.fieldInput)}
-                onChange={this.handleEmailChange}
-                placeholder="To User Email"
-                type="text"
-                value={this.state.toPersonEmail}
-              />
-            </div>
-            <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-              <div className={classNames(`radio-group`, styles.radioGroup)}>
-                <div className={classNames(`radio-item`, styles.radioItem)}>
-                  <input
-                    checked={this.state.mode === MODE_INLINE}
-                    id="radio_inline"
-                    onChange={this.handleModeChange}
-                    type="radio"
-                    value={MODE_INLINE}
+          this.state.hasToken &&
+            <div className={classNames(styles.toForm)}>
+              <div className={classNames(styles.header)}>
+                <div>
+                  <TextField
+                    floatingLabelFixed
+                    floatingLabelText="To User Email"
+                    hintText="Spark User Email"
+                    onChange={this.handleEmailChange}
+                    value={this.state.toPersonEmail}
                   />
-                  <label htmlFor="radio_inline">
-                    {`Inline Mode`}
-                  </label>
                 </div>
-                <div className={classNames(`radio-item`, styles.radioItem)}>
-                  <input
-                    checked={this.state.mode === MODE_REACT}
-                    id="radio_react"
-                    onChange={this.handleModeChange}
-                    type="radio"
-                    value={MODE_REACT}
+                <div>
+                  <RaisedButton
+                    disabled={!loadButtonEnabled}
+                    label={`Open Widget`}
+                    onClick={this.handleSubmit}
+                    primary
                   />
-                  <label htmlFor="radio_react">
-                    {`React Component`}
-                  </label>
+                  <RaisedButton
+                    disabled={!this.state.accessToken}
+                    label={`Clear Token`}
+                    onClick={this.handleClearToken}
+                    secondary
+                  />
                 </div>
               </div>
+              <div className={classNames(styles.example)}>
+                <Tabs>
+                  <Tab label={`React Component`}>
+                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                      <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_REACT} />
+                    </div>
+                  </Tab>
+                  <Tab label={`Inline Mode`}>
+                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                      <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_INLINE} />
+                    </div>
+                  </Tab>
+                </Tabs>
+              </div>
             </div>
-            <div className={classNames(`example-code`, styles.exampleCode)}>
-              <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={this.state.mode} />
-            </div>
-            <button
-              className={classNames(`button`, styles.button)}
-              disabled={!loadButtonEnabled}
-              onClick={this.handleSubmit}
-            >
-              {`Open Widget`}
-            </button>
-          </form>
         }
       </div>
     );
