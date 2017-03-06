@@ -9,18 +9,14 @@ export const MODE_INLINE = `MODE_INLINE`;
 
 function ExampleCode(props) {
   let code;
-  let label;
   if (props.type === MODE_REACT) {
-    label = `React Component Example`;
     code = `<MessageMeetWidget accessToken="${props.accessToken}" toPersonEmail="${props.toPersonEmail}" />`;
   }
   else if (props.type === MODE_INLINE) {
-    label = `Inline Container Example`;
     code = `<div data-toggle="spark-message-meet" data-access-token="${props.accessToken}" data-to-person-email="${props.toPersonEmail}" />`;
   }
   return (
     <div>
-      <div className={classNames(`display`, styles.display)}>{label}</div>
       <div className={classNames(`code`, styles.code)}>
         <pre>
           {code}
