@@ -9,7 +9,9 @@ export default (options) => {
   const packageJson = require(`../../package.json`);
   const plugins = [
     new webpack.EnvironmentPlugin([
-      `NODE_ENV`
+      `NODE_ENV`,
+      `MESSAGE_DEMO_CLIENT_ID`,
+      `MESSAGE_DEMO_CLIENT_SECRET`
     ]),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
@@ -43,7 +45,7 @@ export default (options) => {
       extensions: [`.js`, `.css`, `.json`]
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.js$/,
           include: [
@@ -62,10 +64,10 @@ export default (options) => {
             path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
             path.resolve(__dirname, `..`, `..`, `src`)
           ],
-          loader: ExtractTextPlugin.extract({
-            loader: [{
+          use: ExtractTextPlugin.extract({
+            use: [{
               loader: `css-loader`,
-              query: {
+              options: {
                 camelCase: true,
                 modules: true,
                 localIdentName: `[local]--[hash:base64:5]`,
@@ -75,7 +77,7 @@ export default (options) => {
             },
             {
               loader: `postcss-loader`,
-              query: {
+              options: {
                 sourceMap: true
               }
             }]
@@ -85,18 +87,14 @@ export default (options) => {
           // Do not transform vendor`s CSS with CSS-modules
           test: /\.css$/,
           include: [path.resolve(__dirname, `..`, `..`, `node_modules`)],
-          loaders: [`style-loader`, `css-loader`]
-        },
-        {
-          test: /\.json$/,
-          loader: `json-loader`
+          use: [`style-loader`, `css-loader`]
         },
         {
           test: /\.woff$/,
           // Inline small woff files and output them below font/.
           // Set mimetype just in case.
           loader: `file-loader`,
-          query: {
+          options: {
             name: `fonts/[name].[ext]`,
             mimetype: `application/font-woff`
           }
@@ -104,13 +102,20 @@ export default (options) => {
         {
           test: /\.ttf$|\.otf$|\.eot$|\.svg$/,
           loader: `file-loader`,
-          query: {
+          options: {
             name: `fonts/[name].[ext]`
           }
         },
         {
+          test: /\.mp3$|\.wav$/,
+          loader: `file-loader`,
+          query: {
+            name: `media/[name].[ext]`
+          }
+        },
+        {
           test: /.*\.(gif|png|jpg)$/,
-          loaders: [
+          use: [
             `file-loader?name=[name].[ext]`,
             `image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}`
           ]

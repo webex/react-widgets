@@ -21,7 +21,7 @@ const plugins = [
 ];
 
 export default webpackConfigBase({
-  entry: `./demo.js`,
+  entry: `./basic-demo.js`,
   plugins,
   devtool: `cheap-module-eval-source-map`,
   devServer: {

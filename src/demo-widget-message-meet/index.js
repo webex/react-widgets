@@ -4,28 +4,36 @@ import classNames from 'classnames';
 import cookie from 'react-cookie';
 import autobind from 'autobind-decorator';
 
+import TextField from 'material-ui/TextField';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import SparkLogo from '@ciscospark/react-component-spark-logo';
-import SparkOAuth from '@ciscospark/react-component-spark-oauth';
 import WidgetMessageMeet from '@ciscospark/widget-message-meet';
+
 import ExampleCode, {MODE_REACT, MODE_INLINE} from '../example-code';
+import DemoLogin from '../demo-login';
 
 import styles from './styles.css';
 
 
 class DemoWidgetMessageMeet extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const l = window.location;
     const redirectUri = `${l.protocol}//${l.host}${l.pathname}`.replace(/\/$/, ``);
-
+    const clientId = process.env.MESSAGE_DEMO_CLIENT_ID;
+    const clientSecret = process.env.MESSAGE_DEMO_CLIENT_SECRET;
+    const hasToken = !!cookie.load(`accessToken`);
     this.state = {
       authenticate: false,
+      hasToken,
       mode: MODE_INLINE,
       accessToken: cookie.load(`accessToken`) || ``,
       toPersonEmail: cookie.load(`toPersonEmail`) || ``,
       running: false,
-      clientId: process.env.MESSAGE_DEMO_CLIENT_ID,
-      clientSecret: process.env.MESSAGE_DEMO_CLIENT_SECRET,
+      clientId,
+      clientSecret,
       scope: `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`,
       redirectUri
     };
@@ -44,8 +52,8 @@ class DemoWidgetMessageMeet extends Component {
   }
 
   @autobind
-  handleAccessTokenChange(e) {
-    return this.setState({accessToken: e.target.value});
+  handleAccessTokenChange(accessToken) {
+    return this.setState({accessToken, hasToken: !!accessToken});
   }
 
   @autobind
@@ -59,14 +67,8 @@ class DemoWidgetMessageMeet extends Component {
   }
 
   @autobind
-  handleLoginOAuth(e) {
-    e.preventDefault();
-    this.setState({authenticate: true});
-  }
-
-  @autobind
-  handleOnAuth(token) {
-    return this.setState({accessToken: token, authenticate: false});
+  handleClearToken() {
+    return this.setState({hasToken: false}, () => cookie.remove(`accessToken`));
   }
 
   createWidget(e) {
@@ -87,83 +89,53 @@ class DemoWidgetMessageMeet extends Component {
         <div className={classNames(`logo`, styles.logo)}>
           <SparkLogo />
         </div>
-        <form className={classNames(`demo-form`, styles.demoForm)}>
-          <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-            <input
-              className={classNames(`field-input`, styles.fieldInput)}
-              onChange={this.handleEmailChange}
-              placeholder="To User Email"
-              type="text"
-              value={this.state.toPersonEmail}
-            />
-          </div>
-          <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-            <input
-              className={classNames(`field-input`, styles.fieldInput)}
-              onChange={this.handleAccessTokenChange}
-              placeholder="Your Access Token"
-              type="text"
-              value={this.state.accessToken}
-            />
-          </div>
-          <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-            <button
-              className={classNames(`button-small`, styles.buttonSmall)}
-              onClick={this.handleLoginOAuth}
-            >
-              {`Login with Spark`}
-            </button>
-          </div>
-          <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-            <a href="http://developer.ciscospark.com">{`Get access token from developer.ciscospark.com`}</a>
-          </div>
-          <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
-            <div className={classNames(`radio-group`, styles.radioGroup)}>
-              <div className={classNames(`radio-item`, styles.radioItem)}>
-                <input
-                  checked={this.state.mode === MODE_INLINE}
-                  id="radio_inline"
-                  onChange={this.handleModeChange}
-                  type="radio"
-                  value={MODE_INLINE}
-                />
-                <label htmlFor="radio_inline">
-                  {`Inline Mode`}
-                </label>
+        { !this.state.hasToken &&
+          <DemoLogin onLogin={this.handleAccessTokenChange} />
+        }
+        {
+          this.state.hasToken &&
+            <div className={classNames(styles.toForm)}>
+              <div className={classNames(styles.header)}>
+                <div>
+                  <TextField
+                    floatingLabelFixed
+                    floatingLabelText="To User Email"
+                    hintText="Spark User Email"
+                    onChange={this.handleEmailChange}
+                    value={this.state.toPersonEmail}
+                  />
+                </div>
+                <div>
+                  <RaisedButton
+                    disabled={!loadButtonEnabled}
+                    label={`Open Widget`}
+                    onClick={this.handleSubmit}
+                    primary
+                  />
+                  <RaisedButton
+                    disabled={!this.state.accessToken}
+                    label={`Clear Token`}
+                    onClick={this.handleClearToken}
+                    secondary
+                  />
+                </div>
               </div>
-              <div className={classNames(`radio-item`, styles.radioItem)}>
-                <input
-                  checked={this.state.mode === MODE_REACT}
-                  id="radio_react"
-                  onChange={this.handleModeChange}
-                  type="radio"
-                  value={MODE_REACT}
-                />
-                <label htmlFor="radio_react">
-                  {`React Component`}
-                </label>
+              <div className={classNames(styles.example)}>
+                <Tabs>
+                  <Tab label={`React Component`}>
+                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                      <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_REACT} />
+                    </div>
+                  </Tab>
+                  <Tab label={`Inline Mode`}>
+                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                      <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_INLINE} />
+                    </div>
+                  </Tab>
+                </Tabs>
               </div>
             </div>
-          </div>
-          <div className={classNames(`example-code`, styles.exampleCode)}>
-            <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={this.state.mode} />
-          </div>
-          <button
-            className={classNames(`button`, styles.button)}
-            disabled={!loadButtonEnabled}
-            onClick={this.handleSubmit}
-          >
-            {`Load Widget`}
-          </button>
-          <SparkOAuth
-            clientId={this.state.clientId}
-            clientSecret={this.state.clientSecret}
-            doAuth={this.state.authenticate}
-            onAuth={this.handleOnAuth}
-            redirectUri={this.state.redirectUri}
-            scope={this.state.scope}
-          />
-        </form>
+        }
       </div>
     );
   }

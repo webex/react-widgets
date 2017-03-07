@@ -165,8 +165,6 @@ rules:
     - 2
   jsx-a11y/no-access-key:
     - 2
-  jsx-a11y/no-marquee:
-    - 2
   jsx-a11y/no-onchange:
     - 2
   jsx-a11y/no-static-element-interactions:
