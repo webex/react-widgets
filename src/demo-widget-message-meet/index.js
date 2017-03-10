@@ -80,13 +80,13 @@ class DemoWidgetMessageMeet extends Component {
     const loadButtonEnabled = this.state.accessToken && this.state.toPersonEmail;
     if (this.state.running) {
       return (
-        <div className={classNames(`widget-component-container`, styles.widgetComponentContainer)}>
+        <div className={classNames(`ciscospark-widget-component-container`, styles.widgetComponentContainer)}>
           <WidgetMessageMeet accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} />
         </div>);
     }
     return (
-      <div className={classNames(`demo-wrapper`, styles.demoWrapper)}>
-        <div className={classNames(`logo`, styles.logo)}>
+      <div className={classNames(`ciscospark-demo-wrapper`, styles.demoWrapper)}>
+        <div className={classNames(`ciscospark-logo`, styles.logo)}>
           <SparkLogo />
         </div>
         { !this.state.hasToken &&
@@ -123,12 +123,12 @@ class DemoWidgetMessageMeet extends Component {
               <div className={classNames(styles.example)}>
                 <Tabs>
                   <Tab label={`React Component`}>
-                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                    <div className={classNames(`ciscospark-example-code`, styles.exampleCode)}>
                       <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_REACT} />
                     </div>
                   </Tab>
                   <Tab label={`Inline Mode`}>
-                    <div className={classNames(`example-code`, styles.exampleCode)}>
+                    <div className={classNames(`ciscospark-example-code`, styles.exampleCode)}>
                       <ExampleCode accessToken={this.state.accessToken} toPersonEmail={this.state.toPersonEmail} type={MODE_INLINE} />
                     </div>
                   </Tab>

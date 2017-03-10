@@ -17,7 +17,7 @@ function ExampleCode(props) {
   }
   return (
     <div>
-      <div className={classNames(`code`, styles.code)}>
+      <div className={classNames(`ciscospark-code`, styles.code)}>
         <pre>
           {code}
         </pre>

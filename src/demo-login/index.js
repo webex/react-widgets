@@ -57,7 +57,7 @@ class DemoLogin extends Component {
 
   render() {
     return (
-      <div className={classNames(`demo-login`, styles.demoLogin)}>
+      <div className={classNames(`ciscospark-demo-login`, styles.demoLogin)}>
         <div className={classNames(styles.header)}>
           <p>{`Spark Widgets require an access token to identify the current user.`}</p>
           <p>
@@ -68,10 +68,10 @@ class DemoLogin extends Component {
           <Tabs>
             <Tab label={`Manual Access Token`}>
               <div className={classNames(styles.content)}>
-                <form className={classNames(`demo-form`, styles.demoForm)}>
-                  <div className={classNames(`field-wrapper`, styles.fieldWrapper)}>
+                <form className={classNames(`ciscospark-demo-form`, styles.demoForm)}>
+                  <div className={classNames(`ciscospark-field-wrapper`, styles.fieldWrapper)}>
                     <input
-                      className={classNames(`field-input`, styles.fieldInput)}
+                      className={classNames(`ciscospark-field-input`, styles.fieldInput)}
                       onChange={this.handleAccessTokenChange}
                       placeholder="Your Access Token"
                       type="text"
