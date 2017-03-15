@@ -51,7 +51,7 @@ ansiColor('xterm') {
                             nvm use v6
                             npm install
                             npm run build
-                            grep version package.json | cut -d \" -f4
+                            grep "version" package.json | cut -d \" -f4
                             '''
                         }
                     }
