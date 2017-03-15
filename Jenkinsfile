@@ -51,6 +51,7 @@ ansiColor('xterm') {
                             nvm use v6
                             npm install
                             npm run build
+                            ls -lrt
                             '''
                         }
                     }
