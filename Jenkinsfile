@@ -51,7 +51,7 @@ ansiColor('xterm') {
                             nvm use v6
                             npm install
                             npm run build
-                            awk -F\" '/version/ {print $4}' package.json
+                            #awk -F\" '/version/ {print $4}' package.json
                             '''
                         }
                     }
