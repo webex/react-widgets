@@ -15,7 +15,7 @@ def cleanup = { ->
 
 ansiColor('xterm') {
     timestamps {
-        timeout(10) {
+        timeout(90) {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
