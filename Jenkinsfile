@@ -49,7 +49,7 @@ ansiColor('xterm') {
                             sh '''#!/bin/bash -ex
                             source ~/.nvm/nvm.sh
                             nvm use v6
-                            npm install
+                            //npm install
                             ls -lrt
                             //npm list > npm_list_output.txt
                             //npm run build
