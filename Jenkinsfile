@@ -51,8 +51,7 @@ ansiColor('xterm') {
                             nvm use v6
                             rm -rf node_modules && npm install
                             npm list > npmlist.txt
-                            ls -lrt
-                            #npm run build
+                            npm run build
                             grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
                             '''
                         }
@@ -60,6 +59,7 @@ ansiColor('xterm') {
 
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
                     archive 'dist/**/*'
+                    archive 'npmlist.txt'
 
                     if (currentBuild.result == 'SUCCESS'){
                         stage('Push to github'){
