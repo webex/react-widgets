@@ -50,7 +50,7 @@ ansiColor('xterm') {
                             source ~/.nvm/nvm.sh
                             nvm use v6
                             npm install
-                            npm -g list
+                            npm list
                             //npm run build
                             //grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
                             '''
