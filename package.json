@@ -12,6 +12,7 @@
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
+    "test:automation": "wdio wdio.conf.js",
     "jest": "TZ=utc jest --config=jest.config.json",
     "jest:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/jest-package.js",
     "static-analysis": "npm run eslint",
@@ -120,6 +121,10 @@
     "style-loader": "^0.13.1",
     "stylelint": "^7.8.0",
     "stylelint-config-standard": "^16.0.0",
+    "wdio-junit-reporter": "^0.2.0",
+    "wdio-mocha-framework": "^0.5.9",
+    "wdio-sauce-service": "^0.3.1",
+    "webdriverio": "^4.6.2",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   }
