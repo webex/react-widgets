@@ -49,11 +49,10 @@ ansiColor('xterm') {
                             sh '''#!/bin/bash -ex
                             source ~/.nvm/nvm.sh
                             nvm use v6
-                            ls -lrt
-                            # npm install
-                            # npm list > npm_list_output.txt
-                            # npm run build
-                            # grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
+                            rm -rf node_modules && npm install
+                            npm list > npmlist.txt
+                            #npm run build
+                            grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
                             '''
                         }
                     }
