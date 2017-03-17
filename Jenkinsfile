@@ -51,7 +51,6 @@ ansiColor('xterm') {
                             nvm use v6
                             rm -rf node_modules && npm install
                             npm list > npmlist.txt
-                            ls -lrt
                             npm run build
                             grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
                             '''
