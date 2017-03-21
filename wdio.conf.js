@@ -1,5 +1,6 @@
 /* eslint-disable */
 require(`dotenv`).config();
+require("babel-register");
 exports.config = {
     //
     // ==================
@@ -47,15 +48,14 @@ exports.config = {
         //
         browserName: 'chrome',
         chromeOptions: {
+          args: [
+            `--use-fake-device-for-media-stream`,
+            `--use-fake-ui-for-media-stream`
+          ],
           prefs: {
             "profile.default_content_setting_values.notifications": 2
           }
-        },
-        flags: [
-          `--use-fake-device-for-media-stream`,
-          `--use-fake-ui-for-media-stream`,
-          `--disable-notifications`
-        ]
+        }
     }],
     //
     // ===================
