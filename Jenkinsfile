@@ -19,6 +19,7 @@ ansiColor('xterm') {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
+                def VERSION
 
                 try {
                     currentBuild.result = 'SUCCESS'
@@ -52,7 +53,7 @@ ansiColor('xterm') {
                             rm -rf node_modules && npm install
                             npm list > npmlist.txt
                             npm run build
-                            grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
+                            VERSION = `grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'`
                             '''
                         }
                     }
@@ -69,6 +70,7 @@ ansiColor('xterm') {
                         }
 
                         stage('Publish to CDN'){
+                            println VERSION
                             cdnPublishBuild = build job: 'publish-spark-js-sdk-react-widget-s3', parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: "${currentBuild.number}"]], propagate: false
                             if (cdnPublishBuild.result != 'SUCCESS') {
                                 warn('failed to publish to CDN')
