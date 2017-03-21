@@ -6,4 +6,5 @@ rules:
 env:
   mocha: true
 globals:
-  browser: true
+  browser: true,
+  $: true
