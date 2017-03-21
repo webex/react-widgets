@@ -19,6 +19,7 @@ ansiColor('xterm') {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
+                def VERSION
 
                 try {
                     currentBuild.result = 'SUCCESS'
