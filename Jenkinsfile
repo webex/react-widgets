@@ -53,8 +53,8 @@ ansiColor('xterm') {
                             npm list > npmlist.txt
                             npm run build
                             grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
-                            VERSION = readFile '.version'
                             '''
+                            VERSION = readFile '.version'
                         }
                     }
 
