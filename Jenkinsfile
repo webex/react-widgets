@@ -15,7 +15,7 @@ def cleanup = { ->
 
 ansiColor('xterm') {
     timestamps {
-        timeout(10) {
+        timeout(60) {
             node('NODE_JS_BUILDER') {
                 
                 def GIT_COMMIT
@@ -49,14 +49,17 @@ ansiColor('xterm') {
                             sh '''#!/bin/bash -ex
                             source ~/.nvm/nvm.sh
                             nvm use v6
-                            npm install
+                            rm -rf node_modules && npm install
+                            npm list > npmlist.txt
                             npm run build
+                            grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'
                             '''
                         }
                     }
 
                     archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
                     archive 'dist/**/*'
+                    archive 'npmlist.txt'
 
                     if (currentBuild.result == 'SUCCESS'){
                         stage('Push to github'){
