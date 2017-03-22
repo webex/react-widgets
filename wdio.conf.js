@@ -79,7 +79,7 @@ exports.config = {
     bail: 0,
     //
     // Saves a screenshot to a given path if a command fails.
-    screenshotPath: './errorShots/',
+    // screenshotPath: './errorShots/',
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
@@ -142,11 +142,10 @@ exports.config = {
 
     // Static Server setup
     staticServerFolders: [
-      { mount: '/dist', path: './packages/node_modules/@ciscospark/widget-message-meet/dist' },
-      { mount: '/', path: './test/server/' },
+      { mount: '/wmm', path: './packages/node_modules/@ciscospark/widget-message-meet/dist' },
+      { mount: '/', path: './test/server/' }
     ],
     staticServerPort: 4567,
-    staticServerLog: true,
     //
     // =====
     // Hooks
