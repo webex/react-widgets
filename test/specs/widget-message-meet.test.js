@@ -11,12 +11,12 @@ const toUserName = `AdamTest WeeksTest`;
 
 describe(`Widget Message Meet`, () => {
   before(`setup browser`, () => {
-    browser.url(`/`);
+    browser.url(`/widget-message-meet`);
   });
 
   it(`should have the right page title`, () => {
     const title = browser.getTitle();
-    assert.equal(title, `Message Meet Widget Demo`);
+    assert.equal(title, `Widget Message Meet Test`);
   });
 
   describe(`widget loaded`, () => {

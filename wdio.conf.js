@@ -83,7 +83,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'http://localhost:4567',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 60000,
@@ -117,7 +117,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone'],
+    services: ['selenium-standalone', 'static-server'],
     //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -139,6 +139,14 @@ exports.config = {
         ui: 'bdd',
         timeout: 30000
     },
+
+    // Static Server setup
+    staticServerFolders: [
+      { mount: '/dist', path: './packages/node_modules/@ciscospark/widget-message-meet/dist' },
+      { mount: '/', path: './test/server/' },
+    ],
+    staticServerPort: 4567,
+    staticServerLog: true,
     //
     // =====
     // Hooks
