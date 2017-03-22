@@ -1,3 +1,4 @@
+require(`babel-register`);
 require(`dotenv`).config();
 exports.config = {
   //
@@ -45,6 +46,15 @@ exports.config = {
     maxInstances: 5,
     //
     browserName: `chrome`,
+    chromeOptions: {
+      args: [
+        `--use-fake-device-for-media-stream`,
+        `--use-fake-ui-for-media-stream`
+      ],
+      prefs: {
+        "profile.default_content_setting_values.notifications": 2
+      }
+    },
     platform: `mac`
   }],
   //
@@ -111,6 +121,14 @@ exports.config = {
   user: process.env.SAUCE_USERNAME,
   key: process.env.SAUCE_ACCESS_KEY,
   sauceConnect: true,
+  sauceConnectOpts: {
+    directDomains: [
+      `*.ciscospark.com`,
+      `*.wbx2.com`,
+      `*.webex.com`,
+      `storage101.dfw1.clouddrive.com`
+    ]
+  },
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
   // see also: http://webdriver.io/guide/testrunner/frameworks.html
