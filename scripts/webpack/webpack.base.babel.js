@@ -2,8 +2,10 @@ import path from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import dotenv from 'dotenv';
-
+import {version} from '../../package.json';
 dotenv.config();
+
+process.env.REACT_CISCOSPARK_VERSION = version;
 
 export default (options) => {
   const packageJson = require(`../../package.json`);
@@ -11,7 +13,8 @@ export default (options) => {
     new webpack.EnvironmentPlugin([
       `NODE_ENV`,
       `MESSAGE_DEMO_CLIENT_ID`,
-      `MESSAGE_DEMO_CLIENT_SECRET`
+      `MESSAGE_DEMO_CLIENT_SECRET`,
+      `REACT_CISCOSPARK_VERSION`
     ]),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
