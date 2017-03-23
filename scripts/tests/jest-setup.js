@@ -16,3 +16,8 @@ const localStorageMock = (() => {
 })();
 
 Reflect.defineProperty(window, `localStorage`, {value: localStorageMock});
+Reflect.defineProperty(window, `performance`, {
+  value: {
+    now: jest.fn().mockReturnValue(10)
+  }
+});
