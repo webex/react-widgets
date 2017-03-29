@@ -17,7 +17,7 @@ ansiColor('xterm') {
     timestamps {
         timeout(60) {
             node('NODE_JS_BUILDER') {
-                
+
                 def GIT_COMMIT
                 def packageJsonVersion
 
@@ -30,7 +30,7 @@ ansiColor('xterm') {
                         sh 'git config user.name Jenkins'
 
                         GIT_COMMIT = sh script: 'git rev-parse HEAD | tr -d "\n"', returnStdout: true
-                        
+
                         sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
                             sh 'git fetch upstream'
                             sh 'git checkout upstream/master'
@@ -44,7 +44,7 @@ ansiColor('xterm') {
                             throw err;
                         }
                     }
-                    
+
                     stage('Build'){
                         withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
                             sh '''#!/bin/bash -ex
@@ -52,7 +52,7 @@ ansiColor('xterm') {
                             nvm use v6
                             rm -rf node_modules && npm install
                             npm list > npmlist.txt
-                            npm run build
+                            npm run build:bundle && npm run build:package widget-message-meet
                             grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
                             '''
                             packageJsonVersion = readFile '.version'
@@ -76,7 +76,7 @@ ansiColor('xterm') {
                                 warn('failed to publish to CDN')
                             }
                         }
-                    }                    
+                    }
                     cleanup()
                 }
 
