@@ -11,16 +11,16 @@
 
 </div>
 <script src="/wmm/bundle.js"></script>
-<script src="/dist/globals.js"></script>
 <script>
-  var widgetEl = document.getElementById('ciscospark-widget');
-  // Init a new widget
-  ciscospark.widget(widgetEl).messageMeetWidget({
-    accessToken: window.accessToken,
-    toPersonEmail: window.toPersonEmail,
-    initialActivity: 'message'
-  });
-  console.log(`Token: ${window.token}`);
+  window.openWidget = function(accessToken, toPersonEmail) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+      // Init a new widget
+      ciscospark.widget(widgetEl).messageMeetWidget({
+        accessToken: accessToken,
+        toPersonEmail: toPersonEmail,
+        initialActivity: 'message'
+      });
+    };
 </script>
 </body>
 
