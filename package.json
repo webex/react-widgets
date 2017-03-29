@@ -136,5 +136,8 @@
     "webdriverio": "^4.6.2",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
+  },
+  "optionalDependencies": {
+    "spark-js-sdk--test-users": "~0.3.3"
   }
 }

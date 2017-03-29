@@ -14,7 +14,6 @@ describe(`Widget Message Meet`, () => {
     testUsers.create({count: 2})
       .then((users) => {
         [mccoy, spock] = users;
-        console.info({mccoy});
         spock.spark = new CiscoSpark({
           credentials: {
             authorization: spock.token
@@ -27,23 +26,18 @@ describe(`Widget Message Meet`, () => {
           }
         });
 
-        return Promise.all([
-          spock.spark.phone.register(),
-          mccoy.spark.phone.register(),
-          browser
-            .url(`/widget-message-meet`)
-            .execute((localAccessToken, localToUserEmail) => {
-              window.openWidget(localAccessToken, localToUserEmail);
-            }, spock.token, mccoy.email)
-        ]);
+        console.info(`Opening widget with token: ${spock.token.access_token}`);
+        console.info(`Opening widget to user: ${mccoy.email}`);
+        return browser
+          .url(`/widget-message-meet`)
+          .execute((localAccessToken, localToUserEmail) => {
+            window.openWidget(localAccessToken, localToUserEmail);
+          }, spock.token.access_token, mccoy.email);
+
       }));
 
-  after(() => Promise.all([
-    spock && spock.spark.phone.deregister()
-      .catch((reason) => console.warn(`could not disconnect spock from mercury`, reason)),
-    mccoy && mccoy.spark.phone.deregister()
-      .catch((reason) => console.warn(`could not disconnect mccoy from mercury`, reason))
-  ]));
+  // Leaves the browser open for further testing and inspection
+  after(() => browser.waitUntil(() => false, 120000));
 
   it(`should have the right page title`, () => {
     const title = browser.getTitle();
@@ -53,12 +47,12 @@ describe(`Widget Message Meet`, () => {
   describe(`widget loaded`, () => {
     before(`make sure widget is loaded before testing`, () => {
       browser
-        .waitForText(`h1=${mccoy.username}`, 60000);
+        .waitForText(`h1=${mccoy.displayName}`, 60000);
     });
 
     it(`should have the user's name in title bar`, () => {
-      const title = browser.getText(`h1=${mccoy.username}`);
-      assert.equal(title, mccoy.username);
+      const title = browser.getText(`h1=${mccoy.displayName}`);
+      assert.equal(title, mccoy.displayName);
     });
 
     describe(`conversation loaded`, () => {
