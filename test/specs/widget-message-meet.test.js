@@ -5,14 +5,45 @@ import uuid from 'uuid';
 
 const assert = chai.assert;
 
-// We want to get these constants setup with test user details
-// Currently testing to my test account "adam.weeks+spark@gmail.com"
-const toUserName = `AdamTest WeeksTest`;
+import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@ciscospark/spark-core';
 
 describe(`Widget Message Meet`, () => {
-  before(`setup browser`, () => {
-    browser.url(`/widget-message-meet`);
-  });
+  let mccoy, spock;
+  before(`setup browser and users`, () =>
+    testUsers.create({count: 2})
+      .then((users) => {
+        [mccoy, spock] = users;
+        console.info({mccoy});
+        spock.spark = new CiscoSpark({
+          credentials: {
+            authorization: spock.token
+          }
+        });
+
+        mccoy.spark = new CiscoSpark({
+          credentials: {
+            authorization: mccoy.token
+          }
+        });
+
+        return Promise.all([
+          spock.spark.phone.register(),
+          mccoy.spark.phone.register(),
+          browser
+            .url(`/widget-message-meet`)
+            .execute((localAccessToken, localToUserEmail) => {
+              window.openWidget(localAccessToken, localToUserEmail);
+            }, spock.token, mccoy.email)
+        ]);
+      }));
+
+  after(() => Promise.all([
+    spock && spock.spark.phone.deregister()
+      .catch((reason) => console.warn(`could not disconnect spock from mercury`, reason)),
+    mccoy && mccoy.spark.phone.deregister()
+      .catch((reason) => console.warn(`could not disconnect mccoy from mercury`, reason))
+  ]));
 
   it(`should have the right page title`, () => {
     const title = browser.getTitle();
@@ -22,12 +53,12 @@ describe(`Widget Message Meet`, () => {
   describe(`widget loaded`, () => {
     before(`make sure widget is loaded before testing`, () => {
       browser
-        .waitForVisible(`h1`, 60000);
+        .waitForText(`h1=${mccoy.username}`, 60000);
     });
 
     it(`should have the user's name in title bar`, () => {
-      const title = browser.getText(`h1=${toUserName}`);
-      assert.equal(title, toUserName);
+      const title = browser.getText(`h1=${mccoy.username}`);
+      assert.equal(title, mccoy.username);
     });
 
     describe(`conversation loaded`, () => {
