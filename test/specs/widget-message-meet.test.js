@@ -10,8 +10,9 @@ import CiscoSpark from '@ciscospark/spark-core';
 
 describe(`Widget Message Meet`, () => {
   let mccoy, spock;
+  const scopes = `spark:kms spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write`;
   before(`setup browser and users`, () =>
-    testUsers.create({count: 2})
+    testUsers.create({count: 2, scopes})
       .then((users) => {
         [mccoy, spock] = users;
         spock.spark = new CiscoSpark({
@@ -25,9 +26,9 @@ describe(`Widget Message Meet`, () => {
             authorization: mccoy.token
           }
         });
-
-        console.info(`Opening widget with token: ${spock.token.access_token}`);
-        console.info(`Opening widget to user: ${mccoy.email}`);
+        console.info(`RUN THIS:`);
+        console.info(`window.openWidget("${spock.token.access_token}", "${mccoy.email}";)`);
+        console.info(`END: RUN THIS`);
         return browser
           .url(`/widget-message-meet`)
           .execute((localAccessToken, localToUserEmail) => {
@@ -37,7 +38,7 @@ describe(`Widget Message Meet`, () => {
       }));
 
   // Leaves the browser open for further testing and inspection
-  after(() => browser.waitUntil(() => false, 120000));
+  after(() => browser.waitUntil(() => false, 120000, `done waiting: bye`, 10000));
 
   it(`should have the right page title`, () => {
     const title = browser.getTitle();
