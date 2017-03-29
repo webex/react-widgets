@@ -1,0 +1,10 @@
+rules:
+  no-console:
+    - 0
+  global-require:
+    - 0
+env:
+  mocha: true
+globals:
+  browser: true,
+  $: true

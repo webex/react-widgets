@@ -12,6 +12,8 @@
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
+    "test:automation": "NODE_ENV=test babel-node --presets=stage-1,es2015 scripts/tests/automation.js --config wdio.sauce.conf.js",
+    "test:automation:local": "wdio wdio.conf.js",
     "jest": "TZ=utc jest --config=jest.config.json",
     "jest:package": "NODE_ENV=production babel-node --presets=stage-1,es2015 scripts/jest-package.js",
     "static-analysis": "npm run eslint",
@@ -71,6 +73,7 @@
     "@ciscospark/eslint-config": "^0.7.64",
     "@ciscospark/test-helper-file": "^0.7.34",
     "@ciscospark/test-helper-server": "^0.7.55",
+    "@ciscospark/test-helper-test-users": "^0.7.69",
     "autobind-decorator": "^1.3.4",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
@@ -87,6 +90,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-1": "^6.16.0",
     "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
     "child-process-promise": "^2.2.0",
     "css-loader": "^0.27.3",
     "denodeify": "^1.2.1",
@@ -107,6 +111,7 @@
     "jest": "^19.0.0",
     "json-loader": "^0.5.4",
     "material-ui": "^0.17.0",
+    "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "postcss": "^5.2.6",
     "postcss-cssnext": "^2.9.0",
@@ -122,7 +127,17 @@
     "style-loader": "^0.13.1",
     "stylelint": "^7.8.0",
     "stylelint-config-standard": "^16.0.0",
+    "wdio-dot-reporter": "0.0.8",
+    "wdio-junit-reporter": "^0.2.0",
+    "wdio-mocha-framework": "^0.5.9",
+    "wdio-sauce-service": "^0.3.1",
+    "wdio-selenium-standalone-service": "0.0.8",
+    "wdio-static-server-service": "^1.0.1",
+    "webdriverio": "^4.6.2",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
+  },
+  "optionalDependencies": {
+    "spark-js-sdk--test-users": "~0.3.3"
   }
 }
