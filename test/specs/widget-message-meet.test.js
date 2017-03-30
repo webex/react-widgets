@@ -15,19 +15,19 @@ describe(`Widget Message Meet`, () => {
     testUsers.create({count: 2, scopes})
       .then((users) => {
         [mccoy, spock] = users;
-        spock.spark = new CiscoSpark({
-          credentials: {
-            authorization: spock.token
-          }
-        });
+        // spock.spark = new CiscoSpark({
+        //   credentials: {
+        //     authorization: spock.token
+        //   }
+        // });
 
-        mccoy.spark = new CiscoSpark({
-          credentials: {
-            authorization: mccoy.token
-          }
-        });
+        // mccoy.spark = new CiscoSpark({
+        //   credentials: {
+        //     authorization: mccoy.token
+        //   }
+        // });
         console.info(`RUN THIS:`);
-        console.info(`window.openWidget("${spock.token.access_token}", "${mccoy.email}";)`);
+        console.info(`window.openWidget("${spock.token.access_token}", "${mccoy.email}");`);
         console.info(`END: RUN THIS`);
         return browser
           .url(`/widget-message-meet`)
@@ -38,7 +38,10 @@ describe(`Widget Message Meet`, () => {
       }));
 
   // Leaves the browser open for further testing and inspection
-  after(() => browser.waitUntil(() => false, 120000, `done waiting: bye`, 10000));
+  after(() => {
+    browser.timeouts(`implicit`, 120000);
+    return browser.waitUntil(() => false, 120000, `done waiting: bye`, 10000);
+  });
 
   it(`should have the right page title`, () => {
     const title = browser.getTitle();
