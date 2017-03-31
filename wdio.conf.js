@@ -12,7 +12,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        './test/journeys/specs/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -76,7 +76,7 @@ exports.config = {
     //
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).
-    bail: 0,
+    bail: 1,
     //
     // Saves a screenshot to a given path if a command fails.
     // screenshotPath: './errorShots/',
@@ -130,7 +130,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    reporters: ['dot'],
+    reporters: ['spec'],
 
     //
     // Options to be passed to Mocha.
@@ -143,7 +143,7 @@ exports.config = {
     // Static Server setup
     staticServerFolders: [
       { mount: '/wmm', path: './packages/node_modules/@ciscospark/widget-message-meet/dist' },
-      { mount: '/', path: './test/server/' }
+      { mount: '/', path: './test/journeys/server/' }
     ],
     staticServerPort: 4567,
     //
