@@ -12,6 +12,7 @@ describe(`Widget Message Meet`, function() {
   if (process.env.DEBUG_JOURNEYS) {
     console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
     const timeout = 10 * 60 * 1000;
+    // eslint-disable-next-line no-invalid-this
     this.timeout(timeout);
     // Leaves the browser open for further testing and inspection
     after(() => {
