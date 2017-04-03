@@ -102,7 +102,6 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
 
-              npm list > npmlist.txt
               npm run build:bundle && npm run build:package widget-message-meet
               grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
               '''
@@ -112,7 +111,6 @@ ansiColor('xterm') {
 
           archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
           archive 'dist/**/*'
-          archive 'npmlist.txt'
 
           stage('Check for No Push') {
             try {
