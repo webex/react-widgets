@@ -150,7 +150,7 @@ exports.config = {
 };
 
 if (process.env.SAUCE) {
-  module.exports = Object.assign(module.exports, {
+  exports.config = Object.assign(exports.config, {
     user: process.env.SAUCE_USERNAME,
     key: process.env.SAUCE_ACCESS_KEY,
     sauceConnect: true,
