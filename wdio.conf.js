@@ -155,8 +155,13 @@ if (process.env.SAUCE) {
     key: process.env.SAUCE_ACCESS_KEY,
     sauceConnect: true,
     sauceConnectOpts: {
+      noSslBumpDomains: [
+        `mercury-connection-a.wbx2.com`,
+        `mercury-connection-integration.wbx2.com`
+      ],
       tunnelDomains: [
-        `127.0.0.1`
+        `127.0.0.1`,
+        `localhost`
       ]
     }
   });
