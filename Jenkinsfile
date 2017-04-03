@@ -90,8 +90,8 @@ ansiColor('xterm') {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh
              nvm use v6
-             COMMON_IDENTITY_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 NODE_ENV=test npm run build:bundle && npm run build:package widget-message-meet
-             SAUCE=true npm test
+             NODE_ENV=test npm run build:bundle && npm run build:package widget-message-meet
+             COMMON_IDENTITY_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
              '''
             }
           }
