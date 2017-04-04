@@ -103,14 +103,8 @@ ansiColor('xterm') {
               nvm use v6
 
               npm run build:bundle && npm run build:package widget-message-meet
-              grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
-              '''
-              packageJsonVersion = readFile '.version'
             }
           }
-
-          archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
-          archive 'dist/**/*'
 
           stage('Check for No Push') {
             try {
@@ -128,6 +122,21 @@ ansiColor('xterm') {
           }
 
           if (currentBuild.result == 'SUCCESS'){
+            stage('Bump version'){
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v6
+              npm version patch
+              grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
+              '''
+              packageJsonVersion = readFile '.version'
+
+              sh "git add package.json && git commit -m 'build $packageJsonVerson'"
+            }
+
+            archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
+            archive 'dist/**/*'
+
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
                 sh "git push upstream HEAD:master"
