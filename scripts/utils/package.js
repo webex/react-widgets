@@ -36,7 +36,7 @@ export function runInPackage({constructCommand, commandName, pkgName, pkgPath}) 
  * @param  {string} packagesDir path where packages are stored
  * @returns {array} array of full path strings
  */
-export function getAllPackages(packagesDir = `packages/node_modules/@ciscospark`) {
+export function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscospark`) {
   return readdirSync(packagesDir).reduce((acc, packagePath) => {
     const pkg = getPackage(packagePath, packagesDir);
     if (pkg) {
@@ -68,4 +68,9 @@ export function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark
     }
   }
   return false;
+}
+
+export function getAllPackages() {
+  const pkgPaths = getAllPackagePaths();
+  return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name);
 }

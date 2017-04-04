@@ -3,15 +3,15 @@
 import {readFileSync, writeFileSync} from 'fs';
 import glob from 'glob';
 import path from 'path';
-import detective from 'detective';
+import detective from 'detective-es6';
 import builtinModules from 'builtin-modules';
 import _ from 'lodash';
-import {getAllPackages} from './utils/package';
+import {getAllPackages, getAllPackagePaths} from './utils/package';
 
 export default function updatePackageJson() {
   const topPkgJson = JSON.parse(readFileSync(`./package.json`, `utf8`));
   const packages = getAllPackages();
-
+  const pkgPaths = getAllPackagePaths();
   const flatten = (arr) => arr.reduce(
     (acc, val) => acc.concat(
       Array.isArray(val) ? flatten(val) : val
@@ -19,12 +19,20 @@ export default function updatePackageJson() {
     []
   );
 
-  packages.forEach((pkgPath) => {
+  pkgPaths.forEach((pkgPath) => {
     const pkgJsonPath = path.join(pkgPath, `package.json`);
     const pkgJson = JSON.parse(readFileSync(pkgJsonPath, `utf8`));
 
     // for the dependencies, find all require() calls
-    const srcFiles = glob.sync(path.join(pkgPath, `dist/**/*.js`));
+    const srcFiles = glob.sync(path.join(pkgPath, `src/**/*.js`), {
+      ignore: [
+        `**/*.test.js`,
+        `**/__mocks__/*.js`,
+        `**/fixtures/*.js`,
+        `**/react-test-utils/**/*.js`
+      ]
+    });
+
     const uniqDeps = _.uniq(
       flatten(
         srcFiles.map(
@@ -40,9 +48,15 @@ export default function updatePackageJson() {
         )
       )
     )
-    .filter((dep) => builtinModules.indexOf(dep) === -1)
+    .filter((dep) =>
+      // built in modules
+      builtinModules.indexOf(dep) === -1
+        // react-intl locale imports
+        && !dep.includes(`react-intl/locale-data`)
+        // local references
+        && dep[0] !== `.`
+    )
     .sort();
-
     const deps = pkgJson.dependencies = {};
     uniqDeps.forEach((dep) => {
       if (topPkgJson.dependencies[dep]) {
@@ -59,7 +73,7 @@ export default function updatePackageJson() {
     pkgJson[`module`] = `./src/index.js`;
 
     const jsonString = `${JSON.stringify(pkgJson, null, `  `)}\n`;
-    writeFileSync(pkgPath, jsonString, `utf8`);
+    writeFileSync(pkgJsonPath, jsonString, `utf8`);
   });
 }
 
