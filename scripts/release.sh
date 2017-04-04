@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Currently not used, but should eventually replace scripting in jenkins
+
 if [ ! -z $DRY_RUN ]; then
   echo "Doing a dry run release..."
 elif [ ! -z $BETA ]; then
@@ -21,12 +23,12 @@ BUILD_DIR=build_"${RANDOM}"
 git checkout -b $BUILD_DIR
 
 # Update dependency versions inside each package.json (replace the "*")
-node bin/update-package-json-for-publish.js
+npm run build:packagejson
 
-# Create git tag, which is also the Bower/Github release
-rm -fr lib src dist bower.json component.json package.json
-git add -f lib src dist *.json
-git rm -fr packages bin docs scripts tests
+# Create git tag, which is also the github release
+rm -fr src dist package.json
+git add -f src dist *.json
+git rm -fr packages bin docs scripts
 
 git commit -m "build $VERSION"
 
