@@ -4,6 +4,7 @@
  */
 
 import {exec as processExec} from 'child-process-promise';
+import {execSync as processExecSync} from 'child_process';
 import 'colors';
 
 let executionOptions = {
@@ -74,4 +75,8 @@ export function safeExec(command, options = {}) {
  */
 export function setExecOptions(options) {
   executionOptions = {...executionOptions, ...options};
+}
+
+export function execSync(command) {
+  return processExecSync(command, {stdio: `inherit`});
 }

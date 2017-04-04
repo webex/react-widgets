@@ -1,14 +1,16 @@
+import path from 'path';
 import buildPackage from './build-package';
-import fs from 'fs';
-import denodeify from 'denodeify';
-
-const readDir = denodeify(fs.readdir);
+import {getAllPackages} from './utils/package';
 
 // Run buildPackage on all of our packages
-readDir(`packages/node_modules/@ciscospark`)
-  .then((packages) =>
-    Promise.all(packages.map((pkg) => buildPackage(pkg)))
-      .catch((error) => {
-        throw new Error(error);
-      })
-  );
+console.log(new Date());
+getAllPackages().map((pkg) => {
+  try {
+    const pkgName = require(path.resolve(pkg, `package.json`)).name.split(`/`).pop();
+    return buildPackage(pkgName, pkg);
+  }
+  catch (err) {
+    throw err;
+  }
+});
+console.log(new Date());

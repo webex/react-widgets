@@ -7,6 +7,7 @@
     "build:packages": "export NODE_ENV=${NODE_ENV:-production}; babel-node --presets=stage-1,es2015 scripts/build-packages.js",
     "build:package": "export NODE_ENV=${NODE_ENV:-production}; babel-node --presets=stage-1,es2015 scripts/build-package.js",
     "build:bundle": "export NODE_ENV=${NODE_ENV:-production}; babel-node --presets=stage-1,es2015 scripts/build-bundle.js",
+    "build:packagejson": "export NODE_ENV=${NODE_ENV:-production}; babel-node --presets=stage-1,es2015 scripts/update-package-json.js",
     "clean": "npm run clean:snapshots && npm run clean:dist",
     "clean:snapshots": "rimraf \"packages/**/__snapshots__/\"",
     "clean:dist": "rimraf \"packages/**/dist/\"",
