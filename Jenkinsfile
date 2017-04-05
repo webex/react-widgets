@@ -107,9 +107,7 @@ ansiColor('xterm') {
             npm version patch
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
-            git add package.json
-            git commit -m "build ${version}"
-            git tag -a "v${version}" -m "`git log -1 --format=%s`"
+            git commit --amend -m "build ${version}"
             '''
             packageJsonVersion = readFile '.version'
           }
