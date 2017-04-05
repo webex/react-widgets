@@ -29,8 +29,6 @@ ansiColor('xterm') {
           // Set the description to blank so we can use +=
           currentBuild.description = ''
 
-          env.NPM_CONFIG_REGISTRY = "http://engci-maven-master.cisco.com/artifactory/api/npm/webex-npm-group"
-
           stage('checkout') {
             checkout scm
 
@@ -53,6 +51,8 @@ ansiColor('xterm') {
             }
 
             sh 'git checkout upstream/master'
+            sh 'git reset --hard && git clean -f'
+            sh 'git tag -l | xargs git tag -d'
             try {
               sh "git merge --ff ${GIT_COMMIT}"
             }
@@ -67,11 +67,17 @@ ansiColor('xterm') {
           }
 
           stage('Install') {
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v6
-            npm install
-            '''
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v6
+              npm install
+              rm -f $HOME/.npmrc
+              '''
+            }
           }
 
           stage('Static Analysis') {
@@ -102,20 +108,21 @@ ansiColor('xterm') {
             nvm use v6
             npm version patch
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
-            echo \$version > .version
-            git add package.json
-            git commit -m "build $packageJsonVerson"
-            git tag -a "v\$version" -m "`git log -1 --format=%s`"
+            echo $version > .version
+            git commit --amend -m "build ${version}"
             '''
             packageJsonVersion = readFile '.version'
           }
 
           stage('Build'){
             withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
-              sh 'source ~/.nvm/nvm.sh'
-              sh 'nvm use v6'
-              sh "BUILD_PUBLIC_PATH=\"https://code.s4d.io/widget-message-meet/${packageJsonVersion}/demo/\" npm run build:bundle"
-              sh "BUILD_PUBLIC_PATH=\"https://code.s4d.io/widget-message-meet/${packageJsonVersion}\" npm run build:package widget-message-meet"
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v6
+              version=`cat .version`
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/${version}/demo/" npm run build:bundle
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/${version}/" npm run build:package widget-message-meet
+              '''
             }
           }
 
