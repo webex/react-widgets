@@ -70,10 +70,12 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh 'source ~/.nvm/nvm.sh'
-              sh 'nvm use v6'
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
-              sh 'npm install'
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v6
+              npm install
+              '''
             }
           }
 
