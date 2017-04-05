@@ -73,7 +73,7 @@ ansiColor('xterm') {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v6
-              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc
               npm install
               '''
             }
