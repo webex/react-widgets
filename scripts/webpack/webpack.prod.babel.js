@@ -39,12 +39,15 @@ if (fs.existsSync(`./src/index.html`)) {
   );
 }
 
+const publicPath = process.env.BUILD_PUBLIC_PATH;
+
 export default webpackBaseConfig({
   entry: `./index.js`,
   output: {
     filename: `bundle.js`,
     path: path.resolve(process.cwd(), `dist`),
-    sourceMapFilename: `[file].map`
+    sourceMapFilename: `[file].map`,
+    publicPath
   },
   // Full source maps for production debugging
   devtool: `source-map`,
