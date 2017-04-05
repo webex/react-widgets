@@ -129,9 +129,14 @@ ansiColor('xterm') {
               npm version patch
               grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
               '''
+
               packageJsonVersion = readFile '.version'
 
-              sh "git add package.json && git commit -m 'build $packageJsonVerson'"
+              sh '''#!/bin/bash -ex
+              git add package.json
+              git commit -m "build $packageJsonVerson"
+              git tag -a "v${packageJsonVersion}" -m "`git log -1 --format=%s`"
+              '''
             }
 
             archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
@@ -139,7 +144,7 @@ ansiColor('xterm') {
 
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-                sh "git push upstream HEAD:master"
+                sh "git push upstream HEAD:master && git push --tags"
               }
             }
 
