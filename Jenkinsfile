@@ -100,6 +100,20 @@ ansiColor('xterm') {
             }
           }
 
+          stage('Bump version'){
+            sh '''#!/bin/bash -ex
+            source ~/.nvm/nvm.sh
+            nvm use v6
+            npm version patch
+            version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
+            echo $version > .version
+            git add package.json
+            git commit -m "build ${version}"
+            git tag -a "v${version}" -m "`git log -1 --format=%s`"
+            '''
+            packageJsonVersion = readFile '.version'
+          }
+
           stage('Build'){
             withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
               sh '''#!/bin/bash -ex
@@ -126,19 +140,6 @@ ansiColor('xterm') {
           }
 
           if (currentBuild.result == 'SUCCESS'){
-            stage('Bump version'){
-              sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
-              nvm use v6
-              npm version patch
-              version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
-              echo $version > .version
-              git add package.json
-              git commit -m "build $packageJsonVerson"
-              git tag -a "v$version" -m "`git log -1 --format=%s`"
-              '''
-              packageJsonVersion = readFile '.version'
-            }
 
             archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
             archive 'dist/**/*'
