@@ -101,8 +101,8 @@ ansiColor('xterm') {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v6
-
               npm run build:bundle && npm run build:package widget-message-meet
+              '''
             }
           }
 
@@ -127,16 +127,13 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               npm version patch
-              grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
-              '''
-
-              packageJsonVersion = readFile '.version'
-
-              sh '''#!/bin/bash -ex
+              version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
+              echo $version > .version
               git add package.json
               git commit -m "build $packageJsonVerson"
-              git tag -a "v${packageJsonVersion}" -m "`git log -1 --format=%s`"
+              git tag -a "v$version" -m "`git log -1 --format=%s`"
               '''
+              packageJsonVersion = readFile '.version'
             }
 
             archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
