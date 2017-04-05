@@ -16,6 +16,7 @@ describe(`Widget Message Meet`, function() {
     this.timeout(timeout);
     // Leaves the browser open for further testing and inspection
     after(() => {
+      browser.debug();
       browser.timeouts(`implicit`, 1200000);
       return browser.waitUntil(() => false, 1200000, `done waiting: bye`, 10000);
     });
