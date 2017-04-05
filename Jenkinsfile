@@ -119,7 +119,9 @@ ansiColor('xterm') {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v6
-              npm run build:bundle && npm run build:package widget-message-meet
+              version=`cat .version`
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/${version}/demo/" npm run build:bundle
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/${version}/" npm run build:package widget-message-meet
               '''
             }
           }
