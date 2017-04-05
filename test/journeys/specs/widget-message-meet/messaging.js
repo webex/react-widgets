@@ -7,21 +7,9 @@ import '@ciscospark/plugin-conversation';
 import CiscoSpark from '@ciscospark/spark-core';
 import waitForMercuryEvent from '../../lib/wait-for-mercury-event';
 import waitForPromise from '../../lib/wait-for-promise';
+import {switchToMessage} from '../../lib/menu';
 
-describe(`Widget Message Meet`, function() {
-  if (process.env.DEBUG_JOURNEYS) {
-    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
-    const timeout = 10 * 60 * 1000;
-    // eslint-disable-next-line no-invalid-this
-    this.timeout(timeout);
-    // Leaves the browser open for further testing and inspection
-    after(() => {
-      browser.debug();
-      browser.timeouts(`implicit`, 1200000);
-      return browser.waitUntil(() => false, 1200000, `done waiting: bye`, 10000);
-    });
-  }
-
+describe(`Widget Message Meet`, () => {
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -76,18 +64,24 @@ describe(`Widget Message Meet`, function() {
 
   after(() => mccoy && mccoy.spark.mercury.disconnect());
 
-  it(`sends and receives messages`, () => {
-    browser.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-    assert.match($(`.ciscospark-system-message`).getText(), /You created this conversation/);
-    $(`[placeholder="Send a message to ${mccoy.displayName}"]`).setValue(`Oh, I am sorry, Doctor. Were we having a good time?\n`);
+  describe(`message widget`, () => {
+    before(`switch to message widget`, () => {
+      switchToMessage();
+    });
 
-    const event = waitForMercuryEvent(mccoy.spark, `event:conversation.activity`);
-    assert.equal(event.data.activity.object.displayName, `Oh, I am sorry, Doctor. Were we having a good time?`);
+    it(`sends and receives messages`, () => {
+      browser.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+      assert.match($(`.ciscospark-system-message`).getText(), /You created this conversation/);
+      $(`[placeholder="Send a message to ${mccoy.displayName}"]`).setValue(`Oh, I am sorry, Doctor. Were we having a good time?\n`);
 
-    waitForPromise(mccoy.spark.conversation.post(event.data.activity.target, {
-      displayName: `God, I liked him better before he died.`
-    }));
+      const event = waitForMercuryEvent(mccoy.spark, `event:conversation.activity`);
+      assert.equal(event.data.activity.object.displayName, `Oh, I am sorry, Doctor. Were we having a good time?`);
 
-    browser.waitUntil(() => $(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`).getText() === `God, I liked him better before he died.`);
+      waitForPromise(mccoy.spark.conversation.post(event.data.activity.target, {
+        displayName: `God, I liked him better before he died.`
+      }));
+
+      browser.waitUntil(() => $(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`).getText() === `God, I liked him better before he died.`);
+    });
   });
 });

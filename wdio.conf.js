@@ -1,5 +1,9 @@
 require(`dotenv`).config();
 require(`babel-register`);
+let mochaTimeout = 30000;
+if (process.env.DEBUG_JOURNEYS) {
+  mochaTimeout = 99999999;
+}
 exports.config = {
   //
   // ==================
@@ -138,7 +142,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: `bdd`,
-    timeout: 30000
+    timeout: mochaTimeout
   },
 
   // Static Server setup

@@ -23,6 +23,13 @@ describe(`Widget Message Meet`, () => {
     `spark:kms`
   ].join(` `);
 
+  if (process.env.DEBUG_JOURNEYS) {
+    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
+    // Leaves the browser open for further testing and inspection
+    after(() => browser.debug());
+  }
+
+
   before(`create users`, () => testUsers.create({count: 2})
     .then((users) => {
       [mccoy, spock] = users;
