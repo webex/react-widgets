@@ -29,8 +29,6 @@ ansiColor('xterm') {
           // Set the description to blank so we can use +=
           currentBuild.description = ''
 
-          env.NPM_CONFIG_REGISTRY = "http://engci-maven-master.cisco.com/artifactory/api/npm/webex-npm-group"
-
           stage('checkout') {
             checkout scm
 
