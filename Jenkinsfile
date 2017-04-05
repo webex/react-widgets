@@ -75,6 +75,7 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               npm install
+              rm -f $HOME/.npmrc
               '''
             }
           }
