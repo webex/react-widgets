@@ -51,6 +51,7 @@ ansiColor('xterm') {
             }
 
             sh 'git checkout upstream/master'
+            sh 'git reset --hard && git clean -f'
             try {
               sh "git merge --ff ${GIT_COMMIT}"
             }
