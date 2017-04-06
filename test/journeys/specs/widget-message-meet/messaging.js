@@ -4,13 +4,11 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-conversation';
-import CiscoSpark from '@ciscospark/spark-core';
-import waitForMercuryEvent from '../../lib/wait-for-mercury-event';
-import waitForPromise from '../../lib/wait-for-promise';
 import {switchToMessage} from '../../lib/menu';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
+  const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -47,15 +45,6 @@ describe(`Widget Message Meet`, () => {
       [mccoy] = users;
     }));
 
-  before(`connect mccoy`, () => {
-    mccoy.spark = new CiscoSpark({
-      credentials: {
-        authorization: mccoy.token
-      }
-    });
-    return mccoy.spark.mercury.connect();
-  });
-
   before(`inject token`, () => {
     if (process.env.DEBUG_JOURNEYS) {
       console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
@@ -69,25 +58,26 @@ describe(`Widget Message Meet`, () => {
     }, spock.token.access_token, mccoy.email);
   });
 
-  after(() => mccoy && mccoy.spark.mercury.disconnect());
-
   describe(`message widget`, () => {
     before(`switch to message widget`, () => {
       switchToMessage(browserLocal);
     });
 
     it(`sends and receives messages`, () => {
+      // Increase wait timeout for message delivery
+      browser.timeouts(`implicit`, 10000);
       browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
       assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
+      // Wait for the main conversation to be established before opening remote
+      browserRemote.execute((localAccessToken, localToUserEmail) => {
+        window.openWidget(localAccessToken, localToUserEmail);
+      }, mccoy.token.access_token, spock.email);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+      // Remote is now ready, send a message to it
       browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?\n`);
-
-      const event = waitForMercuryEvent(mccoy.spark, `event:conversation.activity`);
-      assert.equal(event.data.activity.object.displayName, `Oh, I am sorry, Doctor. Were we having a good time?`);
-
-      waitForPromise(mccoy.spark.conversation.post(event.data.activity.target, {
-        displayName: `God, I liked him better before he died.`
-      }));
-
+      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`);
+      // Send a message back
+      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.\n`);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
     });
   });
