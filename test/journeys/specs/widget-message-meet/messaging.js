@@ -10,6 +10,7 @@ import waitForPromise from '../../lib/wait-for-promise';
 import {switchToMessage} from '../../lib/menu';
 
 describe(`Widget Message Meet`, () => {
+  const browserLocal = browser.select(`browserLocal`);
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -27,6 +28,14 @@ describe(`Widget Message Meet`, () => {
     `spark:team_memberships_write`,
     `spark:kms`
   ].join(` `);
+
+  before(`load browsers`, () => {
+    browser
+      .url(`/widget-message-meet`)
+      .execute(() => {
+        localStorage.clear();
+      });
+  });
 
   before(`create spock`, () => testUsers.create({count: 1, displayName: `spock`})
     .then((users) => {
@@ -48,7 +57,6 @@ describe(`Widget Message Meet`, () => {
   });
 
   before(`inject token`, () => {
-    browser.url(`/widget-message-meet`);
     if (process.env.DEBUG_JOURNEYS) {
       console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
       console.info();
@@ -56,8 +64,7 @@ describe(`Widget Message Meet`, () => {
       console.info();
       console.info();
     }
-
-    browser.execute((localAccessToken, localToUserEmail) => {
+    browserLocal.execute((localAccessToken, localToUserEmail) => {
       window.openWidget(localAccessToken, localToUserEmail);
     }, spock.token.access_token, mccoy.email);
   });
@@ -66,13 +73,13 @@ describe(`Widget Message Meet`, () => {
 
   describe(`message widget`, () => {
     before(`switch to message widget`, () => {
-      switchToMessage();
+      switchToMessage(browserLocal);
     });
 
     it(`sends and receives messages`, () => {
-      browser.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-      assert.match($(`.ciscospark-system-message`).getText(), /You created this conversation/);
-      $(`[placeholder="Send a message to ${mccoy.displayName}"]`).setValue(`Oh, I am sorry, Doctor. Were we having a good time?\n`);
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
+      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?\n`);
 
       const event = waitForMercuryEvent(mccoy.spark, `event:conversation.activity`);
       assert.equal(event.data.activity.object.displayName, `Oh, I am sorry, Doctor. Were we having a good time?`);
@@ -81,7 +88,7 @@ describe(`Widget Message Meet`, () => {
         displayName: `God, I liked him better before he died.`
       }));
 
-      browser.waitUntil(() => $(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`).getText() === `God, I liked him better before he died.`);
+      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
     });
   });
 });

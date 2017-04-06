@@ -5,18 +5,18 @@ const activityMenu = `.ciscospark-activity-menu`;
 const controlsContainer = `.ciscospark-controls-container`;
 
 
-export function switchToMessage() {
-  clickMenuButton(messageButton);
+export function switchToMessage(aBrowser) {
+  clickMenuButton(aBrowser, messageButton);
 }
 
-export function switchToMeet() {
-  clickMenuButton(meetButton);
+export function switchToMeet(aBrowser) {
+  clickMenuButton(aBrowser, meetButton);
 }
 
-function clickMenuButton(buttonToClick) {
-  if (!browser.isVisible(activityMenu)) {
-    browser.click(menuButton);
-    browser.waitForVisible(activityMenu);
+function clickMenuButton(aBrowser, buttonToClick) {
+  if (!aBrowser.isVisible(activityMenu)) {
+    aBrowser.click(menuButton);
+    aBrowser.waitForVisible(activityMenu);
   }
-  browser.element(controlsContainer).element(buttonToClick).click();
+  aBrowser.element(controlsContainer).element(buttonToClick).click();
 }

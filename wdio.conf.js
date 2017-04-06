@@ -43,24 +43,38 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: [{
-    // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    // grid with only 5 firefox instances available you can make sure that not more than
-    // 5 instances get started at a time.
-    maxInstances: 5,
-    //
-    browserName: `chrome`,
-    chromeOptions: {
-      args: [
-        `--use-fake-device-for-media-stream`,
-        `--use-fake-ui-for-media-stream`
-      ],
-      prefs: {
-        "profile.default_content_setting_values.notifications": 2
+  capabilities: {
+    browserLocal: {
+      desiredCapabilities: {
+        browserName: `chrome`,
+        chromeOptions: {
+          args: [
+            `--use-fake-device-for-media-stream`,
+            `--use-fake-ui-for-media-stream`
+          ],
+          prefs: {
+            "profile.default_content_setting_values.notifications": 2
+          }
+        },
+        platform: `mac`
       }
     },
-    platform: `mac`
-  }],
+    browserRemote: {
+      desiredCapabilities: {
+        browserName: `chrome`,
+        chromeOptions: {
+          args: [
+            `--use-fake-device-for-media-stream`,
+            `--use-fake-ui-for-media-stream`
+          ],
+          prefs: {
+            "profile.default_content_setting_values.notifications": 2
+          }
+        },
+        platform: `mac`
+      }
+    }
+  },
   //
   // ===================
   // Test Configurations
