@@ -61,7 +61,7 @@ describe(`Widget Message Meet`, () => {
   });
 
   describe(`menu functionality`, () => {
-    const menuButton = `.ciscospark-activity-menu-button-wrapper button`;
+    const menuButton = `button[aria-label="Main Menu"]`;
     const exitButton = `.ciscospark-activity-menu-exit button`;
     const messageButton = `button[aria-label="Message"]`;
     const meetButton = `button[aria-label="Call"]`;

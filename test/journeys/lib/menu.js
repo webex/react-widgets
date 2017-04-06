@@ -1,4 +1,4 @@
-const menuButton = `.ciscospark-activity-menu-button-wrapper button`;
+const menuButton = `button[aria-label="Main Menu"]`;
 const messageButton = `button[aria-label="Message"]`;
 const meetButton = `button[aria-label="Call"]`;
 const activityMenu = `.ciscospark-activity-menu`;
