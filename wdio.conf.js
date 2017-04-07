@@ -153,6 +153,7 @@ if (process.env.SAUCE) {
   exports.config = Object.assign(exports.config, {
     user: process.env.SAUCE_USERNAME,
     key: process.env.SAUCE_ACCESS_KEY,
+    build: process.env.BUILD_NUMBER,
     sauceConnect: true,
     sauceConnectOpts: {
       noSslBumpDomains: [
