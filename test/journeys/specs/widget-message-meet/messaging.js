@@ -67,17 +67,17 @@ describe(`Widget Message Meet`, () => {
   });
 
   describe(`meet widget`, () => {
-      before(`open remote widget`, () => {
-        browserRemote.execute((localAccessToken, localToUserEmail) => {
-          window.openWidget(localAccessToken, localToUserEmail);
-        }, mccoy.token.access_token, spock.email);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
-      });
+    before(`open remote widget`, () => {
+      browserRemote.execute((localAccessToken, localToUserEmail) => {
+        window.openWidget(localAccessToken, localToUserEmail);
+      }, mccoy.token.access_token, spock.email);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+    });
 
-      beforeEach(`widget switches to message`, () => {
-        switchToMessage(browserLocal);
-        switchToMessage(browserRemote);
-      });
+    beforeEach(`widget switches to message`, () => {
+      switchToMessage(browserLocal);
+      switchToMessage(browserRemote);
+    });
 
     it(`sends and receives messages`, () => {
       // Increase wait timeout for message delivery

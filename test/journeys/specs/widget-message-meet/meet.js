@@ -69,7 +69,7 @@ describe(`Widget Message Meet`, () => {
     const meetWidget = `.ciscospark-meet-component-wrapper`;
     const callButton = `button[aria-label="Call"]`;
     const answerButton = `button[aria-label="Answer"]`;
-    const declineButton = `button[aria-label="Decline"]`
+    const declineButton = `button[aria-label="Decline"]`;
     const hangupButton = `button[aria-label="hangup"]`;
 
     describe(`pre call experience`, () => {
@@ -92,7 +92,8 @@ describe(`Widget Message Meet`, () => {
         browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
       });
 
-      beforeEach(`widget switches to message after hangup`, () => {
+      beforeEach(`switch to meet widget`, () => {
+        // widget switches to message after hangup
         switchToMeet(browserLocal);
         switchToMeet(browserRemote);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
