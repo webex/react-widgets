@@ -36,6 +36,8 @@ export default (options) => {
       children: false,
       chunks: false,
       modules: false,
+      maxModules: 0,
+      chunkOrigins: false,
       colors: true
     },
     target: `web`,

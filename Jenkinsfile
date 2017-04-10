@@ -29,8 +29,6 @@ ansiColor('xterm') {
           // Set the description to blank so we can use +=
           currentBuild.description = ''
 
-          env.NPM_CONFIG_REGISTRY = "http://engci-maven-master.cisco.com/artifactory/api/npm/webex-npm-group"
-
           stage('checkout') {
             checkout scm
 
@@ -53,6 +51,8 @@ ansiColor('xterm') {
             }
 
             sh 'git checkout upstream/master'
+            sh 'git reset --hard && git clean -f'
+            sh 'git tag -l | xargs git tag -d'
             try {
               sh "git merge --ff ${GIT_COMMIT}"
             }
@@ -67,11 +67,17 @@ ansiColor('xterm') {
           }
 
           stage('Install') {
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v6
-            npm install
-            '''
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v6
+              npm install
+              rm -f $HOME/.npmrc
+              '''
+            }
           }
 
           stage('Static Analysis') {
@@ -84,16 +90,28 @@ ansiColor('xterm') {
 
           stage('Test') {
             withCredentials([
-              string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'COMMON_IDENTITY_CLIENT_SECRET'),
+              string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
             ]) {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh
              nvm use v6
              NODE_ENV=test npm run build:bundle && npm run build:package widget-message-meet
-             COMMON_IDENTITY_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
              '''
             }
+          }
+
+          stage('Bump version'){
+            sh '''#!/bin/bash -ex
+            source ~/.nvm/nvm.sh
+            nvm use v6
+            npm version patch
+            version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
+            echo $version > .version
+            git commit --amend -m "build ${version}"
+            '''
+            packageJsonVersion = readFile '.version'
           }
 
           stage('Build'){
@@ -101,16 +119,12 @@ ansiColor('xterm') {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v6
-
-              npm run build:bundle && npm run build:package widget-message-meet
-              grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' > .version
+              version=`cat .version`
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:bundle
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/" npm run build:package widget-message-meet
               '''
-              packageJsonVersion = readFile '.version'
             }
           }
-
-          archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
-          archive 'dist/**/*'
 
           stage('Check for No Push') {
             try {
@@ -128,9 +142,13 @@ ansiColor('xterm') {
           }
 
           if (currentBuild.result == 'SUCCESS'){
+
+            archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
+            archive 'dist/**/*'
+
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-                sh "git push upstream HEAD:master"
+                sh "git push upstream HEAD:master && git push --tags"
               }
             }
 

@@ -1,5 +1,5 @@
 import path from 'path';
-import runInPackage from './utils/base-package';
+import {runInPackage} from './utils/package';
 
 /**
  * Starts a specific package with Webpack Dev Server
