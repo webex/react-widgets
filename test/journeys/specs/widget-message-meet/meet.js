@@ -68,6 +68,8 @@ describe(`Widget Message Meet`, () => {
   describe(`meet widget`, () => {
     const meetWidget = `.ciscospark-meet-component-wrapper`;
     const callButton = `button[aria-label="Call"]`;
+    const answerButton = `button[aria-label="Answer"]`;
+    const declineButton = `button[aria-label="Decline"]`
     const hangupButton = `button[aria-label="hangup"]`;
 
     describe(`pre call experience`, () => {
@@ -106,12 +108,20 @@ describe(`Widget Message Meet`, () => {
 
       it(`can hangup in call`, () => {
         browserLocal.element(meetWidget).element(callButton).click();
-        // TODO: Click the answer button in browserRemote
-
-        // TODO: Click the hang up button in browserLocal
+        browserRemote.moveTo(browserRemote.element(meetWidget).value.ELEMENT);
+        browserRemote.waitForVisible(answerButton);
+        browserRemote.element(meetWidget).element(answerButton).click();
+        browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
+        browserLocal.waitForVisible(`.call-controls`);
+        browserLocal.element(meetWidget).element(hangupButton).click();
       });
 
-      it(`can decline an incoming call`);
+      it(`can decline an incoming call`, () => {
+        browserLocal.element(meetWidget).element(callButton).click();
+        browserRemote.moveTo(browserRemote.element(meetWidget).value.ELEMENT);
+        browserRemote.waitForVisible(declineButton);
+        browserRemote.element(meetWidget).element(declineButton).click();
+      });
     });
   });
 });
