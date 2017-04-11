@@ -1,6 +1,4 @@
 /* eslint-disable max-nested-callbacks */
-import {assert} from 'chai';
-
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../lib/menu';
@@ -67,10 +65,13 @@ describe(`Widget Message Meet`, () => {
 
   describe(`meet widget`, () => {
     const meetWidget = `.ciscospark-meet-component-wrapper`;
+    const messageWidget = `.ciscospark-message-component-wrapper`;
     const callButton = `button[aria-label="Call"]`;
     const answerButton = `button[aria-label="Answer"]`;
     const declineButton = `button[aria-label="Decline"]`;
-    const hangupButton = `button[aria-label="hangup"]`;
+    const hangupButton = `button[aria-label="Hangup"]`;
+    const callControls = `.call-controls`;
+    const remoteVideo = `.remote-video video`;
 
     describe(`pre call experience`, () => {
       before(`switch to meet widget`, () => {
@@ -102,26 +103,41 @@ describe(`Widget Message Meet`, () => {
 
       it(`can hangup before answer`, () => {
         browserLocal.element(meetWidget).element(callButton).click();
+        // wait for call to establish
+        browserRemote.waitForVisible(answerButton);
+        // Call controls currently has a hover state
         browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
-        browserLocal.waitForVisible(`.call-controls`);
+        browserLocal.waitForVisible(callControls);
         browserLocal.element(meetWidget).element(hangupButton).click();
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
+      });
+
+      // Skipped due to issue SSDK-631
+      it.skip(`can decline an incoming call`, () => {
+        console.info(`mccoy: ${mccoy.displayName}`);
+        console.info(`spock: ${spock.displayName}`);
+        console.info(`mccoy calling spock`);
+        browserRemote.element(meetWidget).element(callButton).click();
+        browserLocal.waitForVisible(declineButton);
+        console.info(`spock declining`);
+        browserLocal.element(meetWidget).element(declineButton).click();
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        // Pausing to let locus session flush
+        browserLocal.pause(20000);
       });
 
       it(`can hangup in call`, () => {
         browserLocal.element(meetWidget).element(callButton).click();
-        browserRemote.moveTo(browserRemote.element(meetWidget).value.ELEMENT);
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
+        browserRemote.waitForVisible(remoteVideo);
+        // Let call elapse 5 seconds before hanging up
+        browserLocal.pause(5000);
         browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
-        browserLocal.waitForVisible(`.call-controls`);
+        browserLocal.waitForVisible(callControls);
         browserLocal.element(meetWidget).element(hangupButton).click();
-      });
-
-      it(`can decline an incoming call`, () => {
-        browserLocal.element(meetWidget).element(callButton).click();
-        browserRemote.moveTo(browserRemote.element(meetWidget).value.ELEMENT);
-        browserRemote.waitForVisible(declineButton);
-        browserRemote.element(meetWidget).element(declineButton).click();
+        // Should switch back to message widget after hangup
+        browserLocal.waitForVisible(messageWidget);
       });
     });
   });
