@@ -60,7 +60,7 @@ describe(`Widget Message Meet`, () => {
     assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
   });
 
-  describe(`menu functionality`, () => {
+  describe(`Activity Menu`, () => {
     const menuButton = `button[aria-label="Main Menu"]`;
     const exitButton = `.ciscospark-activity-menu-exit button`;
     const messageButton = `button[aria-label="Message"]`;
