@@ -112,14 +112,9 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
       });
 
-      // Skipped due to issue SSDK-631
-      it.skip(`can decline an incoming call`, () => {
-        console.info(`mccoy: ${mccoy.displayName}`);
-        console.info(`spock: ${spock.displayName}`);
-        console.info(`mccoy calling spock`);
+      it(`can decline an incoming call`, () => {
         browserRemote.element(meetWidget).element(callButton).click();
         browserLocal.waitForVisible(declineButton);
-        console.info(`spock declining`);
         browserLocal.element(meetWidget).element(declineButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
         // Pausing to let locus session flush
