@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Widget Message Meet Production Test</title>
+  <meta charset="utf8">
+<link href="https://code.s4d.io/widget-message-meet/production/main.css" rel="stylesheet">
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-message-meet"
+    id="ciscospark-widget">
+
+</div>
+<script src="https://code.s4d.io/widget-message-meet/production/bundle.js"></script>
+<script>
+  window.openWidget = function(accessToken, toPersonEmail) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+      // Init a new widget
+      ciscospark.widget(widgetEl).messageMeetWidget({
+        accessToken: accessToken,
+        toPersonEmail: toPersonEmail,
+        initialActivity: 'message'
+      });
+    };
+</script>
+</body>
+
+</html>
