@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-conversation';
-import {switchToMessage} from '../../lib/menu';
+import {switchToMessage} from '../../../lib/menu';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -29,7 +29,7 @@ describe(`Widget Message Meet`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-message-meet`)
+      .url(`/widget-message-meet/production.html`)
       .execute(() => {
         localStorage.clear();
       });
