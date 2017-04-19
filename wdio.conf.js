@@ -4,12 +4,6 @@ let mochaTimeout = 30000;
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
-let specs = [`./test/journeys/specs/**/*.js`];
-let exclude = [`./test/journeys/specs/tap/**/*.js`];
-if (process.env.TAP_TEST) {
-  specs = [`./test/journeys/specs/tap/**/*.js`];
-  exclude = [];
-}
 exports.config = {
   //
   // ==================
@@ -20,9 +14,17 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-  specs,
+  specs: [`./test/journeys/specs/**/*.js`],
+  suites: {
+    tap: [
+      `./test/journeys/specs/tap/**/*.js`
+    ],
+    widgetMessageMeet: [
+      `./test/journeys/specs/widget-message-meet/**/*.js`
+    ]
+  },
   // Patterns to exclude.
-  exclude,
+  exclude: [],
   //
   // ============
   // Capabilities
