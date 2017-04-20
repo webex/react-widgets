@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Widget Space Test</title>
+  <meta charset="utf8">
+<link href="/ws/main.css" rel="stylesheet"></head>
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-widget"
+    id="ciscospark-widget">
+
+</div>
+<script src="/ws/bundle.js"></script>
+<script>
+  window.openWidget = function(accessToken, spaceId) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+      // Init a new widget
+      console.info(`ciscospark.widget(widgetEl).spaceWidget({
+        accessToken: ${accessToken},
+        spaceId: ${spaceId}
+      });`)
+      ciscospark.widget(widgetEl).spaceWidget({
+        accessToken: accessToken,
+        spaceId: spaceId
+      });
+    };
+</script>
+</body>
+
+</html>
