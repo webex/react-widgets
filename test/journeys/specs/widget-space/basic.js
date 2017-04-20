@@ -8,9 +8,8 @@ import '@ciscospark/plugin-conversation';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
-
-  let docbrown, lorraine, marty;
-  let conversation;
+  let marty;
+  let conversation, participants;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
     `Identity:SCIM`,
@@ -38,23 +37,12 @@ describe(`Widget Space`, () => {
 
   before(`create users`, () => testUsers.create({count: 3})
     .then((users) => {
-      [marty, docbrown, lorraine] = users;
+      participants = users;
+      marty = users[0];
 
       marty.spark = new CiscoSpark({
         credentials: {
           authorization: marty.token
-        }
-      });
-
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token
-        }
-      });
-
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token
         }
       });
 
@@ -65,7 +53,7 @@ describe(`Widget Space`, () => {
 
   before(`create space`, () => marty.spark.conversation.create({
     displayName: `Test Widget Space`,
-    participants: [marty, docbrown, lorraine]
+    participants
   }).then((c) => {
     conversation = c;
     return conversation;
@@ -79,12 +67,7 @@ describe(`Widget Space`, () => {
     browserLocal.execute((c) => {
       console.log(c);
     }, conversation);
-    // TODO: Remove the reload once stable
     browserLocal.waitForVisible(spaceWidget);
-    browserLocal.refresh();
-    browserLocal.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
-    }, marty.token.access_token, conversation.id);
   });
 
   it(`loads the test page`, () => {
@@ -93,18 +76,17 @@ describe(`Widget Space`, () => {
   });
 
   it(`loads the space name`, () => {
-    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== conversation.displayName);
+    browserLocal.waitForVisible(`h1.ciscospark-title`);
+    assert.equal(browserLocal.getText(`h1.ciscospark-title`), conversation.displayName);
   });
 
-  describe.skip(`Activity Menu`, () => {
+  describe(`Activity Menu`, () => {
     const menuButton = `button[aria-label="Main Menu"]`;
     const exitButton = `.ciscospark-activity-menu-exit button`;
     const messageButton = `button[aria-label="Message"]`;
-    const meetButton = `button[aria-label="Call"]`;
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-component-wrapper`;
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
+    const messageWidget = `.ciscospark-message-wrapper`;
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
     });
@@ -129,21 +111,10 @@ describe(`Widget Space`, () => {
       browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
     });
 
-    it(`switches to message widget`, () => {
+    it(`hides menu and switches to message widget`, () => {
       browserLocal.element(controlsContainer).element(messageButton).click();
+      browserLocal.waitForVisible(activityMenu, 1500, true);
       assert.isTrue(browserLocal.isVisible(messageWidget));
-      assert.isFalse(browserLocal.isVisible(meetWidget));
-    });
-
-    it(`has a meet button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(meetButton).waitForVisible();
-    });
-
-    it(`switches to meet widget`, () => {
-      browserLocal.element(controlsContainer).element(meetButton).click();
-      assert.isTrue(browserLocal.isVisible(meetWidget));
-      assert.isFalse(browserLocal.isVisible(messageWidget));
     });
 
   });

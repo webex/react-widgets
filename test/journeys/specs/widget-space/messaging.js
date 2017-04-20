@@ -10,7 +10,7 @@ describe(`Widget Space`, () => {
   const browserRemote = browser.select(`browserRemote`);
 
   let docbrown, lorraine, marty;
-  let conversation, participants;
+  let conversation;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
     `Identity:SCIM`,
@@ -81,36 +81,19 @@ describe(`Widget Space`, () => {
     browserLocal.execute((localAccessToken, spaceId) => {
       window.openWidget(localAccessToken, spaceId);
     }, marty.token.access_token, conversation.id);
-    browserLocal.execute((c) => {
-      console.log(c);
-    }, conversation);
-    // TODO: Remove the reload once stable
     const spaceWidget = `.ciscospark-space-widget`;
     browserLocal.waitForVisible(spaceWidget);
-    browserLocal.refresh();
-    browserLocal.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
-    }, marty.token.access_token, conversation.id);
-    console.log(`Marty: ${marty.displayName}`);
-    console.log(`Marty: ${marty.token.access_token}`);
   });
 
   before(`inject docbrown token`, () => {
     browserRemote.execute((localAccessToken, spaceId) => {
       window.openWidget(localAccessToken, spaceId);
     }, docbrown.token.access_token, conversation.id);
-    // TODO: Remove the reload once stable
     const spaceWidget = `.ciscospark-space-widget`;
     browserRemote.waitForVisible(spaceWidget);
-    browserRemote.refresh();
-    browserRemote.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
-    }, docbrown.token.access_token, conversation.id);
-    console.log(`Doc Brown: ${docbrown.displayName}`);
-    console.log(`Doc Brown: ${docbrown.token.access_token}`);
   });
 
-  describe(`space widget`, () => {
+  describe(`messaging`, () => {
     it(`sends and receives messages`, () => {
       // Increase wait timeout for message delivery
       browser.timeouts(`implicit`, 10000);
