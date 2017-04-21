@@ -3,7 +3,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../lib/menu';
 
-describe(`Widget Message Meet`, () => {
+describe(`Widget: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
@@ -54,8 +54,8 @@ describe(`Widget Message Meet`, () => {
   });
 
   describe(`meet widget`, () => {
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
-    const messageWidget = `.ciscospark-message-component-wrapper`;
+    const meetWidget = `.ciscospark-call-wrapper`;
+    const messageWidget = `.ciscospark-message-wrapper`;
     const callButton = `button[aria-label="Call"]`;
     const answerButton = `button[aria-label="Answer"]`;
     const declineButton = `button[aria-label="Decline"]`;

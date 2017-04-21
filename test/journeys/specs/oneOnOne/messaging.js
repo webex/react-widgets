@@ -6,7 +6,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
 
-describe(`Widget Message Meet`, () => {
+describe(`Widget: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
@@ -34,12 +34,12 @@ describe(`Widget Message Meet`, () => {
       });
   });
 
-  before(`create spock`, () => testUsers.create({count: 1, displayName: `spock`})
+  before(`create spock`, () => testUsers.create({count: 1, config: {displayName: `Mr Spock`}})
     .then((users) => {
       [spock] = users;
     }));
 
-  before(`create mccoy`, () => testUsers.create({count: 1, displayName: `mccoy`})
+  before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: `Bones Mccoy`}})
     .then((users) => {
       [mccoy] = users;
     }));

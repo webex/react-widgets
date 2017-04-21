@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-describe(`Widget Message Meet`, () => {
+describe(`Widget: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
 
   let mccoy, spock;
@@ -72,8 +72,9 @@ describe(`Widget Message Meet`, () => {
   });
 
   it(`loads the user's name`, () => {
-    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== mccoy.email);
-    assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
+    browserLocal.waitForVisible(`h1.ciscospark-title`);
+    browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
+    assert.equal(browserLocal.getText(`h1.ciscospark-title`), mccoy.displayName);
   });
 
   describe(`Activity Menu`, () => {
@@ -83,8 +84,9 @@ describe(`Widget Message Meet`, () => {
     const meetButton = `button[aria-label="Call"]`;
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-component-wrapper`;
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
+    const messageWidget = `.ciscospark-message-wrapper`;
+    const meetWidget = `.ciscospark-call-wrapper`;
+
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
     });
