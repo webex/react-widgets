@@ -99,18 +99,19 @@ describe(`Widget Space`, () => {
 
   describe(`messaging`, () => {
     it(`sends and receives messages`, () => {
+      const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
       // Increase wait timeout for message delivery
       browser.timeouts(`implicit`, 10000);
-      browserLocal.waitForVisible(`[placeholder="Send a message to "]`);
+      browserLocal.waitForVisible(textInputField);
       assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForVisible(`[placeholder="Send a message to "]`);
+      browserRemote.waitForVisible(textInputField);
       // Remote is now ready, send a message to it
       const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
-      browserLocal.setValue(`[placeholder="Send a message to "]`, `${martyText}\n`);
+      browserLocal.setValue(textInputField, `${martyText}\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText);
       // Send a message back
       const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
-      browserRemote.setValue(`[placeholder="Send a message to "]`, `${docText}\n`);
+      browserRemote.setValue(textInputField, `${docText}\n`);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText);
       // Send a message from a 'client'
       const lorraineText = `Marty, will we ever see you again?`;
@@ -121,7 +122,7 @@ describe(`Widget Space`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
       const martyText2 = `I guarantee it.`;
-      browserLocal.setValue(`[placeholder="Send a message to "]`, `${martyText2}\n`);
+      browserLocal.setValue(textInputField, `${martyText2}\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);
     });
   });
