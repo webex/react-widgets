@@ -19,11 +19,11 @@ exports.config = {
     tap: [
       `./test/journeys/specs/tap/**/*.js`
     ],
-    widgetMessageMeet: [
-      `./test/journeys/specs/widget-message-meet/**/*.js`
+    oneOnOne: [
+      `./test/journeys/specs/oneOnOne/**/*.js`
     ],
-    widgetSpace: [
-      `./test/journeys/specs/widget-space/**/*.js`
+    space: [
+      `./test/journeys/specs/space/**/*.js`
     ]
   },
   // Patterns to exclude.
@@ -168,8 +168,7 @@ exports.config = {
 
   // Static Server setup
   staticServerFolders: [
-    {mount: `/wmm`, path: `./packages/node_modules/@ciscospark/widget-message-meet/dist`},
-    {mount: `/ws`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
+    {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
     {mount: `/`, path: `./test/journeys/server/`}
   ],
   staticServerPort: 4567

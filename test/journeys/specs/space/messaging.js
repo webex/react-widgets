@@ -30,7 +30,7 @@ describe(`Widget Space`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-space`)
+      .url(`/`)
       .execute(() => {
         localStorage.clear();
       });
@@ -83,7 +83,11 @@ describe(`Widget Space`, () => {
 
   before(`inject marty token`, () => {
     browserLocal.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
+      const options = {
+        accessToken: localAccessToken,
+        spaceId
+      };
+      window.openWidget(options);
     }, marty.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
     browserLocal.waitForVisible(spaceWidget);
@@ -91,7 +95,11 @@ describe(`Widget Space`, () => {
 
   before(`inject docbrown token`, () => {
     browserRemote.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
+      const options = {
+        accessToken: localAccessToken,
+        spaceId
+      };
+      window.openWidget(options);
     }, docbrown.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
     browserRemote.waitForVisible(spaceWidget);

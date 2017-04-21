@@ -3,16 +3,13 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/plugin-conversation';
 
-describe(`Widget Space`, () => {
+describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
-  let marty;
-  let conversation, participants;
+
+  let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
-    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -29,64 +26,65 @@ describe(`Widget Space`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-space`)
+      .url(`/`)
       .execute(() => {
         localStorage.clear();
       });
   });
 
-  before(`create users`, () => testUsers.create({count: 3})
+  before(`create users`, () => testUsers.create({count: 2})
     .then((users) => {
-      participants = users;
-      marty = users[0];
-
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token
-        }
-      });
-
-      return marty.spark.mercury.connect();
+      [mccoy, spock] = users;
     }));
 
-  after(`disconnect`, () => marty.spark.mercury.disconnect());
-
-  before(`create space`, () => marty.spark.conversation.create({
-    displayName: `Test Widget Space`,
-    participants
-  }).then((c) => {
-    conversation = c;
-    return conversation;
-  }));
-
   before(`inject token`, () => {
-    const spaceWidget = `.ciscospark-space-widget`;
-    browserLocal.execute((localAccessToken, spaceId) => {
-      window.openWidget(localAccessToken, spaceId);
-    }, marty.token.access_token, conversation.id);
-    browserLocal.execute((c) => {
-      console.log(c);
-    }, conversation);
-    browserLocal.waitForVisible(spaceWidget);
+    if (process.env.DEBUG_JOURNEYS) {
+      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
+      console.info();
+      console.info(`window.openWidget({
+        accessToken: "${spock.token.access_token}",
+        toPersonEmail: "${mccoy.email}",
+        initialActivity: "message"
+      });`);
+      console.info();
+      console.info();
+    }
+    browserLocal.execute((localAccessToken, localToUserEmail) => {
+      const options = {
+        accessToken: localAccessToken,
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidget(options);
+    }, spock.token.access_token, mccoy.email);
   });
+
+  if (process.env.DEBUG_JOURNEYS) {
+    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
+    // Leaves the browser open for further testing and inspection
+    after(() => browserLocal.debug());
+  }
+
 
   it(`loads the test page`, () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Space Test`);
+    assert.equal(title, `Cisco Spark Widget Test`);
   });
 
-  it(`loads the space name`, () => {
-    browserLocal.waitForVisible(`h1.ciscospark-title`);
-    assert.equal(browserLocal.getText(`h1.ciscospark-title`), conversation.displayName);
+  it(`loads the user's name`, () => {
+    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== mccoy.email);
+    assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
   });
 
   describe(`Activity Menu`, () => {
     const menuButton = `button[aria-label="Main Menu"]`;
     const exitButton = `.ciscospark-activity-menu-exit button`;
     const messageButton = `button[aria-label="Message"]`;
+    const meetButton = `button[aria-label="Call"]`;
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-wrapper`;
+    const messageWidget = `.ciscospark-message-component-wrapper`;
+    const meetWidget = `.ciscospark-meet-component-wrapper`;
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
     });
@@ -111,10 +109,21 @@ describe(`Widget Space`, () => {
       browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
     });
 
-    it(`hides menu and switches to message widget`, () => {
+    it(`switches to message widget`, () => {
       browserLocal.element(controlsContainer).element(messageButton).click();
-      browserLocal.waitForVisible(activityMenu, 1500, true);
       assert.isTrue(browserLocal.isVisible(messageWidget));
+      assert.isFalse(browserLocal.isVisible(meetWidget));
+    });
+
+    it(`has a meet button`, () => {
+      browserLocal.click(menuButton);
+      browserLocal.element(controlsContainer).element(meetButton).waitForVisible();
+    });
+
+    it(`switches to meet widget`, () => {
+      browserLocal.element(controlsContainer).element(meetButton).click();
+      assert.isTrue(browserLocal.isVisible(meetWidget));
+      assert.isFalse(browserLocal.isVisible(messageWidget));
     });
 
   });

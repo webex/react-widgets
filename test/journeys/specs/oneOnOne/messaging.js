@@ -12,7 +12,6 @@ describe(`Widget Message Meet`, () => {
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
-    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -29,7 +28,7 @@ describe(`Widget Message Meet`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-message-meet`)
+      .url(`/`)
       .execute(() => {
         localStorage.clear();
       });
@@ -46,22 +45,13 @@ describe(`Widget Message Meet`, () => {
     }));
 
   before(`inject token`, () => {
-    if (process.env.DEBUG_JOURNEYS) {
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidget("${spock.token.access_token}", "${mccoy.email}");`);
-      console.info();
-      console.info();
-
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS REMOTE TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidget("${mccoy.token.access_token}", "${spock.email}");`);
-      console.info();
-      console.info();
-    }
-
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidget(options);
     }, spock.token.access_token, mccoy.email);
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
@@ -69,7 +59,12 @@ describe(`Widget Message Meet`, () => {
   describe(`meet widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
-        window.openWidget(localAccessToken, localToUserEmail);
+        const options = {
+          accessToken: localAccessToken,
+          toPersonEmail: localToUserEmail,
+          initialActivity: `message`
+        };
+        window.openWidget(options);
       }, mccoy.token.access_token, spock.email);
       browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
     });
