@@ -4,6 +4,7 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/plugin-conversation';
+import waitForPromise from '../../lib/wait-for-promise';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -13,7 +14,6 @@ describe(`Widget Space`, () => {
   let conversation;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
-    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -57,7 +57,7 @@ describe(`Widget Space`, () => {
       });
     }));
 
-  before(`create lorraine`, () => testUsers.create({count: 1, displayName: `lorraine`})
+  before(`create lorraine`, () => testUsers.create({count: 1, config: {displayName: `Lorraine Baines`}})
     .then((users) => {
       [lorraine] = users;
       lorraine.spark = new CiscoSpark({
@@ -65,9 +65,13 @@ describe(`Widget Space`, () => {
           authorization: lorraine.token
         }
       });
+      return lorraine.spark.mercury.connect();
     }));
 
-  after(`disconnect`, () => marty.spark.mercury.disconnect());
+  after(`disconnect`, () => Promise.all([
+    marty.spark.mercury.disconnect(),
+    lorraine.spark.mercury.disconnect()
+  ]));
 
   before(`create space`, () => marty.spark.conversation.create({
     displayName: `Test Widget Space`,
@@ -108,6 +112,17 @@ describe(`Widget Space`, () => {
       const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
       browserRemote.setValue(`[placeholder="Send a message to "]`, `${docText}\n`);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText);
+      // Send a message from a 'client'
+      const lorraineText = `Marty, will we ever see you again?`;
+      waitForPromise(lorraine.spark.conversation.post(conversation, {
+        displayName: lorraineText
+      }));
+      // Wait for both widgets to receive client message
+      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
+      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
+      const martyText2 = `I guarantee it.`;
+      browserLocal.setValue(`[placeholder="Send a message to "]`, `${martyText2}\n`);
+      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);
     });
   });
 
