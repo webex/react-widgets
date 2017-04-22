@@ -124,7 +124,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
     "postcss-reporter": "^3.0.0",
-    "react-cookie": "^1.0.4",
+    "react-cookie": "^2.0.1",
     "react-router": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "react-test-renderer": "^15.4.1",
