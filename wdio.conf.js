@@ -1,5 +1,9 @@
 require(`dotenv`).config();
 require(`babel-register`);
+let mochaTimeout = 30000;
+if (process.env.DEBUG_JOURNEYS) {
+  mochaTimeout = 99999999;
+}
 exports.config = {
   //
   // ==================
@@ -10,13 +14,17 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-  specs: [
-    `./test/journeys/specs/**/*.js`
-  ],
+  specs: [`./test/journeys/specs/**/*.js`],
+  suites: {
+    tap: [
+      `./test/journeys/specs/tap/**/*.js`
+    ],
+    widgetMessageMeet: [
+      `./test/journeys/specs/widget-message-meet/**/*.js`
+    ]
+  },
   // Patterns to exclude.
-  exclude: [
-    // 'path/to/excluded/files'
-  ],
+  exclude: [],
   //
   // ============
   // Capabilities
@@ -39,24 +47,38 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: [{
-    // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    // grid with only 5 firefox instances available you can make sure that not more than
-    // 5 instances get started at a time.
-    maxInstances: 5,
-    //
-    browserName: `chrome`,
-    chromeOptions: {
-      args: [
-        `--use-fake-device-for-media-stream`,
-        `--use-fake-ui-for-media-stream`
-      ],
-      prefs: {
-        "profile.default_content_setting_values.notifications": 2
+  capabilities: {
+    browserLocal: {
+      desiredCapabilities: {
+        browserName: `chrome`,
+        chromeOptions: {
+          args: [
+            `--use-fake-device-for-media-stream`,
+            `--use-fake-ui-for-media-stream`
+          ],
+          prefs: {
+            "profile.default_content_setting_values.notifications": 2
+          }
+        },
+        platform: `mac`
       }
     },
-    platform: `mac`
-  }],
+    browserRemote: {
+      desiredCapabilities: {
+        browserName: `chrome`,
+        chromeOptions: {
+          args: [
+            `--use-fake-device-for-media-stream`,
+            `--use-fake-ui-for-media-stream`
+          ],
+          prefs: {
+            "profile.default_content_setting_values.notifications": 2
+          }
+        },
+        platform: `mac`
+      }
+    }
+  },
   //
   // ===================
   // Test Configurations
@@ -138,7 +160,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: `bdd`,
-    timeout: 30000
+    timeout: mochaTimeout
   },
 
   // Static Server setup
