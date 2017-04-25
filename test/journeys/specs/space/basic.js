@@ -3,14 +3,15 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@ciscospark/spark-core';
+import '@ciscospark/plugin-conversation';
 
-describe(`Widget Message Meet`, () => {
+describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
-
-  let mccoy, spock;
+  let marty;
+  let conversation, participants;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
-    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -25,50 +26,70 @@ describe(`Widget Message Meet`, () => {
     `spark:kms`
   ].join(` `);
 
-  if (process.env.DEBUG_JOURNEYS) {
-    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
-    // Leaves the browser open for further testing and inspection
-    after(() => browserLocal.debug());
-  }
-
   before(`load browsers`, () => {
     browser
-      .url(`/production.html`)
+      .url(`/`)
       .execute(() => {
         localStorage.clear();
       });
   });
 
-  before(`create users`, () => testUsers.create({count: 2})
+  before(`create users`, () => testUsers.create({count: 3})
     .then((users) => {
-      [mccoy, spock] = users;
+      participants = users;
+      marty = users[0];
+
+      marty.spark = new CiscoSpark({
+        credentials: {
+          authorization: marty.token
+        }
+      });
+
+      return marty.spark.mercury.connect();
     }));
 
+  after(`disconnect`, () => marty.spark.mercury.disconnect());
+
+  before(`create space`, () => marty.spark.conversation.create({
+    displayName: `Test Widget Space`,
+    participants
+  }).then((c) => {
+    conversation = c;
+    return conversation;
+  }));
+
   before(`inject token`, () => {
-    browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
-    }, spock.token.access_token, mccoy.email);
+    const spaceWidget = `.ciscospark-space-widget`;
+    browserLocal.execute((localAccessToken, spaceId) => {
+      const options = {
+        accessToken: localAccessToken,
+        spaceId
+      };
+      window.openSpaceWidget(options);
+    }, marty.token.access_token, conversation.id);
+    browserLocal.execute((c) => {
+      console.log(c);
+    }, conversation);
+    browserLocal.waitForVisible(spaceWidget);
   });
 
   it(`loads the test page`, () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Message Meet Test`);
+    assert.equal(title, `Cisco Spark Widget Test`);
   });
 
-  it(`loads the user's name`, () => {
-    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== mccoy.email);
-    assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
+  it(`loads the space name`, () => {
+    browserLocal.waitForVisible(`h1.ciscospark-title`);
+    assert.equal(browserLocal.getText(`h1.ciscospark-title`), conversation.displayName);
   });
 
   describe(`Activity Menu`, () => {
     const menuButton = `button[aria-label="Main Menu"]`;
     const exitButton = `.ciscospark-activity-menu-exit button`;
     const messageButton = `button[aria-label="Message"]`;
-    const meetButton = `button[aria-label="Call"]`;
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-component-wrapper`;
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
+    const messageWidget = `.ciscospark-message-wrapper`;
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
     });
@@ -93,21 +114,10 @@ describe(`Widget Message Meet`, () => {
       browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
     });
 
-    it(`switches to message widget`, () => {
+    it(`hides menu and switches to message widget`, () => {
       browserLocal.element(controlsContainer).element(messageButton).click();
+      browserLocal.waitForVisible(activityMenu, 1500, true);
       assert.isTrue(browserLocal.isVisible(messageWidget));
-      assert.isFalse(browserLocal.isVisible(meetWidget));
-    });
-
-    it(`has a meet button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(meetButton).waitForVisible();
-    });
-
-    it(`switches to meet widget`, () => {
-      browserLocal.element(controlsContainer).element(meetButton).click();
-      assert.isTrue(browserLocal.isVisible(meetWidget));
-      assert.isFalse(browserLocal.isVisible(messageWidget));
     });
 
   });

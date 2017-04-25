@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cisco Spark Widget Test</title>
+  <meta charset="utf8">
+<link href="/dist/main.css" rel="stylesheet"></head>
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-widget"
+    id="ciscospark-widget">
+
+</div>
+<script src="/dist/bundle.js"></script>
+<script>
+  window.openSpaceWidget = function(options) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+    // Init a new widget
+    ciscospark.widget(widgetEl).spaceWidget(options);
+  };
+  window.openWidgetMessageMeet = function(accessToken, toPersonEmail) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+    // Init a new widget
+    ciscospark.widget(widgetEl).messageMeetWidget(
+      {
+        accessToken: accessToken,
+        toPersonEmail: toPersonEmail,
+        initialActivity: 'message'
+      }
+    );
+  };
+</script>
+</body>
+
+</html>
