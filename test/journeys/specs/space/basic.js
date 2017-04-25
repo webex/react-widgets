@@ -65,7 +65,7 @@ describe(`Widget Space`, () => {
         accessToken: localAccessToken,
         spaceId
       };
-      window.openWidget(options);
+      window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
     browserLocal.execute((c) => {
       console.log(c);

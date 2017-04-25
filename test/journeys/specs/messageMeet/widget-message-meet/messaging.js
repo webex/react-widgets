@@ -4,14 +4,15 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-conversation';
-import {switchToMessage} from '../../lib/menu';
+import {switchToMessage} from '../../../lib/menu';
 
-describe(`Widget: One on One`, () => {
+describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
+    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -28,30 +29,39 @@ describe(`Widget: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/message-meet.html`)
       .execute(() => {
         localStorage.clear();
       });
   });
 
-  before(`create spock`, () => testUsers.create({count: 1, config: {displayName: `Mr Spock`}})
+  before(`create spock`, () => testUsers.create({count: 1, displayName: `spock`})
     .then((users) => {
       [spock] = users;
     }));
 
-  before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: `Bones Mccoy`}})
+  before(`create mccoy`, () => testUsers.create({count: 1, displayName: `mccoy`})
     .then((users) => {
       [mccoy] = users;
     }));
 
   before(`inject token`, () => {
+    if (process.env.DEBUG_JOURNEYS) {
+      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
+      console.info();
+      console.info(`window.openWidgetMessageMeet("${spock.token.access_token}", "${mccoy.email}");`);
+      console.info();
+      console.info();
+
+      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS REMOTE TEST FROM DEV TOOLS`);
+      console.info();
+      console.info(`window.openWidgetMessageMeet("${mccoy.token.access_token}", "${spock.email}");`);
+      console.info();
+      console.info();
+    }
+
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        toPersonEmail: localToUserEmail,
-        initialActivity: `message`
-      };
-      window.openSpaceWidget(options);
+      window.openWidgetMessageMeet(localAccessToken, localToUserEmail);
     }, spock.token.access_token, mccoy.email);
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
@@ -59,12 +69,7 @@ describe(`Widget: One on One`, () => {
   describe(`meet widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
-        const options = {
-          accessToken: localAccessToken,
-          toPersonEmail: localToUserEmail,
-          initialActivity: `message`
-        };
-        window.openSpaceWidget(options);
+        window.openWidgetMessageMeet(localAccessToken, localToUserEmail);
       }, mccoy.token.access_token, spock.email);
       browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
     });

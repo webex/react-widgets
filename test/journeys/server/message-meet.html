@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cisco Spark Widget Test</title>
+  <title>Widget Message Meet Test</title>
   <meta charset="utf8">
-<link href="/dist/main.css" rel="stylesheet"></head>
+<link href="/dist-wmm/main.css" rel="stylesheet"></head>
 <body>
 <div style="width: 500px; height: 500px">
   <main class="ciscospark-widget"
     id="ciscospark-widget">
 
 </div>
-<script src="/dist/bundle.js"></script>
+<script src="/dist-wmm/bundle.js"></script>
 <script>
-  window.openSpaceWidget = function(options) {
-    var widgetEl = document.getElementById('ciscospark-widget');
-    // Init a new widget
-    ciscospark.widget(widgetEl).spaceWidget(options);
-  };
   window.openWidgetMessageMeet = function(accessToken, toPersonEmail) {
     var widgetEl = document.getElementById('ciscospark-widget');
     // Init a new widget

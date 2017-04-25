@@ -24,6 +24,9 @@ exports.config = {
     ],
     space: [
       `./test/journeys/specs/space/**/*.js`
+    ],
+    messageMeet: [
+      `./test/journeys/specs/messageMeet/**/*.js`
     ]
   },
   // Patterns to exclude.
@@ -169,6 +172,7 @@ exports.config = {
   // Static Server setup
   staticServerFolders: [
     {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
+    {mount: `/dist-wmm`, path: `./packages/node_modules/@ciscospark/widget-message-meet/dist`},
     {mount: `/`, path: `./test/journeys/server/`}
   ],
   staticServerPort: 4567
