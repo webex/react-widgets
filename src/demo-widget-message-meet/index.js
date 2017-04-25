@@ -12,7 +12,7 @@ import SparkLogo from '@ciscospark/react-component-spark-logo';
 import WidgetMessageMeet from '@ciscospark/widget-message-meet';
 
 import ExampleCode, {MODE_REACT, MODE_INLINE} from '../example-code';
-import DemoLogin from '../demo-login';
+import TokenInput from '../token-input';
 
 import styles from './styles.css';
 
@@ -90,7 +90,7 @@ class DemoWidgetMessageMeet extends Component {
           <SparkLogo />
         </div>
         { !this.state.hasToken &&
-          <DemoLogin onLogin={this.handleAccessTokenChange} />
+          <TokenInput onLogin={this.handleAccessTokenChange} />
         }
         {
           this.state.hasToken &&
