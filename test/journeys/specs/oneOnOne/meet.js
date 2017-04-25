@@ -31,12 +31,12 @@ describe(`Widget: One on One`, () => {
       });
   });
 
-  before(`create spock`, () => testUsers.create({count: 1, displayName: `spock`})
+  before(`create spock`, () => testUsers.create({count: 1, config: {displayName: `Mr Spock`}})
     .then((users) => {
       [spock] = users;
     }));
 
-  before(`create mccoy`, () => testUsers.create({count: 1, displayName: `mccoy`})
+  before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: `Bones Mccoy`}})
     .then((users) => {
       [mccoy] = users;
     }));
@@ -54,7 +54,7 @@ describe(`Widget: One on One`, () => {
   });
 
   describe(`meet widget`, () => {
-    const meetWidget = `.ciscospark-call-wrapper`;
+    const meetWidget = `.ciscospark-meet-wrapper`;
     const messageWidget = `.ciscospark-message-wrapper`;
     const callButton = `button[aria-label="Call"]`;
     const answerButton = `button[aria-label="Answer"]`;

@@ -85,7 +85,7 @@ describe(`Widget: One on One`, () => {
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
     const messageWidget = `.ciscospark-message-wrapper`;
-    const meetWidget = `.ciscospark-call-wrapper`;
+    const meetWidget = `.ciscospark-meet-wrapper`;
 
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
