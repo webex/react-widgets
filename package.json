@@ -138,7 +138,7 @@
     "wdio-dot-reporter": "0.0.8",
     "wdio-junit-reporter": "^0.2.0",
     "wdio-mocha-framework": "^0.5.9",
-    "wdio-sauce-service": "^0.3.1",
+    "wdio-sauce-service": "^0.4.0",
     "wdio-selenium-standalone-service": "0.0.8",
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
