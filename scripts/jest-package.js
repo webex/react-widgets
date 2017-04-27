@@ -1,4 +1,6 @@
-import runInPackage from './utils/base-package';
+import {getPackage} from './utils/package';
+import {execSync} from './utils/exec';
+
 
 /**
  * Test a specific package with jest
@@ -7,18 +9,20 @@ import runInPackage from './utils/base-package';
  * @returns {Promise}
  */
 export default function jestPackage(pkgName, pkgPath) {
-  return runInPackage({
-    constructCommand: (targetPath) => `npm run jest ${targetPath}/*`,
-    commandName: `Start Package`,
-    pkgName,
-    pkgPath
-  });
+  pkgPath = pkgPath || getPackage(pkgName);
+  if (pkgPath) {
+    try {
+      execSync(`npm run jest ${pkgPath}/*`);
+    }
+    catch (error) {
+      console.error(error.stdout);
+      throw new Error(`Error when running jest on ${pkgName}`, error);
+    }
+  }
+  return false;
 }
 
 // Pass pkgName if running from command line
 if (require.main === module) {
-  jestPackage(process.argv[process.argv.length - 1]).catch((err) => {
-    console.error(err);
-    throw new Error(`test-package.js error \n ${err}`);
-  });
+  jestPackage(process.argv[process.argv.length - 1]);
 }
