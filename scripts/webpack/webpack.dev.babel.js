@@ -15,6 +15,7 @@ const plugins = [
     `CISCOSPARK_ACCESS_TOKEN`,
     `MESSAGE_DEMO_CLIENT_ID`,
     `MESSAGE_DEMO_CLIENT_SECRET`,
+    `SPACE_ID`,
     `TO_PERSON_EMAIL`,
     `TO_PERSON_ID`
   ])

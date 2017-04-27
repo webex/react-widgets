@@ -4,13 +4,12 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-describe(`Widget Message Meet`, () => {
+describe(`Widget: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
 
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
-    `Identity:SCIM`,
     `spark:people_read`,
     `spark:rooms_read`,
     `spark:rooms_write`,
@@ -25,15 +24,9 @@ describe(`Widget Message Meet`, () => {
     `spark:kms`
   ].join(` `);
 
-  if (process.env.DEBUG_JOURNEYS) {
-    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
-    // Leaves the browser open for further testing and inspection
-    after(() => browserLocal.debug());
-  }
-
   before(`load browsers`, () => {
     browser
-      .url(`/widget-message-meet`)
+      .url(`/`)
       .execute(() => {
         localStorage.clear();
       });
@@ -45,19 +38,43 @@ describe(`Widget Message Meet`, () => {
     }));
 
   before(`inject token`, () => {
+    if (process.env.DEBUG_JOURNEYS) {
+      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
+      console.info();
+      console.info(`window.openSpaceWidget({
+        accessToken: "${spock.token.access_token}",
+        toPersonEmail: "${mccoy.email}",
+        initialActivity: "message"
+      });`);
+      console.info();
+      console.info();
+    }
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openSpaceWidget(options);
     }, spock.token.access_token, mccoy.email);
   });
 
+  if (process.env.DEBUG_JOURNEYS) {
+    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
+    // Leaves the browser open for further testing and inspection
+    after(() => browserLocal.debug());
+  }
+
+
   it(`loads the test page`, () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Message Meet Test`);
+    assert.equal(title, `Cisco Spark Widget Test`);
   });
 
   it(`loads the user's name`, () => {
-    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== mccoy.email);
-    assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
+    browserLocal.waitForVisible(`h1.ciscospark-title`);
+    browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
+    assert.equal(browserLocal.getText(`h1.ciscospark-title`), mccoy.displayName);
   });
 
   describe(`Activity Menu`, () => {
@@ -67,8 +84,9 @@ describe(`Widget Message Meet`, () => {
     const meetButton = `button[aria-label="Call"]`;
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-component-wrapper`;
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
+    const messageWidget = `.ciscospark-message-wrapper`;
+    const meetWidget = `.ciscospark-meet-wrapper`;
+
     it(`has a menu button`, () => {
       assert.isTrue(browserLocal.isVisible(menuButton));
     });
