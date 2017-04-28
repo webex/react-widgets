@@ -120,9 +120,10 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               version=`cat .version`
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:bundle
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:package widget-message-meet-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/" npm run build:package widget-message-meet
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
               '''
             }
           }
@@ -146,7 +147,9 @@ ansiColor('xterm') {
 
             archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-space/dist/**/*'
-            archive 'dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-message-meet-demo/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-space-demo/dist/**/*'
+
 
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
