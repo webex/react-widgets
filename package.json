@@ -120,7 +120,7 @@
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^19.0.0",
     "json-loader": "^0.5.4",
-    "material-ui": "^0.17.0",
+    "material-ui": "^0.18.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "postcss": "^5.2.6",
