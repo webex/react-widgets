@@ -52,7 +52,7 @@ describe(`Widget Message Meet`, () => {
 
   it(`loads the test page`, () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Message Meet Test`);
+    assert.equal(title, `Widget Message Meet Production Test`);
   });
 
   it(`loads the user's name`, () => {

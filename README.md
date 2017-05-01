@@ -23,7 +23,7 @@ The basic components are just presentational React <https://github.com/facebook/
 
 While many of our components are purely presentational, some have extended functionality that provide a piece of the full Cisco Spark experience. These fully self contained elements are called `Widgets` and are available here:
 
-*  [Message and Meet Widget](./packages/node_modules/@ciscospark/widget-message-meet)
+*  [Space Widget](./packages/node_modules/@ciscospark/widget-space)
 
 ## Install
 
