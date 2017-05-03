@@ -121,6 +121,7 @@
     "material-ui": "^0.17.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "mockdate": "^2.0.1",
     "postcss": "^5.2.6",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
