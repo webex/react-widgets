@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.18",
+  "version": "0.1.24",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "npm run build:packages && npm run build:bundle",
@@ -25,7 +25,6 @@
     "serve": "npm run start",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
     "start": "cross-env NODE_ENV=${NODE_ENV:-development} webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback",
-    "start:demo": "cross-env NODE_ENV=${NODE_ENV:-development} webpack-dev-server --config scripts/webpack/webpack.demo.babel.js --hot --inline --history-api-fallback",
     "start:package": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node --presets=stage-1,es2015 scripts/start-package.js"
   },
   "repository": {
@@ -42,7 +41,6 @@
   },
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
   "main": "src/index.js",
-  "devMain": "src/demo.js",
   "dependencies": {
     "@ciscospark/common": "0.7.87",
     "@ciscospark/helper-html": "0.7.87",
@@ -123,11 +121,13 @@
     "material-ui": "^0.17.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "mockdate": "^2.0.1",
     "postcss": "^5.2.6",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
     "postcss-reporter": "^3.0.0",
     "react-cookie": "^1.0.4",
+    "react-highlight": "^0.9.0",
     "react-router": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "react-test-renderer": "^15.4.1",
