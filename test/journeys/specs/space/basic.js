@@ -48,6 +48,8 @@ describe(`Widget Space`, () => {
       return marty.spark.mercury.connect();
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   after(`disconnect`, () => marty.spark.mercury.disconnect());
 
   before(`create space`, () => marty.spark.conversation.create({
