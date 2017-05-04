@@ -41,6 +41,8 @@ describe(`Widget: One on One`, () => {
       [mccoy] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {

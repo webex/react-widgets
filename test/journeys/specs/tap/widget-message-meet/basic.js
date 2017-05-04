@@ -44,6 +44,8 @@ describe(`Widget Message Meet`, () => {
       [mccoy, spock] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       window.openWidget(localAccessToken, localToUserEmail);
