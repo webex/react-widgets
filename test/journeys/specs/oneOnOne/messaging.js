@@ -81,7 +81,6 @@ describe(`Widget Space: One on One`, () => {
     });
 
     it(`sends and receives messages`, () => {
-      clearEventLog(browserLocal);
       // Increase wait timeout for message delivery
       browser.timeouts(`implicit`, 10000);
       browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
