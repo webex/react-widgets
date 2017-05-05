@@ -1,9 +1,11 @@
 /* eslint-disable max-nested-callbacks */
+import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../lib/menu';
+import {clearEventLog, getEventLog} from '../../lib/events';
 
-describe(`Widget: One on One`, () => {
+describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
@@ -47,6 +49,9 @@ describe(`Widget: One on One`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
       };
@@ -82,6 +87,9 @@ describe(`Widget: One on One`, () => {
         browserRemote.execute((localAccessToken, localToUserEmail) => {
           const options = {
             accessToken: localAccessToken,
+            onEvent: (eventName) => {
+              window.ciscoSparkEvents.push(eventName);
+            },
             toPersonEmail: localToUserEmail,
             initialActivity: `message`
           };
@@ -119,6 +127,7 @@ describe(`Widget: One on One`, () => {
       });
 
       it(`can hangup in call`, () => {
+        clearEventLog(browserLocal);
         browserLocal.element(meetWidget).element(callButton).click();
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
@@ -130,6 +139,11 @@ describe(`Widget: One on One`, () => {
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
+        const events = getEventLog(browserLocal);
+        // TODO: SSDK-725
+        // assert.include(events, `calls:created`, `has a calls created event`);
+        // assert.include(events, `calls:connected`, `has a calls connected event`);
+        assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
       });
     });
   });
