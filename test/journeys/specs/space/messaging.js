@@ -68,6 +68,8 @@ describe(`Widget Space`, () => {
       return lorraine.spark.mercury.connect();
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   after(`disconnect`, () => Promise.all([
     marty.spark.mercury.disconnect(),
     lorraine.spark.mercury.disconnect()

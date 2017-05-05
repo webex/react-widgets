@@ -37,6 +37,8 @@ describe(`Widget: One on One`, () => {
       [mccoy, spock] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   before(`inject token`, () => {
     if (process.env.DEBUG_JOURNEYS) {
       console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
