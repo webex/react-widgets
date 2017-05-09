@@ -17,17 +17,7 @@
     // Init a new widget
     ciscospark.widget(widgetEl).spaceWidget(options);
   };
-  window.openWidgetMessageMeet = function(accessToken, toPersonEmail) {
-    var widgetEl = document.getElementById('ciscospark-widget');
-    // Init a new widget
-    ciscospark.widget(widgetEl).messageMeetWidget(
-      {
-        accessToken: accessToken,
-        toPersonEmail: toPersonEmail,
-        initialActivity: 'message'
-      }
-    );
-  };
+  window.ciscoSparkEvents = [];
 </script>
 </body>
 
