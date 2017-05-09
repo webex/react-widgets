@@ -99,11 +99,15 @@ describe(`Widget Message Meet`, () => {
         browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
       });
 
-      beforeEach(`switch to meet widget`, () => {
+      beforeEach(`switch to meet widget local`, () => {
         // widget switches to message after hangup
         switchToMeet(browserLocal);
-        switchToMeet(browserRemote);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+      });
+
+      beforeEach(`switch to meet widget remote`, () => {
+        // widget switches to message after hangup
+        switchToMeet(browserRemote);
         browserRemote.element(meetWidget).element(callButton).waitForVisible();
       });
 
