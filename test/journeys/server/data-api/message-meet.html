@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cisco Spark Widget Test</title>
+  <meta charset="utf8">
+<link href="/dist-wmm/main.css" rel="stylesheet"></head>
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-widget"
+    id="ciscospark-widget">
+
+</div>
+<script>
+  window.loadBundle = function (bundleFile) {
+    var script = document.createElement('script');
+    script.src = bundleFile;
+    document.head.appendChild(script);
+    script.onload = function () {
+      console.info(`bundle loaded`);
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    }
+  };
+</script>
+</body>
+
+</html>

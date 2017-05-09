@@ -3,7 +3,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../lib/menu';
 
-describe(`Widget: One on One`, () => {
+describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
