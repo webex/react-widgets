@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cisco Spark Widget Test</title>
+  <meta charset="utf8">
+<link href="/dist-recents/main.css" rel="stylesheet"></head>
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-widget"
+    id="ciscospark-widget">
+
+</div>
+<script src="/dist-recents/bundle.js"></script>
+<script>
+  window.openRecentsWidget = function(options) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+    // Init a new widget
+    ciscospark.widget(widgetEl).recentsWidget(options);
+  };
+</script>
+</body>
+
+</html>
