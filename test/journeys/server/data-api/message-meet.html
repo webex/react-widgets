@@ -16,7 +16,6 @@
     script.src = bundleFile;
     document.head.appendChild(script);
     script.onload = function () {
-      console.info(`bundle loaded`);
       var DOMContentLoaded_event = document.createEvent("Event");
       DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
       window.document.dispatchEvent(DOMContentLoaded_event);
