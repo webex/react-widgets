@@ -17,6 +17,7 @@
     "test:automation:oneOnOne": "wdio wdio.conf.js --suite oneOnOne",
     "test:automation:space": "wdio wdio.conf.js --suite space",
     "test:automation:messageMeet": "wdio wdio.conf.js --suite messageMeet",
+    "test:automation:recents": "wdio wdio.conf.js --suite recents",
     "test:tap": "wdio wdio.conf.js --suite tap",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
     "jest:package": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/jest-package.js",
@@ -149,8 +150,5 @@
     "webdriverio": "^4.6.2",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
-  },
-  "optionalDependencies": {
-    "spark-js-sdk--test-users": "~0.3.3"
   }
 }
