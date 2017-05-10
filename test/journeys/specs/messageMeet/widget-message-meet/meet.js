@@ -1,7 +1,9 @@
 /* eslint-disable max-nested-callbacks */
+import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../../lib/menu';
+import {clearEventLog, getEventLog} from '../../../lib/events';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -45,22 +47,16 @@ describe(`Widget Message Meet`, () => {
   before(`pause to let test users establish`, () => browser.pause(5000));
 
   before(`inject token`, () => {
-    if (process.env.DEBUG_JOURNEYS) {
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidgetMessageMeet("${spock.token.access_token}", "${mccoy.email}");`);
-      console.info();
-      console.info();
-
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS REMOTE TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidgetMessageMeet("${mccoy.token.access_token}", "${spock.email}");`);
-      console.info();
-      console.info();
-    }
-
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidgetMessageMeet(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
     }, spock.token.access_token, mccoy.email);
 
   });
@@ -90,16 +86,28 @@ describe(`Widget Message Meet`, () => {
     describe(`during call experience`, () => {
       before(`open remote widget`, () => {
         browserRemote.execute((localAccessToken, localToUserEmail) => {
-          window.openWidgetMessageMeet(localAccessToken, localToUserEmail);
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName) => {
+              window.ciscoSparkEvents.push(eventName);
+            },
+            toPersonEmail: localToUserEmail,
+            initialActivity: `message`
+          };
+          window.openWidgetMessageMeet(options);
         }, mccoy.token.access_token, spock.email);
         browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
       });
 
-      beforeEach(`switch to meet widget`, () => {
+      beforeEach(`switch to meet widget local`, () => {
         // widget switches to message after hangup
         switchToMeet(browserLocal);
-        switchToMeet(browserRemote);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+      });
+
+      beforeEach(`switch to meet widget remote`, () => {
+        // widget switches to message after hangup
+        switchToMeet(browserRemote);
         browserRemote.element(meetWidget).element(callButton).waitForVisible();
       });
 
@@ -124,6 +132,7 @@ describe(`Widget Message Meet`, () => {
       });
 
       it(`can hangup in call`, () => {
+        clearEventLog(browserLocal);
         browserLocal.element(meetWidget).element(callButton).click();
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
@@ -135,6 +144,11 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
+        const events = getEventLog(browserLocal);
+        // TODO: SSDK-725
+        // assert.include(events, `calls:created`, `has a calls created event`);
+        // assert.include(events, `calls:connected`, `has a calls connected event`);
+        assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
       });
     });
   });
