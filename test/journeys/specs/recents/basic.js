@@ -118,8 +118,8 @@ describe(`Widget Recents`, () => {
       waitForPromise(lorraine.spark.conversation.post(conversation, {
         displayName: lorraineText
       }));
-      browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`);
-      assert.equal(browserLocal.getText(`.space-item:first-child .space-title`), conversation.displayName);
+      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === conversation.displayName);
+      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
       assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
     });
 
@@ -185,8 +185,7 @@ describe(`Widget Recents`, () => {
         assert.include(getEventLog(browserLocal), `rooms:selected`);
       });
 
-      // FAILING SSDK-752
-      it.skip(`memberships:created`, () => {
+      it(`memberships:created`, () => {
         const roomTitle = `Test Group Space 2`;
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.conversation.create({
@@ -235,8 +234,7 @@ describe(`Widget Recents`, () => {
       assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
     });
 
-    // FAILING SSDK-753
-    it.skip(`removes unread indicator when read`, () => {
+    it(`removes unread indicator when read`, () => {
       let activity;
       const lorraineText = `You're safe and sound now!`;
       waitForPromise(lorraine.spark.conversation.post(oneOnOneConversation, {
@@ -260,8 +258,8 @@ describe(`Widget Recents`, () => {
       }).then((c) => docbrown.spark.conversation.post(c, {
         displayName: docText
       })));
-      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === docbrown.displayName);
-      assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), docText);
+      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(docText));
+      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
     });
   });
 });
