@@ -140,9 +140,8 @@ describe(`Widget Space: One on One`, () => {
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
         const events = getEventLog(browserLocal);
-        // TODO: SSDK-725
-        // assert.include(events, `calls:created`, `has a calls created event`);
-        // assert.include(events, `calls:connected`, `has a calls connected event`);
+        assert.include(events, `calls:created`, `has a calls created event`);
+        assert.include(events, `calls:connected`, `has a calls connected event`);
         assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
       });
     });
