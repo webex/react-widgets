@@ -130,6 +130,7 @@ ansiColor('xterm') {
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
               '''
             }
           }
@@ -156,6 +157,7 @@ ansiColor('xterm') {
             archive 'packages/node_modules/@ciscospark/widget-recents/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-message-meet-demo/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-space-demo/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-recents-demo/dist/**/*'
 
 
             stage('Push to github'){
