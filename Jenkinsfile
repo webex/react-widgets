@@ -75,6 +75,7 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               npm install
+              npm install recompose@0.23.1
               rm -f $HOME/.npmrc
               '''
             }
