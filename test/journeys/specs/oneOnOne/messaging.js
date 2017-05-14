@@ -95,7 +95,7 @@ describe(`Widget Space: One on One`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
       const events = getEventLog(browserLocal);
       assert.include(events, `messages:created`, `has a message created event`);
-      assert.include(events, `spaces:unread`, `has an unread message event`);
+      assert.include(events, `rooms:unread`, `has an unread message event`);
     });
 
     it(`sends and deletes message`);
