@@ -76,6 +76,7 @@ ansiColor('xterm') {
               nvm use v6
               npm install
               npm install recompose@0.23.1
+              npm install webrtc-adapter@3.3.4
               rm -f $HOME/.npmrc
               '''
             }
