@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.46",
+  "version": "0.1.47",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "npm run build:packages && npm run build:bundle",
