@@ -33,7 +33,7 @@ describe(`Widget Message Meet`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-message-meet/production.html`)
+      .url(`/production.html`)
       .execute(() => {
         localStorage.clear();
       });
@@ -44,6 +44,8 @@ describe(`Widget Message Meet`, () => {
       [mccoy, spock] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       window.openWidget(localAccessToken, localToUserEmail);
@@ -52,7 +54,7 @@ describe(`Widget Message Meet`, () => {
 
   it(`loads the test page`, () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Message Meet Test`);
+    assert.equal(title, `Widget Message Meet Production Test`);
   });
 
   it(`loads the user's name`, () => {

@@ -75,6 +75,7 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               npm install
+              npm install webrtc-adapter@3.3.4
               rm -f $HOME/.npmrc
               '''
             }
@@ -96,8 +97,12 @@ ansiColor('xterm') {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh
              nvm use v6
-             NODE_ENV=test npm run build:bundle && npm run build:package widget-message-meet
+             NODE_ENV=test npm run build:bundle && npm run build:package widget-message-meet && npm run build:package widget-space && npm run build:package widget-recents
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation:oneOnOne
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation:space
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation:messageMeet
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation:recents
              '''
             }
           }
@@ -120,8 +125,12 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               version=`cat .version`
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:bundle
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:package widget-message-meet-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/" npm run build:package widget-message-meet
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
               '''
             }
           }
@@ -144,7 +153,12 @@ ansiColor('xterm') {
           if (currentBuild.result == 'SUCCESS'){
 
             archive 'packages/node_modules/@ciscospark/widget-message-meet/dist/**/*'
-            archive 'dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-space/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-recents/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-message-meet-demo/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-space-demo/dist/**/*'
+            archive 'packages/node_modules/@ciscospark/widget-recents-demo/dist/**/*'
+
 
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {

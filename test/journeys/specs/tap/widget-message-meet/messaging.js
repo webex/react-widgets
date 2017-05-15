@@ -29,7 +29,7 @@ describe(`Widget Message Meet`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/widget-message-meet/production.html`)
+      .url(`/production.html`)
       .execute(() => {
         localStorage.clear();
       });
@@ -44,6 +44,8 @@ describe(`Widget Message Meet`, () => {
     .then((users) => {
       [mccoy] = users;
     }));
+
+  before(`pause to let test users establish`, () => browser.pause(5000));
 
   before(`inject token`, () => {
     if (process.env.DEBUG_JOURNEYS) {
