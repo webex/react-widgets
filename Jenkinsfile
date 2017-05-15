@@ -75,6 +75,7 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm use v6
               npm install
+              npm install webrtc-adapter@3.3.4
               rm -f $HOME/.npmrc
               '''
             }
