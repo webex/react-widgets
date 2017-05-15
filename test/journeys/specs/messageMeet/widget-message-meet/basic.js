@@ -42,7 +42,15 @@ describe(`Widget Message Meet`, () => {
 
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidgetMessageMeet(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
     }, spock.token.access_token, mccoy.email);
   });
 
