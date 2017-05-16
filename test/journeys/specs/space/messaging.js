@@ -133,7 +133,7 @@ describe(`Widget Space`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText);
       const remoteSendEvents = getEventLog(browserLocal);
       assert.include(remoteSendEvents, `messages:created`, `has a message created event`);
-      assert.include(remoteSendEvents, `spaces:unread`, `has an unread message event`);
+      assert.include(remoteSendEvents, `rooms:unread`, `has an unread message event`);
       // Send a message from a 'client'
       clearEventLog(browserLocal);
       const lorraineText = `Marty, will we ever see you again?`;
@@ -145,7 +145,7 @@ describe(`Widget Space`, () => {
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
       const clientSendEvents = getEventLog(browserLocal);
       assert.include(clientSendEvents, `messages:created`, `has a message created event`);
-      assert.include(clientSendEvents, `spaces:unread`, `has an unread message event`);
+      assert.include(clientSendEvents, `rooms:unread`, `has an unread message event`);
       const martyText2 = `I guarantee it.`;
       browserLocal.setValue(textInputField, `${martyText2}\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);
