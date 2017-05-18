@@ -44,9 +44,9 @@ describe(`Widget Message Meet`, () => {
       [mccoy] = users;
     }));
 
-  before(`pause to let test users establish`, () => browser.pause(5000));
+  before(`pause to let test users establish`, () => browser.pause(7500));
 
-  before(`inject token`, () => {
+  before(`open local widget spock`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
@@ -58,7 +58,22 @@ describe(`Widget Message Meet`, () => {
       };
       window.openWidgetMessageMeet(options);
     }, spock.token.access_token, mccoy.email);
+    browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
+  });
 
+  before(`open remote widget mccoy`, () => {
+    browserRemote.execute((localAccessToken, localToUserEmail) => {
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
+    }, mccoy.token.access_token, spock.email);
+    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
   });
 
   describe(`meet widget`, () => {
@@ -73,8 +88,6 @@ describe(`Widget Message Meet`, () => {
 
     describe(`pre call experience`, () => {
       before(`switch to meet widget`, () => {
-        // Wait for conversation to be established before continuing
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
         switchToMeet(browserLocal);
       });
 
@@ -84,21 +97,6 @@ describe(`Widget Message Meet`, () => {
     });
 
     describe(`during call experience`, () => {
-      before(`open remote widget`, () => {
-        browserRemote.execute((localAccessToken, localToUserEmail) => {
-          const options = {
-            accessToken: localAccessToken,
-            onEvent: (eventName) => {
-              window.ciscoSparkEvents.push(eventName);
-            },
-            toPersonEmail: localToUserEmail,
-            initialActivity: `message`
-          };
-          window.openWidgetMessageMeet(options);
-        }, mccoy.token.access_token, spock.email);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
-      });
-
       beforeEach(`switch to meet widget local`, () => {
         // widget switches to message after hangup
         switchToMeet(browserLocal);
@@ -116,10 +114,12 @@ describe(`Widget Message Meet`, () => {
         // wait for call to establish
         browserRemote.waitForVisible(answerButton);
         // Call controls currently has a hover state
-        browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
+        browserLocal.moveToObject(meetWidget);
         browserLocal.waitForVisible(callControls);
+        browserLocal.moveToObject(hangupButton);
         browserLocal.element(meetWidget).element(hangupButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
       });
 
       it(`can decline an incoming call`, () => {
@@ -128,7 +128,7 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(declineButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
         // Pausing to let locus session flush
-        browserLocal.pause(20000);
+        browserLocal.pause(10000);
       });
 
       it(`can hangup in call`, () => {
@@ -139,8 +139,9 @@ describe(`Widget Message Meet`, () => {
         browserRemote.waitForVisible(remoteVideo);
         // Let call elapse 5 seconds before hanging up
         browserLocal.pause(5000);
-        browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
+        browserLocal.moveToObject(meetWidget);
         browserLocal.waitForVisible(callControls);
+        browserLocal.moveToObject(hangupButton);
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
