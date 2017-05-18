@@ -43,7 +43,7 @@
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
   "main": "src/index.js",
   "dependencies": {
-    "@ciscospark/common": "0.7.87",
+    "@ciscospark/common": "0.8.0",
     "@ciscospark/helper-html": "0.7.87",
     "@ciscospark/plugin-avatar": "0.7.87",
     "@ciscospark/plugin-conversation": "0.7.87",
