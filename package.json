@@ -47,7 +47,7 @@
     "@ciscospark/helper-html": "0.8.0",
     "@ciscospark/plugin-avatar": "0.8.0",
     "@ciscospark/plugin-conversation": "0.8.0",
-    "@ciscospark/plugin-encryption": "0.8.0",
+    "@ciscospark/plugin-encryption": "0.10.0",
     "@ciscospark/plugin-flag": "0.8.0",
     "@ciscospark/plugin-logger": "0.8.0",
     "@ciscospark/plugin-metrics": "0.8.0",
