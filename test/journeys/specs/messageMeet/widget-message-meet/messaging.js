@@ -63,7 +63,7 @@ describe(`Widget Message Meet`, () => {
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
 
-  describe(`meet widget`, () => {
+  describe(`message widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {

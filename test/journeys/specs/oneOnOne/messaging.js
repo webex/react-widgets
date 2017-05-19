@@ -29,7 +29,7 @@ describe(`Widget Space: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/?message`)
       .execute(() => {
         localStorage.clear();
       });
@@ -62,7 +62,7 @@ describe(`Widget Space: One on One`, () => {
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
 
-  describe(`meet widget`, () => {
+  describe(`message widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
