@@ -51,7 +51,7 @@
     "@ciscospark/plugin-flag": "0.8.0",
     "@ciscospark/plugin-logger": "0.8.0",
     "@ciscospark/plugin-metrics": "0.8.0",
-    "@ciscospark/plugin-people": "0.8.0",
+    "@ciscospark/plugin-people": "0.10.0",
     "@ciscospark/plugin-phone": "0.8.0",
     "@ciscospark/spark-core": "0.8.0",
     "@ciscospark/storage-adapter-local-forage": "0.8.0",
