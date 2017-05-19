@@ -87,29 +87,16 @@ describe(`Widget Message Meet`, () => {
     const remoteVideo = `.remote-video video`;
 
     describe(`pre call experience`, () => {
-      before(`switch to meet widget`, () => {
-        switchToMeet(browserLocal);
-      });
-
       it(`has a call button`, () => {
+        switchToMeet(browserLocal);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
       });
     });
 
     describe(`during call experience`, () => {
-      beforeEach(`switch to meet widget local`, () => {
-        // widget switches to message after hangup
+      it(`can hangup before answer`, () => {
         switchToMeet(browserLocal);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
-      });
-
-      beforeEach(`switch to meet widget remote`, () => {
-        // widget switches to message after hangup
-        switchToMeet(browserRemote);
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
-      });
-
-      it(`can hangup before answer`, () => {
         browserLocal.element(meetWidget).element(callButton).click();
         // wait for call to establish
         browserRemote.waitForVisible(answerButton);
@@ -123,16 +110,21 @@ describe(`Widget Message Meet`, () => {
       });
 
       it(`can decline an incoming call`, () => {
+        switchToMeet(browserRemote);
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
         browserRemote.element(meetWidget).element(callButton).click();
         browserLocal.waitForVisible(declineButton);
         browserLocal.element(meetWidget).element(declineButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
         // Pausing to let locus session flush
         browserLocal.pause(10000);
       });
 
       it(`can hangup in call`, () => {
         clearEventLog(browserLocal);
+        switchToMeet(browserLocal);
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
         browserLocal.element(meetWidget).element(callButton).click();
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
@@ -149,6 +141,23 @@ describe(`Widget Message Meet`, () => {
         assert.include(events, `calls:ringing`, `has a calls ringing event`);
         assert.include(events, `calls:connected`, `has a calls connected event`);
         assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
+      });
+
+      it(`logs errors`, () => {
+        const logsRemote = browserRemote.log(`browser`).value;
+        console.info(`browerRemote logs:`);
+        logsRemote.forEach((log) => {
+          if (log.level === `SEVERE`) {
+            console.info(log.message);
+          }
+        });
+        const logsLocal = browserLocal.log(`browser`).value;
+        console.info(`browserLocal logs:`);
+        logsLocal.forEach((log) => {
+          if (log.level === `SEVERE`) {
+            console.info(log.message);
+          }
+        });
       });
     });
   });
