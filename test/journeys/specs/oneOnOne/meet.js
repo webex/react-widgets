@@ -86,26 +86,16 @@ describe(`Widget Space: One on One`, () => {
     const remoteVideo = `.remote-video video`;
 
     describe(`pre call experience`, () => {
-      before(`switch to meet widget`, () => {
-        switchToMeet(browserLocal);
-      });
-
       it(`has a call button`, () => {
+        switchToMeet(browserLocal);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
       });
     });
 
     describe(`during call experience`, () => {
-
-      beforeEach(`switch to meet widget`, () => {
-        // widget switches to message after hangup
-        switchToMeet(browserLocal);
-        switchToMeet(browserRemote);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
-      });
-
       it(`can hangup before answer`, () => {
+        switchToMeet(browserLocal);
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
         browserLocal.element(meetWidget).element(callButton).click();
         // wait for call to establish
         browserRemote.waitForVisible(answerButton);
@@ -119,6 +109,8 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`can decline an incoming call`, () => {
+        switchToMeet(browserRemote);
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
         browserRemote.element(meetWidget).element(callButton).click();
         browserLocal.waitForVisible(declineButton);
         browserLocal.element(meetWidget).element(declineButton).click();
@@ -130,6 +122,8 @@ describe(`Widget Space: One on One`, () => {
 
       it(`can hangup in call`, () => {
         clearEventLog(browserLocal);
+        switchToMeet(browserLocal);
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
         browserLocal.element(meetWidget).element(callButton).click();
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
@@ -146,6 +140,23 @@ describe(`Widget Space: One on One`, () => {
         assert.include(events, `calls:created`, `has a calls created event`);
         assert.include(events, `calls:connected`, `has a calls connected event`);
         assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
+      });
+
+      it(`logs errors`, () => {
+        const logsRemote = browserRemote.log(`browser`).value;
+        console.info(`browerRemote logs:`);
+        logsRemote.forEach((log) => {
+          if (log.level === `SEVERE`) {
+            console.info(log.message);
+          }
+        });
+        const logsLocal = browserLocal.log(`browser`).value;
+        console.info(`browserLocal logs:`);
+        logsLocal.forEach((log) => {
+          if (log.level === `SEVERE`) {
+            console.info(log.message);
+          }
+        });
       });
     });
   });
