@@ -5,8 +5,6 @@
 
 > Cisco Spark for React
 
-** THIS REPO CONTAINS EXPERIMENTAL CODE **
-
 The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.
 
 ## Table of Contents
@@ -20,7 +18,7 @@ The Cisco Spark for React library allows developers to easily incorporate Spark 
 
 ## Background
 
-This library allows React developers to quickly and easily create a Cisco Spark experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Spark, along with more complex, complete widgets, such as the Spark Message and Meet Widget.
+This library allows React developers to quickly and easily create a Cisco Spark experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Spark, along with more complex, complete widgets, such as the Spark Space Widget.
 
 The basic components are just presentational React <https://github.com/facebook/react> components, while our widgets leverage Redux <https://github.com/reactjs/redux> and the Spark Javascript SDK <https://github.com/ciscospark/spark-js-sdk>.
 
@@ -29,6 +27,7 @@ The basic components are just presentational React <https://github.com/facebook/
 While many of our components are purely presentational, some have extended functionality that provide a piece of the full Cisco Spark experience. These fully self contained elements are called `Widgets` and are available here:
 
 *  [Space Widget](./packages/node_modules/@ciscospark/widget-space)
+*  [Recents Widget](./packages/node_modules/@ciscospark/widget-recents)
 
 ## Install
 
