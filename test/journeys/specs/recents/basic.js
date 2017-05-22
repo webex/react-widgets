@@ -45,7 +45,7 @@ describe(`Widget Recents`, () => {
           authorization: marty.token
         }
       });
-      return marty.spark.mercury.connect();
+      return marty.spark.internal.mercury.connect();
     }));
 
   before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
@@ -56,7 +56,7 @@ describe(`Widget Recents`, () => {
           authorization: docbrown.token
         }
       });
-      return docbrown.spark.mercury.connect();
+      return docbrown.spark.internal.mercury.connect();
     }));
 
   before(`create lorraine`, () => testUsers.create({count: 1, config: {displayName: `Lorraine Baines`}})
@@ -67,18 +67,18 @@ describe(`Widget Recents`, () => {
           authorization: lorraine.token
         }
       });
-      return lorraine.spark.mercury.connect();
+      return lorraine.spark.internal.mercury.connect();
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
 
   after(`disconnect`, () => Promise.all([
-    marty.spark.mercury.disconnect(),
-    lorraine.spark.mercury.disconnect(),
-    docbrown.spark.mercury.disconnect()
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect(),
+    docbrown.spark.internal.mercury.disconnect()
   ]));
 
-  before(`create group space`, () => marty.spark.conversation.create({
+  before(`create group space`, () => marty.spark.internal.conversation.create({
     displayName: `Test Group Space`,
     participants: [marty, docbrown, lorraine]
   }).then((c) => {
@@ -86,7 +86,7 @@ describe(`Widget Recents`, () => {
     return conversation;
   }));
 
-  before(`create one on one converstation`, () => lorraine.spark.conversation.create({
+  before(`create one on one converstation`, () => lorraine.spark.internal.conversation.create({
     participants: [marty, lorraine]
   }).then((c) => {
     oneOnOneConversation = c;
@@ -115,7 +115,7 @@ describe(`Widget Recents`, () => {
   describe(`group space`, () => {
     it(`displays a new incoming message`, () => {
       const lorraineText = `Marty, will we ever see you again?`;
-      waitForPromise(lorraine.spark.conversation.post(conversation, {
+      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }));
       browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === conversation.displayName);
@@ -126,7 +126,7 @@ describe(`Widget Recents`, () => {
     it(`removes unread indicator when read`, () => {
       let activity;
       const lorraineText = `You're safe and sound now!`;
-      waitForPromise(lorraine.spark.conversation.post(conversation, {
+      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }).then((a) => {
         activity = a;
@@ -135,7 +135,7 @@ describe(`Widget Recents`, () => {
         browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
       assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
       // Acknowledge the activity to mark it read
-      waitForPromise(marty.spark.conversation.acknowledge(conversation, activity));
+      waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
       browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
     });
 
@@ -144,7 +144,7 @@ describe(`Widget Recents`, () => {
       it(`messages:created`, () => {
         clearEventLog(browserLocal);
         const lorraineText = `Don't be such a square`;
-        waitForPromise(lorraine.spark.conversation.post(conversation, {
+        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }));
         browserLocal.waitUntil(() =>
@@ -155,7 +155,7 @@ describe(`Widget Recents`, () => {
       it(`rooms:unread`, () => {
         clearEventLog(browserLocal);
         const lorraineText = `Your Uncle Joey didn't make parole again.`;
-        waitForPromise(lorraine.spark.conversation.post(conversation, {
+        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }));
         browserLocal.waitUntil(() =>
@@ -167,14 +167,14 @@ describe(`Widget Recents`, () => {
         let activity;
         clearEventLog(browserLocal);
         const lorraineText = `Your Uncle Joey didn't make parole again.`;
-        waitForPromise(lorraine.spark.conversation.post(conversation, {
+        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }).then((a) => {
           activity = a;
         }));
         browserLocal.waitUntil(() =>
           browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        waitForPromise(marty.spark.conversation.acknowledge(conversation, activity));
+        waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
         browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
         assert.include(getEventLog(browserLocal), `rooms:read`);
       });
@@ -188,10 +188,10 @@ describe(`Widget Recents`, () => {
       it(`memberships:created`, () => {
         const roomTitle = `Test Group Space 2`;
         clearEventLog(browserLocal);
-        waitForPromise(lorraine.spark.conversation.create({
+        waitForPromise(lorraine.spark.internal.conversation.create({
           displayName: roomTitle,
           participants: [marty, docbrown, lorraine]
-        }).then((c) => lorraine.spark.conversation.post(c, {
+        }).then((c) => lorraine.spark.internal.conversation.post(c, {
           displayName: `Everybody who's anybody drinks.`
         })));
         browserLocal.waitUntil(() =>
@@ -203,12 +203,12 @@ describe(`Widget Recents`, () => {
         // Create Room
         let kickedConversation;
         const roomTitle = `Kick Marty Out`;
-        waitForPromise(lorraine.spark.conversation.create({
+        waitForPromise(lorraine.spark.internal.conversation.create({
           displayName: roomTitle,
           participants: [marty, docbrown, lorraine]
         }).then((c) => {
           kickedConversation = c;
-          return lorraine.spark.conversation.post(c, {
+          return lorraine.spark.internal.conversation.post(c, {
             displayName: `Goodbye Marty.`
           });
         }));
@@ -216,7 +216,7 @@ describe(`Widget Recents`, () => {
           browserLocal.getText(`.space-item:first-child .space-title`) === roomTitle);
         // Remove user from room
         clearEventLog(browserLocal);
-        waitForPromise(lorraine.spark.conversation.leave(kickedConversation, marty));
+        waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
         browserLocal.waitUntil(() =>
           browserLocal.getText(`.space-item:first-child .space-title`) !== roomTitle);
         assert.include(getEventLog(browserLocal), `memberships:deleted`);
@@ -227,7 +227,7 @@ describe(`Widget Recents`, () => {
   describe(`one on one space`, () => {
     it(`displays a new incoming message`, () => {
       const lorraineText = `Marty? Why are you so nervous?`;
-      waitForPromise(lorraine.spark.conversation.post(oneOnOneConversation, {
+      waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
         displayName: lorraineText
       }));
       browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === lorraine.displayName);
@@ -237,7 +237,7 @@ describe(`Widget Recents`, () => {
     it(`removes unread indicator when read`, () => {
       let activity;
       const lorraineText = `You're safe and sound now!`;
-      waitForPromise(lorraine.spark.conversation.post(oneOnOneConversation, {
+      waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
         displayName: lorraineText
       }).then((a) => {
         activity = a;
@@ -247,15 +247,15 @@ describe(`Widget Recents`, () => {
 
       assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
       // Acknowledge the activity to mark it read
-      waitForPromise(marty.spark.conversation.acknowledge(oneOnOneConversation, activity));
+      waitForPromise(marty.spark.internal.conversation.acknowledge(oneOnOneConversation, activity));
       browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
     });
 
     it(`displays a new one on one`, () => {
       const docText = `Marty! We have to talk!`;
-      waitForPromise(docbrown.spark.conversation.create({
+      waitForPromise(docbrown.spark.internal.conversation.create({
         participants: [marty, docbrown]
-      }).then((c) => docbrown.spark.conversation.post(c, {
+      }).then((c) => docbrown.spark.internal.conversation.post(c, {
         displayName: docText
       })));
       browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(docText));
