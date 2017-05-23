@@ -48,7 +48,7 @@
     "@ciscospark/internal-plugin-avatar": "1.0.0",
     "@ciscospark/internal-plugin-conversation": "1.0.0",
     "@ciscospark/internal-plugin-encryption": "1.0.0",
-    "@ciscospark/internal-plugin-flag": "1.0.0",
+    "@ciscospark/internal-plugin-flag": "1.0.3",
     "@ciscospark/internal-plugin-mercury": "^1.0.0",
     "@ciscospark/internal-plugin-metrics": "1.0.0",
     "@ciscospark/internal-plugin-user": "^1.0.0",
