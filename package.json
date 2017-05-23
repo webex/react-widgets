@@ -55,7 +55,7 @@
     "@ciscospark/plugin-logger": "1.0.0",
     "@ciscospark/plugin-people": "1.0.0",
     "@ciscospark/plugin-phone": "1.0.0",
-    "@ciscospark/spark-core": "1.0.0",
+    "@ciscospark/spark-core": "1.0.3",
     "@ciscospark/storage-adapter-local-forage": "1.0.0",
     "@ciscospark/storage-adapter-local-storage": "1.0.0",
     "ampersand-events": "^2.0.2",
