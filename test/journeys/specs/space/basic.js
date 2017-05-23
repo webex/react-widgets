@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);

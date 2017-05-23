@@ -3,7 +3,7 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
 import {clearEventLog, getEventLog} from '../../lib/events';
 

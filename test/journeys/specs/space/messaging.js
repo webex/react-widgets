@@ -3,7 +3,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import waitForPromise from '../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../lib/events';
 
