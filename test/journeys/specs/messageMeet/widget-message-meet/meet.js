@@ -142,22 +142,22 @@ describe(`Widget Message Meet`, () => {
         assert.include(events, `calls:connected`, `has a calls connected event`);
         assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
       });
+    });
 
-      it(`logs errors`, () => {
-        const logsRemote = browserRemote.log(`browser`).value;
-        console.info(`browerRemote logs:`);
-        logsRemote.forEach((log) => {
-          if (log.level === `SEVERE`) {
-            console.info(log.message);
-          }
-        });
-        const logsLocal = browserLocal.log(`browser`).value;
-        console.info(`browserLocal logs:`);
-        logsLocal.forEach((log) => {
-          if (log.level === `SEVERE`) {
-            console.info(log.message);
-          }
-        });
+    afterEach(`logs errors`, () => {
+      const logsRemote = browserRemote.log(`browser`).value;
+      console.info(`browerRemote logs:`);
+      logsRemote.forEach((log) => {
+        if (log.level === `SEVERE`) {
+          console.info(log.message);
+        }
+      });
+      const logsLocal = browserLocal.log(`browser`).value;
+      console.info(`browserLocal logs:`);
+      logsLocal.forEach((log) => {
+        if (log.level === `SEVERE`) {
+          console.info(log.message);
+        }
       });
     });
   });
