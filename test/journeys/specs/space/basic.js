@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -45,14 +45,14 @@ describe(`Widget Space`, () => {
         }
       });
 
-      return marty.spark.mercury.connect();
+      return marty.spark.internal.mercury.connect();
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
 
-  after(`disconnect`, () => marty.spark.mercury.disconnect());
+  after(`disconnect`, () => marty.spark.internal.mercury.disconnect());
 
-  before(`create space`, () => marty.spark.conversation.create({
+  before(`create space`, () => marty.spark.internal.conversation.create({
     displayName: `Test Widget Space`,
     participants
   }).then((c) => {
