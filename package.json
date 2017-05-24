@@ -122,7 +122,7 @@
     "html-webpack-plugin": "^2.24.1",
     "image-webpack-loader": "^3.1.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
-    "jest": "^19.0.0",
+    "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "material-ui": "^0.18.0",
     "minimist": "^1.2.0",
