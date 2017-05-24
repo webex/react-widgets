@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-describe(`Widget: One on One`, () => {
+describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
 
   let mccoy, spock;
@@ -26,7 +26,7 @@ describe(`Widget: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/?basic`)
       .execute(() => {
         localStorage.clear();
       });
