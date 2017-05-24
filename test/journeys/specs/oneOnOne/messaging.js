@@ -3,7 +3,7 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
 import {clearEventLog, getEventLog} from '../../lib/events';
 
@@ -29,7 +29,7 @@ describe(`Widget Space: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/?message`)
       .execute(() => {
         localStorage.clear();
       });
@@ -62,7 +62,7 @@ describe(`Widget Space: One on One`, () => {
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
 
-  describe(`meet widget`, () => {
+  describe(`message widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
@@ -95,7 +95,7 @@ describe(`Widget Space: One on One`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
       const events = getEventLog(browserLocal);
       assert.include(events, `messages:created`, `has a message created event`);
-      assert.include(events, `spaces:unread`, `has an unread message event`);
+      assert.include(events, `rooms:unread`, `has an unread message event`);
     });
 
     it(`sends and deletes message`);

@@ -3,7 +3,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import waitForPromise from '../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../lib/events';
 
@@ -45,7 +45,7 @@ describe(`Widget Space`, () => {
           authorization: marty.token
         }
       });
-      return marty.spark.mercury.connect();
+      return marty.spark.internal.mercury.connect();
     }));
 
   before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
@@ -66,17 +66,17 @@ describe(`Widget Space`, () => {
           authorization: lorraine.token
         }
       });
-      return lorraine.spark.mercury.connect();
+      return lorraine.spark.internal.mercury.connect();
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
 
   after(`disconnect`, () => Promise.all([
-    marty.spark.mercury.disconnect(),
-    lorraine.spark.mercury.disconnect()
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect()
   ]));
 
-  before(`create space`, () => marty.spark.conversation.create({
+  before(`create space`, () => marty.spark.internal.conversation.create({
     displayName: `Test Widget Space`,
     participants: [marty, docbrown, lorraine]
   }).then((c) => {
@@ -133,11 +133,11 @@ describe(`Widget Space`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText);
       const remoteSendEvents = getEventLog(browserLocal);
       assert.include(remoteSendEvents, `messages:created`, `has a message created event`);
-      assert.include(remoteSendEvents, `spaces:unread`, `has an unread message event`);
+      assert.include(remoteSendEvents, `rooms:unread`, `has an unread message event`);
       // Send a message from a 'client'
       clearEventLog(browserLocal);
       const lorraineText = `Marty, will we ever see you again?`;
-      waitForPromise(lorraine.spark.conversation.post(conversation, {
+      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }));
       // Wait for both widgets to receive client message
@@ -145,7 +145,7 @@ describe(`Widget Space`, () => {
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
       const clientSendEvents = getEventLog(browserLocal);
       assert.include(clientSendEvents, `messages:created`, `has a message created event`);
-      assert.include(clientSendEvents, `spaces:unread`, `has an unread message event`);
+      assert.include(clientSendEvents, `rooms:unread`, `has an unread message event`);
       const martyText2 = `I guarantee it.`;
       browserLocal.setValue(textInputField, `${martyText2}\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);

@@ -19,4 +19,5 @@ function clickMenuButton(aBrowser, buttonToClick) {
     aBrowser.waitForVisible(activityMenu);
   }
   aBrowser.element(controlsContainer).element(buttonToClick).click();
+  aBrowser.waitForVisible(activityMenu, null, true);
 }
