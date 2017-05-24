@@ -3,7 +3,7 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../../lib/menu';
 
 describe(`Widget Message Meet`, () => {
@@ -44,6 +44,8 @@ describe(`Widget Message Meet`, () => {
     .then((users) => {
       [mccoy] = users;
     }));
+
+  before(`pause to let test users establish`, () => browser.pause(5000));
 
   before(`inject token`, () => {
     if (process.env.DEBUG_JOURNEYS) {

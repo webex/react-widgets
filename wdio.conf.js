@@ -4,6 +4,9 @@ let mochaTimeout = 30000;
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
+if (process.env.SAUCE) {
+  mochaTimeout = 90000;
+}
 exports.config = {
   //
   // ==================
@@ -27,6 +30,9 @@ exports.config = {
     ],
     messageMeet: [
       `./test/journeys/specs/messageMeet/**/*.js`
+    ],
+    recents: [
+      `./test/journeys/specs/recents/**/*.js`
     ]
   },
   // Patterns to exclude.
@@ -172,6 +178,7 @@ exports.config = {
   // Static Server setup
   staticServerFolders: [
     {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
+    {mount: `/dist-recents`, path: `./packages/node_modules/@ciscospark/widget-recents/dist`},
     {mount: `/dist-wmm`, path: `./packages/node_modules/@ciscospark/widget-message-meet/dist`},
     {mount: `/`, path: `./test/journeys/server/`}
   ],

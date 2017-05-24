@@ -42,6 +42,8 @@ describe(`Widget Message Meet`, () => {
       [mccoy] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(7500));
+
   before(`inject token`, () => {
     if (process.env.DEBUG_JOURNEYS) {
       console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
@@ -61,6 +63,15 @@ describe(`Widget Message Meet`, () => {
       window.openWidget(localAccessToken, localToUserEmail);
     }, spock.token.access_token, mccoy.email);
 
+    browserRemote.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+
+  });
+
+  before(`open remote widget`, () => {
+    browserRemote.execute((localAccessToken, localToUserEmail) => {
+      window.openWidget(localAccessToken, localToUserEmail);
+    }, mccoy.token.access_token, spock.email);
+    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
   });
 
   describe(`meet widget`, () => {
@@ -86,13 +97,6 @@ describe(`Widget Message Meet`, () => {
     });
 
     describe(`during call experience`, () => {
-      before(`open remote widget`, () => {
-        browserRemote.execute((localAccessToken, localToUserEmail) => {
-          window.openWidget(localAccessToken, localToUserEmail);
-        }, mccoy.token.access_token, spock.email);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
-      });
-
       beforeEach(`switch to meet widget`, () => {
         // widget switches to message after hangup
         switchToMeet(browserLocal);
@@ -106,10 +110,12 @@ describe(`Widget Message Meet`, () => {
         // wait for call to establish
         browserRemote.waitForVisible(answerButton);
         // Call controls currently has a hover state
-        browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
+        browserLocal.moveToObject(meetWidget);
         browserLocal.waitForVisible(callControls);
+        browserLocal.moveToObject(hangupButton);
         browserLocal.element(meetWidget).element(hangupButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
       });
 
       it(`can decline an incoming call`, () => {
@@ -128,8 +134,9 @@ describe(`Widget Message Meet`, () => {
         browserRemote.waitForVisible(remoteVideo);
         // Let call elapse 5 seconds before hanging up
         browserLocal.pause(5000);
-        browserLocal.moveTo(browserLocal.element(meetWidget).value.ELEMENT);
+        browserLocal.moveToObject(meetWidget);
         browserLocal.waitForVisible(callControls);
+        browserLocal.moveToObject(hangupButton);
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);

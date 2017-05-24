@@ -3,10 +3,11 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
+import {clearEventLog, getEventLog} from '../../lib/events';
 
-describe(`Widget: One on One`, () => {
+describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let mccoy, spock;
@@ -28,7 +29,7 @@ describe(`Widget: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/?message`)
       .execute(() => {
         localStorage.clear();
       });
@@ -44,10 +45,15 @@ describe(`Widget: One on One`, () => {
       [mccoy] = users;
     }));
 
+  before(`pause to let test users establish`, () => browser.pause(5000));
+
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
       };
@@ -56,7 +62,7 @@ describe(`Widget: One on One`, () => {
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
 
-  describe(`meet widget`, () => {
+  describe(`message widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
@@ -84,8 +90,12 @@ describe(`Widget: One on One`, () => {
       browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`);
       // Send a message back
+      clearEventLog(browserLocal);
       browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.\n`);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
+      const events = getEventLog(browserLocal);
+      assert.include(events, `messages:created`, `has a message created event`);
+      assert.include(events, `rooms:unread`, `has an unread message event`);
     });
 
     it(`sends and deletes message`);
