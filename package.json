@@ -46,7 +46,7 @@
     "@ciscospark/common": "1.0.0",
     "@ciscospark/helper-html": "1.0.0",
     "@ciscospark/internal-plugin-avatar": "1.0.0",
-    "@ciscospark/internal-plugin-conversation": "1.0.0",
+    "@ciscospark/internal-plugin-conversation": "1.0.3",
     "@ciscospark/internal-plugin-encryption": "1.0.0",
     "@ciscospark/internal-plugin-flag": "1.0.0",
     "@ciscospark/internal-plugin-mercury": "^1.0.0",
