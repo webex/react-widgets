@@ -25,12 +25,6 @@ describe(`Widget Message Meet`, () => {
     `spark:kms`
   ].join(` `);
 
-  if (process.env.DEBUG_JOURNEYS) {
-    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
-    // Leaves the browser open for further testing and inspection
-    after(() => browserLocal.debug());
-  }
-
   before(`load browsers`, () => {
     browser
       .url(`/production.html`)
@@ -48,7 +42,15 @@ describe(`Widget Message Meet`, () => {
 
   before(`inject token`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
     }, spock.token.access_token, mccoy.email);
   });
 
@@ -58,8 +60,9 @@ describe(`Widget Message Meet`, () => {
   });
 
   it(`loads the user's name`, () => {
-    browserLocal.waitUntil(() => browserLocal.getText(`h1`) !== mccoy.email);
-    assert.equal(browserLocal.getText(`h1`), mccoy.displayName);
+    browserLocal.waitForVisible(`h1.ciscospark-title`);
+    browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
+    assert([mccoy.displayName, mccoy.email].includes(browserLocal.getText(`h1.ciscospark-title`)));
   });
 
   describe(`Activity Menu`, () => {

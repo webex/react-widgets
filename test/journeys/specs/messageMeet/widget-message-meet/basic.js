@@ -27,7 +27,7 @@ describe(`Widget Message Meet`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/message-meet.html`)
+      .url(`/production.html`)
       .execute(() => {
         localStorage.clear();
       });
