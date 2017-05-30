@@ -121,8 +121,7 @@ export default (options) => {
         {
           test: /.*\.(gif|png|jpg)$/,
           use: [
-            `file-loader?name=[name].[ext]`,
-            `image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}`
+            `file-loader?name=[name].[ext]`
           ]
         }
       ]
