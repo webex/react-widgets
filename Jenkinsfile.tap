@@ -12,12 +12,6 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/ciscospark/react-ciscospark.git'
-      }
-    }
-
     stage('Clean') {
       steps {
         sh 'rm -rf node_modules'
