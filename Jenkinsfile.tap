@@ -12,12 +12,6 @@ pipeline {
   }
 
   stages {
-    stage('Clean') {
-      steps {
-        sh 'rm -rf node_modules'
-      }
-    }
-
     stage('Install') {
       steps {
         withCredentials([
