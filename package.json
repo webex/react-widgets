@@ -102,7 +102,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-1": "^6.16.0",
     "babel-register": "^6.18.0",
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "child-process-promise": "^2.2.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.0",
