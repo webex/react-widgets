@@ -162,7 +162,7 @@ ansiColor('xterm') {
 
             stage('Push to github'){
               sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-                sh "git push upstream HEAD:master && git push --tags"
+                sh "git push upstream HEAD:master && git push --tags upstream"
               }
             }
 

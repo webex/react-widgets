@@ -1,7 +1,9 @@
 /* eslint-disable max-nested-callbacks */
+import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../../lib/menu';
+import {clearEventLog, getEventLog} from '../../../lib/events';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -44,34 +46,34 @@ describe(`Widget Message Meet`, () => {
 
   before(`pause to let test users establish`, () => browser.pause(7500));
 
-  before(`inject token`, () => {
-    if (process.env.DEBUG_JOURNEYS) {
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidget("${spock.token.access_token}", "${mccoy.email}");`);
-      console.info();
-      console.info();
-
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS REMOTE TEST FROM DEV TOOLS`);
-      console.info();
-      console.info(`window.openWidget("${mccoy.token.access_token}", "${spock.email}");`);
-      console.info();
-      console.info();
-    }
-
+  before(`open local widget spock`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
     }, spock.token.access_token, mccoy.email);
-
-    browserRemote.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-
+    browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
   });
 
-  before(`open remote widget`, () => {
+  before(`open remote widget mccoy`, () => {
     browserRemote.execute((localAccessToken, localToUserEmail) => {
-      window.openWidget(localAccessToken, localToUserEmail);
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName) => {
+          window.ciscoSparkEvents.push(eventName);
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: `message`
+      };
+      window.openWidgetMessageMeet(options);
     }, mccoy.token.access_token, spock.email);
-    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
   });
 
   describe(`meet widget`, () => {
@@ -85,27 +87,16 @@ describe(`Widget Message Meet`, () => {
     const remoteVideo = `.remote-video video`;
 
     describe(`pre call experience`, () => {
-      before(`switch to meet widget`, () => {
-        // Wait for conversation to be established before continuing
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        switchToMeet(browserLocal);
-      });
-
       it(`has a call button`, () => {
+        switchToMeet(browserLocal);
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
       });
     });
 
     describe(`during call experience`, () => {
-      beforeEach(`switch to meet widget`, () => {
-        // widget switches to message after hangup
-        switchToMeet(browserLocal);
-        switchToMeet(browserRemote);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
-      });
-
       it(`can hangup before answer`, () => {
+        switchToMeet(browserLocal);
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
         browserLocal.element(meetWidget).element(callButton).click();
         // wait for call to establish
         browserRemote.waitForVisible(answerButton);
@@ -119,15 +110,21 @@ describe(`Widget Message Meet`, () => {
       });
 
       it(`can decline an incoming call`, () => {
+        switchToMeet(browserRemote);
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
         browserRemote.element(meetWidget).element(callButton).click();
         browserLocal.waitForVisible(declineButton);
         browserLocal.element(meetWidget).element(declineButton).click();
         browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserRemote.element(meetWidget).element(callButton).waitForVisible();
         // Pausing to let locus session flush
-        browserLocal.pause(20000);
+        return browserLocal.pause(10000);
       });
 
       it(`can hangup in call`, () => {
+        clearEventLog(browserLocal);
+        switchToMeet(browserLocal);
+        browserLocal.element(meetWidget).element(callButton).waitForVisible();
         browserLocal.element(meetWidget).element(callButton).click();
         browserRemote.waitForVisible(answerButton);
         browserRemote.element(meetWidget).element(answerButton).click();
@@ -140,6 +137,23 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
+      });
+    });
+
+    afterEach(`logs errors`, () => {
+      const logsRemote = browserRemote.log(`browser`).value;
+      console.info(`browerRemote logs:`);
+      logsRemote.forEach((log) => {
+        if (log.level === `SEVERE`) {
+          console.info(log.message);
+        }
+      });
+      const logsLocal = browserLocal.log(`browser`).value;
+      console.info(`browserLocal logs:`);
+      logsLocal.forEach((log) => {
+        if (log.level === `SEVERE`) {
+          console.info(log.message);
+        }
       });
     });
   });
