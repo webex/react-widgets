@@ -113,11 +113,14 @@ describe(`Widget Space: One on One`, () => {
     it(`sends and flags message`);
 
     describe(`markdown messages`, () => {
-      it(`sends message with bold text`, () => {
+      beforeEach(`wait until widget is loaded`, () => {
         // Increase wait timeout for message delivery
         browser.timeouts(`implicit`, 10000);
         browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
         browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+      });
+
+      it(`sends message with bold text`, () => {
         // Remote is now ready, send a message with bold text from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
         browserRemote.keys([`Enter`, `NULL`]);
@@ -128,10 +131,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with italic text`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message with italic text to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `As you are _so fond_ of observing, doctor, I am not human.`);
         browserLocal.keys([`Enter`, `NULL`]);
@@ -142,10 +141,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with a blockquote`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `> You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
         // Quote break with two new lines
@@ -160,10 +155,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with numbered list`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `1. ordered list item 1`);
         browserLocal.keys([`Shift`, `Enter`, `NULL`]);
@@ -177,10 +168,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with bulleted list`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `* unordered list item 1`);
         browserRemote.keys([`Shift`, `Enter`, `NULL`]);
@@ -194,10 +181,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with heading 1`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `# Heading 1`);
         browserLocal.keys([`Enter`, `NULL`]);
@@ -207,10 +190,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with heading 2`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `## Heading 2`);
         browserRemote.keys([`Enter`, `NULL`]);
@@ -220,10 +199,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with heading 3`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `### Heading 3`);
         browserLocal.keys([`Enter`, `NULL`]);
@@ -233,10 +208,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with horizontal line`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `test horizontal line`);
         browserRemote.keys([`Shift`, `Enter`, `NULL`]);
@@ -248,10 +219,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with link`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `[Cisco](www.cisco.com)`);
         browserLocal.keys([`Enter`, `NULL`]);
@@ -262,10 +229,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with inline code`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message from it
         browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `this tests \`inline.code();\``);
         browserRemote.keys([`Enter`, `NULL`]);
@@ -275,10 +238,6 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`sends message with codeblock`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `\`\`\` html`);
         browserLocal.keys([`Shift`, `Enter`, `NULL`]);
@@ -293,3 +252,4 @@ describe(`Widget Space: One on One`, () => {
     });
   });
 });
+
