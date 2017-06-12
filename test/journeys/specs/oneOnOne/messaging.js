@@ -218,7 +218,8 @@ describe(`Widget Space: One on One`, () => {
         assert.isTrue(browserLocal.isVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > hr`));
       });
 
-      it(`sends message with link`, () => {
+      // TODO: https://voxeolabs.atlassian.net/projects/SSDK/issues/SSDK-920
+      it.skip(`sends message with link`, () => {
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `[Cisco](www.cisco.com)`);
         browserLocal.keys([`Enter`, `NULL`]);
@@ -252,4 +253,3 @@ describe(`Widget Space: One on One`, () => {
     });
   });
 });
-
