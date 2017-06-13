@@ -257,7 +257,6 @@ describe(`Widget Space`, () => {
         assert.isTrue(browserLocal.isVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > hr`));
       });
 
-      // TODO: https://voxeolabs.atlassian.net/projects/SSDK/issues/SSDK-920
       it(`sends message with link`, () => {
         // Remote is now ready, send a message to it
         browserLocal.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `[Cisco](http://www.cisco.com/)`);
