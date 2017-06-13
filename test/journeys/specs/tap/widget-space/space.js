@@ -7,7 +7,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
-import {switchToMeet, switchToMessage} from '../../../lib/menu';
+import {switchToMessage} from '../../../lib/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
 describe(`Widget Space: Group Space: TAP`, () => {
@@ -34,7 +34,7 @@ describe(`Widget Space: Group Space: TAP`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/production/space.html`)
+      .url(`/production/space.html?space`)
       .execute(() => {
         localStorage.clear();
       });

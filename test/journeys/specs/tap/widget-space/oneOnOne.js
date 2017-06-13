@@ -29,7 +29,7 @@ describe(`Widget Space: One on One: TAP`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/production/space.html`)
+      .url(`/production/space.html?oneOnOne`)
       .execute(() => {
         localStorage.clear();
       });
