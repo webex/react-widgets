@@ -28,7 +28,7 @@ describe(`Widget Message Meet TAP`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/production.html`)
+      .url(`/production/message-meet.html`)
       .execute(() => {
         localStorage.clear();
       });
@@ -135,7 +135,8 @@ describe(`Widget Message Meet TAP`, () => {
       assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
       browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 10000);
       // Remote is now ready, send a message to it
-      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?\n`);
+      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?`);
+      browserLocal.keys([`Enter`, `NULL`]);
       browserRemote.waitForVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
       browserRemote.waitUntil(
         () => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`,
@@ -144,7 +145,8 @@ describe(`Widget Message Meet TAP`, () => {
       );
       // Send a message back
       clearEventLog(browserLocal);
-      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.\n`);
+      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.`);
+      browserRemote.keys([`Enter`, `NULL`]);
       browserLocal.waitForVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
       browserLocal.waitUntil(
         () => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`,
