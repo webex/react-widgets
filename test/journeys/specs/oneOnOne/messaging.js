@@ -219,14 +219,14 @@ describe(`Widget Space: One on One`, () => {
       });
 
       // TODO: https://voxeolabs.atlassian.net/projects/SSDK/issues/SSDK-920
-      it.skip(`sends message with link`, () => {
+      it(`sends message with link`, () => {
         // Remote is now ready, send a message to it
-        browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `[Cisco](www.cisco.com)`);
+        browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `[Cisco](http://www.cisco.com/)`);
         browserLocal.keys([`Enter`, `NULL`]);
         // Wait until message arrives and assert link text and href value matches
         browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Cisco`);
         assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > a`), `Cisco`);
-        assert.equal(browserRemote.getAttribute(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > a`, `href`), `www.cisco.com`);
+        assert.equal(browserRemote.getAttribute(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > a`, `href`), `http://www.cisco.com/`);
       });
 
       it(`sends message with inline code`, () => {
