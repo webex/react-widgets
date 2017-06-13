@@ -74,3 +74,10 @@ export function getAllPackages() {
   const pkgPaths = getAllPackagePaths();
   return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name);
 }
+
+export function getWidgetPackages() {
+  const pkgPaths = getAllPackagePaths();
+  return pkgPaths
+    .map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name)
+    .filter((pkgPath) => pkgPath.startsWith(`@ciscospark/widget`) && !pkgPath.startsWith(`@ciscospark/widget-base`));
+}

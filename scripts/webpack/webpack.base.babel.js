@@ -61,7 +61,7 @@ export default (options) => {
             `/fixtures/`,
             `/__mocks__/`
           ],
-          loader: `babel-loader`
+          use: [`babel-loader`]
         },
         {
           test: /\.css$/,
@@ -98,25 +98,31 @@ export default (options) => {
           test: /\.woff$/,
           // Inline small woff files and output them below font/.
           // Set mimetype just in case.
-          loader: `file-loader`,
-          options: {
-            name: `fonts/[name].[ext]`,
-            mimetype: `application/font-woff`
-          }
+          use: [{
+            loader: `file-loader`,
+            options: {
+              name: `fonts/[name].[ext]`,
+              mimetype: `application/font-woff`
+            }
+          }]
         },
         {
           test: /\.ttf$|\.otf$|\.eot$|\.svg$/,
-          loader: `file-loader`,
-          options: {
-            name: `fonts/[name].[ext]`
-          }
+          use: [{
+            loader: `file-loader`,
+            options: {
+              name: `fonts/[name].[ext]`
+            }
+          }]
         },
         {
           test: /\.mp3$|\.wav$/,
-          loader: `file-loader`,
-          query: {
-            name: `media/[name].[ext]`
-          }
+          use: [{
+            loader: `file-loader`,
+            query: {
+              name: `media/[name].[ext]`
+            }
+          }]
         },
         {
           test: /.*\.(gif|png|jpg)$/,
