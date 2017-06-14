@@ -4,6 +4,9 @@ let mochaTimeout = 30000;
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
+if (process.env.SAUCE) {
+  mochaTimeout = 90000;
+}
 exports.config = {
   //
   // ==================

@@ -3,7 +3,7 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-conversation';
+import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../../lib/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
@@ -63,7 +63,7 @@ describe(`Widget Message Meet`, () => {
     browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
   });
 
-  describe(`meet widget`, () => {
+  describe(`message widget`, () => {
     before(`open remote widget`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {

@@ -12,15 +12,12 @@
 </div>
 <script src="https://code.s4d.io/widget-message-meet/production/bundle.js"></script>
 <script>
-  window.openWidget = function(accessToken, toPersonEmail) {
+  window.ciscoSparkEvents = [];
+  window.openWidgetMessageMeet = function(options) {
     var widgetEl = document.getElementById('ciscospark-widget');
-      // Init a new widget
-      ciscospark.widget(widgetEl).messageMeetWidget({
-        accessToken: accessToken,
-        toPersonEmail: toPersonEmail,
-        initialActivity: 'message'
-      });
-    };
+    // Init a new widget
+    ciscospark.widget(widgetEl).messageMeetWidget(options);
+  };
 </script>
 </body>
 

@@ -26,7 +26,7 @@ describe(`Widget Space: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/?basic`)
       .execute(() => {
         localStorage.clear();
       });
