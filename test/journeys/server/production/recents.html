@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Widget Recents Production Test</title>
+  <meta charset="utf8">
+<link href="https://code.s4d.io/widget-recents/production/main.css" rel="stylesheet">
+<body>
+<div style="width: 500px; height: 500px">
+  <main class="ciscospark-widget"
+    id="ciscospark-widget">
+
+</div>
+<script src="https://code.s4d.io/widget-recents/production/bundle.js"></script>
+<script>
+  window.openRecentsWidget = function(options) {
+    var widgetEl = document.getElementById('ciscospark-widget');
+    // Init a new widget
+    ciscospark.widget(widgetEl).recentsWidget(options);
+  };
+  window.ciscoSparkEvents = [];
+</script>
+</body>
+
+</html>
