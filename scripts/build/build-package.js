@@ -12,13 +12,20 @@ import rimraf from 'rimraf';
 export default function buildPackage(pkgName, pkgPath) {
   pkgPath = pkgPath || getPackage(pkgName);
   if (pkgPath) {
+    const isWidget = pkgName.indexOf(`widget-`) !== -1;
     try {
       const webpackConfigPath = path.resolve(__dirname, `webpack`, `webpack.prod.babel.js`);
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
       rimraf.sync(path.resolve(pkgPath, `dist`));
       console.info(`Building ${pkgName}...`.cyan);
-      execSync(`cd ${pkgPath} && webpack --config ${webpackConfigPath}`);
+      if (isWidget) {
+        execSync(`cd ${pkgPath} && webpack --config ${webpackConfigPath}`);
+      }
+      else {
+        execSync(`cd ${pkgPath} && babel ./src --out-dir ./dist/es --ignore *.test.js`);
+      }
+
       console.info(`${pkgName}... Done\n\n`.cyan);
     }
     catch (err) {
