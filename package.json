@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.96",
+  "version": "0.1.101",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "npm run build:packages && npm run build:bundle",
@@ -103,7 +103,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-1": "^6.16.0",
     "babel-register": "^6.18.0",
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "child-process-promise": "^2.2.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.0",
@@ -132,8 +132,8 @@
     "postcss": "^6.0.1",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^2.0.5",
-    "postcss-reporter": "^3.0.0",
-    "react-cookie": "^1.0.4",
+    "postcss-reporter": "^4.0.0",
+    "react-cookie": "^2.0.7",
     "react-highlight": "^0.10.0",
     "react-router": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
