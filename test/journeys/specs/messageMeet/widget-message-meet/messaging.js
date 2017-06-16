@@ -1,11 +1,11 @@
 /* eslint-disable max-nested-callbacks */
 
 import {assert} from 'chai';
-
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../../lib/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -52,8 +52,9 @@ describe(`Widget Message Meet`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          // eslint-disable-next-line object-shorthand
+          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
         },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
@@ -68,8 +69,9 @@ describe(`Widget Message Meet`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
           accessToken: localAccessToken,
-          onEvent: (eventName) => {
-            window.ciscoSparkEvents.push(eventName);
+          onEvent: (eventName, detail) => {
+            // eslint-disable-next-line object-shorthand
+            window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
           },
           toPersonEmail: localToUserEmail,
           initialActivity: `message`
@@ -98,8 +100,13 @@ describe(`Widget Message Meet`, () => {
       browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.\n`);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
       const events = getEventLog(browserLocal);
-      assert.include(events, `messages:created`, `has a message created event`);
-      assert.include(events, `messages:unread`, `has an unread message event`);
+      const eventCreated = events.find((event) => event.eventName === `messages:created`);
+      const eventUnread = events.find((event) => event.eventName === `messages:unread`);
+      assert.isDefined(eventCreated, `has a message created event`);
+      assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
+      assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, mccoy.id));
+      assert.containsAllKeys(eventUnread.detail, [`resource`, `event`, `data`]);
+      assert.isDefined(eventUnread, `has an unread message event`);
     });
 
     it(`sends and deletes message`);
