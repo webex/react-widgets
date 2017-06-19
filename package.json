@@ -153,7 +153,7 @@
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
     "webdriverio": "^4.6.2",
-    "webpack": "^2.2.0",
+    "webpack": "^3.0.0",
     "webpack-dev-server": "^2.2.0"
   },
   "greenkeeper": {
