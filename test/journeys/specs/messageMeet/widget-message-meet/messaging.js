@@ -95,16 +95,22 @@ describe(`Widget Message Meet`, () => {
       // Remote is now ready, send a message to it
       browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?\n`);
       browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`);
+    });
+
+    it(`receives proper events on messages`, () => {
       // Send a message back
       clearEventLog(browserLocal);
-      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.\n`);
+      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.`);
+      browserRemote.keys([`Enter`, `NULL`]);
       browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`);
       const events = getEventLog(browserLocal);
       const eventCreated = events.find((event) => event.eventName === `messages:created`);
       const eventUnread = events.find((event) => event.eventName === `messages:unread`);
       assert.isDefined(eventCreated, `has a message created event`);
       assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
+      assert.containsAllKeys(eventCreated.detail.data, [`actorId`, `actorName`, `id`, `personId`, `roomId`, `roomType`, `text`]);
       assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, mccoy.id));
+      assert.equal(eventCreated.detail.data.actorName, mccoy.displayName);
       assert.containsAllKeys(eventUnread.detail, [`resource`, `event`, `data`]);
       assert.isDefined(eventUnread, `has an unread message event`);
     });
