@@ -140,6 +140,9 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
+      });
+
+      it(`has proper call event data`, () => {
         const result = browserLocal.execute(() => {
           const events = window.ciscoSparkEvents.map((event) => {
             // Passing the call object from the browser causes an overflow
