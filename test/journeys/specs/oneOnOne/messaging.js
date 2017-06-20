@@ -111,7 +111,7 @@ describe(`Widget Space: One on One`, () => {
 
       assert.isDefined(eventUnread, `has an unread message event`);
       assert.containsAllKeys(eventUnread.detail, [`resource`, `event`, `data`]);
-      assert.containsAllKeys(eventUnread.detail.data, [`actorId`, `actorName`, `id`, `personId`, `roomId`, `roomType`, `text`]);
+      assert.containsAllKeys(eventUnread.detail.data, [`actorId`, `actorName`, `id`, `title`, `type`, `created`, `lastActivity`]);
       assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, mccoy.id));
       assert.equal(eventCreated.detail.data.actorName, mccoy.displayName);
     });

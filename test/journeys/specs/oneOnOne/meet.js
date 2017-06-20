@@ -161,16 +161,15 @@ describe(`Widget Space: One on One`, () => {
         assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
         assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `data`]);
         assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`, `call`]);
+        assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`, `call`]);
+        assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`, `call`]);
         assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
         assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
         assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
         assert.equal(eventCreated.detail.data.actorName, spock.displayName);
         assert.equal(eventConnected.detail.data.actorName, spock.displayName);
         assert.equal(eventDisconnected.detail.data.actorName, spock.displayName);
-        assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`, `call`]);
-        assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`, `call`]);
-        assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`, `call`]);
-
       });
     });
   });
