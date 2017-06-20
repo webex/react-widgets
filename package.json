@@ -79,6 +79,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.0",
+    "superagent": "^3.5.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
