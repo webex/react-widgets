@@ -158,15 +158,19 @@ describe(`Widget Space: One on One`, () => {
         assert.isDefined(eventCreated, `has a calls ringing event`);
         assert.isDefined(eventConnected, `has a calls connected event`);
         assert.isDefined(eventDisconnected, `has a calls disconnected event`);
-        assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `actorName`, `data`]);
-        assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `actorName`, `data`]);
-        assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `actorName`, `data`]);
+        assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `data`]);
         assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
         assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
         assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-        assert.equal(eventCreated.detail.actorName, spock.displayName);
-        assert.equal(eventConnected.detail.actorName, spock.displayName);
-        assert.equal(eventDisconnected.detail.actorName, spock.displayName);
+        assert.equal(eventCreated.detail.data.actorName, spock.displayName);
+        assert.equal(eventConnected.detail.data.actorName, spock.displayName);
+        assert.equal(eventDisconnected.detail.data.actorName, spock.displayName);
+        assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`, `call`]);
+        assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`, `call`]);
+        assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`, `call`]);
+
       });
     });
   });
