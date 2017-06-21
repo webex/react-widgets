@@ -3,7 +3,8 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 import {switchToMeet} from '../../../lib/menu';
-import {clearEventLog, getEventLog} from '../../../lib/events';
+import {clearEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
 
 describe(`Widget Message Meet`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -50,8 +51,9 @@ describe(`Widget Message Meet`, () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          // eslint-disable-next-line object-shorthand
+          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
         },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
@@ -65,8 +67,9 @@ describe(`Widget Message Meet`, () => {
     browserRemote.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          // eslint-disable-next-line object-shorthand
+          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
         },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
@@ -137,10 +140,30 @@ describe(`Widget Message Meet`, () => {
         browserLocal.element(meetWidget).element(hangupButton).click();
         // Should switch back to message widget after hangup
         browserLocal.waitForVisible(messageWidget);
-        const events = getEventLog(browserLocal);
-        assert.include(events, `calls:ringing`, `has a calls ringing event`);
-        assert.include(events, `calls:connected`, `has a calls connected event`);
-        assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
+      });
+
+      it(`has proper call event data`, () => {
+        const result = browserLocal.execute(() => {
+          const events = window.ciscoSparkEvents.map((event) => {
+            // Passing the call object from the browser causes an overflow
+            Reflect.deleteProperty(event.detail.data, `call`);
+            return event;
+          });
+          return events;
+        });
+        const events = result.value;
+        const eventRinging = events.find((event) => event.eventName === `calls:ringing`);
+        const eventConnected = events.find((event) => event.eventName === `calls:connected`);
+        const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);
+        assert.isDefined(eventRinging, `has a calls ringing event`);
+        assert.isDefined(eventConnected, `has a calls connected event`);
+        assert.isDefined(eventDisconnected, `has a calls disconnected event`);
+        assert.containsAllKeys(eventRinging.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `data`]);
+        assert.equal(eventRinging.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
+        assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
+        assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
       });
     });
 
