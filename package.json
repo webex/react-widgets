@@ -46,7 +46,7 @@
   "dependencies": {
     "@ciscospark/common": "1.0.0",
     "@ciscospark/helper-html": "1.0.0",
-    "@ciscospark/internal-plugin-avatar": "1.1.1",
+    "@ciscospark/internal-plugin-avatar": "1.1.5",
     "@ciscospark/internal-plugin-conversation": "1.1.1",
     "@ciscospark/internal-plugin-encryption": "1.1.1",
     "@ciscospark/internal-plugin-flag": "1.1.1",
