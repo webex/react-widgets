@@ -18,7 +18,12 @@ export default (options) => {
     ]),
     new ExtractTextPlugin({filename: `[name].css`, disable: false, allChunks: true}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
-    new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`)
+    new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname
+      }
+    })
   ];
 
   return {
