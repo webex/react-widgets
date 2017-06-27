@@ -1,17 +1,17 @@
 /* eslint-disable no-sync */
+const {readFileSync, writeFileSync} = require(`fs`);
+const glob = require(`glob`);
+const path = require(`path`);
+const detective = require(`detective-es6`);
+const builtinModules = require(`builtin-modules`);
+const {uniq} = require(`lodash`);
+const {getAllPackages, getAllPackagePaths} = require(`../../utils/package`);
 
-import {readFileSync, writeFileSync} from 'fs';
-import glob from 'glob';
-import path from 'path';
-import detective from 'detective-es6';
-import builtinModules from 'builtin-modules';
-import _ from 'lodash';
-import {getAllPackages, getAllPackagePaths} from './utils/package';
-
-export default function updatePackageJson() {
+function updatePackageJson() {
   const topPkgJson = JSON.parse(readFileSync(`./package.json`, `utf8`));
   const packages = getAllPackages();
   const pkgPaths = getAllPackagePaths();
+  console.log(packages);
   const flatten = (arr) => arr.reduce(
     (acc, val) => acc.concat(
       Array.isArray(val) ? flatten(val) : val
@@ -33,7 +33,7 @@ export default function updatePackageJson() {
       ]
     });
 
-    const uniqDeps = _.uniq(
+    const uniqDeps = uniq(
       flatten(
         srcFiles.map(
           (srcFile) => {
@@ -59,14 +59,19 @@ export default function updatePackageJson() {
     .sort();
     const deps = pkgJson.dependencies = {};
     uniqDeps.forEach((dep) => {
-      if (topPkgJson.dependencies[dep]) {
-        deps[dep] = topPkgJson.dependencies[dep];
+      const depArray = dep.split(`/`);
+      let cleanDep = depArray[0];
+      if (depArray[0].startsWith(`@`)) {
+        cleanDep = depArray.slice(0, 2).join(`/`);
       }
-      else if (packages.indexOf(dep) !== -1) { // eslint-disable-line no-negated-condition
-        deps[dep] = topPkgJson.version;
+      if (topPkgJson.dependencies[cleanDep]) {
+        deps[cleanDep] = topPkgJson.dependencies[cleanDep];
+      }
+      else if (packages.indexOf(cleanDep) !== -1) { // eslint-disable-line no-negated-condition
+        deps[cleanDep] = topPkgJson.version;
       }
       else {
-        throw new Error(`Unknown dependency ${dep}`);
+        throw new Error(`Unknown dependency ${cleanDep}`);
       }
     });
 
@@ -77,8 +82,9 @@ export default function updatePackageJson() {
   });
 }
 
-
-// Pass pkgName if running from command line
-if (require.main === module) {
-  updatePackageJson();
-}
+module.exports = {
+  command: `package.json`,
+  desc: `Update all package.json`,
+  builder: {},
+  handler: () => updatePackageJson()
+};

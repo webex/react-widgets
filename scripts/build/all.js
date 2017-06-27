@@ -1,6 +1,6 @@
 import path from 'path';
 import buildPackage from './build-package';
-import {getAllPackagePaths} from './utils/package';
+import {getAllPackagePaths} from '../../utils/package';
 
 // Run buildPackage on all of our packages
 getAllPackagePaths().map((pkg) => {

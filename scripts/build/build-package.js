@@ -1,6 +1,6 @@
 import path from 'path';
-import {execSync} from './utils/exec';
-import {getPackage} from './utils/package';
+import {execSync} from '../../utils/exec';
+import {getPackage} from '../../utils/package';
 import rimraf from 'rimraf';
 
 /**

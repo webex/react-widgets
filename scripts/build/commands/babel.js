@@ -1,6 +1,6 @@
 const path = require(`path`);
 const rimraf = require(`rimraf`);
-const {execSync} = require(`./utils/exec`);
+const {execSync} = require(`../../utils/exec`);
 
 /**
  * Build a package using babel
@@ -15,19 +15,17 @@ function babelBuild(pkgName, pkgPath) {
 }
 
 module.exports = {
-  command: `build [packageName]`,
+  command: `babel <packageName> [packagePath]`,
   desc: `Transpile a package with babel`,
-  builder: {
-
-  },
-  handler: wrapHandler(async ({packageName}) => {
+  builder: {},
+  handler: ({packageName, packagePath}) => {
+    console.log(`stupid`);
     if (packageName) {
-      await buildPackage(packageName);
-    }
-    else {
-      for (const pName of await list()) {
-        await buildPackage(pName);
+      if (packagePath) {
+        return babelBuild(packageName, packagePath);
       }
+      return babelBuild(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
     }
-  })
+    return false;
+  }
 };
