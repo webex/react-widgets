@@ -1,14 +1,19 @@
-import buildPackage from './dist';
-import {getWidgetPackages} from './utils/package';
+const {webpackBuild} = require(`../../utils/build`);
+const {getWidgetPackages} = require(`../../utils/package`);
 
-// Run buildPackage on all of our packages
-const widgets = getWidgetPackages();
-widgets.map((pkg) => {
-  try {
-    const pkgName = pkg.split(`/`).pop();
-    return buildPackage(pkgName);
+module.exports = {
+  command: `widgets`,
+  desc: `Build all widgets`,
+  builder: {},
+  handler: () => {
+    getWidgetPackages().map((pkg) => {
+      try {
+        const pkgName = pkg.split(`/`).pop();
+        return webpackBuild(pkgName);
+      }
+      catch (err) {
+        throw err;
+      }
+    });
   }
-  catch (err) {
-    throw err;
-  }
-});
+};
