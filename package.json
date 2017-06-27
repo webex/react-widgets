@@ -49,7 +49,7 @@
     "@ciscospark/internal-plugin-avatar": "1.1.1",
     "@ciscospark/internal-plugin-conversation": "1.1.1",
     "@ciscospark/internal-plugin-encryption": "1.1.1",
-    "@ciscospark/internal-plugin-flag": "1.1.1",
+    "@ciscospark/internal-plugin-flag": "1.1.6",
     "@ciscospark/internal-plugin-mercury": "1.1.1",
     "@ciscospark/internal-plugin-metrics": "1.1.1",
     "@ciscospark/internal-plugin-user": "1.1.1",
