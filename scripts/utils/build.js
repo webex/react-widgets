@@ -1,7 +1,8 @@
-import path from 'path';
-import {execSync} from '../../utils/exec';
-import {getPackage} from '../../utils/package';
-import rimraf from 'rimraf';
+const path = require(`path`);
+const {execSync} = require(`../../utils/exec`);
+const {getPackage} = require(`../../utils/package`);
+const rimraf = require(`rimraf`);
+
 
 /**
  * Builds a specific package with Webpack
@@ -9,7 +10,7 @@ import rimraf from 'rimraf';
  * @param  {string} pkgPath
  * @returns {undefined}
  */
-export default function buildPackage(pkgName, pkgPath) {
+function webpackBuild(pkgName, pkgPath) {
   pkgPath = pkgPath || getPackage(pkgName);
   if (pkgPath) {
     const isWidget = pkgName.indexOf(`widget-`) !== -1;
@@ -35,7 +36,21 @@ export default function buildPackage(pkgName, pkgPath) {
   return false;
 }
 
-// Pass pkgName if running from command line
-if (require.main === module) {
-  buildPackage(process.argv[process.argv.length - 1]);
+
+/**
+ * Build a package using babel
+ * @param {Stinrg} pkgName
+ * @param {String} pkgPath
+ */
+
+function babelBuild(pkgName, pkgPath) {
+  console.info(`Cleaning ${pkgName} dist folder...`.cyan);
+  rimraf.sync(path.resolve(pkgPath, `dist`));
+  execSync(`cd ${pkgPath} && babel ./src --out-dir ./dist/es --ignore *.test.js`);
 }
+
+
+module.exports = {
+  webpackBuild,
+  babelBuild
+};

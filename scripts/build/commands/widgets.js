@@ -1,4 +1,4 @@
-import buildPackage from './build-package';
+import buildPackage from './dist';
 import {getWidgetPackages} from './utils/package';
 
 // Run buildPackage on all of our packages

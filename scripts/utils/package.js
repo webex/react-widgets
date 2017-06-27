@@ -1,8 +1,8 @@
 /* eslint-disable no-sync */
 
-import path from 'path';
-import {execSync} from './exec';
-import {statSync, readdirSync} from 'fs';
+const path = require(`path`);
+const {execSync} = require(`./exec`).execSync;
+const {statSync, readdirSync} = require(`fs`);
 
 
 /**
@@ -11,7 +11,7 @@ import {statSync, readdirSync} from 'fs';
  * @param  {string} pkgPath
  * @returns {Promise}
  */
-export function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
+function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
   pkgPath = getPackage(pkgName || pkgPath);
   if (pkgPath) {
     try {
@@ -36,7 +36,7 @@ export function runInPackage({constructCommand, commandName, pkgName, pkgPath}) 
  * @param  {string} packagesDir path where packages are stored
  * @returns {array} array of full path strings
  */
-export function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscospark`) {
+function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscospark`) {
   return readdirSync(packagesDir).reduce((acc, packagePath) => {
     const pkg = getPackage(packagePath, packagesDir);
     if (pkg) {
@@ -53,7 +53,7 @@ export function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscosp
  * @param  {string} packagesDir path where packages are stored
  * @returns {array} array of full path strings
  */
-export function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark`) {
+function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark`) {
   // check if this is a valid path
   try {
     if (statSync(pkg).isDirectory()) {
@@ -70,14 +70,23 @@ export function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark
   return false;
 }
 
-export function getAllPackages() {
+function getAllPackages() {
   const pkgPaths = getAllPackagePaths();
   return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name);
 }
 
-export function getWidgetPackages() {
+function getWidgetPackages() {
   const pkgPaths = getAllPackagePaths();
   return pkgPaths
     .map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name)
     .filter((pkgPath) => pkgPath.startsWith(`@ciscospark/widget`) && !pkgPath.startsWith(`@ciscospark/widget-base`));
 }
+
+
+module.exports = {
+  getWidgetPackages,
+  getPackage,
+  getAllPackages,
+  getAllPackagePaths,
+  runInPackage
+};
