@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
 
 const path = require(`path`);
-const {execSync} = require(`./exec`).execSync;
+const {execSync} = require(`./exec`);
 const {statSync, readdirSync} = require(`fs`);
 
 

@@ -42,6 +42,7 @@ export default (options) => {
     },
     target: `web`,
     resolve: {
+      mainFields: [`src`, `browser`, `module`, `main`],
       modules: [
         `src`,
         path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
