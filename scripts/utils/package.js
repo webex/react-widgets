@@ -9,7 +9,7 @@ const {statSync, readdirSync} = require(`fs`);
  * Starts a specific package with Webpack Dev Server
  * @param  {string} pkgName
  * @param  {string} pkgPath
- * @returns {Promise}
+ * @returns {undefined}
  */
 function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
   pkgPath = getPackage(pkgName || pkgPath);
@@ -27,7 +27,6 @@ function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
       throw new Error(`Error ${commandName} ${pkgName} package`, err);
     }
   }
-  return false;
 }
 
 
@@ -78,8 +77,10 @@ function getAllPackages() {
 function getWidgetPackages() {
   const pkgPaths = getAllPackagePaths();
   return pkgPaths
-    .map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name)
-    .filter((pkgPath) => pkgPath.startsWith(`@ciscospark/widget`) && !pkgPath.startsWith(`@ciscospark/widget-base`));
+    .filter((pkgPath) => {
+      const pkgName = require(path.resolve(pkgPath, `package.json`)).name;
+      return pkgName.startsWith(`@ciscospark/widget`) && !pkgName.startsWith(`@ciscospark/widget-base`);
+    });
 }
 
 

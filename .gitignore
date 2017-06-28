@@ -6,3 +6,4 @@
 .env
 npm-debug*
 packages/**/es/*
+packages/**/cjs/*

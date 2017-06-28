@@ -6,6 +6,10 @@ const builtinModules = require(`builtin-modules`);
 const {uniq} = require(`lodash`);
 const {getAllPackages, getAllPackagePaths} = require(`./package`);
 
+/**
+ * Updates all package.json files with depedencies
+ * @returns {undefined}
+ */
 function updatePackageJson() {
   const topPkgJson = JSON.parse(readFileSync(`./package.json`, `utf8`));
   const packages = getAllPackages();

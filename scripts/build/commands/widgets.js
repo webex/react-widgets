@@ -1,4 +1,7 @@
-const {webpackBuild} = require(`../../utils/build`);
+const {
+  webpackBuild,
+  transpile
+} = require(`../../utils/build`);
 const {getWidgetPackages} = require(`../../utils/package`);
 
 module.exports = {
@@ -6,10 +9,13 @@ module.exports = {
   desc: `Build all widgets`,
   builder: {},
   handler: () => {
-    getWidgetPackages().map((pkg) => {
+    getWidgetPackages().map((pkgPath) => {
       try {
-        const pkgName = pkg.split(`/`).pop();
-        return webpackBuild(pkgName);
+        const pkgName = pkgPath.split(`/`).pop();
+        return Promise.all([
+          transpile(pkgName, pkgPath),
+          webpackBuild(pkgName, pkgPath)
+        ]);
       }
       catch (err) {
         throw err;
