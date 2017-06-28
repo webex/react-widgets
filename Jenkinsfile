@@ -73,7 +73,7 @@ ansiColor('xterm') {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
-              nvm use v6
+              nvm use v7
               npm install
               npm install webrtc-adapter@3.3.4
               rm -f $HOME/.npmrc
@@ -84,7 +84,7 @@ ansiColor('xterm') {
           stage('Static Analysis') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm use v6
+            nvm use v7
             npm run static-analysis
             '''
           }
@@ -96,7 +96,7 @@ ansiColor('xterm') {
             ]) {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh
-             nvm use v6
+             nvm use v7
              NODE_ENV=test npm run build:package widget-message-meet && npm run build:package widget-space && npm run build:package widget-recents
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation:oneOnOne
@@ -110,7 +110,7 @@ ansiColor('xterm') {
           stage('Bump version'){
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm use v6
+            nvm use v7
             npm version patch
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
@@ -123,7 +123,7 @@ ansiColor('xterm') {
             withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
-              nvm use v6
+              nvm use v7
               version=`cat .version`
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:package widget-message-meet-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/" npm run build:package widget-message-meet
