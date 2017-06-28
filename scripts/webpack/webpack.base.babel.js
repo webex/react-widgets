@@ -59,7 +59,7 @@ export default (options) => {
             path.resolve(__dirname, `..`, `..`, `src`)
           ],
           exclude: [
-            `/fixtures/`,
+            `/__fixtures__/`,
             `/__mocks__/`
           ],
           use: [`babel-loader`]

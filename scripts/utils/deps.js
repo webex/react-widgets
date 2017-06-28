@@ -31,7 +31,7 @@ function updatePackageJson() {
       ignore: [
         `**/*.test.js`,
         `**/__mocks__/*.js`,
-        `**/fixtures/*.js`,
+        `**/__fixtures__/*.js`,
         `**/react-test-utils/**/*.js`
       ]
     });
