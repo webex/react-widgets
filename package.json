@@ -3,15 +3,15 @@
   "version": "0.1.115",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
-    "build": "npm run build:packages && npm run build:bundle",
-    "build:packages": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/build-packages.js",
-    "build:package": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/build-package.js",
-    "build:bundle": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/build-bundle.js",
-    "build:packagejson": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/update-package-json.js",
-    "build:widgets": "cross-env NODE_ENV=${NODE_ENV:-production} babel-node --presets=stage-1,es2015 scripts/build-widgets.js",
-    "clean": "npm run clean:snapshots && npm run clean:dist",
+    "build": "cross-env NODE_ENV=${NODE_ENV:-production} ./scripts/build/index.js",
+    "build:all": "npm run build all",
+    "build:package": "npm run build dist",
+    "build:packagejson": "npm run build package.json",
+    "build:widgets": "npm run build widgets",
+    "clean": "npm run clean:snapshots && npm run clean:dist && npm run clean:transpile",
     "clean:snapshots": "rimraf \"packages/**/__snapshots__/\"",
     "clean:dist": "rimraf \"packages/**/dist/\"",
+    "clean:transpile": "rimraf \"packages/**/es/\" && rimraf \"packages/**/cjs/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
     "test:automation": "wdio wdio.conf.js --suite oneOnOne,space,messageMeet,recents",
@@ -154,7 +154,8 @@
     "wdio-static-server-service": "^1.0.1",
     "webdriverio": "^4.6.2",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0"
+    "webpack-dev-server": "^2.2.0",
+    "yargs": "^8.0.2"
   },
   "greenkeeper": {
     "ignore": [
