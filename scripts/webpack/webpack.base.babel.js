@@ -42,6 +42,7 @@ export default (options) => {
     },
     target: `web`,
     resolve: {
+      mainFields: [`src`, `browser`, `module`, `main`],
       modules: [
         `src`,
         path.resolve(__dirname, `..`, `..`, `packages`, `node_modules`),
@@ -58,7 +59,7 @@ export default (options) => {
             path.resolve(__dirname, `..`, `..`, `src`)
           ],
           exclude: [
-            `/fixtures/`,
+            `/__fixtures__/`,
             `/__mocks__/`
           ],
           use: [`babel-loader`]
