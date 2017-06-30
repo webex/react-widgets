@@ -9,7 +9,6 @@
     "transform-decorators-legacy",
     "transform-export-extensions",
     "transform-object-rest-spread",
-    "transform-postcss",
     "lodash"
   ],
   "presets": [

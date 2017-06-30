@@ -46,6 +46,7 @@ function buildCommonJS(pkgName, pkgPath) {
   rimraf.sync(path.resolve(pkgPath, `cjs`));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
   const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, `..`, `..`, `.babelrc`), `utf8`));
+  babelrc.plugins.push(`transform-postcss`);
   babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelrc);
 }
 
@@ -76,6 +77,7 @@ function buildES(pkgName, pkgPath) {
       `react`
     ]
   });
+  babelrc.plugins.push(`transform-postcss`);
   return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, babelrc);
 }
 
