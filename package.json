@@ -51,7 +51,7 @@
     "@ciscospark/internal-plugin-encryption": "1.1.1",
     "@ciscospark/internal-plugin-flag": "1.1.1",
     "@ciscospark/internal-plugin-mercury": "1.1.1",
-    "@ciscospark/internal-plugin-metrics": "1.1.1",
+    "@ciscospark/internal-plugin-metrics": "1.1.6",
     "@ciscospark/internal-plugin-user": "1.1.1",
     "@ciscospark/plugin-logger": "1.0.3",
     "@ciscospark/plugin-people": "1.0.4",
