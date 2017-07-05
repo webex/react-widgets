@@ -76,7 +76,7 @@ export default (options) => {
               options: {
                 camelCase: true,
                 modules: true,
-                localIdentName: `ciscospark-[local]--[hash:base64:5]`,
+                localIdentName: `[local]--[hash:base64:5]`,
                 importLoaders: 1,
                 sourceMap: true
               }
@@ -84,7 +84,8 @@ export default (options) => {
             {
               loader: `postcss-loader`,
               options: {
-                sourceMap: true
+                sourceMap: true,
+                path: path.resolve(__dirname, `postcss.config.js`)
               }
             }]
           })
