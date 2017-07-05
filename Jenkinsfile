@@ -73,6 +73,7 @@ ansiColor('xterm') {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
+              nvm install 7
               nvm use v7
               npm install
               npm install webrtc-adapter@3.3.4
