@@ -84,7 +84,8 @@ export default (options) => {
             {
               loader: `postcss-loader`,
               options: {
-                sourceMap: true
+                sourceMap: true,
+                path: path.resolve(__dirname, `postcss.config.js`)
               }
             }]
           })
