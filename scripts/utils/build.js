@@ -1,3 +1,4 @@
+#!/usr/bin/env babel-node
 /* eslint-disable no-sync */
 const path = require(`path`);
 const {execSync} = require(`./exec`);
@@ -44,7 +45,9 @@ function buildCommonJS(pkgName, pkgPath) {
   console.info(`Cleaning ${pkgName} cjs folder...`.cyan);
   rimraf.sync(path.resolve(pkgPath, `cjs`));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
-  babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`);
+  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, `..`, `..`, `.babelrc`), `utf8`));
+  babelrc.plugins.push(`transform-postcss`);
+  babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelrc);
 }
 
 
@@ -60,8 +63,7 @@ function buildES(pkgName, pkgPath) {
 
   console.info(`Transpiling ${pkgName} to ES5 with import/export ...`.cyan);
   const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, `..`, `..`, `.babelrc`), `utf8`));
-
-  return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, Object.assign({}, babelrc, {
+  Object.assign(babelrc, {
     babelrc: false,
     sourceMaps: true,
     presets: [
@@ -74,7 +76,9 @@ function buildES(pkgName, pkgPath) {
       ],
       `react`
     ]
-  }));
+  });
+  babelrc.plugins.push(`transform-postcss`);
+  return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, babelrc);
 }
 
 
@@ -104,7 +108,7 @@ function buildFile(filename, destination, babelOptions = {}) {
   }
   // copy if it's a css file
   else if (ext === `.css`) {
-    return outputFileSync(outputPath, content, {encoding: `utf8`});
+    return execSync(`postcss ${filename} -o ${outputPath}`);
   }
   return false;
 }
