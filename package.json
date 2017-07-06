@@ -26,8 +26,8 @@
     "eslint": "eslint packages",
     "serve": "npm run start",
     "stylelint": "stylelint \"packages/node_modules/**/*.css\"",
-    "start": "cross-env NODE_ENV=${NODE_ENV:-development} webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback",
-    "start:package": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node --presets=stage-1,es2015 scripts/start-package.js"
+    "start": "cross-env NODE_ENV=${NODE_ENV:-development} ./scripts/start/index.js",
+    "start:package": "npm run start package"
   },
   "repository": {
     "type": "git",
