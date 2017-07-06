@@ -23,7 +23,6 @@ pipeline {
           nvm install 7
           nvm use v7
           npm install
-          npm rebuild
           rm -f $HOME/.npmrc
           '''
         }
