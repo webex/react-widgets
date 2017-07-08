@@ -51,7 +51,7 @@
     "@ciscospark/internal-plugin-flag": "1.3.0",
     "@ciscospark/internal-plugin-mercury": "1.3.0",
     "@ciscospark/internal-plugin-metrics": "1.3.0",
-    "@ciscospark/internal-plugin-user": "1.3.0",
+    "@ciscospark/internal-plugin-user": "1.3.2",
     "@ciscospark/plugin-logger": "1.3.0",
     "@ciscospark/plugin-people": "1.3.0",
     "@ciscospark/plugin-phone": "1.3.0",
