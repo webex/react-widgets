@@ -46,7 +46,7 @@
   "dependencies": {
     "@ciscospark/common": "1.1.11",
     "@ciscospark/helper-html": "1.1.11",
-    "@ciscospark/internal-plugin-conversation": "1.3.0",
+    "@ciscospark/internal-plugin-conversation": "1.3.2",
     "@ciscospark/internal-plugin-encryption": "1.3.0",
     "@ciscospark/internal-plugin-flag": "1.3.0",
     "@ciscospark/internal-plugin-mercury": "1.3.0",
