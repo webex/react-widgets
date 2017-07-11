@@ -21,6 +21,13 @@ const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 ];
 
+// Bundle paths are used for demos only
+let scriptBundle, styleBundle;
+if (process.env.BUILD_BUNDLE_PUBLIC_PATH) {
+  scriptBundle = `<script src="${process.env.BUILD_BUNDLE_PUBLIC_PATH}bundle.js"></script>`;
+  styleBundle = `<link rel="stylesheet" href="${process.env.BUILD_BUNDLE_PUBLIC_PATH}main.css">`;
+}
+
 // Only create html file when one exists in src/
 if (fs.existsSync(`./src/index.html`)) {
   plugins.push(
@@ -34,7 +41,11 @@ if (fs.existsSync(`./src/index.html`)) {
         sortAttributes: true,
         sortClassName: true
       },
-      template: `./index.html`
+      template: `./index.html`,
+      bundlePaths: {
+        scriptBundle,
+        styleBundle
+      }
     })
   );
 }
