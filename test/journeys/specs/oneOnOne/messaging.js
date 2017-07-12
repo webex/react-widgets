@@ -7,10 +7,10 @@ import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
 import {clearEventLog, getEventLog} from '../../lib/events';
 import {constructHydraId} from '../../lib/hydra';
-const request = require(`superagent`);
-const fs = require(`fs-extra`);
-const path = require(`path`);
-const os = require(`os`);
+import request from 'superagent';
+import fs from 'fs-extra';
+import path from 'path';
+import os from 'os';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);

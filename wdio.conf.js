@@ -23,7 +23,8 @@ exports.config = {
       `./test/journeys/specs/tap/**/*.js`
     ],
     oneOnOne: [
-      `./test/journeys/specs/oneOnOne/**/*.js`
+      // `./test/journeys/specs/oneOnOne/**/*.js`
+      `./test/journeys/specs/oneOnOne/messaging.js`
     ],
     space: [
       `./test/journeys/specs/space/**/*.js`
