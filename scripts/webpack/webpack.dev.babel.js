@@ -9,7 +9,11 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const plugins = [
   new HtmlWebpackPlugin({
-    template: `index.html`
+    template: `index.html`,
+    bundlePaths: {
+      scriptBundle: `<!-- Script should be in main bundle -->`,
+      styleBundle: `<!-- Style should be in main bundle -->`
+    }
   }),
   new webpack.EnvironmentPlugin([
     `CISCOSPARK_ACCESS_TOKEN`,
