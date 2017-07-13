@@ -127,6 +127,7 @@ describe(`Widget Space: One on One`, () => {
       const uploadDir = path.join(__dirname, `assets`);
       const downloadDir = path.join(os.homedir(), `Downloads`);
       const inputFileElem = `.ciscospark-file-input`;
+      const downloadButtonContainer = `(//div[starts-with(@class,"ciscospark-activity-content")])[last()]`;
       const downloadFileButton = `(//div[@title="Download this file"]/parent::button)[last()]`;
       const shareButtonElem = `button[aria-label="Share"]`;
       function sendFileTest(fileName) {
@@ -141,7 +142,7 @@ describe(`Widget Space: One on One`, () => {
         browserLocal.chooseFile(inputFileElem, filePath);
         browserLocal.click(shareButtonElem);
         browserRemote.waitForExist(fileTitle, 30000);
-        browserRemote.moveToObject(downloadFileButton);
+        browserRemote.moveToObject(downloadButtonContainer);
         browserRemote.waitForVisible(downloadFileButton);
         const events = getEventLog(browserRemote);
         const newMessage = events.find((event) => event.eventName === `messages:created`);
