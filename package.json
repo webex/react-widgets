@@ -82,7 +82,7 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@ciscospark/eslint-config": "^1.0.0",
+    "@ciscospark/eslint-config": "^2.0.1",
     "@ciscospark/test-helper-file": "1.1.11",
     "@ciscospark/test-helper-server": "1.1.12",
     "@ciscospark/test-helper-test-users": "1.1.11",
