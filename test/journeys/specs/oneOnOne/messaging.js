@@ -7,6 +7,10 @@ import '@ciscospark/internal-plugin-conversation';
 import {switchToMessage} from '../../lib/menu';
 import {clearEventLog, getEventLog} from '../../lib/events';
 import {constructHydraId} from '../../lib/hydra';
+import request from 'superagent';
+import fs from 'fs-extra';
+import path from 'path';
+import os from 'os';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -69,6 +73,10 @@ describe(`Widget Space: One on One`, () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
           accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            // eslint-disable-next-line object-shorthand
+            window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
+          },
           toPersonEmail: localToUserEmail,
           initialActivity: `message`
         };
@@ -118,13 +126,95 @@ describe(`Widget Space: One on One`, () => {
 
     it(`sends and deletes message`);
 
-    it(`sends message with pdf attachment`);
+    describe(`File Transfer Tests`, () => {
+      /* eslint no-sync: "off" */
+      const uploadDir = path.join(__dirname, `assets`);
+      const downloadDir = path.join(os.homedir(), `Downloads`);
+      const inputFileElem = `.ciscospark-file-input`;
+      const downloadButtonContainer = `(//div[starts-with(@class,"ciscospark-activity-content")])[last()]`;
+      const downloadFileButton = `(//div[@title="Download this file"]/parent::button)[last()]`;
+      const shareButtonElem = `button[aria-label="Share"]`;
+      function sendFileTest(fileName) {
+        clearEventLog(browserRemote);
+        const filePath = path.join(uploadDir, fileName);
+        const fileSize = fs.statSync(filePath).size;
+        const downloadedFile = path.join(downloadDir, fileName);
+        const fileTitle = `//div[text()="${fileName}"]`;
+        if (fs.existsSync(downloadedFile)) {
+          fs.unlinkSync(downloadedFile);
+        }
+        browserLocal.chooseFile(inputFileElem, filePath);
+        browserLocal.click(shareButtonElem);
+        browserRemote.waitForExist(fileTitle, 30000);
+        browserRemote.moveToObject(downloadButtonContainer);
+        browserRemote.waitForVisible(downloadFileButton);
+        const events = getEventLog(browserRemote);
+        const newMessage = events.find((event) => event.eventName === `messages:created`);
+        const fileUrl = newMessage.detail.data.files[0].url;
+        let downloadedFileSize;
+        request.get(fileUrl)
+            .set(`Authorization`, `Bearer ${mccoy.token.access_token}`)
+            .end((error, response) => {
+              downloadedFileSize = response.header[`content-length`];
+            });
+        browser.pause(8000);
+        assert.equal(fileSize, downloadedFileSize);
+        browser.pause(2000);
+        browserRemote.moveToObject(downloadFileButton);
+        browserRemote.waitForVisible(downloadFileButton);
+        browserRemote.click(downloadFileButton);
+        browser.pause(2000);
+      }
 
-    it(`sends message with gif attachment`);
+      it(`sends message with pdf attachment`, () => {
+        sendFileTest(`pdf-sample.pdf`);
+      });
 
-    it(`sends message with jpg attachment`);
+      it(`sends message with txt attachment`, () => {
+        sendFileTest(`txt-sample.txt`);
+      });
 
-    it(`sends message with png attachment`);
+      it(`sends message with doc attachment`, () => {
+        sendFileTest(`doc-sample.doc`);
+      });
+
+      it(`sends message with docx attachment`, () => {
+        sendFileTest(`docx-sample.docx`);
+      });
+
+      it(`sends message with ppt attachment`, () => {
+        sendFileTest(`ppt-sample.ppt`);
+      });
+
+      it(`sends message with html attachment`, () => {
+        sendFileTest(`html-sample.html`);
+      });
+
+      it(`sends message with json attachment`, () => {
+        sendFileTest(`json-sample.json`);
+      });
+
+      it(`sends message with zip attachment`, () => {
+        sendFileTest(`zip-sample.zip`);
+      });
+
+      it(`sends message with gif attachment`, () => {
+        sendFileTest(`gif-sample.gif`);
+      });
+
+      it(`sends message with jpg attachment`, () => {
+        sendFileTest(`jpg-sample.jpg`);
+      });
+
+      it(`sends message with png attachment`, () => {
+        sendFileTest(`png-sample.png`);
+      });
+
+      it(`sends message with mp3 attachment`, () => {
+        sendFileTest(`mp3-sample.mp3`);
+      });
+
+    });
 
     it(`sends and flags message`);
 
