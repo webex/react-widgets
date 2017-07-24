@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.131",
+  "version": "0.1.135",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "cross-env NODE_ENV=${NODE_ENV:-production} ./scripts/build/index.js",
@@ -78,10 +78,11 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.0",
+    "superagent": "^3.5.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@ciscospark/eslint-config": "^1.0.0",
+    "@ciscospark/eslint-config": "^2.0.1",
     "@ciscospark/test-helper-file": "1.1.11",
     "@ciscospark/test-helper-server": "1.1.12",
     "@ciscospark/test-helper-test-users": "1.1.11",
