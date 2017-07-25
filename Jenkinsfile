@@ -50,6 +50,12 @@ ansiColor('xterm') {
               sh 'git fetch upstream'
             }
 
+            changedFiles = sh script: 'git diff --name-only upstream/master..$(git merge-base HEAD upstream/master)', returnStdout: true
+            if (changedFiles.contains('Jenkinsfile')) {
+              currentBuild.description += "Jenkinsfile has been updated in master. Please rebase and push again."
+              error(currentBuild.description)
+            }
+
             sh 'git checkout upstream/master'
             sh 'git reset --hard && git clean -f'
             sh 'git tag -l | xargs git tag -d'
