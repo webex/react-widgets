@@ -101,14 +101,18 @@ function buildFile(filename, destination, babelOptions = {}) {
   const ext = path.extname(filename);
   const outputPath = path.join(destination, path.basename(filename));
   // Ignore non-JS files and test scripts
-  if (ext === `.js` && !filename.includes(`.test.`)) {
-    babelOptions.filename = filename;
-    const result = transform(content, babelOptions);
-    return outputFileSync(outputPath, result.code, {encoding: `utf8`});
-  }
-  // copy if it's a css file
-  else if (ext === `.css`) {
-    return execSync(`postcss ${filename} -o ${outputPath}`);
+  if (!filename.includes(`.test.`)) {
+    if (ext === `.js`) {
+      babelOptions.filename = filename;
+      const result = transform(content, babelOptions);
+      return outputFileSync(outputPath, result.code, {encoding: `utf8`});
+    }
+    // process with postcss if it's a css file
+    else if (ext === `.css`) {
+      return execSync(`postcss ${filename} -o ${outputPath}`);
+    }
+    // Copy if it's any other type of file
+    return outputFileSync(outputPath, content);
   }
   return false;
 }
