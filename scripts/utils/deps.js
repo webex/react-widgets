@@ -78,7 +78,7 @@ function updatePackageJson() {
       }
     });
 
-    pkgJson[`module`] = `./src/index.js`;
+    pkgJson[`module`] = `./es/index.js`;
 
     const jsonString = `${JSON.stringify(pkgJson, null, `  `)}\n`;
     writeFileSync(pkgJsonPath, jsonString, `utf8`);
