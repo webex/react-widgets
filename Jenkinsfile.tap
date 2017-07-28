@@ -8,7 +8,7 @@ def tapTest = { ->
   '''
 }
 
-// We only retry once. If it fails again we
+// We only retry once. If it fails again we fail the build
 def runTapTests = { ->
   echo 'Running Tests'
   try {
