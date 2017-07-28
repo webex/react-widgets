@@ -108,9 +108,9 @@ function buildFile(filename, destination, babelOptions = {}) {
       return outputFileSync(outputPath, result.code, {encoding: `utf8`});
     }
     // process with postcss if it's a css file
-    // else if (ext === `.css`) {
-    //   return execSync(`postcss ${filename} -o ${outputPath}`);
-    // }
+    else if (ext === `.css`) {
+      return execSync(`postcss ${filename} -o ${outputPath}`);
+    }
     // Copy if it's any other type of file
     return outputFileSync(outputPath, content);
   }

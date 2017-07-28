@@ -9,7 +9,9 @@ module.exports = {
       if (packagePath) {
         transpile(packageName, packagePath);
       }
-      transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`, `es`);
+      else {
+        transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
+      }
     }
   }
 };
