@@ -10,19 +10,19 @@ module.exports = {
   command: `components`,
   desc: `Build all component and module packages`,
   builder: {},
-  handler: () =>
-    getAllPackagePaths().map((pkg) => {
+  handler: () => {
+    getAllPackagePaths().forEach((pkg) => {
       try {
         const pkgJson = require(path.resolve(pkg, `package.json`));
         const pkgName = pkgJson.name.split(`/`).pop();
         const isWidget = pkgName.startsWith(`widget-`);
         if (!isWidget && !pkgJson.private) {
-          return transpile(pkgName, pkg);
+          transpile(pkgName, pkg);
         }
       }
       catch (err) {
         throw err;
       }
-      return false;
-    })
+    });
+  }
 };

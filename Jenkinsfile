@@ -183,27 +183,27 @@ ansiColor('xterm') {
               }
             }
 
-              stage('Publish to NPM') {
+            stage('Publish to NPM') {
+              withCredentials([
+                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              ]) {
                 try {
-                  image.inside(DOCKER_RUN_OPTS) {
-                    sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
-                    echo ''
-                    echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
-                    echo ''
-                    sh '''#!/bin/bash -ex
-                    source ~/.nvm/nvm.sh
-                    nvm use v7
-                    npm run publish:components
-                    '''
-                    echo ''
-                    echo 'Reminder: E403 errors above are normal. They occur for any package that has no updates to publish'
-                    echo ''
-                  }
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+                  echo ''
+                  echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
+                  echo ''
+                  sh '''#!/bin/bash -ex
+                  source ~/.nvm/nvm.sh
+                  nvm use v7
+                  npm run publish:components
+                  rm -f $HOME/.npmrc
+                  '''
                 }
                 catch (error) {
                   warn("failed to publish to npm ${error.toString()}")
                 }
               }
+            }
           }
           cleanup()
         }

@@ -9,13 +9,11 @@ module.exports = {
   desc: `Build all widgets`,
   builder: {},
   handler: () => {
-    getWidgetPackages().map((pkgPath) => {
+    getWidgetPackages().forEach((pkgPath) => {
       try {
         const pkgName = pkgPath.split(`/`).pop();
-        return Promise.all([
-          transpile(pkgName, pkgPath),
-          webpackBuild(pkgName, pkgPath)
-        ]);
+        transpile(pkgName, pkgPath);
+        webpackBuild(pkgName, pkgPath);
       }
       catch (err) {
         throw err;

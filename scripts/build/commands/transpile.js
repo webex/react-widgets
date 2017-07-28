@@ -7,10 +7,9 @@ module.exports = {
   handler: ({packageName, packagePath}) => {
     if (packageName) {
       if (packagePath) {
-        return transpile(packageName, packagePath);
+        transpile(packageName, packagePath);
       }
-      return transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`, `es`);
+      transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`, `es`);
     }
-    return false;
   }
 };
