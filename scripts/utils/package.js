@@ -69,8 +69,11 @@ function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark`) {
   return false;
 }
 
-function getAllPackages() {
-  const pkgPaths = getAllPackagePaths();
+function getAllPackages(omitPrivate) {
+  let pkgPaths = getAllPackagePaths();
+  if (omitPrivate) {
+    pkgPaths = pkgPaths.filter((pkgPath) => !require(path.resolve(pkgPath, `package.json`)).private);
+  }
   return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name);
 }
 
