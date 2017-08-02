@@ -128,7 +128,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-mocha": "^4.9.0",
     "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "^2.0.0",
+    "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.24.1",
     "identity-obj-proxy": "^3.0.0",
