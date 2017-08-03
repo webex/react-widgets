@@ -46,7 +46,7 @@
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
   "main": "src/index.js",
   "dependencies": {
-    "@ciscospark/common": "1.1.11",
+    "@ciscospark/common": "1.8.0",
     "@ciscospark/helper-html": "1.1.11",
     "@ciscospark/internal-plugin-conversation": "1.6.1",
     "@ciscospark/internal-plugin-encryption": "1.6.1",
