@@ -56,7 +56,7 @@
     "@ciscospark/internal-plugin-user": "1.8.0",
     "@ciscospark/plugin-logger": "1.8.0",
     "@ciscospark/plugin-people": "1.9.1",
-    "@ciscospark/plugin-phone": "1.9.1",
+    "@ciscospark/plugin-phone": "1.9.3",
     "@ciscospark/spark-core": "1.8.0",
     "@ciscospark/storage-adapter-local-forage": "1.8.0",
     "@ciscospark/storage-adapter-local-storage": "1.8.0",
