@@ -50,7 +50,7 @@
     "@ciscospark/helper-html": "1.1.11",
     "@ciscospark/internal-plugin-conversation": "1.6.1",
     "@ciscospark/internal-plugin-encryption": "1.6.1",
-    "@ciscospark/internal-plugin-flag": "1.6.1",
+    "@ciscospark/internal-plugin-flag": "1.8.0",
     "@ciscospark/internal-plugin-mercury": "1.6.1",
     "@ciscospark/internal-plugin-metrics": "1.7.0",
     "@ciscospark/internal-plugin-user": "1.6.1",
