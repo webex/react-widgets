@@ -6,7 +6,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {elements as rosterElements, hasParticipants} from '../../lib/test-helpers/roster';
+import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/roster';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -55,7 +55,9 @@ describe(`Widget Space`, () => {
         }
       });
 
-      return marty.spark.internal.mercury.connect();
+      return marty.spark.internal.device.register()
+        .then(() => marty.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true))
+        .then(() => marty.spark.internal.mercury.connect());
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));

@@ -1,10 +1,11 @@
 /* eslint-disable max-nested-callbacks */
 
 import {assert} from 'chai';
-
+import '@ciscospark/internal-plugin-feature';
+import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {elements as rosterElements, hasParticipants} from '../../lib/test-helpers/roster';
+import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/roster';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -48,6 +49,13 @@ describe(`Widget Space: One on One`, () => {
   before(`create spock`, () => testUsers.create({count: 1, config: {displayName: spockName}})
     .then((users) => {
       [spock] = users;
+      spock.spark = new CiscoSpark({
+        credentials: {
+          authorization: spock.token
+        }
+      });
+      return spock.spark.internal.device.register()
+        .then(() => spock.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true));
     }));
 
   before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: mccoyName}})
