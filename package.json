@@ -29,7 +29,8 @@
     "start": "cross-env NODE_ENV=${NODE_ENV:-development} ./scripts/start/index.js",
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
-    "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components"
+    "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
+    "upgradespark": "./scripts/utils/update.js"
   },
   "repository": {
     "type": "git",
@@ -139,6 +140,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
+    "npm-check-updates": "^2.12.1",
     "postcss": "^6.0.3",
     "postcss-cli": "^4.1.0",
     "postcss-cssnext": "^2.9.0",
@@ -151,6 +153,7 @@
     "redux-logger": "^3.0.1",
     "redux-mock-store": "^1.2.1",
     "rimraf": "^2.5.4",
+    "semver": "^5.4.1",
     "style-loader": "^0.18.1",
     "stylelint": "^8.0",
     "stylelint-config-standard": "^17.0",
