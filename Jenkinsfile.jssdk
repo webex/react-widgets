@@ -46,15 +46,20 @@ ansiColor('xterm') {
 
         stage('Branching') {
           echo "Creating Branch"
-          def version = sh script: 'npm view ciscospark version', returnStdout: true
-          version = version.trim()
+          def version
           sh '''#!/bin/bash -ex
+          source ~/.nvm/nvm.sh
+          nvm use v7
+          version=$(node ./scripts/utils/jssdkversion.js)
+          echo $version > .version
           git add package.json
           git commit -m "chore: update @ciscospark packages to ${version}"
           '''
+          version = readFile '.version'
           sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-            sh "git push upstream HEAD:js-sdk/${version}"
+            sh "echo git push upstream HEAD:js-sdk/${version}"
           }
+          archiveArtifacts artifacts: 'package.json'
         }
       }
     }
