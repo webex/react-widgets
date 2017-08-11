@@ -13,11 +13,12 @@ export const elements = {
 
 /**
  * Verifies that participants are listed by display name
- * @param {Object} browser
+ * @param {Object} aBrowser
  * @param {Array} participants
  * @returns {Array}
  */
-export function hasParticipants(browser, participants) {
-  const participantsText = browser.element(elements.rosterList).getText();
+export function hasParticipants(aBrowser, participants) {
+  aBrowser.element(elements.rosterList).waitForVisible();
+  const participantsText = aBrowser.element(elements.rosterList).getText();
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
 }

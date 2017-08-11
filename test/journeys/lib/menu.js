@@ -21,3 +21,15 @@ function clickMenuButton(aBrowser, buttonToClick) {
   aBrowser.element(controlsContainer).element(buttonToClick).click();
   aBrowser.waitForVisible(activityMenu, null, true);
 }
+
+/**
+ * Opens activity menu and clicks a button inside it
+ * @param {Browser} aBrowser
+ * @param {string} buttonToClick element selector
+ * @returns {null}
+ */
+export function openMenuAndClickButton(aBrowser, buttonToClick) {
+  aBrowser.click(menuButton);
+  aBrowser.waitForVisible(activityMenu);
+  aBrowser.element(controlsContainer).element(buttonToClick).click();
+}

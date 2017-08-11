@@ -6,6 +6,8 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/roster';
+import {openMenuAndClickButton} from '../../lib/menu';
+
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -160,8 +162,7 @@ describe(`Widget Space: One on One`, () => {
 
   describe(`roster tests`, () => {
     before(`open roster widget`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(rosterElements.peopleButton).click();
+      openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
       assert.isTrue(browserLocal.isVisible(rosterElements.rosterWidget));
     });
 
