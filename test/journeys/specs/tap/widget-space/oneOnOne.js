@@ -4,8 +4,9 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {switchToMeet, switchToMessage} from '../../../lib/menu';
+import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -142,34 +143,16 @@ describe(`Widget Space: One on One: TAP`, () => {
   });
 
   describe(`message widget`, () => {
-    before(`widget switches to message`, () => {
-      switchToMessage(browserLocal);
-      switchToMessage(browserRemote);
-    });
-
     it(`sends and receives messages`, () => {
-      browserLocal.waitForExist(`[placeholder="Send a message to ${mccoy.displayName}"]`, 10000);
-      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForExist(`[placeholder="Send a message to ${spock.displayName}"]`, 10000);
-      // Remote is now ready, send a message to it
-      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?`);
-      browserLocal.keys([`Enter`, `NULL`]);
-      browserRemote.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserRemote.waitUntil(
-        () => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`,
-        10000,
-        `expected to receive message from local`
-      );
+      const message = `Oh, I am sorry, Doctor. Were we having a good time?`;
+      const response = `God, I liked him better before he died.`;
+      switchToMessage(browserLocal);
+      sendMessage(browserLocal, mccoy, message);
+      verifyMessageReceipt(browserRemote, spock, message);
       // Send a message back
       clearEventLog(browserLocal);
-      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.`);
-      browserRemote.keys([`Enter`, `NULL`]);
-      browserLocal.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserLocal.waitUntil(
-        () => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`,
-        10000,
-        `expected to receive message from remote`
-      );
+      sendMessage(browserRemote, spock, response);
+      verifyMessageReceipt(browserLocal, mccoy, response);
       const events = getEventLog(browserLocal);
       assert.include(events, `messages:created`, `has a message created event`);
       assert.include(events, `rooms:unread`, `has an unread message event`);

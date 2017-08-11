@@ -3,7 +3,7 @@
 import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
-import {switchToMessage} from '../../../lib/menu';
+import {switchToMessage} from '../../../lib/test-helpers/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
 

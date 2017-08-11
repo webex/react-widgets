@@ -2,7 +2,7 @@
 import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
-import {switchToMeet} from '../../lib/menu';
+import {switchToMeet} from '../../lib/test-helpers/menu';
 import {clearEventLog} from '../../lib/events';
 import {constructHydraId} from '../../lib/hydra';
 
