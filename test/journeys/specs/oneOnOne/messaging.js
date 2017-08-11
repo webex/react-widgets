@@ -111,7 +111,7 @@ describe(`Widget Space: One on One`, () => {
 
     it(`sends and deletes message`);
 
-    /* describe(`File Transfer Tests`, () => {
+    describe(`File Transfer Tests`, () => {
       it(`sends message with pdf attachment`, () => {
         sendFileTest(browserLocal, browserRemote, mccoy, `pdf-sample.pdf`);
       });
@@ -159,7 +159,7 @@ describe(`Widget Space: One on One`, () => {
       it(`sends message with mp3 attachment`, () => {
         sendFileTest(browserLocal, browserRemote, mccoy, `mp3-sample.mp3`);
       });
-    }); */
+    });
 
     it(`sends and flags message`);
 
@@ -173,7 +173,7 @@ describe(`Widget Space: One on One`, () => {
 
       it(`sends message with bold text`, () => {
         sendMessage(browserRemote, spock, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
-        verifyMessageReceipt(browserLocal, mccoy, `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`)
+        verifyMessageReceipt(browserLocal, mccoy, `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`);
         // Assert only the bolded text is in the strong tag
         assert.equal(browserLocal.getText(`${elements.lastActivityText} > strong`), `Are you out of your Vulcan mind?`);
       });

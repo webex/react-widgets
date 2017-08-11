@@ -60,5 +60,5 @@ export function sendMessage(aBrowser, user, message) {
 export function verifyMessageReceipt(aBrowser, user, message) {
   aBrowser.waitForVisible(`[placeholder="Send a message to ${user.displayName}"]`);
   aBrowser.waitForExist(elements.lastActivityText, 15000);
-  aBrowser.waitUntil(() => browser.getText(elements.lastActivityText) === message);
+  aBrowser.waitUntil(() => aBrowser.element(elements.lastActivityText).getText() === message);
 }
