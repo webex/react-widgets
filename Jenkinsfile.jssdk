@@ -20,35 +20,27 @@ ansiColor('xterm') {
           sh 'git reset --hard && git clean -f'
         }
 
-        stage('Install') {
+        stage('Install/Upgrade') {
           withCredentials([
             string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
           ]) {
             sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            source ~/.nvm/nvm.sh > /dev/null 2>&1
             nvm install 7
             nvm use v7
             npm install
             rm -f $HOME/.npmrc
+            npm run upgradespark
             '''
           }
         }
 
-        stage('Upgrade') {
-          echo "Upgrading @ciscospark packages"
-          sh '''#!/bin/bash -ex
-          source ~/.nvm/nvm.sh
-          nvm use v7
-          npm run upgradespark
-          '''
-        }
-
-        stage('Branching') {
+        stage('Pushing') {
           echo "Creating Branch"
           def version
           sh '''#!/bin/bash -ex
-          source ~/.nvm/nvm.sh
+          source ~/.nvm/nvm.sh > /dev/null 2>&1
           nvm use v7
           version=$(node ./scripts/utils/jssdkversion.js)
           echo $version > .version
@@ -57,7 +49,7 @@ ansiColor('xterm') {
           '''
           version = readFile '.version'
           sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-            sh "git push upstream HEAD:js-sdk/${version}"
+            sh "git push upstream HEAD:refs/heads/js-sdk/${version}"
           }
           archiveArtifacts artifacts: 'package.json'
         }
