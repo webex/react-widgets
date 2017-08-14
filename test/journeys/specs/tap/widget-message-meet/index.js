@@ -5,6 +5,7 @@ import '@ciscospark/plugin-phone';
 import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/menu';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
+import {call, answer, hangup, decline} from '../../../lib/test-helpers/meet';
 
 describe(`Widget Message Meet TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -147,39 +148,19 @@ describe(`Widget Message Meet TAP`, () => {
   });
 
   describe(`meet widget`, () => {
-    const meetWidget = `.ciscospark-meet-component-wrapper`;
-    const callButton = `button[aria-label="Call"]`;
-    const answerButton = `button[aria-label="Answer"]`;
-    const declineButton = `button[aria-label="Decline"]`;
-    const hangupButton = `button[aria-label="Hangup"]`;
-    const callControls = `.call-controls`;
-    const remoteVideo = `.remote-video video`;
-
     it(`can answer and hangup in call`, () => {
       switchToMeet(browserLocal);
-      browserLocal.element(meetWidget).element(callButton).waitForVisible();
-      browserLocal.element(meetWidget).element(callButton).click();
-      browserRemote.waitForVisible(answerButton);
-      browserRemote.element(meetWidget).element(answerButton).click();
-      browserRemote.waitForVisible(remoteVideo);
-      // Let call elapse 5 seconds before hanging up
-      browserLocal.pause(5000);
-      browserLocal.moveToObject(meetWidget);
-      browserLocal.waitForVisible(callControls);
-      browserLocal.moveToObject(hangupButton);
-      browserLocal.element(meetWidget).element(hangupButton).click();
+      call(browserLocal, browserRemote);
+      answer(browserRemote);
+      hangup(browserLocal);
       // Pausing to let locus session flush
       browserLocal.pause(5000);
     });
 
     it(`can decline an incoming call`, () => {
       switchToMeet(browserRemote);
-      browserRemote.element(meetWidget).element(callButton).waitForVisible();
-      browserRemote.element(meetWidget).element(callButton).click();
-      browserLocal.waitForVisible(declineButton);
-      browserLocal.element(meetWidget).element(declineButton).click();
-      browserLocal.element(meetWidget).element(callButton).waitForVisible();
-      browserRemote.element(meetWidget).element(callButton).waitForVisible();
+      call(browserRemote, browserLocal);
+      decline(browserLocal);
     });
   });
 });
