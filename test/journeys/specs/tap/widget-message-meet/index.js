@@ -1,8 +1,11 @@
 /* eslint-disable max-nested-callbacks */
+
 import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
-import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/menu';
+
+import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/basic';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
 import {elements} from '../../../lib/test-helpers/meet';

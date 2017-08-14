@@ -4,6 +4,8 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
+import {elements} from '../../lib/test-helpers/basic';
+
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
 
@@ -80,54 +82,45 @@ describe(`Widget Space: One on One`, () => {
   });
 
   describe(`Activity Menu`, () => {
-    const menuButton = `button[aria-label="Main Menu"]`;
-    const exitButton = `.ciscospark-activity-menu-exit button`;
-    const messageButton = `button[aria-label="Message"]`;
-    const meetButton = `button[aria-label="Call"]`;
-    const activityMenu = `.ciscospark-activity-menu`;
-    const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-wrapper`;
-    const meetWidget = `.ciscospark-meet-wrapper`;
-
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(menuButton));
+      assert.isTrue(browserLocal.isVisible(elements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.waitForVisible(activityMenu);
+      browserLocal.click(elements.menuButton);
+      browserLocal.waitForVisible(elements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(activityMenu));
-      browserLocal.waitForVisible(exitButton);
+      assert.isTrue(browserLocal.isVisible(elements.activityMenu));
+      browserLocal.waitForVisible(elements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(exitButton);
-      browserLocal.waitForVisible(activityMenu, 1500, true);
+      browserLocal.click(elements.exitButton);
+      browserLocal.waitForVisible(elements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
+      browserLocal.click(elements.menuButton);
+      browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
     it(`switches to message widget`, () => {
-      browserLocal.element(controlsContainer).element(messageButton).click();
-      assert.isTrue(browserLocal.isVisible(messageWidget));
-      assert.isFalse(browserLocal.isVisible(meetWidget));
+      browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
+      assert.isTrue(browserLocal.isVisible(elements.messageWidget));
+      assert.isFalse(browserLocal.isVisible(elements.meetWidget));
     });
 
     it(`has a meet button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(meetButton).waitForVisible();
+      browserLocal.click(elements.menuButton);
+      browserLocal.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
     });
 
     it(`switches to meet widget`, () => {
-      browserLocal.element(controlsContainer).element(meetButton).click();
-      assert.isTrue(browserLocal.isVisible(meetWidget));
-      assert.isFalse(browserLocal.isVisible(messageWidget));
+      browserLocal.element(elements.controlsContainer).element(elements.meetButton).click();
+      assert.isTrue(browserLocal.isVisible(elements.meetWidget));
+      assert.isFalse(browserLocal.isVisible(elements.messageWidget));
     });
 
   });
