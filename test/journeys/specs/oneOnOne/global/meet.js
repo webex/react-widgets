@@ -5,10 +5,10 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 
-import {switchToMeet} from '../../lib/test-helpers/basic';
-import {clearEventLog} from '../../lib/events';
-import {constructHydraId} from '../../lib/hydra';
-import {elements, answer, call, decline, hangup} from '../../lib/test-helpers/meet';
+import {switchToMeet} from '../../../lib/test-helpers/basic';
+import {clearEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
+import {elements, answer, call, decline, hangup} from '../../../lib/test-helpers/meet';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);

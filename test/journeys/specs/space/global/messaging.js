@@ -6,10 +6,10 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import waitForPromise from '../../lib/wait-for-promise';
-import {clearEventLog, getEventLog} from '../../lib/events';
-import {constructHydraId} from '../../lib/hydra';
-import {elements, sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/messaging';
+import waitForPromise from '../../../lib/wait-for-promise';
+import {clearEventLog, getEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
+import {elements, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);

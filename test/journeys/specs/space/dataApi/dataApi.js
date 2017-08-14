@@ -6,7 +6,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {elements} from '../../lib/test-helpers/basic';
+import {elements} from '../../../lib/test-helpers/basic';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -30,7 +30,7 @@ describe(`Widget Space`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/data-api/space.html`)
       .execute(() => {
         localStorage.clear();
       });
@@ -65,15 +65,15 @@ describe(`Widget Space`, () => {
   before(`inject token`, () => {
     const spaceWidget = `.ciscospark-space-widget`;
     browserLocal.execute((localAccessToken, spaceId) => {
-      const options = {
-        accessToken: localAccessToken,
-        spaceId
-      };
-      window.openSpaceWidget(options);
+      const csmmDom = document.createElement(`div`);
+      csmmDom.setAttribute(`class`, `ciscospark-widget`);
+      csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
+      csmmDom.setAttribute(`data-access-token`, localAccessToken);
+      csmmDom.setAttribute(`data-space-id`, spaceId);
+      csmmDom.setAttribute(`data-initial-activity`, `message`);
+      document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
+      window.loadBundle(`/dist/bundle.js`);
     }, marty.token.access_token, conversation.id);
-    browserLocal.execute((c) => {
-      console.log(c);
-    }, conversation);
     browserLocal.waitForVisible(spaceWidget);
   });
 
@@ -118,6 +118,19 @@ describe(`Widget Space`, () => {
       assert.isTrue(browserLocal.isVisible(elements.messageWidget));
     });
 
+  });
+
+  describe(`messaging`, () => {
+    it(`sends and receives messages`, () => {
+      const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
+      // Increase wait timeout for message delivery
+      browser.timeouts(`implicit`, 10000);
+      browserLocal.waitForVisible(textInputField);
+      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
+      const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
+      browserLocal.setValue(textInputField, `${martyText}\n`);
+      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText);
+    });
   });
 
 });

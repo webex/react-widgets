@@ -5,9 +5,9 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {clearEventLog, getEventLog} from '../../lib/events';
-import {constructHydraId} from '../../lib/hydra';
-import {elements, sendFileTest, sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/messaging';
+import {clearEventLog, getEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
+import {elements, sendFileTest, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
