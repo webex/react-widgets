@@ -9,7 +9,7 @@ import '@ciscospark/internal-plugin-conversation';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
-import {elements, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
+import {elements, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);

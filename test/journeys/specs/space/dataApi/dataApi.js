@@ -6,7 +6,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {elements} from '../../../lib/test-helpers/basic';
+import {elements} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);

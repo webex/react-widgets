@@ -9,6 +9,11 @@ export const elements = {
   meetWidget: `.ciscospark-meet-wrapper`
 };
 
+/**
+ * Switches to message widget
+ * @param {Object} aBrowser
+ * @returns {void}
+ */
 export function switchToMessage(aBrowser) {
   if (!aBrowser.isVisible(elements.activityMenu)) {
     aBrowser.click(elements.menuButton);
@@ -18,6 +23,11 @@ export function switchToMessage(aBrowser) {
   aBrowser.click(elements.messageButton);
 }
 
+/**
+ * Switches to meet widget
+ * @param {Object} aBrowser
+ * @returns {void}
+ */
 export function switchToMeet(aBrowser) {
   if (!aBrowser.isVisible(elements.activityMenu)) {
     aBrowser.click(elements.menuButton);

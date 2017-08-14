@@ -5,10 +5,10 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 
-import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/basic';
+import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
-import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
-import {elements} from '../../../lib/test-helpers/meet';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
+import {elements} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Message Meet TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);

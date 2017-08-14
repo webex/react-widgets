@@ -7,7 +7,7 @@ import '@ciscospark/internal-plugin-conversation';
 
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
-import {elements, sendFileTest, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
+import {elements, sendFileTest, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -110,8 +110,6 @@ describe(`Widget Space: One on One`, () => {
       assert.equal(eventCreated.detail.data.actorName, mccoy.displayName);
     });
 
-    it(`sends and deletes message`);
-
     describe(`File Transfer Tests`, () => {
       it(`sends message with pdf attachment`, () => {
         sendFileTest(browserLocal, browserRemote, mccoy, `pdf-sample.pdf`);
@@ -162,16 +160,7 @@ describe(`Widget Space: One on One`, () => {
       });
     });
 
-    it(`sends and flags message`);
-
     describe(`markdown messages`, () => {
-      beforeEach(`wait until widget is loaded`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
-      });
-
       it(`sends message with bold text`, () => {
         sendMessage(browserRemote, spock, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
         verifyMessageReceipt(browserLocal, mccoy, `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`);

@@ -1,8 +1,8 @@
-import {clearEventLog} from '../../lib/events';
+import {clearEventLog} from '../../../lib/events';
 import {assert} from 'chai';
 import path from 'path';
 
-const uploadDir = path.join(__dirname, `assets`);
+const uploadDir = path.join(__dirname, `../assets`);
 
 export const elements = {
   inputFile: `.ciscospark-file-input`,

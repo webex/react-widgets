@@ -7,9 +7,9 @@ import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
-import {elements, switchToMessage} from '../../../lib/test-helpers/basic';
+import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
-import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space: Group Space: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);

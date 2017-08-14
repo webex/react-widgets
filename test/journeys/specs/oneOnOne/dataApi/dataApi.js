@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {elements, switchToMessage} from '../../../lib/test-helpers/basic';
+import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space: One on One`, () => {
   describe(`Data API`, () => {

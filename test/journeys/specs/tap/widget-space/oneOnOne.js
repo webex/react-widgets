@@ -4,10 +4,10 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/basic';
+import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
-import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/messaging';
-import {elements, call, answer, hangup, decline} from '../../../lib/test-helpers/meet';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
+import {elements, call, answer, hangup, decline} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
