@@ -6,20 +6,13 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/roster';
-import {openMenuAndClickButton} from '../../lib/menu';
+import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
   let marty;
   let conversation, participants;
-
-  const menuButton = `button[aria-label="Main Menu"]`;
-  const exitButton = `.ciscospark-activity-menu-exit button`;
-  const messageButton = `button[aria-label="Message"]`;
-  const activityMenu = `.ciscospark-activity-menu`;
-  const controlsContainer = `.ciscospark-controls-container`;
-  const messageWidget = `.ciscospark-message-wrapper`;
 
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -98,7 +91,6 @@ describe(`Widget Space`, () => {
     assert.equal(browserLocal.getText(`h1.ciscospark-title`), conversation.displayName);
   });
 
-
   describe(`When conversation is established`, () => {
     before(`wait for conversation to be ready`, () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
@@ -107,38 +99,33 @@ describe(`Widget Space`, () => {
 
     describe(`Activity Menu`, () => {
       it(`has a menu button`, () => {
-        assert.isTrue(browserLocal.isVisible(menuButton));
+        assert.isTrue(browserLocal.isVisible(elements.menuButton));
       });
 
       it(`displays the menu when clicking the menu button`, () => {
-        browserLocal.click(menuButton);
-        browserLocal.waitForVisible(activityMenu);
+        browserLocal.click(elements.menuButton);
+        browserLocal.waitForVisible(elements.activityMenu);
       });
 
       it(`has an exit menu button`, () => {
-        assert.isTrue(browserLocal.isVisible(activityMenu));
-        browserLocal.waitForVisible(exitButton);
-      });
-
-      it(`has a message button`, () => {
-        browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
-      });
-
-      it(`has a people button`, () => {
-        browserLocal.element(controlsContainer).element(rosterElements.peopleButton).waitForVisible();
-      });
-
-      it(`hides menu and switches to message widget`, () => {
-        browserLocal.element(controlsContainer).element(messageButton).click();
-        browserLocal.waitForVisible(activityMenu, 1500, true);
-        assert.isTrue(browserLocal.isVisible(messageWidget));
+        assert.isTrue(browserLocal.isVisible(elements.activityMenu));
+        browserLocal.waitForVisible(elements.exitButton);
       });
 
       it(`closes the menu with the exit button`, () => {
-        browserLocal.click(menuButton);
-        browserLocal.waitForVisible(activityMenu);
-        browserLocal.click(exitButton);
-        browserLocal.waitForVisible(activityMenu, 1500, true);
+        browserLocal.click(elements.exitButton);
+        browserLocal.waitForVisible(elements.activityMenu, 1500, true);
+      });
+
+      it(`has a message button`, () => {
+        browserLocal.click(elements.menuButton);
+        browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+      });
+
+      it(`hides menu and switches to message widget`, () => {
+        browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
+        browserLocal.waitForVisible(elements.activityMenu, 1500, true);
+        assert.isTrue(browserLocal.isVisible(elements.messageWidget));
       });
     });
 
@@ -165,7 +152,5 @@ describe(`Widget Space`, () => {
         browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
       });
     });
-
   });
-
 });

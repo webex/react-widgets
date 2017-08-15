@@ -6,7 +6,7 @@ import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/roster';
+import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);

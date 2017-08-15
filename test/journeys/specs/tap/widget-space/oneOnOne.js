@@ -4,8 +4,10 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {switchToMeet, switchToMessage} from '../../../lib/menu';
+import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
+import {elements, call, answer, hangup, decline} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -89,87 +91,60 @@ describe(`Widget Space: One on One: TAP`, () => {
   });
 
   describe(`Activity Menu`, () => {
-    const menuButton = `button[aria-label="Main Menu"]`;
-    const exitButton = `.ciscospark-activity-menu-exit button`;
-    const messageButton = `button[aria-label="Message"]`;
-    const meetButton = `button[aria-label="Call"]`;
-    const activityMenu = `.ciscospark-activity-menu`;
-    const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-wrapper`;
-    const meetWidget = `.ciscospark-meet-wrapper`;
-
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(menuButton));
+      assert.isTrue(browserLocal.isVisible(basicElements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.waitForVisible(activityMenu);
+      browserLocal.click(basicElements.menuButton);
+      browserLocal.waitForVisible(basicElements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(activityMenu));
-      browserLocal.waitForVisible(exitButton);
+      assert.isTrue(browserLocal.isVisible(basicElements.activityMenu));
+      browserLocal.waitForVisible(basicElements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(exitButton);
-      browserLocal.waitForVisible(activityMenu, 1500, true);
+      browserLocal.click(basicElements.exitButton);
+      browserLocal.waitForVisible(basicElements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
+      browserLocal.click(basicElements.menuButton);
+      browserLocal.element(basicElements.controlsContainer).element(basicElements.messageButton).waitForVisible();
     });
 
     it(`switches to message widget`, () => {
-      browserLocal.element(controlsContainer).element(messageButton).click();
-      assert.isTrue(browserLocal.isVisible(messageWidget));
-      assert.isFalse(browserLocal.isVisible(meetWidget));
+      browserLocal.element(basicElements.controlsContainer).element(basicElements.messageButton).click();
+      assert.isTrue(browserLocal.isVisible(basicElements.messageWidget));
+      assert.isFalse(browserLocal.isVisible(basicElements.meetWidget));
     });
 
     it(`has a meet button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(meetButton).waitForVisible();
+      browserLocal.click(basicElements.menuButton);
+      browserLocal.element(basicElements.controlsContainer).element(basicElements.meetButton).waitForVisible();
     });
 
     it(`switches to meet widget`, () => {
-      browserLocal.element(controlsContainer).element(meetButton).click();
-      assert.isTrue(browserLocal.isVisible(meetWidget));
-      assert.isFalse(browserLocal.isVisible(messageWidget));
+      browserLocal.element(basicElements.controlsContainer).element(basicElements.meetButton).click();
+      assert.isTrue(browserLocal.isVisible(basicElements.meetWidget));
+      assert.isFalse(browserLocal.isVisible(basicElements.messageWidget));
     });
 
   });
 
   describe(`message widget`, () => {
-    before(`widget switches to message`, () => {
-      switchToMessage(browserLocal);
-      switchToMessage(browserRemote);
-    });
-
     it(`sends and receives messages`, () => {
-      browserLocal.waitForExist(`[placeholder="Send a message to ${mccoy.displayName}"]`, 10000);
-      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForExist(`[placeholder="Send a message to ${spock.displayName}"]`, 10000);
-      // Remote is now ready, send a message to it
-      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?`);
-      browserLocal.keys([`Enter`, `NULL`]);
-      browserRemote.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserRemote.waitUntil(
-        () => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`,
-        10000,
-        `expected to receive message from local`
-      );
+      const message = `Oh, I am sorry, Doctor. Were we having a good time?`;
+      const response = `God, I liked him better before he died.`;
+      switchToMessage(browserLocal);
+      sendMessage(browserLocal, mccoy, message);
+      verifyMessageReceipt(browserRemote, spock, message);
       // Send a message back
       clearEventLog(browserLocal);
-      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.`);
-      browserRemote.keys([`Enter`, `NULL`]);
-      browserLocal.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserLocal.waitUntil(
-        () => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`,
-        10000,
-        `expected to receive message from remote`
-      );
+      sendMessage(browserRemote, spock, response);
+      verifyMessageReceipt(browserLocal, mccoy, response);
       const events = getEventLog(browserLocal);
       assert.include(events, `messages:created`, `has a message created event`);
       assert.include(events, `rooms:unread`, `has an unread message event`);
@@ -177,19 +152,10 @@ describe(`Widget Space: One on One: TAP`, () => {
   });
 
   describe(`meet widget`, () => {
-    const meetWidget = `.ciscospark-meet-wrapper`;
-    const messageWidget = `.ciscospark-message-wrapper`;
-    const callButton = `button[aria-label="Call"]`;
-    const answerButton = `button[aria-label="Answer"]`;
-    const declineButton = `button[aria-label="Decline"]`;
-    const hangupButton = `button[aria-label="Hangup"]`;
-    const callControls = `.call-controls`;
-    const remoteVideo = `.remote-video video`;
-
     describe(`pre call experience`, () => {
       it(`has a call button`, () => {
         switchToMeet(browserLocal);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
       });
     });
 
@@ -197,19 +163,12 @@ describe(`Widget Space: One on One: TAP`, () => {
       it(`can hangup in call`, () => {
         clearEventLog(browserLocal);
         switchToMeet(browserLocal);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserLocal.element(meetWidget).element(callButton).click();
-        browserRemote.waitForVisible(answerButton);
-        browserRemote.element(meetWidget).element(answerButton).click();
-        browserRemote.waitForVisible(remoteVideo);
-        // Let call elapse 5 seconds before hanging up
+        call(browserLocal, browserRemote);
+        answer(browserRemote);
         browserLocal.pause(5000);
-        browserLocal.moveToObject(meetWidget);
-        browserLocal.waitForVisible(callControls);
-        browserLocal.moveToObject(hangupButton);
-        browserLocal.element(meetWidget).element(hangupButton).click();
+        hangup(browserLocal);
         // Should switch back to message widget after hangup
-        browserLocal.waitForVisible(messageWidget);
+        browserLocal.waitForVisible(elements.messageWidget);
         const events = getEventLog(browserLocal);
         assert.include(events, `calls:created`, `has a calls created event`);
         assert.include(events, `calls:connected`, `has a calls connected event`);
@@ -220,12 +179,9 @@ describe(`Widget Space: One on One: TAP`, () => {
 
       it(`can decline an incoming call`, () => {
         switchToMeet(browserRemote);
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).click();
-        browserLocal.waitForVisible(declineButton);
-        browserLocal.element(meetWidget).element(declineButton).click();
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
+        call(browserRemote, browserLocal);
+        decline(browserLocal);
+        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
       });
     });
   });
