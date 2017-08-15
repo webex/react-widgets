@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {switchToMessage} from '../../../lib/menu';
+import {switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Message Meet`, () => {
   describe(`Data API`, () => {

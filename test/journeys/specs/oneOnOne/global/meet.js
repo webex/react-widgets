@@ -1,10 +1,14 @@
 /* eslint-disable max-nested-callbacks */
+
 import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
-import {switchToMeet} from '../../lib/menu';
-import {clearEventLog} from '../../lib/events';
-import {constructHydraId} from '../../lib/hydra';
+
+import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {clearEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
+import {elements, answer, call, decline, hangup} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -79,46 +83,26 @@ describe(`Widget Space: One on One`, () => {
   });
 
   describe(`meet widget`, () => {
-    const meetWidget = `.ciscospark-meet-wrapper`;
-    const messageWidget = `.ciscospark-message-wrapper`;
-    const callButton = `button[aria-label="Call"]`;
-    const answerButton = `button[aria-label="Answer"]`;
-    const declineButton = `button[aria-label="Decline"]`;
-    const hangupButton = `button[aria-label="Hangup"]`;
-    const callControls = `.call-controls`;
-    const remoteVideo = `.remote-video video`;
-
     describe(`pre call experience`, () => {
       it(`has a call button`, () => {
         switchToMeet(browserLocal);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
+        browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
       });
     });
 
     describe(`during call experience`, () => {
       it(`can hangup before answer`, () => {
         switchToMeet(browserLocal);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserLocal.element(meetWidget).element(callButton).click();
-        // wait for call to establish
-        browserRemote.waitForVisible(answerButton);
-        // Call controls currently has a hover state
-        browserLocal.moveToObject(meetWidget);
-        browserLocal.waitForVisible(callControls);
-        browserLocal.moveToObject(hangupButton);
-        browserLocal.element(meetWidget).element(hangupButton).click();
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
+        call(browserLocal, browserRemote);
+        hangup(browserLocal);
+        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
       });
 
       it(`can decline an incoming call`, () => {
         switchToMeet(browserRemote);
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).click();
-        browserLocal.waitForVisible(declineButton);
-        browserLocal.element(meetWidget).element(declineButton).click();
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserRemote.element(meetWidget).element(callButton).waitForVisible();
+        call(browserRemote, browserLocal);
+        decline(browserLocal);
+        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
         // Pausing to let locus session flush
         browserLocal.pause(10000);
       });
@@ -127,19 +111,11 @@ describe(`Widget Space: One on One`, () => {
         clearEventLog(browserLocal);
         clearEventLog(browserRemote);
         switchToMeet(browserLocal);
-        browserLocal.element(meetWidget).element(callButton).waitForVisible();
-        browserLocal.element(meetWidget).element(callButton).click();
-        browserRemote.waitForVisible(answerButton);
-        browserRemote.element(meetWidget).element(answerButton).click();
-        browserRemote.waitForVisible(remoteVideo);
-        // Let call elapse 5 seconds before hanging up
-        browserLocal.pause(5000);
-        browserLocal.moveToObject(meetWidget);
-        browserLocal.waitForVisible(callControls);
-        browserLocal.moveToObject(hangupButton);
-        browserLocal.element(meetWidget).element(hangupButton).click();
+        call(browserLocal, browserRemote);
+        answer(browserRemote);
+        hangup(browserLocal);
         // Should switch back to message widget after hangup
-        browserLocal.waitForVisible(messageWidget);
+        browserLocal.waitForVisible(elements.messageWidget);
       });
 
       it(`has proper call event data`, () => {
