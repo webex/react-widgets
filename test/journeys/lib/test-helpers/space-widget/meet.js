@@ -64,6 +64,12 @@ export function hangup(aBrowser) {
   aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();
 }
 
+/**
+ * Test to hangup call before reciever answers
+ * @param {Object} browserLocal
+ * @param {Object} browserRemote
+ * @returns {void}
+ */
 export function hangupBeforeTest(browserLocal, browserRemote) {
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
@@ -71,6 +77,12 @@ export function hangupBeforeTest(browserLocal, browserRemote) {
   browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
 }
 
+/**
+ * Test to decline incoming call
+ * @param {Object} browserLocal
+ * @param {Object} browserRemote
+ * @returns {void}
+ */
 export function declineIncomingTest(browserLocal, browserRemote) {
   switchToMeet(browserRemote);
   call(browserRemote, browserLocal);
@@ -80,6 +92,12 @@ export function declineIncomingTest(browserLocal, browserRemote) {
   browserLocal.pause(10000);
 }
 
+/**
+ * Test to hangup during ongoing call
+ * @param {Object} browserLocal
+ * @param {Object} browserRemote
+ * @returns {void}
+ */
 export function hangupDuringTest(browserLocal, browserRemote) {
   clearEventLog(browserLocal);
   clearEventLog(browserRemote);
@@ -107,6 +125,13 @@ export function hangupDuringTest(browserLocal, browserRemote) {
   browserLocal.waitForVisible(elements.messageWidget);
 }
 
+/**
+ * Test to verify browser has proper call events
+ * @param {Object} browserLocal
+ * @param {Object} browserRemote
+ * @param {Object} spock
+ * @returns {void}
+ */
 export function callEventTest(browserLocal, browserRemote, spock) {
   const result = browserLocal.execute(() => {
     const events = window.ciscoSparkEvents.map((event) => {
