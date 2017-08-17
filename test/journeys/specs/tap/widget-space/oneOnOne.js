@@ -7,7 +7,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
-import {elements, call, answer, hangup, decline} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, call, declineIncomingTest, hangupDuringTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -161,27 +161,11 @@ describe(`Widget Space: One on One: TAP`, () => {
 
     describe(`during call experience`, () => {
       it(`can hangup in call`, () => {
-        clearEventLog(browserLocal);
-        switchToMeet(browserLocal);
-        call(browserLocal, browserRemote);
-        answer(browserRemote);
-        browserLocal.pause(5000);
-        hangup(browserLocal);
-        // Should switch back to message widget after hangup
-        browserLocal.waitForVisible(elements.messageWidget);
-        const events = getEventLog(browserLocal);
-        assert.include(events, `calls:created`, `has a calls created event`);
-        assert.include(events, `calls:connected`, `has a calls connected event`);
-        assert.include(events, `calls:disconnected`, `has a calls disconnected event`);
-        // Pausing to let locus session flush
-        browserLocal.pause(10000);
+        hangupDuringTest(browserLocal, browserRemote);
       });
 
       it(`can decline an incoming call`, () => {
-        switchToMeet(browserRemote);
-        call(browserRemote, browserLocal);
-        decline(browserLocal);
-        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        declineIncomingTest(browserLocal, browserRemote);
       });
     });
   });
