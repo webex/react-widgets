@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.159",
+  "version": "0.1.160",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -175,7 +175,9 @@
     "yargs": "^8.0.2"
   },
   "lint-staged": {
-    "*.js": ["eslint"]
+    "*.js": [
+      "eslint"
+    ]
   },
   "greenkeeper": {
     "ignore": [
