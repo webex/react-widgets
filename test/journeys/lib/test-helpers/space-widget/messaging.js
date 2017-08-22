@@ -1,6 +1,7 @@
-import {clearEventLog} from '../../../lib/events';
 import {assert} from 'chai';
 import path from 'path';
+
+import {clearEventLog} from '../../../lib/events';
 
 const uploadDir = path.join(__dirname, `../assets`);
 
@@ -10,29 +11,29 @@ export const elements = {
   downloadFileButton: `(//div[@title="Download this file"]/parent::button)[last()]`,
   shareButton: `button[aria-label="Share"]`,
   systemMessage: `.ciscospark-system-message`,
+  lastActivity: `.ciscospark-activity-item-container:last-child`,
   lastActivityText: `.ciscospark-activity-item-container:last-child .ciscospark-activity-text`
 };
 
-/* eslint no-sync: "off" */
-export function sendFileTest(browserLocal, browserRemote, mccoy, fileName) {
+/**
+ * Sends a file and verifies receipt
+ * @param {object} browserLocal
+ * @param {object} browserRemote
+ * @param {string} fileName
+ * @returns {null}
+ */
+export function sendFileTest(browserLocal, browserRemote, fileName) {
   clearEventLog(browserRemote);
   const filePath = path.join(uploadDir, fileName);
-  // const fileSize = fs.statSync(filePath).size;
   const fileTitle = `//div[text()="${fileName}"]`;
   browserLocal.chooseFile(elements.inputFile, filePath);
   browserLocal.click(elements.shareButton);
-  return browserRemote.waitForExist(fileTitle, 30000);
-  // TODO: Re-enable file size checks
-  // const events = getEventLog(browserRemote);
-  // const newMessage = events.find((event) => event.eventName === `messages:created`);
-  // const fileUrl = newMessage.detail.data.files[0].url;
-  // let downloadedFileSize;
-  // return request.get(fileUrl)
-  //   .set(`Authorization`, `Bearer ${mccoy.token.access_token}`)
-  //   .then((response) => {
-  //     downloadedFileSize = response.header[`content-length`];
-  //     assert.equal(fileSize, downloadedFileSize);
-  //   });
+  browserRemote.waitForExist(fileTitle, 30000);
+  browserRemote.scroll(fileTitle);
+  const localSize = browserLocal.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
+  const remoteSize = browserRemote.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
+  console.info({localSize, remoteSize});
+  assert.equal(localSize, remoteSize);
 }
 
 /**

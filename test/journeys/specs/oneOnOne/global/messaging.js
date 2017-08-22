@@ -111,53 +111,29 @@ describe(`Widget Space: One on One`, () => {
     });
 
     describe(`File Transfer Tests`, () => {
-      it(`sends message with pdf attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `pdf-sample.pdf`);
-      });
+      it(`sends message with pdf attachment`, () => sendFileTest(browserLocal, browserRemote, `pdf-sample.pdf`));
 
-      it(`sends message with txt attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `txt-sample.txt`);
-      });
+      it(`sends message with txt attachment`, () => sendFileTest(browserLocal, browserRemote, `txt-sample.txt`));
 
-      it(`sends message with doc attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `doc-sample.doc`);
-      });
+      it(`sends message with doc attachment`, () => sendFileTest(browserLocal, browserRemote, `doc-sample.doc`));
 
-      it(`sends message with docx attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `docx-sample.docx`);
-      });
+      it(`sends message with docx attachment`, () => sendFileTest(browserLocal, browserRemote, `docx-sample.docx`));
 
-      it(`sends message with ppt attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `ppt-sample.ppt`);
-      });
+      it(`sends message with ppt attachment`, () => sendFileTest(browserLocal, browserRemote, `ppt-sample.ppt`));
 
-      it(`sends message with html attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `html-sample.html`);
-      });
+      it(`sends message with html attachment`, () => sendFileTest(browserLocal, browserRemote, `html-sample.html`));
 
-      it(`sends message with json attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `json-sample.json`);
-      });
+      it(`sends message with json attachment`, () => sendFileTest(browserLocal, browserRemote, `json-sample.json`));
 
-      it(`sends message with zip attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `zip-sample.zip`);
-      });
+      it(`sends message with zip attachment`, () => sendFileTest(browserLocal, browserRemote, `zip-sample.zip`));
 
-      it(`sends message with gif attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `gif-sample.gif`);
-      });
+      it(`sends message with gif attachment`, () => sendFileTest(browserLocal, browserRemote, `gif-sample.gif`));
 
-      it(`sends message with jpg attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `jpg-sample.jpg`);
-      });
+      it(`sends message with jpg attachment`, () => sendFileTest(browserLocal, browserRemote, `jpg-sample.jpg`));
 
-      it(`sends message with png attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `png-sample.png`);
-      });
+      it(`sends message with png attachment`, () => sendFileTest(browserLocal, browserRemote, `png-sample.png`));
 
-      it(`sends message with mp3 attachment`, () => {
-        sendFileTest(browserLocal, browserRemote, mccoy, `mp3-sample.mp3`);
-      });
+      it(`sends message with mp3 attachment`, () => sendFileTest(browserLocal, browserRemote, `mp3-sample.mp3`));
     });
 
     describe(`markdown messages`, () => {
