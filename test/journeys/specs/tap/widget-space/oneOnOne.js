@@ -12,7 +12,7 @@ import {elements, call, declineIncomingTest, hangupDuringTest} from '../../../li
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
-  let mccoy, spock;
+  let local, mccoy, remote, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
     `spark:people_read`,
@@ -40,43 +40,47 @@ describe(`Widget Space: One on One: TAP`, () => {
   before(`create spock`, () => testUsers.create({count: 1, config: {displayName: `Mr Spock TAP`}})
     .then((users) => {
       [spock] = users;
+      local = {browser: browserLocal, user: spock, displayName: spock.displayName};
     }));
 
   before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: `Bones Mccoy TAP`}})
     .then((users) => {
       [mccoy] = users;
+      remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
 
   before(`inject token for spock`, () => {
-    browserLocal.execute((localAccessToken, localToUserEmail) => {
+    local.browser.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          // eslint-disable-next-line object-shorthand
+          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
         },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
       };
       window.openSpaceWidget(options);
     }, spock.token.access_token, mccoy.email);
-    browserLocal.waitForExist(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
+    local.browser.waitForExist(`[placeholder="Send a message to ${remote.displayName}"]`, 30000);
   });
 
   before(`open remote widget for mccoy`, () => {
-    browserRemote.execute((localAccessToken, localToUserEmail) => {
+    remote.browser.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          // eslint-disable-next-line object-shorthand
+          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
         },
         toPersonEmail: localToUserEmail,
         initialActivity: `message`
       };
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.email);
-    browserRemote.waitForExist(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
+    remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
   });
 
   it(`loads the test page`, () => {
@@ -85,51 +89,51 @@ describe(`Widget Space: One on One: TAP`, () => {
   });
 
   it(`loads the user's name`, () => {
-    browserLocal.waitForVisible(`h1.ciscospark-title`);
-    browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
-    assert.equal(browserLocal.getText(`h1.ciscospark-title`), mccoy.displayName);
+    local.browser.waitForVisible(`h1.ciscospark-title`);
+    local.browser.waitUntil(() => local.browser.getText(`h1.ciscospark-title`) !== `Loading...`);
+    assert.equal(local.browser.getText(`h1.ciscospark-title`), remote.displayName);
   });
 
   describe(`Activity Menu`, () => {
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(basicElements.menuButton));
+      assert.isTrue(local.browser.isVisible(basicElements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(basicElements.menuButton);
-      browserLocal.waitForVisible(basicElements.activityMenu);
+      local.browser.click(basicElements.menuButton);
+      local.browser.waitForVisible(basicElements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(basicElements.activityMenu));
-      browserLocal.waitForVisible(basicElements.exitButton);
+      assert.isTrue(local.browser.isVisible(basicElements.activityMenu));
+      local.browser.waitForVisible(basicElements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(basicElements.exitButton);
-      browserLocal.waitForVisible(basicElements.activityMenu, 1500, true);
+      local.browser.click(basicElements.exitButton);
+      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(basicElements.menuButton);
-      browserLocal.element(basicElements.controlsContainer).element(basicElements.messageButton).waitForVisible();
+      local.browser.click(basicElements.menuButton);
+      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).waitForVisible();
     });
 
     it(`switches to message widget`, () => {
-      browserLocal.element(basicElements.controlsContainer).element(basicElements.messageButton).click();
-      assert.isTrue(browserLocal.isVisible(basicElements.messageWidget));
-      assert.isFalse(browserLocal.isVisible(basicElements.meetWidget));
+      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).click();
+      assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
+      assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
     });
 
     it(`has a meet button`, () => {
-      browserLocal.click(basicElements.menuButton);
-      browserLocal.element(basicElements.controlsContainer).element(basicElements.meetButton).waitForVisible();
+      local.browser.click(basicElements.menuButton);
+      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).waitForVisible();
     });
 
     it(`switches to meet widget`, () => {
-      browserLocal.element(basicElements.controlsContainer).element(basicElements.meetButton).click();
-      assert.isTrue(browserLocal.isVisible(basicElements.meetWidget));
-      assert.isFalse(browserLocal.isVisible(basicElements.messageWidget));
+      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).click();
+      assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
+      assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
     });
 
   });
@@ -138,34 +142,37 @@ describe(`Widget Space: One on One: TAP`, () => {
     it(`sends and receives messages`, () => {
       const message = `Oh, I am sorry, Doctor. Were we having a good time?`;
       const response = `God, I liked him better before he died.`;
-      switchToMessage(browserLocal);
-      sendMessage(browserLocal, mccoy, message);
-      verifyMessageReceipt(browserRemote, spock, message);
+      switchToMessage(local.browser);
+      sendMessage(local, remote, message);
+      verifyMessageReceipt(remote, local, message);
       // Send a message back
-      clearEventLog(browserLocal);
-      sendMessage(browserRemote, spock, response);
-      verifyMessageReceipt(browserLocal, mccoy, response);
-      const events = getEventLog(browserLocal);
-      assert.include(events, `messages:created`, `has a message created event`);
-      assert.include(events, `rooms:unread`, `has an unread message event`);
+      clearEventLog(local.browser);
+      clearEventLog(remote.browser);
+      sendMessage(remote, local, response);
+      verifyMessageReceipt(local, remote, response);
+      const events = getEventLog(local.browser);
+      const eventCreated = events.find((event) => event.eventName === `messages:created`);
+      const eventUnread = events.find((event) => event.eventName === `rooms:unread`);
+      assert.isDefined(eventCreated, `messages:created`, `has a message created event`);
+      assert.isDefined(eventUnread, `rooms:unread`, `has an unread message event`);
     });
   });
 
   describe(`meet widget`, () => {
     describe(`pre call experience`, () => {
       it(`has a call button`, () => {
-        switchToMeet(browserLocal);
-        browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        switchToMeet(local.browser);
+        local.browser.element(elements.meetWidget).element(elements.callButton).waitForVisible();
       });
     });
 
     describe(`during call experience`, () => {
       it(`can hangup in call`, () => {
-        hangupDuringTest(browserLocal, browserRemote);
+        hangupDuringTest(local.browser, remote.browser);
       });
 
       it(`can decline an incoming call`, () => {
-        declineIncomingTest(browserLocal, browserRemote);
+        declineIncomingTest(local.browser, remote.browser);
       });
     });
   });

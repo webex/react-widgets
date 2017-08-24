@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 
 import {switchToMeet} from './main';
-import {clearEventLog, getEventLog} from '../../events';
+import {clearEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
 export const elements = {
