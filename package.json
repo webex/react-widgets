@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.158",
+  "version": "0.1.161",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -30,7 +30,9 @@
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
-    "upgradespark": "./scripts/utils/update.js"
+    "upgradespark": "./scripts/utils/update.js",
+    "precommit": "lint-staged",
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -133,10 +135,12 @@
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.24.1",
+    "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^20.0.4",
     "json-loader": "^0.5.4",
+    "lint-staged": "^4.0.3",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
@@ -169,6 +173,11 @@
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0",
     "yargs": "^8.0.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "greenkeeper": {
     "ignore": [

@@ -136,8 +136,7 @@ describe(`Widget Space: One on One`, () => {
       it(`sends message with mp3 attachment`, () => {
         messageTests.sendFileTest(local, remote, `mp3-sample.mp3`);
       });
-    });
-
+      
     describe(`markdown messaging`, () => {
       it(`sends message with bold text`, () => {
         messageTests.markdown.bold(remote, local);

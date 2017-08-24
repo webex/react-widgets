@@ -12,6 +12,7 @@ export const elements = {
   downloadFileButton: `(//div[@title="Download this file"]/parent::button)[last()]`,
   shareButton: `button[aria-label="Share"]`,
   systemMessage: `.ciscospark-system-message`,
+  lastActivity: `.ciscospark-activity-item-container:last-child`,
   lastActivityText: `.ciscospark-activity-item-container:last-child .ciscospark-activity-text`
 };
 
@@ -52,7 +53,7 @@ export function verifyMessageReceipt(receiver, sender, message) {
 
 /* eslint no-sync: "off" */
 /**
- * Sends and receives file
+ * Sends a file and verifies receipt 
  * @param {TestObject} sender
  * @param {TestObject} receiver
  * @param {string} fileName
@@ -61,23 +62,16 @@ export function verifyMessageReceipt(receiver, sender, message) {
 const sendFileTest = (sender, receiver, fileName) => {
   clearEventLog(receiver.browser);
   const filePath = path.join(uploadDir, fileName);
-  // const fileSize = fs.statSync(filePath).size;
   const fileTitle = `//div[text()="${fileName}"]`;
   sender.browser.chooseFile(elements.inputFile, filePath);
   sender.browser.click(elements.shareButton);
-  return receiver.browser.waitForExist(fileTitle, 30000);
-  // TODO: Re-enable file size checks
-  // const events = getEventLog(receiver);
-  // const newMessage = events.find((event) => event.eventName === `messages:created`);
-  // const fileUrl = newMessage.detail.data.files[0].url;
-  // let downloadedFileSize;
-  // return request.get(fileUrl)
-  //   .set(`Authorization`, `Bearer ${receiver.user.token.access_token}`)
-  //   .then((response) => {
-  //     downloadedFileSize = response.header[`content-length`];
-  //     assert.equal(fileSize, downloadedFileSize);
-  //   });
-};
+  receiver.browser.waitForExist(fileTitle, 30000);
+  receiver.browser.scroll(fileTitle);
+  const localSize = sender.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
+  const remoteSize = receiver.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
+  console.info({localSize, remoteSize});
+  assert.equal(localSize, remoteSize);
+}
 
 /**
  * Test that verifies correct message events are created
