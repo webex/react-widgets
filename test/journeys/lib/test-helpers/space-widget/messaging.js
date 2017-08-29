@@ -53,7 +53,7 @@ export function verifyMessageReceipt(receiver, sender, message) {
 
 /* eslint no-sync: "off" */
 /**
- * Sends a file and verifies receipt 
+ * Sends a file and verifies receipt
  * @param {TestObject} sender
  * @param {TestObject} receiver
  * @param {string} fileName
@@ -71,7 +71,7 @@ const sendFileTest = (sender, receiver, fileName) => {
   const remoteSize = receiver.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
   console.info({localSize, remoteSize});
   assert.equal(localSize, remoteSize);
-}
+};
 
 /**
  * Test that verifies correct message events are created
@@ -133,7 +133,6 @@ const italic = (sender, receiver) => {
  * @returns {void}
  */
 const blockquote = (sender, receiver) => {
-  // Remote is now ready, send a message from it
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `> You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
   // Quote break with two new lines
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
@@ -152,7 +151,6 @@ const blockquote = (sender, receiver) => {
  * @returns {void}
  */
 const orderedList = (sender, receiver) => {
-  // Remote is now ready, send a message to it
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `1. ordered list item 1`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `2. ordered list item 2`);
@@ -170,7 +168,6 @@ const orderedList = (sender, receiver) => {
  * @returns {void}
  */
 const unorderedList = (sender, receiver) => {
-  // Remote is now ready, send a message from it
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `* unordered list item 1`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `* unordered list item 2`);
@@ -224,7 +221,6 @@ const heading3 = (sender, receiver) => {
  * @returns {void}
  */
 const hr = (sender, receiver) => {
-  // Remote is now ready, send a message from it
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `test horizontal line`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `- - -`);
@@ -265,7 +261,6 @@ const inline = (sender, receiver) => {
  * @returns {void}
  */
 const codeblock = (sender, receiver) => {
-  // Remote is now ready, send a message to it
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `\`\`\` html`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `<h1>Hello World!</h1>`);

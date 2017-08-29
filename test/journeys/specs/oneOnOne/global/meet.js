@@ -4,7 +4,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
-import {elements, hangupBeforeTest, declineIncomingTest, hangupDuringTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -88,15 +88,15 @@ describe(`Widget Space: One on One`, () => {
 
     describe(`during call experience`, () => {
       it(`can hangup before answer`, () => {
-        hangupBeforeTest(browserLocal, browserRemote);
+        hangupBeforeAnswerTest(browserLocal, browserRemote);
       });
 
       it(`can decline an incoming call`, () => {
-        declineIncomingTest(browserLocal, browserRemote);
+        declineIncomingCallTest(browserLocal, browserRemote);
       });
 
       it(`can hangup in call`, () => {
-        hangupDuringTest(browserLocal, browserRemote);
+        hangupDuringCallTest(browserLocal, browserRemote);
       });
 
       it(`has proper call event data`, () => {

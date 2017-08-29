@@ -7,7 +7,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
-import {elements, call, declineIncomingTest, hangupDuringTest} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -168,11 +168,11 @@ describe(`Widget Space: One on One: TAP`, () => {
 
     describe(`during call experience`, () => {
       it(`can hangup in call`, () => {
-        hangupDuringTest(local.browser, remote.browser);
+        hangupDuringCallTest(local.browser, remote.browser);
       });
 
       it(`can decline an incoming call`, () => {
-        declineIncomingTest(local.browser, remote.browser);
+        declineIncomingCallTest(local.browser, remote.browser);
       });
     });
   });

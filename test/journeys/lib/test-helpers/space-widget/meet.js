@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 
 import {switchToMeet} from './main';
-import {clearEventLog} from '../../events';
+import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
 export const elements = {
@@ -70,7 +70,7 @@ export function hangup(aBrowser) {
  * @param {Object} browserRemote
  * @returns {void}
  */
-export function hangupBeforeTest(browserLocal, browserRemote) {
+export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   hangup(browserLocal);
@@ -83,7 +83,7 @@ export function hangupBeforeTest(browserLocal, browserRemote) {
  * @param {Object} browserRemote
  * @returns {void}
  */
-export function declineIncomingTest(browserLocal, browserRemote) {
+export function declineIncomingCallTest(browserLocal, browserRemote) {
   switchToMeet(browserRemote);
   call(browserRemote, browserLocal);
   decline(browserLocal);
@@ -98,7 +98,7 @@ export function declineIncomingTest(browserLocal, browserRemote) {
  * @param {Object} browserRemote
  * @returns {void}
  */
-export function hangupDuringTest(browserLocal, browserRemote) {
+export function hangupDuringCallTest(browserLocal, browserRemote) {
   clearEventLog(browserLocal);
   clearEventLog(browserRemote);
   switchToMeet(browserLocal);
@@ -106,15 +106,7 @@ export function hangupDuringTest(browserLocal, browserRemote) {
   answer(browserRemote);
   hangup(browserLocal);
   browserLocal.waitForVisible(elements.messageWidget);
-  const result = browserLocal.execute(() => {
-    const events = window.ciscoSparkEvents.map((event) => {
-      // Passing the call object from the browser causes an overflow
-      Reflect.deleteProperty(event.detail.data, `call`);
-      return event;
-    });
-    return events;
-  });
-  const events = result.value;
+  const events = getEventLog(browserLocal);
   const eventCreated = events.find((event) => event.eventName === `calls:created`);
   const eventConnected = events.find((event) => event.eventName === `calls:connected`);
   const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);
@@ -133,15 +125,7 @@ export function hangupDuringTest(browserLocal, browserRemote) {
  * @returns {void}
  */
 export function callEventTest(browserLocal, browserRemote, spock) {
-  const result = browserLocal.execute(() => {
-    const events = window.ciscoSparkEvents.map((event) => {
-      // Passing the call object from the browser causes an overflow
-      Reflect.deleteProperty(event.detail.data, `call`);
-      return event;
-    });
-    return events;
-  });
-  const events = result.value;
+  const events = getEventLog(browserLocal);
   const eventCreated = events.find((event) => event.eventName === `calls:created`);
   const eventConnected = events.find((event) => event.eventName === `calls:connected`);
   const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);
