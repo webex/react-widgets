@@ -50,7 +50,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@ciscospark/common": "1.9.3",
-    "@ciscospark/helper-html": "1.9.3",
+    "@ciscospark/helper-html": "1.10.1",
     "@ciscospark/internal-plugin-conversation": "1.9.4",
     "@ciscospark/internal-plugin-encryption": "1.9.4",
     "@ciscospark/internal-plugin-flag": "1.9.4",
