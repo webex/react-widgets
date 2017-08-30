@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 
 import {switchToMeet} from './main';
-import {clearEventLog, getEventLog} from '../../events';
+import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
 export const elements = {
@@ -99,20 +99,11 @@ export function declineIncomingCallTest(browserLocal, browserRemote) {
  * @returns {void}
  */
 export function hangupDuringCallTest(browserLocal, browserRemote) {
-  clearEventLog(browserLocal);
-  clearEventLog(browserRemote);
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   answer(browserRemote);
   hangup(browserLocal);
   browserLocal.waitForVisible(elements.messageWidget);
-  const events = getEventLog(browserLocal);
-  const eventCreated = events.find((event) => event.eventName === `calls:created`);
-  const eventConnected = events.find((event) => event.eventName === `calls:connected`);
-  const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);
-  assert.isDefined(eventDisconnected, `has a calls disconnected event`);
-  assert.isDefined(eventCreated, `has a calls ringing event`);
-  assert.isDefined(eventConnected, `has a calls connected event`);
   // Should switch back to message widget after hangup
   browserLocal.waitForVisible(elements.messageWidget);
 }
