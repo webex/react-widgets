@@ -7,6 +7,7 @@ import '@ciscospark/internal-plugin-conversation';
 
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
+import {runAxe} from '../../../lib/axe';
 import {elements, sendFileTest, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space: One on One`, () => {
@@ -108,6 +109,15 @@ describe(`Widget Space: One on One`, () => {
       assert.containsAllKeys(eventUnread.detail.data, [`actorId`, `actorName`, `id`, `title`, `type`, `created`, `lastActivity`]);
       assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, mccoy.id));
       assert.equal(eventCreated.detail.data.actorName, mccoy.displayName);
+    });
+
+    describe(`accessibility`, () => {
+      it(`should have no accessibility violations`, () =>
+        runAxe(browserLocal, `ciscospark-widget`)
+          .then((results) => {
+            assert.equal(results.violations.length, 0);
+          })
+      );
     });
 
     describe(`File Transfer Tests`, () => {

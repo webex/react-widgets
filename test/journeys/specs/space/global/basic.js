@@ -6,6 +6,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
+import {runAxe} from '../../../lib/axe';
 import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
@@ -151,6 +152,15 @@ describe(`Widget Space`, () => {
         browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).click();
         browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
       });
+    });
+
+    describe(`accessibility`, () => {
+      it(`should have no accessibility violations`, () =>
+        runAxe(browserLocal, `ciscospark-widget`)
+          .then((results) => {
+            assert.equal(results.violations.length, 0);
+          })
+      );
     });
   });
 });
