@@ -1,7 +1,10 @@
+import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {sendMessage, verifyMessageReceipt, messageTests} from '../../../lib/test-helpers/space-widget/messaging';
+import {runAxe} from '../../../lib/axe';
+import {messageTests, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -86,6 +89,15 @@ describe(`Widget Space: One on One`, () => {
 
     it(`receives proper events on messages`, () => {
       messageTests.messageEventTest(local, remote);
+    });
+
+    describe(`accessibility`, () => {
+      it(`should have no accessibility violations`, () =>
+        runAxe(browserLocal, `ciscospark-widget`)
+          .then((results) => {
+            assert.equal(results.violations.length, 0);
+          })
+      );
     });
 
     describe(`File Transfer Tests`, () => {

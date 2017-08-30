@@ -180,7 +180,8 @@ exports.config = {
     {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
     {mount: `/dist-recents`, path: `./packages/node_modules/@ciscospark/widget-recents/dist`},
     {mount: `/dist-wmm`, path: `./packages/node_modules/@ciscospark/widget-message-meet/dist`},
-    {mount: `/`, path: `./test/journeys/server/`}
+    {mount: `/`, path: `./test/journeys/server/`},
+    {mount: `/axe-core`, path: `./node_modules/axe-core/`}
   ],
   staticServerPort: 4567
 };
