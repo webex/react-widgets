@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 

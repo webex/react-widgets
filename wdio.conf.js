@@ -72,6 +72,7 @@ exports.config = {
             "profile.default_content_setting_values.notifications": 2
           }
         },
+        idleTimeout: 300,
         platform: `mac`
       }
     },
@@ -87,6 +88,7 @@ exports.config = {
             "profile.default_content_setting_values.notifications": 2
           }
         },
+        idleTimeout: 300,
         platform: `mac`
       }
     }

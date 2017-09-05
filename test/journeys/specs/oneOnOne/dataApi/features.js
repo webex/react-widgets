@@ -1,13 +1,11 @@
 import {assert} from 'chai';
-
-import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 
-describe(`Widget Space`, () => {
+describe(`Widget Space: One on One`, () => {
   describe(`Data API`, () => {
     const browserLocal = browser.select(`browserLocal`);
     const browserRemote = browser.select(`browserRemote`);
@@ -16,7 +14,6 @@ describe(`Widget Space`, () => {
     const activityMenu = `.ciscospark-activity-menu`;
     const controlsContainer = `.ciscospark-controls-container`;
 
-    let conversation;
     let userWithAllTheFeatures, userWithNoFeatures;
     process.env.CISCOSPARK_SCOPE = [
       `webexsquare:get_conversation`,
@@ -36,7 +33,7 @@ describe(`Widget Space`, () => {
 
     before(`load browsers`, () => {
       browser
-        .url(`/data-api/space.html`)
+        .url(`data-api/space.html`)
         .execute(() => {
           localStorage.clear();
         });
@@ -61,40 +58,32 @@ describe(`Widget Space`, () => {
 
     before(`pause to let test users establish`, () => browser.pause(5000));
 
-    before(`create space`, () => userWithAllTheFeatures.spark.internal.conversation.create({
-      displayName: `Feature Test Widget Space`,
-      participants: [userWithAllTheFeatures, userWithNoFeatures]
-    }).then((c) => {
-      conversation = c;
-      return conversation;
-    }));
-
     before(`open widget local`, () => {
-      browserLocal.execute((localAccessToken, spaceId) => {
+      browserLocal.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement(`div`);
         csmmDom.setAttribute(`class`, `ciscospark-widget`);
         csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
         csmmDom.setAttribute(`data-access-token`, localAccessToken);
-        csmmDom.setAttribute(`data-space-id`, spaceId);
+        csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
         window.loadBundle(`/dist/bundle.js`);
-      }, userWithAllTheFeatures.token.access_token, conversation.id);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      }, userWithAllTheFeatures.token.access_token, userWithNoFeatures.email);
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${userWithNoFeatures.displayName}"]`, 30000);
     });
 
     before(`open widget remote`, () => {
-      browserRemote.execute((localAccessToken, spaceId) => {
+      browserRemote.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement(`div`);
         csmmDom.setAttribute(`class`, `ciscospark-widget`);
         csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
         csmmDom.setAttribute(`data-access-token`, localAccessToken);
-        csmmDom.setAttribute(`data-space-id`, spaceId);
+        csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
         window.loadBundle(`/dist/bundle.js`);
-      }, userWithNoFeatures.token.access_token, conversation.id);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      }, userWithNoFeatures.token.access_token, userWithAllTheFeatures.email);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${userWithAllTheFeatures.displayName}"]`, 30000);
     });
 
     describe(`Feature Flags`, () => {

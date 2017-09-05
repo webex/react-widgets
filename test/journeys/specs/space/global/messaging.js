@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
