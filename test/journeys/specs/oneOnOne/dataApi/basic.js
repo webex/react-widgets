@@ -1,4 +1,5 @@
 import {assert} from 'chai';
+
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
