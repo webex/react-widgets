@@ -60,7 +60,6 @@ export function verifyMessageReceipt(receiver, sender, message) {
  * @returns {void}
  */
 const sendFileTest = (sender, receiver, fileName) => {
-  clearEventLog(receiver.browser);
   const filePath = path.join(uploadDir, fileName);
   const fileTitle = `//div[text()="${fileName}"]`;
   sender.browser.chooseFile(elements.inputFile, filePath);
@@ -261,12 +260,14 @@ const inline = (sender, receiver) => {
  * @returns {void}
  */
 const codeblock = (sender, receiver) => {
+  sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `\`\`\` html`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `<h1>Hello World!</h1>`);
   sender.browser.keys([`Shift`, `Enter`, `NULL`]);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `\`\`\``);
   sender.browser.keys([`Enter`, `NULL`]);
+  receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
   receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === `<h1>Hello World!</h1>`);
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), `<h1>Hello World!</h1>`);
 };

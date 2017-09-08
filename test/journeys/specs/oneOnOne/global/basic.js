@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
