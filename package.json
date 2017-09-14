@@ -138,7 +138,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
-    "jest": "^20.0.4",
+    "jest": "^21.1.0",
     "json-loader": "^0.5.4",
     "lint-staged": "^4.0.3",
     "minimist": "^1.2.0",
