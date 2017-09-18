@@ -86,7 +86,7 @@ describe(`Widget Space: One on One`, () => {
     }));
 
 
-    describe(`initial activity setting`, () => {
+    describe(`initial activity setting: meet`, () => {
       before(`inject marty token`, () => {
         browserLocal.execute((localAccessToken, spaceId) => {
           const csmmDom = document.createElement(`div`);
@@ -107,7 +107,31 @@ describe(`Widget Space: One on One`, () => {
         browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
       });
 
-      after(`refresh browsers to remove widgets`, () => browser.refresh());
+      after(`refresh browsers to remove widgets`, browser.refresh);
+    });
+
+    describe(`initial activity setting: message`, () => {
+      before(`inject marty token`, () => {
+        browserLocal.execute((localAccessToken, spaceId) => {
+          const csmmDom = document.createElement(`div`);
+          csmmDom.setAttribute(`class`, `ciscospark-widget`);
+          csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
+          csmmDom.setAttribute(`data-access-token`, localAccessToken);
+          csmmDom.setAttribute(`data-space-id`, spaceId);
+          csmmDom.setAttribute(`data-initial-activity`, `message`);
+          document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
+          window.loadBundle(`/dist/bundle.js`);
+        }, marty.token.access_token, conversation.id);
+        const spaceWidget = `.ciscospark-space-widget`;
+        browserLocal.waitForVisible(spaceWidget);
+      });
+
+      it(`opens message widget`, () => {
+        browserLocal.waitForVisible(elements.messageWidget);
+        browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
+      });
+
+      after(`refresh browsers to remove widgets`, browser.refresh);
     });
 
     describe(`start call setting`, () => {
@@ -154,7 +178,7 @@ describe(`Widget Space: One on One`, () => {
         assert.isNotTrue(browserRemote.isVisible(meetElements.answerButton));
       });
 
-      after(`refresh browsers to remove widgets`, () => browser.refresh());
+      after(`refresh browsers to remove widgets`, browser.refresh);
     });
   });
 });

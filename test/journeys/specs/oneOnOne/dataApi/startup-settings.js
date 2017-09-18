@@ -47,7 +47,7 @@ describe(`Widget Space: One on One`, () => {
 
     before(`pause to let test users establish`, () => browser.pause(5000));
 
-    describe(`initial activity setting`, () => {
+    describe(`initial activity setting: meet`, () => {
       before(`inject token`, () => {
         browserLocal.execute((localAccessToken, localToUserEmail) => {
           const csmmDom = document.createElement(`div`);
@@ -66,7 +66,28 @@ describe(`Widget Space: One on One`, () => {
         browserLocal.waitForVisible(elements.meetButton);
       });
 
-      after(`refresh browsers to remove widgets`, () => browser.refresh());
+      after(`refresh browsers to remove widgets`, browser.refresh);
+    });
+
+    describe(`initial activity setting: message`, () => {
+      before(`inject token`, () => {
+        browserLocal.execute((localAccessToken, localToUserEmail) => {
+          const csmmDom = document.createElement(`div`);
+          csmmDom.setAttribute(`class`, `ciscospark-widget`);
+          csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
+          csmmDom.setAttribute(`data-access-token`, localAccessToken);
+          csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
+          csmmDom.setAttribute(`data-initial-activity`, `message`);
+          document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
+          window.loadBundle(`/dist/bundle.js`);
+        }, spock.token.access_token, mccoy.email);
+      });
+
+      it(`opens message widget`, () => {
+        browserLocal.waitForVisible(elements.messageWidget);
+      });
+
+      after(`refresh browsers to remove widgets`, browser.refresh);
     });
 
     describe(`start call setting`, () => {
@@ -104,7 +125,7 @@ describe(`Widget Space: One on One`, () => {
         hangup(browserLocal);
       });
 
-      after(`refresh browsers to remove widgets`, () => browser.refresh());
+      after(`refresh browsers to remove widgets`, browser.refresh);
     });
   });
 });
