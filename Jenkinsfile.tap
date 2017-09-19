@@ -23,12 +23,11 @@ ansiColor('xterm') {
         try {
           
           stage('checkout') {
-              sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
-              // return the exit code because we don't care about failures
-              sh script: 'git remote add upstream git@github.com:ciscospark/react-ciscospark.git', returnStatus: true
-
-              sh 'git fetch upstream'
-            }
+              checkout([$class: 'GitSCM', branches: [[name: '*/lex_debug']], 
+                        doGenerateSubmoduleConfigurations: false, 
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: '6c8a75fb-5e5f-4803-9b6d-1933a3111a34', url: 'https://github.com/ciscospark/react-ciscospark']]])
           }
           
           stage('Install') {            
