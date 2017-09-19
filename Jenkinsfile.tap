@@ -4,21 +4,7 @@ pipeline {
   agent{
     label 'NODE_JS_BUILDER'
   }
-
-  options {
-    timeout(time: 1, unit: 'HOURS')
-    timestamps()
-    ansiColor('xterm')
-  }
-
-  stages {
-    stage('Clean') {
-      steps {
-        sh 'rm -rf node_modules'
-      }
-    }
-
-    stage('Install') {
+  stage('Install') {
       steps {
         withCredentials([
           string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
@@ -29,12 +15,4 @@ pipeline {
         }
       }
     }
-
-
-  post {
-    failure {
-      echo "this failed in post"  
-      //emailext body: 'Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL', subject: '🚨🚨🚨 Spark-js-sdk--react-widget--tap Failure 🚨🚨🚨', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
-    }
-  }
 }
