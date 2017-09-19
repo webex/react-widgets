@@ -30,11 +30,12 @@ ansiColor('xterm') {
             ]) {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
               sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
-              nvm install 7
-              nvm use v7
-              npm install
-              rm -f $HOME/.npmrc
+              #source ~/.nvm/nvm.sh
+              #nvm install 7
+              #nvm use v7
+              #npm install
+              #rm -f $HOME/.npmrc
+              ls -lrt
               '''
             }
           }
@@ -42,7 +43,7 @@ ansiColor('xterm') {
           stage('Test') {
             echo "Starting Tap Tests"
             try {
-              tapTest()
+              //tapTest()
             }
             catch(error) {
               echo "Test Failed"
