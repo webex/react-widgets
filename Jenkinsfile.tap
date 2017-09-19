@@ -22,6 +22,9 @@ ansiColor('xterm') {
       node('NODE_JS_BUILDER') {
         try {
           stage('Install') {
+            
+            checkout([$class: 'GitSCM', branches: [[name: '*/lex_debug']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ciscospark/react-ciscospark']]])
+            
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
