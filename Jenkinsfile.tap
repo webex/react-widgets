@@ -21,16 +21,6 @@ ansiColor('xterm') {
     timeout(60) {
       node('NODE_JS_BUILDER') {
         try {
-          
-          stage('checkout') {
-            env.GIT_COMMIT = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-              checkout([$class: 'GitSCM', branches: [[name: '*/lex_debug']], 
-                        doGenerateSubmoduleConfigurations: false, 
-                        extensions: [], 
-                        submoduleCfg: [], 
-                        userRemoteConfigs: [[credentialsId: '6c8a75fb-5e5f-4803-9b6d-1933a3111a34', url: 'https://github.com/ciscospark/react-ciscospark']]])
-          }
-          
           stage('Install') {            
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
@@ -55,7 +45,7 @@ ansiColor('xterm') {
             catch(error) {
               echo "Test Failed"
               sleep 30s
-              tapTest()
+              //tapTest()
             }
             echo "Finised with Tap Tests"
           }
