@@ -7,12 +7,8 @@ pipeline {
   stages{
       stage('Install') {
           steps {
-            withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
-            ]) {
-              sh '''#!/bin/bash -ex
-              rm -rf *
-              '''
+             {
+              cleanWs()
             }
           }
         }
