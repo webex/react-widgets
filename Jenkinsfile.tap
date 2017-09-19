@@ -1,5 +1,5 @@
 #!groovy
 
 node('NODE_JS_BUILDER') {
-    cleanWs deleteDirs: true, patterns: [[pattern: '', type: 'INCLUDE']]
+    sh 'rm -rf *'
 }
