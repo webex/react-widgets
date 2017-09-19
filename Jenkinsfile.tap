@@ -1,14 +1,5 @@
 #!groovy
 
-pipeline {
-  agent{
-    label 'NODE_JS_BUILDER'
-  }
-  stages{
-      stage('Install') {
-            steps {
-              cleanWs deleteDirs: true, patterns: [[pattern: '', type: 'INCLUDE']]
-            }
-      }
-  }
+node('NODE_JS_BUILDER') {
+    cleanWs deleteDirs: true, patterns: [[pattern: '', type: 'INCLUDE']]
 }
