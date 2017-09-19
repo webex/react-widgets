@@ -5,12 +5,11 @@ pipeline {
     label 'NODE_JS_BUILDER'
   }
   stages{
+    deleteDir()
       stage('Install') {
-          steps {
-             {
-              cleanWs()
+            steps {
+              echo "cleaning workspace"
             }
-          }
-        }
+      }
   }
 }
