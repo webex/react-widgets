@@ -4,15 +4,17 @@ pipeline {
   agent{
     label 'NODE_JS_BUILDER'
   }
-  stage('Install') {
-      steps {
-        withCredentials([
-          string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
-        ]) {
-          sh '''#!/bin/bash -ex
-          rm -rf *
-          '''
+  stages{
+      stage('Install') {
+          steps {
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh '''#!/bin/bash -ex
+              rm -rf *
+              '''
+            }
+          }
         }
-      }
-    }
+  }
 }
