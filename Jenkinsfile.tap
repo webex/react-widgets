@@ -49,8 +49,7 @@ pipeline {
 
   post {
     failure {
-       echo "testing failure"  
-      //emailext attachLog: true, body: 'Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
+        emailext attachLog: true, body: 'Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
     }
   }
 }
