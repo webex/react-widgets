@@ -5,10 +5,9 @@ pipeline {
     label 'NODE_JS_BUILDER'
   }
   stages{
-    deleteDir()
       stage('Install') {
             steps {
-              echo "cleaning workspace"
+              cleanWs deleteDirs: true, patterns: [[pattern: '', type: 'INCLUDE']]
             }
       }
   }
