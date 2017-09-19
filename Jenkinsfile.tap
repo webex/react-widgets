@@ -8,7 +8,8 @@ def tapTest = { ->
     sh '''#!/bin/bash -ex
     source ~/.nvm/nvm.sh
     nvm use v7
-    CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:tap
+    #CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:tap
+    ls -lrt
     '''
   }
 }
@@ -53,8 +54,8 @@ ansiColor('xterm') {
           if (currentBuild.result != 'UNSTABLE') {
             currentBuild.result = 'FAILURE'
           }
-          cleanup()
-          emailext body: '<p>Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="^Starting Tap Tests", end="^Finised with Tap Tests"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
+          //cleanup()
+          //emailext body: '<p>Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="^Starting Tap Tests", end="^Finised with Tap Tests"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
           throw error
         }
       }
