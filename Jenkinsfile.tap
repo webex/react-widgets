@@ -1,5 +1,64 @@
 #!groovy
 
-node('NODE_JS_BUILDER') {
-    sh 'rm -rf *'
+def tapTest = { ->
+  withCredentials([
+    string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
+    usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
+  ]) {
+    sh '''#!/bin/bash -ex
+    source ~/.nvm/nvm.sh
+    nvm use v7
+    CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:tap
+    '''
+  }
+}
+
+
+ansiColor('xterm') {
+  timestamps {
+    timeout(60) {
+      node('NODE_JS_BUILDER') {
+        try {
+          stage('Install') {
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm install 7
+              nvm use v7
+              npm install
+              rm -f $HOME/.npmrc
+              '''
+            }
+          }
+
+          stage('Test') {
+            echo "Starting Tap Tests"
+            try {
+              tapTest()
+            }
+            catch(error) {
+              echo "Test Failed"
+              sleep 30s
+              tapTest()
+            }
+            echo "Finised with Tap Tests"
+          }
+        }
+
+
+        catch(error) {
+          if (currentBuild.result != 'UNSTABLE') {
+            currentBuild.result = 'FAILURE'
+          }
+          echo "had a failure"
+          //cleanup()
+          //emailext body: '<p>Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="^Starting Tap Tests", end="^Finised with Tap Tests"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
+          throw error
+        }
+      }
+    }
+  }
 }
