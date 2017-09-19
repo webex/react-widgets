@@ -23,6 +23,7 @@ ansiColor('xterm') {
         try {
           
           stage('checkout') {
+            env.GIT_COMMIT = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
               checkout([$class: 'GitSCM', branches: [[name: '*/lex_debug']], 
                         doGenerateSubmoduleConfigurations: false, 
                         extensions: [], 
