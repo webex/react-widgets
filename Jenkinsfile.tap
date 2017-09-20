@@ -35,7 +35,6 @@ pipeline {
         ]) {
           retry(2){
             sh '''#!/bin/bash -ex
-            blah
             source ~/.nvm/nvm.sh
             nvm use v7
             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:tap
