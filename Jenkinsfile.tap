@@ -33,7 +33,7 @@ pipeline {
           string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
           usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
         ]) {
-          retry(1){
+          retry(2){
             sh '''#!/bin/bash -ex
             blah
             source ~/.nvm/nvm.sh
