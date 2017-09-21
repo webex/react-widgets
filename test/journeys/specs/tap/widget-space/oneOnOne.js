@@ -1,6 +1,4 @@
 /* eslint-disable max-nested-callbacks */
-const execSync = require('child_process').execSync;
-execSync('killall -9 sc');
 
 import {assert} from 'chai';
 
