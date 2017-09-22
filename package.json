@@ -51,7 +51,7 @@
   "dependencies": {
     "@ciscospark/common": "1.9.3",
     "@ciscospark/helper-html": "1.9.3",
-    "@ciscospark/internal-plugin-conversation": "1.9.4",
+    "@ciscospark/internal-plugin-conversation": "1.11.0",
     "@ciscospark/internal-plugin-encryption": "1.9.4",
     "@ciscospark/internal-plugin-flag": "1.9.4",
     "@ciscospark/internal-plugin-feature": "1.9.4",
