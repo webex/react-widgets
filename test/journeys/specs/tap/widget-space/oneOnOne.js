@@ -174,7 +174,10 @@ describe(`Widget Space: One on One: TAP`, () => {
       it(`can decline an incoming call`, () => {
         declineIncomingCallTest(local.browser, remote.browser);
       });
+
+      it(`fails the build`, () => {
+        assert.isFalse(true);
+      });
     });
   });
-
 });
