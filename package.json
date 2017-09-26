@@ -80,7 +80,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-cookie": "^2.0.7",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.0.0",
     "react-draggable": "^2.2.3",
     "react-dropzone": "^3.9.0",
     "react-highlight": "^0.10.0",
