@@ -52,7 +52,7 @@ pipeline {
     failure {
       echo "Finished with Tap Tests"
       //emailext body: '<p>Spark-js-sdk--react-widget--tap build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="\\b(Starting)\\b", end="\\b(Finished)\\b"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'spark-js-sdk-gating-pipeline-email.94d222a7@ciscospark.pagerduty.com'
-      emailext body: '<p>$JOB_NAME build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="^Starting with Tap Tests)", end="^Finished with Tap Tests"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'alearche@cisco.com'
+      emailext body: '<p>$JOB_NAME build number $BUILD_NUMBER has failed. For detailed information, please refer to $BUILD_URL</p><pre>${BUILD_LOG_EXCERPT, start="^Starting with Tap Tests", end="^Finished with Tap Tests"}</pre>', subject: 'Spark-js-sdk--react-widget--tap Failure', to: 'alearche@cisco.com'
     }
   }
 }
