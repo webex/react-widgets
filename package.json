@@ -168,7 +168,7 @@
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
     "webdriverio": "^4.6.2",
-    "webpack": "^3.5.4",
+    "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^8.0.2"
   },
