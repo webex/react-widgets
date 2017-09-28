@@ -5,6 +5,8 @@ rules:
     - 0
   global-require:
     - 0
+  max-nested-callbacks:
+    - 0
 env:
   mocha: true
 globals:

@@ -12,7 +12,6 @@
     "lodash"
   ],
   "presets": [
-    "es2015",
     "react",
     ["env", {
       "targets": {

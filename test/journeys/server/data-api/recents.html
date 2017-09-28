@@ -3,6 +3,7 @@
 <head>
   <title>Cisco Spark Widget Test</title>
   <meta charset="utf8">
+  <link href="/dist-recents/main.css" rel="stylesheet">
   <style type="text/css">
     * {
       /*CSS transitions*/
@@ -31,8 +32,6 @@
       animation: none !important;
   }
   </style>
-  <link href="/dist/main.css" rel="stylesheet">
-  <script src="/axe-core/axe.min.js"></script>
 </head>
 <body>
 <div style="width: 500px; height: 500px">
@@ -40,12 +39,16 @@
     id="ciscospark-widget">
 
 </div>
-<script src="/dist/bundle.js"></script>
 <script>
-  window.openSpaceWidget = function(options) {
-    var widgetEl = document.getElementById('ciscospark-widget');
-    // Init a new widget
-    ciscospark.widget(widgetEl).spaceWidget(options);
+  window.loadBundle = function (bundleFile) {
+    var script = document.createElement('script');
+    script.src = bundleFile;
+    document.head.appendChild(script);
+    script.onload = function () {
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    }
   };
   window.ciscoSparkEvents = [];
 </script>
