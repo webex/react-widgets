@@ -3,7 +3,7 @@
  *
  * @export
  * @param {any} myBrowser
- * @returns null
+ * @returns {void}
  */
 export function clearEventLog(myBrowser) {
   myBrowser.execute(() => {window.ciscoSparkEvents.length = 0;});
@@ -17,6 +17,15 @@ export function clearEventLog(myBrowser) {
  * @returns {Array}
  */
 export function getEventLog(myBrowser) {
-  const result = myBrowser.execute(() => window.ciscoSparkEvents);
+  const result = myBrowser.execute(() => {
+    const events = window.ciscoSparkEvents.map((event) => {
+      // Passing the call object from the browser causes an overflow
+      if (event.detail && event.detail.data && event.detail.data.hasOwnProperty(`call`)) {
+        Reflect.deleteProperty(event.detail.data, `call`);
+      }
+      return event;
+    });
+    return events;
+  });
   return result.value;
 }

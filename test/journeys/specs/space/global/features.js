@@ -1,6 +1,5 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
+
 import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
@@ -8,7 +7,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 
-describe(`Widget Space: One on One`, () => {
+describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
 
@@ -108,5 +107,4 @@ describe(`Widget Space: One on One`, () => {
       });
     });
   });
-
 });
