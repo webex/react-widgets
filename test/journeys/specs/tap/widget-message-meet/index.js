@@ -1,9 +1,14 @@
 /* eslint-disable max-nested-callbacks */
+
 import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
-import {switchToMeet, switchToMessage} from '../../../lib/menu';
+
+import {switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
+import {elements} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Message Meet TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -130,29 +135,15 @@ describe(`Widget Message Meet TAP`, () => {
 
   describe(`message widget`, () => {
     it(`sends and receives messages`, () => {
+      const message = `Oh, I am sorry, Doctor. Were we having a good time?`;
+      const response = `God, I liked him better before he died.`;
       switchToMessage(browserLocal);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 10000);
-      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 10000);
-      // Remote is now ready, send a message to it
-      browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Oh, I am sorry, Doctor. Were we having a good time?`);
-      browserLocal.keys([`Enter`, `NULL`]);
-      browserRemote.waitForVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserRemote.waitUntil(
-        () => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Oh, I am sorry, Doctor. Were we having a good time?`,
-        10000,
-        `expected to receive message from local`
-      );
+      sendMessage(browserLocal, mccoy, message);
+      verifyMessageReceipt(browserRemote, spock, message);
       // Send a message back
       clearEventLog(browserLocal);
-      browserRemote.setValue(`[placeholder="Send a message to ${spock.displayName}"]`, `God, I liked him better before he died.`);
-      browserRemote.keys([`Enter`, `NULL`]);
-      browserLocal.waitForVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserLocal.waitUntil(
-        () => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `God, I liked him better before he died.`,
-        10000,
-        `expected to receive message from remote`
-      );
+      sendMessage(browserRemote, spock, response);
+      verifyMessageReceipt(browserLocal, mccoy, response);
       const events = getEventLog(browserLocal);
       assert.include(events, `messages:created`, `has a message created event`);
       assert.include(events, `messages:unread`, `has an unread message event`);
@@ -161,38 +152,32 @@ describe(`Widget Message Meet TAP`, () => {
 
   describe(`meet widget`, () => {
     const meetWidget = `.ciscospark-meet-component-wrapper`;
-    const callButton = `button[aria-label="Call"]`;
-    const answerButton = `button[aria-label="Answer"]`;
-    const declineButton = `button[aria-label="Decline"]`;
-    const hangupButton = `button[aria-label="Hangup"]`;
-    const callControls = `.call-controls`;
-    const remoteVideo = `.remote-video video`;
-
     it(`can answer and hangup in call`, () => {
       switchToMeet(browserLocal);
-      browserLocal.element(meetWidget).element(callButton).waitForVisible();
-      browserLocal.element(meetWidget).element(callButton).click();
-      browserRemote.waitForVisible(answerButton);
-      browserRemote.element(meetWidget).element(answerButton).click();
-      browserRemote.waitForVisible(remoteVideo);
+      browserLocal.element(meetWidget).element(elements.callButton).waitForVisible();
+      browserLocal.element(meetWidget).element(elements.callButton).click();
+      browserRemote.waitForVisible(elements.answerButton);
+      browserRemote.element(meetWidget).element(elements.answerButton).click();
+      browserRemote.waitForVisible(elements.remoteVideo);
       // Let call elapse 5 seconds before hanging up
       browserLocal.pause(5000);
       browserLocal.moveToObject(meetWidget);
-      browserLocal.waitForVisible(callControls);
-      browserLocal.moveToObject(hangupButton);
-      browserLocal.element(meetWidget).element(hangupButton).click();
+      browserLocal.waitForVisible(elements.callControls);
+      browserLocal.moveToObject(elements.hangupButton);
+      browserLocal.element(meetWidget).element(elements.hangupButton).click();
       // Pausing to let locus session flush
       browserLocal.pause(5000);
+
     });
 
     it(`can decline an incoming call`, () => {
       switchToMeet(browserRemote);
-      browserRemote.element(meetWidget).element(callButton).waitForVisible();
-      browserRemote.element(meetWidget).element(callButton).click();
-      browserLocal.waitForVisible(declineButton);
-      browserLocal.element(meetWidget).element(declineButton).click();
-      browserLocal.element(meetWidget).element(callButton).waitForVisible();
-      browserRemote.element(meetWidget).element(callButton).waitForVisible();
+      browserRemote.element(meetWidget).element(elements.callButton).waitForVisible();
+      browserRemote.element(meetWidget).element(elements.callButton).click();
+      browserLocal.waitForVisible(elements.declineButton);
+      browserLocal.element(meetWidget).element(elements.declineButton).click();
+      browserLocal.element(meetWidget).element(elements.callButton).waitForVisible();
+      browserRemote.element(meetWidget).element(elements.callButton).waitForVisible();
     });
   });
 });

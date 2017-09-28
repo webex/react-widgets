@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.153",
+  "version": "0.1.164",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -30,7 +30,9 @@
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
-    "upgradespark": "./scripts/utils/update.js"
+    "upgradespark": "./scripts/utils/update.js",
+    "precommit": "lint-staged",
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -47,21 +49,21 @@
   "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
   "main": "src/index.js",
   "dependencies": {
-    "@ciscospark/common": "1.8.0",
-    "@ciscospark/helper-html": "1.1.11",
-    "@ciscospark/internal-plugin-conversation": "1.8.0",
-    "@ciscospark/internal-plugin-encryption": "1.8.0",
-    "@ciscospark/internal-plugin-flag": "1.8.0",
-    "@ciscospark/internal-plugin-feature": "1.8.0",
-    "@ciscospark/internal-plugin-mercury": "1.8.0",
-    "@ciscospark/internal-plugin-metrics": "1.8.0",
-    "@ciscospark/internal-plugin-user": "1.8.0",
-    "@ciscospark/plugin-logger": "1.8.0",
-    "@ciscospark/plugin-people": "1.9.1",
-    "@ciscospark/plugin-phone": "1.9.1",
-    "@ciscospark/spark-core": "1.8.0",
-    "@ciscospark/storage-adapter-local-forage": "1.8.0",
-    "@ciscospark/storage-adapter-local-storage": "1.8.0",
+    "@ciscospark/common": "1.9.3",
+    "@ciscospark/helper-html": "1.9.3",
+    "@ciscospark/internal-plugin-conversation": "1.9.4",
+    "@ciscospark/internal-plugin-encryption": "1.9.4",
+    "@ciscospark/internal-plugin-flag": "1.9.4",
+    "@ciscospark/internal-plugin-feature": "1.9.4",
+    "@ciscospark/internal-plugin-mercury": "1.9.4",
+    "@ciscospark/internal-plugin-metrics": "1.9.4",
+    "@ciscospark/internal-plugin-user": "1.9.4",
+    "@ciscospark/plugin-logger": "1.9.3",
+    "@ciscospark/plugin-people": "1.10.0",
+    "@ciscospark/plugin-phone": "1.10.0",
+    "@ciscospark/spark-core": "1.9.3",
+    "@ciscospark/storage-adapter-local-forage": "1.9.3",
+    "@ciscospark/storage-adapter-local-storage": "1.9.3",
     "ampersand-events": "^2.0.2",
     "browser-saveas": "^1.0.1",
     "classnames": "^2.2.5",
@@ -93,9 +95,9 @@
   },
   "devDependencies": {
     "@ciscospark/eslint-config": "^2.0.1",
-    "@ciscospark/test-helper-file": "1.1.11",
-    "@ciscospark/test-helper-server": "1.3.1",
-    "@ciscospark/test-helper-test-users": "1.1.11",
+    "@ciscospark/test-helper-file": "1.9.3",
+    "@ciscospark/test-helper-server": "1.9.3",
+    "@ciscospark/test-helper-test-users": "1.9.3",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.2.3",
@@ -133,10 +135,12 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^20.0.4",
     "json-loader": "^0.5.4",
+    "lint-staged": "^4.0.3",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
@@ -169,6 +173,11 @@
     "webpack": "^3.5.4",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^8.0.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "greenkeeper": {
     "ignore": [

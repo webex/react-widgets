@@ -1,12 +1,15 @@
 /* eslint-disable max-nested-callbacks */
+
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
-import waitForPromise from '../../lib/wait-for-promise';
-import {clearEventLog, getEventLog} from '../../lib/events';
-import {constructHydraId} from '../../lib/hydra';
+
+import waitForPromise from '../../../lib/wait-for-promise';
+import {clearEventLog, getEventLog} from '../../../lib/events';
+import {constructHydraId} from '../../../lib/hydra';
+import {elements, sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -119,40 +122,31 @@ describe(`Widget Space`, () => {
 
   describe(`messaging`, () => {
     it(`sends and receives messages`, () => {
-      const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-      // Increase wait timeout for message delivery
-      browser.timeouts(`implicit`, 10000);
-      browserLocal.waitForVisible(textInputField);
-      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForVisible(textInputField);
-      // Remote is now ready, send a message to it
       const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
-      browserLocal.setValue(textInputField, `${martyText}\n`);
-      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText);
-      // Send a message back
       const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
-      browserRemote.setValue(textInputField, `${docText}\n`);
-      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText);
-      // Send a message from a 'client'
       const lorraineText = `Marty, will we ever see you again?`;
+      const martyText2 = `I guarantee it.`;
+      sendMessage(browserLocal, conversation, martyText);
+      verifyMessageReceipt(browserRemote, conversation, martyText);
+      sendMessage(browserRemote, conversation, docText);
+      verifyMessageReceipt(browserLocal, conversation, docText);
+      // Send a message from a 'client'
       waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }));
       // Wait for both widgets to receive client message
-      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
-      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
-      const martyText2 = `I guarantee it.`;
-      browserLocal.setValue(textInputField, `${martyText2}\n`);
-      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);
+      verifyMessageReceipt(browserLocal, conversation, lorraineText);
+      verifyMessageReceipt(browserRemote, conversation, lorraineText);
+      sendMessage(browserLocal, conversation, martyText2);
+      verifyMessageReceipt(browserRemote, conversation, martyText2);
     });
 
     it(`receives proper events on messages`, () => {
       // Send a message back
       clearEventLog(browserLocal);
       const eventText = `You're a wizard, Jim!`;
-      browserRemote.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, eventText);
-      browserRemote.keys([`Enter`, `NULL`]);
-      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === eventText);
+      sendMessage(browserRemote, conversation, eventText);
+      verifyMessageReceipt(browserLocal, conversation, eventText);
       const events = getEventLog(browserLocal);
       const eventCreated = events.find((event) => event.eventName === `messages:created`);
       const eventUnread = events.find((event) => event.eventName === `rooms:unread`);
@@ -174,23 +168,17 @@ describe(`Widget Space`, () => {
       });
 
       it(`sends message with bold text`, () => {
-        // Remote is now ready, send a message with bold text from it
-        browserRemote.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
-        browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until entire message arrives
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`);
+        sendMessage(browserRemote, conversation, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
+        verifyMessageReceipt(browserLocal, conversation, `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`);
         // Assert only the bolded text is in the strong tag
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > strong`), `Are you out of your Vulcan mind?`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > strong`), `Are you out of your Vulcan mind?`);
       });
 
       it(`sends message with italic text`, () => {
-        // Remote is now ready, send a message with italic text to it
-        browserLocal.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `As you are _so fond_ of observing, doctor, I am not human.`);
-        browserLocal.keys([`Enter`, `NULL`]);
-        // Wait until entire message arrives
-        browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `As you are so fond of observing, doctor, I am not human.`);
+        sendMessage(browserLocal, conversation, `As you are _so fond_ of observing, doctor, I am not human.`);
+        verifyMessageReceipt(browserRemote, conversation, `As you are so fond of observing, doctor, I am not human.`);
         // Assert only the italicized text is in the em tag
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > em`), `so fond`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > em`), `so fond`);
       });
 
       it(`sends message with a blockquote`, () => {
@@ -201,10 +189,9 @@ describe(`Widget Space`, () => {
         browserRemote.keys([`Shift`, `Enter`, `NULL`]);
         browserRemote.addValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `You call this relaxing? I'm a nervous wreck. I'm not careful, I'll end up talking to myself.`);
         browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until entire message arrives
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.\nYou call this relaxing? I'm a nervous wreck. I'm not careful, I'll end up talking to myself.`);
+        verifyMessageReceipt(browserLocal, conversation, `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.\nYou call this relaxing? I'm a nervous wreck. I'm not careful, I'll end up talking to myself.`);
         // Assert only first half of message is in the blockquote tag
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > blockquote`), `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > blockquote`), `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
       });
 
       it(`sends message with numbered list`, () => {
@@ -213,11 +200,10 @@ describe(`Widget Space`, () => {
         browserLocal.keys([`Shift`, `Enter`, `NULL`]);
         browserLocal.addValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `2. ordered list item 2`);
         browserLocal.keys([`Enter`, `NULL`]);
-        // Wait until entire message arrives
-        browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `ordered list item 1\nordered list item 2`);
+        verifyMessageReceipt(browserRemote, conversation, `ordered list item 1\nordered list item 2`);
         // Assert text matches for the first and second ordered list items
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > ol > li:nth-child(1)`), `ordered list item 1`);
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > ol > li:nth-child(2)`), `ordered list item 2`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), `ordered list item 1`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > ol > li:nth-child(2)`), `ordered list item 2`);
       });
 
       it(`sends message with bulleted list`, () => {
@@ -226,38 +212,28 @@ describe(`Widget Space`, () => {
         browserRemote.keys([`Shift`, `Enter`, `NULL`]);
         browserRemote.addValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `* unordered list item 2`);
         browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until entire message arrives
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `unordered list item 1\nunordered list item 2`);
+        verifyMessageReceipt(browserLocal, conversation, `unordered list item 1\nunordered list item 2`);
         // Assert text matches for the first and second unordered list items
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > ul > li:nth-child(1)`), `unordered list item 1`);
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > ul > li:nth-child(2)`), `unordered list item 2`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), `unordered list item 1`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > ul > li:nth-child(2)`), `unordered list item 2`);
       });
 
       it(`sends message with heading 1`, () => {
-        // Remote is now ready, send a message to it
-        browserLocal.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `# Heading 1`);
-        browserLocal.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert text in h1 tag matches
-        browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Heading 1`);
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > h1`), `Heading 1`);
+        sendMessage(browserLocal, conversation, `# Heading 1`);
+        verifyMessageReceipt(browserRemote, conversation, `Heading 1`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > h1`), `Heading 1`);
       });
 
       it(`sends message with heading 2`, () => {
-        // Remote is now ready, send a message from it
-        browserRemote.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `## Heading 2`);
-        browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert text in h2 tag matches
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Heading 2`);
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > h2`), `Heading 2`);
+        sendMessage(browserRemote, conversation, `## Heading 2`);
+        verifyMessageReceipt(browserLocal, conversation, `Heading 2`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > h2`), `Heading 2`);
       });
 
       it(`sends message with heading 3`, () => {
-        // Remote is now ready, send a message to it
-        browserLocal.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `### Heading 3`);
-        browserLocal.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert text in h3 tag matches
-        browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Heading 3`);
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > h3`), `Heading 3`);
+        sendMessage(browserLocal, conversation, `### Heading 3`);
+        verifyMessageReceipt(browserRemote, conversation, `Heading 3`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > h3`), `Heading 3`);
       });
 
       it(`sends message with horizontal line`, () => {
@@ -266,28 +242,21 @@ describe(`Widget Space`, () => {
         browserRemote.keys([`Shift`, `Enter`, `NULL`]);
         browserRemote.addValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `- - -`);
         browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert horizontal line element is visible
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `test horizontal line`);
-        assert.isTrue(browserLocal.isVisible(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > hr`));
+        verifyMessageReceipt(browserLocal, conversation, `test horizontal line`);
+        assert.isTrue(browserLocal.isVisible(`${elements.lastActivityText} > hr`));
       });
 
       it(`sends message with link`, () => {
-        // Remote is now ready, send a message to it
-        browserLocal.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `[Cisco](http://www.cisco.com/)`);
-        browserLocal.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert link text and href value matches
-        browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Cisco`);
-        assert.equal(browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > a`), `Cisco`);
-        assert.equal(browserRemote.getAttribute(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > a`, `href`), `http://www.cisco.com/`);
+        sendMessage(browserLocal, conversation, `[Cisco](http://www.cisco.com/)`);
+        verifyMessageReceipt(browserRemote, conversation, `Cisco`);
+        assert.equal(browserRemote.getText(`${elements.lastActivityText} > a`), `Cisco`);
+        assert.equal(browserRemote.getAttribute(`${elements.lastActivityText} > a`, `href`), `http://www.cisco.com/`);
       });
 
       it(`sends message with inline code`, () => {
-        // Remote is now ready, send a message from it
-        browserRemote.setValue(`[placeholder="Send a message to ${conversation.displayName}"]`, `this tests \`inline.code();\``);
-        browserRemote.keys([`Enter`, `NULL`]);
-        // Wait until message arrives and assert text in code tag matches
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `this tests inline.code();`);
-        assert.equal(browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text > code`), `inline.code();`);
+        sendMessage(browserRemote, conversation, `this tests \`inline.code();\``);
+        verifyMessageReceipt(browserLocal, conversation, `this tests inline.code();`);
+        assert.equal(browserLocal.getText(`${elements.lastActivityText} > code`), `inline.code();`);
       });
 
       it(`sends message with codeblock`, () => {
