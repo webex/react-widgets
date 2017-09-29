@@ -1,19 +1,18 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@ciscospark/spark-core';
+import '@ciscospark/internal-plugin-conversation';
 
-import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
+import {elements} from '../../../lib/test-helpers/space-widget/main';
 
-describe(`Widget Space: One on One`, () => {
+describe(`Widget Space`, () => {
   describe(`Data API`, () => {
     const browserLocal = browser.select(`browserLocal`);
-
-    let mccoy, spock;
+    let marty;
+    let conversation, participants;
     process.env.CISCOSPARK_SCOPE = [
       `webexsquare:get_conversation`,
-      `Identity:SCIM`,
       `spark:people_read`,
       `spark:rooms_read`,
       `spark:rooms_write`,
@@ -36,24 +35,45 @@ describe(`Widget Space: One on One`, () => {
         });
     });
 
-    before(`create users`, () => testUsers.create({count: 2})
+    before(`create users`, () => testUsers.create({count: 3})
       .then((users) => {
-        [mccoy, spock] = users;
+        participants = users;
+        marty = users[0];
+
+        marty.spark = new CiscoSpark({
+          credentials: {
+            authorization: marty.token
+          }
+        });
+
+        return marty.spark.internal.mercury.connect();
       }));
 
     before(`pause to let test users establish`, () => browser.pause(5000));
 
+    after(`disconnect`, () => marty.spark.internal.mercury.disconnect());
+
+    before(`create space`, () => marty.spark.internal.conversation.create({
+      displayName: `Test Widget Space`,
+      participants
+    }).then((c) => {
+      conversation = c;
+      return conversation;
+    }));
+
     before(`inject token`, () => {
-      browserLocal.execute((localAccessToken, localToUserEmail) => {
+      const spaceWidget = `.ciscospark-space-widget`;
+      browserLocal.execute((localAccessToken, spaceId) => {
         const csmmDom = document.createElement(`div`);
         csmmDom.setAttribute(`class`, `ciscospark-widget`);
         csmmDom.setAttribute(`data-toggle`, `ciscospark-space`);
         csmmDom.setAttribute(`data-access-token`, localAccessToken);
-        csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
+        csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
         window.loadBundle(`/dist/bundle.js`);
-      }, spock.token.access_token, mccoy.email);
+      }, marty.token.access_token, conversation.id);
+      browserLocal.waitForVisible(spaceWidget);
     });
 
     it(`loads the test page`, () => {
@@ -61,10 +81,9 @@ describe(`Widget Space: One on One`, () => {
       assert.equal(title, `Cisco Spark Widget Test`);
     });
 
-    it(`loads the user's name`, () => {
+    it(`loads the space name`, () => {
       browserLocal.waitForVisible(`h1.ciscospark-title`);
-      browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
-      assert.equal(browserLocal.getText(`h1.ciscospark-title`), mccoy.displayName);
+      assert.equal(browserLocal.getText(`h1.ciscospark-title`), conversation.displayName);
     });
 
     describe(`Activity Menu`, () => {
@@ -92,36 +111,24 @@ describe(`Widget Space: One on One`, () => {
         browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
       });
 
-      it(`switches to message widget`, () => {
+      it(`hides menu and switches to message widget`, () => {
         browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
+        browserLocal.waitForVisible(elements.activityMenu, 1500, true);
         assert.isTrue(browserLocal.isVisible(elements.messageWidget));
-        assert.isFalse(browserLocal.isVisible(elements.meetWidget));
       });
 
-      it(`has a meet button`, () => {
-        browserLocal.click(elements.menuButton);
-        browserLocal.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
-      });
-
-      it(`switches to meet widget`, () => {
-        browserLocal.element(elements.controlsContainer).element(elements.meetButton).click();
-        assert.isTrue(browserLocal.isVisible(elements.meetWidget));
-        assert.isFalse(browserLocal.isVisible(elements.messageWidget));
-      });
     });
 
-    describe(`Messaging`, () => {
-      before(`switch to message`, () => {
-        switchToMessage(browserLocal);
-      });
-
-      it(`sends messages`, () => {
+    describe(`messaging`, () => {
+      it(`sends and receives messages`, () => {
+        const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
         // Increase wait timeout for message delivery
         browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+        browserLocal.waitForVisible(textInputField);
         assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-        browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Fly, you fools!\n`);
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Fly, you fools!`);
+        const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
+        browserLocal.setValue(textInputField, `${martyText}\n`);
+        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText);
       });
     });
   });
