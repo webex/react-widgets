@@ -148,7 +148,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^2.0.5",
     "postcss-modules": "^0.8.0",
-    "postcss-reporter": "^4.0.0",
+    "postcss-reporter": "^5.0.0",
     "react-router": "^4.0.0",
     "react-test-renderer": "^15.6.1",
     "react-transform-hmr": "^1.0.4",
