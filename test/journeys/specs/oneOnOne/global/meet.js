@@ -1,14 +1,8 @@
-/* eslint-disable max-nested-callbacks */
-
-import {assert} from 'chai';
-
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
-import {clearEventLog} from '../../../lib/events';
-import {constructHydraId} from '../../../lib/hydra';
-import {elements, answer, call, decline, hangup} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -92,60 +86,19 @@ describe(`Widget Space: One on One`, () => {
 
     describe(`during call experience`, () => {
       it(`can hangup before answer`, () => {
-        switchToMeet(browserLocal);
-        call(browserLocal, browserRemote);
-        hangup(browserLocal);
-        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        hangupBeforeAnswerTest(browserLocal, browserRemote);
       });
 
       it(`can decline an incoming call`, () => {
-        switchToMeet(browserRemote);
-        call(browserRemote, browserLocal);
-        decline(browserLocal);
-        browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
-        // Pausing to let locus session flush
-        browserLocal.pause(10000);
+        declineIncomingCallTest(browserLocal, browserRemote);
       });
 
       it(`can hangup in call`, () => {
-        clearEventLog(browserLocal);
-        clearEventLog(browserRemote);
-        switchToMeet(browserLocal);
-        call(browserLocal, browserRemote);
-        answer(browserRemote);
-        hangup(browserLocal);
-        // Should switch back to message widget after hangup
-        browserLocal.waitForVisible(elements.messageWidget);
+        hangupDuringCallTest(browserLocal, browserRemote);
       });
 
       it(`has proper call event data`, () => {
-        const result = browserLocal.execute(() => {
-          const events = window.ciscoSparkEvents.map((event) => {
-            // Passing the call object from the browser causes an overflow
-            Reflect.deleteProperty(event.detail.data, `call`);
-            return event;
-          });
-          return events;
-        });
-        const events = result.value;
-        const eventCreated = events.find((event) => event.eventName === `calls:created`);
-        const eventConnected = events.find((event) => event.eventName === `calls:connected`);
-        const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);
-        assert.isDefined(eventCreated, `has a calls ringing event`);
-        assert.isDefined(eventConnected, `has a calls connected event`);
-        assert.isDefined(eventDisconnected, `has a calls disconnected event`);
-        assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
-        assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `data`]);
-        assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `data`]);
-        assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`]);
-        assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`]);
-        assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`]);
-        assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-        assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-        assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-        assert.equal(eventCreated.detail.data.actorName, spock.displayName);
-        assert.equal(eventConnected.detail.data.actorName, spock.displayName);
-        assert.equal(eventDisconnected.detail.data.actorName, spock.displayName);
+        callEventTest(browserLocal, browserRemote, spock);
       });
     });
   });
