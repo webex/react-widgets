@@ -15,7 +15,7 @@ describe(`Widget Space: Group Space: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let docbrown, lorraine, marty;
-  let conversation;
+  let conversation, local, remote;
 
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -89,7 +89,8 @@ describe(`Widget Space: Group Space: TAP`, () => {
   }));
 
   before(`inject marty token`, () => {
-    browserLocal.execute((localAccessToken, spaceId) => {
+    local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
+    local.browser.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName) => {
@@ -100,11 +101,12 @@ describe(`Widget Space: Group Space: TAP`, () => {
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
-    browserLocal.waitForVisible(spaceWidget);
+    local.browser.waitForVisible(spaceWidget);
   });
 
   before(`inject docbrown token`, () => {
-    browserRemote.execute((localAccessToken, spaceId) => {
+    remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
+    remote.browser.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName) => {
@@ -115,50 +117,50 @@ describe(`Widget Space: Group Space: TAP`, () => {
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
-    browserRemote.waitForVisible(spaceWidget);
+    remote.browser.waitForVisible(spaceWidget);
   });
 
   it(`loads the test page`, () => {
-    const title = browserLocal.getTitle();
+    const title = local.browser.getTitle();
     assert.equal(title, `Widget Space Production Test`);
   });
 
   describe(`Activity Menu`, () => {
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(elements.menuButton));
+      assert.isTrue(local.browser.isVisible(elements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(elements.menuButton);
-      browserLocal.waitForVisible(elements.activityMenu);
+      local.browser.click(elements.menuButton);
+      local.browser.waitForVisible(elements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(elements.activityMenu));
-      browserLocal.waitForVisible(elements.exitButton);
+      assert.isTrue(local.browser.isVisible(elements.activityMenu));
+      local.browser.waitForVisible(elements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(elements.exitButton);
-      browserLocal.waitForVisible(elements.activityMenu, 1500, true);
+      local.browser.click(elements.exitButton);
+      local.browser.waitForVisible(elements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(elements.menuButton);
-      browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+      local.browser.click(elements.menuButton);
+      local.browser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
     it(`switches to message widget`, () => {
-      browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
-      assert.isTrue(browserLocal.isVisible(elements.messageWidget));
+      local.browser.element(elements.controlsContainer).element(elements.messageButton).click();
+      assert.isTrue(local.browser.isVisible(elements.messageWidget));
     });
 
   });
 
   describe(`messaging`, () => {
     before(`widget switches to message`, () => {
-      switchToMessage(browserLocal);
-      switchToMessage(browserRemote);
+      switchToMessage(local.browser);
+      switchToMessage(remote.browser);
     });
 
     it(`sends and receives messages`, () => {
@@ -166,27 +168,27 @@ describe(`Widget Space: Group Space: TAP`, () => {
       const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
       const lorraineText = `Marty, will we ever see you again?`;
       const martyText2 = `I guarantee it.`;
-      sendMessage(browserLocal, conversation, martyText);
-      verifyMessageReceipt(browserRemote, conversation, martyText);
-      clearEventLog(browserLocal);
-      sendMessage(browserRemote, conversation, docText);
-      verifyMessageReceipt(browserLocal, conversation, docText);
+      sendMessage(local, remote, martyText);
+      verifyMessageReceipt(remote, local, martyText);
+      clearEventLog(local.browser);
+      sendMessage(remote, local, docText);
+      verifyMessageReceipt(local, remote, docText);
       const remoteSendEvents = getEventLog(browserLocal);
       assert.include(remoteSendEvents, `messages:created`, `has a message created event`);
       assert.include(remoteSendEvents, `rooms:unread`, `has an unread message event`);
-      clearEventLog(browserLocal);
+      clearEventLog(local.browser);
       // Send a message from a 'client'
       waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }));
       // Wait for both widgets to receive client message
-      verifyMessageReceipt(browserLocal, conversation, lorraineText);
-      verifyMessageReceipt(browserRemote, conversation, lorraineText);
-      const clientSendEvents = getEventLog(browserLocal);
+      verifyMessageReceipt(local, remote, lorraineText);
+      verifyMessageReceipt(remote, local, lorraineText);
+      const clientSendEvents = getEventLog(local.browser);
       assert.include(clientSendEvents, `messages:created`, `has a message created event`);
       assert.include(clientSendEvents, `rooms:unread`, `has an unread message event`);
-      sendMessage(browserLocal, conversation, martyText2);
-      verifyMessageReceipt(browserRemote, conversation, martyText2);
+      sendMessage(local, remote, martyText2);
+      verifyMessageReceipt(remote, local, martyText2);
     });
   });
 
