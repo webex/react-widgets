@@ -12,7 +12,7 @@ module.exports = {
   desc: `Build all packages`,
   builder: {},
   handler: () =>
-    getAllPackagePaths().map((pkg) => {
+    getAllPackagePaths().forEach((pkg) => {
       try {
         const pkgJson = require(path.resolve(pkg, `package.json`));
         const pkgName = pkgJson.name.split(`/`).pop();
@@ -20,7 +20,7 @@ module.exports = {
         if (isWidget && !pkgJson.private) {
           webpackBuild(pkgName, pkg);
         }
-        return transpile(pkgName, pkg);
+        transpile(pkgName, pkg);
       }
       catch (err) {
         throw err;

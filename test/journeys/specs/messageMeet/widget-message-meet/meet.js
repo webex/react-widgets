@@ -1,9 +1,12 @@
 /* eslint-disable max-nested-callbacks */
+
 import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
-import {switchToMeet} from '../../../lib/menu';
-import {clearEventLog} from '../../../lib/events';
+
+import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
 
 describe(`Widget Message Meet`, () => {
@@ -143,15 +146,7 @@ describe(`Widget Message Meet`, () => {
       });
 
       it(`has proper call event data`, () => {
-        const result = browserLocal.execute(() => {
-          const events = window.ciscoSparkEvents.map((event) => {
-            // Passing the call object from the browser causes an overflow
-            Reflect.deleteProperty(event.detail.data, `call`);
-            return event;
-          });
-          return events;
-        });
-        const events = result.value;
+        const events = getEventLog(browserLocal);
         const eventRinging = events.find((event) => event.eventName === `calls:ringing`);
         const eventConnected = events.find((event) => event.eventName === `calls:connected`);
         const eventDisconnected = events.find((event) => event.eventName === `calls:disconnected`);

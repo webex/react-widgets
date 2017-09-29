@@ -7,14 +7,15 @@ import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
-import {switchToMessage} from '../../../lib/menu';
+import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe(`Widget Space: Group Space: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
   let docbrown, lorraine, marty;
-  let conversation;
+  let conversation, local, remote;
 
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -88,7 +89,8 @@ describe(`Widget Space: Group Space: TAP`, () => {
   }));
 
   before(`inject marty token`, () => {
-    browserLocal.execute((localAccessToken, spaceId) => {
+    local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
+    local.browser.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName) => {
@@ -99,11 +101,12 @@ describe(`Widget Space: Group Space: TAP`, () => {
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
-    browserLocal.waitForVisible(spaceWidget);
+    local.browser.waitForVisible(spaceWidget);
   });
 
   before(`inject docbrown token`, () => {
-    browserRemote.execute((localAccessToken, spaceId) => {
+    remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
+    remote.browser.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName) => {
@@ -114,104 +117,78 @@ describe(`Widget Space: Group Space: TAP`, () => {
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
-    browserRemote.waitForVisible(spaceWidget);
+    remote.browser.waitForVisible(spaceWidget);
   });
 
   it(`loads the test page`, () => {
-    const title = browserLocal.getTitle();
+    const title = local.browser.getTitle();
     assert.equal(title, `Widget Space Production Test`);
   });
 
   describe(`Activity Menu`, () => {
-    const menuButton = `button[aria-label="Main Menu"]`;
-    const exitButton = `.ciscospark-activity-menu-exit button`;
-    const messageButton = `button[aria-label="Message"]`;
-    const activityMenu = `.ciscospark-activity-menu`;
-    const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-wrapper`;
-
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(menuButton));
+      assert.isTrue(local.browser.isVisible(elements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.waitForVisible(activityMenu);
+      local.browser.click(elements.menuButton);
+      local.browser.waitForVisible(elements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(activityMenu));
-      browserLocal.waitForVisible(exitButton);
+      assert.isTrue(local.browser.isVisible(elements.activityMenu));
+      local.browser.waitForVisible(elements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(exitButton);
-      browserLocal.waitForVisible(activityMenu, 1500, true);
+      local.browser.click(elements.exitButton);
+      local.browser.waitForVisible(elements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
+      local.browser.click(elements.menuButton);
+      local.browser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
     it(`switches to message widget`, () => {
-      browserLocal.element(controlsContainer).element(messageButton).click();
-      assert.isTrue(browserLocal.isVisible(messageWidget));
+      local.browser.element(elements.controlsContainer).element(elements.messageButton).click();
+      assert.isTrue(local.browser.isVisible(elements.messageWidget));
     });
 
   });
 
   describe(`messaging`, () => {
     before(`widget switches to message`, () => {
-      switchToMessage(browserLocal);
-      switchToMessage(browserRemote);
+      switchToMessage(local.browser);
+      switchToMessage(remote.browser);
     });
 
     it(`sends and receives messages`, () => {
-      const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-      browserLocal.waitForExist(textInputField, 10000);
-      assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-      browserRemote.waitForExist(textInputField, 10000);
-      // Remote is now ready, send a message to it
       const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
-      browserLocal.setValue(textInputField, `${martyText}`);
-      browserLocal.keys([`Enter`, `NULL`]);
-      browserRemote.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserRemote.waitUntil(
-        () => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText,
-        10000,
-        `expected to receive message from local`
-      );
-      // Send a message back
-      clearEventLog(browserLocal);
       const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
-      browserRemote.setValue(textInputField, `${docText}`);
-      browserRemote.keys([`Enter`, `NULL`]);
-      browserLocal.waitForExist(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`, 10000);
-      browserLocal.waitUntil(
-        () => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === docText,
-        10000,
-        `expected to receive message from remote`
-      );
+      const lorraineText = `Marty, will we ever see you again?`;
+      const martyText2 = `I guarantee it.`;
+      sendMessage(local, remote, martyText);
+      verifyMessageReceipt(remote, local, martyText);
+      clearEventLog(local.browser);
+      sendMessage(remote, local, docText);
+      verifyMessageReceipt(local, remote, docText);
       const remoteSendEvents = getEventLog(browserLocal);
       assert.include(remoteSendEvents, `messages:created`, `has a message created event`);
       assert.include(remoteSendEvents, `rooms:unread`, `has an unread message event`);
+      clearEventLog(local.browser);
       // Send a message from a 'client'
-      clearEventLog(browserLocal);
-      const lorraineText = `Marty, will we ever see you again?`;
       waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
         displayName: lorraineText
       }));
       // Wait for both widgets to receive client message
-      browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
-      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === lorraineText);
-      const clientSendEvents = getEventLog(browserLocal);
+      verifyMessageReceipt(local, remote, lorraineText);
+      verifyMessageReceipt(remote, local, lorraineText);
+      const clientSendEvents = getEventLog(local.browser);
       assert.include(clientSendEvents, `messages:created`, `has a message created event`);
       assert.include(clientSendEvents, `rooms:unread`, `has an unread message event`);
-      const martyText2 = `I guarantee it.`;
-      browserLocal.setValue(textInputField, `${martyText2}`);
-      browserLocal.keys([`Enter`, `NULL`]);
-      browserRemote.waitUntil(() => browserRemote.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === martyText2);
+      sendMessage(local, remote, martyText2);
+      verifyMessageReceipt(remote, local, martyText2);
     });
   });
 

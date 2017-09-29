@@ -82,7 +82,6 @@ ansiColor('xterm') {
               nvm install 7
               nvm use v7
               npm install
-              npm install webrtc-adapter@3.3.4
               rm -f $HOME/.npmrc
               '''
             }
@@ -96,7 +95,15 @@ ansiColor('xterm') {
             '''
           }
 
-          stage('Test') {
+          stage('Unit Tests') {
+            sh '''#!/bin/bash -ex
+            source ~/.nvm/nvm.sh
+            nvm use v7
+            npm run jest
+            '''
+          }
+
+          stage('Journey Tests') {
             withCredentials([
               string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
@@ -126,12 +133,13 @@ ansiColor('xterm') {
             packageJsonVersion = readFile '.version'
           }
 
-          stage('Build'){
+          stage('Build for CDN'){
             withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v7
               version=`cat .version`
+              NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/demo/" npm run build:package widget-message-meet-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-message-meet/archives/${version}/" npm run build:package widget-message-meet
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
@@ -177,6 +185,28 @@ ansiColor('xterm') {
               cdnPublishBuild = build job: 'publish-spark-js-sdk-react-widget-s3', parameters: [string(name: 'buildNumber', value: "${currentBuild.number}"), string(name: 'versionNumber', value: "${packageJsonVersion}")], propagate: false
               if (cdnPublishBuild.result != 'SUCCESS') {
                 warn('failed to publish to CDN')
+              }
+            }
+
+            stage('Publish to NPM') {
+              withCredentials([
+                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              ]) {
+                try {
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+                  echo ''
+                  echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
+                  echo ''
+                  sh '''#!/bin/bash -ex
+                  source ~/.nvm/nvm.sh
+                  nvm use v7
+                  npm run publish:components
+                  rm -f $HOME/.npmrc
+                  '''
+                }
+                catch (error) {
+                  warn("failed to publish to npm ${error.toString()}")
+                }
               }
             }
           }
