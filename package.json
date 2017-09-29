@@ -170,7 +170,7 @@
     "webdriverio": "^4.6.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
-    "yargs": "^8.0.2"
+    "yargs": "^9.0.1"
   },
   "lint-staged": {
     "*.js": [
