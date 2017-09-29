@@ -5,13 +5,19 @@ import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import {runAxe} from '../../../lib/axe';
-import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {
+  elements as rosterElements,
+  canSearchForParticipants,
+  hasParticipants,
+  searchForPerson,
+  FEATURE_FLAG_ROSTER
+} from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
-  let marty;
-  let conversation, participants;
+  let biff, docbrown, lorraine, marty;
+  let conversation;
 
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -37,20 +43,47 @@ describe(`Widget Space`, () => {
       });
   });
 
-  before(`create users`, () => testUsers.create({count: 3})
+  before(`create marty`, () => testUsers.create({count: 1, config: {displayName: `Marty McFly`}})
     .then((users) => {
-      participants = users;
-      marty = users[0];
-
+      [marty] = users;
       marty.spark = new CiscoSpark({
         credentials: {
           authorization: marty.token
         }
       });
-
       return marty.spark.internal.device.register()
         .then(() => marty.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true))
         .then(() => marty.spark.internal.mercury.connect());
+    }));
+
+  before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
+    .then((users) => {
+      [docbrown] = users;
+      docbrown.spark = new CiscoSpark({
+        credentials: {
+          authorization: docbrown.token
+        }
+      });
+    }));
+
+  before(`create lorraine`, () => testUsers.create({count: 1, config: {displayName: `Lorraine Baines`}})
+    .then((users) => {
+      [lorraine] = users;
+      lorraine.spark = new CiscoSpark({
+        credentials: {
+          authorization: lorraine.token
+        }
+      });
+    }));
+
+  before(`create biff`, () => testUsers.create({count: 1, config: {displayName: `Biff Tannen`}})
+    .then((users) => {
+      [biff] = users;
+      biff.spark = new CiscoSpark({
+        credentials: {
+          authorization: biff.token
+        }
+      });
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
@@ -59,13 +92,13 @@ describe(`Widget Space`, () => {
 
   before(`create space`, () => marty.spark.internal.conversation.create({
     displayName: `Test Widget Space`,
-    participants
+    participants: [marty, docbrown, lorraine]
   }).then((c) => {
     conversation = c;
     return conversation;
   }));
 
-  before(`inject token`, () => {
+  before(`open widget for marty in browserLocal`, () => {
     const spaceWidget = `.ciscospark-space-widget`;
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
@@ -74,9 +107,7 @@ describe(`Widget Space`, () => {
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
-    browserLocal.execute((c) => {
-      console.log(c);
-    }, conversation);
+
     browserLocal.waitForVisible(spaceWidget);
   });
 
@@ -131,7 +162,7 @@ describe(`Widget Space`, () => {
     describe(`roster tests`, () => {
       before(`open roster widget`, () => {
         openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-        assert.isTrue(browserLocal.isVisible(rosterElements.rosterWidget));
+        browserLocal.waitForVisible(rosterElements.rosterWidget);
       });
 
       it(`has a close button`, () => {
@@ -143,7 +174,23 @@ describe(`Widget Space`, () => {
       });
 
       it(`has the participants listed`, () => {
-        hasParticipants(browserLocal, participants);
+        hasParticipants(browserLocal, [marty, docbrown, lorraine]);
+      });
+
+      it(`has search for participants`, () => {
+        canSearchForParticipants(browserLocal);
+      });
+
+      it(`searches and adds person to space`, () => {
+        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+        browserLocal.waitForVisible(rosterElements.rosterWidget);
+        searchForPerson(browserLocal, biff.displayName, true);
+        browserLocal.element(rosterElements.rosterList).waitForVisible();
+        browserLocal.waitUntil(() => {
+          const participantsText = browserLocal.element(rosterElements.rosterList).getText();
+          return participantsText.includes(biff.displayName);
+        }, 15000, `added person not found in participant list`);
+        assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), `People (4)`);
       });
 
       it(`closes the people roster widget`, () => {
