@@ -6,6 +6,8 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
+import {elements} from '../../../lib/test-helpers/space-widget/main';
+
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
   let marty;
@@ -86,40 +88,34 @@ describe(`Widget Space`, () => {
   });
 
   describe(`Activity Menu`, () => {
-    const menuButton = `button[aria-label="Main Menu"]`;
-    const exitButton = `.ciscospark-activity-menu-exit button`;
-    const messageButton = `button[aria-label="Message"]`;
-    const activityMenu = `.ciscospark-activity-menu`;
-    const controlsContainer = `.ciscospark-controls-container`;
-    const messageWidget = `.ciscospark-message-wrapper`;
     it(`has a menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(menuButton));
+      assert.isTrue(browserLocal.isVisible(elements.menuButton));
     });
 
     it(`displays the menu when clicking the menu button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.waitForVisible(activityMenu);
+      browserLocal.click(elements.menuButton);
+      browserLocal.waitForVisible(elements.activityMenu);
     });
 
     it(`has an exit menu button`, () => {
-      assert.isTrue(browserLocal.isVisible(activityMenu));
-      browserLocal.waitForVisible(exitButton);
+      assert.isTrue(browserLocal.isVisible(elements.activityMenu));
+      browserLocal.waitForVisible(elements.exitButton);
     });
 
     it(`closes the menu with the exit button`, () => {
-      browserLocal.click(exitButton);
-      browserLocal.waitForVisible(activityMenu, 1500, true);
+      browserLocal.click(elements.exitButton);
+      browserLocal.waitForVisible(elements.activityMenu, 1500, true);
     });
 
     it(`has a message button`, () => {
-      browserLocal.click(menuButton);
-      browserLocal.element(controlsContainer).element(messageButton).waitForVisible();
+      browserLocal.click(elements.menuButton);
+      browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
     it(`hides menu and switches to message widget`, () => {
-      browserLocal.element(controlsContainer).element(messageButton).click();
-      browserLocal.waitForVisible(activityMenu, 1500, true);
-      assert.isTrue(browserLocal.isVisible(messageWidget));
+      browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
+      browserLocal.waitForVisible(elements.activityMenu, 1500, true);
+      assert.isTrue(browserLocal.isVisible(elements.messageWidget));
     });
 
   });

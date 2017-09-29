@@ -1,9 +1,11 @@
 /* eslint-disable max-nested-callbacks */
 
 import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
-import {switchToMessage} from '../../../lib/menu';
+
+import {switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {constructHydraId} from '../../../lib/hydra';
 
