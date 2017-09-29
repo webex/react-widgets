@@ -50,7 +50,7 @@
   "dependencies": {
     "@ciscospark/common": "1.9.3",
     "@ciscospark/helper-html": "1.9.3",
-    "@ciscospark/internal-plugin-conversation": "1.9.4",
+    "@ciscospark/internal-plugin-conversation": "1.11.0",
     "@ciscospark/internal-plugin-encryption": "1.9.4",
     "@ciscospark/internal-plugin-feature": "1.9.4",
     "@ciscospark/internal-plugin-flag": "1.9.4",
@@ -58,14 +58,14 @@
     "@ciscospark/internal-plugin-metrics": "1.9.4",
     "@ciscospark/internal-plugin-user": "1.9.4",
     "@ciscospark/plugin-logger": "1.9.3",
-    "@ciscospark/plugin-people": "1.10.0",
+    "@ciscospark/plugin-people": "1.10.4",
     "@ciscospark/plugin-phone": "1.10.0",
     "@ciscospark/spark-core": "1.9.3",
     "@ciscospark/storage-adapter-local-forage": "1.9.3",
     "@ciscospark/storage-adapter-local-storage": "1.9.3",
     "ampersand-events": "^2.0.2",
     "classnames": "^2.2.5",
-    "core-decorators": "^0.19.0",
+    "core-decorators": "^0.20.0",
     "custom-event-polyfill": "^0.3.0",
     "file-saver": "^1.3.3",
     "highlight.js": "^9.12.0",
@@ -103,7 +103,7 @@
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-lodash": "^3.2.11",
-    "babel-plugin-react-transform": "^2.0.2",
+    "babel-plugin-react-transform": "^3.0.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-export-extensions": "^6.8.0",
@@ -159,7 +159,7 @@
     "style-loader": "^0.18.1",
     "stylelint": "^8.0",
     "stylelint-config-standard": "^17.0",
-    "stylelint-order": "^0.6.0",
+    "stylelint-order": "^0.7.0",
     "wdio-dot-reporter": "0.0.9",
     "wdio-junit-reporter": "^0.3.1",
     "wdio-mocha-framework": "^0.5.9",
@@ -170,7 +170,7 @@
     "webdriverio": "^4.6.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
-    "yargs": "^8.0.2"
+    "yargs": "^9.0.1"
   },
   "lint-staged": {
     "*.js": [
