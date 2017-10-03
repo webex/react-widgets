@@ -46,7 +46,7 @@ describe(`Widget Space: One on One`, () => {
         }
       });
       return spock.spark.internal.device.register()
-        .then(() => spock.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true));
+        .then(() => spock.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true));
     }));
 
   before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: mccoyName}})
