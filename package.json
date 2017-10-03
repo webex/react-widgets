@@ -61,7 +61,7 @@
     "@ciscospark/internal-plugin-team": "^1.9.4",
     "@ciscospark/internal-plugin-user": "1.9.4",
     "@ciscospark/plugin-logger": "1.9.3",
-    "@ciscospark/plugin-people": "1.10.0",
+    "@ciscospark/plugin-people": "1.12.2",
     "@ciscospark/plugin-phone": "1.10.3",
     "@ciscospark/spark-core": "1.9.3",
     "@ciscospark/storage-adapter-local-forage": "1.9.3",
