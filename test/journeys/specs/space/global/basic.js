@@ -52,7 +52,7 @@ describe(`Widget Space`, () => {
         }
       });
       return marty.spark.internal.device.register()
-        .then(() => marty.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true))
+        .then(() => marty.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true))
         .then(() => marty.spark.internal.mercury.connect());
     }));
 

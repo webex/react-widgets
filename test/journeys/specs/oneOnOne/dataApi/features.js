@@ -48,7 +48,7 @@ describe(`Widget Space: One on One`, () => {
           }
         });
         return userWithAllTheFeatures.spark.internal.device.register()
-          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true));
+          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true));
       }));
 
     before(`create basic user`, () => testUsers.create({count: 1, config: {displayName: `No Features`}})
