@@ -8,7 +8,13 @@ export const elements = {
   peopleButton: `button[aria-label="People"]`,
   rosterTitle: `.ciscospark-roster-title`,
   participantItem: `.ciscospark-participant-list-item`,
-  rosterList: `.ciscospark-roster-scrolling-list`
+  rosterList: `.ciscospark-roster-scrolling-list`,
+  addParticipantArea: `.ciscospark-roster-add-participant`,
+  addParticipantResultsArea: `.ciscospark-roster-add-participant-results`,
+  addParticipantResultItem: `.ciscospark-person-list-item`,
+  addPeopleButton: `.ciscospark-roster-add-people`,
+  searchInput: `.ciscospark-roster-add-participant-search-input`,
+  closeSearchButton: `button[aria-label="Close Search"]`
 };
 
 /**
@@ -21,4 +27,61 @@ export function hasParticipants(aBrowser, participants) {
   aBrowser.element(elements.rosterList).waitForVisible();
   const participantsText = aBrowser.element(elements.rosterList).getText();
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
+}
+
+/**
+ * Verifies that a user can open the participant search feature
+ *
+ * @export
+ * @param {Object} aBrowser
+ * @returns {null}
+ */
+export function canSearchForParticipants(aBrowser) {
+  openSearch(aBrowser);
+  closeSearch(aBrowser);
+}
+
+/**
+ * Searches for a person and verifies that there are results
+ *
+ * @export
+ * @param {Object} aBrowser
+ * @param {String} searchString
+ * @param {boolean} doAdd actually add the person to participants
+ * @param {String} searchResult the string that should appear in search results
+ * @returns {null}
+ */
+export function searchForPerson(aBrowser, searchString, doAdd = false, searchResult = searchString) {
+  openSearch(aBrowser);
+  aBrowser.setValue(elements.searchInput, searchString);
+  aBrowser.waitForVisible(elements.addParticipantResultsArea);
+  aBrowser.waitForVisible(elements.addParticipantResultItem);
+  const resultsText = aBrowser.element(elements.addParticipantResultItem).getText();
+  assert.isTrue(resultsText.includes(searchResult), `matching search result is not found in results`);
+  if (doAdd) {
+    aBrowser.click(elements.addParticipantResultItem);
+    // Adding a participant immediately takes you back to roster
+    aBrowser.waitForVisible(elements.addParticipantArea, 3000, true);
+  }
+  else {
+    closeSearch(aBrowser);
+  }
+}
+
+export function searchAndAddPerson(aBrowser, searchString, searchResult = searchString) {
+  searchForPerson(aBrowser, searchString, true, searchResult);
+}
+
+function openSearch(aBrowser) {
+  assert.isTrue(aBrowser.isVisible(elements.rosterWidget), `roster should be visible for this test`);
+  assert.isTrue(aBrowser.isVisible(elements.addPeopleButton), `add people button is not visible`);
+  aBrowser.click(elements.addPeopleButton);
+  aBrowser.waitForVisible(elements.addParticipantArea);
+  assert.isTrue(aBrowser.isVisible(elements.searchInput), `does not have participant search input`);
+}
+
+function closeSearch(aBrowser) {
+  assert.isTrue(aBrowser.isVisible(elements.closeSearchButton), `does not have a close search button`);
+  aBrowser.click(elements.closeSearchButton);
+  assert.isFalse(aBrowser.isVisible(elements.addParticipantArea), `close button is not hiding search`);
 }

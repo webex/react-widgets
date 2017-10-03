@@ -1,11 +1,10 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {runAxe} from '../../../lib/axe';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space: One on One`, () => {
@@ -31,7 +30,7 @@ describe(`Widget Space: One on One`, () => {
   ].join(` `);
 
   before(`load browsers`, () => {
-    browser
+    browserLocal
       .url(`/?basic`)
       .execute(() => {
         localStorage.clear();
@@ -177,4 +176,12 @@ describe(`Widget Space: One on One`, () => {
     });
   });
 
+  describe(`accessibility`, () => {
+    it(`should have no accessibility violations`, () =>
+      runAxe(browserLocal, `ciscospark-widget`)
+        .then((results) => {
+          assert.equal(results.violations.length, 0);
+        })
+    );
+  });
 });

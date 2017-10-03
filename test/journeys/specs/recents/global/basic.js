@@ -1,16 +1,16 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import waitForPromise from '../../lib/wait-for-promise';
-import {clearEventLog, getEventLog} from '../../lib/events';
+import waitForPromise from '../../../lib/wait-for-promise';
+import {runAxe} from '../../../lib/axe';
+import {clearEventLog, getEventLog} from '../../../lib/events';
 
 describe(`Widget Recents`, () => {
   const browserLocal = browser.select(`browserLocal`);
+
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
   process.env.CISCOSPARK_SCOPE = [
@@ -261,5 +261,14 @@ describe(`Widget Recents`, () => {
       browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(docText));
       assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
     });
+  });
+
+  describe(`accessibility`, () => {
+    it(`should have no accessibility violations`, () =>
+      runAxe(browserLocal, `ciscospark-widget`)
+        .then((results) => {
+          assert.equal(results.violations.length, 0);
+        })
+    );
   });
 });

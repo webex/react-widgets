@@ -1,16 +1,19 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 
+import '@ciscospark/internal-plugin-feature';
+import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
+import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
 describe(`Widget Space: One on One`, () => {
   describe(`Data API`, () => {
     const browserLocal = browser.select(`browserLocal`);
 
     let mccoy, spock;
+    const mccoyName = `Bones Mccoy`;
+    const spockName = `Mr Spock`;
     process.env.CISCOSPARK_SCOPE = [
       `webexsquare:get_conversation`,
       `Identity:SCIM`,
@@ -36,9 +39,21 @@ describe(`Widget Space: One on One`, () => {
         });
     });
 
-    before(`create users`, () => testUsers.create({count: 2})
+    before(`create spock`, () => testUsers.create({count: 1, config: {displayName: spockName}})
       .then((users) => {
-        [mccoy, spock] = users;
+        [spock] = users;
+        spock.spark = new CiscoSpark({
+          credentials: {
+            authorization: spock.token
+          }
+        });
+        return spock.spark.internal.device.register()
+          .then(() => spock.spark.internal.feature.setFeature(`user`, FEATURE_FLAG_ROSTER, true));
+      }));
+
+    before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: mccoyName}})
+      .then((users) => {
+        [mccoy] = users;
       }));
 
     before(`pause to let test users establish`, () => browser.pause(5000));
@@ -77,6 +92,18 @@ describe(`Widget Space: One on One`, () => {
         browserLocal.waitForVisible(elements.activityMenu);
       });
 
+      it(`has a message button`, () => {
+        browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+      });
+
+      it(`has a meet button`, () => {
+        browserLocal.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
+      });
+
+      it(`has a people button`, () => {
+        browserLocal.element(elements.controlsContainer).element(rosterElements.peopleButton).waitForVisible();
+      });
+
       it(`has an exit menu button`, () => {
         assert.isTrue(browserLocal.isVisible(elements.activityMenu));
         browserLocal.waitForVisible(elements.exitButton);
@@ -110,18 +137,27 @@ describe(`Widget Space: One on One`, () => {
       });
     });
 
-    describe(`Messaging`, () => {
-      before(`switch to message`, () => {
-        switchToMessage(browserLocal);
+    describe(`roster tests`, () => {
+      before(`open roster widget`, () => {
+        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+        assert.isTrue(browserLocal.isVisible(rosterElements.rosterWidget));
       });
 
-      it(`sends messages`, () => {
-        // Increase wait timeout for message delivery
-        browser.timeouts(`implicit`, 10000);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-        assert.match(browserLocal.getText(`.ciscospark-system-message`), /You created this conversation/);
-        browserLocal.setValue(`[placeholder="Send a message to ${mccoy.displayName}"]`, `Fly, you fools!\n`);
-        browserLocal.waitUntil(() => browserLocal.getText(`.ciscospark-activity-item-container:last-child .ciscospark-activity-text`) === `Fly, you fools!`);
+      it(`has a close button`, () => {
+        assert.isTrue(browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).isVisible());
+      });
+
+      it(`has the total count of participants`, () => {
+        assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), `People (2)`);
+      });
+
+      it(`has the participants listed`, () => {
+        hasParticipants(browserLocal, [mccoy, spock]);
+      });
+
+      it(`closes the people roster widget`, () => {
+        browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).click();
+        browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
       });
     });
   });
