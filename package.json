@@ -65,7 +65,7 @@
     "@ciscospark/plugin-phone": "1.10.3",
     "@ciscospark/spark-core": "1.9.3",
     "@ciscospark/storage-adapter-local-forage": "1.9.3",
-    "@ciscospark/storage-adapter-local-storage": "1.9.3",
+    "@ciscospark/storage-adapter-local-storage": "1.12.2",
     "ampersand-events": "^2.0.2",
     "browser-saveas": "^1.0.1",
     "classnames": "^2.2.5",
