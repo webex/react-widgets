@@ -98,7 +98,7 @@
   "devDependencies": {
     "@ciscospark/eslint-config": "^2.0.1",
     "@ciscospark/test-helper-file": "1.9.3",
-    "@ciscospark/test-helper-server": "1.9.3",
+    "@ciscospark/test-helper-server": "1.12.2",
     "@ciscospark/test-helper-test-users": "1.9.3",
     "axe-core": "^2.3.1",
     "babel-cli": "^6.22.2",
