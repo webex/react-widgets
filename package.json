@@ -63,7 +63,7 @@
     "@ciscospark/plugin-people": "1.12.0",
     "@ciscospark/plugin-phone": "1.12.0",
     "@ciscospark/spark-core": "1.9.3",
-    "@ciscospark/storage-adapter-local-forage": "1.9.3",
+    "@ciscospark/storage-adapter-local-forage": "1.12.2",
     "@ciscospark/storage-adapter-local-storage": "1.9.3",
     "ampersand-events": "^2.0.2",
     "classnames": "^2.2.5",
