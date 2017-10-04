@@ -68,9 +68,11 @@ function buildES(pkgName, pkgPath) {
     sourceMaps: true,
     presets: [
       [
-        `es2015`,
+        `env`,
         {
-          loose: true,
+          targets: {
+            node: `6.5`
+          },
           modules: false
         }
       ],
