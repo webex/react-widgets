@@ -57,7 +57,7 @@
     "@ciscospark/internal-plugin-mercury": "1.12.2",
     "@ciscospark/internal-plugin-metrics": "1.12.2",
     "@ciscospark/internal-plugin-search": "1.12.2",
-    "@ciscospark/internal-plugin-team": "^1.12.2",
+    "@ciscospark/internal-plugin-team": "1.12.2",
     "@ciscospark/internal-plugin-user": "1.12.2",
     "@ciscospark/plugin-logger": "1.12.2",
     "@ciscospark/plugin-people": "1.12.2",
