@@ -116,11 +116,11 @@ describe(`Widget Space: One on One`, () => {
         });
 
         it(`sends message with gif attachment`, () => {
-          messageTests.sendFileTest(local, remote, `gif-sample.gif`);
+          messageTests.sendFileTest(local, remote, `gif-sample.gif`, false);
         });
 
         it(`sends message with jpg attachment`, () => {
-          messageTests.sendFileTest(local, remote, `jpg-sample.jpg`);
+          messageTests.sendFileTest(local, remote, `jpg-sample.jpg`, false);
         });
 
         it(`sends message with png attachment`, () => {

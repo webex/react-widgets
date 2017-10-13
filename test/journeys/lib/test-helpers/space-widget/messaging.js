@@ -57,9 +57,10 @@ export function verifyMessageReceipt(receiver, sender, message) {
  * @param {TestObject} sender
  * @param {TestObject} receiver
  * @param {string} fileName
+ * @param {boolean} [fileSizeVerify=true] Some files are embedded and don't display file sizes
  * @returns {void}
  */
-const sendFileTest = (sender, receiver, fileName) => {
+const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   const filePath = path.join(uploadDir, fileName);
   const fileTitle = `//div[text()="${fileName}"]`;
   sender.browser.chooseFile(elements.inputFile, filePath);
@@ -68,8 +69,11 @@ const sendFileTest = (sender, receiver, fileName) => {
   receiver.browser.scroll(fileTitle);
   const localSize = sender.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
   const remoteSize = receiver.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
-  console.info({localSize, remoteSize});
-  assert.equal(localSize, remoteSize);
+  // Some files are embedded and don't display file sizes
+  if (fileSizeVerify) {
+    assert.equal(localSize, remoteSize);
+  }
+  sendMessage(receiver, sender, `Received: ${fileName}`);
 };
 
 /**
