@@ -5,6 +5,7 @@ import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
 export const elements = {
+  callContainer: `.call-container`,
   meetWidget: `.ciscospark-meet-wrapper`,
   messageWidget: `.ciscospark-message-wrapper`,
   callButton: `button[aria-label="Call"]`,
@@ -50,7 +51,6 @@ export function call(caller, reciever) {
 export function decline(aBrowser) {
   aBrowser.waitForVisible(elements.declineButton);
   aBrowser.element(elements.meetWidget).element(elements.declineButton).click();
-  aBrowser.element(elements.meetWidget).element(elements.callButton).waitForVisible();
 }
 
 /**
@@ -75,7 +75,8 @@ export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   hangup(browserLocal);
-  browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+  // Should switch back to message widget after hangup
+  browserLocal.waitForVisible(elements.messageWidget);
 }
 
 /**
@@ -88,9 +89,9 @@ export function declineIncomingCallTest(browserLocal, browserRemote) {
   switchToMeet(browserRemote);
   call(browserRemote, browserLocal);
   decline(browserLocal);
-  browserRemote.element(elements.meetWidget).element(elements.callButton).waitForVisible();
-  // Pausing to let locus session flush
-  browserLocal.pause(10000);
+  // Should switch back to message widget after hangup
+  browserLocal.waitForVisible(elements.messageWidget);
+  browserRemote.waitForVisible(elements.messageWidget);
 }
 
 /**
