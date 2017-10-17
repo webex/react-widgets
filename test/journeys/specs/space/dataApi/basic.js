@@ -190,7 +190,10 @@ describe(`Widget Space`, () => {
             const participantsText = browserLocal.element(rosterElements.rosterList).getText();
             return participantsText.includes(biff.displayName);
           }, 15000, `added person not found in participant list`);
-          assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), `People (4)`);
+          browserLocal.waitUntil(() => {
+            const rosterTitle = browserLocal.element(rosterElements.rosterTitle).getText();
+            return rosterTitle === `People (4)`;
+          }, 15000, `Participant count should update once user is added`);
         });
 
         it(`closes the people roster widget`, () => {
