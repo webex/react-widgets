@@ -28,9 +28,6 @@ exports.config = {
     space: [
       `./test/journeys/specs/space/**/*.js`
     ],
-    messageMeet: [
-      `./test/journeys/specs/messageMeet/**/*.js`
-    ],
     recents: [
       `./test/journeys/specs/recents/**/*.js`
     ]
@@ -181,7 +178,6 @@ exports.config = {
   staticServerFolders: [
     {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
     {mount: `/dist-recents`, path: `./packages/node_modules/@ciscospark/widget-recents/dist`},
-    {mount: `/dist-wmm`, path: `./packages/node_modules/@ciscospark/widget-message-meet/dist`},
     {mount: `/`, path: `./test/journeys/server/`},
     {mount: `/axe-core`, path: `./node_modules/axe-core/`}
   ],
