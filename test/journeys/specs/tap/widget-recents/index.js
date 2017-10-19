@@ -2,9 +2,11 @@
 
 import {assert} from 'chai';
 
+import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/plugin-logger';
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/internal-plugin-conversation';
+
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../../lib/events';
@@ -43,6 +45,11 @@ describe(`Widget Recents`, () => {
       marty.spark = new CiscoSpark({
         credentials: {
           authorization: marty.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return marty.spark.internal.mercury.connect();
@@ -54,6 +61,11 @@ describe(`Widget Recents`, () => {
       docbrown.spark = new CiscoSpark({
         credentials: {
           authorization: docbrown.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return docbrown.spark.internal.mercury.connect();
@@ -65,6 +77,11 @@ describe(`Widget Recents`, () => {
       lorraine.spark = new CiscoSpark({
         credentials: {
           authorization: lorraine.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return lorraine.spark.internal.mercury.connect();

@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.171",
+  "version": "0.1.174",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -14,10 +14,9 @@
     "clean:transpile": "rimraf \"packages/**/es/\" && rimraf \"packages/**/cjs/\"",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
-    "test:automation": "wdio wdio.conf.js --suite oneOnOne,space,messageMeet,recents",
+    "test:automation": "wdio wdio.conf.js --suite oneOnOne,space,recents",
     "test:automation:oneOnOne": "wdio wdio.conf.js --suite oneOnOne",
     "test:automation:space": "wdio wdio.conf.js --suite space",
-    "test:automation:messageMeet": "wdio wdio.conf.js --suite messageMeet",
     "test:automation:recents": "wdio wdio.conf.js --suite recents",
     "test:tap": "wdio wdio.conf.js --suite tap",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",

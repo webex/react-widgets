@@ -2,9 +2,10 @@
 
 import {assert} from 'chai';
 
+import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/plugin-logger';
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
@@ -47,6 +48,11 @@ describe(`Widget Space: Group Space: TAP`, () => {
       marty.spark = new CiscoSpark({
         credentials: {
           authorization: marty.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return marty.spark.internal.mercury.connect();
@@ -58,6 +64,11 @@ describe(`Widget Space: Group Space: TAP`, () => {
       docbrown.spark = new CiscoSpark({
         credentials: {
           authorization: docbrown.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
     }));
@@ -68,6 +79,11 @@ describe(`Widget Space: Group Space: TAP`, () => {
       lorraine.spark = new CiscoSpark({
         credentials: {
           authorization: lorraine.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return lorraine.spark.internal.mercury.connect();
