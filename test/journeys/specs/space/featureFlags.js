@@ -1,5 +1,6 @@
 import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
+import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
@@ -38,6 +39,11 @@ describe(`Widget Space Feature Flags`, () => {
         userWithAllTheFeatures.spark = new CiscoSpark({
           credentials: {
             authorization: userWithAllTheFeatures.token
+          },
+          config: {
+            logger: {
+              level: `error`
+            }
           }
         });
         return userWithAllTheFeatures.spark.internal.device.register()
