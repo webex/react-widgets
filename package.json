@@ -89,6 +89,7 @@
     "react-mentions": "^1.2.1",
     "react-redux": "^5.0.1",
     "react-tap-event-plugin": "^2.0.1",
+    "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.0",
