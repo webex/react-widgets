@@ -85,14 +85,19 @@ export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
  * Test to decline incoming call
  * @param {Object} browserLocal
  * @param {Object} browserRemote
+ * @param {boolean} [isMeeting=true] if the call is a "meeting" instead of a "call"
  * @returns {void}
  */
-export function declineIncomingCallTest(browserLocal, browserRemote) {
+export function declineIncomingCallTest(browserLocal, browserRemote, isMeeting = false) {
   switchToMeet(browserRemote);
   call(browserRemote, browserLocal);
   decline(browserLocal);
   // Should switch back to message widget after hangup
   browserLocal.waitForVisible(elements.messageWidget);
+  if (isMeeting) {
+    // Meetings have to be manually disconnected (waiting for participants)
+    hangup(browserRemote);
+  }
   browserRemote.waitForVisible(elements.messageWidget);
 }
 
@@ -100,26 +105,31 @@ export function declineIncomingCallTest(browserLocal, browserRemote) {
  * Test to hangup during ongoing call
  * @param {Object} browserLocal
  * @param {Object} browserRemote
+ * @param {boolean} [isMeeting=true] if the call is a "meeting" instead of a "call"
  * @returns {void}
  */
-export function hangupDuringCallTest(browserLocal, browserRemote) {
+export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = false) {
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   answer(browserRemote);
   hangup(browserLocal);
   browserLocal.waitForVisible(elements.messageWidget);
+  if (isMeeting) {
+    // Meetings have to be manually disconnected (waiting for participants)
+    hangup(browserRemote);
+  }
   // Should switch back to message widget after hangup
-  browserLocal.waitForVisible(elements.messageWidget);
+  browserRemote.waitForVisible(elements.messageWidget);
 }
 
 /**
  * Test to verify browser has proper call events
  * @param {Object} browserLocal
  * @param {Object} browserRemote
- * @param {Object} spock
+ * @param {Object} actor
  * @returns {void}
  */
-export function callEventTest(browserLocal, browserRemote, spock) {
+export function callEventTest(browserLocal, browserRemote, actor) {
   const events = getEventLog(browserLocal);
   const eventCreated = events.find((event) => event.eventName === `calls:created`);
   const eventConnected = events.find((event) => event.eventName === `calls:connected`);
@@ -133,10 +143,10 @@ export function callEventTest(browserLocal, browserRemote, spock) {
   assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`]);
   assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`]);
   assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`]);
-  assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-  assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-  assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, spock.id));
-  assert.equal(eventCreated.detail.data.actorName, spock.displayName);
-  assert.equal(eventConnected.detail.data.actorName, spock.displayName);
-  assert.equal(eventDisconnected.detail.data.actorName, spock.displayName);
+  assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, actor.id));
+  assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, actor.id));
+  assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, actor.id));
+  assert.equal(eventCreated.detail.data.actorName, actor.displayName);
+  assert.equal(eventConnected.detail.data.actorName, actor.displayName);
+  assert.equal(eventDisconnected.detail.data.actorName, actor.displayName);
 }
