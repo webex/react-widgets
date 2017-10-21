@@ -15,7 +15,7 @@ def cleanup = { ->
 
 ansiColor('xterm') {
   timestamps {
-    timeout(60) {
+    timeout(90) {
       node('NODE_JS_BUILDER') {
 
         def packageJsonVersion
