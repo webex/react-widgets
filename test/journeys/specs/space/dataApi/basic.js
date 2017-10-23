@@ -1,6 +1,7 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
+import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
@@ -48,6 +49,11 @@ describe(`Widget Space`, () => {
       marty.spark = new CiscoSpark({
         credentials: {
           authorization: marty.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return marty.spark.internal.device.register()
@@ -61,6 +67,11 @@ describe(`Widget Space`, () => {
         docbrown.spark = new CiscoSpark({
           credentials: {
             authorization: docbrown.token
+          },
+          config: {
+            logger: {
+              level: `error`
+            }
           }
         });
       }));
@@ -71,6 +82,11 @@ describe(`Widget Space`, () => {
         lorraine.spark = new CiscoSpark({
           credentials: {
             authorization: lorraine.token
+          },
+          config: {
+            logger: {
+              level: `error`
+            }
           }
         });
       }));
@@ -81,6 +97,11 @@ describe(`Widget Space`, () => {
         biff.spark = new CiscoSpark({
           credentials: {
             authorization: biff.token
+          },
+          config: {
+            logger: {
+              level: `error`
+            }
           }
         });
       }));
