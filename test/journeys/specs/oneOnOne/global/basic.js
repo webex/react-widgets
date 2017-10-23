@@ -1,5 +1,6 @@
 import {assert} from 'chai';
 import '@ciscospark/internal-plugin-feature';
+import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
@@ -43,6 +44,11 @@ describe(`Widget Space: One on One`, () => {
       spock.spark = new CiscoSpark({
         credentials: {
           authorization: spock.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
         }
       });
       return spock.spark.internal.device.register()
