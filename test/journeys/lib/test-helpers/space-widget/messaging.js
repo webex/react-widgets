@@ -33,7 +33,6 @@ export const elements = {
 export function sendMessage(sender, receiver, message) {
   sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
   sender.browser.waitForVisible(elements.systemMessage);
-  assert.match(sender.browser.getText(elements.systemMessage), /created this conversation/);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
   sender.browser.keys([`Enter`, `NULL`]);
 }
@@ -73,7 +72,9 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   if (fileSizeVerify) {
     assert.equal(localSize, remoteSize);
   }
+  // Send receipt acknowledgement and verify before moving on
   sendMessage(receiver, sender, `Received: ${fileName}`);
+  verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
 };
 
 /**

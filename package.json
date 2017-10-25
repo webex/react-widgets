@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.174",
+  "version": "0.1.182",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -88,6 +88,7 @@
     "react-mentions": "^1.2.1",
     "react-redux": "^5.0.1",
     "react-tap-event-plugin": "^2.0.1",
+    "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.0",
