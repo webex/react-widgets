@@ -1,10 +1,11 @@
 import testUsers from '@ciscospark/test-helper-test-users';
+import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/internal-plugin-conversation';
 
-import waitForPromise from '../../../lib/wait-for-promise';
-import {sendMessage, verifyMessageReceipt, messageTests} from '../../../lib/test-helpers/space-widget/messaging';
+import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest, FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -49,7 +50,9 @@ describe(`Widget Space`, () => {
           }
         }
       });
-      return marty.spark.internal.mercury.connect();
+      return marty.spark.internal.mercury.connect()
+        .then(() => marty.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true))
+        .then(() => marty.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_GROUP_CALLING, true));
     }));
 
   before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
@@ -65,6 +68,9 @@ describe(`Widget Space`, () => {
           }
         }
       });
+      return docbrown.spark.internal.device.register()
+      .then(() => docbrown.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true))
+      .then(() => docbrown.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_GROUP_CALLING, true));
     }));
 
   before(`create lorraine`, () => testUsers.create({count: 1, config: {displayName: `Lorraine Baines`}})
@@ -113,6 +119,7 @@ describe(`Widget Space`, () => {
     }, marty.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
     local.browser.waitForVisible(spaceWidget);
+    local.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 
   before(`inject docbrown token`, () => {
@@ -130,80 +137,32 @@ describe(`Widget Space`, () => {
     }, docbrown.token.access_token, conversation.id);
     const spaceWidget = `.ciscospark-space-widget`;
     remote.browser.waitForVisible(spaceWidget);
+    remote.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 
-  describe(`messaging`, () => {
-    it(`sends and receives messages`, () => {
-      const martyText = `Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?`;
-      const docText = `The way I see it, if you're gonna build a time machine into a car, why not do it with some style?`;
-      const lorraineText = `Marty, will we ever see you again?`;
-      const martyText2 = `I guarantee it.`;
-      sendMessage(remote, local, martyText);
-      verifyMessageReceipt(local, remote, martyText);
-      sendMessage(remote, local, docText);
-      verifyMessageReceipt(local, remote, docText);
-      // Send a message from a 'client'
-      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-        displayName: lorraineText
-      }));
-      // Wait for both widgets to receive client message
-      verifyMessageReceipt(local, remote, lorraineText);
-      verifyMessageReceipt(remote, local, lorraineText);
-      sendMessage(local, remote, martyText2);
-      verifyMessageReceipt(remote, local, martyText2);
+  describe(`meet widget`, () => {
+    describe(`pre call experience`, () => {
+      it(`has a call button`, () => {
+        switchToMeet(browserLocal);
+        browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+      });
     });
 
-    it(`receives proper events on messages`, () => {
-      messageTests.messageEventTest(local, remote);
-    });
-
-    describe(`markdown messaging`, () => {
-      it(`sends message with bold text`, () => {
-        messageTests.markdown.bold(remote, local);
+    describe(`during call experience`, () => {
+      it(`can hangup before answer`, () => {
+        // hangupBeforeAnswerTest(browserLocal, browserRemote);
       });
 
-      it(`sends message with italic text`, () => {
-        messageTests.markdown.italic(local, remote);
+      it(`can decline an incoming call`, () => {
+        declineIncomingCallTest(browserLocal, browserRemote, true);
       });
 
-      it(`sends message with a blockquote`, () => {
-        messageTests.markdown.blockquote(remote, local);
+      it(`can hangup in call`, () => {
+        hangupDuringCallTest(browserLocal, browserRemote, true);
       });
 
-      it(`sends message with numbered list`, () => {
-        messageTests.markdown.orderedList(local, remote);
-      });
-
-      it(`sends message with bulleted list`, () => {
-        messageTests.markdown.unorderedList(remote, local);
-      });
-
-      it(`sends message with heading 1`, () => {
-        messageTests.markdown.heading1(local, remote);
-      });
-
-      it(`sends message with heading 2`, () => {
-        messageTests.markdown.heading2(remote, local);
-      });
-
-      it(`sends message with heading 3`, () => {
-        messageTests.markdown.heading3(local, remote);
-      });
-
-      it(`sends message with horizontal line`, () => {
-        messageTests.markdown.hr(remote, local);
-      });
-
-      it(`sends message with link`, () => {
-        messageTests.markdown.link(local, remote);
-      });
-
-      it(`sends message with inline code`, () => {
-        messageTests.markdown.inline(remote, local);
-      });
-
-      it(`sends message with codeblock`, () => {
-        messageTests.markdown.codeblock(local, remote);
+      it(`has proper call event data`, () => {
+        callEventTest(browserLocal, browserRemote, marty);
       });
     });
   });
