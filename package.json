@@ -21,6 +21,7 @@
     "test:tap": "wdio wdio.conf.js --suite tap",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint",
+    "lint:eslint": "eslint --ignore-path .gitignore $(npm run --silent lint:eslint:ci-reporter)",
     "eslint": "eslint packages",
     "serve": "npm run start",
     "stylelint": "stylelint \"./packages/node_modules/**/*.css\"",
@@ -178,9 +179,7 @@
     "yargs": "^9.0.1"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint"
-    ]
+    "*.js": "lint:eslint"
   },
   "greenkeeper": {
     "ignore": [
