@@ -9,6 +9,13 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
+import {
+  createSpaceAndPost,
+  displayAndReadIncomingMessage,
+  displayIncomingMessage,
+  elements
+} from '../../../lib/test-helpers/recents-widget';
+
 describe(`Widget Recents`, () => {
   const browserLocal = browser.select(`browserLocal`);
 
@@ -110,7 +117,6 @@ describe(`Widget Recents`, () => {
   }));
 
   before(`inject token`, () => {
-    const recentsWidget = `.ciscospark-spaces-list-wrapper`;
     browserLocal.execute((localAccessToken) => {
       const options = {
         accessToken: localAccessToken,
@@ -120,7 +126,7 @@ describe(`Widget Recents`, () => {
       };
       window.openRecentsWidget(options);
     }, marty.token.access_token);
-    browserLocal.waitForVisible(recentsWidget);
+    browserLocal.waitForVisible(elements.recentsWidget);
   });
 
   it(`loads the test page`, () => {
@@ -131,28 +137,12 @@ describe(`Widget Recents`, () => {
   describe(`group space`, () => {
     it(`displays a new incoming message`, () => {
       const lorraineText = `Marty, will we ever see you again?`;
-      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-        displayName: lorraineText
-      }));
-      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === conversation.displayName);
-      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-      assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
+      displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it(`removes unread indicator when read`, () => {
-      let activity;
       const lorraineText = `You're safe and sound now!`;
-      waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-        displayName: lorraineText
-      }).then((a) => {
-        activity = a;
-      }));
-      browserLocal.waitUntil(() =>
-        browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-      // Acknowledge the activity to mark it read
-      waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
-      browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
+      displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
 
     describe(`events`, () => {
@@ -160,82 +150,52 @@ describe(`Widget Recents`, () => {
       it(`messages:created`, () => {
         clearEventLog(browserLocal);
         const lorraineText = `Don't be such a square`;
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }));
-        browserLocal.waitUntil(() =>
-        browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        assert.include(getEventLog(browserLocal), `messages:created`);
+        displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
+        assert.include(getEventLog(browserLocal), `messages:created`, `does not have event in log`);
       });
 
       it(`rooms:unread`, () => {
         clearEventLog(browserLocal);
         const lorraineText = `Your Uncle Joey didn't make parole again.`;
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }));
-        browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        assert.include(getEventLog(browserLocal), `rooms:unread`);
+        displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
+        assert.include(getEventLog(browserLocal), `rooms:unread`, `does not have event in log`);
       });
 
       it(`rooms:read`, () => {
-        let activity;
         clearEventLog(browserLocal);
         const lorraineText = `Your Uncle Joey didn't make parole again.`;
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }).then((a) => {
-          activity = a;
-        }));
-        browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
-        browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
-        assert.include(getEventLog(browserLocal), `rooms:read`);
+        displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+        assert.include(getEventLog(browserLocal), `rooms:read`, `does not have event in log`);
       });
 
       it(`rooms:selected`, () => {
         clearEventLog(browserLocal);
-        browserLocal.click(`.space-item:first-child`);
-        assert.include(getEventLog(browserLocal), `rooms:selected`);
+        browserLocal.element(elements.firstSpace).click();
+        assert.include(getEventLog(browserLocal), `rooms:selected`, `does not have event in log`);
       });
 
       it(`memberships:created`, () => {
         const roomTitle = `Test Group Space 2`;
+        const firstPost = `Everybody who's anybody drinks.`;
         clearEventLog(browserLocal);
-        waitForPromise(lorraine.spark.internal.conversation.create({
-          displayName: roomTitle,
-          participants: [marty, docbrown, lorraine]
-        }).then((c) => lorraine.spark.internal.conversation.post(c, {
-          displayName: `Everybody who's anybody drinks.`
-        })));
-        browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-title`).includes(roomTitle));
-        assert.include(getEventLog(browserLocal), `memberships:created`);
+        createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
+        assert.include(getEventLog(browserLocal), `memberships:created`, `does not have event in log`);
       });
 
       it(`memberships:deleted`, () => {
         // Create Room
-        let kickedConversation;
         const roomTitle = `Kick Marty Out`;
-        waitForPromise(lorraine.spark.internal.conversation.create({
-          displayName: roomTitle,
-          participants: [marty, docbrown, lorraine]
-        }).then((c) => {
-          kickedConversation = c;
-          return lorraine.spark.internal.conversation.post(c, {
-            displayName: `Goodbye Marty.`
-          });
-        }));
-        browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-title`) === roomTitle);
+        const firstPost = `Goodbye Marty.`;
+        const kickedConversation = createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
         // Remove user from room
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
         browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-title`) !== roomTitle);
-        assert.include(getEventLog(browserLocal), `memberships:deleted`);
+          browserLocal.element(`${elements.firstSpace} ${elements.title}`).getText() !== roomTitle,
+          5000,
+          `does not remove space from list`
+        );
+        assert.include(getEventLog(browserLocal), `memberships:deleted`, `does not have event in log`);
       });
     });
   });
@@ -243,39 +203,17 @@ describe(`Widget Recents`, () => {
   describe(`one on one space`, () => {
     it(`displays a new incoming message`, () => {
       const lorraineText = `Marty? Why are you so nervous?`;
-      waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
-        displayName: lorraineText
-      }));
-      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === lorraine.displayName);
-      assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
+      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
     });
 
     it(`removes unread indicator when read`, () => {
-      let activity;
       const lorraineText = `You're safe and sound now!`;
-      waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
-        displayName: lorraineText
-      }).then((a) => {
-        activity = a;
-      }));
-      browserLocal.waitUntil(() =>
-        browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-
-      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-      // Acknowledge the activity to mark it read
-      waitForPromise(marty.spark.internal.conversation.acknowledge(oneOnOneConversation, activity));
-      browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
+      displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
     });
 
     it(`displays a new one on one`, () => {
       const docText = `Marty! We have to talk!`;
-      waitForPromise(docbrown.spark.internal.conversation.create({
-        participants: [marty, docbrown]
-      }).then((c) => docbrown.spark.internal.conversation.post(c, {
-        displayName: docText
-      })));
-      browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(docText));
-      assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
+      createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
     });
   });
 
@@ -283,7 +221,7 @@ describe(`Widget Recents`, () => {
     it(`should have no accessibility violations`, () =>
       runAxe(browserLocal, `ciscospark-widget`)
         .then((results) => {
-          assert.equal(results.violations.length, 0);
+          assert.equal(results.violations.length, 0, `has accessibilty violations`);
         })
     );
   });
