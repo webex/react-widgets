@@ -2,9 +2,11 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
-import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/internal-plugin-feature';
+import CiscoSpark from '@ciscospark/spark-core';
 
+import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
@@ -54,7 +56,9 @@ describe(`Widget Recents`, () => {
             }
           }
         });
-        return marty.spark.internal.mercury.connect();
+        return marty.spark.internal.device.register()
+          .then(() => marty.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_GROUP_CALLING, true))
+          .then(() => marty.spark.internal.mercury.connect());
       }));
 
     before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
@@ -139,6 +143,17 @@ describe(`Widget Recents`, () => {
         const lorraineText = `You're safe and sound now!`;
         displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
       });
+
+      it(`displays a call button on hover`, () => {
+        displayIncomingMessage(browserLocal, lorraine, conversation, `Can you call me?`);
+        browserLocal.moveToObject(elements.firstSpace);
+        // browserLocal.debug();
+        browserLocal.waitUntil(() =>
+          browserLocal.element(`${elements.callButton}`).isVisible(),
+          1500,
+          `does not show call button`
+        );
+      });
     });
 
     describe(`one on one space`, () => {
@@ -155,6 +170,17 @@ describe(`Widget Recents`, () => {
       it(`displays a new one on one`, () => {
         const docText = `Marty! We have to talk!`;
         createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
+      });
+
+      it(`displays a call button on hover`, () => {
+        displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, `Can you call me?`, true);
+        browserLocal.moveToObject(elements.firstSpace);
+        // browserLocal.debug();
+        browserLocal.waitUntil(() =>
+          browserLocal.element(`${elements.callButton}`).isVisible(),
+          1500,
+          `does not show call button`
+        );
       });
     });
 

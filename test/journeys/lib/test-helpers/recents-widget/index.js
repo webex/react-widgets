@@ -6,7 +6,8 @@ export const elements = {
   firstSpace: `.space-item:first-child`,
   title: `.space-title`,
   unreadIndicator: `.space-unread-indicator`,
-  lastActivity: `.space-last-activity`
+  lastActivity: `.space-last-activity`,
+  callButton: `button[aria-label="Call Space"]`
 };
 
 /**
