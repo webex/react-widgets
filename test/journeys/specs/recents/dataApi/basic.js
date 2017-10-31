@@ -2,10 +2,17 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
-import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/internal-plugin-feature';
+import CiscoSpark from '@ciscospark/spark-core';
 
-import waitForPromise from '../../../lib/wait-for-promise';
+import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
+import {
+  createSpaceAndPost,
+  displayAndReadIncomingMessage,
+  displayIncomingMessage,
+  elements
+} from '../../../lib/test-helpers/recents-widget';
 
 describe(`Widget Recents`, () => {
   describe(`Data API`, () => {
@@ -49,7 +56,9 @@ describe(`Widget Recents`, () => {
             }
           }
         });
-        return marty.spark.internal.mercury.connect();
+        return marty.spark.internal.device.register()
+          .then(() => marty.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_GROUP_CALLING, true))
+          .then(() => marty.spark.internal.mercury.connect());
       }));
 
     before(`create docbrown`, () => testUsers.create({count: 1, config: {displayName: `Emmett Brown`}})
@@ -108,7 +117,6 @@ describe(`Widget Recents`, () => {
     }));
 
     before(`inject token`, () => {
-      const recentsWidget = `.ciscospark-spaces-list-wrapper`;
       browserLocal.execute((localAccessToken) => {
         const csmmDom = document.createElement(`div`);
         csmmDom.setAttribute(`class`, `ciscospark-widget`);
@@ -117,7 +125,7 @@ describe(`Widget Recents`, () => {
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
         window.loadBundle(`/dist-recents/bundle.js`);
       }, marty.token.access_token);
-      browserLocal.waitForVisible(recentsWidget);
+      browserLocal.waitForVisible(elements.recentsWidget);
     });
 
     it(`loads the test page`, () => {
@@ -128,68 +136,53 @@ describe(`Widget Recents`, () => {
     describe(`group space`, () => {
       it(`displays a new incoming message`, () => {
         const lorraineText = `Marty, will we ever see you again?`;
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }));
-        browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === conversation.displayName);
-        assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-        assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
+        displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
       });
 
       it(`removes unread indicator when read`, () => {
-        let activity;
         const lorraineText = `You're safe and sound now!`;
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }).then((a) => {
-          activity = a;
-        }));
+        displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+      });
+
+      it(`displays a call button on hover`, () => {
+        displayIncomingMessage(browserLocal, lorraine, conversation, `Can you call me?`);
+        browserLocal.moveToObject(elements.firstSpace);
+        // browserLocal.debug();
         browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-        // Acknowledge the activity to mark it read
-        waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
-        browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
+          browserLocal.element(`${elements.callButton}`).isVisible(),
+          1500,
+          `does not show call button`
+        );
       });
     });
 
     describe(`one on one space`, () => {
       it(`displays a new incoming message`, () => {
         const lorraineText = `Marty? Why are you so nervous?`;
-        waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
-          displayName: lorraineText
-        }));
-        browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-title`) === lorraine.displayName);
-        assert.include(browserLocal.getText(`.space-item:first-child .space-last-activity`), lorraineText);
+        displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
       });
 
       it(`removes unread indicator when read`, () => {
-        let activity;
         const lorraineText = `You're safe and sound now!`;
-        waitForPromise(lorraine.spark.internal.conversation.post(oneOnOneConversation, {
-          displayName: lorraineText
-        }).then((a) => {
-          activity = a;
-        }));
-        browserLocal.waitUntil(() =>
-          browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-
-        assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
-        // Acknowledge the activity to mark it read
-        waitForPromise(marty.spark.internal.conversation.acknowledge(oneOnOneConversation, activity));
-        browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
+        displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
       });
 
       it(`displays a new one on one`, () => {
         const docText = `Marty! We have to talk!`;
-        waitForPromise(docbrown.spark.internal.conversation.create({
-          participants: [marty, docbrown]
-        }).then((c) => docbrown.spark.internal.conversation.post(c, {
-          displayName: docText
-        })));
-        browserLocal.waitUntil(() => browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(docText));
-        assert.isTrue(browserLocal.isVisible(`.space-item:first-child .space-unread-indicator`));
+        createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
+      });
+
+      it(`displays a call button on hover`, () => {
+        displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, `Can you call me?`, true);
+        browserLocal.moveToObject(elements.firstSpace);
+        // browserLocal.debug();
+        browserLocal.waitUntil(() =>
+          browserLocal.element(`${elements.callButton}`).isVisible(),
+          1500,
+          `does not show call button`
+        );
       });
     });
+
   });
 });
