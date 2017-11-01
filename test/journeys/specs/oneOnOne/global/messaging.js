@@ -28,7 +28,7 @@ describe(`Widget Space: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/?message`)
+      .url(`/space.html?message`)
       .execute(() => {
         localStorage.clear();
       });

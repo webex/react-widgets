@@ -33,7 +33,7 @@ describe(`Widget Space: One on One`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/?basic`)
+      .url(`/space.html?basic`)
       .execute(() => {
         localStorage.clear();
       });

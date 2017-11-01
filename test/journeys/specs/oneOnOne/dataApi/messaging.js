@@ -55,7 +55,7 @@ describe(`Widget Space: One on One`, () => {
         csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, spock.token.access_token, mccoy.email);
       local.browser.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
     });
@@ -71,7 +71,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-initial-activity`, `message`);
           csmmDom.setAttribute(`on-event`, `message`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, mccoy.token.access_token, spock.email);
         remote.browser.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
       });

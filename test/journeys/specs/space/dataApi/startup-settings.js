@@ -112,7 +112,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-space-id`, spaceId);
           csmmDom.setAttribute(`data-initial-activity`, `meet`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, marty.token.access_token, conversation.id);
         const spaceWidget = `.ciscospark-space-widget`;
         browserLocal.waitForVisible(spaceWidget);
@@ -136,7 +136,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-space-id`, spaceId);
           csmmDom.setAttribute(`data-initial-activity`, `message`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, marty.token.access_token, conversation.id);
         const spaceWidget = `.ciscospark-space-widget`;
         browserLocal.waitForVisible(spaceWidget);
@@ -160,7 +160,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-space-id`, spaceId);
           csmmDom.setAttribute(`data-initial-activity`, `message`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, docbrown.token.access_token, conversation.id);
         const spaceWidget = `.ciscospark-space-widget`;
         browserRemote.waitForVisible(spaceWidget);
@@ -176,7 +176,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-initial-activity`, `meet`);
           csmmDom.setAttribute(`data-start-call`, true);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, marty.token.access_token, conversation.id);
         const spaceWidget = `.ciscospark-space-widget`;
         browserLocal.waitForVisible(spaceWidget);

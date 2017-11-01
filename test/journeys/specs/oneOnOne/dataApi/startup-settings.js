@@ -57,7 +57,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
           csmmDom.setAttribute(`data-initial-activity`, `meet`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, spock.token.access_token, mccoy.email);
         browserLocal.waitForVisible(elements.meetWidget);
       });
@@ -79,7 +79,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
           csmmDom.setAttribute(`data-initial-activity`, `message`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, spock.token.access_token, mccoy.email);
       });
 
@@ -100,7 +100,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
           csmmDom.setAttribute(`data-initial-activity`, `meet`);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, mccoy.token.access_token, spock.email);
         browserRemote.waitForVisible(elements.meetButton);
       });
@@ -115,7 +115,7 @@ describe(`Widget Space: One on One`, () => {
           csmmDom.setAttribute(`data-initial-activity`, `meet`);
           csmmDom.setAttribute(`data-start-call`, true);
           document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-          window.loadBundle(`/dist/bundle.js`);
+          window.loadBundle(`/dist-space/bundle.js`);
         }, spock.token.access_token, mccoy.email);
         browserLocal.waitForVisible(elements.meetWidget);
       });

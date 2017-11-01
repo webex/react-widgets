@@ -128,7 +128,7 @@ describe(`Widget Space`, () => {
         csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, marty.token.access_token, conversation.id);
       browserLocal.waitForVisible(spaceWidget);
     });

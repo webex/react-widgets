@@ -31,7 +31,7 @@ describe(`Widget Space`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/`)
+      .url(`/space.html`)
       .execute(() => {
         localStorage.clear();
       });

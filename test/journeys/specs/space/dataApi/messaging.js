@@ -109,7 +109,7 @@ describe(`Widget Space`, () => {
         csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, marty.token.access_token, conversation.id);
       const spaceWidget = `.ciscospark-space-widget`;
       local.browser.waitForVisible(spaceWidget);
@@ -125,7 +125,7 @@ describe(`Widget Space`, () => {
         csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, docbrown.token.access_token, conversation.id);
       const spaceWidget = `.ciscospark-space-widget`;
       remote.browser.waitForVisible(spaceWidget);

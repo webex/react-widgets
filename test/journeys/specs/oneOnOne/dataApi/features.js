@@ -73,7 +73,7 @@ describe(`Widget Space: One on One`, () => {
         csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, userWithAllTheFeatures.token.access_token, userWithNoFeatures.email);
       browserLocal.waitForVisible(`[placeholder="Send a message to ${userWithNoFeatures.displayName}"]`, 30000);
     });
@@ -87,7 +87,7 @@ describe(`Widget Space: One on One`, () => {
         csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, userWithNoFeatures.token.access_token, userWithAllTheFeatures.email);
       browserRemote.waitForVisible(`[placeholder="Send a message to ${userWithAllTheFeatures.displayName}"]`, 30000);
     });

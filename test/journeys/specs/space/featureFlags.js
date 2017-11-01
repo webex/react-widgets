@@ -70,7 +70,7 @@ describe(`Widget Space Feature Flags`, () => {
 
     before(`load browsers`, () => {
       browser
-        .url(`/?basic`)
+        .url(`/space.html?basic`)
         .execute(() => {
           localStorage.clear();
         });
@@ -123,7 +123,7 @@ describe(`Widget Space Feature Flags`, () => {
         csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, userWithAllTheFeatures.token.access_token, conversation.id);
       browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
     });
@@ -137,7 +137,7 @@ describe(`Widget Space Feature Flags`, () => {
         csmmDom.setAttribute(`data-space-id`, spaceId);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, userWithNoFeatures1.token.access_token, conversation.id);
       browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
     });

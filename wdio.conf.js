@@ -176,7 +176,7 @@ exports.config = {
 
   // Static Server setup
   staticServerFolders: [
-    {mount: `/dist`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
+    {mount: `/dist-space`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
     {mount: `/dist-recents`, path: `./packages/node_modules/@ciscospark/widget-recents/dist`},
     {mount: `/`, path: `./test/journeys/server/`},
     {mount: `/axe-core`, path: `./node_modules/axe-core/`}

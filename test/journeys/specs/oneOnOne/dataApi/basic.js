@@ -73,7 +73,7 @@ describe(`Widget Space: One on One`, () => {
         csmmDom.setAttribute(`data-to-person-email`, localToUserEmail);
         csmmDom.setAttribute(`data-initial-activity`, `message`);
         document.getElementById(`ciscospark-widget`).appendChild(csmmDom);
-        window.loadBundle(`/dist/bundle.js`);
+        window.loadBundle(`/dist-space/bundle.js`);
       }, spock.token.access_token, mccoy.email);
     });
 
