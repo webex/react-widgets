@@ -1,0 +1,66 @@
+/* eslint-disable max-nested-callbacks */
+
+import {assert} from 'chai';
+
+import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/plugin-logger';
+import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@ciscospark/spark-core';
+
+describe(`Widget Space: Group Space: TAP`, () => {
+  const browserLocal = browser.select(`browserLocal`);
+  let marty;
+
+  process.env.CISCOSPARK_SCOPE = [
+    `webexsquare:get_conversation`,
+    `spark:people_read`,
+    `spark:rooms_read`,
+    `spark:rooms_write`,
+    `spark:memberships_read`,
+    `spark:memberships_write`,
+    `spark:messages_read`,
+    `spark:messages_write`,
+    `spark:teams_read`,
+    `spark:teams_write`,
+    `spark:team_memberships_read`,
+    `spark:team_memberships_write`,
+    `spark:kms`
+  ].join(` `);
+
+  before(`create marty`, () => testUsers.create({count: 1, config: {displayName: `Marty McFly`}})
+    .then((users) => {
+      [marty] = users;
+      marty.spark = new CiscoSpark({
+        credentials: {
+          authorization: marty.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
+        }
+      });
+      return marty.spark.internal.mercury.connect();
+    }));
+
+  it(`loads the test page`, () => {
+    browserLocal
+      .url(`https://code.s4d.io/widget-space/latest/demo/index.html`);
+    const title = browserLocal.getTitle();
+    assert.equal(title, `Cisco Spark Space Widget Demo`);
+
+    browserLocal.waitUntil(() => browserLocal.element(`#accessTokenInput`).isVisible());
+    console.log(marty.token.access_token);
+    const token = marty.token.access_token;
+    // browserLocal.element(`#accessTokenInput`).setValue(token);
+    browserLocal.execute((myToken) => {
+      document.querySelector(`#accessTokenInput`).value = myToken;
+    }, token);
+    const BACKSPACE_UNICODE = `\uE003`;
+    browserLocal.element(`#accessTokenInput`)
+      .click()
+      .keys([` `, BACKSPACE_UNICODE]);
+    browserLocal.debug();
+  });
+
+});
