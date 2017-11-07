@@ -7,6 +7,17 @@ if (process.env.DEBUG_JOURNEYS) {
 if (process.env.SAUCE) {
   mochaTimeout = 90000;
 }
+const services = [];
+if (process.env.SAUCE) {
+  services.push(`sauce`);
+}
+else {
+  services.push(`selenium-standalone`);
+}
+if (!process.env.TAP) {
+  services.push(`static-server`);
+}
+
 exports.config = {
   //
   // ==================
@@ -66,7 +77,8 @@ exports.config = {
         chromeOptions: {
           args: [
             `--use-fake-device-for-media-stream`,
-            `--use-fake-ui-for-media-stream`
+            `--use-fake-ui-for-media-stream`,
+            `--disable-infobars`
           ],
           prefs: {
             "profile.default_content_setting_values.notifications": 2
@@ -82,7 +94,8 @@ exports.config = {
         chromeOptions: {
           args: [
             `--use-fake-device-for-media-stream`,
-            `--use-fake-ui-for-media-stream`
+            `--use-fake-ui-for-media-stream`,
+            `--disable-infobars`
           ],
           prefs: {
             "profile.default_content_setting_values.notifications": 2
@@ -153,7 +166,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: [process.env.SAUCE ? `sauce` : `selenium-standalone`, `static-server`],
+  services,
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -192,7 +205,7 @@ if (process.env.SAUCE) {
     user: process.env.SAUCE_USERNAME,
     key: process.env.SAUCE_ACCESS_KEY,
     build: process.env.BUILD_NUMBER,
-    sauceConnect: true,
+    sauceConnect: !process.env.TAP,
     sauceConnectOpts: {
       noSslBumpDomains: [
         `mercury-connection-a.wbx2.com`,
