@@ -7,6 +7,7 @@ import {assert} from 'chai';
 export const elements = {
   accessTokenInput: `input[aria-label="Access Token"]`,
   saveTokenButton: `button[aria-label="Save Token"]`,
+  clearTokenButton: `button[aria-label="Clear Token"]`,
   toSpaceRadioButton: `input[aria-label="To Space"]`,
   toPersonRadioButton: `input[aria-label="To Person"]`,
   openWidgetButton: `button[aria-label="Open Widget"]`,
@@ -24,6 +25,9 @@ export const elements = {
  * @returns {null}
  */
 export function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to) {
+  if (aBrowser.element(elements.clearTokenButton).isVisible()) {
+    aBrowser.element(elements.clearTokenButton).click();
+  }
   aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, `access token input field not found`);
   aBrowser.execute((myToken, accessTokenElement) => {
     document.querySelector(accessTokenElement).value = myToken;
