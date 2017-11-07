@@ -8,6 +8,7 @@ import {elements as basicElements, switchToMeet, switchToMessage} from '../../..
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
+import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
 
 describe(`Widget Space: One on One: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -31,7 +32,7 @@ describe(`Widget Space: One on One: TAP`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`/production/space.html?oneOnOne`)
+      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?oneOnOne`)
       .execute(() => {
         localStorage.clear();
       });
@@ -52,46 +53,13 @@ describe(`Widget Space: One on One: TAP`, () => {
   before(`pause to let test users establish`, () => browser.pause(5000));
 
   before(`inject token for spock`, () => {
-    local.browser.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          // eslint-disable-next-line object-shorthand
-          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: `message`
-      };
-      window.openSpaceWidget(options);
-    }, spock.token.access_token, mccoy.email);
+    loginAndOpenWidget(local.browser, spock.token.access_token, true, mccoy.email);
     local.browser.waitForExist(`[placeholder="Send a message to ${remote.displayName}"]`, 30000);
   });
 
   before(`open remote widget for mccoy`, () => {
-    remote.browser.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          // eslint-disable-next-line object-shorthand
-          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: `message`
-      };
-      window.openSpaceWidget(options);
-    }, mccoy.token.access_token, spock.email);
+    loginAndOpenWidget(remote.browser, mccoy.token.access_token, true, spock.email);
     remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
-  });
-
-  it(`loads the test page`, () => {
-    const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Space Production Test`);
-  });
-
-  it(`loads the user's name`, () => {
-    local.browser.waitForVisible(`h1.ciscospark-title`);
-    local.browser.waitUntil(() => local.browser.getText(`h1.ciscospark-title`) !== `Loading...`);
-    assert.equal(local.browser.getText(`h1.ciscospark-title`), remote.displayName);
   });
 
   describe(`Activity Menu`, () => {

@@ -105,7 +105,7 @@ export function declineIncomingCallTest(browserLocal, browserRemote, isMeeting =
  * Test to hangup during ongoing call
  * @param {Object} browserLocal
  * @param {Object} browserRemote
- * @param {boolean} [isMeeting=true] if the call is a "meeting" instead of a "call"
+ * @param {boolean} [isMeeting=false] if the call is a "meeting" instead of a "call"
  * @returns {void}
  */
 export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = false) {

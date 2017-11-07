@@ -11,6 +11,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
+import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
 
 describe(`Widget Space: Group Space: TAP`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -35,8 +36,13 @@ describe(`Widget Space: Group Space: TAP`, () => {
   ].join(` `);
 
   before(`load browsers`, () => {
-    browser
-      .url(`/production/space.html?space`)
+    browserLocal
+      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?space&local`)
+      .execute(() => {
+        localStorage.clear();
+      });
+    browserRemote
+      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?space&remote`)
       .execute(() => {
         localStorage.clear();
       });
@@ -106,39 +112,14 @@ describe(`Widget Space: Group Space: TAP`, () => {
 
   before(`inject marty token`, () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
-    local.browser.execute((localAccessToken, spaceId) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
-        },
-        spaceId
-      };
-      window.openSpaceWidget(options);
-    }, marty.token.access_token, conversation.id);
-    const spaceWidget = `.ciscospark-space-widget`;
-    local.browser.waitForVisible(spaceWidget);
+    loginAndOpenWidget(local.browser, marty.token.access_token, false, conversation.id);
+    local.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
 
   before(`inject docbrown token`, () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
-    remote.browser.execute((localAccessToken, spaceId) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
-        },
-        spaceId
-      };
-      window.openSpaceWidget(options);
-    }, docbrown.token.access_token, conversation.id);
-    const spaceWidget = `.ciscospark-space-widget`;
-    remote.browser.waitForVisible(spaceWidget);
-  });
-
-  it(`loads the test page`, () => {
-    const title = local.browser.getTitle();
-    assert.equal(title, `Widget Space Production Test`);
+    loginAndOpenWidget(remote.browser, docbrown.token.access_token, false, conversation.id);
+    remote.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
 
   describe(`Activity Menu`, () => {
@@ -190,8 +171,8 @@ describe(`Widget Space: Group Space: TAP`, () => {
       sendMessage(remote, local, docText);
       verifyMessageReceipt(local, remote, docText);
       const remoteSendEvents = getEventLog(browserLocal);
-      assert.include(remoteSendEvents, `messages:created`, `has a message created event`);
-      assert.include(remoteSendEvents, `rooms:unread`, `has an unread message event`);
+      assert.isTrue(remoteSendEvents.some((event) => event.eventName === `messages:created`), `event was not seen`);
+      assert.isTrue(remoteSendEvents.some((event) => event.eventName === `rooms:unread`), `event was not seen`);
       clearEventLog(local.browser);
       // Send a message from a 'client'
       waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
@@ -201,8 +182,8 @@ describe(`Widget Space: Group Space: TAP`, () => {
       verifyMessageReceipt(local, remote, lorraineText);
       verifyMessageReceipt(remote, local, lorraineText);
       const clientSendEvents = getEventLog(local.browser);
-      assert.include(clientSendEvents, `messages:created`, `has a message created event`);
-      assert.include(clientSendEvents, `rooms:unread`, `has an unread message event`);
+      assert.isTrue(clientSendEvents.some((event) => event.eventName === `messages:created`), `event was not seen`);
+      assert.isTrue(clientSendEvents.some((event) => event.eventName === `rooms:unread`), `event was not seen`);
       sendMessage(local, remote, martyText2);
       verifyMessageReceipt(remote, local, martyText2);
     });
