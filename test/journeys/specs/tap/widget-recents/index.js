@@ -10,6 +10,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../../lib/events';
+import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/recents';
 
 describe(`Widget Recents`, () => {
   const browserLocal = browser.select(`browserLocal`);
@@ -33,7 +34,7 @@ describe(`Widget Recents`, () => {
 
   before(`load browser`, () => {
     browserLocal
-      .url(`/production/recents.html`)
+      .url(`https://code.s4d.io/widget-recents/latest/demo/index.html`)
       .execute(() => {
         localStorage.clear();
       });
@@ -111,22 +112,9 @@ describe(`Widget Recents`, () => {
   }));
 
   before(`inject token`, () => {
+    loginAndOpenWidget(browserLocal, marty.token.access_token);
     const recentsWidget = `.ciscospark-spaces-list-wrapper`;
-    browserLocal.execute((localAccessToken) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
-        }
-      };
-      window.openRecentsWidget(options);
-    }, marty.token.access_token);
-    browserLocal.waitForVisible(recentsWidget);
-  });
-
-  it(`loads the test page`, () => {
-    const title = browserLocal.getTitle();
-    assert.equal(title, `Widget Recents Production Test`);
+    browserLocal.waitUntil(() => browserLocal.element(recentsWidget).isVisible(), 3500, `widget was never created`);
   });
 
   describe(`group space`, () => {
@@ -171,7 +159,7 @@ describe(`Widget Recents`, () => {
         }));
         browserLocal.waitUntil(() =>
         browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        assert.include(getEventLog(browserLocal), `messages:created`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `messages:created`), `event was not seen`);
       });
 
       it(`rooms:unread`, () => {
@@ -182,7 +170,7 @@ describe(`Widget Recents`, () => {
         }));
         browserLocal.waitUntil(() =>
           browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
-        assert.include(getEventLog(browserLocal), `rooms:unread`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `rooms:unread`), `event was not seen`);
       });
 
       it(`rooms:read`, () => {
@@ -198,13 +186,13 @@ describe(`Widget Recents`, () => {
           browserLocal.getText(`.space-item:first-child .space-last-activity`).includes(lorraineText));
         waitForPromise(marty.spark.internal.conversation.acknowledge(conversation, activity));
         browserLocal.waitForVisible(`.space-item:first-child .space-unread-indicator`, 1500, true);
-        assert.include(getEventLog(browserLocal), `rooms:read`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `rooms:read`), `event was not seen`);
       });
 
       it(`rooms:selected`, () => {
         clearEventLog(browserLocal);
         browserLocal.click(`.space-item:first-child`);
-        assert.include(getEventLog(browserLocal), `rooms:selected`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `rooms:selected`), `event was not seen`);
       });
 
       it(`memberships:created`, () => {
@@ -218,7 +206,7 @@ describe(`Widget Recents`, () => {
         })));
         browserLocal.waitUntil(() =>
           browserLocal.getText(`.space-item:first-child .space-title`).includes(roomTitle));
-        assert.include(getEventLog(browserLocal), `memberships:created`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `memberships:created`), `event was not seen`);
       });
 
       it(`memberships:deleted`, () => {
@@ -241,7 +229,7 @@ describe(`Widget Recents`, () => {
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
         browserLocal.waitUntil(() =>
           browserLocal.getText(`.space-item:first-child .space-title`) !== roomTitle);
-        assert.include(getEventLog(browserLocal), `memberships:deleted`);
+        assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === `memberships:deleted`), `event was not seen`);
       });
     });
   });
