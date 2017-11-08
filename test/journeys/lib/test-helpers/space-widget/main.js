@@ -1,4 +1,5 @@
 export const elements = {
+  spaceWidget: `.ciscospark-space-widget`,
   menuButton: `button[aria-label="Main Menu"]`,
   messageButton: `button[aria-label="Message"]`,
   meetButton: `button[aria-label="Call"]`,

@@ -30,6 +30,9 @@ exports.config = {
     ],
     recents: [
       `./test/journeys/specs/recents/**/*.js`
+    ],
+    multiple: [
+      `./test/journeys/specs/multiple/**/*.js`
     ]
   },
   // Patterns to exclude.

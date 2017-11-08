@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cisco Spark Multiple Widget Test</title>
+  <meta charset="utf8">
+  <style type="text/css">
+    * {
+      /*CSS transitions*/
+      -webkit-transition: none !important;
+      -moz-transition: none !important;
+      -o-transition: none !important;
+      -ms-transition: none !important;
+      transition: none !important;
+      /*CSS transition properties*/
+      -webkit-transition-property: none !important;
+      -moz-transition-property: none !important;
+      -o-transition-property: none !important;
+      -ms-transition-property: none !important;
+      transition-property: none !important;
+      /*CSS transforms*/
+      -webkit-transform: none !important;
+      -moz-transform: none !important;
+      -o-transform: none !important;
+      -ms-transform: none !important;
+      transform: none !important;
+      /*CSS animations*/
+      -webkit-animation: none !important;
+      -moz-animation: none !important;
+      -o-animation: none !important;
+      -ms-animation: none !important;
+      animation: none !important;
+  }
+  </style>
+  <link href="/dist-space/main.css" rel="stylesheet">
+  <link href="/dist-recents/main.css" rel="stylesheet">
+  <script src="/axe-core/axe.min.js"></script>
+</head>
+<body>
+  <div style="display: flex;">
+    <div style="width: 500px; height: 500px">
+      <main class="ciscospark-widget"
+        id="ciscospark-recents-widget">
+    </div>
+    <div style="width: 500px; height: 500px">
+      <main class="ciscospark-widget"
+        id="ciscospark-space-widget">
+    </div>
+  </div>
+
+  <script src="/dist-space/bundle.js"></script>
+  <script src="/dist-recents/bundle.js"></script>
+  <script>
+    window.openSpaceWidget = function(options) {
+      var spaceWidgetEl = document.getElementById('ciscospark-space-widget');
+      // Init a new widget
+      ciscospark.widget(spaceWidgetEl).spaceWidget(options);
+    };
+    window.openRecentsWidget = function(options) {
+      var recentsWidgetEl = document.getElementById('ciscospark-recents-widget');
+      // Init a new widget
+      ciscospark.widget(recentsWidgetEl).recentsWidget(options);
+    };
+    window.ciscoSparkEvents = [];
+  </script>
+</body>
+
+</html>
