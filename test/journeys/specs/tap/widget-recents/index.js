@@ -34,7 +34,7 @@ describe(`Widget Recents`, () => {
 
   before(`load browser`, () => {
     browserLocal
-      .url(`https://code.s4d.io/widget-recents/latest/demo/index.html`)
+      .url(`/widget-recents/production/demo/index.html`)
       .execute(() => {
         localStorage.clear();
       });

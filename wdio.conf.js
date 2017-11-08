@@ -132,7 +132,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: `http://localhost:4567`,
+  baseUrl: process.env.TAP ? `https://code.s4d.io` : `http://localhost:4567`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,

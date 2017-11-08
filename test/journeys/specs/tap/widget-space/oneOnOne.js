@@ -32,7 +32,7 @@ describe(`Widget Space: One on One: TAP`, () => {
 
   before(`load browsers`, () => {
     browser
-      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?oneOnOne`)
+      .url(`/widget-space/production/demo/index.html?oneOnOne`)
       .execute(() => {
         localStorage.clear();
       });

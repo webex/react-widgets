@@ -37,12 +37,12 @@ describe(`Widget Space: Group Space: TAP`, () => {
 
   before(`load browsers`, () => {
     browserLocal
-      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?space&local`)
+      .url(`/widget-space/production/demo/index.html?space&local`)
       .execute(() => {
         localStorage.clear();
       });
     browserRemote
-      .url(`https://code.s4d.io/widget-space/latest/demo/index.html?space&remote`)
+      .url(`/widget-space/production/demo/index.html?space&remote`)
       .execute(() => {
         localStorage.clear();
       });
