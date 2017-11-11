@@ -144,7 +144,7 @@
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^21.1.0",
     "json-loader": "^0.5.4",
-    "lint-staged": "^4.2.2",
+    "lint-staged": "^5.0.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
