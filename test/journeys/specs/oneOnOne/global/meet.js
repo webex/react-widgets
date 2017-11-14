@@ -2,11 +2,13 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-phone';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {clearEventLog} from '../../../lib/events';
 import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe(`Widget Space: One on One`, () => {
   const browserLocal = browser.select(`browserLocal`);
   const browserRemote = browser.select(`browserRemote`);
+  let local, remote;
   let mccoy, spock;
   process.env.CISCOSPARK_SCOPE = [
     `webexsquare:get_conversation`,
@@ -35,11 +37,13 @@ describe(`Widget Space: One on One`, () => {
   before(`create spock`, () => testUsers.create({count: 1, config: {displayName: `Mr Spock`}})
     .then((users) => {
       [spock] = users;
+      local = {browser: browserLocal, user: spock, displayName: spock.displayName};
     }));
 
   before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: `Bones Mccoy`}})
     .then((users) => {
       [mccoy] = users;
+      remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
     }));
 
   before(`pause to let test users establish`, () => browser.pause(7500));
@@ -94,11 +98,13 @@ describe(`Widget Space: One on One`, () => {
       });
 
       it(`can hangup in call`, () => {
+        clearEventLog(browserLocal);
+        clearEventLog(browserRemote);
         hangupDuringCallTest(browserLocal, browserRemote);
       });
 
       it(`has proper call event data`, () => {
-        callEventTest(browserLocal, browserRemote, spock);
+        callEventTest(local, remote);
       });
     });
   });

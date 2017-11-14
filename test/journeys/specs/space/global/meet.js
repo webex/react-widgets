@@ -4,6 +4,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {clearEventLog} from '../../../lib/events';
 import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest, FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 
@@ -158,11 +159,13 @@ describe(`Widget Space`, () => {
       });
 
       it(`can hangup in call`, () => {
+        clearEventLog(browserLocal);
+        clearEventLog(browserRemote);
         hangupDuringCallTest(browserLocal, browserRemote, true);
       });
 
       it(`has proper call event data`, () => {
-        callEventTest(browserLocal, browserRemote, marty);
+        callEventTest(local, remote, conversation);
       });
     });
   });
