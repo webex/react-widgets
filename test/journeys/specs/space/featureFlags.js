@@ -53,6 +53,19 @@ describe(`Widget Space Feature Flags`, () => {
     testUsers.create({count: 2, config: {displayName: `No Features`}})
       .then((users) => {
         [userWithNoFeatures1, userWithNoFeatures2] = users;
+        userWithNoFeatures1.spark = new CiscoSpark({
+          credentials: {
+            authorization: userWithNoFeatures1.token
+          },
+          config: {
+            logger: {
+              level: `error`
+            }
+          }
+        });
+        return userWithNoFeatures1.spark.internal.device.register()
+          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, false))
+          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_GROUP_CALLING, false));
       })
   ]));
 

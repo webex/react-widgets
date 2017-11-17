@@ -8,7 +8,7 @@ import '@ciscospark/internal-plugin-conversation';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
 import {elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
 
-describe(`Widget Space: One on One`, () => {
+describe(`Widget Space`, () => {
   describe(`Data API Settings`, () => {
     const browserLocal = browser.select(`browserLocal`);
     const browserRemote = browser.select(`browserRemote`);

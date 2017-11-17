@@ -59,6 +59,18 @@ describe(`Widget Space: One on One`, () => {
   before(`create basic user`, () => testUsers.create({count: 1, config: {displayName: `No Features`}})
     .then((users) => {
       [userWithNoFeatures] = users;
+      userWithNoFeatures.spark = new CiscoSpark({
+        credentials: {
+          authorization: userWithNoFeatures.token
+        },
+        config: {
+          logger: {
+            level: `error`
+          }
+        }
+      });
+      return userWithNoFeatures.spark.internal.device.register()
+        .then(() => userWithNoFeatures.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, false));
     }));
 
   before(`pause to let test users establish`, () => browser.pause(5000));
