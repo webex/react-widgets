@@ -1,12 +1,10 @@
-import {assert} from 'chai';
-
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
-import {elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
+import {answer, hangup} from '../../../lib/test-helpers/space-widget/meet.js';
 
 describe(`Widget Space`, () => {
   describe(`Data API Settings`, () => {
@@ -118,9 +116,9 @@ describe(`Widget Space`, () => {
         browserLocal.waitForVisible(spaceWidget);
       });
 
-      it(`defaults to message when set to meet`, () => {
-        browserLocal.waitForVisible(elements.messageWidget);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
+      it(`opens meet widget`, () => {
+        browserLocal.waitForVisible(elements.meetWidget);
+        browserLocal.waitForVisible(elements.meetButton);
       });
 
       after(`refresh browsers to remove widgets`, browser.refresh);
@@ -182,16 +180,9 @@ describe(`Widget Space`, () => {
         browserLocal.waitForVisible(spaceWidget);
       });
 
-      it(`browser with start call set to true does not start call`, () => {
-        browserLocal.waitForVisible(elements.messageWidget);
-        browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
-        assert.isNotTrue(browserRemote.isVisible(meetElements.remoteVideo));
-      });
-
-      it(`browser without start call setting does not receive a call`, () => {
-        browserRemote.waitForVisible(elements.messageWidget);
-        browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
-        assert.isNotTrue(browserRemote.isVisible(meetElements.answerButton));
+      it(`starts call when set to true`, () => {
+        answer(browserRemote);
+        hangup(browserLocal);
       });
 
       after(`refresh browsers to remove widgets`, browser.refresh);
