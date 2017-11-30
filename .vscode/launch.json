@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Jest Debugger",
+          "port": 5858,
+          "address": "localhost",
+          "stopOnEntry": false,
+          "runtimeExecutable": null,
+          "runtimeArgs": [
+              "--debug-brk",
+              "./node_modules/.bin/jest", // Path to Jest
+              "-i",
+              "--config=jest.config.json"
+          ],
+          "env": {
+            "TZ": "utc"
+          },
+          "cwd": "${workspaceRoot}",
+          "sourceMaps": true
+        }
+    ]
+}
