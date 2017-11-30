@@ -1,6 +1,0 @@
-extends:
-  - "@ciscospark/eslint-config-react"
-env:
-  jest: true
-  browser: true
-root: true
