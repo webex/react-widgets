@@ -4,15 +4,15 @@
  * to their latest version.
  */
 
-const ncu = require(`npm-check-updates`);
+const ncu = require('npm-check-updates');
 
 ncu.run({
   // Always specify the path to the package file
-  packageFile: `package.json`,
+  packageFile: 'package.json',
   // Any command-line option can be specified here.
   // These are set by default:
   filter: /^@ciscospark.*$/,
   upgrade: true
 }).then(() => {
-  console.log(`@ciscospark dependencies upgraded`);
+  console.log('@ciscospark dependencies upgraded');
 });

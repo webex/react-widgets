@@ -1,12 +1,12 @@
-const {startPackage} = require(`../../utils/package`);
+const {startPackage} = require('../../utils/package');
 
 module.exports = {
-  command: `package <widgetName>`,
-  desc: `Start a widget`,
+  command: 'package <widgetName>',
+  desc: 'Start a widget',
   builder: {},
   handler: ({widgetName}) => {
     let pkgName;
-    if (widgetName.startsWith(`widget-`)) {
+    if (widgetName.startsWith('widget-')) {
       pkgName = widgetName;
     }
     else {

@@ -9,10 +9,10 @@ import {execSync} from './utils/exec';
  * @returns {Promise}
  */
 export default function jestPackage(pkgName, pkgPath) {
-  pkgPath = pkgPath || getPackage(pkgName);
-  if (pkgPath) {
+  const targetPkgPath = pkgPath || getPackage(pkgName);
+  if (targetPkgPath) {
     try {
-      execSync(`npm run jest ${pkgPath}/*`);
+      execSync(`npm run jest ${targetPkgPath}/*`);
     }
     catch (error) {
       console.error(error.stdout);

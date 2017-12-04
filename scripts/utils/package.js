@@ -1,8 +1,31 @@
-/* eslint-disable no-sync */
+const path = require('path');
+const {statSync, readdirSync} = require('fs');
 
-const path = require(`path`);
-const {execSync} = require(`./exec`);
-const {statSync, readdirSync} = require(`fs`);
+const {execSync} = require('./exec');
+
+
+/**
+ * Get single packages full path
+ * @param  {string} pkg specific package name or full path
+ * @param  {string} packagesDir path where packages are stored
+ * @returns {array} array of full path strings
+ */
+function getPackage(pkg, packagesDir = 'packages/node_modules/@ciscospark') {
+  // check if this is a valid path
+  try {
+    if (statSync(pkg).isDirectory()) {
+      const fullpath = path.resolve(pkg);
+      statSync(path.resolve(fullpath, 'package.json'));
+      return fullpath;
+    }
+  }
+  catch (err) {
+    if (err.code === 'ENOENT') {
+      return getPackage(path.resolve(packagesDir, pkg));
+    }
+  }
+  return false;
+}
 
 
 /**
@@ -11,12 +34,17 @@ const {statSync, readdirSync} = require(`fs`);
  * @param  {string} pkgPath
  * @returns {undefined}
  */
-function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
-  pkgPath = getPackage(pkgName || pkgPath);
+function runInPackage({
+  constructCommand,
+  commandName,
+  pkgName,
+  pkgPath
+}) {
+  const outputPkgPath = getPackage(pkgName || pkgPath);
   if (pkgPath) {
     try {
       console.info(`${commandName} ${pkgName} ...`);
-      const command = constructCommand(pkgPath);
+      const command = constructCommand(outputPkgPath);
       execSync(command)
         .catch((error) => {
           console.error(error.stdout);
@@ -35,7 +63,7 @@ function runInPackage({constructCommand, commandName, pkgName, pkgPath}) {
  * @param  {string} packagesDir path where packages are stored
  * @returns {array} array of full path strings
  */
-function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscospark`) {
+function getAllPackagePaths(packagesDir = 'packages/node_modules/@ciscospark') {
   return readdirSync(packagesDir).reduce((acc, packagePath) => {
     const pkg = getPackage(packagePath, packagesDir);
     if (pkg) {
@@ -45,44 +73,20 @@ function getAllPackagePaths(packagesDir = `packages/node_modules/@ciscospark`) {
   }, []);
 }
 
-
-/**
- * Get single packages full path
- * @param  {string} pkg specific package name or full path
- * @param  {string} packagesDir path where packages are stored
- * @returns {array} array of full path strings
- */
-function getPackage(pkg, packagesDir = `packages/node_modules/@ciscospark`) {
-  // check if this is a valid path
-  try {
-    if (statSync(pkg).isDirectory()) {
-      const fullpath = path.resolve(pkg);
-      statSync(path.resolve(fullpath, `package.json`));
-      return fullpath;
-    }
-  }
-  catch (err) {
-    if (err.code === `ENOENT`) {
-      return getPackage(path.resolve(packagesDir, pkg));
-    }
-  }
-  return false;
-}
-
 function getAllPackages(omitPrivate) {
   let pkgPaths = getAllPackagePaths();
   if (omitPrivate) {
-    pkgPaths = pkgPaths.filter((pkgPath) => !require(path.resolve(pkgPath, `package.json`)).private);
+    pkgPaths = pkgPaths.filter((pkgPath) => !require(path.resolve(pkgPath, 'package.json')).private);
   }
-  return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, `package.json`)).name);
+  return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, 'package.json')).name);
 }
 
 function getWidgetPackages() {
   const pkgPaths = getAllPackagePaths();
   return pkgPaths
     .filter((pkgPath) => {
-      const pkgName = require(path.resolve(pkgPath, `package.json`)).name;
-      return pkgName.startsWith(`@ciscospark/widget`) && !pkgName.startsWith(`@ciscospark/widget-base`);
+      const pkgName = require(path.resolve(pkgPath, 'package.json')).name;
+      return pkgName.startsWith('@ciscospark/widget') && !pkgName.startsWith('@ciscospark/widget-base');
     });
 }
 
@@ -94,8 +98,8 @@ function getWidgetPackages() {
  */
 function startPackage(pkgName, pkgPath) {
   return runInPackage({
-    constructCommand: (targetPath) => `webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback --context ${path.resolve(targetPath, `src`)}`,
-    commandName: `Start Package`,
+    constructCommand: (targetPath) => `webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback --context ${path.resolve(targetPath, 'src')}`,
+    commandName: 'Start Package',
     pkgName,
     pkgPath
   });

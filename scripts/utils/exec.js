@@ -2,9 +2,10 @@
  * Borrowed from React Bootstrap
  * https://github.com/react-bootstrap/react-bootstrap
  */
-const processExec = require(`child-process-promise`).exec;
-const processExecSync = require(`child_process`).execSync; // eslint-disable-line no-sync
-require(`colors`);
+const processExecSync = require('child_process').execSync;
+
+const processExec = require('child-process-promise').exec;
+require('colors');
 
 let executionOptions = {
   dryRun: false,
@@ -20,9 +21,9 @@ let executionOptions = {
 function logWithPrefix(prefix, message) {
   console.log(
     message.toString().trim()
-    .split(`\n`)
-    .map((line) => `${prefix.grey} ${line}`)
-    .join(`\n`)
+      .split('\n')
+      .map((line) => `${prefix.grey} ${line}`)
+      .join('\n')
   );
 }
 
@@ -41,13 +42,13 @@ function exec(command, options = {}) {
   const title = options.title || command;
 
   return proc.progress(({stdout, stderr}) => {
-    stdout.on(`data`, (data) => console.log(data));
-    stderr.on(`data`, (data) => console.log(data));
+    stdout.on('data', (data) => console.log(data));
+    stderr.on('data', (data) => console.log(data));
   })
-  .then((result) => {
-    logWithPrefix(`[${title}]`, `Complete`.cyan);
-    return result;
-  });
+    .then((result) => {
+      logWithPrefix(`[${title}]`, 'Complete'.cyan);
+      return result;
+    });
 }
 
 /**
@@ -60,7 +61,7 @@ function safeExec(command, options = {}) {
   const title = options.title || command;
 
   if (executionOptions.dryRun) {
-    logWithPrefix(`[${title}]`.grey, `DRY RUN`.magenta);
+    logWithPrefix(`[${title}]`.grey, 'DRY RUN'.magenta);
     return Promise.resolve();
   }
 
@@ -77,7 +78,7 @@ function setExecOptions(options) {
 }
 
 function execSync(command) {
-  return processExecSync(command, {stdio: `inherit`});
+  return processExecSync(command, {stdio: 'inherit'});
 }
 
 module.exports = {

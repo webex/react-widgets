@@ -1,8 +1,8 @@
-const {webpackBuild} = require(`../../utils/build`);
+const {webpackBuild} = require('../../utils/build');
 
 module.exports = {
-  command: `dist <packageName> [packagePath]`,
-  desc: `Bundle the package into a single distributable`,
+  command: 'dist <packageName> [packagePath]',
+  desc: 'Bundle the package into a single distributable',
   builder: {},
   handler: ({packageName, packagePath}) => {
     if (packageName) {

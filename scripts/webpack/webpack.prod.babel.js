@@ -4,8 +4,9 @@
 /* eslint no-sync:0 */
 
 import path from 'path';
-import webpack from 'webpack';
 import fs from 'fs';
+
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import webpackBaseConfig from './webpack.base.babel';
@@ -29,7 +30,7 @@ if (process.env.BUILD_BUNDLE_PUBLIC_PATH) {
 }
 
 // Only create html file when one exists in src/
-if (fs.existsSync(`./src/index.html`)) {
+if (fs.existsSync('./src/index.html')) {
   plugins.push(
     new HtmlWebpackPlugin({
       hash: true,
@@ -41,7 +42,7 @@ if (fs.existsSync(`./src/index.html`)) {
         sortAttributes: true,
         sortClassName: true
       },
-      template: `./index.html`,
+      template: './index.html',
       bundlePaths: {
         scriptBundle,
         styleBundle
@@ -53,20 +54,20 @@ if (fs.existsSync(`./src/index.html`)) {
 const publicPath = process.env.BUILD_PUBLIC_PATH;
 
 export default webpackBaseConfig({
-  entry: `./index.js`,
+  entry: './index.js',
   output: {
-    filename: `bundle.js`,
-    path: path.resolve(process.cwd(), `dist`),
-    sourceMapFilename: `[file].map`,
+    filename: 'bundle.js',
+    path: path.resolve(process.cwd(), 'dist'),
+    sourceMapFilename: '[file].map',
     publicPath
   },
   // Full source maps for production debugging
-  devtool: `source-map`,
+  devtool: 'source-map',
   plugins,
   // Reset env values we don't want to see in bundles
   env: {
-    CISCOSPARK_ACCESS_TOKEN: ``,
-    TO_PERSON_EMAIL: ``,
-    TO_PERSON_ID: ``
+    CISCOSPARK_ACCESS_TOKEN: '',
+    TO_PERSON_EMAIL: '',
+    TO_PERSON_ID: ''
   }
 });

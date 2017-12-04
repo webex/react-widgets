@@ -1,5 +1,6 @@
-const path = require(`path`);
-const {runInPackage} = require(`./utils/package`);
+const path = require('path');
+
+const {runInPackage} = require('./utils/package');
 
 /**
  * Starts a specific package with Webpack Dev Server
@@ -9,8 +10,8 @@ const {runInPackage} = require(`./utils/package`);
  */
 function startPackage(pkgName, pkgPath) {
   return runInPackage({
-    constructCommand: (targetPath) => `npm run start -- --context ${path.resolve(targetPath, `src`)}`,
-    commandName: `Start Package`,
+    constructCommand: (targetPath) => `npm run start -- --context ${path.resolve(targetPath, 'src')}`,
+    commandName: 'Start Package',
     pkgName,
     pkgPath
   });

@@ -1,12 +1,59 @@
 #!/usr/bin/env babel-node
-/* eslint-disable no-sync */
-const path = require(`path`);
-const {execSync} = require(`./exec`);
-const {getPackage} = require(`./package`);
-const rimraf = require(`rimraf`);
-const {transform} = require(`babel-core`);
-const fs = require(`fs`);
-const outputFileSync = require(`output-file-sync`);
+const fs = require('fs');
+const path = require('path');
+
+const rimraf = require('rimraf');
+const {transform} = require('babel-core');
+const outputFileSync = require('output-file-sync');
+
+const {getPackage} = require('./package');
+const {execSync} = require('./exec');
+
+
+function buildFile(filename, destination, babelOptions = {}) {
+  const options = Object.assign({}, babelOptions);
+  const content = fs.readFileSync(filename, {encoding: 'utf8'});
+  const ext = path.extname(filename);
+  const outputPath = path.join(destination, path.basename(filename));
+  // Ignore non-JS files and test scripts
+  if (!filename.includes('.test.')) {
+    if (ext === '.js') {
+      options.filename = filename;
+      const result = transform(content, babelOptions);
+      return outputFileSync(outputPath, result.code, {encoding: 'utf8'});
+    }
+    // process with postcss if it's a css file
+    if (ext === '.css') {
+      return execSync(`postcss ${filename} -o ${outputPath}`);
+    }
+    // Copy if it's any other type of file
+    return outputFileSync(outputPath, content);
+  }
+  return false;
+}
+
+function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = true) {
+  const stats = fs.statSync(folderPath);
+
+  if (stats.isFile()) {
+    try {
+      buildFile(folderPath, destination, babelOptions);
+    }
+    catch (err) {
+      throw new Error(`Error transpiling ${folderPath} package, ${err}`, err);
+    }
+  }
+  else if (stats.isDirectory()) {
+    const outputPath = firstFolder ? destination : path.join(destination, path.basename(folderPath));
+    const files = fs.readdirSync(folderPath).map((file) => path.join(folderPath, file));
+    files.forEach((filename) => {
+      // Ignore fixtures, mocks, and snapshots
+      if (!filename.includes('__')) {
+        babelBuild(filename, outputPath, babelOptions, false);
+      }
+    });
+  }
+}
 
 
 /**
@@ -16,15 +63,15 @@ const outputFileSync = require(`output-file-sync`);
  * @returns {undefined}
  */
 function webpackBuild(pkgName, pkgPath) {
-  pkgPath = pkgPath || getPackage(pkgName);
-  if (pkgPath) {
+  const targetPkgPath = pkgPath || getPackage(pkgName);
+  if (targetPkgPath) {
     try {
-      const webpackConfigPath = path.resolve(__dirname, `..`, `webpack`, `webpack.prod.babel.js`);
+      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(pkgPath, `dist`));
+      rimraf.sync(path.resolve(targetPkgPath, 'dist'));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${pkgPath} && webpack --config ${webpackConfigPath}`);
+      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath}`);
       console.info(`${pkgName}... Done\n\n`.cyan);
     }
     catch (err) {
@@ -43,10 +90,10 @@ function webpackBuild(pkgName, pkgPath) {
  */
 function buildCommonJS(pkgName, pkgPath) {
   console.info(`Cleaning ${pkgName} cjs folder...`.cyan);
-  rimraf.sync(path.resolve(pkgPath, `cjs`));
+  rimraf.sync(path.resolve(pkgPath, 'cjs'));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
-  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, `..`, `..`, `.babelrc`), `utf8`));
-  babelrc.plugins.push(`transform-postcss`);
+  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
+  babelrc.plugins.push('transform-postcss');
   babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelrc);
 }
 
@@ -59,27 +106,27 @@ function buildCommonJS(pkgName, pkgPath) {
  */
 function buildES(pkgName, pkgPath) {
   console.info(`Cleaning ${pkgName} es folder...`.cyan);
-  rimraf.sync(path.resolve(pkgPath, `es`));
+  rimraf.sync(path.resolve(pkgPath, 'es'));
 
   console.info(`Transpiling ${pkgName} to ES5 with import/export ...`.cyan);
-  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, `..`, `..`, `.babelrc`), `utf8`));
+  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
   Object.assign(babelrc, {
     babelrc: false,
     sourceMaps: true,
     presets: [
       [
-        `env`,
+        'env',
         {
           targets: {
-            node: `6.5`
+            node: '6.5'
           },
           modules: false
         }
       ],
-      `react`
+      'react'
     ]
   });
-  babelrc.plugins.push(`transform-postcss`);
+  babelrc.plugins.push('transform-postcss');
   return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, babelrc);
 }
 
@@ -95,52 +142,6 @@ function transpile(pkgName, pkgPath) {
     buildES(pkgName, pkgPath),
     buildCommonJS(pkgName, pkgPath)
   ]);
-}
-
-
-function buildFile(filename, destination, babelOptions = {}) {
-  const content = fs.readFileSync(filename, {encoding: `utf8`});
-  const ext = path.extname(filename);
-  const outputPath = path.join(destination, path.basename(filename));
-  // Ignore non-JS files and test scripts
-  if (!filename.includes(`.test.`)) {
-    if (ext === `.js`) {
-      babelOptions.filename = filename;
-      const result = transform(content, babelOptions);
-      return outputFileSync(outputPath, result.code, {encoding: `utf8`});
-    }
-    // process with postcss if it's a css file
-    else if (ext === `.css`) {
-      return execSync(`postcss ${filename} -o ${outputPath}`);
-    }
-    // Copy if it's any other type of file
-    return outputFileSync(outputPath, content);
-  }
-  return false;
-}
-
-
-function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = true) {
-  const stats = fs.statSync(folderPath);
-
-  if (stats.isFile()) {
-    try {
-      buildFile(folderPath, destination, babelOptions);
-    }
-    catch (err) {
-      throw new Error(`Error transpiling ${folderPath} package, ${err}`, err);
-    }
-  }
-  else if (stats.isDirectory()) {
-    const outputPath = firstFolder ? destination : path.join(destination, path.basename(folderPath));
-    const files = fs.readdirSync(folderPath).map((file) => path.join(folderPath, file));
-    files.forEach((filename) => {
-      // Ignore fixtures, mocks, and snapshots
-      if (!filename.includes(`__`)) {
-        babelBuild(filename, outputPath, babelOptions, false);
-      }
-    });
-  }
 }
 
 

@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import dotenv from 'dotenv';
 import MockDate from 'mockdate';
+
+dotenv.config();
 
 // Set up fake localstorage for tests
 const localStorageMock = (() => {
@@ -17,21 +17,21 @@ const localStorageMock = (() => {
   };
 })();
 
-Reflect.defineProperty(window, `localStorage`, {value: localStorageMock});
-Reflect.defineProperty(window, `performance`, {
+Reflect.defineProperty(window, 'localStorage', {value: localStorageMock});
+Reflect.defineProperty(window, 'performance', {
   value: {
     now: jest.fn().mockReturnValue(10)
   }
 });
 
 // Date will always be the same for all tests
-MockDate.set(new Date(`2017`));
+MockDate.set(new Date('2017'));
 
 window.URL.createObjectURL = jest.fn();
 window.URL.revokeObjectURL = jest.fn();
 
-jest.mock(`uuid`, () => (
+jest.mock('uuid', () => (
   {
-    v4: jest.fn(() => `f187283e-73db-4d0f-ab27-6e804eb7eb50`)
+    v4: jest.fn(() => 'f187283e-73db-4d0f-ab27-6e804eb7eb50')
   }
 ));

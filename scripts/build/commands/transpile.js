@@ -1,8 +1,8 @@
-const {transpile} = require(`../../utils/build`);
+const {transpile} = require('../../utils/build');
 
 module.exports = {
-  command: `transpile <packageName> [packagePath]`,
-  desc: `Transpile a package with babel`,
+  command: 'transpile <packageName> [packagePath]',
+  desc: 'Transpile a package with babel',
   builder: {},
   handler: ({packageName, packagePath}) => {
     if (packageName) {
