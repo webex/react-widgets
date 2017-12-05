@@ -140,7 +140,6 @@ export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = fa
  * @param {object} [space=false]
  * @returns {void}
  */
-// eslint-disable-next-line max-statements
 export function callEventTest(caller, receiver, space = false) {
   const callerEvents = getEventLog(caller.browser);
   const receiverEvents = getEventLog(receiver.browser);

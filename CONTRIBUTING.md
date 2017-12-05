@@ -1,9 +1,11 @@
 # Contributing
 
 ## Opening an Issue
+
 The title of a Bug or Enhancement should clearly indicate what is broken or desired. Use the description to explain possible solutions or add details and (especially for Enhancemnts) explain *how* or *why* the issue is broken or desired.
 
 ### Grammar
+
 While quibbling about grammar in issue titles may seem a bit pedantic, adhering to some simple rules can make it much easier to understand a Bug or an Enhancement from the title alone. For example, is the title **"Browsers should support blinking text"** a bug or a feature request?
 
 - Enhancements: The title should be an imperative statement of how things should be. **"Add support for blinking text"**
@@ -18,7 +20,7 @@ As part of the build process, commits are run through [conventional changelog](h
 
 Each commit message consists of a **header**, a **body** and a **footer**. The header has a special format that includes a **type**, a **scope** and a **subject**:
 
-```
+``` text
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -73,7 +75,7 @@ The footer should contain any information about **Breaking changes** and is also
 
 Install dependencies:
 
-```
+``` bash
 # Install top-level dependencies
 npm install
 ```
@@ -85,7 +87,7 @@ You'll need to create a file called `.env` that defines, at a minimum:
 - `CISCOSPARK_REDIRECT_URI`
 - `CISCOSPARK_SCOPE`
 - `CISCOSPARK_ACCESS_TOKEN`
--
+
 You can get these values by registering a new integration on the [developer portal](https://developer.ciscospark.com/add-integration.html).
 
 Finally, to run all tests:
@@ -94,8 +96,12 @@ Finally, to run all tests:
 npm test
 ```
 
-And to run the tests for a specific package 
+And to run the tests for a specific package:
 
 ```bash
 npm run jest -- packages/node_modules/@ciscospark/PACKAGE_NAME
 ```
+
+### Static Analysis (e.g. linting)
+
+We use eslint as a part of our static analysis step. Before contributing any code, please be sure to install eslint and be sure to following the instructions to correctly install peerDependnencies  <https://www.npmjs.com/package/@ciscospark/eslint-config-react>

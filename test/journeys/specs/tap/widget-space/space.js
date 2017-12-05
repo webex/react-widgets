@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-
 import {assert} from 'chai';
 
 import '@ciscospark/internal-plugin-conversation';

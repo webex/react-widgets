@@ -76,7 +76,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
     if (outputTopPkgJson.dependencies[cleanDep]) {
       deps[cleanDep] = outputTopPkgJson.dependencies[cleanDep];
     }
-    else if (outputPackages.indexOf(cleanDep) !== -1) { // eslint-disable-line no-negated-condition
+    else if (outputPackages.indexOf(cleanDep) !== -1) {
       deps[cleanDep] = outputTopPkgJson.version;
     }
     else {

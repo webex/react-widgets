@@ -104,8 +104,7 @@ describe('Widget Space', () => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName, detail) => {
-          // eslint-disable-next-line object-shorthand
-          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
+          window.ciscoSparkEvents.push({eventName, detail});
         },
         spaceId
       };
@@ -121,8 +120,7 @@ describe('Widget Space', () => {
       const options = {
         accessToken: localAccessToken,
         onEvent: (eventName, detail) => {
-          // eslint-disable-next-line object-shorthand
-          window.ciscoSparkEvents.push({eventName: eventName, detail: detail});
+          window.ciscoSparkEvents.push({eventName, detail});
         },
         spaceId
       };

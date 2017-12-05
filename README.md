@@ -15,6 +15,8 @@ The Cisco Spark for React library allows developers to easily incorporate Spark 
   - [Build from Source](#build-from-source)
 - [Version](#version)
 - [Development](#development)
+- [Coding Style](#coding-style)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Background
@@ -50,9 +52,17 @@ Once a widget is bundled, the version number is available in the following ways:
 - Programmatic access after a widget has been registered: `window.ciscospark.widgetFn.{widgetName}.version` (e.g. `window.ciscospark.widgetFn.spaceWidget.version`)
 - Access after a widget has been instantiated: `window.ciscospark.widget({widgetEl}).version` (e.g. `window.ciscospark.widget(document.getElementById('myWidget')).version`)
 
-### Development
+## Development
 
 - `stylelint` currently ignores all `node_modules` directories, and will not lint our packages. Discussion: <https://github.com/stylelint/stylelint/issues/2236>
+
+## Coding Style
+
+We follow our [Cisco Spark Web Styleguide](https://github.com/ciscospark/web-styleguide) when developing any web based libraries and tools. Please check it out and do your best to follow our norms when contributing to this codebase.
+
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING) for details.
 
 ## License
 

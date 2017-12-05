@@ -20,8 +20,8 @@ export const elements = {
  * @param {object} conversation
  * @param {string} message
  * @param {boolean} [isOneOnOne=false]
+ * @returns {undefined}
  */
-// eslint-disable-next-line max-params
 export function displayIncomingMessage(aBrowser, sender, conversation, message, isOneOnOne = false) {
   const spaceTitle = isOneOnOne ? sender.displayName : conversation.displayName;
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
@@ -48,8 +48,8 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
  * @param {object} receiver - Person with spark object
  * @param {object} conversation
  * @param {string} message
+ * @returns {undefined}
  */
-// eslint-disable-next-line max-params
 export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
   let activity;
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
@@ -81,9 +81,8 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
  * @param {string} roomTitle
  * @param {string} firstPost
  * @param {boolean} [isOneOnOne=false]
- * @returns
+ * @returns {undefined}
  */
-// eslint-disable-next-line max-params
 export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, firstPost, isOneOnOne = false) {
   const spaceTitle = isOneOnOne ? sender.displayName : roomTitle;
   let conversation;
