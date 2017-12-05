@@ -8,37 +8,37 @@ import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '
 import {runAxe} from '../../../lib/axe';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
-describe(`Widget Space: One on One`, () => {
-  const browserLocal = browser.select(`browserLocal`);
+describe('Widget Space: One on One', () => {
+  const browserLocal = browser.select('browserLocal');
 
   let mccoy, spock;
-  const mccoyName = `Bones Mccoy`;
-  const spockName = `Mr Spock`;
+  const mccoyName = 'Bones Mccoy';
+  const spockName = 'Mr Spock';
   process.env.CISCOSPARK_SCOPE = [
-    `webexsquare:get_conversation`,
-    `spark:people_read`,
-    `spark:rooms_read`,
-    `spark:rooms_write`,
-    `spark:memberships_read`,
-    `spark:memberships_write`,
-    `spark:messages_read`,
-    `spark:messages_write`,
-    `spark:teams_read`,
-    `spark:teams_write`,
-    `spark:team_memberships_read`,
-    `spark:team_memberships_write`,
-    `spark:kms`
-  ].join(` `);
+    'webexsquare:get_conversation',
+    'spark:people_read',
+    'spark:rooms_read',
+    'spark:rooms_write',
+    'spark:memberships_read',
+    'spark:memberships_write',
+    'spark:messages_read',
+    'spark:messages_write',
+    'spark:teams_read',
+    'spark:teams_write',
+    'spark:team_memberships_read',
+    'spark:team_memberships_write',
+    'spark:kms'
+  ].join(' ');
 
-  before(`load browsers`, () => {
+  before('load browsers', () => {
     browserLocal
-      .url(`/space.html?basic`)
+      .url('/space.html?basic')
       .execute(() => {
         localStorage.clear();
       });
   });
 
-  before(`create spock`, () => testUsers.create({count: 1, config: {displayName: spockName}})
+  before('create spock', () => testUsers.create({count: 1, config: {displayName: spockName}})
     .then((users) => {
       [spock] = users;
       spock.spark = new CiscoSpark({
@@ -47,24 +47,24 @@ describe(`Widget Space: One on One`, () => {
         },
         config: {
           logger: {
-            level: `error`
+            level: 'error'
           }
         }
       });
       return spock.spark.internal.device.register()
-        .then(() => spock.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true));
+        .then(() => spock.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
     }));
 
-  before(`create mccoy`, () => testUsers.create({count: 1, config: {displayName: mccoyName}})
+  before('create mccoy', () => testUsers.create({count: 1, config: {displayName: mccoyName}})
     .then((users) => {
       [mccoy] = users;
     }));
 
-  before(`pause to let test users establish`, () => browser.pause(5000));
+  before('pause to let test users establish', () => browser.pause(5000));
 
-  before(`inject token`, () => {
+  before('inject token', () => {
     if (process.env.DEBUG_JOURNEYS) {
-      console.info(`RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS`);
+      console.info('RUN THE FOLLOWING CODE BLOCK TO RERUN THIS TEST FROM DEV TOOLS');
       console.info();
       console.info(`window.openSpaceWidget({
         accessToken: "${spock.token.access_token}",
@@ -78,116 +78,114 @@ describe(`Widget Space: One on One`, () => {
       const options = {
         accessToken: localAccessToken,
         toPersonEmail: localToUserEmail,
-        initialActivity: `message`
+        initialActivity: 'message'
       };
       window.openSpaceWidget(options);
     }, spock.token.access_token, mccoy.email);
   });
 
   if (process.env.DEBUG_JOURNEYS) {
-    console.warn(`Running with DEBUG_JOURNEYS may require you to manually kill wdio`);
+    console.warn('Running with DEBUG_JOURNEYS may require you to manually kill wdio');
     // Leaves the browser open for further testing and inspection
     after(() => browserLocal.debug());
   }
 
 
-  it(`loads the test page`, () => {
+  it('loads the test page', () => {
     const title = browserLocal.getTitle();
-    assert.equal(title, `Cisco Spark Widget Test`);
+    assert.equal(title, 'Cisco Spark Widget Test');
   });
 
-  it(`loads the user's name`, () => {
-    browserLocal.waitForVisible(`h1.ciscospark-title`);
-    browserLocal.waitUntil(() => browserLocal.getText(`h1.ciscospark-title`) !== `Loading...`);
-    assert.equal(browserLocal.getText(`h1.ciscospark-title`), mccoy.displayName);
+  it('loads the user\'s name', () => {
+    browserLocal.waitForVisible('h1.ciscospark-title');
+    browserLocal.waitUntil(() => browserLocal.getText('h1.ciscospark-title') !== 'Loading...');
+    assert.equal(browserLocal.getText('h1.ciscospark-title'), mccoy.displayName);
   });
 
-  describe(`Activity Menu`, () => {
-    it(`has a menu button`, () => {
+  describe('Activity Menu', () => {
+    it('has a menu button', () => {
       assert.isTrue(browserLocal.isVisible(elements.menuButton));
     });
 
-    it(`displays the menu when clicking the menu button`, () => {
+    it('displays the menu when clicking the menu button', () => {
       browserLocal.click(elements.menuButton);
       browserLocal.waitForVisible(elements.activityMenu);
     });
 
-    it(`has a message button`, () => {
+    it('has a message button', () => {
       browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
-    it(`has a meet button`, () => {
+    it('has a meet button', () => {
       browserLocal.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
     });
 
-    it(`has a people button`, () => {
+    it('has a people button', () => {
       browserLocal.element(elements.controlsContainer).element(rosterElements.peopleButton).waitForVisible();
     });
 
-    it(`has an exit menu button`, () => {
+    it('has an exit menu button', () => {
       assert.isTrue(browserLocal.isVisible(elements.activityMenu));
       browserLocal.waitForVisible(elements.exitButton);
     });
 
-    it(`closes the menu with the exit button`, () => {
+    it('closes the menu with the exit button', () => {
       browserLocal.click(elements.exitButton);
       browserLocal.waitForVisible(elements.activityMenu, 1500, true);
     });
 
-    it(`has a message button`, () => {
+    it('has a message button', () => {
       browserLocal.click(elements.menuButton);
       browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
     });
 
-    it(`switches to message widget`, () => {
+    it('switches to message widget', () => {
       browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
       assert.isTrue(browserLocal.isVisible(elements.messageWidget));
       assert.isFalse(browserLocal.isVisible(elements.meetWidget));
     });
 
-    it(`has a meet button`, () => {
+    it('has a meet button', () => {
       browserLocal.click(elements.menuButton);
       browserLocal.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
     });
 
-    it(`switches to meet widget`, () => {
+    it('switches to meet widget', () => {
       browserLocal.element(elements.controlsContainer).element(elements.meetButton).click();
       assert.isTrue(browserLocal.isVisible(elements.meetWidget));
       assert.isFalse(browserLocal.isVisible(elements.messageWidget));
     });
-
   });
 
-  describe(`roster tests`, () => {
-    before(`open roster widget`, () => {
+  describe('roster tests', () => {
+    before('open roster widget', () => {
       openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
       assert.isTrue(browserLocal.isVisible(rosterElements.rosterWidget));
     });
 
-    it(`has a close button`, () => {
+    it('has a close button', () => {
       assert.isTrue(browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).isVisible());
     });
 
-    it(`has the total count of participants`, () => {
-      assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), `People (2)`);
+    it('has the total count of participants', () => {
+      assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), 'People (2)');
     });
 
-    it(`has the participants listed`, () => {
+    it('has the participants listed', () => {
       hasParticipants(browserLocal, [mccoy, spock]);
     });
 
-    it(`closes the people roster widget`, () => {
+    it('closes the people roster widget', () => {
       browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).click();
       browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
     });
   });
 
-  describe(`accessibility`, () => {
-    it(`should have no accessibility violations`, () =>
-      runAxe(browserLocal, `ciscospark-widget`)
+  describe('accessibility', () => {
+    it('should have no accessibility violations', () =>
+      runAxe(browserLocal, 'ciscospark-widget')
         .then((results) => {
           assert.equal(results.violations.length, 0);
-        })
-    );
+        }));
   });
 });

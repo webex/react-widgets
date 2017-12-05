@@ -22,7 +22,7 @@
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint",
     "lint:eslint": "eslint --ignore-path .gitignore $(npm run --silent lint:eslint:ci-reporter)",
-    "eslint": "eslint packages",
+    "eslint": "eslint ./",
     "serve": "npm run start",
     "stylelint": "stylelint \"./packages/node_modules/**/*.css\"",
     "start": "cross-env NODE_ENV=${NODE_ENV:-development} ./scripts/start/index.js",

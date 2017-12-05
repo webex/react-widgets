@@ -14,34 +14,54 @@ import {elements as meetElements} from './meet';
  * @returns {null}
  */
 export default function featureFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
-  describe(`Roster Feature Flag`, () => {
-    it(`has a roster for user with feature flag`, () => {
+  describe('Roster Feature Flag', () => {
+    it('has a roster for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(browserWithAllTheFeatures.element(mainElements.controlsContainer).element(rosterElements.peopleButton).isVisible());
+      assert.isTrue(
+        browserWithAllTheFeatures
+          .element(mainElements.controlsContainer)
+          .element(rosterElements.peopleButton)
+          .isVisible()
+      );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
-    it(`does not have a roster for user without flag`, () => {
+    it('does not have a roster for user without flag', () => {
       browserWithNoFeatures.click(mainElements.menuButton);
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isFalse(browserWithNoFeatures.element(mainElements.controlsContainer).element(rosterElements.peopleButton).isVisible());
+      assert.isFalse(
+        browserWithNoFeatures
+          .element(mainElements.controlsContainer)
+          .element(rosterElements.peopleButton)
+          .isVisible()
+      );
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });
 
-  describe(`Group Calling Feature Flag`, () => {
-    it(`has a call option for user with feature flag`, () => {
+  describe('Group Calling Feature Flag', () => {
+    it('has a call option for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(browserWithAllTheFeatures.element(mainElements.controlsContainer).element(meetElements.callButton).isVisible());
+      assert.isTrue(
+        browserWithAllTheFeatures
+          .element(mainElements.controlsContainer)
+          .element(meetElements.callButton)
+          .isVisible()
+      );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
-    it(`does not have a call option for user without flag`, () => {
+    it('does not have a call option for user without flag', () => {
       browserWithNoFeatures.click(mainElements.menuButton);
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isFalse(browserWithNoFeatures.element(mainElements.controlsContainer).element(meetElements.callButton).isVisible());
+      assert.isFalse(
+        browserWithNoFeatures
+          .element(mainElements.controlsContainer)
+          .element(meetElements.callButton)
+          .isVisible()
+      );
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });

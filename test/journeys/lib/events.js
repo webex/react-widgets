@@ -6,7 +6,7 @@
  * @returns {void}
  */
 export function clearEventLog(myBrowser) {
-  myBrowser.execute(() => {window.ciscoSparkEvents.length = 0;});
+  myBrowser.execute(() => { window.ciscoSparkEvents.length = 0; });
 }
 
 /**
@@ -20,8 +20,8 @@ export function getEventLog(myBrowser) {
   const result = myBrowser.execute(() => {
     const events = window.ciscoSparkEvents.map((event) => {
       // Passing the call object from the browser causes an overflow
-      if (event.detail && event.detail.data && event.detail.data.hasOwnProperty(`call`)) {
-        Reflect.deleteProperty(event.detail.data, `call`);
+      if (event.detail && event.detail.data && Object.prototype.hasOwnProperty.call(event.detail.data, 'call')) {
+        Reflect.deleteProperty(event.detail.data, 'call');
       }
       return event;
     });

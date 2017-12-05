@@ -1,13 +1,14 @@
 import {assert} from 'chai';
+
 import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
-  recentsWidget: `.ciscospark-spaces-list-wrapper`,
-  firstSpace: `.space-item:first-child`,
-  title: `.space-title`,
-  unreadIndicator: `.space-unread-indicator`,
-  lastActivity: `.space-last-activity`,
-  callButton: `button[aria-label="Call Space"]`
+  recentsWidget: '.ciscospark-spaces-list-wrapper',
+  firstSpace: '.space-item:first-child',
+  title: '.space-title',
+  unreadIndicator: '.space-unread-indicator',
+  lastActivity: '.space-last-activity',
+  callButton: 'button[aria-label="Call Space"]'
 };
 
 /**
@@ -28,13 +29,13 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
   }));
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle
-      , 5000
-      , `conversation not displayed`);
+    , 5000
+    , 'conversation not displayed');
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message)
-      , 5000
-      , `does not have last message displayed`);
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), `does not have unread indicator`);
+    , 5000
+    , 'does not have last message displayed');
+  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
 }
 
 /**
@@ -58,17 +59,15 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
   }));
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message),
-    5000,
-    `does not have last message sent`
-  );
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), `does not have unread indicator`);
+  5000,
+  'does not have last message sent');
+  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
   aBrowser.waitUntil(() =>
     !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(),
-    5000,
-    `does not remove unread indicator`
-  );
+  5000,
+  'does not remove unread indicator');
 }
 
 /**
@@ -100,17 +99,14 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
       return sender.spark.internal.conversation.post(c, {
         displayName: firstPost
       });
-    })
-  );
+    }));
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle),
-    5000,
-    `does not display newly created space title`
-  );
+  5000,
+  'does not display newly created space title');
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(firstPost),
-    5000,
-    `does not have last message sent`
-  );
+  5000,
+  'does not have last message sent');
   return conversation;
 }

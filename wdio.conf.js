@@ -1,5 +1,6 @@
-require(`dotenv`).config();
-require(`babel-register`);
+require('dotenv').config();
+require('babel-register');
+
 let mochaTimeout = 30000;
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
@@ -9,13 +10,13 @@ if (process.env.SAUCE) {
 }
 const services = [];
 if (process.env.SAUCE) {
-  services.push(`sauce`);
+  services.push('sauce');
 }
 else {
-  services.push(`selenium-standalone`);
+  services.push('selenium-standalone');
 }
 if (!process.env.TAP) {
-  services.push(`static-server`);
+  services.push('static-server');
 }
 
 exports.config = {
@@ -28,22 +29,22 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-  specs: [`./test/journeys/specs/**/*.js`],
+  specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     tap: [
-      `./test/journeys/specs/tap/**/*.js`
+      './test/journeys/specs/tap/**/*.js'
     ],
     oneOnOne: [
-      `./test/journeys/specs/oneOnOne/**/*.js`
+      './test/journeys/specs/oneOnOne/**/*.js'
     ],
     space: [
-      `./test/journeys/specs/space/**/*.js`
+      './test/journeys/specs/space/**/*.js'
     ],
     recents: [
-      `./test/journeys/specs/recents/**/*.js`
+      './test/journeys/specs/recents/**/*.js'
     ],
     multiple: [
-      `./test/journeys/specs/multiple/**/*.js`
+      './test/journeys/specs/multiple/**/*.js'
     ]
   },
   // Patterns to exclude.
@@ -73,36 +74,36 @@ exports.config = {
   capabilities: {
     browserLocal: {
       desiredCapabilities: {
-        browserName: `chrome`,
+        browserName: 'chrome',
         chromeOptions: {
           args: [
-            `--use-fake-device-for-media-stream`,
-            `--use-fake-ui-for-media-stream`,
-            `--disable-infobars`
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+            '--disable-infobars'
           ],
           prefs: {
-            "profile.default_content_setting_values.notifications": 2
+            'profile.default_content_setting_values.notifications': 2
           }
         },
         idleTimeout: 300,
-        platform: `mac`
+        platform: 'mac'
       }
     },
     browserRemote: {
       desiredCapabilities: {
-        browserName: `chrome`,
+        browserName: 'chrome',
         chromeOptions: {
           args: [
-            `--use-fake-device-for-media-stream`,
-            `--use-fake-ui-for-media-stream`,
-            `--disable-infobars`
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+            '--disable-infobars'
           ],
           prefs: {
-            "profile.default_content_setting_values.notifications": 2
+            'profile.default_content_setting_values.notifications': 2
           }
         },
         idleTimeout: 300,
-        platform: `mac`
+        platform: 'mac'
       }
     }
   },
@@ -118,7 +119,7 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: `silent`,
+  logLevel: 'silent',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -132,7 +133,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: process.env.TAP ? `https://code.s4d.io` : `http://localhost:4567`,
+  baseUrl: process.env.TAP ? 'https://code.s4d.io' : 'http://localhost:4567',
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
@@ -174,28 +175,28 @@ exports.config = {
   //
   // Make sure you have the wdio adapter package for the specific framework installed
   // before running any tests.
-  framework: `mocha`,
+  framework: 'mocha',
   //
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: http://webdriver.io/guide/testrunner/reporters.html
   // NOTE: Omitting `xunit` for now. We can revisit that on another pass
-  reporters: [`spec`],
+  reporters: ['spec'],
 
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
-    ui: `bdd`,
+    ui: 'bdd',
     timeout: mochaTimeout
   },
 
   // Static Server setup
   staticServerFolders: [
-    {mount: `/dist-space`, path: `./packages/node_modules/@ciscospark/widget-space/dist`},
-    {mount: `/dist-recents`, path: `./packages/node_modules/@ciscospark/widget-recents/dist`},
-    {mount: `/`, path: `./test/journeys/server/`},
-    {mount: `/axe-core`, path: `./node_modules/axe-core/`}
+    {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
+    {mount: '/dist-recents', path: './packages/node_modules/@ciscospark/widget-recents/dist'},
+    {mount: '/', path: './test/journeys/server/'},
+    {mount: '/axe-core', path: './node_modules/axe-core/'}
   ],
   staticServerPort: 4567
 };
@@ -208,12 +209,12 @@ if (process.env.SAUCE) {
     sauceConnect: !process.env.TAP,
     sauceConnectOpts: {
       noSslBumpDomains: [
-        `mercury-connection-a.wbx2.com`,
-        `mercury-connection-integration.wbx2.com`
+        'mercury-connection-a.wbx2.com',
+        'mercury-connection-integration.wbx2.com'
       ],
       tunnelDomains: [
-        `127.0.0.1`,
-        `localhost`
+        '127.0.0.1',
+        'localhost'
       ]
     }
   });

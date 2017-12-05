@@ -1,19 +1,20 @@
-import {assert} from 'chai';
 import path from 'path';
+
+import {assert} from 'chai';
 
 import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
-const uploadDir = path.join(__dirname, `../assets`);
+const uploadDir = path.join(__dirname, '../assets');
 
 export const elements = {
-  inputFile: `.ciscospark-file-input`,
-  downloadButtonContainer: `(//div[starts-with(@class,"ciscospark-activity-content")])[last()]`,
-  downloadFileButton: `(//div[@title="Download this file"]/parent::button)[last()]`,
-  shareButton: `button[aria-label="Share"]`,
-  systemMessage: `.ciscospark-system-message`,
-  lastActivity: `.ciscospark-activity-item-container:last-child`,
-  lastActivityText: `.ciscospark-activity-item-container:last-child .ciscospark-activity-text`
+  inputFile: '.ciscospark-file-input',
+  downloadButtonContainer: '(//div[starts-with(@class,"ciscospark-activity-content")])[last()]',
+  downloadFileButton: '(//div[@title="Download this file"]/parent::button)[last()]',
+  shareButton: 'button[aria-label="Share"]',
+  systemMessage: '.ciscospark-system-message',
+  lastActivity: '.ciscospark-activity-item-container:last-child',
+  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
 };
 
 /**
@@ -34,7 +35,7 @@ export function sendMessage(sender, receiver, message) {
   sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
   sender.browser.waitForVisible(elements.systemMessage);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
-  sender.browser.keys([`Enter`, `NULL`]);
+  sender.browser.keys(['Enter', 'NULL']);
 }
 
 /**
@@ -66,8 +67,8 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   sender.browser.click(elements.shareButton);
   receiver.browser.waitForExist(fileTitle, 30000);
   receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
-  const remoteSize = receiver.browser.element(elements.lastActivity).element(`.ciscospark-share-file-size`).getText();
+  const localSize = sender.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
+  const remoteSize = receiver.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
     assert.equal(localSize, remoteSize);
@@ -84,23 +85,23 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
  * @returns {void}
  */
 const messageEventTest = (sender, receiver) => {
-  const message = `God, I liked him better before he died.`;
+  const message = 'God, I liked him better before he died.';
   clearEventLog(receiver.browser);
   sendMessage(sender, receiver, message);
   verifyMessageReceipt(receiver, sender, message);
   const events = getEventLog(receiver.browser);
-  const eventCreated = events.find((event) => event.eventName === `messages:created`);
-  const eventUnread = events.find((event) => event.eventName === `rooms:unread`);
-  assert.isDefined(eventCreated, `has a message created event`);
-  assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
-  assert.containsAllKeys(eventCreated.detail.data, [`actorId`, `actorName`, `id`, `personId`, `roomId`, `roomType`, `text`]);
-  assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, sender.user.id));
+  const eventCreated = events.find((event) => event.eventName === 'messages:created');
+  const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
+  assert.isDefined(eventCreated, 'has a message created event');
+  assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
+  assert.containsAllKeys(eventCreated.detail.data, ['actorId', 'actorName', 'id', 'personId', 'roomId', 'roomType', 'text']);
+  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.user.id));
   assert.equal(eventCreated.detail.data.actorName, sender.user.displayName);
 
-  assert.isDefined(eventUnread, `has an unread message event`);
-  assert.containsAllKeys(eventUnread.detail, [`resource`, `event`, `data`]);
-  assert.containsAllKeys(eventUnread.detail.data, [`actorId`, `actorName`, `id`, `title`, `type`, `created`, `lastActivity`]);
-  assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, sender.user.id));
+  assert.isDefined(eventUnread, 'has an unread message event');
+  assert.containsAllKeys(eventUnread.detail, ['resource', 'event', 'data']);
+  assert.containsAllKeys(eventUnread.detail.data, ['actorId', 'actorName', 'id', 'title', 'type', 'created', 'lastActivity']);
+  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.user.id));
   assert.equal(eventCreated.detail.data.actorName, sender.user.displayName);
 };
 
@@ -111,10 +112,10 @@ const messageEventTest = (sender, receiver) => {
  * @returns {void}
  */
 const bold = (sender, receiver) => {
-  sendMessage(sender, receiver, `**Are you out of your Vulcan mind?** No human can tolerate the radiation that's in there!`);
-  verifyMessageReceipt(receiver, sender, `Are you out of your Vulcan mind? No human can tolerate the radiation that's in there!`);
+  sendMessage(sender, receiver, '**Are you out of your Vulcan mind?** No human can tolerate the radiation that\'s in there!');
+  verifyMessageReceipt(receiver, sender, 'Are you out of your Vulcan mind? No human can tolerate the radiation that\'s in there!');
   // Assert only the bolded text is in the strong tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > strong`), `Are you out of your Vulcan mind?`);
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > strong`), 'Are you out of your Vulcan mind?');
 };
 
 /**
@@ -124,10 +125,10 @@ const bold = (sender, receiver) => {
  * @returns {void}
  */
 const italic = (sender, receiver) => {
-  sendMessage(sender, receiver, `As you are _so fond_ of observing, doctor, I am not human.`);
-  verifyMessageReceipt(receiver, sender, `As you are so fond of observing, doctor, I am not human.`);
+  sendMessage(sender, receiver, 'As you are _so fond_ of observing, doctor, I am not human.');
+  verifyMessageReceipt(receiver, sender, 'As you are so fond of observing, doctor, I am not human.');
   // Assert only the italicized text is in the em tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > em`), `so fond`);
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > em`), 'so fond');
 };
 
 /**
@@ -137,15 +138,15 @@ const italic = (sender, receiver) => {
  * @returns {void}
  */
 const blockquote = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `> You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '> You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
   // Quote break with two new lines
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `You call this relaxing? I'm a nervous wreck. I'm not careful, I'll end up talking to myself.`);
-  sender.browser.keys([`Enter`, `NULL`]);
-  verifyMessageReceipt(receiver, sender, `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.\nYou call this relaxing? I'm a nervous wreck. I'm not careful, I'll end up talking to myself.`);
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'You call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
+  sender.browser.keys(['Enter', 'NULL']);
+  verifyMessageReceipt(receiver, sender, 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
   // Assert only first half of message is in the blockquote tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), `You'll have a great time, Bones. You'll enjoy your shore leave. You'll relax.`);
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
 };
 
 /**
@@ -155,14 +156,14 @@ const blockquote = (sender, receiver) => {
  * @returns {void}
  */
 const orderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `1. ordered list item 1`);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `2. ordered list item 2`);
-  sender.browser.keys([`Enter`, `NULL`]);
-  verifyMessageReceipt(receiver, sender, `ordered list item 1\nordered list item 2`);
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '1. ordered list item 1');
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '2. ordered list item 2');
+  sender.browser.keys(['Enter', 'NULL']);
+  verifyMessageReceipt(receiver, sender, 'ordered list item 1\nordered list item 2');
   // Assert text matches for the first and second ordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), `ordered list item 1`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(2)`), `ordered list item 2`);
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), 'ordered list item 1');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(2)`), 'ordered list item 2');
 };
 
 /**
@@ -172,14 +173,14 @@ const orderedList = (sender, receiver) => {
  * @returns {void}
  */
 const unorderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `* unordered list item 1`);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `* unordered list item 2`);
-  sender.browser.keys([`Enter`, `NULL`]);
-  verifyMessageReceipt(receiver, sender, `unordered list item 1\nunordered list item 2`);
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 1');
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 2');
+  sender.browser.keys(['Enter', 'NULL']);
+  verifyMessageReceipt(receiver, sender, 'unordered list item 1\nunordered list item 2');
   // Assert text matches for the first and second unordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), `unordered list item 1`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(2)`), `unordered list item 2`);
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), 'unordered list item 1');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(2)`), 'unordered list item 2');
 };
 
 /**
@@ -189,9 +190,9 @@ const unorderedList = (sender, receiver) => {
  * @returns {void}
  */
 const heading1 = (sender, receiver) => {
-  sendMessage(sender, receiver, `# Heading 1`);
-  verifyMessageReceipt(receiver, sender, `Heading 1`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h1`), `Heading 1`);
+  sendMessage(sender, receiver, '# Heading 1');
+  verifyMessageReceipt(receiver, sender, 'Heading 1');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h1`), 'Heading 1');
 };
 
 /**
@@ -201,9 +202,9 @@ const heading1 = (sender, receiver) => {
  * @returns {void}
  */
 const heading2 = (sender, receiver) => {
-  sendMessage(sender, receiver, `## Heading 2`);
-  verifyMessageReceipt(receiver, sender, `Heading 2`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h2`), `Heading 2`);
+  sendMessage(sender, receiver, '## Heading 2');
+  verifyMessageReceipt(receiver, sender, 'Heading 2');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h2`), 'Heading 2');
 };
 
 /**
@@ -213,9 +214,9 @@ const heading2 = (sender, receiver) => {
  * @returns {void}
  */
 const heading3 = (sender, receiver) => {
-  sendMessage(sender, receiver, `### Heading 3`);
-  verifyMessageReceipt(receiver, sender, `Heading 3`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h3`), `Heading 3`);
+  sendMessage(sender, receiver, '### Heading 3');
+  verifyMessageReceipt(receiver, sender, 'Heading 3');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h3`), 'Heading 3');
 };
 
 /**
@@ -225,11 +226,11 @@ const heading3 = (sender, receiver) => {
  * @returns {void}
  */
 const hr = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `test horizontal line`);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `- - -`);
-  sender.browser.keys([`Enter`, `NULL`]);
-  verifyMessageReceipt(receiver, sender, `test horizontal line`);
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'test horizontal line');
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
+  sender.browser.keys(['Enter', 'NULL']);
+  verifyMessageReceipt(receiver, sender, 'test horizontal line');
   assert.isTrue(receiver.browser.isVisible(`${elements.lastActivityText} > hr`));
 };
 
@@ -240,10 +241,10 @@ const hr = (sender, receiver) => {
  * @returns {void}
  */
 const link = (sender, receiver) => {
-  sendMessage(sender, receiver, `[Cisco](http://www.cisco.com/)`);
-  verifyMessageReceipt(receiver, sender, `Cisco`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > a`), `Cisco`);
-  assert.equal(receiver.browser.getAttribute(`${elements.lastActivityText} > a`, `href`), `http://www.cisco.com/`);
+  sendMessage(sender, receiver, '[Cisco](http://www.cisco.com/)');
+  verifyMessageReceipt(receiver, sender, 'Cisco');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > a`), 'Cisco');
+  assert.equal(receiver.browser.getAttribute(`${elements.lastActivityText} > a`, 'href'), 'http://www.cisco.com/');
 };
 
 /**
@@ -253,9 +254,9 @@ const link = (sender, receiver) => {
  * @returns {void}
  */
 const inline = (sender, receiver) => {
-  sendMessage(sender, receiver, `this tests \`inline.code();\``);
-  verifyMessageReceipt(receiver, sender, `this tests inline.code();`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > code`), `inline.code();`);
+  sendMessage(sender, receiver, 'this tests `inline.code();`');
+  verifyMessageReceipt(receiver, sender, 'this tests inline.code();');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > code`), 'inline.code();');
 };
 
 /**
@@ -266,15 +267,15 @@ const inline = (sender, receiver) => {
  */
 const codeblock = (sender, receiver) => {
   sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `\`\`\` html`);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `<h1>Hello World!</h1>`);
-  sender.browser.keys([`Shift`, `Enter`, `NULL`]);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `\`\`\``);
-  sender.browser.keys([`Enter`, `NULL`]);
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '``` html');
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '<h1>Hello World!</h1>');
+  sender.browser.keys(['Shift', 'Enter', 'NULL']);
+  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '```');
+  sender.browser.keys(['Enter', 'NULL']);
   receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
-  receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === `<h1>Hello World!</h1>`);
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), `<h1>Hello World!</h1>`);
+  receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === '<h1>Hello World!</h1>');
+  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), '<h1>Hello World!</h1>');
 };
 
 export const messageTests = {

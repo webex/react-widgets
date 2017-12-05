@@ -11,13 +11,13 @@
  * @returns {Promise}
  * https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter-examples
  */
-export const runAxe = (aBrowser, elementId, rules = [`best-practice`]) =>
+export const runAxe = (aBrowser, elementId, rules = ['best-practice']) =>
   new Promise((resolve, reject) => {
     const axeResults = aBrowser.executeAsync((theElementId, theRules, done) => {
       const widgetElement = document.getElementById(theElementId);
       const options = {
         runOnly: {
-          type: `tag`,
+          type: 'tag',
           values: theRules
         }
       };
@@ -29,5 +29,8 @@ export const runAxe = (aBrowser, elementId, rules = [`best-practice`]) =>
       reject(axeResults.value.err);
     }
     resolve(axeResults.value.results);
-  }
-);
+  });
+
+export default {
+  runAxe
+};

@@ -6,40 +6,40 @@ import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 
-describe(`Widget Space: One on One`, () => {
-  const browserLocal = browser.select(`browserLocal`);
-  const browserRemote = browser.select(`browserRemote`);
+describe('Widget Space: One on One', () => {
+  const browserLocal = browser.select('browserLocal');
+  const browserRemote = browser.select('browserRemote');
 
-  const menuButton = `button[aria-label="Main Menu"]`;
-  const activityMenu = `.ciscospark-activity-menu`;
-  const controlsContainer = `.ciscospark-controls-container`;
+  const menuButton = 'button[aria-label="Main Menu"]';
+  const activityMenu = '.ciscospark-activity-menu';
+  const controlsContainer = '.ciscospark-controls-container';
 
   let userWithAllTheFeatures, userWithNoFeatures;
   process.env.CISCOSPARK_SCOPE = [
-    `webexsquare:get_conversation`,
-    `spark:people_read`,
-    `spark:rooms_read`,
-    `spark:rooms_write`,
-    `spark:memberships_read`,
-    `spark:memberships_write`,
-    `spark:messages_read`,
-    `spark:messages_write`,
-    `spark:teams_read`,
-    `spark:teams_write`,
-    `spark:team_memberships_read`,
-    `spark:team_memberships_write`,
-    `spark:kms`
-  ].join(` `);
+    'webexsquare:get_conversation',
+    'spark:people_read',
+    'spark:rooms_read',
+    'spark:rooms_write',
+    'spark:memberships_read',
+    'spark:memberships_write',
+    'spark:messages_read',
+    'spark:messages_write',
+    'spark:teams_read',
+    'spark:teams_write',
+    'spark:team_memberships_read',
+    'spark:team_memberships_write',
+    'spark:kms'
+  ].join(' ');
 
-  before(`load browsers`, () => {
+  before('load browsers', () => {
     browser
-      .url(`/space.html?basic`)
+      .url('/space.html?basic')
       .execute(() => {
         localStorage.clear();
       });
   });
 
-  before(`create main user`, () => testUsers.create({count: 1, config: {displayName: `All Features`}})
+  before('create main user', () => testUsers.create({count: 1, config: {displayName: 'All Features'}})
     .then((users) => {
       [userWithAllTheFeatures] = users;
       userWithAllTheFeatures.spark = new CiscoSpark({
@@ -48,15 +48,15 @@ describe(`Widget Space: One on One`, () => {
         },
         config: {
           logger: {
-            level: `error`
+            level: 'error'
           }
         }
       });
       return userWithAllTheFeatures.spark.internal.device.register()
-        .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, true));
+        .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
     }));
 
-  before(`create basic user`, () => testUsers.create({count: 1, config: {displayName: `No Features`}})
+  before('create basic user', () => testUsers.create({count: 1, config: {displayName: 'No Features'}})
     .then((users) => {
       [userWithNoFeatures] = users;
       userWithNoFeatures.spark = new CiscoSpark({
@@ -65,49 +65,49 @@ describe(`Widget Space: One on One`, () => {
         },
         config: {
           logger: {
-            level: `error`
+            level: 'error'
           }
         }
       });
       return userWithNoFeatures.spark.internal.device.register()
-        .then(() => userWithNoFeatures.spark.internal.feature.setFeature(`developer`, FEATURE_FLAG_ROSTER, false));
+        .then(() => userWithNoFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, false));
     }));
 
-  before(`pause to let test users establish`, () => browser.pause(5000));
+  before('pause to let test users establish', () => browser.pause(5000));
 
-  before(`open widget local`, () => {
+  before('open widget local', () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
         toPersonEmail: localToUserEmail,
-        initialActivity: `message`
+        initialActivity: 'message'
       };
       window.openSpaceWidget(options);
     }, userWithAllTheFeatures.token.access_token, userWithNoFeatures.email);
     browserLocal.waitForVisible(`[placeholder="Send a message to ${userWithNoFeatures.displayName}"]`, 30000);
   });
 
-  before(`open widget remote`, () => {
+  before('open widget remote', () => {
     browserRemote.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
         toPersonEmail: localToUserEmail,
-        initialActivity: `message`
+        initialActivity: 'message'
       };
       window.openSpaceWidget(options);
     }, userWithNoFeatures.token.access_token, userWithAllTheFeatures.email);
     browserRemote.waitForVisible(`[placeholder="Send a message to ${userWithAllTheFeatures.displayName}"]`, 30000);
   });
 
-  describe(`Feature Flags`, () => {
-    describe(`Roster Feature Flag`, () => {
-      it(`has a roster for user with feature flag`, () => {
+  describe('Feature Flags', () => {
+    describe('Roster Feature Flag', () => {
+      it('has a roster for user with feature flag', () => {
         browserLocal.click(menuButton);
         browserLocal.waitForVisible(activityMenu);
         assert.isTrue(browserLocal.element(controlsContainer).element(rosterElements.peopleButton).isVisible());
       });
 
-      it(`does not have a roster for user without flag`, () => {
+      it('does not have a roster for user without flag', () => {
         browserRemote.click(menuButton);
         browserRemote.waitForVisible(activityMenu);
         assert.isFalse(browserRemote.element(controlsContainer).element(rosterElements.peopleButton).isVisible());

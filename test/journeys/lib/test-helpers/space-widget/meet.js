@@ -1,21 +1,22 @@
 import {assert} from 'chai';
 
-import {switchToMeet} from './main';
 import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
-export const FEATURE_FLAG_GROUP_CALLING = `js-widgets-group-calling`;
+import {switchToMeet} from './main';
+
+export const FEATURE_FLAG_GROUP_CALLING = 'js-widgets-group-calling';
 
 export const elements = {
-  callContainer: `.call-container`,
-  meetWidget: `.ciscospark-meet-wrapper`,
-  messageWidget: `.ciscospark-message-wrapper`,
-  callButton: `button[aria-label="Call"]`,
-  answerButton: `button[aria-label="Answer"]`,
-  declineButton: `button[aria-label="Decline"]`,
-  hangupButton: `button[aria-label="Hangup"]`,
-  callControls: `.call-controls`,
-  remoteVideo: `.remote-video video`
+  callContainer: '.call-container',
+  meetWidget: '.ciscospark-meet-wrapper',
+  messageWidget: '.ciscospark-message-wrapper',
+  callButton: 'button[aria-label="Call"]',
+  answerButton: 'button[aria-label="Answer"]',
+  declineButton: 'button[aria-label="Decline"]',
+  hangupButton: 'button[aria-label="Hangup"]',
+  callControls: '.call-controls',
+  remoteVideo: '.remote-video video'
 };
 
 
@@ -144,48 +145,48 @@ export function callEventTest(caller, receiver, space = false) {
   const callerEvents = getEventLog(caller.browser);
   const receiverEvents = getEventLog(receiver.browser);
 
-  const findCreated = (event) => event.eventName === `calls:created`;
+  const findCreated = (event) => event.eventName === 'calls:created';
   const eventCreated = callerEvents.find(findCreated);
   const receiverEventCreated = receiverEvents.find(findCreated);
-  assert.isDefined(eventCreated, `has a calls created event`);
-  assert.isDefined(receiverEventCreated, `has a calls created event`);
+  assert.isDefined(eventCreated, 'has a calls created event');
+  assert.isDefined(receiverEventCreated, 'has a calls created event');
   if (space) {
-    assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `data`]);
-    assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`]);
-    assert.containsAllKeys(receiverEventCreated.detail, [`resource`, `event`, `data`]);
-    assert.containsAllKeys(receiverEventCreated.detail.data, [`actorName`, `roomId`]);
-    assert.equal(eventCreated.detail.data.actorName, space.displayName, `call created event did not have space name`);
-    assert.equal(receiverEventCreated.detail.data.actorName, space.displayName, `call created event on receiver did not have space name`);
+    assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'data']);
+    assert.containsAllKeys(eventCreated.detail.data, ['actorName', 'roomId']);
+    assert.containsAllKeys(receiverEventCreated.detail, ['resource', 'event', 'data']);
+    assert.containsAllKeys(receiverEventCreated.detail.data, ['actorName', 'roomId']);
+    assert.equal(eventCreated.detail.data.actorName, space.displayName, 'call created event did not have space name');
+    assert.equal(receiverEventCreated.detail.data.actorName, space.displayName, 'call created event on receiver did not have space name');
   }
   else {
-    assert.containsAllKeys(eventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
-    assert.containsAllKeys(eventCreated.detail.data, [`actorName`, `roomId`]);
-    assert.containsAllKeys(receiverEventCreated.detail, [`resource`, `event`, `actorId`, `data`]);
-    assert.containsAllKeys(receiverEventCreated.detail.data, [`actorName`, `roomId`]);
-    assert.equal(eventCreated.detail.actorId, constructHydraId(`PEOPLE`, caller.user.id), `call created event did not have caller details`);
-    assert.equal(eventCreated.detail.data.actorName, caller.displayName, `call created event did not have caller details`);
-    assert.equal(receiverEventCreated.detail.actorId, constructHydraId(`PEOPLE`, caller.user.id), `call created event on receiver did not have caller details`);
-    assert.equal(receiverEventCreated.detail.data.actorName, caller.displayName, `call created event on receiver did not have caller details`);
+    assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
+    assert.containsAllKeys(eventCreated.detail.data, ['actorName', 'roomId']);
+    assert.containsAllKeys(receiverEventCreated.detail, ['resource', 'event', 'actorId', 'data']);
+    assert.containsAllKeys(receiverEventCreated.detail.data, ['actorName', 'roomId']);
+    assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event did not have caller details');
+    assert.equal(eventCreated.detail.data.actorName, caller.displayName, 'call created event did not have caller details');
+    assert.equal(receiverEventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event on receiver did not have caller details');
+    assert.equal(receiverEventCreated.detail.data.actorName, caller.displayName, 'call created event on receiver did not have caller details');
   }
 
-  const eventConnected = callerEvents.find((event) => event.eventName === `calls:connected`);
-  assert.isDefined(eventConnected, `has a calls connected event`);
-  assert.containsAllKeys(eventConnected.detail, [`resource`, `event`, `actorId`, `data`]);
-  assert.containsAllKeys(eventConnected.detail.data, [`actorName`, `roomId`]);
+  const eventConnected = callerEvents.find((event) => event.eventName === 'calls:connected');
+  assert.isDefined(eventConnected, 'has a calls connected event');
+  assert.containsAllKeys(eventConnected.detail, ['resource', 'event', 'actorId', 'data']);
+  assert.containsAllKeys(eventConnected.detail.data, ['actorName', 'roomId']);
   if (space) {
-    assert.equal(eventCreated.detail.data.actorName, space.displayName, `call connected event did not have space name`);
+    assert.equal(eventCreated.detail.data.actorName, space.displayName, 'call connected event did not have space name');
   }
   else {
-    assert.equal(eventConnected.detail.actorId, constructHydraId(`PEOPLE`, caller.user.id));
-    assert.equal(eventConnected.detail.data.actorName, caller.displayName, `call connected event did not have space name`);
+    assert.equal(eventConnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id));
+    assert.equal(eventConnected.detail.data.actorName, caller.displayName, 'call connected event did not have space name');
   }
 
-  const eventDisconnected = callerEvents.find((event) => event.eventName === `calls:disconnected`);
-  assert.isDefined(eventDisconnected, `has a calls disconnected event`);
-  assert.containsAllKeys(eventDisconnected.detail, [`resource`, `event`, `actorId`, `data`]);
-  assert.containsAllKeys(eventDisconnected.detail.data, [`actorName`, `roomId`]);
+  const eventDisconnected = callerEvents.find((event) => event.eventName === 'calls:disconnected');
+  assert.isDefined(eventDisconnected, 'has a calls disconnected event');
+  assert.containsAllKeys(eventDisconnected.detail, ['resource', 'event', 'actorId', 'data']);
+  assert.containsAllKeys(eventDisconnected.detail.data, ['actorName', 'roomId']);
   if (!space) {
-    assert.equal(eventDisconnected.detail.actorId, constructHydraId(`PEOPLE`, caller.user.id));
+    assert.equal(eventDisconnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id));
     assert.equal(eventDisconnected.detail.data.actorName, caller.displayName);
   }
 }

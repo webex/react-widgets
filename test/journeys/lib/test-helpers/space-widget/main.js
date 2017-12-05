@@ -1,13 +1,13 @@
 export const elements = {
-  spaceWidget: `.ciscospark-space-widget`,
-  menuButton: `button[aria-label="Main Menu"]`,
-  messageButton: `button[aria-label="Message"]`,
-  meetButton: `button[aria-label="Call"]`,
-  activityMenu: `.ciscospark-activity-menu`,
-  controlsContainer: `.ciscospark-controls-container`,
-  exitButton: `.ciscospark-activity-menu-exit button`,
-  messageWidget: `.ciscospark-message-wrapper`,
-  meetWidget: `.ciscospark-meet-wrapper`
+  spaceWidget: '.ciscospark-space-widget',
+  menuButton: 'button[aria-label="Main Menu"]',
+  messageButton: 'button[aria-label="Message"]',
+  meetButton: 'button[aria-label="Call"]',
+  activityMenu: '.ciscospark-activity-menu',
+  controlsContainer: '.ciscospark-controls-container',
+  exitButton: '.ciscospark-activity-menu-exit button',
+  messageWidget: '.ciscospark-message-wrapper',
+  meetWidget: '.ciscospark-meet-wrapper'
 };
 
 /**
