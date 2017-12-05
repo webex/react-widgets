@@ -206,7 +206,6 @@
       "@ciscospark/test-helper-test-users",
       "eslint",
       "eslint-config",
-      "eslint-config-airbnb",
       "eslint-plugin-babel",
       "eslint-plugin-import",
       "eslint-plugin-jsx-a11y",

@@ -3,7 +3,6 @@ const {statSync, readdirSync} = require('fs');
 
 const {execSync} = require('./exec');
 
-
 /**
  * Get single packages full path
  * @param  {string} pkg specific package name or full path
@@ -41,7 +40,7 @@ function runInPackage({
   pkgPath
 }) {
   const outputPkgPath = getPackage(pkgName || pkgPath);
-  if (pkgPath) {
+  if (outputPkgPath) {
     try {
       console.info(`${commandName} ${pkgName} ...`);
       const command = constructCommand(outputPkgPath);
@@ -72,6 +71,7 @@ function getAllPackagePaths(packagesDir = 'packages/node_modules/@ciscospark') {
     return acc;
   }, []);
 }
+
 
 function getAllPackages(omitPrivate) {
   let pkgPaths = getAllPackagePaths();
