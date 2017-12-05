@@ -19,7 +19,7 @@ function buildFile(filename, destination, babelOptions = {}) {
   if (!filename.includes('.test.')) {
     if (ext === '.js') {
       options.filename = filename;
-      const result = transform(content, babelOptions);
+      const result = transform(content, options);
       return outputFileSync(outputPath, result.code, {encoding: 'utf8'});
     }
     // process with postcss if it's a css file
