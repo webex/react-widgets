@@ -26,9 +26,9 @@ ansiColor('xterm') {
           ]) {
             sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh > /dev/null 2>&1
-            nvm install 7
-            nvm use v7
+            source ~/.nvm/nvm.sh
+            nvm install v8.9.1
+            nvm use v8.9.1
             npm install
             rm -f $HOME/.npmrc
             npm run upgradespark
@@ -40,8 +40,8 @@ ansiColor('xterm') {
           echo "Creating Branch"
           def version
           sh '''#!/bin/bash -ex
-          source ~/.nvm/nvm.sh > /dev/null 2>&1
-          nvm use v7
+          source ~/.nvm/nvm.sh
+          nvm use v8.9.1
           version=$(node ./scripts/utils/jssdkversion.js)
           echo $version > .version
           git add package.json
