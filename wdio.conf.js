@@ -1,7 +1,37 @@
 require('dotenv').config();
 require('babel-register');
 
+const os = require('os');
+
+const uuid = require('uuid');
+
+const {inject} = require('./scripts/tests/openh264');
+
+const browser = process.env.BROWSER || 'chrome';
+const tunnelId = uuid.v4();
+const port = process.env.PORT || 4567;
+const chromeCapabilities = {
+  browserName: 'chrome',
+  chromeOptions: {
+    args: [
+      '--use-fake-device-for-media-stream',
+      '--use-fake-ui-for-media-stream',
+      '--disable-infobars'
+    ],
+    prefs: {
+      'profile.default_content_setting_values.notifications': 2
+    }
+  },
+  idleTimeout: 300,
+  platform: 'mac'
+};
+const firefoxCapabilities = {
+  browserName: 'firefox',
+  idleTimeout: 300,
+  platform: 'OS X 10.12'
+};
 let mochaTimeout = 30000;
+
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
@@ -9,6 +39,7 @@ if (process.env.SAUCE) {
   mochaTimeout = 90000;
 }
 const services = [];
+services.push('firefox-profile');
 if (process.env.SAUCE) {
   services.push('sauce');
 }
@@ -20,6 +51,8 @@ if (!process.env.TAP) {
 }
 
 exports.config = {
+  seleniumInstallArgs: {version: '3.4.0'},
+  seleniumArgs: {version: '3.4.0'},
   //
   // ==================
   // Specify Test Files
@@ -71,40 +104,19 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: {
+  capabilities: browser === 'chrome' ? {
     browserLocal: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        chromeOptions: {
-          args: [
-            '--use-fake-device-for-media-stream',
-            '--use-fake-ui-for-media-stream',
-            '--disable-infobars'
-          ],
-          prefs: {
-            'profile.default_content_setting_values.notifications': 2
-          }
-        },
-        idleTimeout: 300,
-        platform: 'mac'
-      }
+      desiredCapabilities: chromeCapabilities
     },
     browserRemote: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        chromeOptions: {
-          args: [
-            '--use-fake-device-for-media-stream',
-            '--use-fake-ui-for-media-stream',
-            '--disable-infobars'
-          ],
-          prefs: {
-            'profile.default_content_setting_values.notifications': 2
-          }
-        },
-        idleTimeout: 300,
-        platform: 'mac'
-      }
+      desiredCapabilities: chromeCapabilities
+    }
+  } : {
+    browserLocal: {
+      desiredCapabilities: firefoxCapabilities
+    },
+    browserRemote: {
+      desiredCapabilities: firefoxCapabilities
     }
   },
   //
@@ -133,7 +145,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: process.env.TAP ? 'https://code.s4d.io' : 'http://localhost:4567',
+  baseUrl: process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
@@ -198,7 +210,38 @@ exports.config = {
     {mount: '/', path: './test/journeys/server/'},
     {mount: '/axe-core', path: './node_modules/axe-core/'}
   ],
-  staticServerPort: 4567
+  staticServerPort: port,
+  onPrepare(config, capabilities) {
+    const defs = [
+      capabilities.browserRemote.desiredCapabilities,
+      capabilities.browserLocal.desiredCapabilities
+    ];
+
+    const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
+    /* eslint-disable no-param-reassign */
+    defs.forEach((d) => {
+      if (process.env.SAUCE) {
+        d.build = build;
+        // Set the base to SauceLabs so that inject() does its thing.
+        d.base = 'SauceLabs';
+
+        d.version = d.version || 'latest';
+        d.platform = d.platform || 'OS X 10.12';
+      }
+      else {
+        // Copy the base over so that inject() does its thing.
+        d.base = d.browserName;
+        d.platform = os.platform();
+      }
+    });
+    /* eslint-enable no-param-reassign */
+
+    return inject(defs)
+      .then(() => {
+        // Remove the base because it's not actually a selenium property
+        defs.forEach((d) => Reflect.deleteProperty(d, 'base'));
+      });
+  }
 };
 
 if (process.env.SAUCE) {
@@ -209,13 +252,19 @@ if (process.env.SAUCE) {
     sauceConnect: !process.env.TAP,
     sauceConnectOpts: {
       noSslBumpDomains: [
-        'mercury-connection-a.wbx2.com',
-        'mercury-connection-integration.wbx2.com'
+        '*.wbx2.com',
+        '*.ciscospark.com',
+        '*.webex.com',
+        '127.0.0.1',
+        'localhost',
+        '*.clouddrive.com'
       ],
       tunnelDomains: [
         '127.0.0.1',
         'localhost'
-      ]
+      ],
+      tunnelIdentifier: tunnelId,
+      port: process.env.SAUCE_CONNECT_PORT || 4445
     }
   });
 }

@@ -7,6 +7,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import waitForPromise from '../../lib/wait-for-promise';
+import {moveMouse} from '../../lib/test-helpers/index';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
 
@@ -189,7 +190,7 @@ describe('Multiple widgets on a page', () => {
 
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      browserLocal.moveToObject(recentsElements.firstSpace);
+      moveMouse(browserLocal, recentsElements.firstSpace, 10, 10);
       browserLocal.waitUntil(() =>
         browserLocal.element(`${recentsElements.callButton}`).isVisible(),
       1500,

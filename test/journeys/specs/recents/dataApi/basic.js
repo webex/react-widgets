@@ -6,6 +6,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 
+import {moveMouse} from '../../../lib/test-helpers/index';
 import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -146,7 +147,7 @@ describe('Widget Recents', () => {
 
       it('displays a call button on hover', () => {
         displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
-        browserLocal.moveToObject(elements.firstSpace);
+        moveMouse(browserLocal, elements.firstSpace, 10, 10);
         // browserLocal.debug();
         browserLocal.waitUntil(() =>
           browserLocal.element(`${elements.callButton}`).isVisible(),
@@ -173,7 +174,7 @@ describe('Widget Recents', () => {
 
       it('displays a call button on hover', () => {
         displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-        browserLocal.moveToObject(elements.firstSpace);
+        moveMouse(browserLocal, elements.firstSpace, 10, 10);
         // browserLocal.debug();
         browserLocal.waitUntil(() =>
           browserLocal.element(`${elements.callButton}`).isVisible(),
