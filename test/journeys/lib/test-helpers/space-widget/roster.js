@@ -6,7 +6,7 @@ export const elements = {
   rosterWidget: '.ciscospark-roster',
   closeButton: 'button[aria-label="Close"]',
   peopleButton: 'button[aria-label="People"]',
-  rosterTitle: '.ciscospark-roster-title',
+  rosterTitle: '.ciscospark-widget-title',
   participantItem: '.ciscospark-participant-list-item',
   rosterList: '.ciscospark-roster-scrolling-list',
   addParticipantArea: '.ciscospark-roster-add-participant',
