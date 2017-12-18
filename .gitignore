@@ -9,3 +9,4 @@ npm-debug*
 packages/**/es/*
 packages/**/cjs/*
 .tmp/*
+reports/*

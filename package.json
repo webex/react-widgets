@@ -177,7 +177,7 @@
     "wdio-selenium-standalone-service": "0.0.9",
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
-    "webdriverio": "4.9.11",
+    "webdriverio": "4.9.9",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^9.0.1"

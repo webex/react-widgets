@@ -3,6 +3,9 @@ require('babel-register');
 
 const os = require('os');
 
+// eslint-disable-next-line prefer-destructuring
+const argv = require('yargs').argv;
+
 const uuid = require('uuid');
 
 const {inject} = require('./scripts/tests/openh264');
@@ -98,7 +101,6 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -193,7 +195,16 @@ exports.config = {
   // The only one supported by default is 'dot'
   // see also: http://webdriver.io/guide/testrunner/reporters.html
   // NOTE: Omitting `xunit` for now. We can revisit that on another pass
-  reporters: ['spec'],
+  reporters: ['spec', 'junit'],
+  reporterOptions: {
+    junit: {
+      outputDir: './reports/junit/wdio/',
+      outputFileFormat() {
+        return `results-${argv.suite}-${browser}.xml`;
+      },
+      packageName: `${argv.suite}-${browser}`
+    }
+  },
 
   //
   // Options to be passed to Mocha.
