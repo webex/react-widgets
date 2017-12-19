@@ -1,0 +1,362 @@
+# Test Plan
+
+## Test Suites
+
+- oneOnOne
+- space
+- recents
+- multiple
+- tap
+
+### One on One Suite
+
+The "oneOnOne" test suite opens a space widget between two individuals. The tests are performed by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
+
+- Global
+  - "Basic Tests" (Test Users Created)
+    - Widget header has "to user"'s name
+    - Activity Menu
+      - has a menu button
+      - displays the menu when clicking the menu button
+      - has a message button
+      - has a meet button
+      - has a people button
+      - has an exit menu button
+      - closes the menu with the exit button
+      - has a message button
+      - switches to message widget
+      - has a meet button
+      - switches to meet widget
+    - roster tests
+      - has a close button
+      - has the total count of participants
+      - has the participants listed
+      - closes the people roster widget
+    -accessibility
+      - should have no accessibility violations
+  - Feature Flags (Test Users Created)
+    - Roster Feature Flag
+      - has a roster for user with feature flag
+      - does not have a roster for user without flag
+  - Meet widget (Test Users Created)
+    - pre call experience
+      - has a call button
+    - during call experience
+      - can hangup before answer
+      - can decline an incoming call
+      - can hangup in call
+      - has proper call event data
+  - Message widget (Test Users Created)
+    - sends and receives messages
+    - receives proper events on messages
+    -accessibility
+      - should have no accessibility violations
+    - File Transfer Tests
+      - sends message with pdf attachment
+      - sends message with txt attachment
+      - sends message with doc attachment
+      - sends message with docx attachment
+      - sends message with ppt attachment
+      - sends message with html attachment
+      - sends message with json attachment
+      - sends message with zip attachment
+      - sends message with gif attachment
+      - sends message with jpg attachment
+      - sends message with png attachment
+      - sends message with mp3 attachment
+    - markdown messaging
+      - sends message with bold text
+      - sends message with italic text
+      - sends message with a blockquote
+      - sends message with numbered list
+      - sends message with bulleted list
+      - sends message with heading 1
+      - sends message with heading 2
+      - sends message with heading 3
+      - sends message with horizontal line
+      - sends message with link
+      - sends message with inline code
+      - sends message with codeblock
+
+- Data API
+  - "Basic Tests" (Test Users Created)
+    - loads the test page
+    - loads the user's name
+      - Activity Menu
+        - has a menu button
+        - displays the menu when clicking the menu button
+        - has a message button
+        - has a meet button
+        - has a people button
+        - has an exit menu button
+        - closes the menu with the exit button
+        - has a message button
+        - switches to message widget
+        - has a meet button
+        - switches to meet widget
+      - roster tests
+        - has a close button
+        - has the total count of participants
+        - has the participants listed
+        - closes the people roster widget
+  - Feature Flags (Test Users Created)
+    - Roster Feature Flag
+      - has a roster for user with feature flag
+      - does not have a roster for user without flag
+  - Meet widget (Test Users Created)
+    - pre call experience
+      - has a call button
+    - during call experience
+      - can hangup before answer
+      - can decline an incoming call
+      - can hangup in call
+  - Message widget (Test Users Created)
+    - sends and receives messages
+    - receives proper events on messages
+    - accessibility
+      - should have no accessibility violations
+    - File Transfer Tests
+      - sends message with pdf attachment
+      - sends message with txt attachment
+      - sends message with doc attachment
+      - sends message with docx attachment
+      - sends message with ppt attachment
+      - sends message with html attachment
+      - sends message with json attachment
+      - sends message with zip attachment
+      - sends message with gif attachment
+      - sends message with jpg attachment
+      - sends message with png attachment
+      - sends message with mp3 attachment
+    - markdown messaging
+      - sends message with bold text
+      - sends message with italic text
+      - sends message with a blockquote
+      - sends message with numbered list
+      - sends message with bulleted list
+      - sends message with heading 1
+      - sends message with heading 2
+      - sends message with heading 3
+      - sends message with horizontal line
+      - sends message with link
+      - sends message with inline code
+      - sends message with codeblock
+
+### Space Suite
+
+The "space" test suite opens a space widget to a group space and creates three test users to interact. The tests are performed by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
+
+- Global
+  - "Basic Tests" (Test Users & Space Created)
+    - loads the space name
+    - When conversation is established
+      - Activity Menu
+        - has a menu button
+        - displays the menu when clicking the menu button
+        - has an exit menu button
+        - closes the menu with the exit button
+        - has a message button
+        - hides menu and switches to message widget
+      - Roster Tests
+        - has a close button
+        - has the total count of participants
+        - has the participants listed
+        - has search for participants
+        - searches and adds person to space
+        - closes the people roster widget
+      - accessibility
+        - should have no accessibility violations
+  - Meet widget (Test Users & Space Created)
+    - pre call experience
+      - has a call button
+    - during call experience
+      - can hangup before answer
+      - can decline an incoming call
+      - can hangup in call
+  - Message widget (Test Users & Space Created)
+    - sends and receives messages
+    - receives proper events on messages
+    - markdown messaging
+      - sends message with bold text
+      - sends message with italic text
+      - sends message with a blockquote
+      - sends message with numbered list
+      - sends message with bulleted list
+      - sends message with heading 1
+      - sends message with heading 2
+      - sends message with heading 3
+      - sends message with horizontal line
+      - sends message with link
+      - sends message with inline code
+      - sends message with codeblock
+
+- Data API
+  - "Basic Tests" (Test Users & Space Created)
+    - loads the space name
+    - When conversation is established
+      - Activity Menu
+        - has a menu button
+        - displays the menu when clicking the menu button
+        - has an exit menu button
+        - closes the menu with the exit button
+        - has a message button
+        - hides menu and switches to message widget
+      - Roster Tests
+        - has a close button
+        - has the total count of participants
+        - has the participants listed
+        - has search for participants
+        - searches and adds person to space
+        - closes the people roster widget
+      - accessibility
+        - should have no accessibility violations
+      - messaging
+        - sends and receives messages
+  - Meet widget (Test Users & Space Created)
+    - pre call experience
+      - has a call button
+    - during call experience
+      - can hangup before answer
+      - can decline an incoming call
+      - can hangup in call
+  - Message widget (Test Users & Space Created)
+    - sends and receives messages
+    - markdown messaging
+      - sends message with bold text
+      - sends message with italic text
+      - sends message with a blockquote
+      - sends message with numbered list
+      - sends message with bulleted list
+      - sends message with heading 1
+      - sends message with heading 2
+      - sends message with heading 3
+      - sends message with horizontal line
+      - sends message with link
+      - sends message with inline code
+      - sends message with codeblock
+  - Startup Settings (Test Users & Space Created)
+    - initial activity setting: meet
+      - opens meet widget
+    - initial activity setting: message
+      - opens message widget
+    - start call setting
+      - starts call when set to true
+
+- Feature Flags
+  - Global
+    - Roster Feature Flag
+      - has a roster for user with feature flag
+      - does not have a roster for user without flag
+    - Group Calling Feature Flag
+      - has a call option for user with feature flag
+      - does not have a call option for user without flag
+  - Data API
+    - Roster Feature Flag
+      - has a roster for user with feature flag
+      - does not have a roster for user without flag
+    - Group Calling Feature Flag
+      - has a call option for user with feature flag
+      - does not have a call option for user without flag
+
+### Recents Suite
+
+The "recents" test suite opens a recents widget and does things via the sdk that should be reflected in the recents widget. The tests are performed by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
+
+- Data API
+  - group space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a call button on hover
+  - one on one space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a new one on one
+    - displays a call button on hover
+- Global Object
+  - group space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a call button on hover
+    - events
+      - messages:created
+      - rooms:unread
+      - rooms:read
+      - rooms:selected
+      - memberships:created
+      - memberships:deleted
+  - one on one space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a new one on one
+    - displays a call button on hover
+  - accessibility
+    - should have no accessibility violations
+
+### Multiple Widgets Suite
+
+The "multiple" test suite opens a recents widget and a space widget. The tests are performed by instantiating the widgets via the global javascript method.
+
+- recents widget functionality
+  - displays a new incoming message
+  - removes unread indicator when read
+  - displays a call button on hover
+- space widget functionality
+  - Activity Menu
+    - has a menu button
+    - displays the menu when clicking the menu button
+    - has an exit menu button
+    - closes the menu with the exit button
+    - has a message button
+    - hides menu and switches to message widget
+  - messaging
+    - sends and receives messages
+
+### Tap Suite
+
+The "tap" test suite verifies that the production release behaves properly and tests against the public cdn widget bundle.
+
+- Widget Recents
+  - group space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - events
+      - messages:created
+      - rooms:unread
+      - rooms:read
+      - rooms:selected
+      - memberships:created
+      - memberships:deleted
+  - one on one space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a new one on one
+
+- Widget Space
+  - one on one
+    - Activity Menu
+      - has a menu button
+      - displays the menu when clicking the menu button
+      - has an exit menu button
+      - closes the menu with the exit button
+      - has a message button
+      - switches to message widget
+      - has a meet button
+      - switches to meet widget
+    - message widget
+      - sends and receives messages
+    - meet widget
+      - pre call experience
+      - has a call button
+      - during call experience
+      - can hangup in call
+      - can decline an incoming call
+  - space
+    - Activity Menu
+      - has a menu button
+      - displays the menu when clicking the menu button
+      - has an exit menu button
+      - closes the menu with the exit button
+      - has a message button
+      - switches to message widget
+    - message widget
+      - sends and receives messages
