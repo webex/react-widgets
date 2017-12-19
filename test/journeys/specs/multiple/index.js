@@ -7,7 +7,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import waitForPromise from '../../lib/wait-for-promise';
-import {moveMouse} from '../../lib/test-helpers/index';
+import {moveMouse} from '../../lib/test-helpers';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
 

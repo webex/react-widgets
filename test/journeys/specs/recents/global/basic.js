@@ -10,7 +10,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
-import {moveMouse} from '../../../lib/test-helpers/index';
+import {moveMouse} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,

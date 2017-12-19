@@ -6,7 +6,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 
-import {moveMouse} from '../../../lib/test-helpers/index';
+import {moveMouse} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,

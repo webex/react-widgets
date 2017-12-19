@@ -1,6 +1,6 @@
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {moveMouse} from '../../../lib/test-helpers/index.js';
+import {moveMouse} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
 import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
 

@@ -13,7 +13,7 @@ const {inject} = require('./scripts/tests/openh264');
 const browser = process.env.BROWSER || 'chrome';
 const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
-const {suite} = argv;
+const {suite} = argv || 'all';
 
 const chromeCapabilities = {
   browserName: 'chrome',
