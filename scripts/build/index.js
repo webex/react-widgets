@@ -5,6 +5,8 @@
  * CommonJS : Compiled source with all transforms and polyfills
  */
 
+require('dotenv').config();
+
 // eslint-disable-reason not needed for command line
 // eslint-disable-next-line no-unused-expressions
 require('yargs')
