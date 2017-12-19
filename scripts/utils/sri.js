@@ -3,6 +3,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const glob = require('glob');
+const rimraf = require('rimraf');
 const sriToolbox = require('sri-toolbox');
 
 
@@ -48,7 +49,6 @@ function verifySignature({
   return verify.verify(publicKey, signature, 'base64');
 }
 
-
 function generateDistSRI({
   packagePath,
   privateKeyPath,
@@ -62,6 +62,9 @@ function generateDistSRI({
     console.error(`No package.json found in: ${packagePath}`);
     return false;
   }
+
+  // Remove old manifest if it exists
+  rimraf.sync(path.resolve(packagePath, 'manifest.json'));
 
   // Get all distributable files
   const distFiles = glob.sync(path.join(packagePath, 'dist/**/*'), {nodir: true});
