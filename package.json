@@ -9,6 +9,7 @@
     "build:components": "npm run build components",
     "build:packagejson": "npm run build package.json",
     "build:widgets": "npm run build widgets",
+    "build:sri": "npm run build sri",
     "clean": "npm run clean:dist && npm run clean:transpile",
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "clean:transpile": "rimraf \"packages/**/es/\" && rimraf \"packages/**/cjs/\"",
