@@ -134,15 +134,22 @@ ansiColor('xterm') {
           }
 
           stage('Build for CDN'){
-            withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
+            withCredentials([
+              usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
+              file(credentialsId: 'web-sdk-cdn-public-key', variable: 'PUBLIC_KEY'),
+              file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY'),
+              file(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
+            ]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
               version=`cat .version`
               NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
+              npm run build sri widget-space
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
+              npm run build sri widget-recents
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
               '''
             }
