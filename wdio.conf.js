@@ -13,8 +13,11 @@ const {inject} = require('./scripts/tests/openh264');
 const browser = process.env.BROWSER || 'chrome';
 const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
+const {suite} = argv;
+
 const chromeCapabilities = {
   browserName: 'chrome',
+  name: `react-widget-${suite}`,
   chromeOptions: {
     args: [
       '--use-fake-device-for-media-stream',
@@ -30,6 +33,7 @@ const chromeCapabilities = {
 };
 const firefoxCapabilities = {
   browserName: 'firefox',
+  name: `react-widget-${suite}`,
   idleTimeout: 300,
   platform: 'OS X 10.12'
 };
@@ -200,9 +204,9 @@ exports.config = {
     junit: {
       outputDir: './reports/junit/wdio/',
       outputFileFormat() {
-        return `results-${argv.suite}-${browser}.xml`;
+        return `results-${suite}-${browser}.xml`;
       },
-      packageName: `${argv.suite}-${browser}`
+      packageName: `${suite}-${browser}`
     }
   },
 
