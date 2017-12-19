@@ -1,7 +1,8 @@
 import testUsers from '@ciscospark/test-helper-test-users';
 
+import {moveMouse} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
-import {answer, hangup} from '../../../lib/test-helpers/space-widget/meet.js';
+import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
 
 describe('Widget Space: One on One', () => {
   describe('Data API Settings', () => {
@@ -122,6 +123,7 @@ describe('Widget Space: One on One', () => {
 
       it('starts call when set to true', () => {
         answer(browserRemote);
+        moveMouse(browserLocal, meetElements.callContainer);
         hangup(browserLocal);
       });
 
