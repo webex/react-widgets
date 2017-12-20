@@ -18,15 +18,12 @@ export const elements = {
   callControls: '.call-controls',
   remoteVideo: '.remote-video video'
 };
-
-
 /**
  * @typedef {object} TestObject
  * @param {object} browser - browser for test
  * @param {object} user - user object for test
  * @param {object} displayName - name used to identify test object
  */
-
 
 /**
  * Answers call on specified browser
@@ -48,7 +45,6 @@ export function answer(aBrowser) {
  * @returns {void}
  */
 export function call(caller, reciever) {
-  caller.moveToObject(elements.meetWidget);
   caller.element(elements.meetWidget).element(elements.callButton).waitForVisible();
   caller.element(elements.meetWidget).element(elements.callButton).click();
   // wait for call to establish
@@ -72,8 +68,8 @@ export function decline(aBrowser) {
  */
 export function hangup(aBrowser) {
   // Call controls currently has a hover state
-  aBrowser.moveToObject(elements.meetWidget);
   aBrowser.waitForVisible(elements.callControls);
+  aBrowser.element(elements.meetWidget).element(elements.hangupButton).waitForVisible();
   aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();
 }
 
