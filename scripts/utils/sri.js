@@ -6,7 +6,12 @@ const glob = require('glob');
 const rimraf = require('rimraf');
 const sriToolbox = require('sri-toolbox');
 
-
+/**
+ * Takes data as a string and generates an integrity hash using sha384
+ * @param {Object} options
+ * @param {String} options.data
+ * @returns {String} integrity
+ */
 function generateSRI({
   data
 }) {
@@ -17,6 +22,14 @@ function generateSRI({
   return integrity;
 }
 
+/**
+ * Provides the signature for an SRI hash
+ * @param {Object} options
+ * @param {String} options.sri SRI hash
+ * @param {String} options.privateKey
+ * @param {String} options.passphrase associated with private key
+ * @returns {String} signature
+ */
 function signSRI({
   sri,
   privateKey,
@@ -33,6 +46,14 @@ function signSRI({
   return sign.sign({key: privateKey, passphrase}, 'base64');
 }
 
+/**
+ * Verifies signed string using public key
+ * @param {Object} options
+ * @param {String} options.data original signed string
+ * @param {String} options.signature
+ * @param {String} options.publicKey
+ * @returns {Boolean}
+ */
 function verifySignature({
   data,
   signature,
@@ -49,6 +70,15 @@ function verifySignature({
   return verify.verify(publicKey, signature, 'base64');
 }
 
+/**
+ * Generates manifest file with SRI and signatures for a specific package
+ * @param {Object} options
+ * @param {String} options.packagePath path to widget package
+ * @param {String} options.privateKeyPath
+ * @param {String} options.publicKeyPath
+ * @param {String} options.passphrase
+ * @returns {Boolean}
+ */
 function generateDistSRI({
   packagePath,
   privateKeyPath,
