@@ -76,13 +76,13 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm install v8.9.1
               nvm use v8.9.1
               npm install
-              rm -f $HOME/.npmrc
+              git checkout .npmrc
               '''
             }
           }
@@ -132,10 +132,9 @@ ansiColor('xterm') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
             nvm use v8.9.1
-            npm version patch
+            npm version patch -m "build %s"
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
-            git commit --amend -m "build ${version}"
             '''
             packageJsonVersion = readFile '.version'
           }
@@ -196,7 +195,7 @@ ansiColor('xterm') {
                 string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
               ]) {
                 try {
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
@@ -204,7 +203,7 @@ ansiColor('xterm') {
                   source ~/.nvm/nvm.sh
                   nvm use v8.9.1
                   npm run publish:components
-                  rm -f $HOME/.npmrc
+                  git checkout .npmrc
                   '''
                 }
                 catch (error) {
