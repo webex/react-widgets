@@ -76,13 +76,13 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm install v8.9.1
               nvm use v8.9.1
               npm install
-              rm -f $HOME/.npmrc
+              git checkout .npmrc
               '''
             }
           }
@@ -113,11 +113,18 @@ ansiColor('xterm') {
              nvm use v8.9.1
              NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation -- --suite=oneOnOne
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation -- --suite=space
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation -- --suite=recents
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm run test:automation -- --suite=multiple
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome npm run test:automation -- --suite=oneOnOne &
+             sleep 60 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:automation -- --suite=space &
+             sleep 120 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=chrome npm run test:automation -- --suite=recents &
+             sleep 180 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4570 SAUCE_CONNECT_PORT=5007 BROWSER=chrome npm run test:automation -- --suite=multiple &
+             wait
+             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=firefox npm run test:automation -- --suite=oneOnOne &
+             sleep 60 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=firefox npm run test:automation -- --suite=space &
+             sleep 120 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:automation -- --suite=recents &
+             sleep 180 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4570 SAUCE_CONNECT_PORT=5007 BROWSER=firefox npm run test:automation -- --suite=multiple &
+             wait
              '''
+             junit '**/reports/junit/wdio/*.xml'
             }
           }
 
@@ -125,10 +132,9 @@ ansiColor('xterm') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
             nvm use v8.9.1
-            npm version patch
+            npm version patch -m "build %s"
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
-            git commit --amend -m "build ${version}"
             '''
             packageJsonVersion = readFile '.version'
           }
@@ -196,7 +202,7 @@ ansiColor('xterm') {
                 string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
               ]) {
                 try {
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
@@ -204,7 +210,7 @@ ansiColor('xterm') {
                   source ~/.nvm/nvm.sh
                   nvm use v8.9.1
                   npm run publish:components
-                  rm -f $HOME/.npmrc
+                  git checkout .npmrc
                   '''
                 }
                 catch (error) {
