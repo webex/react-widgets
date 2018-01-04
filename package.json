@@ -97,7 +97,6 @@
     "redux-logger": "^3.0.1",
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
-    "redux-logger": "^3.0.1",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.0",
     "superagent": "^3.5.2",

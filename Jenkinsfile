@@ -132,6 +132,7 @@ ansiColor('xterm') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
             nvm use v8.9.1
+            git diff
             npm version patch -m "build %s"
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
@@ -142,9 +143,8 @@ ansiColor('xterm') {
           stage('Build for CDN'){
             withCredentials([
               usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
-              file(credentialsId: 'web-sdk-cdn-public-key', variable: 'PUBLIC_KEY'),
-              file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY'),
-              file(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
+              file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
+              string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
             ]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
