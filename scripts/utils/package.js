@@ -86,7 +86,7 @@ function getWidgetPackages() {
   return pkgPaths
     .filter((pkgPath) => {
       const pkgName = require(path.resolve(pkgPath, 'package.json')).name;
-      return pkgName.startsWith('@ciscospark/widget') && !pkgName.startsWith('@ciscospark/widget-base');
+      return pkgName.startsWith('@ciscospark/widget');
     });
 }
 
