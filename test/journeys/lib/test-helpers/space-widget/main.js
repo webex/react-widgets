@@ -3,6 +3,7 @@ export const elements = {
   menuButton: 'button[aria-label="Main Menu"]',
   messageButton: 'button[aria-label="Message"]',
   meetButton: 'button[aria-label="Call"]',
+  filesButton: 'button[aria-label="Files"]',
   activityMenu: '.ciscospark-activity-menu',
   controlsContainer: '.ciscospark-controls-container',
   exitButton: '.ciscospark-activity-menu-exit button',

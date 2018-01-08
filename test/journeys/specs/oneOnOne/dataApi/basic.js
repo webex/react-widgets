@@ -114,6 +114,10 @@ describe('Widget Space: One on One', () => {
         browserLocal.element(elements.controlsContainer).element(rosterElements.peopleButton).waitForVisible();
       });
 
+      it('has a files button', () => {
+        browserLocal.element(elements.controlsContainer).element(elements.filesButton).waitForVisible();
+      });
+
       it('has an exit menu button', () => {
         assert.isTrue(browserLocal.isVisible(elements.activityMenu));
         browserLocal.waitForVisible(elements.exitButton);

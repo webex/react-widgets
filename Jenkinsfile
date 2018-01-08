@@ -76,13 +76,13 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm install v8.9.1
               nvm use v8.9.1
               npm install
-              rm -f $HOME/.npmrc
+              git checkout .npmrc
               '''
             }
           }
@@ -132,24 +132,30 @@ ansiColor('xterm') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
             nvm use v8.9.1
-            npm version patch
+            git diff
+            npm version patch -m "build %s"
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
-            git commit --amend -m "build ${version}"
             '''
             packageJsonVersion = readFile '.version'
           }
 
           stage('Build for CDN'){
-            withCredentials([usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID')]) {
+            withCredentials([
+              usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
+              file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
+              string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
+            ]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
               version=`cat .version`
               NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build sri widget-space
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
+              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build sri widget-recents
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
               '''
             }
@@ -196,7 +202,7 @@ ansiColor('xterm') {
                 string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
               ]) {
                 try {
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
@@ -204,7 +210,7 @@ ansiColor('xterm') {
                   source ~/.nvm/nvm.sh
                   nvm use v8.9.1
                   npm run publish:components
-                  rm -f $HOME/.npmrc
+                  git checkout .npmrc
                   '''
                 }
                 catch (error) {

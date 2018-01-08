@@ -16,6 +16,8 @@ The Cisco Spark for React library allows developers to easily incorporate Spark 
 - [Version](#version)
 - [Development](#development)
 - [Coding Style](#coding-style)
+- [Coding Style](#coding-style)
+- [Code Verification](#code-verification)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -59,6 +61,47 @@ Once a widget is bundled, the version number is available in the following ways:
 ## Coding Style
 
 We follow our [Cisco Spark Web Styleguide](https://github.com/ciscospark/web-styleguide) when developing any web based libraries and tools. Please check it out and do your best to follow our norms when contributing to this codebase.
+
+## Code Verification
+
+As a best practice, we provide a [Sub-resource Integrity (SRI)](https://www.w3.org/TR/SRI/) hash for all of our CDN hosted distributable files. A manifest listing all of the files with associated `integrity` hashes can be found for the latest build, where `{NAME}` is the name of the widget at `https://code.s4d.io/widget-{NAME}/production/manifest.json`.
+
+> **Manifest Example**
+>
+> ``` json
+> {
+>   "version": "0.1.215",
+>   "files": [
+>      {
+>        "name": "bundle.js",
+>        "url": "https://code.s4d.io/widget-space/archives/0.1.120/bundle.js",
+>        "signature": "kfVRBKftbb3OQ4VmYOqstb9V0abqXJzY1L0Ww/zsbiF+bGaDkgiLWqztTCh43uMsUtzEgpF0M29pr67gSlZLSOq6iUgBg9zGhiVoVqlxEUGqxdOXkeDLRTOr16KkBtAObBidWauyNOvA+6FAC71UP2yFTXIadV7z1W7tIwt+wOfGqqaBwzMCuXl1bS4Va5Fj+s2SLsRfuDrSG0gPbG499bl0v6QkWKvkYPjW4v/BffyJNFJsu2rubkPXSCEk5yU4UpOJqsQPJ+sx4s9QFgMtWbNZ+cqnBuPFPBrr5E31lOS3eJwR9Jx139ZTpcBxP19qM6zV9ategsil7w1dIN1HVbU6H/byLHTLjf39kCOsNJk6yo+B9FiD2By8wSDi4ykD6MJEH7OqOxsb49/FsgALSmJB1iIexU4xQWE3HhupEtlvv+YCQtUE0IBMVEmjauhLzJ0gBemOvzo7eMeWEsrTSSMtePS+wp9UT7uvmz7l/UIBeIuhT87YKAt0AHgE3C0pE/JOh3JofshVZ++mC1A+bjSl/+Y41mU8BclWYnGfXDwkYevzi5SxklS77eD1J/4Q+DXUkDNAR9DQe/UHZ8nrnW+GlUATwHaqhW4883p/j9zGuGEzcEQeUDHBMl23c0z3hUIXfYfhn7dExyHzTzMZQaKFD5Dl7+CgmL5V6FHY3Iw=",
+>        "integrity": "sha384-3bMDdbkrYdS5m4SA7/gzkh7/G9ppEV0BVyPs2TZqbny/z9aPaw4D3DHS1+Wg9phW"
+>     }
+>   ]
+> }
+> ```
+
+To find the SRI hash for a specific build of the widgets, you can use the following URL, replacing {VERSION} with the specific version you are looking for: `https://code.s4d.io/widget-space/archives/{VERSION}/manifest.json`.
+
+Additionally, for those who want an additional layer of verification, a `signature` has been provided that is signed by a private key. You can use our [public key](./public-key.pem) to verify this signature. Here is example of the verification process using the nodeJS built-in `cryto` library:
+
+``` js
+const crypto = require('crypto');
+function verifySignature({
+  data,
+  signature,
+  publicKey
+}) {
+  // Verify that we signed correctly using public key
+  const verify = crypto.createVerify('RSA-SHA384');
+  verify.write(data);
+  verify.end();
+
+  // True if signature is verified
+  return verify.verify(publicKey, signature, 'base64');
+}
+```
 
 ## Contributing
 
