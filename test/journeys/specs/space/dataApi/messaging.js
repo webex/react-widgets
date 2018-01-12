@@ -152,6 +152,64 @@ describe('Widget Space', () => {
         verifyMessageReceipt(remote, local, martyText2);
       });
 
+      describe('File Transfer Tests', () => {
+        it('sends message with pdf attachment', () => {
+          messageTests.sendFileTest(local, remote, 'pdf-sample.pdf');
+        });
+
+        it('sends message with txt attachment', () => {
+          messageTests.sendFileTest(local, remote, 'txt-sample.txt');
+        });
+
+        it('sends message with doc attachment', () => {
+          messageTests.sendFileTest(local, remote, 'doc-sample.doc');
+        });
+
+        it('sends message with docx attachment', () => {
+          messageTests.sendFileTest(local, remote, 'docx-sample.docx');
+        });
+
+        it('sends message with ppt attachment', () => {
+          messageTests.sendFileTest(local, remote, 'ppt-sample.ppt');
+        });
+
+        it('sends message with html attachment', () => {
+          messageTests.sendFileTest(local, remote, 'html-sample.html');
+        });
+
+        it('sends message with json attachment', () => {
+          messageTests.sendFileTest(local, remote, 'json-sample.json');
+        });
+
+        it('sends message with zip attachment', () => {
+          messageTests.sendFileTest(local, remote, 'zip-sample.zip');
+        });
+
+        it('sends message with gif attachment', () => {
+          messageTests.sendFileTest(local, remote, 'gif-sample.gif', false);
+        });
+
+        it('sends message with jpg attachment', () => {
+          messageTests.sendFileTest(local, remote, 'jpg-sample.jpg', false);
+        });
+
+        it('sends message with png attachment', () => {
+          messageTests.sendFileTest(local, remote, 'png-sample.png');
+        });
+
+        it('sends message with mp3 attachment', () => {
+          messageTests.sendFileTest(local, remote, 'mp3-sample.mp3');
+        });
+
+        it('verifies png-sample is in files tab', () => {
+          messageTests.filesTabTest(local, remote, 'png-sample.png');
+        });
+
+        it('verifies mp3-sample is in files tab', () => {
+          messageTests.filesTabTest(local, remote, 'mp3-sample.mp3', false);
+        });
+      });
+
       describe('markdown messaging', () => {
         it('sends message with bold text', () => {
           messageTests.markdown.bold(remote, local);

@@ -5,6 +5,8 @@ import {assert} from 'chai';
 import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
+import {elements as mainElements} from './main';
+
 const uploadDir = path.join(__dirname, '../assets');
 
 export const elements = {
@@ -14,7 +16,9 @@ export const elements = {
   shareButton: 'button[aria-label="Share"]',
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
-  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
+  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
+  filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
+  closeButton: 'button[aria-label="Close"]'
 };
 
 /**
@@ -51,6 +55,31 @@ export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
 }
 
+/**
+ * Verifies file is displayed in files tab
+ * @param {object} aBrowser
+ * @param {string} fileName
+ * @param {boolean} hasThumbnail
+ * @returns {void}
+ */
+export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
+  const fileTitle = `//div[text()="${fileName}"]`;
+  const fileThumbnail = `[alt="Uploaded File ${fileName}"]`;
+  if (!aBrowser.isVisible(mainElements.activityMenu)) {
+    aBrowser.click(mainElements.menuButton);
+    aBrowser.waitForVisible(mainElements.activityMenu);
+  }
+  aBrowser.waitForVisible(mainElements.filesButton);
+  aBrowser.click(mainElements.filesButton);
+  aBrowser.waitForVisible(elements.filesWidget);
+  aBrowser.element(`${elements.filesWidget}${fileTitle}`).waitForExist();
+  if (hasThumbnail) {
+    aBrowser.waitForVisible(fileThumbnail);
+  }
+  aBrowser.waitForVisible(elements.closeButton);
+  aBrowser.click(elements.closeButton);
+}
+
 /* eslint no-sync: "off" */
 /**
  * Sends a file and verifies receipt
@@ -76,6 +105,19 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   // Send receipt acknowledgement and verify before moving on
   sendMessage(receiver, sender, `Received: ${fileName}`);
   verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
+};
+
+/**
+ * Test that sends a file and verifies that it is present in the files activity tab
+ * @param {TestObject} sender
+ * @param {TestObject} receiver
+ * @param {string} fileName
+ * @param {boolean} [hasThumbnail = true] Some files don't have a thumbnail
+ * @returns {void}
+ */
+const filesTabTest = (sender, receiver, fileName, hasThumbnail = true) => {
+  verifyFilesActivityTab(sender.browser, fileName, hasThumbnail);
+  verifyFilesActivityTab(receiver.browser, fileName, hasThumbnail);
 };
 
 /**
@@ -280,6 +322,7 @@ const codeblock = (sender, receiver) => {
 
 export const messageTests = {
   sendFileTest,
+  filesTabTest,
   messageEventTest,
   markdown: {
     bold,

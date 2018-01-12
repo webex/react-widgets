@@ -145,6 +145,14 @@ describe('Widget Space: One on One', () => {
       it('sends message with mp3 attachment', () => {
         messageTests.sendFileTest(local, remote, 'mp3-sample.mp3');
       });
+
+      it('verifies png-sample is in files tab', () => {
+        messageTests.filesTabTest(local, remote, 'png-sample.png');
+      });
+
+      it('verifies mp3-sample is in files tab', () => {
+        messageTests.filesTabTest(local, remote, 'mp3-sample.mp3', false);
+      });
     });
 
     describe('markdown messaging', () => {
