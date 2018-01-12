@@ -178,6 +178,14 @@ describe('Widget Space', () => {
           browserLocal.element(elements.controlsContainer).element(elements.filesButton).waitForVisible();
         });
 
+        it('switches to files widget', () => {
+          browserLocal.waitForVisible(elements.filesButton);
+          browserLocal.click(elements.filesButton);
+          browserLocal.waitForVisible(elements.filesWidget);
+          browserLocal.waitForVisible(elements.menuButton);
+          browserLocal.click(elements.menuButton);
+        });
+
         it('hides menu and switches to message widget', () => {
           browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
           browserLocal.waitForVisible(elements.activityMenu, 1500, true);
