@@ -16,9 +16,7 @@ export const elements = {
   shareButton: 'button[aria-label="Share"]',
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
-  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
-  filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
-  closeButton: 'button[aria-label="Close"]'
+  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
 };
 
 /**
@@ -71,13 +69,13 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
   }
   aBrowser.waitForVisible(mainElements.filesButton);
   aBrowser.click(mainElements.filesButton);
-  aBrowser.waitForVisible(elements.filesWidget);
-  aBrowser.element(`${elements.filesWidget}${fileTitle}`).waitForExist();
+  aBrowser.waitForVisible(mainElements.filesWidget);
+  aBrowser.element(`${mainElements.filesWidget}${fileTitle}`).waitForExist();
   if (hasThumbnail) {
     aBrowser.waitForVisible(fileThumbnail);
   }
-  aBrowser.waitForVisible(elements.closeButton);
-  aBrowser.click(elements.closeButton);
+  aBrowser.waitForVisible(mainElements.closeButton);
+  aBrowser.click(mainElements.closeButton);
 }
 
 /* eslint no-sync: "off" */
