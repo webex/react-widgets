@@ -2,6 +2,7 @@ import path from 'path';
 
 import {assert} from 'chai';
 
+import {moveMouse} from '../';
 import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
@@ -10,6 +11,8 @@ import {elements as mainElements} from './main';
 const uploadDir = path.join(__dirname, '../assets');
 
 export const elements = {
+  flagButton: 'button[aria-label="Flag this message"]',
+  highlighted: '.isHighlighted',
   inputFile: '.ciscospark-file-input',
   downloadButtonContainer: '(//div[starts-with(@class,"ciscospark-activity-content")])[last()]',
   downloadFileButton: '(//div[@title="Download this file"]/parent::button)[last()]',
@@ -76,6 +79,73 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
   }
   aBrowser.waitForVisible(mainElements.closeButton);
   aBrowser.click(mainElements.closeButton);
+}
+
+/**
+ * Flags the last message received
+ * @param {TestObject} testObject
+ * @param {string} messageToFlag Verifies the last message is this string
+ * @returns {void}
+ */
+export function flagMessage(testObject, messageToFlag) {
+  testObject.browser.waitUntil(() =>
+    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
+
+  moveMouse(testObject.browser, elements.lastActivityText);
+  testObject.browser.waitUntil(() =>
+    testObject.browser
+      .element(elements.lastActivity)
+      .element(elements.flagButton)
+      .isVisible(),
+  'flag button is not visible');
+
+  testObject.browser
+    .element(elements.lastActivity)
+    .element(elements.flagButton)
+    .click();
+
+  // Move mouse away to hide hover buttons
+  moveMouse(testObject.browser, elements.lastActivityText, 0, 150);
+
+  // Verify it is highlighted, showing it was flagged
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(elements.lastActivity)
+    .element(elements.highlighted)
+    .element(elements.flagButton)
+    .isVisible(), 'flag button did not highlight');
+
+  // Since we automatically activate the flag icon before confirming it on the server,
+  // we need to wait a certain timeframe to allow server to recognize flag
+  testObject.browser.pause(1500);
+}
+
+/**
+ * Unflags the last message received. Expected message should already be flagged
+ * @param {TestObject} testObject
+ * @param {string} messageToUnflag
+ * @returns {void}
+ */
+export function removeFlagMessage(testObject, messageToUnflag) {
+  testObject.browser.waitUntil(() =>
+    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag);
+
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(elements.lastActivity)
+    .element(elements.highlighted)
+    .element(elements.flagButton)
+    .isVisible(), 'message was not flagged');
+
+  testObject.browser
+    .element(elements.lastActivity)
+    .element(elements.flagButton)
+    .click();
+
+  moveMouse(testObject.browser, elements.lastActivityText, 0, 150);
+
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(elements.lastActivity)
+    .element(elements.highlighted)
+    .isVisible() === false, 'message was still flagged');
 }
 
 /* eslint no-sync: "off" */
