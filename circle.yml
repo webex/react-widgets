@@ -5,7 +5,7 @@ machine:
     XUNIT: true
     UNIT_ONLY: true
   node:
-    version: 7
+    version: 8.9.1
 
 general:
   artifacts:
