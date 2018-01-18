@@ -64,6 +64,8 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - sends message with jpg attachment
       - sends message with png attachment
       - sends message with mp3 attachment
+      - verifies png-sample is in files tab
+      - verifies mp3-sample is in files tab
     - markdown messaging
       - sends message with bold text
       - sends message with italic text
@@ -128,6 +130,8 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - sends message with jpg attachment
       - sends message with png attachment
       - sends message with mp3 attachment
+      - verifies png-sample is in files tab
+      - verifies mp3-sample is in files tab
     - markdown messaging
       - sends message with bold text
       - sends message with italic text
@@ -176,6 +180,21 @@ The "space" test suite opens a space widget to a group space and creates three t
   - Message widget (Test Users & Space Created)
     - sends and receives messages
     - receives proper events on messages
+    - File Transfer Tests
+      - sends message with pdf attachment
+      - sends message with txt attachment
+      - sends message with doc attachment
+      - sends message with docx attachment
+      - sends message with ppt attachment
+      - sends message with html attachment
+      - sends message with json attachment
+      - sends message with zip attachment
+      - sends message with gif attachment
+      - sends message with jpg attachment
+      - sends message with png attachment
+      - sends message with mp3 attachment
+      - verifies png-sample is in files tab
+      - verifies mp3-sample is in files tab
     - markdown messaging
       - sends message with bold text
       - sends message with italic text
@@ -221,6 +240,21 @@ The "space" test suite opens a space widget to a group space and creates three t
       - can hangup in call
   - Message widget (Test Users & Space Created)
     - sends and receives messages
+    - File Transfer Tests
+      - sends message with pdf attachment
+      - sends message with txt attachment
+      - sends message with doc attachment
+      - sends message with docx attachment
+      - sends message with ppt attachment
+      - sends message with html attachment
+      - sends message with json attachment
+      - sends message with zip attachment
+      - sends message with gif attachment
+      - sends message with jpg attachment
+      - sends message with png attachment
+      - sends message with mp3 attachment
+      - verifies png-sample is in files tab
+      - verifies mp3-sample is in files tab
     - markdown messaging
       - sends message with bold text
       - sends message with italic text

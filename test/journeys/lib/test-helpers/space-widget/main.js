@@ -4,8 +4,10 @@ export const elements = {
   messageButton: 'button[aria-label="Message"]',
   meetButton: 'button[aria-label="Call"]',
   filesButton: 'button[aria-label="Files"]',
+  filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
   controlsContainer: '.ciscospark-controls-container',
+  closeButton: 'button[aria-label="Close"]',
   exitButton: '.ciscospark-activity-menu-exit button',
   messageWidget: '.ciscospark-message-wrapper',
   meetWidget: '.ciscospark-meet-wrapper'

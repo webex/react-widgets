@@ -118,6 +118,14 @@ describe('Widget Space: One on One', () => {
         browserLocal.element(elements.controlsContainer).element(elements.filesButton).waitForVisible();
       });
 
+      it('switches to files widget', () => {
+        browserLocal.waitForVisible(elements.filesButton);
+        browserLocal.click(elements.filesButton);
+        browserLocal.waitForVisible(elements.filesWidget);
+        browserLocal.waitForVisible(elements.menuButton);
+        browserLocal.click(elements.menuButton);
+      });
+
       it('has an exit menu button', () => {
         assert.isTrue(browserLocal.isVisible(elements.activityMenu));
         browserLocal.waitForVisible(elements.exitButton);
