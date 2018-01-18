@@ -1,7 +1,17 @@
+import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {sendMessage, verifyMessageReceipt, messageTests} from '../../../lib/test-helpers/space-widget/messaging';
+import {
+  canDeleteMessage,
+  deleteMessage,
+  flagMessage,
+  messageTests,
+  removeFlagMessage,
+  sendMessage,
+  verifyMessageReceipt
+} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe('Widget Space: One on One', () => {
   describe('Data API', () => {
@@ -44,7 +54,7 @@ describe('Widget Space: One on One', () => {
         remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
       }));
 
-    before('pause to let test users establish', () => browser.pause(5000));
+    before('pause to let test users establish', () => browser.pause(500));
 
     before('inject token', () => {
       local.browser.execute((localAccessToken, localToUserEmail) => {
@@ -80,6 +90,40 @@ describe('Widget Space: One on One', () => {
         const message = 'Oh, I am sorry, Doctor. Were we having a good time?';
         sendMessage(local, remote, message);
         verifyMessageReceipt(remote, local, message);
+      });
+
+      describe('message actions', () => {
+        describe('message flags', () => {
+          const message = 'Do you really think this is a good idea?';
+          before('create a message to flag', () => {
+            sendMessage(remote, local, message);
+            verifyMessageReceipt(local, remote, message);
+          });
+
+          it('should be able to flag a message', () => {
+            flagMessage(local, message);
+          });
+
+          it('should be able to unflag a message', () => {
+            removeFlagMessage(local, message);
+          });
+        });
+
+        describe('delete message', () => {
+          it('should be able to delete a message from self', () => {
+            const message = 'There is no spoon!';
+            sendMessage(local, remote, message);
+            verifyMessageReceipt(remote, local, message);
+            deleteMessage(local, message);
+          });
+
+          it('should not be able to delete a message from others', () => {
+            const message = 'Hey you guys!';
+            sendMessage(remote, local, message);
+            verifyMessageReceipt(local, remote, message);
+            assert.isFalse(canDeleteMessage(local, message));
+          });
+        });
       });
 
       describe('File Transfer Tests', () => {

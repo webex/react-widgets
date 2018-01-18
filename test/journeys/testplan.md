@@ -32,7 +32,7 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - has the total count of participants
       - has the participants listed
       - closes the people roster widget
-    -accessibility
+    - accessibility
       - should have no accessibility violations
   - Feature Flags (Test Users Created)
     - Roster Feature Flag
@@ -49,7 +49,14 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
   - Message widget (Test Users Created)
     - sends and receives messages
     - receives proper events on messages
-    -accessibility
+    - message actions
+      - message flags
+        - should be able to flag a message
+        - should be able to unflag a message
+      - delete message
+        - should be able to delete a message from self
+        - should not be able to delete a message from others
+    - accessibility
       - should have no accessibility violations
     - File Transfer Tests
       - sends message with pdf attachment
@@ -115,8 +122,13 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
   - Message widget (Test Users Created)
     - sends and receives messages
     - receives proper events on messages
-    - accessibility
-      - should have no accessibility violations
+    - message actions
+      - message flags
+        - should be able to flag a message
+        - should be able to unflag a message
+      - delete message
+        - should be able to delete a message from self
+        - should not be able to delete a message from others
     - File Transfer Tests
       - sends message with pdf attachment
       - sends message with txt attachment
@@ -180,6 +192,13 @@ The "space" test suite opens a space widget to a group space and creates three t
   - Message widget (Test Users & Space Created)
     - sends and receives messages
     - receives proper events on messages
+    - message actions
+      - message flags
+        - should be able to flag a message
+        - should be able to unflag a message
+      - delete message
+        - should be able to delete a message from self
+        - should not be able to delete a message from others
     - File Transfer Tests
       - sends message with pdf attachment
       - sends message with txt attachment
@@ -240,6 +259,13 @@ The "space" test suite opens a space widget to a group space and creates three t
       - can hangup in call
   - Message widget (Test Users & Space Created)
     - sends and receives messages
+    - message actions
+      - message flags
+        - should be able to flag a message
+        - should be able to unflag a message
+      - delete message
+        - should be able to delete a message from self
+        - should not be able to delete a message from others
     - File Transfer Tests
       - sends message with pdf attachment
       - sends message with txt attachment

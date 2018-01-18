@@ -1,10 +1,20 @@
+import {assert} from 'chai';
+
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
-import {sendMessage, verifyMessageReceipt, messageTests} from '../../../lib/test-helpers/space-widget/messaging';
+import {
+  canDeleteMessage,
+  deleteMessage,
+  flagMessage,
+  messageTests,
+  removeFlagMessage,
+  sendMessage,
+  verifyMessageReceipt
+} from '../../../lib/test-helpers/space-widget/messaging';
 
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
@@ -83,7 +93,7 @@ describe('Widget Space', () => {
       return lorraine.spark.internal.mercury.connect();
     }));
 
-  before('pause to let test users establish', () => browser.pause(5000));
+  before('pause to let test users establish', () => browser.pause(500));
 
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
@@ -153,6 +163,40 @@ describe('Widget Space', () => {
 
     it('receives proper events on messages', () => {
       messageTests.messageEventTest(local, remote);
+    });
+
+    describe('message actions', () => {
+      describe('message flags', () => {
+        const message = 'Do you really think this is a good idea?';
+        before('create a message to flag', () => {
+          sendMessage(remote, local, message);
+          verifyMessageReceipt(local, remote, message);
+        });
+
+        it('should be able to flag a message', () => {
+          flagMessage(local, message);
+        });
+
+        it('should be able to unflag a message', () => {
+          removeFlagMessage(local, message);
+        });
+      });
+
+      describe('delete message', () => {
+        it('should be able to delete a message from self', () => {
+          const message = 'There is no spoon!';
+          sendMessage(local, remote, message);
+          verifyMessageReceipt(remote, local, message);
+          deleteMessage(local, message);
+        });
+
+        it('should not be able to delete a message from others', () => {
+          const message = 'Hey you guys!';
+          sendMessage(remote, local, message);
+          verifyMessageReceipt(local, remote, message);
+          assert.isFalse(canDeleteMessage(local, message));
+        });
+      });
     });
 
     describe('File Transfer Tests', () => {
