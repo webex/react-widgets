@@ -11,15 +11,22 @@ import {elements as mainElements} from './main';
 const uploadDir = path.join(__dirname, '../assets');
 
 export const elements = {
+  deleteMessageButton: 'button[aria-label="Delete this message"]',
   flagButton: 'button[aria-label="Flag this message"]',
   highlighted: '.isHighlighted',
   inputFile: '.ciscospark-file-input',
+  modalWindow: '.ciscospark-dialogue-modal',
+  modalDeleteButton: 'button[title="Delete"].dialogue-modal-action-btn',
   downloadButtonContainer: '(//div[starts-with(@class,"ciscospark-activity-content")])[last()]',
   downloadFileButton: '(//div[@title="Download this file"]/parent::button)[last()]',
   shareButton: 'button[aria-label="Share"]',
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
   lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
+};
+
+export const messages = {
+  youDeleted: 'You deleted your message.'
 };
 
 /**
@@ -147,6 +154,60 @@ export function removeFlagMessage(testObject, messageToUnflag) {
     .element(elements.highlighted)
     .isVisible() === false, 'message was still flagged');
 }
+
+/**
+ * Looks to see if the last message can be deleted
+ * @param {TestObject} testObject
+ * @param {string} messageToDelete
+ * @returns {boolean}
+ */
+export function canDeleteMessage(testObject, messageToDelete) {
+  testObject.browser.waitUntil(() =>
+    testObject.browser.element(elements.lastActivityText).getText() === messageToDelete);
+
+  return testObject.browser
+    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
+    .isExisting();
+}
+
+/**
+ * Deletes the last message sent
+ * @param {TestObject} testObject
+ * @param {string} messageToDelete
+ * @returns {null}
+ */
+export function deleteMessage(testObject, messageToDelete) {
+  assert.isTrue(canDeleteMessage(testObject, messageToDelete));
+
+  moveMouse(testObject.browser, elements.lastActivityText);
+
+  testObject.browser.waitUntil(() =>
+    testObject.browser
+      .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
+      .isVisible(),
+  'delete button is not visible');
+
+  testObject.browser
+    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
+    .click();
+
+  // Click modal confirm
+  testObject.browser.waitUntil(() =>
+    testObject.browser
+      .element(elements.modalWindow)
+      .isVisible(),
+  'modal window is not visible');
+  assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
+  testObject.browser.element(elements.modalDeleteButton).click();
+
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
+
+  testObject.browser.waitUntil(() => {
+    const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
+    return text.includes(messages.youDeleted);
+  }, 'message was not deleted');
+}
+
 
 /* eslint no-sync: "off" */
 /**
