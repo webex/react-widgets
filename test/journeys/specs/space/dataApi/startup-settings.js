@@ -4,8 +4,9 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
 import {moveMouse} from '../../../lib/test-helpers';
-import {elements} from '../../../lib/test-helpers/space-widget/main.js';
-import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
+import {elements} from '../../../lib/test-helpers/space-widget/main';
+import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet';
+import {constructHydraId} from '../../../lib/hydra';
 
 describe('Widget Space', () => {
   describe('Data API Settings', () => {
@@ -185,6 +186,43 @@ describe('Widget Space', () => {
         answer(browserRemote);
         moveMouse(browserLocal, meetElements.callContainer);
         hangup(browserLocal);
+      });
+
+      after('refresh browsers to remove widgets', browser.refresh);
+    });
+
+    describe('opens using hydra id ', () => {
+      before('inject docbrown token', () => {
+        browserRemote.execute((localAccessToken, hydraId) => {
+          const csmmDom = document.createElement('div');
+          csmmDom.setAttribute('class', 'ciscospark-widget');
+          csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+          csmmDom.setAttribute('data-access-token', localAccessToken);
+          csmmDom.setAttribute('data-space-id', hydraId);
+          document.getElementById('ciscospark-widget').appendChild(csmmDom);
+          window.loadBundle('/dist-space/bundle.js');
+        }, docbrown.token.access_token, constructHydraId('ROOM', conversation.id));
+        const spaceWidget = '.ciscospark-space-widget';
+        browserRemote.waitForVisible(spaceWidget);
+      });
+
+      before('inject marty token', () => {
+        browserLocal.execute((localAccessToken, hydraId) => {
+          const csmmDom = document.createElement('div');
+          csmmDom.setAttribute('class', 'ciscospark-widget');
+          csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+          csmmDom.setAttribute('data-access-token', localAccessToken);
+          csmmDom.setAttribute('data-space-id', hydraId);
+          document.getElementById('ciscospark-widget').appendChild(csmmDom);
+          window.loadBundle('/dist-space/bundle.js');
+        }, marty.token.access_token, constructHydraId('ROOM', conversation.id));
+        const spaceWidget = '.ciscospark-space-widget';
+        browserLocal.waitForVisible(spaceWidget);
+      });
+
+      it('opens meet widget', () => {
+        browser.waitForVisible(elements.messageWidget);
+        browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
       });
 
       after('refresh browsers to remove widgets', browser.refresh);
