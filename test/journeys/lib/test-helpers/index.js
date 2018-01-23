@@ -6,26 +6,33 @@ import uuid from 'uuid';
  * Mouse is then moved from the origin by the x and y offset
  * @param {Object} aBrowser
  * @param {string} selector
- * @param {integer} [x=100]
- * @param {integer} [y=100]
+ * @param {integer} [offsetX=0]
+ * @param {integer} [offsetY=0]
  * @returns {void}
  */
 // eslint-disable-next-line import/prefer-default-export
-export function moveMouse(aBrowser, selector, x = 100, y = 100) {
-  const element = aBrowser.element(selector);
+export function moveMouse(aBrowser, selector, offsetX = 0, offsetY = 0) {
   if (aBrowser.desiredCapabilities.browserName.toLowerCase().includes('firefox')) {
+    // Find center point of element
+    const {x: elementX, y: elementY} = aBrowser.getLocation(selector);
+    const {height, width} = aBrowser.getElementSize(selector);
+
+    const x = Math.round(elementX + width / 2 + offsetX);
+    const y = Math.round(elementY + height / 2 + offsetY);
     aBrowser.actions([{
       type: 'pointer',
       id: `mouse-${uuid.v4()}`,
-      parameters: {pointerType: 'mouse'},
       actions: [
         {
-          type: 'pointerMove', element: element.value, duration: 0, x, y
+          type: 'pointerMove',
+          duration: 0,
+          x,
+          y
         }
       ]
     }]);
   }
   else {
-    aBrowser.moveToObject(selector);
+    aBrowser.moveToObject(selector, offsetX, offsetY);
   }
 }
