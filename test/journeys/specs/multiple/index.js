@@ -190,7 +190,7 @@ describe('Multiple widgets on a page', () => {
 
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      moveMouse(browserLocal, recentsElements.firstSpace, 10, 10);
+      moveMouse(browserLocal, recentsElements.firstSpace);
       browserLocal.waitUntil(() =>
         browserLocal.element(`${recentsElements.callButton}`).isVisible(),
       1500,

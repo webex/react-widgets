@@ -152,7 +152,7 @@ describe('Widget Recents', () => {
 
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
-      moveMouse(browserLocal, elements.firstSpace, 10, 10);
+      moveMouse(browserLocal, elements.firstSpace);
       // browserLocal.debug();
       browserLocal.waitUntil(() =>
         browserLocal.element(`${elements.callButton}`).isVisible(),
@@ -238,7 +238,7 @@ describe('Widget Recents', () => {
 
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      moveMouse(browserLocal, elements.firstSpace, 10, 10);
+      moveMouse(browserLocal, elements.firstSpace);
       // browserLocal.debug();
       browserLocal.waitUntil(() =>
         browserLocal.element(`${elements.callButton}`).isVisible(),

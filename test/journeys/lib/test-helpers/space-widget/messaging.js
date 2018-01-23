@@ -97,7 +97,6 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
 export function flagMessage(testObject, messageToFlag) {
   testObject.browser.waitUntil(() =>
     testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
-
   moveMouse(testObject.browser, elements.lastActivityText);
   testObject.browser.waitUntil(() =>
     testObject.browser
@@ -111,9 +110,6 @@ export function flagMessage(testObject, messageToFlag) {
     .element(elements.flagButton)
     .click();
 
-  // Move mouse away to hide hover buttons
-  moveMouse(testObject.browser, elements.lastActivityText, 0, 150);
-
   // Verify it is highlighted, showing it was flagged
   testObject.browser.waitUntil(() => testObject.browser
     .element(elements.lastActivity)
@@ -123,7 +119,7 @@ export function flagMessage(testObject, messageToFlag) {
 
   // Since we automatically activate the flag icon before confirming it on the server,
   // we need to wait a certain timeframe to allow server to recognize flag
-  testObject.browser.pause(1500);
+  testObject.browser.pause(2500);
 }
 
 /**
@@ -134,7 +130,7 @@ export function flagMessage(testObject, messageToFlag) {
  */
 export function removeFlagMessage(testObject, messageToUnflag) {
   testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag);
+    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 'message was not found');
 
   testObject.browser.waitUntil(() => testObject.browser
     .element(elements.lastActivity)
@@ -146,8 +142,6 @@ export function removeFlagMessage(testObject, messageToUnflag) {
     .element(elements.lastActivity)
     .element(elements.flagButton)
     .click();
-
-  moveMouse(testObject.browser, elements.lastActivityText, 0, 150);
 
   testObject.browser.waitUntil(() => testObject.browser
     .element(elements.lastActivity)
@@ -167,6 +161,7 @@ export function canDeleteMessage(testObject, messageToDelete) {
 
   return testObject.browser
     .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
+    // Delete button is hidden but still exists
     .isExisting();
 }
 
