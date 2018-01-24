@@ -2,6 +2,7 @@ import {assert} from 'chai';
 
 import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
+import {moveMouse} from '../';
 
 import {switchToMeet} from './main';
 
@@ -68,6 +69,7 @@ export function decline(aBrowser) {
  */
 export function hangup(aBrowser) {
   // Call controls currently has a hover state
+  moveMouse(aBrowser, elements.callContainer);
   aBrowser.waitForVisible(elements.callControls);
   aBrowser.element(elements.meetWidget).element(elements.hangupButton).waitForVisible();
   aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();

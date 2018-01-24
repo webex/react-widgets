@@ -14,6 +14,7 @@ export const elements = {
   deleteMessageButton: 'button[aria-label="Delete this message"]',
   flagButton: 'button[aria-label="Flag this message"]',
   highlighted: '.isHighlighted',
+  pendingActivity: '.activity-item-pending',
   inputFile: '.ciscospark-file-input',
   modalWindow: '.ciscospark-dialogue-modal',
   modalDeleteButton: 'button[title="Delete"].dialogue-modal-action-btn',
@@ -59,6 +60,7 @@ export function sendMessage(sender, receiver, message) {
  */
 export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
+  receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
   receiver.browser.waitForExist(elements.lastActivityText, 15000);
   receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
 }
@@ -95,6 +97,7 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
  * @returns {void}
  */
 export function flagMessage(testObject, messageToFlag) {
+  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
     testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
   moveMouse(testObject.browser, elements.lastActivityText);
@@ -129,6 +132,7 @@ export function flagMessage(testObject, messageToFlag) {
  * @returns {void}
  */
 export function removeFlagMessage(testObject, messageToUnflag) {
+  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
     testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 'message was not found');
 
@@ -156,7 +160,9 @@ export function removeFlagMessage(testObject, messageToUnflag) {
  * @returns {boolean}
  */
 export function canDeleteMessage(testObject, messageToDelete) {
+  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
+    // Text matches message to delete
     testObject.browser.element(elements.lastActivityText).getText() === messageToDelete);
 
   return testObject.browser
