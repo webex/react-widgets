@@ -11,6 +11,7 @@ const uuid = require('uuid');
 const {inject} = require('./scripts/tests/openh264');
 
 const browser = process.env.BROWSER || 'chrome';
+const platform = process.env.PLATFORM || 'OS X 10.12';
 const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
 const {suite} = argv || 'all';
@@ -29,13 +30,15 @@ const chromeCapabilities = {
     }
   },
   idleTimeout: 300,
-  platform: 'mac'
+  maxDuration: 10800,
+  platform
 };
 const firefoxCapabilities = {
   browserName: 'firefox',
   name: `react-widget-${suite}`,
   idleTimeout: 300,
-  platform: 'OS X 10.12'
+  maxDuration: 10800,
+  platform
 };
 let mochaTimeout = 30000;
 
@@ -204,9 +207,9 @@ exports.config = {
     junit: {
       outputDir: './reports/junit/wdio/',
       outputFileFormat() {
-        return `results-${suite}-${browser}.xml`;
+        return `results-${suite}-${browser}-${platform}.xml`;
       },
-      packageName: `${suite}-${browser}`
+      packageName: `${suite}-${browser}-${platform}`
     }
   },
 
