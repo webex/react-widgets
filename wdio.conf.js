@@ -29,12 +29,14 @@ const chromeCapabilities = {
     }
   },
   idleTimeout: 300,
+  maxDuration: 3600,
   platform: 'mac'
 };
 const firefoxCapabilities = {
   browserName: 'firefox',
   name: `react-widget-${suite}`,
   idleTimeout: 300,
+  maxDuration: 3600,
   platform: 'OS X 10.12'
 };
 let mochaTimeout = 30000;
