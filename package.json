@@ -63,7 +63,7 @@
     "@ciscospark/internal-plugin-user": "1.25.1",
     "@ciscospark/plugin-logger": "1.25.1",
     "@ciscospark/plugin-people": "1.25.1",
-    "@ciscospark/plugin-phone": "1.25.3",
+    "@ciscospark/plugin-phone": "1.26.0",
     "@ciscospark/spark-core": "1.25.1",
     "@ciscospark/storage-adapter-local-forage": "1.25.1",
     "@ciscospark/storage-adapter-local-storage": "1.25.1",
