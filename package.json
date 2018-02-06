@@ -156,7 +156,7 @@
     "mockdate": "^2.0.1",
     "npm-check-updates": "^2.12.1",
     "postcss": "^6.0.3",
-    "postcss-cli": "^4.1.0",
+    "postcss-cli": "^5.0.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.5",
     "postcss-modules": "^0.8.0",
