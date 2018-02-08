@@ -22,7 +22,6 @@ export const elements = {
  * @param {string} accessToken
  * @param {boolean} isOneOnOne
  * @param {string} to
- * @returns {null}
  */
 export function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to) {
   if (aBrowser.element(elements.clearTokenButton).isVisible()) {

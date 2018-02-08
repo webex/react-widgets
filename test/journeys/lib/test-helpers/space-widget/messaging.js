@@ -175,7 +175,6 @@ export function canDeleteMessage(testObject, messageToDelete) {
  * Deletes the last message sent
  * @param {TestObject} testObject
  * @param {string} messageToDelete
- * @returns {null}
  */
 export function deleteMessage(testObject, messageToDelete) {
   assert.isTrue(canDeleteMessage(testObject, messageToDelete));

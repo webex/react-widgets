@@ -46,7 +46,6 @@ export function switchToMeet(aBrowser) {
  * Opens activity menu and clicks a button inside it
  * @param {Browser} aBrowser
  * @param {string} buttonToClick element selector
- * @returns {null}
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
   aBrowser.click(elements.menuButton);
