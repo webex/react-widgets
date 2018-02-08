@@ -78,7 +78,7 @@ ansiColor('xterm') {
             ]) {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
+              ~/.nvm/nvm.sh
               nvm install v8.9.1
               nvm use v8.9.1
               npm install
@@ -89,7 +89,7 @@ ansiColor('xterm') {
 
           stage('Static Analysis') {
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            ~/.nvm/nvm.sh
             nvm use v8.9.1
             npm run static-analysis
             '''
@@ -97,7 +97,7 @@ ansiColor('xterm') {
 
           stage('Unit Tests') {
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            ~/.nvm/nvm.sh
             nvm use v8.9.1
             npm run jest
             '''
@@ -109,7 +109,7 @@ ansiColor('xterm') {
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
             ]) {
              sh '''#!/bin/bash -ex
-             source ~/.nvm/nvm.sh
+             ~/.nvm/nvm.sh
              nvm use v8.9.1
              NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
@@ -124,7 +124,7 @@ ansiColor('xterm') {
 
           stage('Bump version'){
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            ~/.nvm/nvm.sh
             nvm use v8.9.1
             git diff
             npm version patch -m "build %s"
@@ -141,7 +141,7 @@ ansiColor('xterm') {
               string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
             ]) {
               sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
+              ~/.nvm/nvm.sh
               nvm use v8.9.1
               version=`cat .version`
               NODE_ENV=production
@@ -201,7 +201,7 @@ ansiColor('xterm') {
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
                   sh '''#!/bin/bash -ex
-                  source ~/.nvm/nvm.sh
+                  ~/.nvm/nvm.sh
                   nvm use v8.9.1
                   npm run publish:components
                   git checkout .npmrc
