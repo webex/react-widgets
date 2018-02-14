@@ -116,8 +116,6 @@ describe('Widget Space', () => {
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, marty.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    local.browser.waitForVisible(spaceWidget);
     local.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 
@@ -133,8 +131,6 @@ describe('Widget Space', () => {
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, docbrown.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    remote.browser.waitForVisible(spaceWidget);
     remote.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 

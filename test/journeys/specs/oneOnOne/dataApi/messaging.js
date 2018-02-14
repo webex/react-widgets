@@ -54,7 +54,7 @@ describe('Widget Space: One on One', () => {
         remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
       }));
 
-    before('pause to let test users establish', () => browser.pause(500));
+    before('pause to let test users establish', () => browser.pause(5000));
 
     before('inject token', () => {
       local.browser.execute((localAccessToken, localToUserEmail) => {

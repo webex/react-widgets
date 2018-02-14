@@ -60,7 +60,7 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, spock.token.access_token, mccoy.email);
-    browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
+    local.browser.waitForVisible(`[placeholder="Send a message to ${remote.displayName}"]`);
   });
 
   before('open remote widget mccoy', () => {
@@ -75,7 +75,6 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.email);
-    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
   });
 
   describe('meet widget', () => {

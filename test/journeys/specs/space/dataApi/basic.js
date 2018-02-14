@@ -119,7 +119,6 @@ describe('Widget Space', () => {
     }));
 
     before('open widget for marty in browserLocal', () => {
-      const spaceWidget = '.ciscospark-space-widget';
       browserLocal.execute((localAccessToken, spaceId) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -130,7 +129,6 @@ describe('Widget Space', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, marty.token.access_token, conversation.id);
-      browserLocal.waitForVisible(spaceWidget);
     });
 
     it('loads the test page', () => {
