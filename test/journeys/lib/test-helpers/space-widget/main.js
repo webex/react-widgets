@@ -34,6 +34,7 @@ export function switchToMessage(aBrowser) {
  */
 export function switchToMeet(aBrowser) {
   if (!aBrowser.isVisible(elements.activityMenu)) {
+    aBrowser.waitForVisible(elements.menuButton);
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
