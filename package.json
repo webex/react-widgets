@@ -20,7 +20,7 @@
     "test:automation:space": "wdio wdio.conf.js --suite space",
     "test:automation:recents": "wdio wdio.conf.js --suite recents",
     "test:tap": "cross-env TAP=true wdio wdio.conf.js --suite tap",
-    "test:integration": "wdio wdio.conf.js --suite recents && wdio wdio.conf.js --suite multiple && wdio wdio.conf.js --suite oneOnOne && wdio wdio.conf.js --suite space",
+    "test:integration": "wdio wdio.conf.js --suite recents ; sleep 60 ; wdio wdio.conf.js --suite multiple ; sleep 60 ; wdio wdio.conf.js --suite oneOnOne ; sleep 60 ; wdio wdio.conf.js --suite space",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint",
     "lint:eslint": "eslint --ignore-path .gitignore $(npm run --silent lint:eslint:ci-reporter)",
@@ -180,7 +180,7 @@
     "wdio-selenium-standalone-service": "0.0.9",
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
-    "webdriverio": "4.9.9",
+    "webdriverio": "4.10.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^9.0.1"

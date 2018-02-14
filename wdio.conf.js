@@ -31,6 +31,7 @@ const chromeCapabilities = {
   },
   idleTimeout: 300,
   maxDuration: 10800,
+  seleniumVersion: '3.4.0',
   platform
 };
 const firefoxCapabilities = {
@@ -38,6 +39,7 @@ const firefoxCapabilities = {
   name: `react-widget-${suite}`,
   idleTimeout: 300,
   maxDuration: 10800,
+  seleniumVersion: '3.4.0',
   platform
 };
 let mochaTimeout = 30000;
