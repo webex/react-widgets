@@ -30,7 +30,7 @@ const chromeCapabilities = {
     }
   },
   idleTimeout: 300,
-  maxDuration: 10800,
+  maxDuration: 3600,
   seleniumVersion: '3.4.0',
   platform
 };
@@ -38,7 +38,7 @@ const firefoxCapabilities = {
   browserName: 'firefox',
   name: `react-widget-${suite}`,
   idleTimeout: 300,
-  maxDuration: 10800,
+  maxDuration: 3600,
   seleniumVersion: '3.4.0',
   platform
 };
