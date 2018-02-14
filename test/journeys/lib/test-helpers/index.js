@@ -33,6 +33,6 @@ export function moveMouse(aBrowser, selector, offsetX = 0, offsetY = 0) {
     }]);
   }
   else {
-    aBrowser.moveToObject(selector, offsetX, offsetY);
+    aBrowser.moveToObject(selector);
   }
 }
