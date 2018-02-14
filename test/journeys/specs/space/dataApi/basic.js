@@ -235,19 +235,6 @@ describe('Widget Space', () => {
           browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
         });
       });
-
-      describe('messaging', () => {
-        it('sends and receives messages', () => {
-          const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-          // Increase wait timeout for message delivery
-          browser.timeouts('implicit', 10000);
-          browserLocal.waitForVisible(textInputField);
-          assert.match(browserLocal.getText('.ciscospark-system-message'), /You created this conversation/);
-          const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-          browserLocal.setValue(textInputField, `${martyText}\n`);
-          browserLocal.waitUntil(() => browserLocal.getText('.ciscospark-activity-item-container:last-child .ciscospark-activity-text') === martyText);
-        });
-      });
     });
   });
 });
