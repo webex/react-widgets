@@ -61,7 +61,7 @@
     "@ciscospark/internal-plugin-search": "1.25.1",
     "@ciscospark/internal-plugin-team": "1.25.4",
     "@ciscospark/internal-plugin-user": "1.25.1",
-    "@ciscospark/plugin-authorization": "1.25.1",
+    "@ciscospark/plugin-authorization": "1.27.1",
     "@ciscospark/plugin-logger": "1.25.1",
     "@ciscospark/plugin-people": "1.25.1",
     "@ciscospark/plugin-phone": "1.26.0",
