@@ -171,7 +171,7 @@
     "sleep-ms": "^2.0.1",
     "sri-toolbox": "^0.2.0",
     "style-loader": "^0.19.0",
-    "stylelint": "^8.0",
+    "stylelint": "^9.0.0",
     "stylelint-config-standard": "^17.0",
     "stylelint-order": "^0.7.0",
     "wdio-dot-reporter": "0.0.9",
