@@ -91,9 +91,9 @@ exports.inject = async function inject(browsers) {
     await exports.download();
   }
 
+  /* eslint-disable no-await-in-loop */
   for (const key of Object.keys(browsers)) {
     const def = browsers[key];
-    // eslint-disable-next-line no-await-in-loop
     await injectProfile(def);
   }
 };
