@@ -11,7 +11,6 @@ import {elements as meetElements} from './meet';
  * @export
  * @param {any} browserWithAllTheFeatures
  * @param {any} browserWithNoFeatures
- * @returns {null}
  */
 export default function featureFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
   describe('Roster Feature Flag', () => {

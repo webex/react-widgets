@@ -11,14 +11,14 @@ import uuid from 'uuid';
  * @returns {void}
  */
 // eslint-disable-next-line import/prefer-default-export
-export function moveMouse(aBrowser, selector, offsetX = 0, offsetY = 0) {
+export function moveMouse(aBrowser, selector) {
   if (aBrowser.desiredCapabilities.browserName.toLowerCase().includes('firefox')) {
     // Find center point of element
     const {x: elementX, y: elementY} = aBrowser.getLocation(selector);
     const {height, width} = aBrowser.getElementSize(selector);
 
-    const x = Math.round(elementX + width / 2 + offsetX);
-    const y = Math.round(elementY + height / 2 + offsetY);
+    const x = Math.round(elementX + width / 2);
+    const y = Math.round(elementY + height / 2);
     aBrowser.actions([{
       type: 'pointer',
       id: `mouse-${uuid.v4()}`,
@@ -33,6 +33,6 @@ export function moveMouse(aBrowser, selector, offsetX = 0, offsetY = 0) {
     }]);
   }
   else {
-    aBrowser.moveToObject(selector, offsetX, offsetY);
+    aBrowser.moveToObject(selector);
   }
 }

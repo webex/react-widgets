@@ -34,6 +34,7 @@ export function switchToMessage(aBrowser) {
  */
 export function switchToMeet(aBrowser) {
   if (!aBrowser.isVisible(elements.activityMenu)) {
+    aBrowser.waitForVisible(elements.menuButton);
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
@@ -45,7 +46,6 @@ export function switchToMeet(aBrowser) {
  * Opens activity menu and clicks a button inside it
  * @param {Browser} aBrowser
  * @param {string} buttonToClick element selector
- * @returns {null}
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
   aBrowser.click(elements.menuButton);

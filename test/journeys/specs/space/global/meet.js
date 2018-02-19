@@ -117,9 +117,6 @@ describe('Widget Space', () => {
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    local.browser.waitForVisible(spaceWidget);
-    local.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 
   before('inject docbrown token', () => {
@@ -134,9 +131,6 @@ describe('Widget Space', () => {
       };
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    remote.browser.waitForVisible(spaceWidget);
-    remote.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
   });
 
   describe('meet widget', () => {

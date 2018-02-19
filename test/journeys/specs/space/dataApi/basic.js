@@ -119,7 +119,6 @@ describe('Widget Space', () => {
     }));
 
     before('open widget for marty in browserLocal', () => {
-      const spaceWidget = '.ciscospark-space-widget';
       browserLocal.execute((localAccessToken, spaceId) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -130,7 +129,6 @@ describe('Widget Space', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, marty.token.access_token, conversation.id);
-      browserLocal.waitForVisible(spaceWidget);
     });
 
     it('loads the test page', () => {
@@ -235,19 +233,6 @@ describe('Widget Space', () => {
         it('closes the people roster widget', () => {
           browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).click();
           browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
-        });
-      });
-
-      describe('messaging', () => {
-        it('sends and receives messages', () => {
-          const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-          // Increase wait timeout for message delivery
-          browser.timeouts('implicit', 10000);
-          browserLocal.waitForVisible(textInputField);
-          assert.match(browserLocal.getText('.ciscospark-system-message'), /You created this conversation/);
-          const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-          browserLocal.setValue(textInputField, `${martyText}\n`);
-          browserLocal.waitUntil(() => browserLocal.getText('.ciscospark-activity-item-container:last-child .ciscospark-activity-text') === martyText);
         });
       });
     });

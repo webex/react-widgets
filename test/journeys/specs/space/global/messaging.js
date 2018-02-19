@@ -93,7 +93,7 @@ describe('Widget Space', () => {
       return lorraine.spark.internal.mercury.connect();
     }));
 
-  before('pause to let test users establish', () => browser.pause(500));
+  before('pause to let test users establish', () => browser.pause(5000));
 
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
@@ -120,8 +120,6 @@ describe('Widget Space', () => {
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    local.browser.waitForVisible(spaceWidget);
   });
 
   before('inject docbrown token', () => {
@@ -136,8 +134,6 @@ describe('Widget Space', () => {
       };
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
-    const spaceWidget = '.ciscospark-space-widget';
-    remote.browser.waitForVisible(spaceWidget);
   });
 
   describe('messaging', () => {

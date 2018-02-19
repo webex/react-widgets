@@ -44,7 +44,7 @@ function platformToShortName(platform) {
 
   return undefined;
 }
-
+/* eslint-disable valid-jsdoc */
 /**
  * Injects a gzipped, base64-encoded firefox profile directory into a firefox browser definition
  * @param {Object} def
@@ -79,6 +79,7 @@ async function exists(dir) {
     return false;
   }
 }
+/* eslint-enable valid-jsdoc */
 
 exports.download = async function download() {
   await rimraf(`${PROFILE_DIR}/mac`);
