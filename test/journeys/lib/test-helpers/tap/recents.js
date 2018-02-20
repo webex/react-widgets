@@ -15,7 +15,6 @@ export const elements = {
  *
  * @param {object} aBrowser
  * @param {string} accessToken
- * @returns {null}
  */
 export function loginAndOpenWidget(aBrowser, accessToken) {
   aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, 'access token input field not found');

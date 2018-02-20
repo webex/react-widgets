@@ -43,7 +43,7 @@ describe('Widget Space: One on One', () => {
         [mccoy] = users;
       }));
 
-    before('pause to let test users establish', () => browser.pause(7500));
+    before('pause to let test users establish', () => browser.pause(5000));
 
     before('open local widget spock', () => {
       browserLocal.execute((localAccessToken, localToUserEmail) => {

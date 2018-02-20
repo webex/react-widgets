@@ -121,7 +121,6 @@ describe('Widget Space', () => {
     }));
 
     before('open widget for marty in browserLocal', () => {
-      const spaceWidget = '.ciscospark-space-widget';
       browserLocal.execute((localAccessToken, spaceId) => {
         const options = {
           accessToken: localAccessToken,
@@ -129,8 +128,6 @@ describe('Widget Space', () => {
         };
         window.openSpaceWidget(options);
       }, marty.token.access_token, conversation.id);
-
-      browserLocal.waitForVisible(spaceWidget);
     });
 
     it('loads the test page', () => {

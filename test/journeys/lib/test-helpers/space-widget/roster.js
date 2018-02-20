@@ -50,7 +50,6 @@ export function hasParticipants(aBrowser, participants) {
  *
  * @export
  * @param {Object} aBrowser
- * @returns {null}
  */
 export function canSearchForParticipants(aBrowser) {
   openSearch(aBrowser);
@@ -65,7 +64,6 @@ export function canSearchForParticipants(aBrowser) {
  * @param {String} searchString
  * @param {boolean} doAdd actually add the person to participants
  * @param {String} searchResult the string that should appear in search results
- * @returns {null}
  */
 export function searchForPerson(aBrowser, searchString, doAdd = false, searchResult = searchString) {
   openSearch(aBrowser);
