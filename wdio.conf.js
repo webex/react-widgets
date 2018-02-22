@@ -9,6 +9,8 @@ const argv = require('yargs').argv;
 const uuid = require('uuid');
 
 const {inject} = require('./scripts/tests/openh264');
+const beforeSuite = require('./scripts/tests/beforeSuite');
+
 
 const browser = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'OS X 10.12';
@@ -222,6 +224,11 @@ exports.config = {
     ui: 'bdd',
     timeout: mochaTimeout
   },
+
+  // =====
+  // Hooks
+  // =====
+  beforeSuite,
 
   // Static Server setup
   staticServerFolders: [
