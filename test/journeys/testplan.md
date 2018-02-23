@@ -86,6 +86,16 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - sends message with link
       - sends message with inline code
       - sends message with codeblock
+  - Guest Access (Test User and JWT user created)
+    - message widget
+      - sends and receives messages
+      - receives proper events on messages
+    - meet widget
+      - pre call experience
+        - has a call button
+      - during call experience
+        - can hangup in call
+        - can decline an incoming call
 
 - Data API
   - "Basic Tests" (Test Users Created)
@@ -157,6 +167,15 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - sends message with link
       - sends message with inline code
       - sends message with codeblock
+  - Guest Access (Test User and JWT user created)
+    - message widget
+      - sends and receives messages
+    - meet widget
+      - pre call experience
+        - has a call button
+      - during call experience
+        - can hangup in call
+        - can decline an incoming call
 
 ### Space Suite
 
