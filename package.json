@@ -183,7 +183,7 @@
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
     "webdriverio": "4.10.2",
-    "webpack": "^3.6.0",
+    "webpack": "^4.0.0",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^9.0.1"
   },
