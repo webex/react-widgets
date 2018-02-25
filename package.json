@@ -184,7 +184,7 @@
     "wdio-static-server-service": "^1.0.1",
     "webdriverio": "4.10.2",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.7.1",
+    "webpack-dev-server": "^3.0.0",
     "yargs": "^9.0.1"
   },
   "lint-staged": {
