@@ -90,7 +90,6 @@ exports.inject = async function inject(browsers) {
   if (!await exists(`${PROFILE_DIR}/mac`)) {
     await exports.download();
   }
-
   /* eslint-disable no-await-in-loop */
   for (const key of Object.keys(browsers)) {
     const def = browsers[key];

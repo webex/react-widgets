@@ -10,22 +10,6 @@ import {FEATURE_FLAG_GROUP_CALLING} from '../../lib/test-helpers/space-widget/me
 
 
 describe('Widget Space Feature Flags', () => {
-  process.env.CISCOSPARK_SCOPE = [
-    'webexsquare:get_conversation',
-    'spark:people_read',
-    'spark:rooms_read',
-    'spark:rooms_write',
-    'spark:memberships_read',
-    'spark:memberships_write',
-    'spark:messages_read',
-    'spark:messages_write',
-    'spark:teams_read',
-    'spark:teams_write',
-    'spark:team_memberships_read',
-    'spark:team_memberships_write',
-    'spark:kms'
-  ].join(' ');
-
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
 

@@ -10,21 +10,6 @@ describe('Widget Space: One on One', () => {
   const browserRemote = browser.select('browserRemote');
   let local, remote;
   let mccoy, spock;
-  process.env.CISCOSPARK_SCOPE = [
-    'webexsquare:get_conversation',
-    'spark:people_read',
-    'spark:rooms_read',
-    'spark:rooms_write',
-    'spark:memberships_read',
-    'spark:memberships_write',
-    'spark:messages_read',
-    'spark:messages_write',
-    'spark:teams_read',
-    'spark:teams_write',
-    'spark:team_memberships_read',
-    'spark:team_memberships_write',
-    'spark:kms'
-  ].join(' ');
 
   before('load browsers', () => {
     browser

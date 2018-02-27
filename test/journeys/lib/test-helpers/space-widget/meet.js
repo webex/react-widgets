@@ -152,38 +152,40 @@ export function callEventTest(caller, receiver, space = false) {
     assert.containsAllKeys(eventCreated.detail.data, ['actorName', 'roomId']);
     assert.containsAllKeys(receiverEventCreated.detail, ['resource', 'event', 'data']);
     assert.containsAllKeys(receiverEventCreated.detail.data, ['actorName', 'roomId']);
-    assert.equal(eventCreated.detail.data.actorName, space.displayName, 'call created event did not have space name');
-    assert.equal(receiverEventCreated.detail.data.actorName, space.displayName, 'call created event on receiver did not have space name');
+    assert.equal(eventCreated.detail.data.actorName, caller.user.displayName, 'call created event did not have caller name as actorName');
+    assert.equal(receiverEventCreated.detail.data.actorName, caller.user.displayName, 'call created event on receiver did not have caller name as actorName');
   }
   else {
     assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
     assert.containsAllKeys(eventCreated.detail.data, ['actorName', 'roomId']);
     assert.containsAllKeys(receiverEventCreated.detail, ['resource', 'event', 'actorId', 'data']);
     assert.containsAllKeys(receiverEventCreated.detail.data, ['actorName', 'roomId']);
-    assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event did not have caller details');
-    assert.equal(eventCreated.detail.data.actorName, caller.displayName, 'call created event did not have caller details');
-    assert.equal(receiverEventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event on receiver did not have caller details');
-    assert.equal(receiverEventCreated.detail.data.actorName, caller.displayName, 'call created event on receiver did not have caller details');
+    assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event did not have caller id as actorId');
+    assert.equal(eventCreated.detail.data.actorName, caller.displayName, 'call created event did not have caller name as actorName');
+    assert.equal(receiverEventCreated.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'call created event on receiver did not have caller id as actorId');
+    assert.equal(receiverEventCreated.detail.data.actorName, caller.displayName, 'call created event on receiver did not have caller name as actorName');
   }
 
+  let errorMessage = 'calls connected event is missing data';
   const eventConnected = callerEvents.find((event) => event.eventName === 'calls:connected');
-  assert.isDefined(eventConnected, 'has a calls connected event');
-  assert.containsAllKeys(eventConnected.detail, ['resource', 'event', 'actorId', 'data']);
-  assert.containsAllKeys(eventConnected.detail.data, ['actorName', 'roomId']);
+  assert.isDefined(eventConnected, 'has a calls connected event', errorMessage);
+  assert.containsAllKeys(eventConnected.detail, ['resource', 'event', 'actorId', 'data'], errorMessage);
+  assert.containsAllKeys(eventConnected.detail.data, ['actorName', 'roomId'], 'calls:connected', errorMessage);
   if (space) {
-    assert.equal(eventCreated.detail.data.actorName, space.displayName, 'call connected event did not have space name');
+    assert.equal(eventCreated.detail.data.actorName, caller.user.displayName, 'call connected event did not have call name as actorName');
   }
   else {
     assert.equal(eventConnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id));
-    assert.equal(eventConnected.detail.data.actorName, caller.displayName, 'call connected event did not have space name');
+    assert.equal(eventConnected.detail.data.actorName, caller.displayName, 'call connected event did not have caller name as actorName');
   }
 
+  errorMessage = 'calls disconnected event is missing data';
   const eventDisconnected = callerEvents.find((event) => event.eventName === 'calls:disconnected');
-  assert.isDefined(eventDisconnected, 'has a calls disconnected event');
-  assert.containsAllKeys(eventDisconnected.detail, ['resource', 'event', 'actorId', 'data']);
-  assert.containsAllKeys(eventDisconnected.detail.data, ['actorName', 'roomId']);
+  assert.isDefined(eventDisconnected, 'has a calls disconnected event', errorMessage);
+  assert.containsAllKeys(eventDisconnected.detail, ['resource', 'event', 'actorId', 'data'], errorMessage);
+  assert.containsAllKeys(eventDisconnected.detail.data, ['actorName', 'roomId'], errorMessage);
   if (!space) {
-    assert.equal(eventDisconnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id));
-    assert.equal(eventDisconnected.detail.data.actorName, caller.displayName);
+    assert.equal(eventDisconnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'calls disconnected event did not have caller id as actorId');
+    assert.equal(eventDisconnected.detail.data.actorName, caller.displayName, 'calls disconnected event on caller did not have caller name as actorName');
   }
 }
