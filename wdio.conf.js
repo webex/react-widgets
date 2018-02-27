@@ -13,10 +13,10 @@ const beforeSuite = require('./scripts/tests/beforeSuite');
 
 
 const browser = process.env.BROWSER || 'chrome';
-const platform = process.env.PLATFORM || 'OS X 10.12';
+const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
-const {suite} = argv || 'all';
+const {suite} = argv || 'integration';
 
 const chromeCapabilities = {
   browserName: 'chrome',
@@ -92,6 +92,15 @@ exports.config = {
     ],
     multiple: [
       './test/journeys/specs/multiple/**/*.js'
+    ],
+    integration: [
+      './test/journeys/specs/multiple/**/*.js',
+      './test/journeys/specs/oneOnOne/dataApi/*.js',
+      './test/journeys/specs/oneOnOne/global/*.js',
+      './test/journeys/specs/recents/dataApi/*.js',
+      './test/journeys/specs/recents/global/*.js',
+      './test/journeys/specs/space/dataApi/*.js',
+      './test/journeys/specs/space/global/*.js'
     ]
   },
   // Patterns to exclude.

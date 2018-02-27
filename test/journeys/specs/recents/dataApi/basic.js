@@ -5,6 +5,7 @@ import '@ciscospark/plugin-logger';
 import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
+import SauceLabs from 'saucelabs';
 
 import {moveMouse} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
@@ -18,8 +19,26 @@ import {
 describe('Widget Recents', () => {
   describe('Data API', () => {
     const browserLocal = browser.select('browserLocal');
+    const browserName = process.env.BROWSER || 'chrome';
+    const platform = process.env.PLATFORM || 'mac 10.12';
+
     let docbrown, lorraine, marty;
     let conversation, oneOnOneConversation;
+
+    before('update sauce job', () => {
+      if (process.env.SAUCE && process.env.INTEGRATION) {
+        browser.reload();
+        const account = new SauceLabs({
+          username: process.env.SAUCE_USERNAME,
+          password: process.env.SAUCE_ACCESS_KEY
+        });
+        account.getJobs((err, jobs) => {
+          const widgetJobs = jobs.filter((job) => job.name === 'react-widget-integration' && job.consolidated_status === 'in progress'
+                  && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
+          widgetJobs.forEach((job) => account.updateJob(job.id, {name: 'react-widget-recents'}));
+        });
+      }
+    });
 
     before('load browser', () => {
       browserLocal

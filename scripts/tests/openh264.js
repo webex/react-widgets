@@ -38,7 +38,7 @@ function encode(fp) {
  * @returns {string}
  */
 function platformToShortName(platform) {
-  if (platform.toLowerCase().includes('os x') || platform === 'darwin') {
+  if (platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac')) {
     return 'mac';
   }
 
