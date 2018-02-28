@@ -2,6 +2,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
+import '@ciscospark/plugin-phone';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
@@ -11,7 +12,7 @@ import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
 import {moveMouse} from '../../../lib/test-helpers';
-import {FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
+import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
@@ -21,13 +22,22 @@ import {
 
 describe('Widget Recents', () => {
   const browserLocal = browser.select('browserLocal');
+  const browserRemote = browser.select('browserRemote');
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
 
-  before('load browser', () => {
+  before('load browser for recents widget', () => {
     browserLocal
       .url('/recents.html')
+      .execute(() => {
+        localStorage.clear();
+      });
+  });
+
+  before('load browser for meet widget', () => {
+    browserRemote
+      .url('/space.html?meetRecents')
       .execute(() => {
         localStorage.clear();
       });
@@ -80,14 +90,14 @@ describe('Widget Recents', () => {
           }
         }
       });
-      return lorraine.spark.internal.mercury.connect();
+      return lorraine.spark.phone.register();
     }));
 
   before('pause to let test users establish', () => browser.pause(5000));
 
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect(),
+    lorraine.spark.phone.deregister(),
     docbrown.spark.internal.mercury.disconnect()
   ]));
 
@@ -106,7 +116,7 @@ describe('Widget Recents', () => {
     return oneOnOneConversation;
   }));
 
-  before('inject token', () => {
+  before('open recents widget for marty', () => {
     browserLocal.execute((localAccessToken) => {
       const options = {
         accessToken: localAccessToken,
@@ -117,6 +127,20 @@ describe('Widget Recents', () => {
       window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);
+  });
+
+  before('open meet widget for lorraine', () => {
+    browserRemote.execute((localAccessToken, localToUserEmail) => {
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
+        },
+        toPersonEmail: localToUserEmail,
+        initialActivity: 'meet'
+      };
+      window.openSpaceWidget(options);
+    }, lorraine.token.access_token, marty.email);
   });
 
   it('loads the test page', () => {
@@ -138,9 +162,8 @@ describe('Widget Recents', () => {
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
       moveMouse(browserLocal, elements.firstSpace);
-      // browserLocal.debug();
       browserLocal.waitUntil(() =>
-        browserLocal.element(`${elements.callButton}`).isVisible(),
+        browserLocal.element(elements.callButton).isVisible(),
       1500,
       'does not show call button');
     });
@@ -224,11 +247,22 @@ describe('Widget Recents', () => {
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
       moveMouse(browserLocal, elements.firstSpace);
-      // browserLocal.debug();
       browserLocal.waitUntil(() =>
-        browserLocal.element(`${elements.callButton}`).isVisible(),
+        browserLocal.element(elements.callButton).isVisible(),
       1500,
       'does not show call button');
+    });
+  });
+
+  describe('incoming call', () => {
+    it('should display incoming call screen', () => {
+      browserRemote.element(meetElements.meetWidget).element(meetElements.callButton).waitForVisible();
+      browserRemote.element(meetElements.callButton).click();
+      browserLocal.waitUntil(() =>
+        browserLocal.element(elements.answerButton).isVisible(),
+      15000,
+      'does not show call answer button');
+      hangup(browserRemote);
     });
   });
 
