@@ -8,7 +8,8 @@ export const elements = {
   title: '.space-title',
   unreadIndicator: '.space-unread-indicator',
   lastActivity: '.space-last-activity',
-  callButton: 'button[aria-label="Call Space"]'
+  callButton: 'button[aria-label="Call Space"]',
+  answerButton: 'button[aria-label="Answer"]'
 };
 
 /**
