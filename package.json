@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.259",
+  "version": "0.1.262",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -20,7 +20,7 @@
     "test:automation:space": "wdio wdio.conf.js --suite space",
     "test:automation:recents": "wdio wdio.conf.js --suite recents",
     "test:tap": "cross-env TAP=true wdio wdio.conf.js --suite tap",
-    "test:integration": "wdio wdio.conf.js --suite recents ; sleepms 60000 ; wdio wdio.conf.js --suite multiple ; sleepms 60000 ; wdio wdio.conf.js --suite oneOnOne ; sleepms 60000 ; wdio wdio.conf.js --suite space",
+    "test:integration": "cross-env INTEGRATION=true wdio wdio.conf.js --suite integration",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
     "static-analysis": "npm run eslint",
     "lint:eslint": "eslint --ignore-path .gitignore $(npm run --silent lint:eslint:ci-reporter)",
@@ -167,6 +167,7 @@
     "react-transform-hmr": "^1.0.4",
     "redux-mock-store": "^1.2.1",
     "rimraf": "^2.5.4",
+    "saucelabs": "^1.4.0",
     "semver": "^5.4.1",
     "sleep-ms": "^2.0.1",
     "sri-toolbox": "^0.2.0",

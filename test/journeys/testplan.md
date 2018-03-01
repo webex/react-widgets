@@ -332,6 +332,8 @@ The "recents" test suite opens a recents widget and does things via the sdk that
     - removes unread indicator when read
     - displays a new one on one
     - displays a call button on hover
+  - incoming call
+    - should display incoming call screen
 - Global Object
   - group space
     - displays a new incoming message
@@ -349,6 +351,8 @@ The "recents" test suite opens a recents widget and does things via the sdk that
     - removes unread indicator when read
     - displays a new one on one
     - displays a call button on hover
+  - incoming call
+    - should display incoming call screen
   - accessibility
     - should have no accessibility violations
 
