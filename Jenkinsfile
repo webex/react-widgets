@@ -79,8 +79,8 @@ ansiColor('xterm') {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
-              nvm install v8.9.1
-              nvm use v8.9.1
+              nvm install v8.9.4
+              nvm use v8.9.4
               npm install
               git checkout .npmrc
               '''
@@ -90,7 +90,7 @@ ansiColor('xterm') {
           stage('Static Analysis') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm use v8.9.1
+            nvm use v8.9.4
             npm run static-analysis
             '''
           }
@@ -98,7 +98,7 @@ ansiColor('xterm') {
           stage('Unit Tests') {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm use v8.9.1
+            nvm use v8.9.4
             npm run jest
             '''
           }
@@ -110,9 +110,8 @@ ansiColor('xterm') {
             ]) {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh
-             nvm use v8.9.1
+             nvm use v8.9.4
              NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true npm test
              CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration &
              sleep 60 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration &
              sleep 120 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration &
@@ -125,7 +124,7 @@ ansiColor('xterm') {
           stage('Bump version'){
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm use v8.9.1
+            nvm use v8.9.4
             git diff
             npm version patch -m "build %s"
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
@@ -142,7 +141,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh
-              nvm use v8.9.1
+              nvm use v8.9.4
               version=`cat .version`
               NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
@@ -202,7 +201,7 @@ ansiColor('xterm') {
                   echo ''
                   sh '''#!/bin/bash -ex
                   source ~/.nvm/nvm.sh
-                  nvm use v8.9.1
+                  nvm use v8.9.4
                   npm run publish:components
                   git checkout .npmrc
                   '''
