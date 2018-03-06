@@ -3,7 +3,8 @@ require('babel-register');
 
 const os = require('os');
 
-const {argv} = require('yargs');
+// eslint-disable-next-line prefer-destructuring
+const argv = require('yargs').argv;
 
 const {inject} = require('../scripts/tests/openh264');
 const beforeSuite = require('../scripts/tests/beforeSuite');
@@ -11,7 +12,7 @@ const beforeSuite = require('../scripts/tests/beforeSuite');
 const browser = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const port = process.env.PORT || 4567;
-const {suite} = argv || 'integration';
+const suite = argv.suite || 'integration';
 
 const chromeCapabilities = {
   browserName: 'chrome',
