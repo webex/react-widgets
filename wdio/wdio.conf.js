@@ -3,8 +3,7 @@ require('babel-register');
 
 const os = require('os');
 
-// eslint-disable-next-line prefer-destructuring
-const argv = require('yargs').argv;
+const {argv} = require('yargs');
 
 const {inject} = require('../scripts/tests/openh264');
 const beforeSuite = require('../scripts/tests/beforeSuite');

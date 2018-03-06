@@ -3,7 +3,7 @@ require('dotenv').config();
 const uuid = require('uuid');
 
 process.env.SAUCE = true;
-let config = require('./wdio.conf.js');
+let {config} = require('./wdio.conf.js');
 
 config.mochaOpts.timeout = 90000;
 config.services = config.services.push('sauce');

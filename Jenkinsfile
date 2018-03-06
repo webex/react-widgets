@@ -129,18 +129,17 @@ ansiColor('xterm') {
 
           stage('Run Journey Tests') {
             withCredentials([
-              string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
+              string(credentialsId: 'REACT_WIDGETS_CLIENT_ID', variable: 'CISCOSPARK_CLIENT_ID'),
+              string(credentialsId: 'REACT_WIDGETS_CLIENT_SECRET', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
             ]) {
              sh '''#!/bin/bash -ex
              source ~/.nvm/nvm.sh &> /dev/null
              nvm use v8.9.4
              export JOURNEY_TEST_BASE_URL=https://practical-roentgen-7d4de0.netlify.com
-             export CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340
-             export SAUCE=true
-             BROWSER=firefox npm run test:integration & sleep 60
-             BROWSER=chrome npm run test:integration & sleep 120
-             BROWSER=chrome PLATFORM="windows 10" npm run test:integration & wait
+             BROWSER=firefox npm run test:integration:sauce & sleep 60
+             BROWSER=chrome npm run test:integration:sauce & sleep 120
+             BROWSER=chrome PLATFORM="windows 10" npm run test:integration:sauce & wait
              '''
              junit '**/reports/junit/wdio/*.xml'
             }
