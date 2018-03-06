@@ -1,0 +1,74 @@
+version: 2
+
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  unit_tests_and_linting:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: Run eslint
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: Run all Jest test suites
+          command: npm run jest -- --ci --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+
+  build:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NODE_ENV: "test"
+    steps:
+      - checkout
+      - run:
+          name: Build Space Widget
+          command: npm run build:package widget-space
+      - run:
+          name: Build Recents Widget
+          command: npm run build:package widget-recents
+
+machine:
+  environment:
+    COVERAGE: true
+    NODE_ENV: test
+    XUNIT: true
+    UNIT_ONLY: true
+  node:
+    version: 8.9.1
+
+general:
+  artifacts:
+    - npm-debug.log
+
+dependencies:
+  cache_directories:
+    - node_modules
+
+test:
+  override:
+    - npm run static-analysis
+    - npm run jest -- --runInBand
