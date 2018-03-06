@@ -78,7 +78,7 @@ ansiColor('xterm') {
             ]) {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
+              source ~/.nvm/nvm.sh &> /dev/null
               nvm install v8.9.4
               nvm use v8.9.4
               npm install
@@ -89,7 +89,7 @@ ansiColor('xterm') {
 
           stage('Static Analysis') {
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            source ~/.nvm/nvm.sh &> /dev/null
             nvm use v8.9.4
             npm run static-analysis
             '''
@@ -97,60 +97,52 @@ ansiColor('xterm') {
 
           stage('Unit Tests') {
             sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
+            source ~/.nvm/nvm.sh &> /dev/null
             nvm use v8.9.4
             npm run jest
             '''
           }
 
-          stage('Journey Tests') {
+          stage('Build for Testing') {
+            sh '''#!/bin/bash -ex
+            source ~/.nvm/nvm.sh &> /dev/null
+            nvm use v8.9.4
+            export NODE_ENV=test
+            cp -r ./test/journeys/server ./dist-test
+            BUILD_DIST_PATH="${PWD}/dist-test/dist-space" npm run build:package widget-space
+            BUILD_DIST_PATH="${PWD}/dist-test/dist-recents" npm run build:package widget-recents
+            cp -r ./node_modules/axe-core ./dist-test/
+            '''
+          }
+
+          stage('Deploy for Testing') {
+            withCredentials([
+              string(credentialsId: 'NETLIFY_TOKEN', variable: 'NETLIFY_TOKEN'),
+            ]) {
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh &> /dev/null
+              nvm use v8.9.4
+              npx netlify deploy -t $NETLIFY_TOKEN
+              '''
+            }
+          }
+
+          stage('Run Journey Tests') {
             withCredentials([
               string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
             ]) {
              sh '''#!/bin/bash -ex
-             source ~/.nvm/nvm.sh
+             source ~/.nvm/nvm.sh &> /dev/null
              nvm use v8.9.4
-             NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
-             CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration &
-             sleep 60 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration &
-             sleep 120 && CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration &
-             wait
+             export JOURNEY_TEST_BASE_URL=https://practical-roentgen-7d4de0.netlify.com
+             export CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340
+             export SAUCE=true
+             BROWSER=firefox npm run test:integration & sleep 60
+             BROWSER=chrome npm run test:integration & sleep 120
+             BROWSER=chrome PLATFORM="windows 10" npm run test:integration & wait
              '''
              junit '**/reports/junit/wdio/*.xml'
-            }
-          }
-
-          stage('Bump version'){
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v8.9.4
-            git diff
-            npm version patch -m "build %s"
-            version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
-            echo $version > .version
-            '''
-            packageJsonVersion = readFile '.version'
-          }
-
-          stage('Build for CDN'){
-            withCredentials([
-              usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
-              file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
-              string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
-            ]) {
-              sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
-              nvm use v8.9.4
-              version=`cat .version`
-              NODE_ENV=production
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build sri widget-space
-              BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
-              BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build sri widget-recents
-              BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
-              '''
             }
           }
 
@@ -170,6 +162,39 @@ ansiColor('xterm') {
           }
 
           if (currentBuild.result == 'SUCCESS'){
+
+            stage('Bump version'){
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh &> /dev/null
+              nvm use v8.9.4
+              git diff
+              npm version patch -m "build %s"
+              version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
+              echo $version > .version
+              '''
+              packageJsonVersion = readFile '.version'
+            }
+
+            stage('Build for CDN'){
+              withCredentials([
+                usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
+                file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
+                string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
+              ]) {
+                sh '''#!/bin/bash -ex
+                source ~/.nvm/nvm.sh &> /dev/null
+                nvm use v8.9.4
+                export version=`cat .version`
+                export NODE_ENV=production
+                BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
+                BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build sri widget-space
+                BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
+                BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build:package widget-recents
+                BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build sri widget-recents
+                BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
+                '''
+              }
+            }
 
             archive 'packages/node_modules/@ciscospark/widget-space/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-recents/dist/**/*'
@@ -200,7 +225,7 @@ ansiColor('xterm') {
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
                   sh '''#!/bin/bash -ex
-                  source ~/.nvm/nvm.sh
+                  source ~/.nvm/nvm.sh &> /dev/null
                   nvm use v8.9.4
                   npm run publish:components
                   git checkout .npmrc
