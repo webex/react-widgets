@@ -10,3 +10,4 @@ packages/**/es/*
 packages/**/cjs/*
 .tmp/*
 reports/*
+/dist-test

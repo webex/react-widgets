@@ -6,17 +6,13 @@ const os = require('os');
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
 
-const uuid = require('uuid');
-
-const {inject} = require('./scripts/tests/openh264');
-const beforeSuite = require('./scripts/tests/beforeSuite');
-
+const {inject} = require('../scripts/tests/openh264');
+const beforeSuite = require('../scripts/tests/beforeSuite');
 
 const browser = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
-const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
-const {suite} = argv || 'integration';
+const suite = argv.suite || 'integration';
 
 const chromeCapabilities = {
   browserName: 'chrome',
@@ -36,6 +32,7 @@ const chromeCapabilities = {
   seleniumVersion: '3.4.0',
   platform
 };
+
 const firefoxCapabilities = {
   browserName: 'firefox',
   name: `react-widget-${suite}`,
@@ -49,33 +46,10 @@ let mochaTimeout = 30000;
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
-if (process.env.SAUCE) {
-  mochaTimeout = 90000;
-}
-const services = [];
-services.push('firefox-profile');
-if (process.env.SAUCE) {
-  services.push('sauce');
-}
-else {
-  services.push('selenium-standalone');
-}
-if (!process.env.TAP) {
-  services.push('static-server');
-}
 
 exports.config = {
   seleniumInstallArgs: {version: '3.4.0'},
   seleniumArgs: {version: '3.4.0'},
-  //
-  // ==================
-  // Specify Test Files
-  // ==================
-  // Define which test specs should run. The pattern is relative to the directory
-  // from which `wdio` was called. Notice that, if you are calling `wdio` from an
-  // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
-  // directory is where your package.json resides, so `wdio` will be called from there.
-  //
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     tap: [
@@ -105,27 +79,6 @@ exports.config = {
   },
   // Patterns to exclude.
   exclude: [],
-  //
-  // ============
-  // Capabilities
-  // ============
-  // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
-  // time. Depending on the number of capabilities, WebdriverIO launches several test
-  // sessions. Within your capabilities you can overwrite the spec and exclude options in
-  // order to group specific specs to a specific capability.
-  //
-  // First, you can define how many instances should be started at the same time. Let's
-  // say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
-  // set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
-  // files and you set maxInstances to 10, all spec files will get tested at the same time
-  // and 30 processes will get spawned. The property handles how many capabilities
-  // from the same test should run tests.
-  //
-  //
-  // If you have trouble getting all important capabilities together, check out the
-  // Sauce Labs platform configurator - a great tool to configure your capabilities:
-  // https://docs.saucelabs.com/reference/platforms-configurator
-  //
   capabilities: browser === 'chrome' ? {
     browserLocal: {
       desiredCapabilities: chromeCapabilities
@@ -167,7 +120,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`,
+  baseUrl: process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
@@ -178,30 +131,11 @@ exports.config = {
   //
   // Default request retries count
   connectionRetryCount: 3,
-  //
-  // Initialize the browser instance with a WebdriverIO plugin. The object should have the
-  // plugin name as key and the desired plugin options as properties. Make sure you have
-  // the plugin installed before running any tests. The following plugins are currently
-  // available:
-  // WebdriverCSS: https://github.com/webdriverio/webdrivercss
-  // WebdriverRTC: https://github.com/webdriverio/webdriverrtc
-  // Browserevent: https://github.com/webdriverio/browserevent
-  // plugins: {
-  //   webdrivercss: {
-  //     screenshotRoot: 'my-shots',
-  //     failedComparisonsRoot: 'diffs',
-  //     misMatchTolerance: 0.05,
-  //     screenWidth: [320,480,640,1024]
-  //   },
-  //   webdriverrtc: {},
-  //   browserevent: {}
-  // },
-  //
-  // Test runner services
-  // Services take over a specific job you don't want to take care of. They enhance
-  // your test setup with almost no effort. Unlike plugins, they don't add new
-  // commands. Instead, they hook themselves up into the test process.
-  services,
+  services: [
+    'firefox-profile',
+    'selenium-standalone',
+    'static-server'
+  ],
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -238,7 +172,6 @@ exports.config = {
   // Hooks
   // =====
   beforeSuite,
-
   // Static Server setup
   staticServerFolders: [
     {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
@@ -247,7 +180,7 @@ exports.config = {
     {mount: '/axe-core', path: './node_modules/axe-core/'}
   ],
   staticServerPort: port,
-  onPrepare(config, capabilities) {
+  onPrepare(conf, capabilities) {
     const defs = [
       capabilities.browserRemote.desiredCapabilities,
       capabilities.browserLocal.desiredCapabilities
@@ -279,29 +212,3 @@ exports.config = {
       });
   }
 };
-
-if (process.env.SAUCE) {
-  exports.config = Object.assign(exports.config, {
-    deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
-    user: process.env.SAUCE_USERNAME,
-    key: process.env.SAUCE_ACCESS_KEY,
-    build: process.env.BUILD_NUMBER,
-    sauceConnect: !process.env.TAP,
-    sauceConnectOpts: {
-      noSslBumpDomains: [
-        '*.wbx2.com',
-        '*.ciscospark.com',
-        '*.webex.com',
-        '127.0.0.1',
-        'localhost',
-        '*.clouddrive.com'
-      ],
-      tunnelDomains: [
-        '127.0.0.1',
-        'localhost'
-      ],
-      tunnelIdentifier: tunnelId,
-      port: process.env.SAUCE_CONNECT_PORT || 4445
-    }
-  });
-}
