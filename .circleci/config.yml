@@ -8,13 +8,16 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-
+      - run: echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc
       - run: npm install
+      - run: npm prune
+      - run: git checkout .npmrc
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: js-dependencies-{{ checksum "package.json" }}
 
   unit_tests_and_linting:
     docker:
@@ -22,8 +25,9 @@ jobs:
     steps:
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-
+      - checkout
       - run:
           name: Run eslint
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
@@ -31,44 +35,94 @@ jobs:
           name: Run all Jest test suites
           command: npm run jest -- --ci --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: "reports/junit/js-jest-results.xml"
       - store_test_results:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
 
-  build:
+  build_for_tests:
     docker:
       - image: circleci/node:8.9.4
     environment:
       - NODE_ENV: "test"
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Copy journey test static files
+          command: |
+            mkdir -p /tmp/dist-test
+            cp -r ./test/journeys/server /tmp/workspace/dist-test
+            cp -r ./node_modules/axe-core /tmp/workspace/dist-test/
       - run:
           name: Build Space Widget
           command: npm run build:package widget-space
+          environment:
+            - BUILD_DIST_PATH: /tmp/workspace/dist-test/dist-space
       - run:
           name: Build Recents Widget
           command: npm run build:package widget-recents
+          environment:
+            - BUILD_DIST_PATH: /tmp/workspace/dist-test/dist-recents
+      - persist_to_workspace:
+          path: /tmp/workspace
 
-machine:
-  environment:
-    COVERAGE: true
-    NODE_ENV: test
-    XUNIT: true
-    UNIT_ONLY: true
-  node:
-    version: 8.9.1
+  deploy_for_testing:
+    docker:
+      - image: circle/node:8.9.4
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Deploy testing payload to Netlify
+          command: npx netlify deploy -t $NETLIFY_TOKEN
 
-general:
-  artifacts:
-    - npm-debug.log
+  journey_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
+    steps:
+      - checkout
+      - run:
+          name: Run Firefox MacOS Tests on SauceLabs
+          command: npm run test:integration:sauce
+          environment:
+            - BROWSER: firefox
+      - run:
+          name: Run Chrome MacOS Tests on SauceLabs
+          command: npm run test:integration:sauce
+          environment:
+            - BROWSER: chrome
+      - run:
+          name: Run Chrome Windows 10 Tests on SauceLabs
+          command: npm run test:integration:sauce
+          environment:
+            - BROWSER: chrome
+            - PLATFORM: windows 10
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_artifacts:
+          path: reports/junit/wdio
 
-dependencies:
-  cache_directories:
-    - node_modules
-
-test:
-  override:
-    - npm run static-analysis
-    - npm run jest -- --runInBand
+workflows:
+  version: 2
+  run_all_tests:
+    jobs:
+      - install
+      - build_for_tests:
+          requires:
+            - install
+      - unit_tests_and_linting:
+          requires:
+            - install
+            - build_for_tests
+      - deploy_for_testing:
+          requires:
+            - build_for_tests
+      - journey_tests:
+          requires:
+            - deploy_for_testing
