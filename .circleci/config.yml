@@ -1,5 +1,27 @@
-version: 2
+# Templates and Variables
+test_defaults: &test_defaults
+  docker:
+    - image: circleci/node:8.9.4
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - js-dependencies-{{ checksum "package-lock.json" }}
+        - js-dependencies-
+    - run:
+        name: Integration Test
+        command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
+        no_output_timeout: 40m
+    - store_test_results:
+        path: reports/junit/wdio
+    - store_artifacts:
+        path: reports/junit/wdio
 
+test_base_url: &test_base_url
+  JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
+
+# Main Config
+version: 2
 jobs:
   install:
     docker:
@@ -90,72 +112,93 @@ jobs:
           name: Deploy testing payload to Netlify
           command: npx netlify deploy -s ${SITE_ID} -p ${DEPLOY_PATH} -t ${NETLIFY_TOKEN}
 
-  firefox_mac_tests:
-    docker:
-      - image: circleci/node:8.9.4
+  firefox_mac_oneOnOne_tests:
     environment:
-      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
-      - run:
-          name: Run Firefox MacOS Tests on SauceLabs
-          command: npm run test:integration:sauce
-          no_output_timeout: 40m
-          environment:
-            BROWSER: firefox
-      - store_test_results:
-          path: reports/junit/wdio
-      - store_artifacts:
-          path: reports/junit/wdio
+      - <<: *test_base_url
+      - BROWSER: firefox
+      - TEST_SUITE: oneOnOne
+    <<: *test_defaults
 
-  chrome_mac_tests:
-    docker:
-      - image: circleci/node:8.9.4
+  firefox_mac_recents_tests:
     environment:
-      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
-      - run:
-          name: Run Chrome MacOS Tests on SauceLabs
-          command: npm run test:integration:sauce
-          no_output_timeout: 40m
-          environment:
-            BROWSER: chrome
-      - store_test_results:
-          path: reports/junit/wdio
-      - store_artifacts:
-          path: reports/junit/wdio
+      - <<: *test_base_url
+      - BROWSER: firefox
+      - TEST_SUITE: recents
+    <<: *test_defaults
 
-  chrome_win10_tests:
-    docker:
-      - image: circleci/node:8.9.4
+  firefox_mac_space_tests:
     environment:
-      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
-      - run:
-          name: Run Chrome Windows 10 Tests on SauceLabs
-          command: npm run test:integration:sauce
-          no_output_timeout: 40m
-          environment:
-            BROWSER: chrome
-            PLATFORM: windows 10
-      - store_test_results:
-          path: reports/junit/wdio
-      - store_artifacts:
-          path: reports/junit/wdio
+      - <<: *test_base_url
+      - BROWSER: firefox
+      - TEST_SUITE: space
+    <<: *test_defaults
+
+  firefox_mac_multiple_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: firefox
+      - TEST_SUITE: multiple
+    <<: *test_defaults
+
+  chrome_mac_oneOnOne_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - TEST_SUITE: oneOnOne
+    <<: *test_defaults
+
+  chrome_mac_recents_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - TEST_SUITE: recents
+    <<: *test_defaults
+
+  chrome_mac_space_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - TEST_SUITE: space
+    <<: *test_defaults
+
+  chrome_mac_multiple_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - TEST_SUITE: multiple
+    <<: *test_defaults
+
+  chrome_win10_oneOnOne_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: oneOnOne
+    <<: *test_defaults
+
+  chrome_win10_recents_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: recents
+    <<: *test_defaults
+
+  chrome_win10_space_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: space
+    <<: *test_defaults
+
+  chrome_win10_multiple_tests:
+    environment:
+      - <<: *test_base_url
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: multiple
+    <<: *test_defaults
 
 workflows:
   version: 2
@@ -171,12 +214,39 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
-      - chrome_win10_tests:
+      - firefox_mac_oneOnOne_tests:
           requires:
             - deploy_for_testing
-      - chrome_mac_tests:
+      - firefox_mac_recents_tests:
           requires:
             - deploy_for_testing
-      - firefox_mac_tests:
+      - firefox_mac_space_tests:
+          requires:
+            - deploy_for_testing
+      - firefox_mac_multiple_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_mac_oneOnOne_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_mac_recents_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_mac_space_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_mac_multiple_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_win10_oneOnOne_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_win10_recents_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_win10_space_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_win10_multiple_tests:
           requires:
             - deploy_for_testing

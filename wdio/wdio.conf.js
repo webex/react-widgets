@@ -66,15 +66,6 @@ exports.config = {
     ],
     multiple: [
       './test/journeys/specs/multiple/**/*.js'
-    ],
-    integration: [
-      './test/journeys/specs/multiple/**/*.js',
-      './test/journeys/specs/oneOnOne/dataApi/*.js',
-      './test/journeys/specs/oneOnOne/global/*.js',
-      './test/journeys/specs/recents/dataApi/*.js',
-      './test/journeys/specs/recents/global/*.js',
-      './test/journeys/specs/space/dataApi/*.js',
-      './test/journeys/specs/space/global/*.js'
     ]
   },
   // Patterns to exclude.
