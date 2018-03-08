@@ -8,7 +8,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
       - run: npm install
@@ -16,7 +16,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: js-dependencies-{{ checksum "package.json" }}
+          key: js-dependencies-{{ checksum "package-lock.json" }}
 
   unit_tests_and_linting:
     docker:
@@ -25,7 +25,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - run:
           name: Run eslint
@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - run:
           name: Copy journey test static files
@@ -83,7 +83,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - attach_workspace:
           at: /tmp/workspace
@@ -101,7 +101,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - run:
           name: Run Firefox MacOS Tests on SauceLabs
