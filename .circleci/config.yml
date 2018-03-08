@@ -8,6 +8,11 @@ test_defaults: &test_defaults
         keys:
         - js-dependencies-{{ checksum "package-lock.json" }}
         - js-dependencies-
+    - attach_workspace:
+        at: /tmp/workspace
+    - run:
+        name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
+        command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
     - run:
         name: Integration Test
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
@@ -16,9 +21,6 @@ test_defaults: &test_defaults
         path: reports/junit/wdio
     - store_artifacts:
         path: reports/junit/wdio
-
-test_base_url: &test_base_url
-  JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
 
 # Main Config
 version: 2
@@ -98,7 +100,7 @@ jobs:
     docker:
       - image: circleci/node:8.9.4
     environment:
-      - SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
+      - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
       - DEPLOY_PATH: "/tmp/workspace/dist-test"
     steps:
       - checkout
@@ -110,67 +112,62 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Deploy testing payload to Netlify
-          command: npx netlify deploy -s ${SITE_ID} -p ${DEPLOY_PATH} -t ${NETLIFY_TOKEN}
+          command: npm run deploy netlify ${DEPLOY_PATH} -- --saveUrlPath=/tmp/.netlifyUrl
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - .netlifyUrl
 
   firefox_mac_oneOnOne_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: firefox
       - TEST_SUITE: oneOnOne
     <<: *test_defaults
 
   firefox_mac_recents_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: firefox
       - TEST_SUITE: recents
     <<: *test_defaults
 
   firefox_mac_space_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: firefox
       - TEST_SUITE: space
     <<: *test_defaults
 
   firefox_mac_multiple_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: firefox
       - TEST_SUITE: multiple
     <<: *test_defaults
 
   chrome_mac_oneOnOne_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - TEST_SUITE: oneOnOne
     <<: *test_defaults
 
   chrome_mac_recents_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - TEST_SUITE: recents
     <<: *test_defaults
 
   chrome_mac_space_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - TEST_SUITE: space
     <<: *test_defaults
 
   chrome_mac_multiple_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - TEST_SUITE: multiple
     <<: *test_defaults
 
   chrome_win10_oneOnOne_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: oneOnOne
@@ -178,7 +175,6 @@ jobs:
 
   chrome_win10_recents_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: recents
@@ -186,7 +182,6 @@ jobs:
 
   chrome_win10_space_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: space
@@ -194,7 +189,6 @@ jobs:
 
   chrome_win10_multiple_tests:
     environment:
-      - <<: *test_base_url
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: multiple
