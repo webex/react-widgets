@@ -10,9 +10,8 @@ jobs:
           keys:
           - js-dependencies-{{ checksum "package.json" }}
           - js-dependencies-
-      - run: echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
       - run: npm install
-      - run: npm prune
       - run: git checkout .npmrc
       - save_cache:
           paths:
@@ -23,11 +22,11 @@ jobs:
     docker:
       - image: circleci/node:8.9.4
     steps:
+      - checkout
       - restore_cache:
           keys:
           - js-dependencies-{{ checksum "package.json" }}
           - js-dependencies-
-      - checkout
       - run:
           name: Run eslint
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
@@ -35,7 +34,7 @@ jobs:
           name: Run all Jest test suites
           command: npm run jest -- --ci --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-jest-results.xml"
+            JEST_JUNIT_OUTPUT: reports/junit/js-jest-results.xml
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -48,41 +47,50 @@ jobs:
       - NODE_ENV: "test"
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-
       - run:
           name: Copy journey test static files
           command: |
-            mkdir -p /tmp/dist-test
+            mkdir -p /tmp
             cp -r ./test/journeys/server /tmp/dist-test
             cp -r ./node_modules/axe-core /tmp/dist-test/
       - run:
           name: Build Space Widget
           command: npm run build:package widget-space
           environment:
-            - BUILD_DIST_PATH: /tmp/dist-test/dist-space
+            BUILD_DIST_PATH: /tmp/dist-test/dist-space
       - run:
           name: Build Recents Widget
           command: npm run build:package widget-recents
           environment:
-            - BUILD_DIST_PATH: /tmp/dist-test/dist-recents
+            BUILD_DIST_PATH: /tmp/dist-test/dist-recents
       - persist_to_workspace:
-          root: ./
+          root: /tmp
           paths:
             - dist-test
 
 
   deploy_for_testing:
     docker:
-      - image: circle/node:8.9.4
+      - image: circleci/node:8.9.4
+    environment:
+      - SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
+      - DEPLOY_PATH: "/tmp/workspace/dist-test"
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-
       - attach_workspace:
           at: /tmp/workspace
       - run:
           name: Deploy testing payload to Netlify
-          command: npx netlify deploy -t $NETLIFY_TOKEN -s $SITE_ID -p $DEPLOY_PATH
-          environment:
-            - SITE_ID: cb5e410a-9679-4ef3-99dc-82b89143e494
-            - DEPLOY_PATH: /tmp/workspace/dist-test
+          command: npx netlify deploy -s ${SITE_ID} -p ${DEPLOY_PATH} -t ${NETLIFY_TOKEN}
+
 
   journey_tests:
     docker:
@@ -91,22 +99,26 @@ jobs:
       - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package.json" }}
+          - js-dependencies-
       - run:
           name: Run Firefox MacOS Tests on SauceLabs
           command: npm run test:integration:sauce
           environment:
-            - BROWSER: firefox
+            BROWSER: firefox
       - run:
           name: Run Chrome MacOS Tests on SauceLabs
           command: npm run test:integration:sauce
           environment:
-            - BROWSER: chrome
+            BROWSER: chrome
       - run:
           name: Run Chrome Windows 10 Tests on SauceLabs
           command: npm run test:integration:sauce
           environment:
-            - BROWSER: chrome
-            - PLATFORM: windows 10
+            BROWSER: chrome
+            PLATFORM: windows 10
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
@@ -123,7 +135,6 @@ workflows:
       - unit_tests_and_linting:
           requires:
             - install
-            - build_for_tests
       - deploy_for_testing:
           requires:
             - build_for_tests

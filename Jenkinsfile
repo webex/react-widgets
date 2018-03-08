@@ -122,7 +122,7 @@ ansiColor('xterm') {
               sh '''#!/bin/bash -ex
               source ~/.nvm/nvm.sh &> /dev/null
               nvm use v8.9.4
-              npx netlify deploy -t $NETLIFY_TOKEN
+              npx netlify deploy -t ${NETLIFY_TOKEN}
               '''
             }
           }
