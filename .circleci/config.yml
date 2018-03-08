@@ -72,7 +72,6 @@ jobs:
           paths:
             - dist-test
 
-
   deploy_for_testing:
     docker:
       - image: circleci/node:8.9.4
@@ -91,8 +90,7 @@ jobs:
           name: Deploy testing payload to Netlify
           command: npx netlify deploy -s ${SITE_ID} -p ${DEPLOY_PATH} -t ${NETLIFY_TOKEN}
 
-
-  journey_tests:
+  firefox_mac_tests:
     docker:
       - image: circleci/node:8.9.4
     environment:
@@ -106,16 +104,51 @@ jobs:
       - run:
           name: Run Firefox MacOS Tests on SauceLabs
           command: npm run test:integration:sauce
+          no_output_timeout: 40m
           environment:
             BROWSER: firefox
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_artifacts:
+          path: reports/junit/wdio
+
+  chrome_mac_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
       - run:
           name: Run Chrome MacOS Tests on SauceLabs
           command: npm run test:integration:sauce
+          no_output_timeout: 40m
           environment:
             BROWSER: chrome
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_artifacts:
+          path: reports/junit/wdio
+
+  chrome_win10_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - JOURNEY_TEST_BASE_URL: https://practical-roentgen-7d4de0.netlify.com
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
       - run:
           name: Run Chrome Windows 10 Tests on SauceLabs
           command: npm run test:integration:sauce
+          no_output_timeout: 40m
           environment:
             BROWSER: chrome
             PLATFORM: windows 10
@@ -138,6 +171,12 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
-      - journey_tests:
+      - chrome_win10_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_mac_tests:
+          requires:
+            - deploy_for_testing
+      - firefox_mac_tests:
           requires:
             - deploy_for_testing
