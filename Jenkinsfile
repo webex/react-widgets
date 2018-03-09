@@ -77,7 +77,7 @@ ansiColor('xterm') {
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh &> /dev/null
               nvm install v8.9.4
               nvm use v8.9.4
@@ -88,7 +88,7 @@ ansiColor('xterm') {
           }
 
           stage('Static Analysis') {
-            sh '''#!/bin/bash -ex
+            sh '''#!/bin/bash -e
             source ~/.nvm/nvm.sh &> /dev/null
             nvm use v8.9.4
             npm run static-analysis
@@ -96,7 +96,7 @@ ansiColor('xterm') {
           }
 
           stage('Unit Tests') {
-            sh '''#!/bin/bash -ex
+            sh '''#!/bin/bash -e
             source ~/.nvm/nvm.sh &> /dev/null
             nvm use v8.9.4
             npm run jest
@@ -104,7 +104,7 @@ ansiColor('xterm') {
           }
 
           stage('Build for Testing') {
-            sh '''#!/bin/bash -ex
+            sh '''#!/bin/bash -e
             source ~/.nvm/nvm.sh &> /dev/null
             nvm use v8.9.4
             export NODE_ENV=test
@@ -119,7 +119,7 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NETLIFY_TOKEN', variable: 'NETLIFY_TOKEN'),
             ]) {
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh &> /dev/null
               nvm use v8.9.4
               npx netlify deploy -t ${NETLIFY_TOKEN}
@@ -133,7 +133,7 @@ ansiColor('xterm') {
               string(credentialsId: 'REACT_WIDGETS_CLIENT_SECRET', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
             ]) {
-             sh '''#!/bin/bash -ex
+             sh '''#!/bin/bash -e
              source ~/.nvm/nvm.sh &> /dev/null
              nvm use v8.9.4
              export JOURNEY_TEST_BASE_URL=https://practical-roentgen-7d4de0.netlify.com
@@ -163,7 +163,7 @@ ansiColor('xterm') {
           if (currentBuild.result == 'SUCCESS'){
 
             stage('Bump version'){
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh &> /dev/null
               nvm use v8.9.4
               git diff
@@ -180,7 +180,7 @@ ansiColor('xterm') {
                 file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
                 string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
               ]) {
-                sh '''#!/bin/bash -ex
+                sh '''#!/bin/bash -e
                 source ~/.nvm/nvm.sh &> /dev/null
                 nvm use v8.9.4
                 export version=`cat .version`
@@ -223,7 +223,7 @@ ansiColor('xterm') {
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
-                  sh '''#!/bin/bash -ex
+                  sh '''#!/bin/bash -e
                   source ~/.nvm/nvm.sh &> /dev/null
                   nvm use v8.9.4
                   npm run publish:components

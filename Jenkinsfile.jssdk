@@ -24,7 +24,7 @@ ansiColor('xterm') {
           withCredentials([
             string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
           ]) {
-            sh '''#!/bin/bash -ex
+            sh '''#!/bin/bash -e
             source ~/.nvm/nvm.sh
             nvm install v8.9.4
             nvm use v8.9.4
@@ -37,7 +37,7 @@ ansiColor('xterm') {
         stage('Pushing') {
           echo "Creating Branch"
           def version
-          sh '''#!/bin/bash -ex
+          sh '''#!/bin/bash -e
           source ~/.nvm/nvm.sh
           nvm use v8.9.4
           version=$(node ./scripts/utils/jssdkversion.js)
