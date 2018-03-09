@@ -180,7 +180,6 @@
     "stylelint": "^8.0",
     "stylelint-config-standard": "^17.0",
     "stylelint-order": "^0.7.0",
-    "wdio-dot-reporter": "0.0.9",
     "wdio-firefox-profile-service": "^0.1.0",
     "wdio-junit-reporter": "^0.4.2",
     "wdio-mocha-framework": "^0.5.9",
@@ -188,7 +187,7 @@
     "wdio-selenium-standalone-service": "0.0.9",
     "wdio-spec-reporter": "^0.1.0",
     "wdio-static-server-service": "^1.0.1",
-    "webdriverio": "4.10.2",
+    "webdriverio": "4.12.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1",
     "yargs": "^9.0.1"
