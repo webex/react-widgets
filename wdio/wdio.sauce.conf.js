@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const uuid = require('uuid');
 
+const {getSauceAsset} = require('../scripts/utils/sauce');
+
 process.env.SAUCE = true;
 let {config} = require('./wdio.conf.js');
 
@@ -10,20 +12,29 @@ config.mochaOpts.timeout = 90000;
 config.services = config.services.push('sauce');
 // Disable since sauce already captures screenshots
 config.screenshotOnReject = false;
-const {beforeSuite} = config;
+config.screenshotPath = undefined;
 
-function sauceBeforeSuite() {
-  beforeSuite();
-
+config.beforeSuite = function sauceBeforeSuite() {
   // Hack to display link to sauceLabs jobs when using multi remote
-  const logTypes = browser.logTypes();
-  Object.keys(logTypes).forEach((browserId) => {
+  ['browserLocal', 'browserRemote'].forEach((browserId) => {
     const logs = browser.select(browserId).log('browser');
     console.log(`🦄 Check out ${browserId} job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
   });
-}
+};
 
-config.beforeSuite = sauceBeforeSuite;
+config.afterSuite = function sauceAfterSuite() {
+  ['browserLocal', 'browserRemote'].forEach((browserId) => {
+    const logs = browser.select(browserId).log('browser');
+    if (logs) {
+      const {sessionId} = logs;
+      if (sessionId) {
+        getSauceAsset(sessionId, 'selenium-server.log', `reports/sauce/${browserId}-selenium-server.log`);
+        getSauceAsset(sessionId, 'log.json', `reports/sauce/${browserId}-log.json`);
+      }
+    }
+  });
+};
+
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy

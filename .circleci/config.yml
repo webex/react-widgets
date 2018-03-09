@@ -21,11 +21,7 @@ test_defaults: &test_defaults
     - store_test_results:
         path: reports/junit/wdio
     - store_artifacts:
-        path: reports/junit/wdio
-        destination: junit/wdio
-    - store_artifacts:
-        path: reports/browser
-        destination: browser
+        path: reports
 
 # Main Config
 version: 2

@@ -11,7 +11,7 @@ const mkdirp = require('mkdirp');
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
 
-const {inject} = require('../scripts/tests/openh264');
+const {inject} = require('../scripts/utils/tests/openh264');
 
 const browserType = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
@@ -85,27 +85,30 @@ if (process.env.DEBUG_JOURNEYS) {
 }
 
 function saveBrowserLogs(browser, details) {
-  const logTypes = browser.logTypes();
+  if (browserType !== 'firefox') {
+    const logTypes = browser.logTypes();
 
-  Object.keys(logTypes).forEach((browserId) => {
-    if (logTypes[browserId].value.includes('browser')) {
-      const logs = browser.select(browserId).log('browser');
+    Object.keys(logTypes).forEach((browserId) => {
+      if (logTypes[browserId].value.includes('browser')) {
+        const logs = browser.select(browserId).log('browser');
 
-      if (logs.value.length) {
-        const json = Object.assign({}, logs, {details});
-        const jsonString = `${JSON.stringify(json, null, 2)}\n`;
-        const dir = path.resolve(process.cwd(), logPath, 'browser');
-        mkdirp(dir, (err) => {
-          if (err) {
-            console.error(err);
-          }
-          else {
-            fs.writeFileSync(path.resolve(dir, `${browserId}-${suite}-${browserType}.json`), jsonString, 'utf8');
-          }
-        });
+        if (logs.value.length) {
+          const json = Object.assign({}, logs, {details});
+          const jsonString = `${JSON.stringify(json, null, 2)}\n`;
+          const dir = path.resolve(process.cwd(), logPath, 'browser', suite);
+          mkdirp(dir, (err) => {
+            if (err) {
+              console.error(err);
+            }
+            else {
+              const {timestamp} = logs.value[0];
+              fs.writeFileSync(path.resolve(dir, `${details.type}-${browserId}-${timestamp}.json`), jsonString, 'utf8');
+            }
+          });
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 exports.config = {
@@ -194,9 +197,6 @@ exports.config = {
     junit: {
       outputDir: `${logPath}/junit/wdio/`,
       outputFileFormat: {
-        single() {
-          return `results-${suite}-${browserType}-${platform}.xml`;
-        },
         multi(opts) {
           return `${suite}-${browserType}-${platform}-${opts.cid}.xml`;
         }

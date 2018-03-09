@@ -1,5 +1,5 @@
-import {getPackage} from './utils/package';
-import {execSync} from './utils/exec';
+import {getPackage} from '../package';
+import {execSync} from '../exec';
 
 
 /**
