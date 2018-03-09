@@ -13,7 +13,7 @@ test_defaults: &test_defaults
     - run:
         name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
         command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
-    - run: echo "BUILD_NUM=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
+    - run: echo "BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
     - run:
         name: Integration Test
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}

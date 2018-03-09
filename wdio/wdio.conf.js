@@ -84,17 +84,15 @@ if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
 
-function saveBrowserLogs(browser, suiteDetails) {
+function saveBrowserLogs(browser, details) {
   const logTypes = browser.logTypes();
 
   Object.keys(logTypes).forEach((browserId) => {
     if (logTypes[browserId].value.includes('browser')) {
       const logs = browser.select(browserId).log('browser');
-      // Hack to print out saucelabs link
-      console.log(`🦄 Check out job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
 
       if (logs.value.length) {
-        const json = Object.assign({}, logs, {suite: suiteDetails});
+        const json = Object.assign({}, logs, {details});
         const jsonString = `${JSON.stringify(json, null, 2)}\n`;
         const dir = path.resolve(process.cwd(), logPath, 'browser');
         mkdirp(dir, (err) => {
@@ -257,10 +255,11 @@ exports.config = {
 
     return inject(defs);
   },
+  afterTest(test) {
+    saveBrowserLogs(browser, test);
+  },
   afterSuite(suiteDetails) {
     saveBrowserLogs(browser, suiteDetails);
-    saveBrowserLogs(browser, suiteDetails);
-
   },
   // Static Server setup
   staticServerFolders: [
