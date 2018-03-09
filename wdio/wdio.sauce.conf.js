@@ -7,12 +7,13 @@ let {config} = require('./wdio.conf.js');
 
 config.mochaOpts.timeout = 90000;
 config.services = config.services.push('sauce');
+// Disable since sauce already captures screenshots
+config.screenshotOnReject = false;
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
   user: process.env.SAUCE_USERNAME,
   key: process.env.SAUCE_ACCESS_KEY,
-  build: process.env.BUILD_NUMBER,
   sauceConnect: false
 });
 

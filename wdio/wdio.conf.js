@@ -1,22 +1,33 @@
+/* global browser */
 require('dotenv').config();
 require('babel-register');
 
 const os = require('os');
+const fs = require('fs');
+const path = require('path');
+
+const mkdirp = require('mkdirp');
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
 
 const {inject} = require('../scripts/tests/openh264');
-const beforeSuite = require('../scripts/tests/beforeSuite');
 
-const browser = process.env.BROWSER || 'chrome';
+const browserType = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const port = process.env.PORT || 4567;
 const suite = argv.suite || 'integration';
+const logPath = './reports/';
+
+const SELENIUM_VERSION = '3.4.0';
+const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
+const baseUrl = process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`;
 
 const chromeCapabilities = {
   browserName: 'chrome',
   name: `react-widget-${suite}`,
+  build,
+  logLevel: 'WARN',
   chromeOptions: {
     args: [
       '--use-fake-device-for-media-stream',
@@ -29,27 +40,79 @@ const chromeCapabilities = {
   },
   idleTimeout: 300,
   maxDuration: 3600,
-  seleniumVersion: '3.4.0',
+  seleniumVersion: SELENIUM_VERSION,
   platform
 };
 
 const firefoxCapabilities = {
   browserName: 'firefox',
   name: `react-widget-${suite}`,
+  build,
+  logLevel: 'WARN',
   idleTimeout: 300,
   maxDuration: 3600,
-  seleniumVersion: '3.4.0',
+  seleniumVersion: SELENIUM_VERSION,
   platform
 };
+
+let browserCapabilities;
+
+if (browserType.toLowerCase().includes('chrome')) {
+  browserCapabilities = {
+    browserLocal: {
+      desiredCapabilities: chromeCapabilities
+    },
+    browserRemote: {
+      desiredCapabilities: chromeCapabilities
+    }
+  };
+}
+else if (browserType.toLowerCase().includes('firefox')) {
+  browserCapabilities = {
+    browserLocal: {
+      desiredCapabilities: firefoxCapabilities
+    },
+    browserRemote: {
+      desiredCapabilities: firefoxCapabilities
+    }
+  };
+}
+
 let mochaTimeout = 30000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
 
+function saveBrowserLogs(browser, suiteDetails) {
+  const logTypes = browser.logTypes();
+
+  Object.keys(logTypes).forEach((browserId) => {
+    if (logTypes[browserId].value.includes('browser')) {
+      const logs = browser.select(browserId).log('browser');
+      // Hack to print out saucelabs link
+      console.log(`🦄 Check out job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
+
+      if (logs.value.length) {
+        const json = Object.assign({}, logs, {suite: suiteDetails});
+        const jsonString = `${JSON.stringify(json, null, 2)}\n`;
+        const dir = path.resolve(process.cwd(), logPath, 'browser');
+        mkdirp(dir, (err) => {
+          if (err) {
+            console.error(err);
+          }
+          else {
+            fs.writeFileSync(path.resolve(dir, `${browserId}-${suite}-${browserType}.json`), jsonString, 'utf8');
+          }
+        });
+      }
+    }
+  });
+}
+
 exports.config = {
-  seleniumInstallArgs: {version: '3.4.0'},
-  seleniumArgs: {version: '3.4.0'},
+  seleniumInstallArgs: {version: SELENIUM_VERSION},
+  seleniumArgs: {version: SELENIUM_VERSION},
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     tap: [
@@ -70,21 +133,8 @@ exports.config = {
   },
   // Patterns to exclude.
   exclude: [],
-  capabilities: browser === 'chrome' ? {
-    browserLocal: {
-      desiredCapabilities: chromeCapabilities
-    },
-    browserRemote: {
-      desiredCapabilities: chromeCapabilities
-    }
-  } : {
-    browserLocal: {
-      desiredCapabilities: firefoxCapabilities
-    },
-    browserRemote: {
-      desiredCapabilities: firefoxCapabilities
-    }
-  },
+  build,
+  capabilities: browserCapabilities,
   //
   // ===================
   // Test Configurations
@@ -97,7 +147,7 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'silent',
+  logLevel: 'error',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -107,11 +157,12 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  // screenshotPath: './errorShots/',
+  screenshotPath: `${logPath}/error-screenshots/`,
+  screenshotOnReject: true,
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`,
+  baseUrl,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
@@ -143,11 +194,16 @@ exports.config = {
   reporters: ['spec', 'junit'],
   reporterOptions: {
     junit: {
-      outputDir: './reports/junit/wdio/',
-      outputFileFormat() {
-        return `results-${suite}-${browser}-${platform}.xml`;
+      outputDir: `${logPath}/junit/wdio/`,
+      outputFileFormat: {
+        single() {
+          return `results-${suite}-${browserType}-${platform}.xml`;
+        },
+        multi(opts) {
+          return `${suite}-${browserType}-${platform}-${opts.cid}.xml`;
+        }
       },
-      packageName: `${suite}-${browser}-${platform}`
+      packageName: `${suite}-${browserType}-${platform}`
     }
   },
 
@@ -162,7 +218,50 @@ exports.config = {
   // =====
   // Hooks
   // =====
-  beforeSuite,
+  beforeSuite() {
+    // Setup test user scopes
+    process.env.CISCOSPARK_SCOPE = [
+      'webexsquare:get_conversation',
+      'spark:people_read',
+      'spark:rooms_read',
+      'spark:rooms_write',
+      'spark:memberships_read',
+      'spark:memberships_write',
+      'spark:messages_read',
+      'spark:messages_write',
+      'spark:teams_read',
+      'spark:teams_write',
+      'spark:team_memberships_read',
+      'spark:team_memberships_write',
+      'spark:kms'
+    ].join(' ');
+  },
+  onPrepare(conf, capabilities) {
+    const defs = [
+      capabilities.browserRemote.desiredCapabilities,
+      capabilities.browserLocal.desiredCapabilities
+    ];
+
+    /* eslint-disable no-param-reassign */
+    defs.forEach((d) => {
+      if (process.env.SAUCE) {
+        d.build = build;
+        d.version = d.version || 'latest';
+        d.platform = d.platform || 'OS X 10.12';
+      }
+      else {
+        d.platform = os.platform();
+      }
+    });
+    /* eslint-enable no-param-reassign */
+
+    return inject(defs);
+  },
+  afterSuite(suiteDetails) {
+    saveBrowserLogs(browser, suiteDetails);
+    saveBrowserLogs(browser, suiteDetails);
+
+  },
   // Static Server setup
   staticServerFolders: [
     {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
@@ -170,36 +269,5 @@ exports.config = {
     {mount: '/', path: './test/journeys/server/'},
     {mount: '/axe-core', path: './node_modules/axe-core/'}
   ],
-  staticServerPort: port,
-  onPrepare(conf, capabilities) {
-    const defs = [
-      capabilities.browserRemote.desiredCapabilities,
-      capabilities.browserLocal.desiredCapabilities
-    ];
-
-    const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
-    /* eslint-disable no-param-reassign */
-    defs.forEach((d) => {
-      if (process.env.SAUCE) {
-        d.build = build;
-        // Set the base to SauceLabs so that inject() does its thing.
-        d.base = 'SauceLabs';
-
-        d.version = d.version || 'latest';
-        d.platform = d.platform || 'OS X 10.12';
-      }
-      else {
-        // Copy the base over so that inject() does its thing.
-        d.base = d.browserName;
-        d.platform = os.platform();
-      }
-    });
-    /* eslint-enable no-param-reassign */
-
-    return inject(defs)
-      .then(() => {
-        // Remove the base because it's not actually a selenium property
-        defs.forEach((d) => Reflect.deleteProperty(d, 'base'));
-      });
-  }
+  staticServerPort: port
 };

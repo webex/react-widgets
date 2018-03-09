@@ -13,6 +13,7 @@ test_defaults: &test_defaults
     - run:
         name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
         command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+    - run: echo "BUILD_NUM=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
     - run:
         name: Integration Test
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
@@ -21,6 +22,10 @@ test_defaults: &test_defaults
         path: reports/junit/wdio
     - store_artifacts:
         path: reports/junit/wdio
+        destination: junit/wdio
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
 
 # Main Config
 version: 2
@@ -56,13 +61,14 @@ jobs:
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: Run all Jest test suites
-          command: npm run jest -- --ci --testResultsProcessor="jest-junit"
+          command: npm run jest -- --ci -i --testResultsProcessor="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT: reports/junit/js-jest-results.xml
       - store_test_results:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
+          destination: junit
 
   build_for_tests:
     docker:
@@ -118,76 +124,76 @@ jobs:
           paths:
             - .netlifyUrl
 
-  firefox_mac_oneOnOne_tests:
+  oneOnOne_firefox_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: oneOnOne
     <<: *test_defaults
 
-  firefox_mac_recents_tests:
+  recents_firefox_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: recents
     <<: *test_defaults
 
-  firefox_mac_space_tests:
+  space_firefox_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: space
     <<: *test_defaults
 
-  firefox_mac_multiple_tests:
+  multiple_firefox_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: multiple
     <<: *test_defaults
 
-  chrome_mac_oneOnOne_tests:
+  oneOnOne_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: oneOnOne
     <<: *test_defaults
 
-  chrome_mac_recents_tests:
+  recents_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: recents
     <<: *test_defaults
 
-  chrome_mac_space_tests:
+  space_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: space
     <<: *test_defaults
 
-  chrome_mac_multiple_tests:
+  multiple_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: multiple
     <<: *test_defaults
 
-  chrome_win10_oneOnOne_tests:
+  oneOnOne_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: oneOnOne
     <<: *test_defaults
 
-  chrome_win10_recents_tests:
+  recents_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: recents
     <<: *test_defaults
 
-  chrome_win10_space_tests:
+  space_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: space
     <<: *test_defaults
 
-  chrome_win10_multiple_tests:
+  multiple_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
@@ -208,39 +214,39 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
-      - firefox_mac_oneOnOne_tests:
+      - oneOnOne_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - firefox_mac_recents_tests:
+      - recents_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - firefox_mac_space_tests:
+      - space_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - firefox_mac_multiple_tests:
+      - multiple_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - chrome_mac_oneOnOne_tests:
+      - oneOnOne_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - chrome_mac_recents_tests:
+      - recents_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - chrome_mac_space_tests:
+      - space_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - chrome_mac_multiple_tests:
+      - multiple_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - chrome_win10_oneOnOne_tests:
+      - oneOnOne_chrome_win10_tests:
           requires:
             - deploy_for_testing
-      - chrome_win10_recents_tests:
+      - recents_chrome_win10_tests:
           requires:
             - deploy_for_testing
-      - chrome_win10_space_tests:
+      - space_chrome_win10_tests:
           requires:
             - deploy_for_testing
-      - chrome_win10_multiple_tests:
+      - multiple_chrome_win10_tests:
           requires:
             - deploy_for_testing
