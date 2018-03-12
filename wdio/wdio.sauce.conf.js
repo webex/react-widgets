@@ -5,6 +5,8 @@ const uuid = require('uuid');
 
 const {getSauceAsset} = require('../scripts/utils/sauce');
 
+const browserType = process.env.BROWSER || 'chrome';
+
 process.env.SAUCE = true;
 let {config} = require('./wdio.conf.js');
 
@@ -13,40 +15,49 @@ config.services = config.services.push('sauce');
 // Disable since sauce already captures screenshots
 config.screenshotOnReject = false;
 config.screenshotPath = undefined;
+const {beforeSuite} = config;
 
-config.beforeSuite = function sauceBeforeSuite() {
-  try {
-    // Hack to display link to sauceLabs jobs when using multi remote
-    const logTypes = browser.logTypes();
-    Object.keys(logTypes).forEach((browserId) => {
-      const logs = browser.select(browserId).log('browser');
-      console.log(`🦄 Check out ${browserId} job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
-    });
+function sauceBeforeSuite() {
+  if (browserType !== 'firefox') {
+    try {
+      // Hack to display link to sauceLabs jobs when using multi remote
+      const logTypes = browser.logTypes();
+      Object.keys(logTypes).forEach((browserId) => {
+        const logs = browser.select(browserId).log('browser');
+        console.log(`🦄 Check out ${browserId} job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
+      });
+    }
+    catch (e) {
+      // Do nothing
+    }
   }
-  catch (e) {
-    // Do nothing
-  }
-};
+}
 
 config.afterSuite = function sauceAfterSuite() {
-  try {
-    const logTypes = browser.logTypes();
-    Object.keys(logTypes).forEach((browserId) => {
-      const logs = browser.select(browserId).log('browser');
-      if (logs) {
-        const {sessionId} = logs;
-        if (sessionId) {
-          getSauceAsset(sessionId, 'selenium-server.log', `reports/sauce/${browserId}-selenium-server.log`);
-          getSauceAsset(sessionId, 'log.json', `reports/sauce/${browserId}-log.json`);
+  if (browserType !== 'firefox') {
+    try {
+      const logTypes = browser.logTypes();
+      Object.keys(logTypes).forEach((browserId) => {
+        const logs = browser.select(browserId).log('browser');
+        if (logs) {
+          const {sessionId} = logs;
+          if (sessionId) {
+            getSauceAsset(sessionId, 'selenium-server.log', `reports/sauce/${browserId}-selenium-server.log`);
+            getSauceAsset(sessionId, 'log.json', `reports/sauce/${browserId}-log.json`);
+          }
         }
-      }
-    });
-  }
-  catch (e) {
-    // Do Nothing
+      });
+    }
+    catch (e) {
+      // Do Nothing
+    }
   }
 };
 
+config.beforeSuite = function baseBeforeSuite() {
+  beforeSuite();
+  sauceBeforeSuite();
+};
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
