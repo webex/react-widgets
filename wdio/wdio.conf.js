@@ -19,7 +19,7 @@ const port = process.env.PORT || 4567;
 const suite = argv.suite || 'integration';
 const logPath = './reports/';
 
-const SELENIUM_VERSION = '3.4.0';
+const SELENIUM_VERSION = '3.6.0';
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 const baseUrl = process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`;
 
