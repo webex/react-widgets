@@ -15,24 +15,36 @@ config.screenshotOnReject = false;
 config.screenshotPath = undefined;
 
 config.beforeSuite = function sauceBeforeSuite() {
-  // Hack to display link to sauceLabs jobs when using multi remote
-  ['browserLocal', 'browserRemote'].forEach((browserId) => {
-    const logs = browser.select(browserId).log('browser');
-    console.log(`🦄 Check out ${browserId} job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
-  });
+  try {
+    // Hack to display link to sauceLabs jobs when using multi remote
+    const logTypes = browser.logTypes();
+    Object.keys(logTypes).forEach((browserId) => {
+      const logs = browser.select(browserId).log('browser');
+      console.log(`🦄 Check out ${browserId} job at https://saucelabs.com/tests/${logs.sessionId} 🦄`);
+    });
+  }
+  catch (e) {
+    // Do nothing
+  }
 };
 
 config.afterSuite = function sauceAfterSuite() {
-  ['browserLocal', 'browserRemote'].forEach((browserId) => {
-    const logs = browser.select(browserId).log('browser');
-    if (logs) {
-      const {sessionId} = logs;
-      if (sessionId) {
-        getSauceAsset(sessionId, 'selenium-server.log', `reports/sauce/${browserId}-selenium-server.log`);
-        getSauceAsset(sessionId, 'log.json', `reports/sauce/${browserId}-log.json`);
+  try {
+    const logTypes = browser.logTypes();
+    Object.keys(logTypes).forEach((browserId) => {
+      const logs = browser.select(browserId).log('browser');
+      if (logs) {
+        const {sessionId} = logs;
+        if (sessionId) {
+          getSauceAsset(sessionId, 'selenium-server.log', `reports/sauce/${browserId}-selenium-server.log`);
+          getSauceAsset(sessionId, 'log.json', `reports/sauce/${browserId}-log.json`);
+        }
       }
-    }
-  });
+    });
+  }
+  catch (e) {
+    // Do Nothing
+  }
 };
 
 
