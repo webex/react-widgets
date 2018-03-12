@@ -119,12 +119,43 @@ exports.config = {
     tap: [
       './test/journeys/specs/tap/**/*.js'
     ],
-    oneOnOne: [
-      './test/journeys/specs/oneOnOne/**/*.js'
+    oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
+    'oneOnOne-basic': [
+      './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/global/basic.js'
     ],
-    space: [
-      './test/journeys/specs/space/**/*.js'
+    'oneOnOne-features': [
+      './test/journeys/specs/oneOnOne/dataApi/features.js',
+      './test/journeys/specs/oneOnOne/global/features.js'
     ],
+    'oneOnOne-meet': [
+      './test/journeys/specs/oneOnOne/dataApi/meet.js',
+      './test/journeys/specs/oneOnOne/global/meet.js'
+    ],
+    'oneOnOne-messaging': [
+      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
+      './test/journeys/specs/oneOnOne/global/messaging.js'
+    ],
+    'oneOnOne-dataApi-startup': [
+      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js'
+    ],
+    space: ['./test/journeys/specs/space/**/*.js'],
+    'space-basic': [
+      './test/journeys/specs/space/dataApi/basic.js',
+      './test/journeys/specs/space/global/basic.js'
+    ],
+    'space-meet': [
+      './test/journeys/specs/space/dataApi/meet.js',
+      './test/journeys/specs/space/global/meet.js'
+    ],
+    'space-messaging': [
+      './test/journeys/specs/space/dataApi/messaging.js',
+      './test/journeys/specs/space/global/messaging.js'
+    ],
+    'space-dataApi-startup': [
+      './test/journeys/specs/space/dataApi/startup-settings.js'
+    ],
+    'space-features': ['./test/journeys/specs/space/featureFlags.js'],
     recents: [
       './test/journeys/specs/recents/**/*.js'
     ],
