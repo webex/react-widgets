@@ -34,14 +34,16 @@ jobs:
       - restore_cache:
           keys:
           - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
       - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
       - run: npm install
-      - run: git checkout .npmrc
+      - run:
+          command: rm -rf node_modules && npm install
+          when: on_fail
       - save_cache:
           paths:
             - node_modules
           key: js-dependencies-{{ checksum "package-lock.json" }}
+          when: always
 
   unit_tests_and_linting:
     docker:
