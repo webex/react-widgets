@@ -26,7 +26,8 @@ export const elements = {
 export function displayIncomingMessage(aBrowser, sender, conversation, message, isOneOnOne = false) {
   const spaceTitle = isOneOnOne ? sender.displayName : conversation.displayName;
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
-    displayName: message
+    displayName: message,
+    content: message
   }));
   aBrowser.waitUntil(() =>
     aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle

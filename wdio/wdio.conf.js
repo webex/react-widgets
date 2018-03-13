@@ -1,12 +1,7 @@
-/* global browser */
 require('dotenv').config();
 require('babel-register');
 
 const os = require('os');
-const fs = require('fs');
-const path = require('path');
-
-const mkdirp = require('mkdirp');
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
@@ -19,7 +14,7 @@ const port = process.env.PORT || 4567;
 const suite = argv.suite || 'integration';
 const logPath = './reports/';
 
-const SELENIUM_VERSION = '3.6.0';
+const SELENIUM_VERSION = '3.4.0'; // Do not update to 3.6.0. Breaks actions API
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 const baseUrl = process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`;
 
@@ -82,33 +77,6 @@ let mochaTimeout = 30000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
-}
-
-function saveBrowserLogs(browser, details) {
-  if (browserType !== 'firefox') {
-    const logTypes = browser.logTypes();
-
-    Object.keys(logTypes).forEach((browserId) => {
-      if (logTypes[browserId].value.includes('browser')) {
-        const logs = browser.select(browserId).log('browser');
-
-        if (logs.value.length) {
-          const json = Object.assign({}, logs, {details});
-          const jsonString = `${JSON.stringify(json, null, 2)}\n`;
-          const dir = path.resolve(process.cwd(), logPath, 'browser', suite);
-          mkdirp(dir, (err) => {
-            if (err) {
-              console.error(err);
-            }
-            else {
-              const {timestamp} = logs.value[0];
-              fs.writeFileSync(path.resolve(dir, `${details.type}-${browserId}-${timestamp}.json`), jsonString, 'utf8');
-            }
-          });
-        }
-      }
-    });
-  }
 }
 
 exports.config = {
@@ -189,8 +157,8 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: `${logPath}/error-screenshots/`,
-  screenshotOnReject: true,
+  // screenshotPath: `${logPath}/error-screenshots/`,
+  // screenshotOnReject: true,
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
@@ -285,12 +253,6 @@ exports.config = {
     /* eslint-enable no-param-reassign */
 
     return inject(defs);
-  },
-  afterTest(test) {
-    saveBrowserLogs(browser, test);
-  },
-  afterSuite(suiteDetails) {
-    saveBrowserLogs(browser, suiteDetails);
   },
   // Static Server setup
   staticServerFolders: [

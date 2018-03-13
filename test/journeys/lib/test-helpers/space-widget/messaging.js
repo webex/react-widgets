@@ -48,7 +48,7 @@ export function sendMessage(sender, receiver, message) {
   sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
   sender.browser.waitForVisible(elements.systemMessage);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
 }
 
 /**
@@ -96,25 +96,25 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
  * @param {string} messageToFlag Verifies the last message is this string
  * @returns {void}
  */
-export function flagMessage(testObject, messageToFlag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
-  moveMouse(testObject.browser, elements.lastActivityText);
-  testObject.browser.waitUntil(() =>
-    testObject.browser
+export function flagMessage({browser: aBrowser}, messageToFlag) {
+  aBrowser.waitForExist(elements.pendingActivity, 15000, true);
+  aBrowser.waitUntil(() =>
+    aBrowser.element(elements.lastActivityText).getText() === messageToFlag);
+  moveMouse(aBrowser, elements.lastActivityText);
+  aBrowser.waitUntil(() =>
+    aBrowser
       .element(elements.lastActivity)
       .element(elements.flagButton)
       .isVisible(),
   'flag button is not visible');
 
-  testObject.browser
+  aBrowser
     .element(elements.lastActivity)
     .element(elements.flagButton)
     .click();
 
   // Verify it is highlighted, showing it was flagged
-  testObject.browser.waitUntil(() => testObject.browser
+  aBrowser.waitUntil(() => aBrowser
     .element(elements.lastActivity)
     .element(elements.highlighted)
     .element(elements.flagButton)
@@ -122,7 +122,7 @@ export function flagMessage(testObject, messageToFlag) {
 
   // Since we automatically activate the flag icon before confirming it on the server,
   // we need to wait a certain timeframe to allow server to recognize flag
-  testObject.browser.pause(2500);
+  aBrowser.pause(2500);
 }
 
 /**
@@ -314,7 +314,7 @@ const blockquote = (sender, receiver) => {
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'You call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
   // Assert only first half of message is in the blockquote tag
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
@@ -330,7 +330,7 @@ const orderedList = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '1. ordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '2. ordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'ordered list item 1\nordered list item 2');
   // Assert text matches for the first and second ordered list items
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), 'ordered list item 1');
@@ -347,7 +347,7 @@ const unorderedList = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'unordered list item 1\nunordered list item 2');
   // Assert text matches for the first and second unordered list items
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), 'unordered list item 1');
@@ -400,7 +400,7 @@ const hr = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'test horizontal line');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'test horizontal line');
   assert.isTrue(receiver.browser.isVisible(`${elements.lastActivityText} > hr`));
 };
@@ -443,7 +443,7 @@ const codeblock = (sender, receiver) => {
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '<h1>Hello World!</h1>');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '```');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
   receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === '<h1>Hello World!</h1>');
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), '<h1>Hello World!</h1>');
