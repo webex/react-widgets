@@ -6,6 +6,7 @@ export const elements = {
   filesButton: 'button[aria-label="Files"]',
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
+  activityList: '.ciscospark-activity-list',
   controlsContainer: '.ciscospark-controls-container',
   closeButton: 'button[aria-label="Close"]',
   exitButton: '.ciscospark-activity-menu-exit button',
