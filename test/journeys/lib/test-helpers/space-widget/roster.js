@@ -40,8 +40,8 @@ function closeSearch(aBrowser) {
  * @returns {Array}
  */
 export function hasParticipants(aBrowser, participants) {
-  aBrowser.element(elements.rosterList).waitForVisible();
-  const participantsText = aBrowser.element(elements.rosterList).getText();
+  aBrowser.waitForVisible(elements.rosterList);
+  const participantsText = aBrowser.getText(elements.rosterList);
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
 }
 
@@ -70,7 +70,7 @@ export function searchForPerson(aBrowser, searchString, doAdd = false, searchRes
   aBrowser.setValue(elements.searchInput, searchString);
   aBrowser.waitForVisible(elements.addParticipantResultsArea);
   aBrowser.waitForVisible(elements.addParticipantResultItem);
-  const resultsText = aBrowser.element(elements.addParticipantResultItem).getText();
+  const resultsText = aBrowser.getText(elements.addParticipantResultItem);
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);
