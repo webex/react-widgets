@@ -19,7 +19,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
       assert.isTrue(
         browserWithAllTheFeatures
-          .isVisible(`${mainElements.controlsContainer} ${rosterElements.peopleButton}`)
+          .isVisible(`${mainElements.activityMenu} ${rosterElements.peopleButton}`)
       );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
@@ -29,7 +29,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
       assert.isFalse(
         browserWithNoFeatures
-          .isVisible(`${mainElements.controlsContainer} ${rosterElements.peopleButton}`)
+          .isVisible(`${mainElements.activityMenu} ${rosterElements.peopleButton}`)
       );
       browserWithNoFeatures.click(mainElements.exitButton);
     });
@@ -41,7 +41,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
       assert.isTrue(
         browserWithAllTheFeatures
-          .isVisible(`${mainElements.controlsContainer} ${meetElements.callButton}`)
+          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
       );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
@@ -51,7 +51,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
       assert.isFalse(
         browserWithNoFeatures
-          .isVisible(`${mainElements.controlsContainer} ${meetElements.callButton}`)
+          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
       );
       browserWithNoFeatures.click(mainElements.exitButton);
     });
