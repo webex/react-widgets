@@ -14,6 +14,7 @@ export const elements = {
   deleteMessageButton: 'button[aria-label="Delete this message"]',
   flagButton: 'button[aria-label="Flag this message"]',
   highlighted: '.isHighlighted',
+  pendingAction: '.pending',
   pendingActivity: '.activity-item-pending',
   inputFile: '.ciscospark-file-input',
   modalWindow: '.ciscospark-dialogue-modal',
@@ -96,33 +97,35 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
  * @param {string} messageToFlag Verifies the last message is this string
  * @returns {void}
  */
-export function flagMessage({browser: aBrowser}, messageToFlag) {
-  aBrowser.waitForExist(elements.pendingActivity, 15000, true);
-  aBrowser.waitUntil(() =>
-    aBrowser.element(elements.lastActivityText).getText() === messageToFlag);
-  moveMouse(aBrowser, elements.lastActivityText);
-  aBrowser.waitUntil(() =>
-    aBrowser
-      .element(elements.lastActivity)
-      .element(elements.flagButton)
+export function flagMessage(testObject, messageToFlag) {
+  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
+  testObject.browser.waitUntil(() =>
+    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
+  moveMouse(testObject.browser, elements.lastActivityText);
+  testObject.browser.waitUntil(() =>
+    testObject.browser
+      .element(`${elements.lastActivity} ${elements.flagButton}`)
       .isVisible(),
-  'flag button is not visible');
+  1500, 'flag button is not visible when hovering');
 
-  aBrowser
-    .element(elements.lastActivity)
-    .element(elements.flagButton)
+  testObject.browser
+    .element(`${elements.lastActivity} ${elements.flagButton}`)
     .click();
 
-  // Verify it is highlighted, showing it was flagged
-  aBrowser.waitUntil(() => aBrowser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
-    .element(elements.flagButton)
-    .isVisible(), 'flag button did not highlight');
+  // Flag has a pending class while it waits for server upload
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    .isVisible(), 1500, 'flag button did not highlight with pending state');
 
-  // Since we automatically activate the flag icon before confirming it on the server,
-  // we need to wait a certain timeframe to allow server to recognize flag
-  aBrowser.pause(2500);
+  // Verify it is highlighted, showing it was flagged
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
+    .isVisible(), 1500, 'flag button did not highlight');
+
+  // Remove pending flag
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    .isVisible() === false, 7500, 'flag button did not remove pending state');
 }
 
 /**
@@ -134,23 +137,19 @@ export function flagMessage({browser: aBrowser}, messageToFlag) {
 export function removeFlagMessage(testObject, messageToUnflag) {
   testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 'message was not found');
+    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 1500, 'message was not found');
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
-    .element(elements.flagButton)
-    .isVisible(), 'message was not flagged');
+    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
+    .isVisible(), 1500, 'message was not flagged');
 
   testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.flagButton)
+    .element(`${elements.lastActivity} ${elements.flagButton}`)
     .click();
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
-    .isVisible() === false, 'message was still flagged');
+    .element(`${elements.lastActivity} ${elements.highlighted}`)
+    .isVisible() === false, 3500, 'message was still flagged');
 }
 
 /**
@@ -185,7 +184,7 @@ export function deleteMessage(testObject, messageToDelete) {
     testObject.browser
       .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
       .isVisible(),
-  'delete button is not visible');
+  1500, 'delete button is not visible when hovering');
 
   testObject.browser
     .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
@@ -196,7 +195,7 @@ export function deleteMessage(testObject, messageToDelete) {
     testObject.browser
       .element(elements.modalWindow)
       .isVisible(),
-  'modal window is not visible');
+  3500, 'delete modal window is not visible after clicking delete button');
   assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
   testObject.browser.element(elements.modalDeleteButton).click();
 
@@ -205,7 +204,7 @@ export function deleteMessage(testObject, messageToDelete) {
   testObject.browser.waitUntil(() => {
     const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
     return text.includes(messages.youDeleted);
-  }, 'message was not deleted');
+  }, 3500, 'message was not deleted');
 }
 
 
@@ -225,8 +224,8 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   sender.browser.click(elements.shareButton);
   receiver.browser.waitForExist(fileTitle, 30000);
   receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
-  const remoteSize = receiver.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
+  const localSize = sender.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
+  const remoteSize = receiver.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
     assert.equal(localSize, remoteSize);
