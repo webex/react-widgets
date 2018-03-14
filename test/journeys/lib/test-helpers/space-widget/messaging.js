@@ -106,7 +106,7 @@ export function flagMessage(testObject, messageToFlag) {
     testObject.browser
       .element(`${elements.lastActivity} ${elements.flagButton}`)
       .isVisible(),
-  'flag button is not visible');
+  1500, 'flag button is not visible when hovering');
 
   testObject.browser
     .element(`${elements.lastActivity} ${elements.flagButton}`)
@@ -123,9 +123,9 @@ export function flagMessage(testObject, messageToFlag) {
     .isVisible(), 1500, 'flag button did not highlight');
 
   // Remove pending flag
-  testObject.browser.waitUntil(() => !testObject.browser
+  testObject.browser.waitUntil(() => testObject.browser
     .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
-    .isVisible(), 7500, 'flag button did not remove pending state');
+    .isVisible() === false, 7500, 'flag button did not remove pending state');
 }
 
 /**
@@ -137,11 +137,11 @@ export function flagMessage(testObject, messageToFlag) {
 export function removeFlagMessage(testObject, messageToUnflag) {
   testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 'message was not found');
+    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 1500, 'message was not found');
 
   testObject.browser.waitUntil(() => testObject.browser
     .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 'message was not flagged');
+    .isVisible(), 1500, 'message was not flagged');
 
   testObject.browser
     .element(`${elements.lastActivity} ${elements.flagButton}`)
@@ -149,7 +149,7 @@ export function removeFlagMessage(testObject, messageToUnflag) {
 
   testObject.browser.waitUntil(() => testObject.browser
     .element(`${elements.lastActivity} ${elements.highlighted}`)
-    .isVisible() === false, 'message was still flagged');
+    .isVisible() === false, 3500, 'message was still flagged');
 }
 
 /**
@@ -184,7 +184,7 @@ export function deleteMessage(testObject, messageToDelete) {
     testObject.browser
       .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
       .isVisible(),
-  'delete button is not visible');
+  1500, 'delete button is not visible when hovering');
 
   testObject.browser
     .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
@@ -195,7 +195,7 @@ export function deleteMessage(testObject, messageToDelete) {
     testObject.browser
       .element(elements.modalWindow)
       .isVisible(),
-  'modal window is not visible');
+  3500, 'delete modal window is not visible after clicking delete button');
   assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
   testObject.browser.element(elements.modalDeleteButton).click();
 
@@ -204,7 +204,7 @@ export function deleteMessage(testObject, messageToDelete) {
   testObject.browser.waitUntil(() => {
     const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
     return text.includes(messages.youDeleted);
-  }, 'message was not deleted');
+  }, 3500, 'message was not deleted');
 }
 
 
@@ -224,8 +224,8 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   sender.browser.click(elements.shareButton);
   receiver.browser.waitForExist(fileTitle, 30000);
   receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
-  const remoteSize = receiver.browser.element(elements.lastActivity).element('.ciscospark-share-file-size').getText();
+  const localSize = sender.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
+  const remoteSize = receiver.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
     assert.equal(localSize, remoteSize);
