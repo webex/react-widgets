@@ -31,19 +31,12 @@ jobs:
       - image: circleci/node:8.9.4
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
       - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
       - run: npm install
-      - run:
-          command: rm -rf node_modules && npm install
-          when: on_fail
       - save_cache:
           paths:
             - node_modules
           key: js-dependencies-{{ checksum "package-lock.json" }}
-          when: always
 
   unit_tests_and_linting:
     docker:
