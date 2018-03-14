@@ -122,11 +122,6 @@ export function flagMessage(testObject, messageToFlag) {
     .element(`${elements.lastActivity} ${elements.flagButton}`)
     .click();
 
-  // Flag has a pending class while it waits for server upload
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
-    .isVisible(), 1500, 'flag button did not highlight with pending state');
-
   // Verify it is highlighted, showing it was flagged
   testObject.browser.waitUntil(() => testObject.browser
     .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
