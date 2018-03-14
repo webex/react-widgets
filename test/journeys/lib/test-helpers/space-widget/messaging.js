@@ -24,7 +24,10 @@ export const elements = {
   shareButton: 'button[aria-label="Share"]',
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
-  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
+  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
+  readReceiptsArea: '.ciscospark-read-receipts',
+  readReceiptsAvatar: '.ciscospark-typing-avatar',
+  messageComposer: '.ciscospark-message-composer'
 };
 
 export const messages = {
@@ -64,6 +67,13 @@ export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
   receiver.browser.waitForExist(elements.lastActivityText, 15000);
   receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
+  // Move mouse to send read receipt
+  moveMouse(receiver.browser, elements.lastActivityText);
+  // Verify read receipt comes across
+  sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+  // Move Mouse to text area so it doesn't cause any tool tips
+  moveMouse(receiver.browser, elements.messageComposer);
+  moveMouse(sender.browser, elements.messageComposer);
 }
 
 /**
