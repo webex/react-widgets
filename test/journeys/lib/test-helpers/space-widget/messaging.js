@@ -14,6 +14,7 @@ export const elements = {
   deleteMessageButton: 'button[aria-label="Delete this message"]',
   flagButton: 'button[aria-label="Flag this message"]',
   highlighted: '.isHighlighted',
+  pendingAction: '.pending',
   pendingActivity: '.activity-item-pending',
   inputFile: '.ciscospark-file-input',
   modalWindow: '.ciscospark-dialogue-modal',
@@ -103,26 +104,28 @@ export function flagMessage(testObject, messageToFlag) {
   moveMouse(testObject.browser, elements.lastActivityText);
   testObject.browser.waitUntil(() =>
     testObject.browser
-      .element(elements.lastActivity)
-      .element(elements.flagButton)
+      .element(`${elements.lastActivity} ${elements.flagButton}`)
       .isVisible(),
   'flag button is not visible');
 
   testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.flagButton)
+    .element(`${elements.lastActivity} ${elements.flagButton}`)
     .click();
+
+  // Flag has a pending class while it waits for server upload
+  testObject.browser.waitUntil(() => testObject.browser
+    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    .isVisible(), 1500, 'flag button did not highlight with pending state');
 
   // Verify it is highlighted, showing it was flagged
   testObject.browser.waitUntil(() => testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
-    .element(elements.flagButton)
-    .isVisible(), 'flag button did not highlight');
+    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
+    .isVisible(), 1500, 'flag button did not highlight');
 
-  // Since we automatically activate the flag icon before confirming it on the server,
-  // we need to wait a certain timeframe to allow server to recognize flag
-  testObject.browser.pause(2500);
+  // Remove pending flag
+  testObject.browser.waitUntil(() => !testObject.browser
+    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    .isVisible(), 7500, 'flag button did not remove pending state');
 }
 
 /**
@@ -137,19 +140,15 @@ export function removeFlagMessage(testObject, messageToUnflag) {
     testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 'message was not found');
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
-    .element(elements.flagButton)
+    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
     .isVisible(), 'message was not flagged');
 
   testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.flagButton)
+    .element(`${elements.lastActivity} ${elements.flagButton}`)
     .click();
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(elements.lastActivity)
-    .element(elements.highlighted)
+    .element(`${elements.lastActivity} ${elements.highlighted}`)
     .isVisible() === false, 'message was still flagged');
 }
 
