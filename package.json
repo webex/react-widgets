@@ -35,9 +35,7 @@
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
-    "upgradespark": "./scripts/utils/update.js",
-    "precommit": "lint-staged",
-    "prepush": "npm run test"
+    "upgradespark": "./scripts/utils/update.js"
   },
   "repository": {
     "type": "git",
@@ -152,7 +150,7 @@
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
-    "husky": "^0.14.3",
+    "husky": "^0.15.0-rc.9",
     "identity-obj-proxy": "^3.0.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^22.1.2",
