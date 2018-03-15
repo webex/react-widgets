@@ -143,8 +143,14 @@ describe('Widget Space: Group', () => {
         }, marty.token.access_token, conversation.id);
 
         const spaceWidget = '.ciscospark-space-widget';
-        browserLocal.waitForVisible(spaceWidget);
-        browserRemote.waitForVisible(spaceWidget);
+        browserLocal.waitUntil(
+          () => browserLocal.isVisible(spaceWidget),
+          15000, 'does not load local browser'
+        );
+        browserRemote.waitUntil(
+          () => browserRemote.isVisible(spaceWidget),
+          15000, 'does not load remote browser'
+        );
 
         answer(browserRemote);
         hangup(browserLocal);

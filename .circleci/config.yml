@@ -17,9 +17,9 @@ test_defaults: &test_defaults
     - run:
         name: Integration Test
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
-        no_output_timeout: 40m
+        no_output_timeout: 25m
     - store_test_results:
-        path: reports/junit/wdio
+        path: reports/junit
     - store_artifacts:
         path: reports
 
@@ -54,7 +54,7 @@ jobs:
           name: Run all Jest test suites
           command: npm run jest -- --ci -i --testResultsProcessor="jest-junit"
           environment:
-            JEST_JUNIT_OUTPUT: reports/junit/js-jest-results.xml
+            JEST_JUNIT_OUTPUT: reports/junit/jest/js-jest-results.xml
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -115,48 +115,26 @@ jobs:
           paths:
             - .netlifyUrl
 
-# Recents Suite Firefox on Mac
-  recents_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: recents
-    <<: *test_defaults
-
-# Recents Suite Chrome on Mac
-  recents_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: recents
-    <<: *test_defaults
-
-# Recents Suite Chrome on Win10
-  recents_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: recents
-    <<: *test_defaults
-
-# Multiple Suite Firefox on Mac
+# Recents and Multiple Suite Firefox on Mac
   multiple_firefox_mac_tests:
     environment:
       - BROWSER: firefox
-      - TEST_SUITE: multiple
+      - TEST_SUITE: recents-multiple
     <<: *test_defaults
 
-    # Multiple Suite Chrome on Mac
-  multiple_chrome_mac_tests:
+# Recents and Multiple Suite Chrome on Mac
+  multiple_recents_chrome_mac_tests:
     environment:
       - BROWSER: chrome
-      - TEST_SUITE: multiple
+      - TEST_SUITE: recents-multiple
     <<: *test_defaults
 
-# Multiple Suite Chrome on Win10
-  multiple_chrome_win10_tests:
+# Recents and Multiple Suite Chrome on Win10
+  multiple_recents_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
-      - TEST_SUITE: multiple
+      - TEST_SUITE: recents-multiple
     <<: *test_defaults
 
 # One On One Suite Firefox on Mac
@@ -164,12 +142,6 @@ jobs:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_features_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: oneOnOne-features
     <<: *test_defaults
 
   oneOnOne_meet_firefox_mac_tests:
@@ -184,23 +156,11 @@ jobs:
       - TEST_SUITE: oneOnOne-messaging
     <<: *test_defaults
 
-  oneOnOne_dataApi_startup_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: oneOnOne-dataApi-startup
-    <<: *test_defaults
-
 # One On One Suite Chrome on Mac
   oneOnOne_basic_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_features_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: oneOnOne-features
     <<: *test_defaults
 
   oneOnOne_meet_chrome_mac_tests:
@@ -215,11 +175,6 @@ jobs:
       - TEST_SUITE: oneOnOne-messaging
     <<: *test_defaults
 
-  oneOnOne_dataApi_startup_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: oneOnOne-dataApi-startup
-    <<: *test_defaults
 
 # One On One Suite Chrome on Win10
   oneOnOne_basic_chrome_win10_tests:
@@ -227,13 +182,6 @@ jobs:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_features_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: oneOnOne-features
     <<: *test_defaults
 
   oneOnOne_meet_chrome_win10_tests:
@@ -250,24 +198,11 @@ jobs:
       - TEST_SUITE: oneOnOne-messaging
     <<: *test_defaults
 
-  oneOnOne_dataApi_startup_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: oneOnOne-dataApi-startup
-    <<: *test_defaults
-
 # Space Suite Firefox on Mac
   space_basic_firefox_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_features_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: space-features
     <<: *test_defaults
 
   space_meet_firefox_mac_tests:
@@ -282,23 +217,11 @@ jobs:
       - TEST_SUITE: space-messaging
     <<: *test_defaults
 
-  space_dataApi_startup_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: space-dataApi-startup
-    <<: *test_defaults
-
 # Space Suite Chrome on Mac
   space_basic_chrome_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_features_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: space-features
     <<: *test_defaults
 
   space_meet_chrome_mac_tests:
@@ -313,25 +236,12 @@ jobs:
       - TEST_SUITE: space-messaging
     <<: *test_defaults
 
-  space_dataApi_startup_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: space-dataApi-startup
-    <<: *test_defaults
-
 # Space Suite Chrome on Win10
   space_basic_chrome_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_features_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: space-features
     <<: *test_defaults
 
   space_meet_chrome_win10_tests:
@@ -348,13 +258,6 @@ jobs:
       - TEST_SUITE: space-messaging
     <<: *test_defaults
 
-  space_dataApi_startup_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: space-dataApi-startup
-    <<: *test_defaults
-
 workflows:
   version: 2
   run_all_tests:
@@ -369,28 +272,16 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
-      - recents_firefox_mac_tests:
-          requires:
-            - deploy_for_testing
-      - recents_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - recents_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
       - multiple_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - multiple_chrome_mac_tests:
+      - multiple_recents_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - multiple_chrome_win10_tests:
+      - multiple_recents_chrome_win10_tests:
           requires:
             - deploy_for_testing
       - oneOnOne_basic_firefox_mac_tests:
-          requires:
-            - deploy_for_testing
-      - oneOnOne_features_firefox_mac_tests:
           requires:
             - deploy_for_testing
       - oneOnOne_meet_firefox_mac_tests:
@@ -399,13 +290,7 @@ workflows:
       - oneOnOne_messaging_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_dataApi_startup_firefox_mac_tests:
-          requires:
-            - deploy_for_testing
       - oneOnOne_basic_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - oneOnOne_features_chrome_mac_tests:
           requires:
             - deploy_for_testing
       - oneOnOne_meet_chrome_mac_tests:
@@ -414,13 +299,7 @@ workflows:
       - oneOnOne_messaging_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_dataApi_startup_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
       - oneOnOne_basic_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
-      - oneOnOne_features_chrome_win10_tests:
           requires:
             - deploy_for_testing
       - oneOnOne_meet_chrome_win10_tests:
@@ -429,13 +308,7 @@ workflows:
       - oneOnOne_messaging_chrome_win10_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_dataApi_startup_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
       - space_basic_firefox_mac_tests:
-          requires:
-            - deploy_for_testing
-      - space_features_firefox_mac_tests:
           requires:
             - deploy_for_testing
       - space_meet_firefox_mac_tests:
@@ -444,13 +317,7 @@ workflows:
       - space_messaging_firefox_mac_tests:
           requires:
             - deploy_for_testing
-      - space_dataApi_startup_firefox_mac_tests:
-          requires:
-            - deploy_for_testing
       - space_basic_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - space_features_chrome_mac_tests:
           requires:
             - deploy_for_testing
       - space_meet_chrome_mac_tests:
@@ -459,21 +326,12 @@ workflows:
       - space_messaging_chrome_mac_tests:
           requires:
             - deploy_for_testing
-      - space_dataApi_startup_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
       - space_basic_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
-      - space_features_chrome_win10_tests:
           requires:
             - deploy_for_testing
       - space_meet_chrome_win10_tests:
           requires:
             - deploy_for_testing
       - space_messaging_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
-      - space_dataApi_startup_chrome_win10_tests:
           requires:
             - deploy_for_testing

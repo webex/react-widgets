@@ -87,12 +87,11 @@ exports.config = {
     ],
     oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
     'oneOnOne-basic': [
+      './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/features.js',
       './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/global/basic.js'
-    ],
-    'oneOnOne-features': [
       './test/journeys/specs/oneOnOne/dataApi/features.js',
-      './test/journeys/specs/oneOnOne/global/features.js'
+      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js'
     ],
     'oneOnOne-meet': [
       './test/journeys/specs/oneOnOne/dataApi/meet.js',
@@ -102,13 +101,12 @@ exports.config = {
       './test/journeys/specs/oneOnOne/dataApi/messaging.js',
       './test/journeys/specs/oneOnOne/global/messaging.js'
     ],
-    'oneOnOne-dataApi-startup': [
-      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js'
-    ],
     space: ['./test/journeys/specs/space/**/*.js'],
     'space-basic': [
+      './test/journeys/specs/space/global/basic.js',
+      './test/journeys/specs/space/featureFlags.js',
       './test/journeys/specs/space/dataApi/basic.js',
-      './test/journeys/specs/space/global/basic.js'
+      './test/journeys/specs/space/dataApi/startup-settings.js'
     ],
     'space-meet': [
       './test/journeys/specs/space/dataApi/meet.js',
@@ -118,14 +116,14 @@ exports.config = {
       './test/journeys/specs/space/dataApi/messaging.js',
       './test/journeys/specs/space/global/messaging.js'
     ],
-    'space-dataApi-startup': [
-      './test/journeys/specs/space/dataApi/startup-settings.js'
-    ],
-    'space-features': ['./test/journeys/specs/space/featureFlags.js'],
     recents: [
       './test/journeys/specs/recents/**/*.js'
     ],
     multiple: [
+      './test/journeys/specs/multiple/**/*.js'
+    ],
+    'recents-multiple': [
+      './test/journeys/specs/recents/**/*.js',
       './test/journeys/specs/multiple/**/*.js'
     ]
   },
@@ -155,8 +153,8 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  // screenshotPath: `${logPath}/error-screenshots/`,
-  // screenshotOnReject: true,
+  screenshotPath: `${logPath}/error-screenshots/`,
+  screenshotOnReject: true,
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
@@ -167,10 +165,10 @@ exports.config = {
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
-  connectionRetryTimeout: 30000,
+  connectionRetryTimeout: 20000,
   //
   // Default request retries count
-  connectionRetryCount: 3,
+  connectionRetryCount: 1,
   services: [
     'firefox-profile',
     'selenium-standalone',
@@ -192,10 +190,10 @@ exports.config = {
   reporters: ['spec', 'junit'],
   reporterOptions: {
     junit: {
-      outputDir: `${logPath}/junit/wdio/`,
+      outputDir: `${logPath}/junit/wdio/${suite}/${browserType}-${platform}`,
       outputFileFormat: {
         multi(opts) {
-          return `${suite}-${browserType}-${platform}-${opts.cid}.xml`;
+          return `${suite}-${opts.cid}.xml`;
         }
       },
       packageName: `${suite}-${browserType}-${platform}`
