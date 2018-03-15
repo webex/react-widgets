@@ -19,9 +19,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
       assert.isTrue(
         browserWithAllTheFeatures
-          .element(mainElements.controlsContainer)
-          .element(rosterElements.peopleButton)
-          .isVisible()
+          .isVisible(`${mainElements.activityMenu} ${rosterElements.peopleButton}`)
       );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
@@ -31,9 +29,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
       assert.isFalse(
         browserWithNoFeatures
-          .element(mainElements.controlsContainer)
-          .element(rosterElements.peopleButton)
-          .isVisible()
+          .isVisible(`${mainElements.activityMenu} ${rosterElements.peopleButton}`)
       );
       browserWithNoFeatures.click(mainElements.exitButton);
     });
@@ -45,9 +41,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
       assert.isTrue(
         browserWithAllTheFeatures
-          .element(mainElements.controlsContainer)
-          .element(meetElements.callButton)
-          .isVisible()
+          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
       );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
@@ -57,9 +51,7 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
       assert.isFalse(
         browserWithNoFeatures
-          .element(mainElements.controlsContainer)
-          .element(meetElements.callButton)
-          .isVisible()
+          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
       );
       browserWithNoFeatures.click(mainElements.exitButton);
     });

@@ -1,8 +1,11 @@
-import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-phone';
-
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
-import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
+import {
+  elements,
+  hangupBeforeAnswerTest,
+  declineIncomingCallTest,
+  hangupDuringCallTest,
+  setupOneOnOneUsers
+} from '../../../lib/test-helpers/space-widget/meet';
 
 describe('Widget Space: One on One', () => {
   describe('Data API', () => {
@@ -10,27 +13,19 @@ describe('Widget Space: One on One', () => {
     const browserRemote = browser.select('browserRemote');
     let mccoy, spock;
 
-    before('load browsers', () => {
+    before('initialize test users', function intializeUsers() {
+      ({mccoy, spock} = setupOneOnOneUsers());
+    });
+
+    it('can load browsers and widgets', function loadBrowsers() {
+      this.retries(3);
+
       browser
         .url('/data-api/space.html')
         .execute(() => {
           localStorage.clear();
         });
-    });
 
-    before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
-      .then((users) => {
-        [spock] = users;
-      }));
-
-    before('create mccoy', () => testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
-      .then((users) => {
-        [mccoy] = users;
-      }));
-
-    before('pause to let test users establish', () => browser.pause(5000));
-
-    before('open local widget spock', () => {
       browserLocal.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -41,10 +36,7 @@ describe('Widget Space: One on One', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, spock.token.access_token, mccoy.email);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
-    });
 
-    before('open remote widget mccoy', () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -56,14 +48,20 @@ describe('Widget Space: One on One', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, mccoy.token.access_token, spock.email);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
+
+      browser.waitUntil(() =>
+        browserRemote.isVisible(`[placeholder="Send a message to ${spock.displayName}"]`) &&
+        browserLocal.isVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`),
+      10000, 'failed to load browsers and widgets');
     });
 
     describe('meet widget', () => {
       describe('pre call experience', () => {
         it('has a call button', () => {
           switchToMeet(browserLocal);
-          browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+          browserLocal.waitUntil(() =>
+            browserLocal.isVisible(`${elements.meetWidget} ${elements.callButton}`),
+          5000, 'call button is not visible');
         });
       });
 

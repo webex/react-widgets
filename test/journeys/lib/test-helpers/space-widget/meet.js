@@ -1,10 +1,18 @@
 import {assert} from 'chai';
 
+import '@ciscospark/internal-plugin-conversation';
+import '@ciscospark/plugin-logger';
+import '@ciscospark/plugin-phone';
+
+import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@ciscospark/spark-core';
+
 import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 import {moveMouse} from '../';
 
 import {switchToMeet} from './main';
+import {FEATURE_FLAG_ROSTER} from './roster';
 
 export const FEATURE_FLAG_GROUP_CALLING = 'js-widgets-group-calling';
 
@@ -33,7 +41,7 @@ export const elements = {
  */
 export function answer(aBrowser) {
   aBrowser.waitForVisible(elements.answerButton);
-  aBrowser.element(elements.meetWidget).element(elements.answerButton).click();
+  aBrowser.click(`${elements.meetWidget} ${elements.answerButton}`);
   aBrowser.waitForVisible(elements.remoteVideo);
   // Let call elapse 5 seconds before hanging up
   aBrowser.pause(5000);
@@ -46,8 +54,8 @@ export function answer(aBrowser) {
  * @returns {void}
  */
 export function call(caller, reciever) {
-  caller.element(elements.meetWidget).element(elements.callButton).waitForVisible();
-  caller.element(elements.meetWidget).element(elements.callButton).click();
+  caller.waitForVisible(`${elements.meetWidget} ${elements.callButton}`);
+  caller.click(`${elements.meetWidget} ${elements.callButton}`);
   // wait for call to establish
   reciever.waitForVisible(elements.answerButton);
 }
@@ -59,7 +67,7 @@ export function call(caller, reciever) {
  */
 export function decline(aBrowser) {
   aBrowser.waitForVisible(elements.declineButton);
-  aBrowser.element(elements.meetWidget).element(elements.declineButton).click();
+  aBrowser.click(`${elements.meetWidget} ${elements.declineButton}`);
 }
 
 /**
@@ -71,8 +79,8 @@ export function hangup(aBrowser) {
   // Call controls currently has a hover state
   moveMouse(aBrowser, elements.callContainer);
   aBrowser.waitForVisible(elements.callControls);
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).waitForVisible();
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();
+  aBrowser.waitForVisible(`${elements.meetWidget} ${elements.hangupButton}`);
+  aBrowser.click(`${elements.meetWidget} ${elements.hangupButton}`);
 }
 
 /**
@@ -188,4 +196,94 @@ export function callEventTest(caller, receiver, space = false) {
     assert.equal(eventDisconnected.detail.actorId, constructHydraId('PEOPLE', caller.user.id), 'calls disconnected event did not have caller id as actorId');
     assert.equal(eventDisconnected.detail.data.actorName, caller.displayName, 'calls disconnected event on caller did not have caller name as actorName');
   }
+}
+
+/**
+ * Creates our Back to the Future Test Users for group meeting tests
+ * @returns {Object}
+ */
+export function setupGroupTestUsers() {
+  let docbrown, marty, lorraine;
+  testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
+    .then((users) => {
+      [marty] = users;
+      marty.spark = new CiscoSpark({
+        credentials: {
+          authorization: marty.token
+        },
+        config: {
+          logger: {
+            level: 'error'
+          }
+        }
+      });
+      return marty.spark.internal.device.register()
+        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
+        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
+    });
+
+  testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
+    .then((users) => {
+      [docbrown] = users;
+      docbrown.spark = new CiscoSpark({
+        credentials: {
+          authorization: docbrown.token
+        },
+        config: {
+          logger: {
+            level: 'error'
+          }
+        }
+      });
+      return docbrown.spark.internal.device.register()
+        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
+        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
+    });
+
+  testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
+    .then((users) => {
+      [lorraine] = users;
+      lorraine.spark = new CiscoSpark({
+        credentials: {
+          authorization: lorraine.token
+        },
+        config: {
+          logger: {
+            level: 'error'
+          }
+        }
+      });
+      return lorraine.spark.internal.mercury.connect();
+    });
+
+  browser.waitUntil(() =>
+    marty && marty.spark && marty.spark.internal.device.webSocketUrl &&
+    docbrown && docbrown.spark && docbrown.spark.internal.device.webSocketUrl &&
+    lorraine && lorraine.spark && lorraine.spark.internal.device.webSocketUrl,
+  10000, 'failed to create test users');
+
+  return {marty, docbrown, lorraine};
+}
+
+/**
+ * Creates our Star Trek Test Users for one on one meeting tests
+ * @returns {Object}
+ */
+export function setupOneOnOneUsers() {
+  let mccoy, spock;
+  testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
+    .then((users) => {
+      [spock] = users;
+    });
+
+  testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
+    .then((users) => {
+      [mccoy] = users;
+    });
+
+  browser.waitUntil(() =>
+    mccoy && mccoy.email && spock && spock.email,
+  15000, 'failed to create test users');
+
+  return {mccoy, spock};
 }

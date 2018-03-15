@@ -52,7 +52,7 @@ export function sendMessage(sender, receiver, message) {
   sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
   sender.browser.waitForVisible(elements.systemMessage);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
 }
 
 /**
@@ -66,7 +66,7 @@ export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
   receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
   receiver.browser.waitForExist(elements.lastActivityText, 15000);
-  receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
+  receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityText) === message);
   // Move mouse to send read receipt
   moveMouse(receiver.browser, elements.lastActivityText);
   // Verify read receipt comes across
@@ -93,7 +93,7 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
   aBrowser.waitForVisible(mainElements.filesButton);
   aBrowser.click(mainElements.filesButton);
   aBrowser.waitForVisible(mainElements.filesWidget);
-  aBrowser.element(`${mainElements.filesWidget}${fileTitle}`).waitForExist();
+  aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
   if (hasThumbnail) {
     aBrowser.waitForVisible(fileThumbnail);
   }
@@ -110,27 +110,25 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
 export function flagMessage(testObject, messageToFlag) {
   testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
+    testObject.browser.getText(elements.lastActivityText) === messageToFlag);
   moveMouse(testObject.browser, elements.lastActivityText);
   testObject.browser.waitUntil(() =>
     testObject.browser
-      .element(`${elements.lastActivity} ${elements.flagButton}`)
-      .isVisible(),
+      .isVisible(`${elements.lastActivity} ${elements.flagButton}`),
   1500, 'flag button is not visible when hovering');
 
   testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+    .click(`${elements.lastActivity} ${elements.flagButton}`);
 
   // Verify it is highlighted, showing it was flagged
   testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'flag button did not highlight');
+    .isVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`),
+  1500, 'flag button did not highlight');
 
   // Remove pending flag
   testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
-    .isVisible() === false, 7500, 'flag button did not remove pending state');
+    .isVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    === false, 7500, 'flag button did not remove pending state');
 }
 
 /**
@@ -142,19 +140,18 @@ export function flagMessage(testObject, messageToFlag) {
 export function removeFlagMessage(testObject, messageToUnflag) {
   testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 1500, 'message was not found');
+    testObject.browser.getText(elements.lastActivityText) === messageToUnflag, 1500, 'message was not found');
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'message was not flagged');
+    .isVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`),
+  1500, 'message was not flagged');
 
   testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+    .click(`${elements.lastActivity} ${elements.flagButton}`);
 
   testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}`)
-    .isVisible() === false, 3500, 'message was still flagged');
+    .isVisible(`${elements.lastActivity} ${elements.highlighted}`) === false,
+  3500, 'message was still flagged');
 }
 
 /**
@@ -167,12 +164,10 @@ export function canDeleteMessage(testObject, messageToDelete) {
   testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
   testObject.browser.waitUntil(() =>
     // Text matches message to delete
-    testObject.browser.element(elements.lastActivityText).getText() === messageToDelete);
-
+    testObject.browser.getText(elements.lastActivityText) === messageToDelete);
+  // Delete button is hidden but still exists
   return testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    // Delete button is hidden but still exists
-    .isExisting();
+    .isExisting(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 }
 
 /**
@@ -192,22 +187,20 @@ export function deleteMessage(testObject, messageToDelete) {
   1500, 'delete button is not visible when hovering');
 
   testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    .click();
+    .click(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 
   // Click modal confirm
   testObject.browser.waitUntil(() =>
     testObject.browser
-      .element(elements.modalWindow)
-      .isVisible(),
+      .isVisible(elements.modalWindow),
   3500, 'delete modal window is not visible after clicking delete button');
-  assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
-  testObject.browser.element(elements.modalDeleteButton).click();
+  assert.isTrue(testObject.browser.isVisible(elements.modalDeleteButton), 'modal delete button is not visible');
+  testObject.browser.click(elements.modalDeleteButton);
 
   testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
 
   testObject.browser.waitUntil(() => {
-    const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
+    const text = testObject.browser.getText(`${elements.lastActivity} ${elements.systemMessage}`);
     return text.includes(messages.youDeleted);
   }, 3500, 'message was not deleted');
 }
@@ -229,8 +222,8 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   sender.browser.click(elements.shareButton);
   receiver.browser.waitForExist(fileTitle, 30000);
   receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
-  const remoteSize = receiver.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
+  const localSize = sender.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
+  const remoteSize = receiver.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
     assert.equal(localSize, remoteSize);
@@ -318,7 +311,7 @@ const blockquote = (sender, receiver) => {
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'You call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
   // Assert only first half of message is in the blockquote tag
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
@@ -334,7 +327,7 @@ const orderedList = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '1. ordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '2. ordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'ordered list item 1\nordered list item 2');
   // Assert text matches for the first and second ordered list items
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), 'ordered list item 1');
@@ -351,7 +344,7 @@ const unorderedList = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'unordered list item 1\nunordered list item 2');
   // Assert text matches for the first and second unordered list items
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), 'unordered list item 1');
@@ -404,7 +397,7 @@ const hr = (sender, receiver) => {
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'test horizontal line');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   verifyMessageReceipt(receiver, sender, 'test horizontal line');
   assert.isTrue(receiver.browser.isVisible(`${elements.lastActivityText} > hr`));
 };
@@ -447,7 +440,7 @@ const codeblock = (sender, receiver) => {
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '<h1>Hello World!</h1>');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '```');
-  sender.browser.keys(['Enter', 'NULL']);
+  sender.browser.keys('Enter');
   receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
   receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === '<h1>Hello World!</h1>');
   assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), '<h1>Hello World!</h1>');

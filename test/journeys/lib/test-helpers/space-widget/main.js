@@ -6,6 +6,7 @@ export const elements = {
   filesButton: 'button[aria-label="Files"]',
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
+  activityList: '.ciscospark-activity-list',
   controlsContainer: '.ciscospark-controls-container',
   closeButton: 'button[aria-label="Close"]',
   exitButton: '.ciscospark-activity-menu-exit button',
@@ -23,7 +24,7 @@ export function switchToMessage(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+  aBrowser.waitForVisible(`${elements.activityMenu} ${elements.messageButton}`);
   aBrowser.click(elements.messageButton);
 }
 
@@ -38,7 +39,7 @@ export function switchToMeet(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
+  aBrowser.waitForVisible(`${elements.activityMenu} ${elements.meetButton}`);
   aBrowser.click(elements.meetButton);
 }
 
@@ -50,5 +51,5 @@ export function switchToMeet(aBrowser) {
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
   aBrowser.click(elements.menuButton);
   aBrowser.waitForVisible(elements.activityMenu);
-  aBrowser.element(elements.controlsContainer).element(buttonToClick).click();
+  aBrowser.click(`${elements.activityMenu} ${buttonToClick}`);
 }

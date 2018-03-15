@@ -11,7 +11,7 @@ import {
   elements as rosterElements,
   canSearchForParticipants,
   hasParticipants,
-  searchForPerson,
+  searchAndAddPerson,
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
 
@@ -23,7 +23,7 @@ describe('Widget Space', () => {
     let biff, docbrown, lorraine, marty;
     let conversation;
 
-    before('update sauce job', () => {
+    before('initialize', () => {
       if (process.env.SAUCE && process.env.INTEGRATION) {
         browser.reload();
         const account = new SauceLabs({
@@ -36,92 +36,88 @@ describe('Widget Space', () => {
           widgetJobs.forEach((job) => account.updateJob(job.id, {name: 'react-widget-space'}));
         });
       }
-    });
 
-    before('load browsers', () => {
-      browser
+      browserLocal
         .url('/data-api/space.html')
         .execute(() => {
           localStorage.clear();
         });
-    });
 
-    before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-      .then((users) => {
-        [marty] = users;
-        marty.spark = new CiscoSpark({
-          credentials: {
-            authorization: marty.token
-          },
-          config: {
-            logger: {
-              level: 'error'
+      testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
+        .then((users) => {
+          [marty] = users;
+          marty.spark = new CiscoSpark({
+            credentials: {
+              authorization: marty.token
+            },
+            config: {
+              logger: {
+                level: 'error'
+              }
             }
-          }
+          });
+          return marty.spark.internal.device.register()
+            .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
+            .then(() => marty.spark.internal.mercury.connect());
         });
-        return marty.spark.internal.device.register()
-          .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-          .then(() => marty.spark.internal.mercury.connect());
-      }));
 
-    before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-      .then((users) => {
-        [docbrown] = users;
-        docbrown.spark = new CiscoSpark({
-          credentials: {
-            authorization: docbrown.token
-          },
-          config: {
-            logger: {
-              level: 'error'
+      testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
+        .then((users) => {
+          [docbrown] = users;
+          docbrown.spark = new CiscoSpark({
+            credentials: {
+              authorization: docbrown.token
+            },
+            config: {
+              logger: {
+                level: 'error'
+              }
             }
-          }
+          });
         });
-      }));
 
-    before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-      .then((users) => {
-        [lorraine] = users;
-        lorraine.spark = new CiscoSpark({
-          credentials: {
-            authorization: lorraine.token
-          },
-          config: {
-            logger: {
-              level: 'error'
+      testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
+        .then((users) => {
+          [lorraine] = users;
+          lorraine.spark = new CiscoSpark({
+            credentials: {
+              authorization: lorraine.token
+            },
+            config: {
+              logger: {
+                level: 'error'
+              }
             }
-          }
+          });
         });
-      }));
 
-    before('create biff', () => testUsers.create({count: 1, config: {displayName: 'Biff Tannen'}})
-      .then((users) => {
-        [biff] = users;
-        biff.spark = new CiscoSpark({
-          credentials: {
-            authorization: biff.token
-          },
-          config: {
-            logger: {
-              level: 'error'
+      testUsers.create({count: 1, config: {displayName: 'Biff Tannen'}})
+        .then((users) => {
+          [biff] = users;
+          biff.spark = new CiscoSpark({
+            credentials: {
+              authorization: biff.token
+            },
+            config: {
+              logger: {
+                level: 'error'
+              }
             }
-          }
+          });
         });
-      }));
 
-    before('pause to let test users establish', () => browser.pause(5000));
+      browser.pause(5000);
 
-    after('disconnect', () => marty.spark.internal.mercury.disconnect());
+      marty.spark.internal.conversation.create({
+        displayName: 'Test Widget Space',
+        participants: [marty, docbrown, lorraine]
+      }).then((c) => {
+        conversation = c;
+        return conversation;
+      });
 
-    before('create space', () => marty.spark.internal.conversation.create({
-      displayName: 'Test Widget Space',
-      participants: [marty, docbrown, lorraine]
-    }).then((c) => {
-      conversation = c;
-      return conversation;
-    }));
+      browserLocal.waitUntil(() => conversation && conversation.id, 10000, 'failed to create conversation');
 
-    before('open widget for marty in browserLocal', () => {
       browserLocal.execute((localAccessToken, spaceId) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -172,11 +168,11 @@ describe('Widget Space', () => {
 
         it('has a message button', () => {
           browserLocal.click(elements.menuButton);
-          browserLocal.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+          browserLocal.waitForVisible(`${elements.activityMenu} ${elements.messageButton}`);
         });
 
         it('has a files button', () => {
-          browserLocal.element(elements.controlsContainer).element(elements.filesButton).waitForVisible();
+          browserLocal.waitForVisible(`${elements.activityMenu} ${elements.filesButton}`);
         });
 
         it('switches to files widget', () => {
@@ -188,7 +184,7 @@ describe('Widget Space', () => {
         });
 
         it('hides menu and switches to message widget', () => {
-          browserLocal.element(elements.controlsContainer).element(elements.messageButton).click();
+          browserLocal.click(`${elements.activityMenu} ${elements.messageButton}`);
           browserLocal.waitForVisible(elements.activityMenu, 1500, true);
           assert.isTrue(browserLocal.isVisible(elements.messageWidget));
         });
@@ -202,14 +198,12 @@ describe('Widget Space', () => {
 
         it('has a close button', () => {
           assert.isTrue(
-            browserLocal.element(rosterElements.rosterWidget)
-              .element(rosterElements.closeButton)
-              .isVisible()
+            browserLocal.isVisible(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`)
           );
         });
 
         it('has the total count of participants', () => {
-          assert.equal(browserLocal.element(rosterElements.rosterTitle).getText(), 'People (3)');
+          assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
         });
 
         it('has the participants listed', () => {
@@ -221,23 +215,20 @@ describe('Widget Space', () => {
         });
 
         it('searches and adds person to space', () => {
-          searchForPerson(browserLocal, biff.displayName, true);
-          browserLocal.element(rosterElements.rosterList).waitForVisible();
-          browserLocal.waitUntil(() => {
-            const participantsText = browserLocal.element(rosterElements.rosterList).getText();
-            return participantsText.includes(biff.displayName);
-          }, 15000, 'added person not found in participant list');
-          browserLocal.waitUntil(() => {
-            const rosterTitle = browserLocal.element(rosterElements.rosterTitle).getText();
-            return rosterTitle === 'People (4)';
-          }, 15000, 'Participant count should update once user is added');
+          searchAndAddPerson({
+            aBrowser: browserLocal,
+            searchString: biff.email,
+            searchResult: biff.displayName
+          });
         });
 
         it('closes the people roster widget', () => {
-          browserLocal.element(rosterElements.rosterWidget).element(rosterElements.closeButton).click();
-          browserLocal.element(rosterElements.rosterWidget).waitForVisible(1500, true);
+          browserLocal.click(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`);
+          browserLocal.waitForVisible(rosterElements.rosterWidget, 500, true);
         });
       });
     });
+
+    after('disconnect', () => marty.spark.internal.mercury.disconnect());
   });
 });

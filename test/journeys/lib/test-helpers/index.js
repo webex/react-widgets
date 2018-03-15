@@ -22,12 +22,17 @@ export function moveMouse(aBrowser, selector) {
     aBrowser.actions([{
       type: 'pointer',
       id: `mouse-${uuid.v4()}`,
+      parameters: {pointerType: 'mouse'},
       actions: [
         {
           type: 'pointerMove',
           duration: 0,
           x,
           y
+        },
+        {
+          type: 'pause',
+          duration: 500
         }
       ]
     }]);
