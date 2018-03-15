@@ -14,7 +14,7 @@ export const elements = {
   deleteMessageButton: 'button[aria-label="Delete this message"]',
   flagButton: 'button[aria-label="Flag this message"]',
   highlighted: '.isHighlighted',
-  pendingAction: '.pending',
+  pendingAction: '.flagActionPending',
   pendingActivity: '.activity-item-pending',
   inputFile: '.ciscospark-file-input',
   modalWindow: '.ciscospark-dialogue-modal',
@@ -24,7 +24,10 @@ export const elements = {
   shareButton: 'button[aria-label="Share"]',
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
-  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text'
+  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
+  readReceiptsArea: '.ciscospark-read-receipts',
+  readReceiptsAvatar: '.ciscospark-typing-avatar',
+  messageComposer: '.ciscospark-message-composer'
 };
 
 export const messages = {
@@ -64,6 +67,13 @@ export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
   receiver.browser.waitForExist(elements.lastActivityText, 15000);
   receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityText) === message);
+  // Move mouse to send read receipt
+  moveMouse(receiver.browser, elements.lastActivityText);
+  // Verify read receipt comes across
+  sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+  // Move Mouse to text area so it doesn't cause any tool tips
+  moveMouse(receiver.browser, elements.messageComposer);
+  moveMouse(sender.browser, elements.messageComposer);
 }
 
 /**
@@ -97,32 +107,28 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
  * @param {string} messageToFlag Verifies the last message is this string
  * @returns {void}
  */
-export function flagMessage({browser: aBrowser}, messageToFlag) {
-  aBrowser.waitForExist(elements.pendingActivity, 15000, true);
-  aBrowser.waitUntil(() =>
-    aBrowser.getText(elements.lastActivityText) === messageToFlag);
-  moveMouse(aBrowser, elements.lastActivityText);
-  aBrowser.waitUntil(
-    () => aBrowser.isVisible(`${elements.lastActivity} ${elements.flagButton}`),
-    1500, 'flag button is not visible'
-  );
+export function flagMessage(testObject, messageToFlag) {
+  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
+  testObject.browser.waitUntil(() =>
+    testObject.browser.getText(elements.lastActivityText) === messageToFlag);
+  moveMouse(testObject.browser, elements.lastActivityText);
+  testObject.browser.waitUntil(() =>
+    testObject.browser
+      .isVisible(`${elements.lastActivity} ${elements.flagButton}`),
+  1500, 'flag button is not visible when hovering');
 
-  aBrowser.click(`${elements.lastActivity} ${elements.flagButton}`);
-
-  // Flag has a pending class while it waits for server upload
-  aBrowser.waitUntil(() => aBrowser
-    .isVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`),
-  1500, 'flag button did not highlight with pending state');
+  testObject.browser
+    .click(`${elements.lastActivity} ${elements.flagButton}`);
 
   // Verify it is highlighted, showing it was flagged
-  aBrowser.waitUntil(() => aBrowser
+  testObject.browser.waitUntil(() => testObject.browser
     .isVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`),
   1500, 'flag button did not highlight');
 
   // Remove pending flag
-  aBrowser.waitUntil(() => aBrowser
-    .isVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`) === false,
-  7500, 'flag button did not remove pending state');
+  testObject.browser.waitUntil(() => testObject.browser
+    .isVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
+    === false, 7500, 'flag button did not remove pending state');
 }
 
 /**
@@ -176,7 +182,8 @@ export function deleteMessage(testObject, messageToDelete) {
 
   testObject.browser.waitUntil(() =>
     testObject.browser
-      .isVisible(`${elements.lastActivity} ${elements.deleteMessageButton}`),
+      .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
+      .isVisible(),
   1500, 'delete button is not visible when hovering');
 
   testObject.browser
@@ -192,9 +199,10 @@ export function deleteMessage(testObject, messageToDelete) {
 
   testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
 
-  testObject.browser.waitUntil(() => testObject.browser
-    .getText(`${elements.lastActivity} ${elements.systemMessage}`).includes(messages.youDeleted),
-  3500, 'message was not deleted');
+  testObject.browser.waitUntil(() => {
+    const text = testObject.browser.getText(`${elements.lastActivity} ${elements.systemMessage}`);
+    return text.includes(messages.youDeleted);
+  }, 3500, 'message was not deleted');
 }
 
 
