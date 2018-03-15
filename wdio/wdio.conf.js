@@ -34,7 +34,6 @@ const chromeCapabilities = {
     }
   },
   idleTimeout: 300,
-  maxDuration: 3600,
   seleniumVersion: SELENIUM_VERSION,
   platform
 };
@@ -45,7 +44,6 @@ const firefoxCapabilities = {
   build,
   logLevel: 'WARN',
   idleTimeout: 300,
-  maxDuration: 3600,
   seleniumVersion: SELENIUM_VERSION,
   platform
 };
@@ -73,7 +71,7 @@ else if (browserType.toLowerCase().includes('firefox')) {
   };
 }
 
-let mochaTimeout = 30000;
+let mochaTimeout = 15000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
@@ -165,11 +163,11 @@ exports.config = {
   baseUrl,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 30000,
+  waitforTimeout: 20000,
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
-  connectionRetryTimeout: 90000,
+  connectionRetryTimeout: 30000,
   //
   // Default request retries count
   connectionRetryCount: 3,
