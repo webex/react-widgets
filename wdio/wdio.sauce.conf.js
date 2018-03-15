@@ -7,9 +7,12 @@ let {config} = require('./wdio.conf.js');
 
 config.mochaOpts.timeout = 90000;
 config.services = [
-  'sauce',
-  'firefox-profile'
+  'sauce'
 ];
+
+if (process.env.BROWSER.includes('firefox')) {
+  config.services.push('firefox-profile');
+}
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy

@@ -1,96 +1,49 @@
-import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/internal-plugin-conversation';
-import '@ciscospark/plugin-logger';
-import CiscoSpark from '@ciscospark/spark-core';
+import {
+  switchToMeet,
+  elements as mainElements
+} from '../../../lib/test-helpers/space-widget/main';
+import {
+  elements,
+  declineIncomingCallTest,
+  hangupDuringCallTest,
+  setupGroupTestUsers
+} from '../../../lib/test-helpers/space-widget/meet';
 
-import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
-import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
-import {elements, declineIncomingCallTest, hangupDuringCallTest, FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
-
-describe('Widget Space', () => {
+describe('Widget Space: Group - Data API', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
   let docbrown, lorraine, marty;
-  let conversation, local, remote;
+  let conversation;
 
-  before('load browsers', () => {
+  before('initialize test users', () => {
+    ({docbrown, lorraine, marty} = setupGroupTestUsers());
+  });
+
+  it('can create conversation', function createConversation() {
+    this.retries(2);
+
+    marty.spark.internal.conversation.create({
+      displayName: 'Test Widget Space',
+      participants: [marty, docbrown, lorraine]
+    }).then((c) => {
+      conversation = c;
+      return conversation;
+    });
+
+    browser.waitUntil(() => conversation && conversation.id,
+      15000, 'failed to create conversation');
+  });
+
+  it('can load browsers and widgets', function loadBrowsers() {
+    this.retries(3);
+
     browser
       .url('/data-api/space.html')
       .execute(() => {
         localStorage.clear();
       });
-  });
 
-  before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-    .then((users) => {
-      [marty] = users;
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return marty.spark.internal.mercury.connect()
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
-    }));
-
-  before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-    .then((users) => {
-      [docbrown] = users;
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return docbrown.spark.internal.device.register()
-        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
-    }));
-
-  before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-    .then((users) => {
-      [lorraine] = users;
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return lorraine.spark.internal.mercury.connect();
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
-
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect()
-  ]));
-
-  before('create space', () => marty.spark.internal.conversation.create({
-    displayName: 'Test Widget Space',
-    participants: [marty, docbrown, lorraine]
-  }).then((c) => {
-    conversation = c;
-    return conversation;
-  }));
-
-  before('inject marty token', () => {
-    local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
-    local.browser.execute((localAccessToken, spaceId) => {
+    browserLocal.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-space');
@@ -100,12 +53,8 @@ describe('Widget Space', () => {
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, marty.token.access_token, conversation.id);
-    local.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
-  });
 
-  before('inject docbrown token', () => {
-    remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
-    remote.browser.execute((localAccessToken, spaceId) => {
+    browserRemote.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-space');
@@ -115,7 +64,11 @@ describe('Widget Space', () => {
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, docbrown.token.access_token, conversation.id);
-    remote.browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
+
+    browser.waitUntil(() =>
+      browserRemote.isVisible(mainElements.messageWidget) &&
+      browserLocal.isVisible(mainElements.messageWidget),
+    10000, 'failed to load browsers and widgets');
   });
 
   describe('meet widget', () => {
@@ -127,9 +80,9 @@ describe('Widget Space', () => {
     });
 
     describe('during call experience', () => {
-      it('can hangup before answer', () => {
-        // hangupBeforeAnswerTest(browserLocal, browserRemote);
-      });
+      // it('can hangup before answer', () => {
+      //   hangupBeforeAnswerTest(browserLocal, browserRemote);
+      // });
 
       it('can decline an incoming call', () => {
         declineIncomingCallTest(browserLocal, browserRemote, true);
@@ -140,4 +93,9 @@ describe('Widget Space', () => {
       });
     });
   });
+
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect()
+  ]));
 });

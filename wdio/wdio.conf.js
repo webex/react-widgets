@@ -71,7 +71,7 @@ else if (browserType.toLowerCase().includes('firefox')) {
   };
 }
 
-let mochaTimeout = 15000;
+let mochaTimeout = 30000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
@@ -82,6 +82,9 @@ exports.config = {
   seleniumArgs: {version: SELENIUM_VERSION},
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
+    integration: [
+      './test/journeys/specs/**/*.js'
+    ],
     tap: [
       './test/journeys/specs/tap/**/*.js'
     ],
@@ -153,8 +156,8 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: `${logPath}/error-screenshots/`,
-  screenshotOnReject: true,
+  // screenshotPath: `${logPath}/error-screenshots/`,
+  // screenshotOnReject: true,
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
