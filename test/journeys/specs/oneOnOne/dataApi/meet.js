@@ -11,7 +11,7 @@ describe('Widget Space: One on One', () => {
     let mccoy, spock;
 
     before('initialize', () => {
-      browserLocal
+      browser
         .url('/data-api/space.html')
         .execute(() => {
           localStorage.clear();
