@@ -256,12 +256,12 @@ describe('Widget Recents', () => {
 
   describe('incoming call', () => {
     it('should display incoming call screen', () => {
-      browserRemote.element(meetElements.meetWidget).element(meetElements.callButton).waitForVisible();
-      browserRemote.element(meetElements.callButton).click();
-      browserLocal.waitUntil(() =>
-        browserLocal.element(elements.answerButton).isVisible(),
-      15000,
-      'does not show call answer button');
+      browserRemote.waitForVisible(`${meetElements.meetWidget} ${meetElements.callButton}`);
+      browserRemote.click(meetElements.callButton);
+      browserLocal.waitUntil(
+        () => browserLocal.isVisible(elements.answerButton),
+        15000, 'does not show call answer button'
+      );
       hangup(browserRemote);
     });
   });

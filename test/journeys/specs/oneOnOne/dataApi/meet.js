@@ -10,27 +10,24 @@ describe('Widget Space: One on One', () => {
     const browserRemote = browser.select('browserRemote');
     let mccoy, spock;
 
-    before('load browsers', () => {
-      browser
+    before('initialize', () => {
+      browserLocal
         .url('/data-api/space.html')
         .execute(() => {
           localStorage.clear();
         });
-    });
+      testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
+        .then((users) => {
+          [spock] = users;
+        });
 
-    before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
-      .then((users) => {
-        [spock] = users;
-      }));
+      testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
+        .then((users) => {
+          [mccoy] = users;
+        });
 
-    before('create mccoy', () => testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
-      .then((users) => {
-        [mccoy] = users;
-      }));
+      browser.pause(5000);
 
-    before('pause to let test users establish', () => browser.pause(5000));
-
-    before('open local widget spock', () => {
       browserLocal.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -41,10 +38,8 @@ describe('Widget Space: One on One', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, spock.token.access_token, mccoy.email);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
-    });
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
 
-    before('open remote widget mccoy', () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const csmmDom = document.createElement('div');
         csmmDom.setAttribute('class', 'ciscospark-widget');
@@ -56,14 +51,14 @@ describe('Widget Space: One on One', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, mccoy.token.access_token, spock.email);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
     });
 
     describe('meet widget', () => {
       describe('pre call experience', () => {
         it('has a call button', () => {
           switchToMeet(browserLocal);
-          browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+          browserLocal.waitForVisible(`${elements.meetWidget} ${elements.callButton}`);
         });
       });
 
