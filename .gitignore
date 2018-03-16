@@ -10,3 +10,4 @@ packages/**/cjs/*
 .tmp/*
 reports/*
 /dist-test
+coverage/
