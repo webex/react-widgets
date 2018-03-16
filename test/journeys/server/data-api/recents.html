@@ -4,6 +4,7 @@
   <title>Cisco Spark Widget Test</title>
   <meta charset="utf8">
   <link href="/dist-recents/main.css" rel="stylesheet">
+  <script src="/axe-core/axe.min.js"></script>
   <style type="text/css">
     * {
       /*CSS transitions*/
@@ -40,7 +41,7 @@
 
 </div>
 <script>
-  window.loadBundle = function (bundleFile) {
+  window.loadBundle = function (bundleFile, callback) {
     var script = document.createElement('script');
     script.src = bundleFile;
     document.head.appendChild(script);
@@ -48,6 +49,7 @@
       var DOMContentLoaded_event = document.createEvent("Event");
       DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
       window.document.dispatchEvent(DOMContentLoaded_event);
+      callback();
     }
   };
   window.ciscoSparkEvents = [];

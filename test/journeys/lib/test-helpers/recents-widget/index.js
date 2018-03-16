@@ -31,12 +31,10 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
   }));
   aBrowser.waitUntil(() =>
     aBrowser.getText(`${elements.firstSpace} ${elements.title}`) === spaceTitle
-    , 5000
-    , 'conversation not displayed');
+    , 5000, 'conversation not displayed');
   aBrowser.waitUntil(() =>
     aBrowser.getText(`${elements.firstSpace} ${elements.lastActivity}`).includes(message)
-    , 5000
-    , 'does not have last message displayed');
+    , 5000, 'does not have last message displayed');
   assert.isTrue(aBrowser.isVisible(`${elements.firstSpace} ${elements.unreadIndicator}`), 'does not have unread indicator');
 }
 
