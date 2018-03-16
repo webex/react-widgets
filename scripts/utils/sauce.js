@@ -38,6 +38,22 @@ function getSauceAsset(jobId, filename, destination) {
   );
 }
 
+function getSauceConcurrency(callback) {
+  request.get(
+    `https://${username}:${accessKey}@saucelabs.com/rest/v1.1/users/${username}/concurrency`,
+    (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        callback(JSON.parse(body));
+      }
+      else {
+        console.log(`Error ${response.statusCode}`);
+      }
+    }
+  );
+}
+
 module.exports = {
-  getSauceAsset
+  getSauceAsset,
+  getSauceConcurrency
 };
+

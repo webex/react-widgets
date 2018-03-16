@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const uuid = require('uuid');
 
+const {getSauceConcurrency} = require('../scripts/utils/sauce');
+
 process.env.SAUCE = true;
 let {config} = require('./wdio.conf.js');
 
@@ -13,6 +15,26 @@ config.services = [
 if (process.env.BROWSER && process.env.BROWSER.includes('firefox')) {
   config.services.push('firefox-profile');
 }
+
+const baseOnPrepare = config.onPrepare;
+
+config.onPrepare = function onPrepare(conf, capabilities) {
+  baseOnPrepare(conf, capabilities);
+  // eslint-disable-next-line no-use-before-define
+  const concurrencyTimer = setInterval(checkConcurrency, 30000);
+
+  function checkConcurrency() {
+    getSauceConcurrency((data) => {
+      const {ancestor} = data.concurrency;
+      const remaining = ancestor.allowed.overall - ancestor.current.overall;
+      if (remaining >= 4) {
+        clearInterval(concurrencyTimer);
+        return;
+      }
+      console.warn(`Sauce Labs only has ${remaining} idle containers, waiting for more to become available`);
+    });
+  }
+};
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy

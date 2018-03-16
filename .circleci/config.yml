@@ -115,6 +115,25 @@ jobs:
           paths:
             - .netlifyUrl
 
+  # firefox_mac_tests:
+  #   environment:
+  #     - BROWSER: firefox
+  #     - TEST_SUITE: integration
+  #   <<: *test_defaults
+
+  # chrome_mac_tests:
+  #   environment:
+  #     - BROWSER: chrome
+  #     - TEST_SUITE: integration
+  #   <<: *test_defaults
+
+  # chrome_win10_tests:
+  #   environment:
+  #     - BROWSER: chrome
+  #     - PLATFORM: windows 10
+  #     - TEST_SUITE: integration
+  #   <<: *test_defaults
+
 # Recents and Multiple Suite Firefox on Mac
   multiple_firefox_mac_tests:
     environment:
@@ -272,6 +291,15 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
+      # - firefox_mac_tests:
+      #     requires:
+      #       - deploy_for_testing
+      # - chrome_mac_tests:
+      #     requires:
+      #       - deploy_for_testing
+      # - chrome_win10_tests:
+      #     requires:
+      #       - deploy_for_testing
       - multiple_firefox_mac_tests:
           requires:
             - deploy_for_testing

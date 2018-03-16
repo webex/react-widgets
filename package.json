@@ -14,7 +14,7 @@
     "clean:dist": "rimraf \"packages/**/dist/\" && rimraf \"packages/**/dist/\"",
     "clean:transpile": "rimraf \"packages/**/es/\" && rimraf \"packages/**/cjs/\"",
     "deploy": "cross-env NODE_ENV=${NODE_ENV:-development} ./scripts/deploy/index.js",
-    "sauce": "./scripts/utils/sauce.js",
+    "sauce": "./scripts/test/index.js sauce",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
     "test:automation": "wdio ./wdio/wdio.conf.js",

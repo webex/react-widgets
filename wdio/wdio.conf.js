@@ -83,10 +83,10 @@ exports.config = {
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     integration: [
-      './test/journeys/specs/**/*.js'
-    ],
-    tap: [
-      './test/journeys/specs/tap/**/*.js'
+      './test/journeys/specs/multiple/*.js',
+      './test/journeys/specs/oneOnOne/*.js',
+      './test/journeys/specs/space/*.js',
+      './test/journeys/specs/recents/*.js'
     ],
     oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
     'oneOnOne-basic': [
@@ -216,24 +216,6 @@ exports.config = {
   // =====
   // Hooks
   // =====
-  beforeSuite() {
-    // Setup test user scopes
-    process.env.CISCOSPARK_SCOPE = [
-      'webexsquare:get_conversation',
-      'spark:people_read',
-      'spark:rooms_read',
-      'spark:rooms_write',
-      'spark:memberships_read',
-      'spark:memberships_write',
-      'spark:messages_read',
-      'spark:messages_write',
-      'spark:teams_read',
-      'spark:teams_write',
-      'spark:team_memberships_read',
-      'spark:team_memberships_write',
-      'spark:kms'
-    ].join(' ');
-  },
   onPrepare(conf, capabilities) {
     const defs = [
       capabilities.browserRemote.desiredCapabilities,
@@ -254,6 +236,24 @@ exports.config = {
     /* eslint-enable no-param-reassign */
 
     return inject(defs);
+  },
+  beforeSuite() {
+    // Setup test user scopes
+    process.env.CISCOSPARK_SCOPE = [
+      'webexsquare:get_conversation',
+      'spark:people_read',
+      'spark:rooms_read',
+      'spark:rooms_write',
+      'spark:memberships_read',
+      'spark:memberships_write',
+      'spark:messages_read',
+      'spark:messages_write',
+      'spark:teams_read',
+      'spark:teams_write',
+      'spark:team_memberships_read',
+      'spark:team_memberships_write',
+      'spark:kms'
+    ].join(' ');
   },
   // Static Server setup
   staticServerFolders: [

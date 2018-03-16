@@ -1,4 +1,4 @@
-const {getSauceAsset} = require('../../utils/sauce');
+const {getSauceAsset} = require('../../../utils/sauce');
 
 module.exports = {
   command: 'assets <jobId> <filename> [destination]',
