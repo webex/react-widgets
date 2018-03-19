@@ -4,7 +4,7 @@ import {runAxe} from '../../lib/axe';
 import waitForPromise from '../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../lib/events';
 
-import {moveMouse} from '../../lib/test-helpers';
+import {setupGroupTestUsers, moveMouse} from '../../lib/test-helpers';
 import {elements as meetElements, hangup} from '../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -12,8 +12,6 @@ import {
   displayIncomingMessage,
   elements as recentsElements
 } from '../../lib/test-helpers/recents-widget';
-
-import {setupGroupTestUsers} from '../../lib/test-helpers/space-widget/main';
 
 export default function baseRecentsTest({name, browserLocalSetup}) {
   describe(name, () => {
@@ -34,11 +32,10 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
         marty.spark.internal.device.userId &&
         lorraine.spark.internal.device.userId &&
         docbrown.spark.internal.device.userId,
-      15000, 'failed to register marty');
+      15000, 'failed to register user devices');
     });
 
-
-    it('can create group space', function createGroupSpace() {
+    it('creates group space', function createGroupSpace() {
       this.retries(2);
 
       marty.spark.internal.conversation.create({
@@ -53,7 +50,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
         15000, 'failed to create group space');
     });
 
-    it('can create one on one space', function createOneOnOneSpace() {
+    it('creates one on one space', function createOneOnOneSpace() {
       this.retries(2);
 
       lorraine.spark.internal.conversation.create({
@@ -67,7 +64,9 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
         15000, 'failed to create one on one space');
     });
 
-    it('can load browser and widgets', () => {
+    it('loads browser and widgets', function loadBrowsers() {
+      this.retries(3);
+
       browserLocalSetup({aBrowser: browserLocal, accessToken: marty.token.access_token});
 
       browserRemote
@@ -109,7 +108,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
       it('displays a call button on hover', () => {
         displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
         moveMouse(browserLocal, recentsElements.firstSpace);
-        browserLocal.waitUntil(() =>
+        browser.waitUntil(() =>
           browserLocal.element(recentsElements.callButton).isVisible(),
         1500,
         'does not show call button');
@@ -166,7 +165,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
           // Remove user from room
           clearEventLog(browserLocal);
           waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
-          browserLocal.waitUntil(() =>
+          browser.waitUntil(() =>
             browserLocal.element(`${recentsElements.firstSpace} ${recentsElements.title}`).getText() !== roomTitle,
           5000,
           'does not remove space from list');
@@ -194,7 +193,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
       it('displays a call button on hover', () => {
         displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
         moveMouse(browserLocal, recentsElements.firstSpace);
-        browserLocal.waitUntil(() =>
+        browser.waitUntil(() =>
           browserLocal.element(recentsElements.callButton).isVisible(),
         1500,
         'does not show call button');
@@ -205,7 +204,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
       it('should display incoming call screen', () => {
         browserRemote.waitForVisible(`${meetElements.meetWidget} ${meetElements.callButton}`);
         browserRemote.click(meetElements.callButton);
-        browserLocal.waitUntil(
+        browser.waitUntil(
           () => browserLocal.isVisible(recentsElements.answerButton),
           15000, 'does not show call answer button'
         );

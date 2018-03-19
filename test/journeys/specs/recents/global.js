@@ -11,8 +11,8 @@ recentTests({
     aBrowser.execute((localAccessToken) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
         }
       };
       window.openRecentsWidget(options);

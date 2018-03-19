@@ -15,8 +15,8 @@ recentTests({
       csmmDom.setAttribute('data-access-token', localAccessToken);
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-recents/bundle.js', () => {
-        window.ciscospark.widget(csmmDom).on('all', (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        window.ciscospark.widget(csmmDom).on('all', ({eventName, detail}) => {
+          window.ciscoSparkEvents.push({eventName, detail});
         });
       });
     }, accessToken);
