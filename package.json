@@ -160,7 +160,7 @@
     "postcss": "^6.0.3",
     "postcss-cli": "^4.1.0",
     "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "^2.0.5",
+    "postcss-loader": "2.1.1",
     "postcss-modules": "^0.8.0",
     "postcss-reporter": "^5.0.0",
     "react-test-renderer": "^16.1.0",
