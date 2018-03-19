@@ -49,7 +49,9 @@
       var DOMContentLoaded_event = document.createEvent("Event");
       DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
       window.document.dispatchEvent(DOMContentLoaded_event);
-      callback();
+      if (callback) {
+        callback();
+      }
     }
   };
   window.ciscoSparkEvents = [];
