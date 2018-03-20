@@ -90,40 +90,33 @@ exports.config = {
     ],
     oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
     'oneOnOne-basic': [
-      './test/journeys/specs/oneOnOne/global/basic.js',
-      './test/journeys/specs/oneOnOne/global/features.js',
-      './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/dataApi/features.js',
-      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js'
+      './test/journeys/specs/oneOnOne/basic/*.js',
+      './test/journeys/specs/oneOnOne/features/*.js',
+      './test/journeys/specs/oneOnOne/startup-settings.js'
     ],
     'oneOnOne-meet': [
-      './test/journeys/specs/oneOnOne/dataApi/meet.js',
-      './test/journeys/specs/oneOnOne/global/meet.js'
+      './test/journeys/specs/oneOnOne/meet/*.js'
     ],
     'oneOnOne-messaging': [
-      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
-      './test/journeys/specs/oneOnOne/global/messaging.js'
+      './test/journeys/specs/oneOnOne/messaging/*.js'
     ],
     space: ['./test/journeys/specs/space/**/*.js'],
     'space-basic': [
-      './test/journeys/specs/space/global/basic.js',
+      './test/journeys/specs/space/basic/*.js',
       './test/journeys/specs/space/featureFlags.js',
-      './test/journeys/specs/space/dataApi/basic.js',
-      './test/journeys/specs/space/dataApi/startup-settings.js'
+      './test/journeys/specs/space/startup-settings.js'
     ],
     'space-meet': [
-      './test/journeys/specs/space/dataApi/meet.js',
-      './test/journeys/specs/space/global/meet.js'
+      './test/journeys/specs/space/meet/*.js'
     ],
     'space-messaging': [
-      './test/journeys/specs/space/dataApi/messaging.js',
-      './test/journeys/specs/space/global/messaging.js'
+      './test/journeys/specs/space/messaging/*.js'
     ],
     recents: [
-      './test/journeys/specs/recents/**/*.js'
+      './test/journeys/specs/recents/*.js'
     ],
     multiple: [
-      './test/journeys/specs/multiple/**/*.js'
+      './test/journeys/specs/multiple/index.js'
     ],
     'recents-multiple': [
       './test/journeys/specs/recents/**/*.js',
@@ -132,7 +125,7 @@ exports.config = {
   },
   // Patterns to exclude.
   exclude: [
-    '**/common.js'
+    '**/base.js'
   ],
   build,
   capabilities: browserCapabilities,

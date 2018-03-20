@@ -87,64 +87,6 @@ ansiColor('xterm') {
             }
           }
 
-          stage('Static Analysis') {
-            sh '''#!/bin/bash -e
-            source ~/.nvm/nvm.sh &> /dev/null
-            nvm use v8.9.4
-            npm run static-analysis
-            '''
-          }
-
-          stage('Unit Tests') {
-            sh '''#!/bin/bash -e
-            source ~/.nvm/nvm.sh &> /dev/null
-            nvm use v8.9.4
-            npm run jest
-            '''
-          }
-
-          stage('Build for Testing') {
-            sh '''#!/bin/bash -e
-            source ~/.nvm/nvm.sh &> /dev/null
-            nvm use v8.9.4
-            export NODE_ENV=test
-            cp -r ./test/journeys/server ./dist-test
-            BUILD_DIST_PATH="${PWD}/dist-test/dist-space" npm run build:package widget-space
-            BUILD_DIST_PATH="${PWD}/dist-test/dist-recents" npm run build:package widget-recents
-            cp -r ./node_modules/axe-core ./dist-test/
-            '''
-          }
-
-          stage('Deploy for Testing') {
-            withCredentials([
-              string(credentialsId: 'NETLIFY_TOKEN', variable: 'NETLIFY_TOKEN'),
-            ]) {
-              sh '''#!/bin/bash -e
-              source ~/.nvm/nvm.sh &> /dev/null
-              nvm use v8.9.4
-              npx netlify deploy -t ${NETLIFY_TOKEN}
-              '''
-            }
-          }
-
-          stage('Run Journey Tests') {
-            withCredentials([
-              string(credentialsId: 'REACT_WIDGETS_CLIENT_ID', variable: 'CISCOSPARK_CLIENT_ID'),
-              string(credentialsId: 'REACT_WIDGETS_CLIENT_SECRET', variable: 'CISCOSPARK_CLIENT_SECRET'),
-              usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
-            ]) {
-             sh '''#!/bin/bash -e
-             source ~/.nvm/nvm.sh &> /dev/null
-             nvm use v8.9.4
-             export JOURNEY_TEST_BASE_URL=https://practical-roentgen-7d4de0.netlify.com
-             BROWSER=firefox npm run test:integration:sauce & sleep 60
-             BROWSER=chrome npm run test:integration:sauce & sleep 120
-             BROWSER=chrome PLATFORM="windows 10" npm run test:integration:sauce & wait
-             '''
-             junit '**/reports/junit/wdio/*.xml'
-            }
-          }
-
           stage('Check for No Push') {
             try {
               noPushCount = sh script: 'git log upstream/master.. | grep -c "#no-push"', returnStdout: true
