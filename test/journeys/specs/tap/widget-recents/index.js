@@ -11,7 +11,7 @@ import {clearEventLog, getEventLog} from '../../../lib/events';
 import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/recents';
 
 describe('Widget Recents', () => {
-  const browserLocal = browser.select('browserLocal');
+  const browserLocal = browser.select('1');
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
 

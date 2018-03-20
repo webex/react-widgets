@@ -3,6 +3,7 @@ require('dotenv').config();
 const uuid = require('uuid');
 
 process.env.SAUCE = true;
+
 let {config} = require('./wdio.conf.js');
 
 config.mochaOpts.timeout = 90000;
@@ -13,6 +14,12 @@ config.services = [
 if (process.env.BROWSER && process.env.BROWSER.includes('firefox')) {
   config.services.push('firefox-profile');
 }
+
+// Setup Sauce Labs extended debugging
+Object.keys(config.capabilities)
+  .forEach((c) => {
+    config.capabilities[c].desiredCapabilities.extendedDebugging = true;
+  });
 
 config = Object.assign({}, config, {
   deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy

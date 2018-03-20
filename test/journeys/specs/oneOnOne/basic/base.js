@@ -14,7 +14,7 @@ import {setupOneOnOneUsers} from '../../../lib/test-helpers';
 
 export default function oneOnOneBasicTests({name, browserLocalSetup}) {
   describe(`Widget Space: One on One - Basic (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
+    const browserLocal = browser.select('1');
 
     let mccoy, spock, oneOnOneConversation;
 

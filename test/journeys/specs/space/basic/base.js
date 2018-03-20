@@ -13,7 +13,7 @@ import {
 
 export default function groupBasicTests({name, browserSetup}) {
   describe(`Widget Space: Group - Basic (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
+    const browserLocal = browser.select('1');
     let biff, docbrown, lorraine, marty;
     let conversation;
 

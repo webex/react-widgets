@@ -9,6 +9,7 @@ const argv = require('yargs').argv;
 const {inject} = require('../scripts/utils/tests/openh264');
 
 const browserType = process.env.BROWSER || 'chrome';
+const browserCount = process.env.BROWSER_COUNT || 2;
 const platform = process.env.PLATFORM || 'mac 10.12';
 const port = process.env.PORT || 4567;
 const suite = argv.suite || 'integration';
@@ -18,57 +19,45 @@ const SELENIUM_VERSION = '3.4.0'; // Do not update to 3.6.0. Breaks actions API
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 const baseUrl = process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`;
 
-const chromeCapabilities = {
-  browserName: 'chrome',
-  name: `react-widget-${suite}`,
-  build,
-  logLevel: 'WARN',
-  chromeOptions: {
-    args: [
-      '--use-fake-device-for-media-stream',
-      '--use-fake-ui-for-media-stream',
-      '--disable-infobars'
-    ],
-    prefs: {
-      'profile.default_content_setting_values.notifications': 2
-    }
+const capabilities = {
+  firefox: {
+    browserName: 'firefox',
+    name: `react-widget-${suite}`,
+    build,
+    logLevel: 'WARN',
+    idleTimeout: 60,
+    seleniumVersion: SELENIUM_VERSION,
+    platform
   },
-  idleTimeout: 60,
-  seleniumVersion: SELENIUM_VERSION,
-  platform
+  chrome: {
+    browserName: 'chrome',
+    name: `react-widget-${suite}`,
+    build,
+    logLevel: 'WARN',
+    chromeOptions: {
+      args: [
+        '--use-fake-device-for-media-stream',
+        '--use-fake-ui-for-media-stream',
+        '--disable-infobars'
+      ],
+      prefs: {
+        'profile.default_content_setting_values.notifications': 2
+      }
+    },
+    idleTimeout: 60,
+    seleniumVersion: SELENIUM_VERSION,
+    platform
+  }
 };
 
-const firefoxCapabilities = {
-  browserName: 'firefox',
-  name: `react-widget-${suite}`,
-  build,
-  logLevel: 'WARN',
-  idleTimeout: 60,
-  seleniumVersion: SELENIUM_VERSION,
-  platform
-};
-
-let browserCapabilities;
-
-if (browserType.toLowerCase().includes('chrome')) {
-  browserCapabilities = {
-    browserLocal: {
-      desiredCapabilities: chromeCapabilities
-    },
-    browserRemote: {
-      desiredCapabilities: chromeCapabilities
-    }
-  };
-}
-else if (browserType.toLowerCase().includes('firefox')) {
-  browserCapabilities = {
-    browserLocal: {
-      desiredCapabilities: firefoxCapabilities
-    },
-    browserRemote: {
-      desiredCapabilities: firefoxCapabilities
-    }
-  };
+function getBrowserCapabilities(type = 'chrome', count = 2) {
+  const cap = {};
+  for (let i = 1; i <= count; i += 1) {
+    cap[i] = {
+      desiredCapabilities: capabilities[type]
+    };
+  }
+  return cap;
 }
 
 let mochaTimeout = 30000;
@@ -89,15 +78,17 @@ exports.config = {
       './test/journeys/specs/recents/*.js'
     ],
     basic: [
-      './test/journeys/specs/**/basic/*.js',
+      './test/journeys/specs/**/basic/*.js'
+    ],
+    features: [
       './test/journeys/specs/**/features/*.js',
       './test/journeys/specs/**/startup-settings.js'
     ],
     meet: [
       './test/journeys/specs/**/meet/*.js'
     ],
-    message: [
-      './test/journeys/specs/**/message/*.js'
+    messaging: [
+      './test/journeys/specs/**/messaging/*.js'
     ],
     oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
     'oneOnOne-basic': [
@@ -139,7 +130,7 @@ exports.config = {
     '**/base.js'
   ],
   build,
-  capabilities: browserCapabilities,
+  capabilities: getBrowserCapabilities(browserType, browserCount),
   //
   // ===================
   // Test Configurations
@@ -220,12 +211,9 @@ exports.config = {
   // =====
   // Hooks
   // =====
-  onPrepare(conf, capabilities) {
-    const defs = [
-      capabilities.browserRemote.desiredCapabilities,
-      capabilities.browserLocal.desiredCapabilities
-    ];
-
+  onPrepare(conf, caps) {
+    const defs = Object.keys(caps).map((c) => caps[c].desiredCapabilities);
+    console.log(caps);
     /* eslint-disable no-param-reassign */
     defs.forEach((d) => {
       if (process.env.SAUCE) {

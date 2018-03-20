@@ -10,8 +10,8 @@ import {FEATURE_FLAG_GROUP_CALLING} from '../../lib/test-helpers/space-widget/me
 
 
 describe('Widget Space Feature Flags', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
 
   let conversation;
   let userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2;

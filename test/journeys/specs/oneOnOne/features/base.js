@@ -5,8 +5,8 @@ import {setupOneOnOneUsers} from '../../../lib/test-helpers';
 
 export default function oneOnOneFeatureTests({name, browserSetup}) {
   describe(`Widget Space: One on One - Features (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
-    const browserRemote = browser.select('browserRemote');
+    const browserLocal = browser.select('1');
+    const browserRemote = browser.select('2');
 
     let userWithAllTheFeatures, userWithNoFeatures, oneOnOneConversation;
 

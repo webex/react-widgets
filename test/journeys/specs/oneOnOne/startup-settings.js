@@ -4,8 +4,8 @@ import {elements} from '../../lib/test-helpers/space-widget/main.js';
 import {answer, hangup} from '../../lib/test-helpers/space-widget/meet.js';
 
 describe('Widget Space: One on One - Data API Settings', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
   let mccoy, spock;
 
   before('initialize test users', () => {

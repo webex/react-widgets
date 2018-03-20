@@ -13,8 +13,8 @@ import {runAxe} from '../../../lib/axe';
 
 export default function groupMessageTests({name, browserSetup}) {
   describe(`Widget Space: Group - Messaging (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
-    const browserRemote = browser.select('browserRemote');
+    const browserLocal = browser.select('1');
+    const browserRemote = browser.select('2');
     let docbrown, lorraine, marty;
     let conversation;
 

@@ -19,8 +19,8 @@ import {
 
 
 describe('Multiple Widgets on a Single Page', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;

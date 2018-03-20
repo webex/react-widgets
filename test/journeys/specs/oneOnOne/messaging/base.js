@@ -11,8 +11,8 @@ import {runAxe} from '../../../lib/axe';
 
 export default function oneOnOneMessageTests({name, browserSetup}) {
   describe(`Widget Space: One On One - Messaging (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
-    const browserRemote = browser.select('browserRemote');
+    const browserLocal = browser.select('1');
+    const browserRemote = browser.select('2');
     let mccoy, spock, oneOnOneConversation;
 
     before('initialize test users', function intializeUsers() {

@@ -12,8 +12,8 @@ import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space
 import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
 
 describe('Widget Space: Group Space: TAP', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
   let docbrown, lorraine, marty;
   let conversation, local, remote;
 

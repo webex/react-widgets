@@ -11,8 +11,8 @@ import {
 
 export default function oneOnOneMeetTests({name, browserSetup}) {
   describe(`Widget Space: One on One - Meet (${name})`, () => {
-    const browserLocal = browser.select('browserLocal');
-    const browserRemote = browser.select('browserRemote');
+    const browserLocal = browser.select('1');
+    const browserRemote = browser.select('2');
     let mccoy, spock, oneOnOneConversation;
 
     before('initialize test users', function intializeUsers() {

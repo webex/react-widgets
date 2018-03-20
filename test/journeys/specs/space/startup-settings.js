@@ -10,8 +10,8 @@ import {elements as messageElements} from '../../lib/test-helpers/space-widget/m
 import {constructHydraId} from '../../lib/hydra';
 
 describe('Widget Space: Group - Data API Settings', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
   const spaceWidget = '.ciscospark-space-widget';
   let docbrown, lorraine, marty;
   let conversation;
