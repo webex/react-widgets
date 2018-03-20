@@ -6,28 +6,42 @@ import {moveMouse} from '../';
 import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
-import {elements as mainElements} from './main';
+import {
+  elements as mainElements,
+  openMenuAndClickButton
+} from './main';
 
 const uploadDir = path.join(__dirname, '../assets');
 
+const activityContainers = '//div[contains(@class, "ciscospark-activity-item-container")]';
+const lastSuccessfulActivity = `(${activityContainers}/div[not(contains(@class, "pending"))]/parent::div)[last()]`;
+const lastSuccessfulActivityText = `${lastSuccessfulActivity}//div[contains(@class, "ciscospark-activity-text")]`;
+const downloadButtonContainer = `(${lastSuccessfulActivity}//div[starts-with(@class,"ciscospark-activity-content")])[last()]`;
+const downloadFileButton = `(${lastSuccessfulActivity}//div[@title="Download this file"]/parent::button)[last()]`;
+
 export const elements = {
-  deleteMessageButton: 'button[aria-label="Delete this message"]',
-  flagButton: 'button[aria-label="Flag this message"]',
-  highlighted: '.isHighlighted',
-  pendingAction: '.flagActionPending',
+  deleteMessageButton: `${lastSuccessfulActivity}//button[@aria-label="Delete this message"]`,
+  flagButton: '//button[@aria-label="Flag this message"]',
+  highlighted: '//div[contains(@class, "isHighlighted")]',
+  pendingAction: '//div[contains(@class, "flagActionPending") and contains(@class, "isHighlighted")]',
   pendingActivity: '.activity-item-pending',
   inputFile: '.ciscospark-file-input',
   modalWindow: '.ciscospark-dialogue-modal',
   modalDeleteButton: 'button[title="Delete"].dialogue-modal-action-btn',
-  downloadButtonContainer: '(//div[starts-with(@class,"ciscospark-activity-content")])[last()]',
-  downloadFileButton: '(//div[@title="Download this file"]/parent::button)[last()]',
-  shareButton: 'button[aria-label="Share"]',
-  systemMessage: '.ciscospark-system-message',
+  lastSuccessfulActivity,
+  lastSuccessfulActivityText,
+  downloadButtonContainer,
+  downloadFileButton,
+  shareButton: '//button[@aria-label="Share"]',
+  systemMessage: '//div[contains(@class, "ciscospark-system-message")]',
   lastActivity: '.ciscospark-activity-item-container:last-child',
   lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
   readReceiptsArea: '.ciscospark-read-receipts',
   readReceiptsAvatar: '.ciscospark-typing-avatar',
-  messageComposer: '.ciscospark-message-composer'
+  messageComposer: '.ciscospark-message-composer',
+  textArea: '.ciscospark-message-composer textarea',
+  stagedFiles: '.ciscospark-message-composer .ciscospark-staged-files',
+  deleteShareButton: '//button[@aria-label="Delete Share"]'
 };
 
 export const messages = {
@@ -35,24 +49,17 @@ export const messages = {
 };
 
 /**
- * @typedef {object} TestObject
- * @param {object} browser - browser for test
- * @param {object} user - user object for test
- * @param {object} displayName - name used to identify test object
- */
-
-/**
  * Sends message to user from specified browser
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @param {string} message
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.senderBrowser
+ * @param {string} options.message
  */
-export function sendMessage(sender, receiver, message) {
-  sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
-  sender.browser.waitForVisible(elements.systemMessage);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
-  sender.browser.keys(['Enter', 'NULL']);
+export function sendMessage({senderBrowser, message}) {
+  senderBrowser.waitUntil(() =>
+    senderBrowser.isVisible(elements.textArea),
+  5000, 'message composer is not visible');
+  senderBrowser.setValue(elements.textArea, message);
+  senderBrowser.keys('Enter');
 }
 
 /**
@@ -60,40 +67,42 @@ export function sendMessage(sender, receiver, message) {
  * @param {TestObject} receiver
  * @param {TestObject} sender
  * @param {string} message
- * @returns {void}
  */
-export function verifyMessageReceipt(receiver, sender, message) {
-  receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
-  receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
-  receiver.browser.waitForExist(elements.lastActivityText, 15000);
-  receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
+export function verifyMessageReceipt({
+  receiverBrowser, senderBrowser, message
+}) {
+  receiverBrowser.waitUntil(() =>
+    receiverBrowser.isExisting(elements.lastSuccessfulActivityText),
+  15000, 'message text was not found');
+  receiverBrowser.waitUntil(() =>
+    receiverBrowser.getText(elements.lastSuccessfulActivityText) === message,
+  1000, `message text did not match "${message}"`);
   // Move mouse to send read receipt
-  moveMouse(receiver.browser, elements.lastActivityText);
+  moveMouse(receiverBrowser, elements.lastSuccessfulActivity);
   // Verify read receipt comes across
-  sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+  senderBrowser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
   // Move Mouse to text area so it doesn't cause any tool tips
-  moveMouse(receiver.browser, elements.messageComposer);
-  moveMouse(sender.browser, elements.messageComposer);
+  moveMouse(receiverBrowser, elements.messageComposer);
+  moveMouse(senderBrowser, elements.messageComposer);
 }
 
 /**
  * Verifies file is displayed in files tab
- * @param {object} aBrowser
- * @param {string} fileName
- * @param {boolean} hasThumbnail
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {string} options.fileName
+ * @param {boolean} options.hasThumbnail
  */
-export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
+function verifyFilesActivityTab({aBrowser, fileName, hasThumbnail}) {
   const fileTitle = `//div[text()="${fileName}"]`;
-  const fileThumbnail = `[alt="Uploaded File ${fileName}"]`;
-  if (!aBrowser.isVisible(mainElements.activityMenu)) {
-    aBrowser.click(mainElements.menuButton);
-    aBrowser.waitForVisible(mainElements.activityMenu);
-  }
-  aBrowser.waitForVisible(mainElements.filesButton);
-  aBrowser.click(mainElements.filesButton);
-  aBrowser.waitForVisible(mainElements.filesWidget);
-  aBrowser.element(`${mainElements.filesWidget}${fileTitle}`).waitForExist();
+  const fileThumbnail = `//img[@alt="Uploaded File ${fileName}"]`;
+  openMenuAndClickButton(aBrowser, mainElements.filesButton);
+
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(mainElements.filesWidget),
+  5000, 'failed to open files tab');
+
+  aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
   if (hasThumbnail) {
     aBrowser.waitForVisible(fileThumbnail);
   }
@@ -103,111 +112,107 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
 
 /**
  * Flags the last message received
- * @param {TestObject} testObject
- * @param {string} messageToFlag Verifies the last message is this string
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {String} options.messageToFlag
  */
-export function flagMessage(testObject, messageToFlag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
-  moveMouse(testObject.browser, elements.lastActivityText);
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(`${elements.lastActivity} ${elements.flagButton}`)
-      .isVisible(),
+export function flagMessage({aBrowser, messageToFlag}) {
+  aBrowser.waitForExist(elements.pendingActivity, 15000, true);
+  aBrowser.waitUntil(() =>
+    aBrowser.getText(elements.lastSuccessfulActivityText) === messageToFlag,
+  10000, 'message to flag does not exist');
+  moveMouse(aBrowser, elements.lastSuccessfulActivity);
+  aBrowser.waitUntil(() =>
+    aBrowser
+      .isVisible(`${elements.lastSuccessfulActivity}${elements.flagButton}`),
   1500, 'flag button is not visible when hovering');
 
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+  aBrowser
+    .click(`${elements.lastSuccessfulActivity}${elements.flagButton}`);
 
   // Verify it is highlighted, showing it was flagged
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'flag button did not highlight');
+  aBrowser.waitUntil(() => aBrowser
+    .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}${elements.flagButton}`),
+  1500, 'flag button did not highlight');
 
   // Remove pending flag
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
-    .isVisible() === false, 7500, 'flag button did not remove pending state');
+  aBrowser.waitUntil(() => aBrowser
+    .isVisible(`${elements.lastSuccessfulActivity}${elements.pendingAction}${elements.flagButton}`)
+    === false, 7500, 'flag button did not remove pending state');
 }
 
 /**
  * Unflags the last message received. Expected message should already be flagged
- * @param {TestObject} testObject
- * @param {string} messageToUnflag
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {String} options.messageToUnflag
  */
-export function removeFlagMessage(testObject, messageToUnflag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 1500, 'message was not found');
+export function removeFlagMessage({aBrowser, messageToUnflag}) {
+  aBrowser.waitUntil(() =>
+    aBrowser.getText(elements.lastSuccessfulActivityText) === messageToUnflag,
+  1500, `message was not found "${messageToUnflag}"`);
 
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'message was not flagged');
+  aBrowser.waitUntil(() => aBrowser
+    .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}${elements.flagButton}`),
+  1500, 'message was not flagged');
 
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+  aBrowser
+    .click(`${elements.lastSuccessfulActivity}${elements.flagButton}`);
 
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}`)
-    .isVisible() === false, 3500, 'message was still flagged');
+  aBrowser.waitUntil(() => aBrowser
+    .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}`) === false,
+  3500, 'message was still flagged');
 }
 
 /**
  * Looks to see if the last message can be deleted
- * @param {TestObject} testObject
- * @param {string} messageToDelete
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {string} options.messageToDelete
  * @returns {boolean}
  */
-export function canDeleteMessage(testObject, messageToDelete) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
+export function canDeleteMessage({aBrowser, messageToDelete}) {
+  aBrowser.waitUntil(() =>
     // Text matches message to delete
-    testObject.browser.element(elements.lastActivityText).getText() === messageToDelete);
-
-  return testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    // Delete button is hidden but still exists
-    .isExisting();
+    aBrowser.getText(elements.lastSuccessfulActivityText) === messageToDelete,
+  10000, `failed to find message to delete "${messageToDelete}"`);
+  // Delete button is hidden but still exists
+  return aBrowser
+    .isExisting(elements.deleteMessageButton);
 }
 
 /**
  * Deletes the last message sent
- * @param {TestObject} testObject
- * @param {string} messageToDelete
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {string} options.messageToDelete
  */
-export function deleteMessage(testObject, messageToDelete) {
-  assert.isTrue(canDeleteMessage(testObject, messageToDelete));
+export function deleteMessage({aBrowser, messageToDelete}) {
+  assert.isTrue(canDeleteMessage({aBrowser, messageToDelete}));
 
-  moveMouse(testObject.browser, elements.lastActivityText);
+  moveMouse(aBrowser, elements.lastSuccessfulActivity);
 
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-      .isVisible(),
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.deleteMessageButton),
   1500, 'delete button is not visible when hovering');
 
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    .click();
+  aBrowser.click(elements.deleteMessageButton);
 
   // Click modal confirm
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(elements.modalWindow)
-      .isVisible(),
+  aBrowser.waitUntil(() =>
+    aBrowser
+      .isVisible(elements.modalWindow),
   3500, 'delete modal window is not visible after clicking delete button');
-  assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
-  testObject.browser.element(elements.modalDeleteButton).click();
+  assert.isTrue(aBrowser.isVisible(elements.modalDeleteButton), 'modal delete button is not visible');
+  aBrowser.click(elements.modalDeleteButton);
 
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
+  const deletedSystemMessage = `${elements.lastSuccessfulActivity}${elements.systemMessage}`;
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(deletedSystemMessage),
+  10000, `could not find system message at ${deletedSystemMessage}`);
 
-  testObject.browser.waitUntil(() => {
-    const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
+  aBrowser.waitUntil(() => {
+    const text = aBrowser.getText(deletedSystemMessage);
     return text.includes(messages.youDeleted);
   }, 3500, 'message was not deleted');
 }
@@ -216,242 +221,339 @@ export function deleteMessage(testObject, messageToDelete) {
 /* eslint no-sync: "off" */
 /**
  * Sends a file and verifies receipt
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @param {string} fileName
- * @param {boolean} [fileSizeVerify=true] Some files are embedded and don't display file sizes
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.senderBrowser
+ * @param {Object} options.receiverBrowser
+ * @param {string} options.fileName
+ * @param {boolean} [options.fileSizeVerify=true] Some files are embedded and don't display file sizes
  */
-const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
+function sendFileTest({
+  senderBrowser, receiverBrowser, fileName, fileSizeVerify = true
+}) {
   const filePath = path.join(uploadDir, fileName);
   const fileTitle = `//div[text()="${fileName}"]`;
-  sender.browser.chooseFile(elements.inputFile, filePath);
-  sender.browser.click(elements.shareButton);
-  receiver.browser.waitForExist(fileTitle, 30000);
-  receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
-  const remoteSize = receiver.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
+  senderBrowser.chooseFile(elements.inputFile, filePath);
+  senderBrowser.click(elements.shareButton);
+  receiverBrowser.waitUntil(() =>
+    receiverBrowser.isExisting(fileTitle),
+  15000, 'failed to send file');
+
+  receiverBrowser.scroll(fileTitle);
+
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
+    const fileSizeSelector = `${elements.lastSuccessfulActivity}//span[contains(@class, "ciscospark-share-file-size")]`;
+    const localSize = senderBrowser.getText(fileSizeSelector);
+    const remoteSize = receiverBrowser.getText(fileSizeSelector);
     assert.equal(localSize, remoteSize);
   }
   // Send receipt acknowledgement and verify before moving on
-  sendMessage(receiver, sender, `Received: ${fileName}`);
-  verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
-};
+  const message = `Received: ${fileName}`;
+  sendMessage({
+    senderBrowser: receiverBrowser,
+    message
+  });
+  verifyMessageReceipt({
+    senderBrowser,
+    receiverBrowser,
+    message
+  });
+}
 
 /**
  * Test that sends a file and verifies that it is present in the files activity tab
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @param {string} fileName
- * @param {boolean} [hasThumbnail = true] Some files don't have a thumbnail
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.senderBrowser
+ * @param {Object} options.receiverBrowser
+ * @param {string} options.fileName
+ * @param {boolean} [options.hasThumbnail = true] Some files don't have a thumbnail
  */
-const filesTabTest = (sender, receiver, fileName, hasThumbnail = true) => {
-  verifyFilesActivityTab(sender.browser, fileName, hasThumbnail);
-  verifyFilesActivityTab(receiver.browser, fileName, hasThumbnail);
-};
+function filesTabTest({
+  senderBrowser, receiverBrowser, fileName, hasThumbnail = true
+}) {
+  verifyFilesActivityTab({
+    aBrowser: senderBrowser, fileName, hasThumbnail
+  });
+  verifyFilesActivityTab({
+    aBrowser: receiverBrowser, fileName, hasThumbnail
+  });
+}
 
 /**
  * Test that verifies correct message events are created
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} options
+ * @param {Object} options.senderBrowser
+ * @param {Object} options.sender
+ * @param {Object} options.receiverBrowser
  */
-const messageEventTest = (sender, receiver) => {
+function messageEventTest({
+  senderBrowser, sender, receiverBrowser
+}) {
   const message = 'God, I liked him better before he died.';
-  clearEventLog(receiver.browser);
-  sendMessage(sender, receiver, message);
-  verifyMessageReceipt(receiver, sender, message);
-  const events = getEventLog(receiver.browser);
+  clearEventLog(receiverBrowser);
+  sendMessage({
+    senderBrowser,
+    message
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message
+  });
+  const events = getEventLog(receiverBrowser);
   const eventCreated = events.find((event) => event.eventName === 'messages:created');
   const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
+
   assert.isDefined(eventCreated, 'has a message created event');
   assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
   assert.containsAllKeys(eventCreated.detail.data, ['actorId', 'actorName', 'id', 'personId', 'roomId', 'roomType', 'text']);
-  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.user.id));
-  assert.equal(eventCreated.detail.data.actorName, sender.user.displayName);
+  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.id));
+  assert.equal(eventCreated.detail.data.actorName, sender.displayName);
 
   assert.isDefined(eventUnread, 'has an unread message event');
   assert.containsAllKeys(eventUnread.detail, ['resource', 'event', 'data']);
   assert.containsAllKeys(eventUnread.detail.data, ['actorId', 'actorName', 'id', 'title', 'type', 'created', 'lastActivity']);
-  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.user.id));
-  assert.equal(eventCreated.detail.data.actorName, sender.user.displayName);
-};
+  assert.equal(eventCreated.detail.actorId, constructHydraId('PEOPLE', sender.id));
+  assert.equal(eventCreated.detail.data.actorName, sender.displayName);
+}
 
 /**
  * Test for sending markdown message with bold text
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const bold = (sender, receiver) => {
-  sendMessage(sender, receiver, '**Are you out of your Vulcan mind?** No human can tolerate the radiation that\'s in there!');
-  verifyMessageReceipt(receiver, sender, 'Are you out of your Vulcan mind? No human can tolerate the radiation that\'s in there!');
+function bold(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: '**Are you out of your Vulcan mind?** No human can tolerate the radiation that\'s in there!'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'Are you out of your Vulcan mind? No human can tolerate the radiation that\'s in there!'
+  });
   // Assert only the bolded text is in the strong tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > strong`), 'Are you out of your Vulcan mind?');
-};
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}//strong`), 'Are you out of your Vulcan mind?');
+}
 
 /**
  * Test for sending markdown message with italic text
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const italic = (sender, receiver) => {
-  sendMessage(sender, receiver, 'As you are _so fond_ of observing, doctor, I am not human.');
-  verifyMessageReceipt(receiver, sender, 'As you are so fond of observing, doctor, I am not human.');
+function italic(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: 'As you are _so fond_ of observing, doctor, I am not human.'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'As you are so fond of observing, doctor, I am not human.'
+  });
   // Assert only the italicized text is in the em tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > em`), 'so fond');
-};
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}//em`), 'so fond');
+}
 
 /**
  * Test for sending markdown message with a blockquote
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const blockquote = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '> You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
+function blockquote(senderBrowser, receiverBrowser) {
+  senderBrowser.setValue(elements.textArea, '> You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
   // Quote break with two new lines
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'You call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
-  sender.browser.keys(['Enter', 'NULL']);
-  verifyMessageReceipt(receiver, sender, 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, 'You call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
+  senderBrowser.keys('Enter');
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.'
+  });
   // Assert only first half of message is in the blockquote tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
-};
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}//blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
+}
 
 /**
  * Test for sending markdown message with an ordered list
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const orderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '1. ordered list item 1');
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '2. ordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
-  verifyMessageReceipt(receiver, sender, 'ordered list item 1\nordered list item 2');
+function orderedList(senderBrowser, receiverBrowser) {
+  senderBrowser.setValue(elements.textArea, '1. ordered list item 1');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, '2. ordered list item 2');
+  senderBrowser.keys('Enter');
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'ordered list item 1\nordered list item 2'
+  });
   // Assert text matches for the first and second ordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), 'ordered list item 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(2)`), 'ordered list item 2');
-};
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/ol/li[1]`), 'ordered list item 1');
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/ol/li[2]`), 'ordered list item 2');
+}
 
 /**
  * Test for sending markdown message with an unordered list
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const unorderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 1');
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 2');
-  sender.browser.keys(['Enter', 'NULL']);
-  verifyMessageReceipt(receiver, sender, 'unordered list item 1\nunordered list item 2');
+function unorderedList(senderBrowser, receiverBrowser) {
+  senderBrowser.setValue(elements.textArea, '* unordered list item 1');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, '* unordered list item 2');
+  senderBrowser.keys('Enter');
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'unordered list item 1\nunordered list item 2'
+  });
   // Assert text matches for the first and second unordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), 'unordered list item 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(2)`), 'unordered list item 2');
-};
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/ul/li[1]`), 'unordered list item 1');
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/ul/li[2]`), 'unordered list item 2');
+}
 
 /**
  * Test for sending markdown message with a h1 heading
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const heading1 = (sender, receiver) => {
-  sendMessage(sender, receiver, '# Heading 1');
-  verifyMessageReceipt(receiver, sender, 'Heading 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h1`), 'Heading 1');
-};
+function heading1(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: '# Heading 1'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'Heading 1'
+  });
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/h1`), 'Heading 1');
+}
 
 /**
  * Test for sending markdown message with a h2 heading
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const heading2 = (sender, receiver) => {
-  sendMessage(sender, receiver, '## Heading 2');
-  verifyMessageReceipt(receiver, sender, 'Heading 2');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h2`), 'Heading 2');
-};
+function heading2(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: '## Heading 2'
+  });
+
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'Heading 2'
+  });
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/h2`), 'Heading 2');
+}
 
 /**
  * Test for sending markdown message with a h3 heading
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const heading3 = (sender, receiver) => {
-  sendMessage(sender, receiver, '### Heading 3');
-  verifyMessageReceipt(receiver, sender, 'Heading 3');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h3`), 'Heading 3');
-};
+function heading3(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: '### Heading 3'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'Heading 3'
+  });
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/h3`), 'Heading 3');
+}
 
 /**
  * Test for sending markdown message with a horizontal line
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const hr = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'test horizontal line');
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
-  sender.browser.keys(['Enter', 'NULL']);
-  verifyMessageReceipt(receiver, sender, 'test horizontal line');
-  assert.isTrue(receiver.browser.isVisible(`${elements.lastActivityText} > hr`));
-};
+function hr(senderBrowser, receiverBrowser) {
+  senderBrowser.setValue(elements.textArea, 'test horizontal line');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, '- - -');
+  senderBrowser.keys('Enter');
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'test horizontal line'
+  });
+  assert.isTrue(receiverBrowser.isVisible(`${elements.lastSuccessfulActivityText}/hr`));
+}
 
 /**
  * Test for sending markdown message with a link
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const link = (sender, receiver) => {
-  sendMessage(sender, receiver, '[Cisco](http://www.cisco.com/)');
-  verifyMessageReceipt(receiver, sender, 'Cisco');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > a`), 'Cisco');
-  assert.equal(receiver.browser.getAttribute(`${elements.lastActivityText} > a`, 'href'), 'http://www.cisco.com/');
-};
+function link(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: '[Cisco](http://www.cisco.com/)'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'Cisco'
+  });
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/a`), 'Cisco');
+  assert.equal(receiverBrowser.getAttribute(`${elements.lastSuccessfulActivityText}/a`, 'href'), 'http://www.cisco.com/');
+}
 
 /**
  * Test for sending markdown message with inline code
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const inline = (sender, receiver) => {
-  sendMessage(sender, receiver, 'this tests `inline.code();`');
-  verifyMessageReceipt(receiver, sender, 'this tests inline.code();');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > code`), 'inline.code();');
-};
+function inline(senderBrowser, receiverBrowser) {
+  sendMessage({
+    senderBrowser,
+    message: 'this tests `inline.code();`'
+  });
+  verifyMessageReceipt({
+    receiverBrowser,
+    senderBrowser,
+    message: 'this tests inline.code();'
+  });
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/code`), 'inline.code();');
+}
 
 /**
  * Test for sending markdown message with a codeblock
- * @param {TestObject} sender
- * @param {TestObject} receiver
- * @returns {void}
+ * @param {Object} senderBrowser
+ * @param {Object} receiverBrowser
  */
-const codeblock = (sender, receiver) => {
-  sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '``` html');
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '<h1>Hello World!</h1>');
-  sender.browser.keys(['Shift', 'Enter', 'NULL']);
-  sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '```');
-  sender.browser.keys(['Enter', 'NULL']);
-  receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
-  receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === '<h1>Hello World!</h1>');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), '<h1>Hello World!</h1>');
-};
+function codeblock(senderBrowser, receiverBrowser) {
+  senderBrowser.waitForVisible(elements.textArea);
+  senderBrowser.setValue(elements.textArea, '``` html');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, '<h1>Hello World!</h1>');
+  senderBrowser.keys(['Shift', 'Enter', 'NULL']);
+  senderBrowser.addValue(elements.textArea, '```');
+  senderBrowser.keys('Enter');
+  receiverBrowser.waitForVisible(`${elements.lastSuccessfulActivityText}/pre/code`);
+  receiverBrowser.waitUntil(() =>
+    receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/pre/code`) === '<h1>Hello World!</h1>');
+  assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/pre/code`), '<h1>Hello World!</h1>');
+}
+
+/**
+ * Clears any stuck file in the file uploader
+ * @param {Object} aBrowser
+ */
+export function clearFileUploader(aBrowser) {
+  while (aBrowser.isVisible(elements.stagedFiles)) {
+    aBrowser.click(elements.deleteShareButton);
+  }
+}
 
 export const messageTests = {
   sendFileTest,

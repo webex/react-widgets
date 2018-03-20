@@ -6,12 +6,13 @@ export const elements = {
   rosterWidget: '.ciscospark-roster',
   closeButton: 'button[aria-label="Close"]',
   peopleButton: 'button[aria-label="People"]',
-  rosterTitle: '.ciscospark-widget-title',
+  rosterTitle: '.ciscospark-roster .ciscospark-widget-title',
   participantItem: '.ciscospark-participant-list-item',
   rosterList: '.ciscospark-roster-scrolling-list',
   addParticipantArea: '.ciscospark-roster-add-participant',
   addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
-  addParticipantResultItem: '.ciscospark-people-list-item',
+  addParticipantResultItem: '.ciscospark-roster-add-participant-results .ciscospark-people-list-item',
+  addParticipantResultName: '.ciscospark-roster-add-participant-results .ciscospark-people-list-name',
   addPeopleButton: '.ciscospark-roster-add-people',
   searchInput: '.ciscospark-roster-add-participant-search-input',
   closeSearchButton: 'button[aria-label="Close Search"]'
@@ -40,8 +41,8 @@ function closeSearch(aBrowser) {
  * @returns {Array}
  */
 export function hasParticipants(aBrowser, participants) {
-  aBrowser.element(elements.rosterList).waitForVisible();
-  const participantsText = aBrowser.element(elements.rosterList).getText();
+  aBrowser.waitForVisible(elements.rosterList);
+  const participantsText = aBrowser.getText(elements.rosterList);
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
 }
 
@@ -65,19 +66,41 @@ export function canSearchForParticipants(aBrowser) {
  * @param {boolean} doAdd actually add the person to participants
  * @param {String} searchResult the string that should appear in search results
  */
-export function searchForPerson(aBrowser, searchString, doAdd = false, searchResult = searchString) {
+export function searchForPerson({
+  aBrowser, searchString, doAdd = false, searchResult = searchString
+}) {
   openSearch(aBrowser);
   aBrowser.setValue(elements.searchInput, searchString);
   aBrowser.waitForVisible(elements.addParticipantResultsArea);
   aBrowser.waitForVisible(elements.addParticipantResultItem);
-  const resultsText = aBrowser.element(elements.addParticipantResultItem).getText();
+  const resultsText = aBrowser.getText(elements.addParticipantResultName);
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);
     // Adding a participant immediately takes you back to roster
-    aBrowser.waitForVisible(elements.addParticipantArea, 3000, true);
+    aBrowser.waitForVisible(elements.addPeopleButton, 3000);
   }
   else {
     closeSearch(aBrowser);
   }
+}
+/**
+ * Searchs for and adds a person
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {String} options.searchString
+ */
+export function searchAndAddPerson({aBrowser, searchString, searchResult}) {
+  searchForPerson({
+    aBrowser, searchString, doAdd: true, searchResult
+  });
+  aBrowser.waitUntil(() => aBrowser.isVisible(elements.rosterList), 5000, 'roster does not become visible');
+  aBrowser.waitUntil(() => {
+    const participantsText = aBrowser.getText(elements.rosterList);
+    return participantsText.includes(searchResult);
+  }, 5000, 'added person not found in participant list');
+  aBrowser.waitUntil(() => {
+    const rosterTitle = aBrowser.getText(elements.rosterTitle);
+    return rosterTitle === 'People (4)';
+  }, 5000, 'Participant count should update once user is added');
 }

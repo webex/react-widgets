@@ -1,8 +1,8 @@
-import '@ciscospark/internal-plugin-conversation';
-import '@ciscospark/internal-plugin-feature';
-import '@ciscospark/plugin-logger';
-import CiscoSpark from '@ciscospark/spark-core';
-import testUsers from '@ciscospark/test-helper-test-users';
+import {
+  createTestUsers,
+  loadWithGlobals,
+  loadWithDataApi
+} from '../../lib/test-helpers';
 
 import featureFlagTests from '../../lib/test-helpers/space-widget/featureFlags';
 import {FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/space-widget/roster';
@@ -15,131 +15,115 @@ describe('Widget Space Feature Flags', () => {
 
   let conversation;
   let userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2;
+  before('initialize test users', () => {
+    ({
+      userWithAllTheFeatures,
+      userWithNoFeatures1,
+      userWithNoFeatures2
+    } = createTestUsers(3, {
+      userWithAllTheFeatures: {displayName: 'Emmett Brown'},
+      userWithNoFeatures1: {displayName: 'Lorraine Baines'},
+      userWithNoFeatures2: {displayName: 'Marty McFly'}
+    }));
 
-  before('create test users', () => Promise.all([
-    testUsers.create({count: 1, config: {displayName: 'All Features'}})
-      .then((users) => {
-        [userWithAllTheFeatures] = users;
-        userWithAllTheFeatures.spark = new CiscoSpark({
-          credentials: {
-            authorization: userWithAllTheFeatures.token
-          },
-          config: {
-            logger: {
-              level: 'error'
-            }
-          }
-        });
-        return userWithAllTheFeatures.spark.internal.device.register()
-          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
-      }),
-    testUsers.create({count: 2, config: {displayName: 'No Features'}})
-      .then((users) => {
-        [userWithNoFeatures1, userWithNoFeatures2] = users;
-        userWithNoFeatures1.spark = new CiscoSpark({
-          credentials: {
-            authorization: userWithNoFeatures1.token
-          },
-          config: {
-            logger: {
-              level: 'error'
-            }
-          }
-        });
-        return userWithNoFeatures1.spark.internal.device.register()
-          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, false))
-          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, false));
-      })
-  ]));
+    userWithAllTheFeatures.spark.internal.device.register()
+      .then(() => userWithAllTheFeatures.spark.internal.feature
+        .setFeature('developer', FEATURE_FLAG_ROSTER, true))
+      .then(() => userWithAllTheFeatures.spark.internal.feature
+        .setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
 
-  before('pause to let test users establish', () => browser.pause(5000));
+    userWithNoFeatures1.spark.internal.device.register()
+      .then(() => userWithNoFeatures1.spark.internal.feature
+        .setFeature('developer', FEATURE_FLAG_ROSTER, false))
+      .then(() => userWithNoFeatures1.spark.internal.feature
+        .setFeature('developer', FEATURE_FLAG_GROUP_CALLING, false));
 
-  before('create space', () => userWithAllTheFeatures.spark.internal.conversation.create({
-    displayName: 'Widget Feature Flag Test Space',
-    participants: [userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2]
-  }).then((c) => {
-    conversation = c;
-    return conversation;
-  }));
+    browser.waitUntil(() =>
+      userWithAllTheFeatures.spark.internal.device.userId &&
+      userWithNoFeatures1.spark.internal.device.userId,
+    15000, 'failed to register user devices');
+  });
+
+  it('can create group space', function createOneOnOneSpace() {
+    this.retries(2);
+
+    userWithAllTheFeatures.spark.internal.conversation.create({
+      displayName: 'Widget Feature Flag Test Space',
+      participants: [userWithNoFeatures1, userWithNoFeatures2, userWithAllTheFeatures]
+    }).then((c) => {
+      conversation = c;
+      return conversation;
+    });
+
+    browser.waitUntil(() => conversation && conversation.id,
+      15000, 'failed to create group space');
+  });
 
   describe('Browser Global', () => {
-    before('load browsers', () => {
+    it('loads browsers and widgets', function loadGlobal() {
+      this.retries(2);
+
       browser
         .url('/space.html?basic')
         .execute(() => {
           localStorage.clear();
         });
+
+      loadWithGlobals({
+        aBrowser: browserLocal,
+        accessToken: userWithAllTheFeatures.token.access_token,
+        spaceId: conversation.id,
+        initialActivity: 'message'
+      });
+
+      loadWithGlobals({
+        aBrowser: browserRemote,
+        accessToken: userWithNoFeatures1.token.access_token,
+        spaceId: conversation.id,
+        initialActivity: 'message'
+      });
+
+      browser.waitUntil(() =>
+        browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`) &&
+        browserRemote.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
+      15000, 'failed to load browsers and widgets');
     });
 
-    before('open widget local', () => {
-      browserLocal.execute((localAccessToken, spaceId) => {
-        const options = {
-          accessToken: localAccessToken,
-          spaceId,
-          initialActivity: 'message'
-        };
-        window.openSpaceWidget(options);
-      }, userWithAllTheFeatures.token.access_token, conversation.id);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
-    });
-
-    before('open widget remote', () => {
-      browserRemote.execute((localAccessToken, spaceId) => {
-        const options = {
-          accessToken: localAccessToken,
-          spaceId,
-          initialActivity: 'message'
-        };
-        window.openSpaceWidget(options);
-      }, userWithNoFeatures1.token.access_token, conversation.id);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
-    });
-
-    describe('Feature Flag Tests', () => {
-      featureFlagTests(browserLocal, browserRemote);
-    });
+    featureFlagTests(browserLocal, browserRemote);
   });
 
   describe('Data API', () => {
-    before('load browsers', () => {
+    it('loads browsers and widgets', function loadDataApi() {
+      this.retries(2);
+
       browser
         .url('/data-api/space.html')
         .execute(() => {
           localStorage.clear();
         });
+
+      loadWithDataApi({
+        aBrowser: browserLocal,
+        bundle: '/dist-space/bundle.js',
+        accessToken: userWithAllTheFeatures.token.access_token,
+        spaceId: conversation.id,
+        initialActivity: 'message'
+      });
+
+      loadWithDataApi({
+        aBrowser: browserRemote,
+        bundle: '/dist-space/bundle.js',
+        accessToken: userWithNoFeatures1.token.access_token,
+        spaceId: conversation.id,
+        initialActivity: 'message'
+      });
+
+      browser.waitUntil(() =>
+        browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`) &&
+        browserRemote.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
+      15000, 'failed to load browsers and widgets');
     });
 
-    before('open widget local', () => {
-      browserLocal.execute((localAccessToken, spaceId) => {
-        const csmmDom = document.createElement('div');
-        csmmDom.setAttribute('class', 'ciscospark-widget');
-        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
-        csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
-        csmmDom.setAttribute('data-initial-activity', 'message');
-        document.getElementById('ciscospark-widget').appendChild(csmmDom);
-        window.loadBundle('/dist-space/bundle.js');
-      }, userWithAllTheFeatures.token.access_token, conversation.id);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
-    });
-
-    before('open widget remote', () => {
-      browserRemote.execute((localAccessToken, spaceId) => {
-        const csmmDom = document.createElement('div');
-        csmmDom.setAttribute('class', 'ciscospark-widget');
-        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
-        csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
-        csmmDom.setAttribute('data-initial-activity', 'message');
-        document.getElementById('ciscospark-widget').appendChild(csmmDom);
-        window.loadBundle('/dist-space/bundle.js');
-      }, userWithNoFeatures1.token.access_token, conversation.id);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
-    });
-
-    describe('Feature Flag Tests', () => {
-      featureFlagTests(browserLocal, browserRemote);
-    });
+    featureFlagTests(browserLocal, browserRemote);
   });
 });
