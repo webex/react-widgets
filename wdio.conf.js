@@ -1,7 +1,11 @@
-require('dotenv').config();
 require('babel-register');
-
 const os = require('os');
+
+const dotenv = require('dotenv');
+
+dotenv.config();
+dotenv.config({path: '.env.default'});
+
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
