@@ -19,9 +19,10 @@ test_defaults: &test_defaults
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
         no_output_timeout: 25m
     - store_test_results:
-        path: reports/junit
+        path: reports/junit/wdio
     - store_artifacts:
-        path: reports
+        path: reports/junit/wdio
+        destination: wdio
 
 # Main Config
 version: 2
