@@ -88,6 +88,17 @@ exports.config = {
       './test/journeys/specs/space/*.js',
       './test/journeys/specs/recents/*.js'
     ],
+    basic: [
+      './test/journeys/specs/**/basic/*.js',
+      './test/journeys/specs/**/features/*.js',
+      './test/journeys/specs/**/startup-settings.js'
+    ],
+    meet: [
+      './test/journeys/specs/**/meet/*.js'
+    ],
+    message: [
+      './test/journeys/specs/**/message/*.js'
+    ],
     oneOnOne: ['./test/journeys/specs/oneOnOne/**/*.js'],
     'oneOnOne-basic': [
       './test/journeys/specs/oneOnOne/basic/*.js',
