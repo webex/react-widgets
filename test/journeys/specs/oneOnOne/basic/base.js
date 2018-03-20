@@ -29,7 +29,7 @@ export default function oneOnOneBasicTests({name, browserLocalSetup}) {
       15000, 'failed to register user devices');
     });
 
-    it('can create one on one space', function createOneOnOneSpace() {
+    it('creates one on one space', function createOneOnOneSpace() {
       this.retries(2);
 
       spock.spark.internal.conversation.create({

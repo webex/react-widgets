@@ -17,6 +17,12 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
 
     before('initialize test users', function intializeUsers() {
       ({mccoy, spock} = setupOneOnOneUsers());
+
+      spock.spark.internal.device.register();
+
+      browser.waitUntil(() =>
+        spock.spark.internal.device.userId,
+      15000, 'failed to register user devices');
     });
 
     it('can create one on one space', function createOneOnOneSpace() {

@@ -49,64 +49,63 @@ export function moveMouse(aBrowser, selector) {
   }
 }
 
+
+/**
+ * Creates a number of test users
+ * @param {number} count number of users to generate
+ * @param {Object} userInfo with config to pass to test user creator
+ * @returns {Object}
+ */
+export function createTestUsers(count, userInfo = {
+  docbrown: {displayName: 'Emmett Brown'},
+  lorraine: {displayName: 'Lorraine Baines'},
+  marty: {displayName: 'Marty McFly'},
+  biff: {displayName: 'Biff Tannen'}
+}) {
+  const users = {};
+  const userKeys = Object.keys(userInfo);
+
+  function storeUser(u, key) {
+    [users[key]] = u;
+    users[key].spark = new CiscoSpark({
+      credentials: {
+        authorization: users[key].token
+      },
+      config: {
+        logger: {
+          level: 'error'
+        }
+      }
+    });
+    return users[key];
+  }
+
+  for (let i = 0; i < count; i += 1) {
+    const key = userKeys[i];
+    testUsers.create({count: 1, config: userInfo[key]})
+      .then((u) => storeUser(u, key));
+  }
+
+  browser.waitUntil(() =>
+    userKeys.reduce((acc, val) =>
+      acc && users[val] && users[val].email &&
+      users[val].spark && users[val].spark.canAuthorize,
+    true),
+  15000, 'failed to create test users');
+
+  return users;
+}
+
 /**
  * Creates our Back to the Future Test Users for group meeting tests
  * @returns {Object}
  */
 export function setupGroupTestUsers() {
-  let docbrown, marty, lorraine;
-  testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-    .then((users) => {
-      [marty] = users;
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-    });
-
-  testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-    .then((users) => {
-      [docbrown] = users;
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-    });
-
-  testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-    .then((users) => {
-      [lorraine] = users;
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-    });
-
-  browser.waitUntil(() =>
-    marty && marty.email && marty.spark && marty.spark.canAuthorize &&
-    docbrown && docbrown.email && docbrown.spark && docbrown.spark.canAuthorize &&
-    lorraine && lorraine.email && lorraine.spark && lorraine.spark.canAuthorize,
-  10000, 'failed to create test users');
-
-  return {marty, docbrown, lorraine};
+  return createTestUsers(3, {
+    docbrown: {displayName: 'Emmett Brown'},
+    lorraine: {displayName: 'Lorraine Baines'},
+    marty: {displayName: 'Marty McFly'}
+  });
 }
 
 /**
@@ -114,41 +113,83 @@ export function setupGroupTestUsers() {
  * @returns {Object}
  */
 export function setupOneOnOneUsers() {
-  let mccoy, spock;
-  testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
-    .then((users) => {
-      [spock] = users;
-      spock.spark = new CiscoSpark({
-        credentials: {
-          authorization: spock.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
+  return createTestUsers(2, {
+    spock: {displayName: 'Mr Spock'},
+    mccoy: {displayName: 'Bones Mccoy'}
+  });
+}
+
+/**
+ * Loads a widget into the browser with Data API
+ * @param {Object} options
+ */
+export function loadWithDataApi({
+  aBrowser,
+  bundle,
+  accessToken,
+  spaceId,
+  toPersonEmail,
+  initialActivity,
+  startCall
+}) {
+  aBrowser.execute((options) => {
+    const csmmDom = document.createElement('div');
+    csmmDom.setAttribute('class', 'ciscospark-widget');
+    csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+    csmmDom.setAttribute('data-access-token', options.accessToken);
+    if (options.spaceId) {
+      csmmDom.setAttribute('data-space-id', options.spaceId);
+    }
+    if (options.toPersonEmail) {
+      csmmDom.setAttribute('data-to-person-email', options.toPersonEmail);
+    }
+    if (options.initialActivity) {
+      csmmDom.setAttribute('data-initial-activity', options.initialActivity);
+    }
+    if (options.startCall) {
+      csmmDom.setAttribute('data-start-call', options.startCall);
+    }
+    document.getElementById('ciscospark-widget').appendChild(csmmDom);
+    window.loadBundle(options.bundle, () => {
+      if (window.ciscoSparkEvents) {
+        window.ciscospark.widget(csmmDom).on('all', (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
+        });
+      }
     });
+  }, {
+    bundle,
+    accessToken,
+    spaceId,
+    toPersonEmail,
+    initialActivity,
+    startCall
+  });
+}
 
-  testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
-    .then((users) => {
-      [mccoy] = users;
-      mccoy.spark = new CiscoSpark({
-        credentials: {
-          authorization: mccoy.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-    });
-
-  browser.waitUntil(() =>
-    mccoy && mccoy.email && mccoy.spark && mccoy.spark.canAuthorize &&
-    spock && spock.email && spock.spark && spock.spark.canAuthorize,
-  15000, 'failed to create test users');
-
-  return {mccoy, spock};
+/**
+ * Loads a widget into the browser with browser globals
+ * @param {Object} options
+ */
+export function loadWithGlobals({
+  aBrowser,
+  accessToken,
+  spaceId,
+  toPersonEmail,
+  initialActivity,
+  startCall
+}) {
+  aBrowser.execute((options) => {
+    window.openSpaceWidget(Object.assign(options, {
+      onEvent: (eventName, detail) => {
+        window.ciscoSparkEvents.push({eventName, detail});
+      }
+    }));
+  }, {
+    accessToken,
+    spaceId,
+    toPersonEmail,
+    initialActivity,
+    startCall
+  });
 }

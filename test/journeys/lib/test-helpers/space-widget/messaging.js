@@ -206,10 +206,13 @@ export function deleteMessage({aBrowser, messageToDelete}) {
   assert.isTrue(aBrowser.isVisible(elements.modalDeleteButton), 'modal delete button is not visible');
   aBrowser.click(elements.modalDeleteButton);
 
-  aBrowser.waitForVisible(`${elements.lastSuccessfulActivity}${elements.systemMessage}`);
+  const deletedSystemMessage = `${elements.lastSuccessfulActivity}${elements.systemMessage}`;
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(deletedSystemMessage),
+  10000, `could not find system message at ${deletedSystemMessage}`);
 
   aBrowser.waitUntil(() => {
-    const text = aBrowser.getText(`${elements.lastSuccessfulActivity}${elements.systemMessage}`);
+    const text = aBrowser.getText(deletedSystemMessage);
     return text.includes(messages.youDeleted);
   }, 3500, 'message was not deleted');
 }
@@ -300,7 +303,7 @@ function messageEventTest({
   const events = getEventLog(receiverBrowser);
   const eventCreated = events.find((event) => event.eventName === 'messages:created');
   const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
-  console.log(events);
+
   assert.isDefined(eventCreated, 'has a message created event');
   assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
   assert.containsAllKeys(eventCreated.detail.data, ['actorId', 'actorName', 'id', 'personId', 'roomId', 'roomType', 'text']);

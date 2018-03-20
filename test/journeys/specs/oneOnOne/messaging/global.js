@@ -1,6 +1,8 @@
-import recentTests from './base';
+import {loadWithGlobals} from '../../../lib/test-helpers';
 
-recentTests({
+import messagingTests from './base';
+
+messagingTests({
   name: 'Global',
   browserSetup({aBrowser, accessToken, toPersonEmail}) {
     aBrowser
@@ -9,16 +11,11 @@ recentTests({
         localStorage.clear();
       });
 
-    aBrowser.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: 'message'
-      };
-      window.openSpaceWidget(options);
-    }, accessToken, toPersonEmail);
+    loadWithGlobals({
+      aBrowser,
+      accessToken,
+      toPersonEmail,
+      initialActivity: 'message'
+    });
   }
 });

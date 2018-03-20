@@ -1,7 +1,6 @@
-import {assert} from 'chai';
-
-import {elements as mainElements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
-import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {elements as mainElements} from '../../../lib/test-helpers/space-widget/main';
+import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {rosterFlagTests} from '../../../lib/test-helpers/space-widget/featureFlags';
 import {setupOneOnOneUsers} from '../../../lib/test-helpers';
 
 export default function oneOnOneFeatureTests({name, browserSetup}) {
@@ -62,18 +61,7 @@ export default function oneOnOneFeatureTests({name, browserSetup}) {
 
     describe('Feature Flags', () => {
       describe('Roster', () => {
-        it('switches to roster for user with feature flag', () => {
-          openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-          browser.waitUntil(() =>
-            browserLocal.isVisible(rosterElements.rosterWidget),
-          5000, 'could not sitch to roster widget');
-        });
-
-        it('does not have a roster for user without flag', () => {
-          browserRemote.click(mainElements.menuButton);
-          browserRemote.waitForVisible(mainElements.activityMenu);
-          assert.isFalse(browserRemote.isVisible(`${mainElements.activityMenu} ${rosterElements.peopleButton}`));
-        });
+        rosterFlagTests(browserLocal, browserRemote);
       });
     });
   });

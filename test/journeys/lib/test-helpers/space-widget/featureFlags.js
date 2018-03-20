@@ -5,14 +5,12 @@ import {elements as rosterElements} from './roster';
 import {elements as meetElements} from './meet';
 
 /**
- *
- * Feature Flag Tests Journeys
- *
+ * Check if Roster Flag is working correctly
  * @export
- * @param {any} browserWithAllTheFeatures
- * @param {any} browserWithNoFeatures
+ * @param {Object} browserWithAllTheFeatures
+ * @param {Object} browserWithNoFeatures
  */
-export default function featureFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
+export function rosterFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
   describe('Roster Feature Flag', () => {
     it('has a roster for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
@@ -34,7 +32,15 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });
+}
 
+/**
+ * Check if Group Calling Flag is working correctly
+ * @export
+ * @param {Object} browserWithAllTheFeatures
+ * @param {Object} browserWithNoFeatures
+ */
+export function groupCallingFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
   describe('Group Calling Feature Flag', () => {
     it('has a call option for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
@@ -56,4 +62,17 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });
+}
+
+/**
+ *
+ * Feature Flag Tests Journeys
+ *
+ * @export
+ * @param {Object} browserWithAllTheFeatures
+ * @param {Object} browserWithNoFeatures
+ */
+export default function featureFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
+  rosterFlagTests(browserWithAllTheFeatures, browserWithNoFeatures);
+  groupCallingFlagTests(browserWithAllTheFeatures, browserWithNoFeatures);
 }
