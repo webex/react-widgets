@@ -1,10 +1,12 @@
 
 import {
   setupGroupTestUsers,
-  loadWithDataApi
+  loadWithDataApi,
+  moveMouse
 } from '../../lib/test-helpers';
 import {elements} from '../../lib/test-helpers/space-widget/main';
-import {answer, hangup} from '../../lib/test-helpers/space-widget/meet';
+import {answer, hangup, elements as meetElements} from '../../lib/test-helpers/space-widget/meet';
+import {elements as messageElements} from '../../lib/test-helpers/space-widget/messaging';
 import {constructHydraId} from '../../lib/hydra';
 
 describe('Widget Space: Group - Data API Settings', () => {
@@ -104,7 +106,19 @@ describe('Widget Space: Group - Data API Settings', () => {
     15000, 'does not load local browser');
 
     answer(browserRemote);
+    moveMouse(browserLocal, meetElements.callContainer);
     hangup(browserLocal);
+    hangup(browserRemote);
+    // Wait for end of locus session before continuing
+    browserLocal.waitUntil(
+      () => {
+        const message = browserLocal
+          .getText(`${messageElements.lastSuccessfulActivity}${messageElements.systemMessage}`);
+        return message.includes('You had a meeting');
+      },
+      25000,
+      'end of call message never posted to space'
+    );
   });
 
   it('opens using hydra id', function withHydraIds() {
