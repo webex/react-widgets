@@ -1,12 +1,8 @@
 import {assert} from 'chai';
 
-import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-logger';
-import CiscoSpark from '@ciscospark/spark-core';
-import '@ciscospark/internal-plugin-conversation';
-
 import {runAxe} from '../../../lib/axe';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
+import {createTestUsers} from '../../../lib/test-helpers';
 import {
   elements as rosterElements,
   canSearchForParticipants,
@@ -15,83 +11,30 @@ import {
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
 
-describe('Widget Space', () => {
-  describe('Global', () => {
+export default function groupBasicTests({name, browserSetup}) {
+  describe(`Widget Space: Group - Basic (${name})`, () => {
     const browserLocal = browser.select('browserLocal');
     let biff, docbrown, lorraine, marty;
     let conversation;
 
-    before('initialize', () => {
-      browserLocal
-        .url('/space.html')
-        .execute(() => {
-          localStorage.clear();
-        });
+    before('initialize test users', () => {
+      ({
+        marty,
+        biff,
+        docbrown,
+        lorraine
+      } = createTestUsers(4));
 
-      testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-        .then((users) => {
-          [marty] = users;
-          marty.spark = new CiscoSpark({
-            credentials: {
-              authorization: marty.token
-            },
-            config: {
-              logger: {
-                level: 'error'
-              }
-            }
-          });
-          return marty.spark.internal.device.register()
-            .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-            .then(() => marty.spark.internal.mercury.connect());
-        });
+      marty.spark.internal.device.register()
+        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
 
-      testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-        .then((users) => {
-          [docbrown] = users;
-          docbrown.spark = new CiscoSpark({
-            credentials: {
-              authorization: docbrown.token
-            },
-            config: {
-              logger: {
-                level: 'error'
-              }
-            }
-          });
-        });
+      browser.waitUntil(() =>
+        marty.spark.internal.device.userId,
+      15000, 'failed to register user devices');
+    });
 
-      testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-        .then((users) => {
-          [lorraine] = users;
-          lorraine.spark = new CiscoSpark({
-            credentials: {
-              authorization: lorraine.token
-            },
-            config: {
-              logger: {
-                level: 'error'
-              }
-            }
-          });
-        });
-
-      testUsers.create({count: 1, config: {displayName: 'Biff Tannen'}})
-        .then((users) => {
-          [biff] = users;
-          biff.spark = new CiscoSpark({
-            credentials: {
-              authorization: biff.token
-            },
-            config: {
-              logger: {
-                level: 'error'
-              }
-            }
-          });
-        });
-
-      browser.pause(5000);
+    it('creates group space', function createGroupSpace() {
+      this.retries(2);
 
       marty.spark.internal.conversation.create({
         displayName: 'Test Widget Space',
@@ -101,30 +44,27 @@ describe('Widget Space', () => {
         return conversation;
       });
 
-      browserLocal.waitUntil(() => conversation && conversation.id, 10000, 'failed to create conversation');
-
-      browserLocal.execute((accessToken, spaceId) => {
-        window.openSpaceWidget({
-          accessToken,
-          spaceId
-        });
-      }, marty.token.access_token, conversation.id);
+      browser.waitUntil(() => conversation && conversation.id,
+        15000, 'failed to create group space');
     });
 
-    it('loads the test page', () => {
-      const title = browserLocal.getTitle();
-      assert.equal(title, 'Cisco Spark Widget Test');
-    });
+    it('loads browser and widgets', function loadBrowsers() {
+      browserSetup({
+        aBrowser: browserLocal,
+        accessToken: marty.token.access_token,
+        spaceId: conversation.id
+      });
 
-    it('loads the space name', () => {
-      browserLocal.waitForVisible('h1.ciscospark-title');
-      assert.equal(browserLocal.getText('h1.ciscospark-title'), conversation.displayName);
+      browser.waitUntil(() =>
+        browserLocal.isVisible(elements.messageWidget),
+      10000, 'failed to laod browser and widgets');
     });
 
     describe('When conversation is established', () => {
       before('wait for conversation to be ready', () => {
-        const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-        browserLocal.waitForVisible(textInputField);
+        browserLocal.waitUntil(() =>
+          browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
+        10000, 'failed to load message composer');
       });
 
       describe('Activity Menu', () => {
@@ -208,16 +148,14 @@ describe('Widget Space', () => {
           browserLocal.waitForVisible(rosterElements.rosterWidget, 500, true);
         });
       });
-
-      describe('accessibility', () => {
-        it('should have no accessibility violations', () =>
-          runAxe(browserLocal, 'ciscospark-widget')
-            .then((results) => {
-              assert.equal(results.violations.length, 0);
-            }));
-      });
     });
 
-    after('disconnect', () => marty.spark.internal.mercury.disconnect());
+    describe('accessibility', () => {
+      it('should have no accessibility violations', () =>
+        runAxe(browserLocal, 'ciscospark-widget')
+          .then((results) => {
+            assert.equal(results.violations.length, 0);
+          }));
+    });
   });
-});
+}
