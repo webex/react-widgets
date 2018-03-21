@@ -56,17 +56,11 @@ export default function groupBasicTests({name, browserSetup}) {
       });
 
       browser.waitUntil(() =>
-        browserLocal.isVisible(elements.messageWidget),
+        browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
       10000, 'failed to laod browser and widgets');
     });
 
     describe('When conversation is established', () => {
-      before('wait for conversation to be ready', () => {
-        browserLocal.waitUntil(() =>
-          browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
-        10000, 'failed to load message composer');
-      });
-
       describe('Activity Menu', () => {
         it('has a menu button', () => {
           assert.isTrue(browserLocal.isVisible(elements.menuButton));

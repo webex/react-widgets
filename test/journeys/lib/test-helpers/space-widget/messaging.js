@@ -55,7 +55,7 @@ export const messages = {
  * @param {string} options.message
  */
 export function sendMessage({senderBrowser, message}) {
-  senderBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     senderBrowser.isVisible(elements.textArea),
   5000, 'message composer is not visible');
   senderBrowser.setValue(elements.textArea, message);
@@ -71,10 +71,10 @@ export function sendMessage({senderBrowser, message}) {
 export function verifyMessageReceipt({
   receiverBrowser, senderBrowser, message
 }) {
-  receiverBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     receiverBrowser.isExisting(elements.lastSuccessfulActivityText),
   15000, 'message text was not found');
-  receiverBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     receiverBrowser.getText(elements.lastSuccessfulActivityText) === message,
   1000, `message text did not match "${message}"`);
   // Move mouse to send read receipt
@@ -98,7 +98,7 @@ function verifyFilesActivityTab({aBrowser, fileName, hasThumbnail}) {
   const fileThumbnail = `//img[@alt="Uploaded File ${fileName}"]`;
   openMenuAndClickButton(aBrowser, mainElements.filesButton);
 
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser.isVisible(mainElements.filesWidget),
   5000, 'failed to open files tab');
 
@@ -118,11 +118,11 @@ function verifyFilesActivityTab({aBrowser, fileName, hasThumbnail}) {
  */
 export function flagMessage({aBrowser, messageToFlag}) {
   aBrowser.waitForExist(elements.pendingActivity, 15000, true);
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser.getText(elements.lastSuccessfulActivityText) === messageToFlag,
   10000, 'message to flag does not exist');
   moveMouse(aBrowser, elements.lastSuccessfulActivity);
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser
       .isVisible(`${elements.lastSuccessfulActivity}${elements.flagButton}`),
   1500, 'flag button is not visible when hovering');
@@ -131,12 +131,12 @@ export function flagMessage({aBrowser, messageToFlag}) {
     .click(`${elements.lastSuccessfulActivity}${elements.flagButton}`);
 
   // Verify it is highlighted, showing it was flagged
-  aBrowser.waitUntil(() => aBrowser
+  browser.waitUntil(() => aBrowser
     .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}${elements.flagButton}`),
   1500, 'flag button did not highlight');
 
   // Remove pending flag
-  aBrowser.waitUntil(() => aBrowser
+  browser.waitUntil(() => aBrowser
     .isVisible(`${elements.lastSuccessfulActivity}${elements.pendingAction}${elements.flagButton}`)
     === false, 7500, 'flag button did not remove pending state');
 }
@@ -148,18 +148,18 @@ export function flagMessage({aBrowser, messageToFlag}) {
  * @param {String} options.messageToUnflag
  */
 export function removeFlagMessage({aBrowser, messageToUnflag}) {
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser.getText(elements.lastSuccessfulActivityText) === messageToUnflag,
   1500, `message was not found "${messageToUnflag}"`);
 
-  aBrowser.waitUntil(() => aBrowser
+  browser.waitUntil(() => aBrowser
     .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}${elements.flagButton}`),
   1500, 'message was not flagged');
 
   aBrowser
     .click(`${elements.lastSuccessfulActivity}${elements.flagButton}`);
 
-  aBrowser.waitUntil(() => aBrowser
+  browser.waitUntil(() => aBrowser
     .isVisible(`${elements.lastSuccessfulActivity}${elements.highlighted}`) === false,
   3500, 'message was still flagged');
 }
@@ -172,7 +172,7 @@ export function removeFlagMessage({aBrowser, messageToUnflag}) {
  * @returns {boolean}
  */
 export function canDeleteMessage({aBrowser, messageToDelete}) {
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     // Text matches message to delete
     aBrowser.getText(elements.lastSuccessfulActivityText) === messageToDelete,
   10000, `failed to find message to delete "${messageToDelete}"`);
@@ -192,14 +192,14 @@ export function deleteMessage({aBrowser, messageToDelete}) {
 
   moveMouse(aBrowser, elements.lastSuccessfulActivity);
 
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser.isVisible(elements.deleteMessageButton),
   1500, 'delete button is not visible when hovering');
 
   aBrowser.click(elements.deleteMessageButton);
 
   // Click modal confirm
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser
       .isVisible(elements.modalWindow),
   3500, 'delete modal window is not visible after clicking delete button');
@@ -207,11 +207,11 @@ export function deleteMessage({aBrowser, messageToDelete}) {
   aBrowser.click(elements.modalDeleteButton);
 
   const deletedSystemMessage = `${elements.lastSuccessfulActivity}${elements.systemMessage}`;
-  aBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     aBrowser.isVisible(deletedSystemMessage),
   10000, `could not find system message at ${deletedSystemMessage}`);
 
-  aBrowser.waitUntil(() => {
+  browser.waitUntil(() => {
     const text = aBrowser.getText(deletedSystemMessage);
     return text.includes(messages.youDeleted);
   }, 3500, 'message was not deleted');
@@ -234,7 +234,7 @@ function sendFileTest({
   const fileTitle = `//div[text()="${fileName}"]`;
   senderBrowser.chooseFile(elements.inputFile, filePath);
   senderBrowser.click(elements.shareButton);
-  receiverBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     receiverBrowser.isExisting(fileTitle),
   15000, 'failed to send file');
 
@@ -540,7 +540,7 @@ function codeblock(senderBrowser, receiverBrowser) {
   senderBrowser.addValue(elements.textArea, '```');
   senderBrowser.keys('Enter');
   receiverBrowser.waitForVisible(`${elements.lastSuccessfulActivityText}/pre/code`);
-  receiverBrowser.waitUntil(() =>
+  browser.waitUntil(() =>
     receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/pre/code`) === '<h1>Hello World!</h1>');
   assert.equal(receiverBrowser.getText(`${elements.lastSuccessfulActivityText}/pre/code`), '<h1>Hello World!</h1>');
 }

@@ -2,9 +2,8 @@ import {assert} from 'chai';
 
 import {runAxe} from '../../lib/axe';
 import waitForPromise from '../../lib/wait-for-promise';
-import {clearEventLog, getEventLog} from '../../lib/events';
-
-import {setupGroupTestUsers, moveMouse} from '../../lib/test-helpers';
+import {clearEventLog, getEventNames} from '../../lib/events';
+import {setupGroupTestUsers, moveMouse, loadWithGlobals} from '../../lib/test-helpers';
 import {elements as meetElements, hangup} from '../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -75,17 +74,12 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
           localStorage.clear();
         });
 
-      browserRemote.execute((localAccessToken, localToUserEmail) => {
-        const options = {
-          accessToken: localAccessToken,
-          onEvent: (eventName, detail) => {
-            window.ciscoSparkEvents.push({eventName, detail});
-          },
-          toPersonEmail: localToUserEmail,
-          initialActivity: 'meet'
-        };
-        window.openSpaceWidget(options);
-      }, lorraine.token.access_token, marty.email);
+      loadWithGlobals({
+        aBrowser: browserRemote,
+        accessToken: lorraine.token.access_token,
+        toPersonEmail: marty.email,
+        initialActivity: 'meet'
+      });
 
       browser.waitUntil(() =>
         browserLocal.isVisible(recentsElements.recentsWidget) &&
@@ -109,9 +103,8 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
         displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
         moveMouse(browserLocal, recentsElements.firstSpace);
         browser.waitUntil(() =>
-          browserLocal.element(recentsElements.callButton).isVisible(),
-        1500,
-        'does not show call button');
+          browserLocal.isVisible(recentsElements.callButton),
+        1500, 'does not show call button');
       });
 
       describe('events', () => {
@@ -120,27 +113,27 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
           clearEventLog(browserLocal);
           const lorraineText = 'Don\'t be such a square';
           displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-          assert.include(getEventLog(browserLocal), 'messages:created', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'messages:created', 'does not have event in log');
         });
 
         it('rooms:unread', () => {
           clearEventLog(browserLocal);
           const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
           displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-          assert.include(getEventLog(browserLocal), 'rooms:unread', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'rooms:unread', 'does not have event in log');
         });
 
         it('rooms:read', () => {
           clearEventLog(browserLocal);
           const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
           displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-          assert.include(getEventLog(browserLocal), 'rooms:read', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'rooms:read', 'does not have event in log');
         });
 
         it('rooms:selected', () => {
           clearEventLog(browserLocal);
           browserLocal.element(recentsElements.firstSpace).click();
-          assert.include(getEventLog(browserLocal), 'rooms:selected', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'rooms:selected', 'does not have event in log');
         });
 
         it('memberships:created', () => {
@@ -148,7 +141,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
           const firstPost = 'Everybody who\'s anybody drinks.';
           clearEventLog(browserLocal);
           createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
-          assert.include(getEventLog(browserLocal), 'memberships:created', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'memberships:created', 'does not have event in log');
         });
 
         it('memberships:deleted', () => {
@@ -166,10 +159,10 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
           clearEventLog(browserLocal);
           waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
           browser.waitUntil(() =>
-            browserLocal.element(`${recentsElements.firstSpace} ${recentsElements.title}`).getText() !== roomTitle,
+            browserLocal.getText(`${recentsElements.firstSpace} ${recentsElements.title}`) !== roomTitle,
           5000,
           'does not remove space from list');
-          assert.include(getEventLog(browserLocal), 'memberships:deleted', 'does not have event in log');
+          assert.include(getEventNames(browserLocal), 'memberships:deleted', 'does not have event in log');
         });
       });
     });
@@ -194,7 +187,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
         displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
         moveMouse(browserLocal, recentsElements.firstSpace);
         browser.waitUntil(() =>
-          browserLocal.element(recentsElements.callButton).isVisible(),
+          browserLocal.isVisible(recentsElements.callButton),
         1500,
         'does not show call button');
       });
@@ -202,7 +195,7 @@ export default function baseRecentsTest({name, browserLocalSetup}) {
 
     describe('incoming call', () => {
       it('should display incoming call screen', () => {
-        browserRemote.waitForVisible(`${meetElements.meetWidget} ${meetElements.callButton}`);
+        browserRemote.waitForVisible(meetElements.callButton);
         browserRemote.click(meetElements.callButton);
         browser.waitUntil(
           () => browserLocal.isVisible(recentsElements.answerButton),

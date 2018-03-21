@@ -94,12 +94,12 @@ export function searchAndAddPerson({aBrowser, searchString, searchResult}) {
   searchForPerson({
     aBrowser, searchString, doAdd: true, searchResult
   });
-  aBrowser.waitUntil(() => aBrowser.isVisible(elements.rosterList), 5000, 'roster does not become visible');
-  aBrowser.waitUntil(() => {
+  browser.waitUntil(() => aBrowser.isVisible(elements.rosterList), 5000, 'roster does not become visible');
+  browser.waitUntil(() => {
     const participantsText = aBrowser.getText(elements.rosterList);
     return participantsText.includes(searchResult);
   }, 5000, 'added person not found in participant list');
-  aBrowser.waitUntil(() => {
+  browser.waitUntil(() => {
     const rosterTitle = aBrowser.getText(elements.rosterTitle);
     return rosterTitle === 'People (4)';
   }, 5000, 'Participant count should update once user is added');

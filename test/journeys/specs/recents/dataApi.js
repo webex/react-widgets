@@ -1,3 +1,5 @@
+import {loadWithDataApi} from '../../lib/test-helpers';
+
 import recentTests from './base';
 
 recentTests({
@@ -8,17 +10,11 @@ recentTests({
       .execute(() => {
         localStorage.clear();
       });
-    aBrowser.execute((localAccessToken) => {
-      const csmmDom = document.createElement('div');
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
-      csmmDom.setAttribute('data-access-token', localAccessToken);
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
-      window.loadBundle('/dist-recents/bundle.js', () => {
-        window.ciscospark.widget(csmmDom).on('all', ({eventName, detail}) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        });
-      });
-    }, accessToken);
+    loadWithDataApi({
+      aBrowser,
+      accessToken,
+      bundle: '/dist-recents/bundle.js',
+      widget: 'recents'
+    });
   }
 });

@@ -14,7 +14,7 @@ oneOnOneBasicTests({
         toPersonEmail: localToUserEmail,
         initialActivity: 'message'
       };
-      window.openSpaceWidget(options);
+      window.openWidget(options);
     }, accessToken, toPersonEmail);
   }
 });

@@ -27,7 +27,7 @@ export function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to) {
   if (aBrowser.isVisible(elements.clearTokenButton)) {
     aBrowser.clicke(elements.clearTokenButton);
   }
-  aBrowser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
+  browser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
   aBrowser.execute((myToken, accessTokenElement) => {
     document.querySelector(accessTokenElement).value = myToken;
   }, accessToken, elements.accessTokenInput);
@@ -45,5 +45,5 @@ export function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to) {
     aBrowser.setValue(elements.toSpaceInput, to);
   }
   aBrowser.click(elements.openWidgetButton);
-  aBrowser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
+  browser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
 }

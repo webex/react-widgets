@@ -17,7 +17,7 @@ export const elements = {
  * @param {string} accessToken
  */
 export function loginAndOpenWidget(aBrowser, accessToken) {
-  aBrowser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
+  browser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
   aBrowser.execute((myToken, accessTokenElement) => {
     document.querySelector(accessTokenElement).value = myToken;
   }, accessToken, elements.accessTokenInput);
@@ -26,5 +26,5 @@ export function loginAndOpenWidget(aBrowser, accessToken) {
   assert.equal(aBrowser.getValue(elements.accessTokenInput), accessToken, 'access token entry failed');
   aBrowser.click(elements.saveTokenButton);
   aBrowser.click(elements.openWidgetButton);
-  aBrowser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
+  browser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
 }

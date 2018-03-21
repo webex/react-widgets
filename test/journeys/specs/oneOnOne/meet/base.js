@@ -60,38 +60,33 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
       10000, 'failed to load browsers and widgets');
     });
 
-    describe('meet widget', () => {
-      describe('pre call experience', () => {
-        it('has a call button', () => {
-          switchToMeet(browserLocal);
-          browser.waitUntil(() =>
-            browserLocal.isVisible(`${elements.meetWidget} ${elements.callButton}`),
-          5000, 'call button is not visible');
-        });
-      });
+    it('has a call button before active call', () => {
+      switchToMeet(browserLocal);
+      browser.waitUntil(() =>
+        browserLocal.isVisible(elements.callButton),
+      5000, 'call button is not visible after switching to meet widget');
+    });
 
-      describe('during call experience', () => {
-        it('can hangup before answer', () => {
-          hangupBeforeAnswerTest(browserLocal, browserRemote);
-        });
+    it('can hangup before answer', () => {
+      hangupBeforeAnswerTest(browserLocal, browserRemote);
+    });
 
-        it('can decline an incoming call', () => {
-          declineIncomingCallTest(browserLocal, browserRemote);
-        });
+    it('can decline an incoming call', () => {
+      declineIncomingCallTest(browserLocal, browserRemote);
+    });
 
-        it('can hangup in call', () => {
-          clearEventLog(browserLocal);
-          clearEventLog(browserRemote);
-          hangupDuringCallTest(browserLocal, browserRemote);
-        });
+    it('can hangup in call', () => {
+      clearEventLog(browserLocal);
+      clearEventLog(browserRemote);
+      hangupDuringCallTest(browserLocal, browserRemote);
+    });
 
-        it('has proper call event data', () => {
-          callEventTest(
-            {browser: browserLocal, user: spock, displayName: spock.displayName},
-            {browser: browserRemote, user: mccoy, displayName: mccoy.displayName}
-          );
-        });
-      });
+    it('has proper call event data', () => {
+      callEventTest(
+        {browser: browserLocal, user: spock, displayName: spock.displayName},
+        {browser: browserRemote, user: mccoy, displayName: mccoy.displayName}
+      );
     });
   });
 }
+

@@ -1,3 +1,5 @@
+import {loadWithGlobals} from '../../lib/test-helpers';
+
 import recentTests from './base';
 
 recentTests({
@@ -8,15 +10,10 @@ recentTests({
       .execute(() => {
         localStorage.clear();
       });
-    aBrowser.execute((localAccessToken) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        }
-      };
-      window.openRecentsWidget(options);
-    }, accessToken);
+    loadWithGlobals({
+      aBrowser,
+      accessToken
+    });
   }
 });
 

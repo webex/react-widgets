@@ -6,7 +6,7 @@
  * @returns {void}
  */
 export function clearEventLog(myBrowser) {
-  myBrowser.execute(() => { window.ciscoSparkEvents.length = 0; });
+  myBrowser.execute(() => { window.ciscoSparkEvents = []; });
 }
 
 /**
@@ -28,4 +28,16 @@ export function getEventLog(myBrowser) {
     return events;
   });
   return result.value;
+}
+
+/**
+ * Gets an array of event names from the browser
+ *
+ * @export
+ * @param {Object} aBrowser
+ * @returns {Array}
+ */
+export function getEventNames(aBrowser) {
+  const events = getEventLog(aBrowser);
+  return events.map((e) => e.eventName);
 }

@@ -195,26 +195,49 @@ describe('Multiple Widgets on a Single Page', () => {
           spaceName: local.displayName,
           message: martyText
         });
-        verifyMessageReceipt(local, remote, martyText);
+        verifyMessageReceipt({
+          senderBrowser: browserLocal,
+          receiverBrowser: browserRemote,
+          message: martyText
+        });
+
         sendMessage({
           senderBrowser: remote.browser,
           spaceName: local.displayName,
           message: docText
         });
-        verifyMessageReceipt(local, remote, docText);
+        verifyMessageReceipt({
+          senderBrowser: browserLocal,
+          receiverBrowser: browserRemote,
+          message: docText
+        });
+
         // Send a message from a 'client'
         waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }));
         // Wait for both widgets to receive client message
-        verifyMessageReceipt(local, remote, lorraineText);
-        verifyMessageReceipt(remote, local, lorraineText);
+        verifyMessageReceipt({
+          senderBrowser: browserLocal,
+          receiverBrowser: browserRemote,
+          message: lorraineText
+        });
+        verifyMessageReceipt({
+          senderBrowser: browserRemote,
+          receiverBrowser: browserLocal,
+          message: lorraineText
+        });
+
         sendMessage({
           senderBrowser: local.browser,
           spaceName: remote.displayName,
           message: martyText2
         });
-        verifyMessageReceipt(remote, local, martyText2);
+        verifyMessageReceipt({
+          senderBrowser: browserRemote,
+          receiverBrowser: browserLocal,
+          message: martyText2
+        });
       });
     });
   });

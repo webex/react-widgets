@@ -110,7 +110,7 @@ describe('Widget Space: Group - Data API Settings', () => {
     hangup(browserLocal);
     hangup(browserRemote);
     // Wait for end of locus session before continuing
-    browserLocal.waitUntil(
+    browser.waitUntil(
       () => {
         const message = browserLocal
           .getText(`${messageElements.lastSuccessfulActivity}${messageElements.systemMessage}`);

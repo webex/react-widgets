@@ -24,7 +24,7 @@ const capabilities = {
     browserName: 'firefox',
     name: `react-widget-${suite}`,
     build,
-    logLevel: 'WARN',
+    logLevel: 'verbose',
     idleTimeout: 60,
     seleniumVersion: SELENIUM_VERSION,
     platform
@@ -33,7 +33,7 @@ const capabilities = {
     browserName: 'chrome',
     name: `react-widget-${suite}`,
     build,
-    logLevel: 'WARN',
+    logLevel: 'verbose',
     chromeOptions: {
       args: [
         '--use-fake-device-for-media-stream',
@@ -123,6 +123,9 @@ exports.config = {
     'recents-multiple': [
       './test/journeys/specs/recents/**/*.js',
       './test/journeys/specs/multiple/**/*.js'
+    ],
+    test: [
+      './test/journeys/specs/recents/global.js'
     ]
   },
   // Patterns to exclude.
@@ -213,7 +216,6 @@ exports.config = {
   // =====
   onPrepare(conf, caps) {
     const defs = Object.keys(caps).map((c) => caps[c].desiredCapabilities);
-    console.log(caps);
     /* eslint-disable no-param-reassign */
     defs.forEach((d) => {
       if (process.env.SAUCE) {

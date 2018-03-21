@@ -1,8 +1,5 @@
 import {setupGroupTestUsers} from '../../../lib/test-helpers';
-import {
-  switchToMeet,
-  elements as mainElements
-} from '../../../lib/test-helpers/space-widget/main';
+import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog} from '../../../lib/events';
 import {
   elements,
@@ -12,7 +9,8 @@ import {
 } from '../../../lib/test-helpers/space-widget/meet';
 
 export default function groupMeetTests({name, browserSetup}) {
-  describe(`Widget Space: Group - Meet (${name})`, () => {
+  describe(`Widget Space: Group - Meet (${name})`, function groupMeet() {
+    this.retries(2);
     const browserLocal = browser.select('1');
     const browserRemote = browser.select('2');
     let docbrown, lorraine, marty;
@@ -60,34 +58,34 @@ export default function groupMeetTests({name, browserSetup}) {
       });
 
       browser.waitUntil(() =>
-        browserRemote.isVisible(mainElements.messageWidget) &&
-        browserLocal.isVisible(mainElements.messageWidget),
+        browserRemote.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`) &&
+        browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
       10000, 'failed to load browsers and widgets');
     });
 
-    describe('meet widget', () => {
-      it('has a call button before active call', () => {
-        switchToMeet(browserLocal);
-        browserLocal.waitForVisible(`${elements.meetWidget} ${elements.callButton}`);
-      });
+    it('has a call button before active call', () => {
+      switchToMeet(browserLocal);
+      browser.waitUntil(() =>
+        browserLocal.isVisible(elements.callButton),
+      5000, 'call button is not visible after switching to meet widget');
+    });
 
-      it('declines an incoming call', () => {
-        declineIncomingCallTest(browserLocal, browserRemote, true);
-      });
+    it('declines an incoming call', function declineIncoming() {
+      declineIncomingCallTest(browserLocal, browserRemote, true);
+    });
 
-      it('hangs up active call', () => {
-        clearEventLog(browserLocal);
-        clearEventLog(browserRemote);
-        hangupDuringCallTest(browserLocal, browserRemote, true);
-      });
+    it('hangs up active call', function hangupActive() {
+      clearEventLog(browserLocal);
+      clearEventLog(browserRemote);
+      hangupDuringCallTest(browserLocal, browserRemote, true);
+    });
 
-      it('has proper call event data', () => {
-        callEventTest(
-          {browser: browserLocal, user: marty, displayName: conversation.displayName},
-          {browser: browserRemote, user: docbrown, displayName: conversation.displayName},
-          conversation
-        );
-      });
+    it('has proper call event data', () => {
+      callEventTest(
+        {browser: browserLocal, user: marty, displayName: conversation.displayName},
+        {browser: browserRemote, user: docbrown, displayName: conversation.displayName},
+        conversation
+      );
     });
   });
 }

@@ -2,7 +2,6 @@ import {assert} from 'chai';
 
 import {elements as mainElements} from './main';
 import {elements as rosterElements} from './roster';
-import {elements as meetElements} from './meet';
 
 /**
  * Check if Roster Flag is working correctly
@@ -42,23 +41,18 @@ export function rosterFlagTests(browserWithAllTheFeatures, browserWithNoFeatures
  */
 export function groupCallingFlagTests(browserWithAllTheFeatures, browserWithNoFeatures) {
   describe('Group Calling Feature Flag', () => {
+    const callButton = `${mainElements.activityMenu} button[aria-label="Call"]`;
     it('has a call option for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(
-        browserWithAllTheFeatures
-          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
-      );
+      assert.isTrue(browserWithAllTheFeatures.isVisible(callButton));
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
     it('does not have a call option for user without flag', () => {
       browserWithNoFeatures.click(mainElements.menuButton);
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isFalse(
-        browserWithNoFeatures
-          .isVisible(`${mainElements.activityMenu} ${meetElements.callButton}`)
-      );
+      assert.isFalse(browserWithNoFeatures.isVisible(callButton));
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });

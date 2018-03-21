@@ -130,12 +130,14 @@ export function loadWithDataApi({
   spaceId,
   toPersonEmail,
   initialActivity,
-  startCall
+  startCall,
+  widget = 'space'
 }) {
   aBrowser.execute((options) => {
     const csmmDom = document.createElement('div');
     csmmDom.setAttribute('class', 'ciscospark-widget');
-    csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+
+    csmmDom.setAttribute('data-toggle', `ciscospark-${options.widget}`);
     csmmDom.setAttribute('data-access-token', options.accessToken);
     if (options.spaceId) {
       csmmDom.setAttribute('data-space-id', options.spaceId);
@@ -163,7 +165,8 @@ export function loadWithDataApi({
     spaceId,
     toPersonEmail,
     initialActivity,
-    startCall
+    startCall,
+    widget
   });
 }
 
@@ -180,7 +183,7 @@ export function loadWithGlobals({
   startCall
 }) {
   aBrowser.execute((options) => {
-    window.openSpaceWidget(Object.assign(options, {
+    window.openWidget(Object.assign(options, {
       onEvent: (eventName, detail) => {
         window.ciscoSparkEvents.push({eventName, detail});
       }

@@ -21,11 +21,11 @@ export const elements = {
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
   if (!aBrowser.isVisible(elements.activityMenu)) {
-    aBrowser.waitUntil(() =>
+    browser.waitUntil(() =>
       aBrowser.isVisible(elements.menuButton),
     5000, 'menu button is not visible when trying to open activity menu');
     aBrowser.click(elements.menuButton);
-    aBrowser.waitUntil(() =>
+    browser.waitUntil(() =>
       aBrowser.isVisible(elements.activityMenu),
     5000, 'could not open activity menu');
   }
