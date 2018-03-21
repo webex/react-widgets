@@ -82,7 +82,7 @@ export function createTestUsers(count, userInfo = {
 
   for (let i = 0; i < count; i += 1) {
     const key = userKeys[i];
-    testUsers.create({count: 1, config: userInfo[key]})
+    testUsers.create({count: 1, config: userInfo[key] || {}})
       .then((u) => storeUser(u, key));
   }
 
@@ -122,6 +122,14 @@ export function setupOneOnOneUsers() {
 /**
  * Loads a widget into the browser with Data API
  * @param {Object} options
+ * @param {Object} options.aBrowser required
+ * @param {string} options.bundle required
+ * @param {string} options.accessToken required
+ * @param {string} options.widget required, name of widget we need to load
+ * @param {string} options.spaceId
+ * @param {string} options.toPersonEmail
+ * @param {string} options.initialActivity
+ * @param {boolean} options.startCall
  */
 export function loadWithDataApi({
   aBrowser,
@@ -173,6 +181,12 @@ export function loadWithDataApi({
 /**
  * Loads a widget into the browser with browser globals
  * @param {Object} options
+ * @param {Object} options.aBrowser required
+ * @param {string} options.accessToken required
+ * @param {string} options.spaceId
+ * @param {string} options.toPersonEmail
+ * @param {string} options.initialActivity
+ * @param {boolean} options.startCall
  */
 export function loadWithGlobals({
   aBrowser,

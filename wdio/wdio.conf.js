@@ -19,6 +19,9 @@ const SELENIUM_VERSION = '3.4.0'; // Do not update to 3.6.0. Breaks actions API
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 const baseUrl = process.env.JOURNEY_TEST_BASE_URL || `http://localhost:${port}`;
 
+const screenResolution = platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac') ? '1920x1440' : '1920x1080';
+
+
 const capabilities = {
   firefox: {
     browserName: 'firefox',
@@ -27,6 +30,7 @@ const capabilities = {
     logLevel: 'verbose',
     idleTimeout: 60,
     seleniumVersion: SELENIUM_VERSION,
+    screenResolution,
     platform
   },
   chrome: {
@@ -46,6 +50,7 @@ const capabilities = {
     },
     idleTimeout: 60,
     seleniumVersion: SELENIUM_VERSION,
+    screenResolution,
     platform
   }
 };
@@ -146,7 +151,7 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'error',
+  logLevel: 'verbose',
   //
   // Enables colors for log output.
   coloredLogs: true,

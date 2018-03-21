@@ -23,6 +23,9 @@ test_defaults: &test_defaults
     - store_artifacts:
         path: reports/junit/wdio
         destination: wdio
+    - store_artifacts:
+        path: /home/circleci/.npm/_logs/
+        destination: npm-logs
 
 # Main Config
 version: 2

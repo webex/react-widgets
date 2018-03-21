@@ -1,3 +1,0 @@
-hooks:
-  pre-commit: lint-staged && ./scripts/validate-ci-config.sh
-  pre-push: npm test

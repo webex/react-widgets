@@ -35,7 +35,9 @@
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
-    "upgradespark": "./scripts/utils/update.js"
+    "upgradespark": "./scripts/utils/update.js",
+    "precommit": "lint-staged",
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -134,6 +136,7 @@
     "caniuse-lite": "^1.0.30000744",
     "chai": "^4.0.2",
     "child-process-promise": "^2.2.0",
+    "command-exists": "^1.2.2",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.0",
     "cssnano": "^3.10.0",
@@ -150,7 +153,7 @@
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
-    "husky": "^0.15.0-rc.9",
+    "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "inline-environment-variables-webpack-plugin": "^1.1.0",
     "jest": "^22.1.2",
