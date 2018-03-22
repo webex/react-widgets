@@ -38,7 +38,9 @@ export function openMenuAndClickButton(aBrowser, buttonToClick) {
  * @returns {void}
  */
 export function switchToMessage(aBrowser) {
-  openMenuAndClickButton(aBrowser, elements.messageButton);
+  if (!aBrowser.isVisible(elements.messageWidget)) {
+    openMenuAndClickButton(aBrowser, elements.messageButton);
+  }
 }
 
 /**
@@ -47,5 +49,7 @@ export function switchToMessage(aBrowser) {
  * @returns {void}
  */
 export function switchToMeet(aBrowser) {
-  openMenuAndClickButton(aBrowser, elements.meetButton);
+  if (!aBrowser.isVisible(elements.meetWidget)) {
+    openMenuAndClickButton(aBrowser, elements.meetButton);
+  }
 }

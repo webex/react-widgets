@@ -1,27 +1,24 @@
-import recentTests from './base';
+import {loadWithDataApi} from '../../../lib/test-helpers';
 
-recentTests({
+import meetTests from './base';
+
+meetTests({
   name: 'Data API',
-  browserSetup({aBrowser, accessToken, toPersonEmail}) {
+  browserSetup({
+    aBrowser, accessToken, toPersonEmail, initialActivity
+  }) {
     aBrowser
       .url('/data-api/space.html')
       .execute(() => {
         localStorage.clear();
       });
 
-    aBrowser.execute((localAccessToken, localToUserEmail) => {
-      const csmmDom = document.createElement('div');
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-space');
-      csmmDom.setAttribute('data-access-token', localAccessToken);
-      csmmDom.setAttribute('data-to-person-email', localToUserEmail);
-      csmmDom.setAttribute('data-initial-activity', 'message');
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
-      window.loadBundle('/dist-space/bundle.js', () => {
-        window.ciscospark.widget(csmmDom).on('all', (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        });
-      });
-    }, accessToken, toPersonEmail);
+    loadWithDataApi({
+      aBrowser,
+      bundle: '/dist-space/bundle.js',
+      initialActivity,
+      accessToken,
+      toPersonEmail
+    });
   }
 });

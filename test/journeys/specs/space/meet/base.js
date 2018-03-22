@@ -1,16 +1,14 @@
+import allMeetTests from '../../../lib/constructors/meet';
 import {setupGroupTestUsers} from '../../../lib/test-helpers';
-import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog} from '../../../lib/events';
 import {
-  elements,
-  declineIncomingCallTest,
   hangupDuringCallTest,
-  callEventTest
+  callEventTest,
+  elements
 } from '../../../lib/test-helpers/space-widget/meet';
 
 export default function groupMeetTests({name, browserSetup}) {
   describe(`Widget Space: Group - Meet (${name})`, function groupMeet() {
-    this.retries(2);
     const browserLocal = browser.select('1');
     const browserRemote = browser.select('2');
     let docbrown, lorraine, marty;
@@ -40,52 +38,46 @@ export default function groupMeetTests({name, browserSetup}) {
         15000, 'failed to create conversation');
     });
 
-    it('loads browsers and widgets', function loadBrowsers() {
-      this.retries(3);
-
+    function loadBrowsers() {
       browserSetup({
         aBrowser: browserLocal,
         accessToken: marty.token.access_token,
         spaceId: conversation.id,
-        initialActivity: 'message'
+        initialActivity: 'meet'
       });
 
       browserSetup({
         aBrowser: browserRemote,
         accessToken: docbrown.token.access_token,
         spaceId: conversation.id,
-        initialActivity: 'message'
+        initialActivity: 'meet'
       });
 
       browser.waitUntil(() =>
-        browserRemote.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`) &&
-        browserLocal.isVisible(`[placeholder="Send a message to ${conversation.displayName}"]`),
-      10000, 'failed to load browsers and widgets');
-    });
-
-    it('has a call button before active call', () => {
-      switchToMeet(browserLocal);
-      browser.waitUntil(() =>
+        browserRemote.isVisible(elements.callButton) &&
         browserLocal.isVisible(elements.callButton),
-      5000, 'call button is not visible after switching to meet widget');
-    });
+      10000, 'failed to load browsers and widgets');
+    }
 
-    it('declines an incoming call', function declineIncoming() {
-      declineIncomingCallTest(browserLocal, browserRemote, true);
-    });
+    describe('Meet', function meet() {
+      this.retries(2);
+      allMeetTests({
+        browserLocal,
+        browserRemote,
+        loadBrowsers
+      });
 
-    it('hangs up active call', function hangupActive() {
-      clearEventLog(browserLocal);
-      clearEventLog(browserRemote);
-      hangupDuringCallTest(browserLocal, browserRemote, true);
-    });
-
-    it('has proper call event data', () => {
-      callEventTest(
-        {browser: browserLocal, user: marty, displayName: conversation.displayName},
-        {browser: browserRemote, user: docbrown, displayName: conversation.displayName},
-        conversation
-      );
+      it('has proper call event data', () => {
+        loadBrowsers();
+        clearEventLog(browserLocal);
+        clearEventLog(browserRemote);
+        hangupDuringCallTest(browserLocal, browserRemote);
+        callEventTest(
+          {browser: browserLocal, user: marty, displayName: conversation.displayName},
+          {browser: browserRemote, user: docbrown, displayName: conversation.displayName},
+          conversation
+        );
+      });
     });
   });
 }

@@ -1,16 +1,14 @@
-import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import allMeetTests from '../../../lib/constructors/meet';
 import {setupOneOnOneUsers} from '../../../lib/test-helpers';
 import {clearEventLog} from '../../../lib/events';
 import {
-  elements,
-  hangupBeforeAnswerTest,
-  declineIncomingCallTest,
   hangupDuringCallTest,
-  callEventTest
+  callEventTest,
+  elements
 } from '../../../lib/test-helpers/space-widget/meet';
 
 export default function oneOnOneMeetTests({name, browserSetup}) {
-  describe(`Widget Space: One on One - Meet (${name})`, () => {
+  describe(`Widget Space: One on One - Meet (${name})`, function meetTests() {
     const browserLocal = browser.select('1');
     const browserRemote = browser.select('2');
     let mccoy, spock, oneOnOneConversation;
@@ -39,53 +37,46 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
         15000, 'failed to create one on one space');
     });
 
-    it('can load browsers and widgets', function loadBrowsers() {
-      this.retries(3);
-
+    function loadBrowsers() {
       browserSetup({
         aBrowser: browserLocal,
         accessToken: spock.token.access_token,
-        toPersonEmail: mccoy.email
+        toPersonEmail: mccoy.email,
+        initialActivity: 'meet'
       });
 
       browserSetup({
         aBrowser: browserRemote,
         accessToken: mccoy.token.access_token,
-        toPersonEmail: spock.email
+        toPersonEmail: spock.email,
+        initialActivity: 'meet'
       });
 
       browser.waitUntil(() =>
-        browserRemote.isVisible(`[placeholder="Send a message to ${spock.displayName}"]`) &&
-        browserLocal.isVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`),
-      10000, 'failed to load browsers and widgets');
-    });
-
-    it('has a call button before active call', () => {
-      switchToMeet(browserLocal);
-      browser.waitUntil(() =>
+        browserRemote.isVisible(elements.callButton) &&
         browserLocal.isVisible(elements.callButton),
-      5000, 'call button is not visible after switching to meet widget');
-    });
+      10000, 'failed to open widgets with meet widget visible');
+    }
 
-    it('can hangup before answer', () => {
-      hangupBeforeAnswerTest(browserLocal, browserRemote);
-    });
+    describe('Meet', function meet() {
+      this.retries(2);
 
-    it('can decline an incoming call', () => {
-      declineIncomingCallTest(browserLocal, browserRemote);
-    });
+      allMeetTests({
+        browserLocal,
+        browserRemote,
+        loadBrowsers
+      });
 
-    it('can hangup in call', () => {
-      clearEventLog(browserLocal);
-      clearEventLog(browserRemote);
-      hangupDuringCallTest(browserLocal, browserRemote);
-    });
-
-    it('has proper call event data', () => {
-      callEventTest(
-        {browser: browserLocal, user: spock, displayName: spock.displayName},
-        {browser: browserRemote, user: mccoy, displayName: mccoy.displayName}
-      );
+      it('has proper call event data', () => {
+        loadBrowsers();
+        clearEventLog(browserLocal);
+        clearEventLog(browserRemote);
+        hangupDuringCallTest(browserLocal, browserRemote);
+        callEventTest(
+          {browser: browserLocal, user: spock, displayName: spock.displayName},
+          {browser: browserRemote, user: mccoy, displayName: mccoy.displayName}
+        );
+      });
     });
   });
 }

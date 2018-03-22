@@ -1,8 +1,8 @@
 import {loadWithDataApi} from '../../../lib/test-helpers';
 
-import globalMeetTests from './base';
+import meetTests from './base';
 
-globalMeetTests({
+meetTests({
   name: 'Data API',
   browserSetup({
     aBrowser,

@@ -1,24 +1,23 @@
-import recentTests from './base';
+import {loadWithGlobals} from '../../../lib/test-helpers';
 
-recentTests({
+import meetTests from './base';
+
+meetTests({
   name: 'Global',
-  browserSetup({aBrowser, accessToken, toPersonEmail}) {
+  browserSetup({
+    aBrowser, accessToken, toPersonEmail, initialActivity
+  }) {
     aBrowser
       .url('/space.html?meet')
       .execute(() => {
         localStorage.clear();
       });
 
-    aBrowser.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: 'message'
-      };
-      window.openWidget(options);
-    }, accessToken, toPersonEmail);
+    loadWithGlobals({
+      aBrowser,
+      accessToken,
+      toPersonEmail,
+      initialActivity
+    });
   }
 });

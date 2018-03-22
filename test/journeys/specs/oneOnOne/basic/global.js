@@ -1,3 +1,5 @@
+import {loadWithGlobals} from '../../../lib/test-helpers';
+
 import oneOnOneBasicTests from './base';
 
 oneOnOneBasicTests({
@@ -8,13 +10,11 @@ oneOnOneBasicTests({
       .execute(() => {
         localStorage.clear();
       });
-    aBrowser.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        toPersonEmail: localToUserEmail,
-        initialActivity: 'message'
-      };
-      window.openWidget(options);
-    }, accessToken, toPersonEmail);
+    loadWithGlobals({
+      aBrowser,
+      accessToken,
+      toPersonEmail,
+      initialActivity: 'message'
+    });
   }
 });

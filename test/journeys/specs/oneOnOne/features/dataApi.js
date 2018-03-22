@@ -1,3 +1,5 @@
+import {loadWithDataApi} from '../../../lib/test-helpers';
+
 import oneOnOneFeatureTests from './base';
 
 oneOnOneFeatureTests({
@@ -8,15 +10,13 @@ oneOnOneFeatureTests({
       .execute(() => {
         localStorage.clear();
       });
-    aBrowser.execute((localAccessToken, localToUserEmail) => {
-      const csmmDom = document.createElement('div');
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-space');
-      csmmDom.setAttribute('data-access-token', localAccessToken);
-      csmmDom.setAttribute('data-to-person-email', localToUserEmail);
-      csmmDom.setAttribute('data-initial-activity', 'message');
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
-      window.loadBundle('/dist-space/bundle.js');
-    }, accessToken, toPersonEmail);
+
+    loadWithDataApi({
+      aBrowser,
+      bundle: '/dist-space/bundle.js',
+      initialActivity: 'message',
+      accessToken,
+      toPersonEmail
+    });
   }
 });

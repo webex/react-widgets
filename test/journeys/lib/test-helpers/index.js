@@ -176,6 +176,9 @@ export function loadWithDataApi({
     startCall,
     widget
   });
+  browser.waitUntil(() =>
+    aBrowser.getTitle(),
+  10000, 'failed to load browser');
 }
 
 /**
@@ -209,4 +212,7 @@ export function loadWithGlobals({
     initialActivity,
     startCall
   });
+  browser.waitUntil(() =>
+    aBrowser.getTitle(),
+  10000, 'failed to load browser');
 }

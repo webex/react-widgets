@@ -11,6 +11,7 @@ import {
   openMenuAndClickButton
 } from '../../../lib/test-helpers/space-widget/main';
 import {setupOneOnOneUsers} from '../../../lib/test-helpers';
+import activityMenuTests from '../../../lib/constructors/activityMenu';
 
 export default function oneOnOneBasicTests({name, browserLocalSetup}) {
   describe(`Widget Space: One on One - Basic (${name})`, () => {
@@ -65,35 +66,7 @@ export default function oneOnOneBasicTests({name, browserLocalSetup}) {
       assert.equal(browserLocal.getText('h1.ciscospark-title'), mccoy.displayName);
     });
 
-    describe('Activity Menu', () => {
-      it('switches to files widget', () => {
-        openMenuAndClickButton(browserLocal, elements.filesButton);
-        browser.waitUntil(() =>
-          browserLocal.isVisible(elements.filesWidget),
-        5000, 'could not switch to files widget');
-      });
-
-      it('switches to message widget', () => {
-        openMenuAndClickButton(browserLocal, elements.messageButton);
-        browser.waitUntil(() =>
-          browserLocal.isVisible(elements.messageWidget),
-        5000, 'could not switch to message widget');
-      });
-
-      it('switches to meet widget', () => {
-        openMenuAndClickButton(browserLocal, elements.meetButton);
-        browser.waitUntil(() =>
-          browserLocal.isVisible(elements.meetWidget),
-        5000, 'could not switch to meet widget');
-      });
-
-      it('closes activity menu with the exit button', () => {
-        openMenuAndClickButton(browserLocal, elements.exitButton);
-        browser.waitUntil(() =>
-          !browserLocal.isVisible(elements.activityMenu),
-        5000, 'could not open and close activity menu');
-      });
-    });
+    activityMenuTests(browserLocal);
 
     describe('roster tests', () => {
       it('opens roster widget', () => {

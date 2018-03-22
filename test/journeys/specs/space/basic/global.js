@@ -3,7 +3,7 @@ import {loadWithGlobals} from '../../../lib/test-helpers';
 import groupBasicTests from './base';
 
 groupBasicTests({
-  name: 'Data API',
+  name: 'Global',
   browserSetup({aBrowser, accessToken, spaceId}) {
     aBrowser
       .url('/space.html')

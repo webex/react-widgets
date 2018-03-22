@@ -59,10 +59,6 @@ export default function oneOnOneFeatureTests({name, browserSetup}) {
       10000, 'failed to load browsers and widgets');
     });
 
-    describe('Feature Flags', () => {
-      describe('Roster', () => {
-        rosterFlagTests(browserLocal, browserRemote);
-      });
-    });
+    rosterFlagTests(browserLocal, browserRemote);
   });
 }

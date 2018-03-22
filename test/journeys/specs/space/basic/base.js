@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 
 import {runAxe} from '../../../lib/axe';
-import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
+import {openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 import {createTestUsers} from '../../../lib/test-helpers';
 import {
   elements as rosterElements,
@@ -10,6 +10,7 @@ import {
   searchAndAddPerson,
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
+import activityMenuTests from '../../../lib/constructors/activityMenu';
 
 export default function groupBasicTests({name, browserSetup}) {
   describe(`Widget Space: Group - Basic (${name})`, () => {
@@ -60,90 +61,45 @@ export default function groupBasicTests({name, browserSetup}) {
       10000, 'failed to laod browser and widgets');
     });
 
-    describe('When conversation is established', () => {
-      describe('Activity Menu', () => {
-        it('has a menu button', () => {
-          assert.isTrue(browserLocal.isVisible(elements.menuButton));
-        });
+    activityMenuTests(browserLocal);
 
-        it('displays the menu when clicking the menu button', () => {
-          browserLocal.click(elements.menuButton);
-          browserLocal.waitForVisible(elements.activityMenu);
-        });
+    describe('roster tests', () => {
+      before('open roster widget', () => {
+        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+        browserLocal.waitForVisible(rosterElements.rosterWidget);
+      });
 
-        it('has an exit menu button', () => {
-          assert.isTrue(browserLocal.isVisible(elements.activityMenu));
-          browserLocal.waitForVisible(elements.exitButton);
-        });
+      it('has a close button', () => {
+        assert.isTrue(
+          browserLocal.isVisible(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`)
+        );
+      });
 
-        it('closes the menu with the exit button', () => {
-          browserLocal.click(elements.exitButton);
-          browserLocal.waitForVisible(elements.activityMenu, 1500, true);
-        });
+      it('has the total count of participants', () => {
+        assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
+      });
 
-        it('has a message button', () => {
-          browserLocal.click(elements.menuButton);
-          browserLocal.waitForVisible(`${elements.activityMenu} ${elements.messageButton}`);
-        });
+      it('has the participants listed', () => {
+        hasParticipants(browserLocal, [marty, docbrown, lorraine]);
+      });
 
-        it('has a files button', () => {
-          browserLocal.waitForVisible(`${elements.activityMenu} ${elements.filesButton}`);
-        });
+      it('has search for participants', () => {
+        canSearchForParticipants(browserLocal);
+      });
 
-        it('switches to files widget', () => {
-          browserLocal.waitForVisible(elements.filesButton);
-          browserLocal.click(elements.filesButton);
-          browserLocal.waitForVisible(elements.filesWidget);
-          browserLocal.waitForVisible(elements.menuButton);
-          browserLocal.click(elements.menuButton);
-        });
-
-        it('hides menu and switches to message widget', () => {
-          browserLocal.click(`${elements.activityMenu} ${elements.messageButton}`);
-          browserLocal.waitForVisible(elements.activityMenu, 1500, true);
-          assert.isTrue(browserLocal.isVisible(elements.messageWidget));
+      it('searches and adds person to space', () => {
+        searchAndAddPerson({
+          aBrowser: browserLocal,
+          searchString: biff.email,
+          searchResult: biff.displayName
         });
       });
 
-      describe('roster tests', () => {
-        before('open roster widget', () => {
-          openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-          browserLocal.waitForVisible(rosterElements.rosterWidget);
-        });
-
-        it('has a close button', () => {
-          assert.isTrue(
-            browserLocal.isVisible(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`)
-          );
-        });
-
-        it('has the total count of participants', () => {
-          assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
-        });
-
-        it('has the participants listed', () => {
-          hasParticipants(browserLocal, [marty, docbrown, lorraine]);
-        });
-
-        it('has search for participants', () => {
-          canSearchForParticipants(browserLocal);
-        });
-
-        it('searches and adds person to space', () => {
-          searchAndAddPerson({
-            aBrowser: browserLocal,
-            searchString: biff.email,
-            searchResult: biff.displayName
-          });
-        });
-
-        it('closes the people roster widget', () => {
-          browserLocal.click(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`);
-          browserLocal.waitForVisible(rosterElements.rosterWidget, 500, true);
-        });
+      it('closes the people roster widget', () => {
+        browserLocal.click(`${rosterElements.rosterWidget} ${rosterElements.closeButton}`);
+        browserLocal.waitForVisible(rosterElements.rosterWidget, 500, true);
       });
     });
-
     describe('accessibility', () => {
       it('should have no accessibility violations', () =>
         runAxe(browserLocal, 'ciscospark-widget')

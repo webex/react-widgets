@@ -28,7 +28,7 @@ const capabilities = {
     name: `react-widget-${suite}`,
     build,
     logLevel: 'verbose',
-    idleTimeout: 60,
+    idleTimeout: 120,
     seleniumVersion: SELENIUM_VERSION,
     screenResolution,
     platform
@@ -48,7 +48,7 @@ const capabilities = {
         'profile.default_content_setting_values.notifications': 2
       }
     },
-    idleTimeout: 60,
+    idleTimeout: 120,
     seleniumVersion: SELENIUM_VERSION,
     screenResolution,
     platform
@@ -128,9 +128,6 @@ exports.config = {
     'recents-multiple': [
       './test/journeys/specs/recents/**/*.js',
       './test/journeys/specs/multiple/**/*.js'
-    ],
-    test: [
-      './test/journeys/specs/recents/global.js'
     ]
   },
   // Patterns to exclude.
@@ -152,6 +149,7 @@ exports.config = {
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'verbose',
+  logOutput: `${logPath}/browser`,
   //
   // Enables colors for log output.
   coloredLogs: true,
