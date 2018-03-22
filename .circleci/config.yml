@@ -19,9 +19,16 @@ test_defaults: &test_defaults
         command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
         no_output_timeout: 25m
     - store_test_results:
-        path: reports/junit
+        path: reports/junit/wdio
     - store_artifacts:
-        path: reports
+        path: reports/junit/wdio
+        destination: wdio
+    - store_artifacts:
+        path: /home/circleci/.npm/_logs/
+        destination: npm-logs
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
 
 # Main Config
 version: 2
@@ -115,166 +122,102 @@ jobs:
           paths:
             - .netlifyUrl
 
-  # firefox_mac_tests:
-  #   environment:
-  #     - BROWSER: firefox
-  #     - TEST_SUITE: integration
-  #   <<: *test_defaults
+  firefox_meet_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: meet
+    <<: *test_defaults
 
-  # chrome_mac_tests:
-  #   environment:
-  #     - BROWSER: chrome
-  #     - TEST_SUITE: integration
-  #   <<: *test_defaults
+  firefox_messaging_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: messaging
+    <<: *test_defaults
 
-  # chrome_win10_tests:
-  #   environment:
-  #     - BROWSER: chrome
-  #     - PLATFORM: windows 10
-  #     - TEST_SUITE: integration
-  #   <<: *test_defaults
+  firefox_basic_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
 
-# Recents and Multiple Suite Firefox on Mac
-  multiple_firefox_mac_tests:
+  firefox_features_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  firefox_recents_multiple_mac_tests:
     environment:
       - BROWSER: firefox
       - TEST_SUITE: recents-multiple
     <<: *test_defaults
 
-# Recents and Multiple Suite Chrome on Mac
-  multiple_recents_chrome_mac_tests:
+  chrome_meet_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: meet
+    <<: *test_defaults
+
+  chrome_messaging_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: messaging
+    <<: *test_defaults
+
+  chrome_basic_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
+
+  chrome_features_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  chrome_recents_multiple_mac_tests:
     environment:
       - BROWSER: chrome
       - TEST_SUITE: recents-multiple
     <<: *test_defaults
 
-# Recents and Multiple Suite Chrome on Win10
-  multiple_recents_chrome_win10_tests:
+  chrome_meet_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: meet
+    <<: *test_defaults
+
+  chrome_messaging_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: messaging
+    <<: *test_defaults
+
+  chrome_basic_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
+
+  chrome_features_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  chrome_recents_multiple_win10_tests:
     environment:
       - BROWSER: chrome
       - PLATFORM: windows 10
       - TEST_SUITE: recents-multiple
-    <<: *test_defaults
-
-# One On One Suite Firefox on Mac
-  oneOnOne_basic_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_meet_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: oneOnOne-meet
-    <<: *test_defaults
-
-  oneOnOne_messaging_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: oneOnOne-messaging
-    <<: *test_defaults
-
-# One On One Suite Chrome on Mac
-  oneOnOne_basic_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_meet_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: oneOnOne-meet
-    <<: *test_defaults
-
-  oneOnOne_messaging_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: oneOnOne-messaging
-    <<: *test_defaults
-
-
-# One On One Suite Chrome on Win10
-  oneOnOne_basic_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: oneOnOne-basic
-    <<: *test_defaults
-
-  oneOnOne_meet_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: oneOnOne-meet
-    <<: *test_defaults
-
-  oneOnOne_messaging_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: oneOnOne-messaging
-    <<: *test_defaults
-
-# Space Suite Firefox on Mac
-  space_basic_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_meet_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: space-meet
-    <<: *test_defaults
-
-  space_messaging_firefox_mac_tests:
-    environment:
-      - BROWSER: firefox
-      - TEST_SUITE: space-messaging
-    <<: *test_defaults
-
-# Space Suite Chrome on Mac
-  space_basic_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_meet_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: space-meet
-    <<: *test_defaults
-
-  space_messaging_chrome_mac_tests:
-    environment:
-      - BROWSER: chrome
-      - TEST_SUITE: space-messaging
-    <<: *test_defaults
-
-# Space Suite Chrome on Win10
-  space_basic_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: space-basic
-    <<: *test_defaults
-
-  space_meet_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: space-meet
-    <<: *test_defaults
-
-  space_messaging_chrome_win10_tests:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - TEST_SUITE: space-messaging
     <<: *test_defaults
 
 workflows:
@@ -291,75 +234,62 @@ workflows:
       - deploy_for_testing:
           requires:
             - build_for_tests
-      # - firefox_mac_tests:
-      #     requires:
-      #       - deploy_for_testing
-      # - chrome_mac_tests:
-      #     requires:
-      #       - deploy_for_testing
-      # - chrome_win10_tests:
-      #     requires:
-      #       - deploy_for_testing
-      - multiple_firefox_mac_tests:
+      - firefox_basic_mac_tests:
           requires:
             - deploy_for_testing
-      - multiple_recents_chrome_mac_tests:
+      - firefox_features_mac_tests:
           requires:
             - deploy_for_testing
-      - multiple_recents_chrome_win10_tests:
+            - firefox_basic_mac_tests
+      - firefox_recents_multiple_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_basic_firefox_mac_tests:
+            - firefox_features_mac_tests
+      - firefox_meet_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_meet_firefox_mac_tests:
+            - firefox_recents_multiple_mac_tests
+      - firefox_messaging_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_messaging_firefox_mac_tests:
+            - firefox_meet_mac_tests
+
+      - chrome_basic_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_basic_chrome_mac_tests:
+      - chrome_features_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_meet_chrome_mac_tests:
+            - chrome_basic_mac_tests
+      - chrome_recents_multiple_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_messaging_chrome_mac_tests:
+            - chrome_features_mac_tests
+      - chrome_meet_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_basic_chrome_win10_tests:
+            - chrome_recents_multiple_mac_tests
+      - chrome_messaging_mac_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_meet_chrome_win10_tests:
+            - chrome_meet_mac_tests
+
+      - chrome_basic_win10_tests:
           requires:
             - deploy_for_testing
-      - oneOnOne_messaging_chrome_win10_tests:
+      - chrome_features_win10_tests:
           requires:
             - deploy_for_testing
-      - space_basic_firefox_mac_tests:
+            - chrome_basic_win10_tests
+      - chrome_recents_multiple_win10_tests:
           requires:
             - deploy_for_testing
-      - space_meet_firefox_mac_tests:
+            - chrome_features_win10_tests
+      - chrome_meet_win10_tests:
           requires:
             - deploy_for_testing
-      - space_messaging_firefox_mac_tests:
+            - chrome_recents_multiple_win10_tests
+      - chrome_messaging_win10_tests:
           requires:
             - deploy_for_testing
-      - space_basic_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - space_meet_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - space_messaging_chrome_mac_tests:
-          requires:
-            - deploy_for_testing
-      - space_basic_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
-      - space_meet_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
-      - space_messaging_chrome_win10_tests:
-          requires:
-            - deploy_for_testing
+            - chrome_meet_win10_tests
