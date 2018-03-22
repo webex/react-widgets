@@ -9,6 +9,6 @@ export default function waitForMercuryEvent(spark, eventName) {
   browser.waitUntil(() => new Promise((resolve) => spark.internal.mercury.once(eventName, (e) => {
     event = e;
     resolve(true);
-  })));
+  })), 15000, `timeout waiting for mercury event: ${eventName}`);
   return event;
 }

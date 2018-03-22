@@ -12,12 +12,12 @@ export const elements = {
   callContainer: '.call-container',
   meetWidget: '.ciscospark-meet-wrapper',
   messageWidget: '.ciscospark-message-wrapper',
-  callButton: 'button[aria-label="Call"]',
-  answerButton: 'button[aria-label="Answer"]',
-  declineButton: 'button[aria-label="Decline"]',
-  hangupButton: 'button[aria-label="Hangup"]',
-  callControls: '.call-controls',
-  remoteVideo: '.remote-video video'
+  callButton: '.ciscospark-meet-wrapper button[aria-label="Call"]',
+  answerButton: '.ciscospark-meet-wrapper button[aria-label="Answer"]',
+  declineButton: '.ciscospark-meet-wrapper button[aria-label="Decline"]',
+  hangupButton: '.ciscospark-meet-wrapper button[aria-label="Hangup"]',
+  callControls: '.ciscospark-meet-wrapper .call-controls',
+  remoteVideo: '.ciscospark-meet-wrapper .remote-video video'
 };
 /**
  * @typedef {object} TestObject
@@ -32,24 +32,39 @@ export const elements = {
  * @returns {void}
  */
 export function answer(aBrowser) {
-  aBrowser.waitForVisible(elements.answerButton);
-  aBrowser.element(elements.meetWidget).element(elements.answerButton).click();
-  aBrowser.waitForVisible(elements.remoteVideo);
+  browser.waitUntil(() =>
+    aBrowser.isVisible(elements.answerButton),
+  10000, 'answer button is not visible');
+  aBrowser.click(elements.answerButton);
+  browser.waitUntil(() =>
+    aBrowser.isVisible(elements.remoteVideo),
+  10000, 'remote video is not visible after answering a call');
   // Let call elapse 5 seconds before hanging up
-  aBrowser.pause(5000);
+  browser.pause(3000);
 }
 
 /**
  * Begins call between two browsers
  * @param {Object} caller
- * @param {Object} reciever
+ * @param {Object} receiver
  * @returns {void}
  */
-export function call(caller, reciever) {
-  caller.element(elements.meetWidget).element(elements.callButton).waitForVisible();
-  caller.element(elements.meetWidget).element(elements.callButton).click();
+export function call(caller, receiver) {
+  switchToMeet(caller);
+  switchToMeet(receiver);
+  browser.waitUntil(() =>
+    caller.isVisible(elements.callButton) &&
+    receiver.isVisible(elements.callButton),
+  5000, 'call button is not visible after switching to meet widget');
+
+  caller.click(elements.callButton);
   // wait for call to establish
-  reciever.waitForVisible(elements.answerButton);
+  browser.waitUntil(() =>
+    receiver.isVisible(elements.answerButton) &&
+    caller.isVisible(elements.callControls),
+  10000, 'answer button is not visible after sender intiates a call');
+
+  browser.pause(3000);
 }
 
 /**
@@ -58,8 +73,10 @@ export function call(caller, reciever) {
  * @returns {void}
  */
 export function decline(aBrowser) {
-  aBrowser.waitForVisible(elements.declineButton);
-  aBrowser.element(elements.meetWidget).element(elements.declineButton).click();
+  browser.waitUntil(() =>
+    aBrowser.isVisible(elements.declineButton),
+  1500, 'decline button is not visible');
+  aBrowser.click(elements.declineButton);
 }
 
 /**
@@ -69,10 +86,16 @@ export function decline(aBrowser) {
  */
 export function hangup(aBrowser) {
   // Call controls currently has a hover state
-  moveMouse(aBrowser, elements.callContainer);
-  aBrowser.waitForVisible(elements.callControls);
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).waitForVisible();
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();
+  if (aBrowser.isVisible(elements.hangupButton)) {
+    aBrowser.click(elements.hangupButton);
+  }
+  else if (aBrowser.isVisible(elements.callContainer)) {
+    moveMouse(aBrowser, elements.callContainer);
+    browser.waitUntil(() =>
+      aBrowser.isVisible(elements.hangupButton),
+    1500, 'hangup button was not visible after hovering over');
+    aBrowser.click(elements.hangupButton);
+  }
 }
 
 /**
@@ -82,52 +105,53 @@ export function hangup(aBrowser) {
  * @returns {void}
  */
 export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
-  switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   hangup(browserLocal);
   // Should switch back to message widget after hangup
-  browserLocal.waitForVisible(elements.messageWidget);
+  browser.waitUntil(() =>
+    browserLocal.isVisible(elements.messageWidget) &&
+    browserRemote.isVisible(elements.messageWidget),
+  5000, 'failed to return to message activity after hanging up a call');
 }
 
 /**
  * Test to decline incoming call
  * @param {Object} browserLocal
  * @param {Object} browserRemote
- * @param {boolean} [isMeeting=true] if the call is a "meeting" instead of a "call"
  * @returns {void}
  */
-export function declineIncomingCallTest(browserLocal, browserRemote, isMeeting = false) {
-  switchToMeet(browserRemote);
+export function declineIncomingCallTest(browserLocal, browserRemote) {
   call(browserRemote, browserLocal);
   decline(browserLocal);
   // Should switch back to message widget after hangup
-  browserLocal.waitForVisible(elements.messageWidget);
-  if (isMeeting) {
-    // Meetings have to be manually disconnected (waiting for participants)
-    hangup(browserRemote);
-  }
-  browserRemote.waitForVisible(elements.messageWidget);
+  browser.waitUntil(() =>
+    browserLocal.isVisible(elements.messageWidget),
+  5000, 'browserLocal failed to return to message activity after hanging up call');
+  hangup(browserRemote);
+  browser.waitUntil(() =>
+    browserRemote.isVisible(elements.messageWidget),
+  5000, 'browserRemote failed to return to message activity after hanging up a call');
 }
 
 /**
  * Test to hangup during ongoing call
  * @param {Object} browserLocal
  * @param {Object} browserRemote
- * @param {boolean} [isMeeting=false] if the call is a "meeting" instead of a "call"
  * @returns {void}
  */
-export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = false) {
-  switchToMeet(browserLocal);
+export function hangupDuringCallTest(browserLocal, browserRemote) {
   call(browserLocal, browserRemote);
   answer(browserRemote);
   hangup(browserLocal);
-  browserLocal.waitForVisible(elements.messageWidget);
-  if (isMeeting) {
-    // Meetings have to be manually disconnected (waiting for participants)
-    hangup(browserRemote);
-  }
+  browser.waitUntil(() =>
+    browserLocal.isVisible(elements.messageWidget),
+  5000, 'browserLocal failed to return to message activity after hanging up a call');
+
+  hangup(browserRemote);
   // Should switch back to message widget after hangup
-  browserRemote.waitForVisible(elements.messageWidget);
+  browser.waitUntil(() =>
+    browserRemote.isVisible(elements.messageWidget),
+  5000, 'browserRemote failed to return to message activity after hanging up a call');
 }
 
 /**

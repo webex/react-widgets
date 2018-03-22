@@ -30,6 +30,6 @@
   },
   "verbose": true,
   "setupFiles": [
-    "<rootDir>/scripts/tests/jest-setup.js"
+    "<rootDir>/scripts/utils/tests/jest-setup.js"
   ]
 }

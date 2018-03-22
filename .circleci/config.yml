@@ -1,0 +1,280 @@
+# Templates and Variables
+test_defaults: &test_defaults
+  docker:
+    - image: circleci/node:8.9.4
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - js-dependencies-{{ checksum "package-lock.json" }}
+        - js-dependencies-
+    - attach_workspace:
+        at: /tmp/workspace
+    - run:
+        name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
+        command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+    - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
+    - run:
+        name: Integration Test
+        command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
+        no_output_timeout: 25m
+    - store_test_results:
+        path: reports/junit/wdio
+    - store_artifacts:
+        path: reports/junit/wdio
+        destination: wdio
+    - store_artifacts:
+        path: /home/circleci/.npm/_logs/
+        destination: npm-logs
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
+
+# Main Config
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-dependencies-{{ checksum "package-lock.json" }}
+
+  unit_tests_and_linting:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Run eslint
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: Run all Jest test suites
+          command: npm run jest -- --ci -i --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/jest/js-jest-results.xml
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+          destination: junit
+
+  build_for_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NODE_ENV: "test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Copy and build journey test static files
+          command: npm run build test /tmp/dist-test
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - dist-test
+
+  deploy_for_testing:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
+      - DEPLOY_PATH: "/tmp/workspace/dist-test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Deploy testing payload to Netlify
+          command: npm run deploy netlify ${DEPLOY_PATH} -- --saveUrlPath=/tmp/.netlifyUrl
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - .netlifyUrl
+
+  firefox_meet_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: meet
+    <<: *test_defaults
+
+  firefox_messaging_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: messaging
+    <<: *test_defaults
+
+  firefox_basic_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
+
+  firefox_features_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  firefox_recents_multiple_mac_tests:
+    environment:
+      - BROWSER: firefox
+      - TEST_SUITE: recents-multiple
+    <<: *test_defaults
+
+  chrome_meet_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: meet
+    <<: *test_defaults
+
+  chrome_messaging_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: messaging
+    <<: *test_defaults
+
+  chrome_basic_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
+
+  chrome_features_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  chrome_recents_multiple_mac_tests:
+    environment:
+      - BROWSER: chrome
+      - TEST_SUITE: recents-multiple
+    <<: *test_defaults
+
+  chrome_meet_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: meet
+    <<: *test_defaults
+
+  chrome_messaging_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: messaging
+    <<: *test_defaults
+
+  chrome_basic_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: basic
+      - BROWSER_COUNT: 1
+    <<: *test_defaults
+
+  chrome_features_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: features
+    <<: *test_defaults
+
+  chrome_recents_multiple_win10_tests:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - TEST_SUITE: recents-multiple
+    <<: *test_defaults
+
+workflows:
+  version: 2
+  run_all_tests:
+    jobs:
+      - install
+      - build_for_tests:
+          requires:
+            - install
+      - unit_tests_and_linting:
+          requires:
+            - install
+      - deploy_for_testing:
+          requires:
+            - build_for_tests
+      - firefox_basic_mac_tests:
+          requires:
+            - deploy_for_testing
+      - firefox_meet_mac_tests:
+          requires:
+            - deploy_for_testing
+            - firefox_basic_mac_tests
+      - firefox_messaging_mac_tests:
+          requires:
+            - deploy_for_testing
+            - firefox_meet_mac_tests
+      - firefox_features_mac_tests:
+          requires:
+            - deploy_for_testing
+            - firefox_messaging_mac_tests
+      - firefox_recents_multiple_mac_tests:
+          requires:
+            - deploy_for_testing
+            - firefox_features_mac_tests
+      - chrome_basic_mac_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_meet_mac_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_basic_mac_tests
+      - chrome_messaging_mac_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_meet_mac_tests
+      - chrome_features_mac_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_messaging_mac_tests
+      - chrome_recents_multiple_mac_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_features_mac_tests
+      - chrome_basic_win10_tests:
+          requires:
+            - deploy_for_testing
+      - chrome_meet_win10_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_basic_win10_tests
+      - chrome_messaging_win10_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_meet_win10_tests
+      - chrome_features_win10_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_messaging_win10_tests
+      - chrome_recents_multiple_win10_tests:
+          requires:
+            - deploy_for_testing
+            - chrome_features_win10_tests

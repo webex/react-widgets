@@ -22,12 +22,17 @@ export function moveMouse(aBrowser, selector) {
     aBrowser.actions([{
       type: 'pointer',
       id: `mouse-${uuid.v4()}`,
+      parameters: {pointerType: 'mouse'},
       actions: [
         {
           type: 'pointerMove',
           duration: 0,
           x,
           y
+        },
+        {
+          type: 'pause',
+          duration: 500
         }
       ]
     }]);
@@ -35,4 +40,70 @@ export function moveMouse(aBrowser, selector) {
   else {
     aBrowser.moveToObject(selector);
   }
+}
+
+
+/**
+ * Loads a widget into the browser with Data API
+ * @param {Object} options
+ * @param {Object} options.aBrowser required
+ * @param {string} options.bundle required
+ * @param {string} options.accessToken required
+ * @param {string} options.widget required, name of widget we need to load
+ * @param {string} options.spaceId
+ * @param {string} options.toPersonEmail
+ * @param {string} options.initialActivity
+ * @param {boolean} options.startCall
+ */
+export function loadWithDataApi({
+  aBrowser,
+  accessToken,
+  spaceId,
+  toPersonEmail,
+  initialActivity,
+  startCall
+}) {
+  aBrowser.refresh();
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible('#ciscospark-widget'),
+  15000, 'failed to refresh browser');
+  aBrowser.execute((options) => {
+    window.openWidgetDataApi(options);
+  }, {
+    accessToken,
+    spaceId,
+    toPersonEmail,
+    initialActivity,
+    startCall
+  });
+}
+
+/**
+ * Loads a widget into the browser with browser globals
+ * @param {Object} options
+ * @param {Object} options.aBrowser required
+ * @param {string} options.accessToken required
+ * @param {string} options.spaceId
+ * @param {string} options.toPersonEmail
+ * @param {string} options.initialActivity
+ * @param {boolean} options.startCall
+ */
+export function loadWithGlobals({
+  aBrowser,
+  accessToken,
+  spaceId,
+  toPersonEmail,
+  initialActivity,
+  startCall
+}) {
+  aBrowser.refresh();
+  aBrowser.execute((options) => {
+    window.openWidgetGlobal(options);
+  }, {
+    accessToken,
+    spaceId,
+    toPersonEmail,
+    initialActivity,
+    startCall
+  });
 }

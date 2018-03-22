@@ -9,8 +9,8 @@ import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../
 import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
 
 describe('Widget Space: One on One: TAP', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
+  const browserLocal = browser.select('1');
+  const browserRemote = browser.select('2');
   let local, mccoy, remote, spock;
 
   before('load browsers', () => {

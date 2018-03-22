@@ -1,54 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Cisco Spark Widget Test</title>
-  <meta charset="utf8">
-  <style type="text/css">
-    * {
-      /*CSS transitions*/
-      -webkit-transition: none !important;
-      -moz-transition: none !important;
-      -o-transition: none !important;
-      -ms-transition: none !important;
-      transition: none !important;
-      /*CSS transition properties*/
-      -webkit-transition-property: none !important;
-      -moz-transition-property: none !important;
-      -o-transition-property: none !important;
-      -ms-transition-property: none !important;
-      transition-property: none !important;
-      /*CSS transforms*/
-      -webkit-transform: none !important;
-      -moz-transform: none !important;
-      -o-transform: none !important;
-      -ms-transform: none !important;
-      transform: none !important;
-      /*CSS animations*/
-      -webkit-animation: none !important;
-      -moz-animation: none !important;
-      -o-animation: none !important;
-      -ms-animation: none !important;
-      animation: none !important;
-  }
-  </style>
-  <link href="/dist-space/main.css" rel="stylesheet">
-  <script src="/axe-core/axe.min.js"></script>
-</head>
-<body>
-<div style="width: 500px; height: 500px">
-  <main class="ciscospark-widget"
-    id="ciscospark-widget">
+  <head>
+    <title>Cisco Spark Widget Test</title>
+    <meta charset="utf8" />
+    <style type="text/css">
+      * {
+        /*CSS transitions*/
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        -ms-transition: none !important;
+        transition: none !important;
+        /*CSS transition properties*/
+        -webkit-transition-property: none !important;
+        -moz-transition-property: none !important;
+        -o-transition-property: none !important;
+        -ms-transition-property: none !important;
+        transition-property: none !important;
+        /*CSS transforms*/
+        -webkit-transform: none !important;
+        -moz-transform: none !important;
+        -o-transform: none !important;
+        -ms-transform: none !important;
+        transform: none !important;
+        /*CSS animations*/
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -o-animation: none !important;
+        -ms-animation: none !important;
+        animation: none !important;
+      }
+    </style>
+    <link href="/dist-space/main.css" rel="stylesheet" />
+    <script src="/axe-core/axe.min.js"></script>
+  </head>
+  <body>
+    <div style="width: 500px; height: 500px">
+      <main class="ciscospark-widget" id="ciscospark-widget"/>
+    </div>
+    <script>
+      var widgetEl = document.getElementById('ciscospark-widget');
 
-</div>
-<script src="/dist-space/bundle.js"></script>
-<script>
-  window.openSpaceWidget = function(options) {
-    var widgetEl = document.getElementById('ciscospark-widget');
-    // Init a new widget
-    ciscospark.widget(widgetEl).spaceWidget(options);
-  };
-  window.ciscoSparkEvents = [];
-</script>
-</body>
+      window.ciscoSparkEvents = [];
+
+      window.loadBundle = function(callback) {
+        var script = document.createElement('script');
+        script.src = '/dist-space/bundle.js';
+        document.head.appendChild(script);
+        script.onload = function () {
+          var DOMContentLoaded_event = document.createEvent("Event");
+          DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+          window.document.dispatchEvent(DOMContentLoaded_event);
+          if (callback) {
+            callback();
+          }
+        }
+      };
+
+      window.openWidgetGlobal = function(options) {
+        loadBundle(function() {
+          window.ciscospark.widget(widgetEl).spaceWidget(Object.assign({}, options, {
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            }
+          }));
+        });
+      };
+
+      window.openWidgetDataApi = function(options) {
+        const csmmDom = document.createElement('div');
+        csmmDom.setAttribute('class', 'ciscospark-widget');
+        csmmDom.setAttribute('data-toggle', `ciscospark-space`);
+        csmmDom.setAttribute('data-access-token', options.accessToken);
+        if (options.spaceId) {
+          csmmDom.setAttribute('data-space-id', options.spaceId);
+        }
+        if (options.toPersonEmail) {
+          csmmDom.setAttribute('data-to-person-email', options.toPersonEmail);
+        }
+        if (options.initialActivity) {
+          csmmDom.setAttribute('data-initial-activity', options.initialActivity);
+        }
+        if (options.startCall) {
+          csmmDom.setAttribute('data-start-call', options.startCall);
+        }
+        widgetEl.appendChild(csmmDom);
+        window.loadBundle(function() {
+          window.ciscospark.widget(csmmDom).on('all', (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          });
+        });
+      };
+    </script>
+  </body>
 
 </html>

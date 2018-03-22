@@ -6,6 +6,7 @@ export const elements = {
   filesButton: 'button[aria-label="Files"]',
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
+  activityList: '.ciscospark-activity-list',
   controlsContainer: '.ciscospark-controls-container',
   closeButton: 'button[aria-label="Close"]',
   exitButton: '.ciscospark-activity-menu-exit button',
@@ -14,17 +15,32 @@ export const elements = {
 };
 
 /**
+ * Opens activity menu and clicks a button inside it
+ * @param {Browser} aBrowser
+ * @param {string} buttonToClick element selector
+ */
+export function openMenuAndClickButton(aBrowser, buttonToClick) {
+  if (!aBrowser.isVisible(elements.activityMenu)) {
+    browser.waitUntil(() =>
+      aBrowser.isVisible(elements.menuButton),
+    5000, 'menu button is not visible when trying to open activity menu');
+    aBrowser.click(elements.menuButton);
+    browser.waitUntil(() =>
+      aBrowser.isVisible(elements.activityMenu),
+    5000, 'could not open activity menu');
+  }
+  aBrowser.click(`${elements.activityMenu} ${buttonToClick}`);
+}
+
+/**
  * Switches to message widget
  * @param {Object} aBrowser
  * @returns {void}
  */
 export function switchToMessage(aBrowser) {
-  if (!aBrowser.isVisible(elements.activityMenu)) {
-    aBrowser.click(elements.menuButton);
-    aBrowser.waitForVisible(elements.activityMenu);
+  if (!aBrowser.isVisible(elements.messageWidget)) {
+    openMenuAndClickButton(aBrowser, elements.messageButton);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
-  aBrowser.click(elements.messageButton);
 }
 
 /**
@@ -33,22 +49,7 @@ export function switchToMessage(aBrowser) {
  * @returns {void}
  */
 export function switchToMeet(aBrowser) {
-  if (!aBrowser.isVisible(elements.activityMenu)) {
-    aBrowser.waitForVisible(elements.menuButton);
-    aBrowser.click(elements.menuButton);
-    aBrowser.waitForVisible(elements.activityMenu);
+  if (!aBrowser.isVisible(elements.meetWidget)) {
+    openMenuAndClickButton(aBrowser, elements.meetButton);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
-  aBrowser.click(elements.meetButton);
-}
-
-/**
- * Opens activity menu and clicks a button inside it
- * @param {Browser} aBrowser
- * @param {string} buttonToClick element selector
- */
-export function openMenuAndClickButton(aBrowser, buttonToClick) {
-  aBrowser.click(elements.menuButton);
-  aBrowser.waitForVisible(elements.activityMenu);
-  aBrowser.element(elements.controlsContainer).element(buttonToClick).click();
 }
