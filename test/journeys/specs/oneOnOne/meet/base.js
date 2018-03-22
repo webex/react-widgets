@@ -1,5 +1,10 @@
+import {assert} from 'chai';
+
 import allMeetTests from '../../../lib/constructors/meet';
-import {setupOneOnOneUsers} from '../../../lib/test-helpers';
+import {
+  setupOneOnOneUsers,
+  createSpace
+} from '../../../lib/test-helpers/sdk';
 import {clearEventLog} from '../../../lib/events';
 import {
   hangupDuringCallTest,
@@ -11,30 +16,35 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
   describe(`Widget Space: One on One - Meet (${name})`, function meetTests() {
     const browserLocal = browser.select('1');
     const browserRemote = browser.select('2');
-    let mccoy, spock, oneOnOneConversation;
+    let mccoy, spock, space;
 
     before('initialize test users', function intializeUsers() {
       ({mccoy, spock} = setupOneOnOneUsers());
 
-      spock.spark.internal.device.register();
+      browser.call(() => spock.spark.internal.device.register());
 
+      assert.exists(mccoy.spark, 'failed to create mccoy test user');
+      assert.exists(spock.spark.internal.device.userId, 'failed to register spock devices');
+    });
+
+    it('load initial browser page', function loadBrowser() {
+      this.retries(2);
+      browser.url('/space.html')
+        .execute(() => {
+          localStorage.clear();
+        });
       browser.waitUntil(() =>
-        spock.spark.internal.device.userId,
-      15000, 'failed to register user devices');
+        browser.isVisible('#ciscospark-widget'),
+      15000, 'failed to load test page in browser');
     });
 
     it('can create one on one space', function createOneOnOneSpace() {
       this.retries(2);
-
-      spock.spark.internal.conversation.create({
+      space = createSpace({
+        sparkInstance: spock.spark,
         participants: [spock, mccoy]
-      }).then((c) => {
-        oneOnOneConversation = c;
-        return oneOnOneConversation;
       });
-
-      browser.waitUntil(() => oneOnOneConversation && oneOnOneConversation.id,
-        15000, 'failed to create one on one space');
+      assert.exists(space.id, 'failed to create one on one space');
     });
 
     function loadBrowsers() {
@@ -55,17 +65,17 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
       browser.waitUntil(() =>
         browserRemote.isVisible(elements.callButton) &&
         browserLocal.isVisible(elements.callButton),
-      10000, 'failed to open widgets with meet widget visible');
+      15000, 'failed to open widgets with meet widget visible');
     }
 
     describe('Meet', function meet() {
       this.retries(2);
 
-      allMeetTests({
-        browserLocal,
-        browserRemote,
-        loadBrowsers
-      });
+      // allMeetTests({
+      //   browserLocal,
+      //   browserRemote,
+      //   loadBrowsers
+      // });
 
       it('has proper call event data', () => {
         loadBrowsers();

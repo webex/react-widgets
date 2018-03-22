@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 const fs = require('fs');
 
-const mkdirp = require('mkdirp');
+const fse = require('fs-extra');
 const request = require('request');
 
 require('dotenv').config();

@@ -7,15 +7,8 @@ meetTests({
   browserSetup({
     aBrowser, accessToken, toPersonEmail, initialActivity
   }) {
-    aBrowser
-      .url('/data-api/space.html')
-      .execute(() => {
-        localStorage.clear();
-      });
-
     loadWithDataApi({
       aBrowser,
-      bundle: '/dist-space/bundle.js',
       initialActivity,
       accessToken,
       toPersonEmail

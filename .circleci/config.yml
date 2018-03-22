@@ -80,21 +80,8 @@ jobs:
           - js-dependencies-{{ checksum "package-lock.json" }}
           - js-dependencies-
       - run:
-          name: Copy journey test static files
-          command: |
-            mkdir -p /tmp
-            cp -r ./test/journeys/server /tmp/dist-test
-            cp -r ./node_modules/axe-core /tmp/dist-test/
-      - run:
-          name: Build Space Widget
-          command: npm run build:package widget-space
-          environment:
-            BUILD_DIST_PATH: /tmp/dist-test/dist-space
-      - run:
-          name: Build Recents Widget
-          command: npm run build:package widget-recents
-          environment:
-            BUILD_DIST_PATH: /tmp/dist-test/dist-recents
+          name: Copy and build journey test static files
+          command: npm run build test /tmp/dist-test
       - persist_to_workspace:
           root: /tmp
           paths:
