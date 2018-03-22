@@ -96,6 +96,7 @@ export default function allMessagingTest({
     const senderBrowser = browserLocal;
     const receiverBrowser = browserRemote;
     function sendFile(fileName, fileSizeVerify = true) {
+      clearFileUploader(senderBrowser);
       messageTests.sendFileTest({
         senderBrowser,
         receiverBrowser,

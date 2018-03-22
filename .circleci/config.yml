@@ -26,6 +26,9 @@ test_defaults: &test_defaults
     - store_artifacts:
         path: /home/circleci/.npm/_logs/
         destination: npm-logs
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
 
 # Main Config
 version: 2
