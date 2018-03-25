@@ -1,7 +1,7 @@
 #!/usr/bin/env babel-node
 const fs = require('fs');
 
-const mkdirp = require('mkdirp');
+const fse = require('fs-extra');
 const request = require('request');
 
 require('dotenv').config();
@@ -20,7 +20,7 @@ function getSauceAsset(jobId, filename, destination) {
           if (extension && extension.length < 5) {
             [targetDir] = destination.split('.');
           }
-          mkdirp(targetDir, (err) => {
+          fse.mkdir(targetDir, (err) => {
             if (err) {
               console.error(err);
             }

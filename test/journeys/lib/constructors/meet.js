@@ -5,21 +5,18 @@ import {
 } from '../test-helpers/space-widget/meet';
 
 export default function allMeetTests({
-  browserLocal, browserRemote, loadBrowsers
+  browserLocal, browserRemote, isGroup
 }) {
   it('hangs up before answer', () => {
-    loadBrowsers();
     hangupBeforeAnswerTest(browserLocal, browserRemote);
   });
 
   it('declines an incoming call', () => {
-    loadBrowsers();
-    declineIncomingCallTest(browserLocal, browserRemote);
+    declineIncomingCallTest({browserLocal, browserRemote, isGroup});
   });
 
   it('hangs up active call', () => {
-    loadBrowsers();
-    hangupDuringCallTest(browserLocal, browserRemote);
+    hangupDuringCallTest({browserLocal, browserRemote, isGroup});
   });
 }
 

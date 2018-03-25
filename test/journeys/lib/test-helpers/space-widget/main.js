@@ -1,11 +1,15 @@
+import {clickButton} from '../';
+
+const activityMenu = '.ciscospark-activity-menu';
+
 export const elements = {
   spaceWidget: '.ciscospark-space-widget',
   menuButton: 'button[aria-label="Main Menu"]',
-  messageButton: 'button[aria-label="Message"]',
-  meetButton: 'button[aria-label="Call"]',
-  filesButton: 'button[aria-label="Files"]',
+  activityMenu,
+  messageButton: `${activityMenu} button[aria-label="Message"]`,
+  meetButton: `${activityMenu} button[aria-label="Call"]`,
+  filesButton: ` ${activityMenu} button[aria-label="Files"]`,
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
-  activityMenu: '.ciscospark-activity-menu',
   activityList: '.ciscospark-activity-list',
   controlsContainer: '.ciscospark-controls-container',
   closeButton: 'button[aria-label="Close"]',
@@ -20,16 +24,14 @@ export const elements = {
  * @param {string} buttonToClick element selector
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
-  if (!aBrowser.isVisible(elements.activityMenu)) {
+  if (!aBrowser.isVisible(elements.activityMenu) && !aBrowser.isVisible(buttonToClick)) {
+    clickButton(aBrowser, elements.menuButton);
     browser.waitUntil(() =>
-      aBrowser.isVisible(elements.menuButton),
-    5000, 'menu button is not visible when trying to open activity menu');
-    aBrowser.click(elements.menuButton);
-    browser.waitUntil(() =>
-      aBrowser.isVisible(elements.activityMenu),
-    5000, 'could not open activity menu');
+      aBrowser.isVisible(elements.activityMenu) &&
+      aBrowser.isVisible(buttonToClick),
+    5000, 'could not open activity menu and find button to click');
   }
-  aBrowser.click(`${elements.activityMenu} ${buttonToClick}`);
+  aBrowser.click(buttonToClick);
 }
 
 /**

@@ -65,11 +65,15 @@ function getBrowserCapabilities(type = 'chrome', count = 2) {
   return cap;
 }
 
-let mochaTimeout = 30000;
+const services = [
+  'selenium-standalone',
+  'static-server'
+];
 
-if (process.env.DEBUG_JOURNEYS) {
-  mochaTimeout = 99999999;
+if (process.env.BROWSER && process.env.BROWSER.includes('firefox')) {
+  services.push('firefox-profile');
 }
+
 
 exports.config = {
   seleniumInstallArgs: {version: SELENIUM_VERSION},
@@ -171,15 +175,11 @@ exports.config = {
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
-  connectionRetryTimeout: 20000,
+  connectionRetryTimeout: 30000,
   //
   // Default request retries count
-  connectionRetryCount: 1,
-  services: [
-    'firefox-profile',
-    'selenium-standalone',
-    'static-server'
-  ],
+  connectionRetryCount: 3,
+  services,
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -211,7 +211,10 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: mochaTimeout
+    bail: 1,
+    fullTrace: true,
+    slow: 5000,
+    timeout: process.env.DEBUG_JOURNEYS ? 99999999 : 30000
   },
 
   // =====
@@ -231,7 +234,6 @@ exports.config = {
       }
     });
     /* eslint-enable no-param-reassign */
-
     return inject(defs);
   },
   beforeSuite() {

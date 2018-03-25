@@ -7,12 +7,6 @@ meetTests({
   browserSetup({
     aBrowser, accessToken, toPersonEmail, initialActivity
   }) {
-    aBrowser
-      .url('/space.html?meet')
-      .execute(() => {
-        localStorage.clear();
-      });
-
     loadWithGlobals({
       aBrowser,
       accessToken,

@@ -2,22 +2,23 @@ import {assert} from 'chai';
 
 import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
-import {moveMouse} from '../';
+import {moveMouse, clickButton} from '../';
 
 import {switchToMeet} from './main';
 
 export const FEATURE_FLAG_GROUP_CALLING = 'js-widgets-group-calling';
 
+const meetWidget = '.ciscospark-meet-wrapper';
 export const elements = {
   callContainer: '.call-container',
-  meetWidget: '.ciscospark-meet-wrapper',
+  meetWidget,
   messageWidget: '.ciscospark-message-wrapper',
-  callButton: '.ciscospark-meet-wrapper button[aria-label="Call"]',
-  answerButton: '.ciscospark-meet-wrapper button[aria-label="Answer"]',
-  declineButton: '.ciscospark-meet-wrapper button[aria-label="Decline"]',
-  hangupButton: '.ciscospark-meet-wrapper button[aria-label="Hangup"]',
-  callControls: '.ciscospark-meet-wrapper .call-controls',
-  remoteVideo: '.ciscospark-meet-wrapper .remote-video video'
+  callButton: `${meetWidget} button[aria-label="Call"]`,
+  answerButton: `${meetWidget} button[aria-label="Answer"]`,
+  declineButton: `${meetWidget} button[aria-label="Decline"]`,
+  hangupButton: `${meetWidget} button[aria-label="Hangup"]`,
+  callControls: `${meetWidget} .call-controls`,
+  remoteVideo: `${meetWidget} .remote-video video`
 };
 /**
  * @typedef {object} TestObject
@@ -32,15 +33,13 @@ export const elements = {
  * @returns {void}
  */
 export function answer(aBrowser) {
-  browser.waitUntil(() =>
-    aBrowser.isVisible(elements.answerButton),
-  10000, 'answer button is not visible');
-  aBrowser.click(elements.answerButton);
+  switchToMeet(aBrowser);
+  clickButton(aBrowser, elements.answerButton);
   browser.waitUntil(() =>
     aBrowser.isVisible(elements.remoteVideo),
   10000, 'remote video is not visible after answering a call');
-  // Let call elapse 5 seconds before hanging up
-  browser.pause(3000);
+  // Let call elapse 5 seconds before performing any actions
+  browser.pause(5000);
 }
 
 /**
@@ -55,16 +54,19 @@ export function call(caller, receiver) {
   browser.waitUntil(() =>
     caller.isVisible(elements.callButton) &&
     receiver.isVisible(elements.callButton),
-  5000, 'call button is not visible after switching to meet widget');
+  2000, 'call button is not visible after switching to meet widget');
 
   caller.click(elements.callButton);
   // wait for call to establish
-  browser.waitUntil(() =>
-    receiver.isVisible(elements.answerButton) &&
+  caller.waitUntil(() =>
     caller.isVisible(elements.callControls),
-  10000, 'answer button is not visible after sender intiates a call');
+  30000, 'call controls not visible after starting a call');
 
-  browser.pause(3000);
+  receiver.waitUntil(() =>
+    receiver.isVisible(elements.answerButton),
+  30000, 'answer button is not visible after intiating a call');
+  // Let call elapse 5 seconds before performing any actions
+  browser.pause(5000);
 }
 
 /**
@@ -73,10 +75,8 @@ export function call(caller, receiver) {
  * @returns {void}
  */
 export function decline(aBrowser) {
-  browser.waitUntil(() =>
-    aBrowser.isVisible(elements.declineButton),
-  1500, 'decline button is not visible');
-  aBrowser.click(elements.declineButton);
+  switchToMeet(aBrowser);
+  clickButton(aBrowser, elements.declineButton);
 }
 
 /**
@@ -85,17 +85,10 @@ export function decline(aBrowser) {
  * @returns {void}
  */
 export function hangup(aBrowser) {
+  switchToMeet(aBrowser);
   // Call controls currently has a hover state
-  if (aBrowser.isVisible(elements.hangupButton)) {
-    aBrowser.click(elements.hangupButton);
-  }
-  else if (aBrowser.isVisible(elements.callContainer)) {
-    moveMouse(aBrowser, elements.callContainer);
-    browser.waitUntil(() =>
-      aBrowser.isVisible(elements.hangupButton),
-    1500, 'hangup button was not visible after hovering over');
-    aBrowser.click(elements.hangupButton);
-  }
+  moveMouse(aBrowser, elements.callContainer);
+  clickButton(aBrowser, elements.hangupButton);
 }
 
 /**
@@ -120,38 +113,41 @@ export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
  * @param {Object} browserRemote
  * @returns {void}
  */
-export function declineIncomingCallTest(browserLocal, browserRemote) {
+export function declineIncomingCallTest({browserLocal, browserRemote, isGroup}) {
   call(browserRemote, browserLocal);
   decline(browserLocal);
   // Should switch back to message widget after hangup
   browser.waitUntil(() =>
     browserLocal.isVisible(elements.messageWidget),
-  5000, 'browserLocal failed to return to message activity after hanging up call');
-  hangup(browserRemote);
+  20000, 'browserLocal failed to return to message activity after hanging up call');
+  if (isGroup) {
+    hangup(browserRemote);
+  }
   browser.waitUntil(() =>
     browserRemote.isVisible(elements.messageWidget),
-  5000, 'browserRemote failed to return to message activity after hanging up a call');
+  20000, 'browserRemote failed to return to message activity after hanging up a call');
 }
 
 /**
  * Test to hangup during ongoing call
+ *
  * @param {Object} browserLocal
  * @param {Object} browserRemote
- * @returns {void}
  */
-export function hangupDuringCallTest(browserLocal, browserRemote) {
+export function hangupDuringCallTest({browserLocal, browserRemote, isGroup}) {
   call(browserLocal, browserRemote);
   answer(browserRemote);
   hangup(browserLocal);
   browser.waitUntil(() =>
     browserLocal.isVisible(elements.messageWidget),
-  5000, 'browserLocal failed to return to message activity after hanging up a call');
-
-  hangup(browserRemote);
+  20000, 'browserLocal failed to return to message activity after hanging up a call');
+  if (isGroup) {
+    hangup(browserRemote);
+  }
   // Should switch back to message widget after hangup
   browser.waitUntil(() =>
     browserRemote.isVisible(elements.messageWidget),
-  5000, 'browserRemote failed to return to message activity after hanging up a call');
+  20000, 'browserRemote failed to return to message activity after hanging up a call');
 }
 
 /**
