@@ -106,7 +106,7 @@ function verifySignature({
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING) for details.
+See [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## License
 
