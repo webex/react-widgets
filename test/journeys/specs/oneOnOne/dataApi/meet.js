@@ -1,5 +1,4 @@
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/plugin-phone';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';

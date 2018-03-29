@@ -2,7 +2,6 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
-import '@ciscospark/plugin-phone';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
@@ -82,7 +81,7 @@ describe('Widget Recents', () => {
           }
         }
       });
-      return lorraine.spark.phone.register();
+      return lorraine.spark.internal.mercury.connect();
     }));
 
   before('pause to let test users establish', () => browser.pause(5000));
@@ -251,7 +250,7 @@ describe('Widget Recents', () => {
 
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.phone.deregister(),
+    lorraine.spark.internal.mercury.disconnect(),
     docbrown.spark.internal.mercury.disconnect()
   ]));
 });
