@@ -8,12 +8,12 @@
           "type": "node",
           "request": "launch",
           "name": "Jest Debugger",
-          "port": 5858,
+          "port": 9229,
           "address": "localhost",
           "stopOnEntry": false,
           "runtimeExecutable": null,
           "runtimeArgs": [
-              "--debug-brk",
+              "--inspect-brk",
               "./node_modules/.bin/jest", // Path to Jest
               "-i",
               "--config=jest.config.json"

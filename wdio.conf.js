@@ -17,6 +17,9 @@ const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
 const port = process.env.PORT || 4567;
 const {suite} = argv || 'integration';
+const screenResolutionMac = '1920x1440';
+const screenResolutionWin = '1920x1080';
+const screenResolution = platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac') ? screenResolutionMac : screenResolutionWin;
 
 const chromeCapabilities = {
   browserName: 'chrome',
@@ -34,6 +37,7 @@ const chromeCapabilities = {
   idleTimeout: 300,
   maxDuration: 3600,
   seleniumVersion: '3.4.0',
+  screenResolution,
   platform
 };
 const firefoxCapabilities = {
@@ -42,6 +46,7 @@ const firefoxCapabilities = {
   idleTimeout: 300,
   maxDuration: 3600,
   seleniumVersion: '3.4.0',
+  screenResolution,
   platform
 };
 let mochaTimeout = 30000;

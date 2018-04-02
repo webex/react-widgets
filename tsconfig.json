@@ -4,9 +4,11 @@
     "allowJs": true
   },
   "include": [
-    "packages/node_modules/@ciscospark"
+    "packages/node_modules/@ciscospark/**/*"
   ],
   "exclude": [
-    "node_modules/**/*"
+    "packages/node_modules/@ciscospark/**/dist/*",
+    "node_modules/**/*",
+    "dist"
   ]
 }

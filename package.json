@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.1.262",
+  "version": "0.1.270",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
@@ -32,6 +32,7 @@
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
     "upgradespark": "./scripts/utils/update.js",
+    "release": "standard-version",
     "precommit": "lint-staged",
     "prepush": "npm run test"
   },
@@ -160,7 +161,7 @@
     "postcss": "^6.0.3",
     "postcss-cli": "^4.1.0",
     "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "^2.0.5",
+    "postcss-loader": "2.1.1",
     "postcss-modules": "^0.8.0",
     "postcss-reporter": "^5.0.0",
     "react-test-renderer": "^16.1.0",
@@ -171,6 +172,7 @@
     "semver": "^5.4.1",
     "sleep-ms": "^2.0.1",
     "sri-toolbox": "^0.2.0",
+    "standard-version": "^4.3.0",
     "style-loader": "^0.19.0",
     "stylelint": "^8.0",
     "stylelint-config-standard": "^17.0",
