@@ -15,12 +15,14 @@ import {
   callEventTest,
   elements
 } from '../../../lib/test-helpers/space-widget/meet';
+import MeetWidgetPage from '../../../lib/widgets/space/meet';
 
-export default function oneOnOneMeetTests({name, browserSetup}) {
-  describe(`Widget Space: One on One - Meet (${name})`, function meetTests() {
+export default function oneOnOneMeetTests() {
+  describe(`Widget Space: One on One - Meet`, function meetTests() {
     this.retries(2);
-    const browserLocal = browser.select('1');
-    const browserRemote = browser.select('2');
+    const Local = new MeetWidgetPage(browser.select('1'));
+    const Remote = new MeetWidgetPage(browser.select('2'));
+
     let mccoy, spock, space;
 
     before('initialize test users', function intializeUsers() {
@@ -41,14 +43,6 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
       assert.exists(space.id, 'failed to create one on one space');
     });
 
-    it('load initial browser page', function loadBrowser() {
-      this.retries(2);
-      browser.url('/space.html')
-        .execute(() => {
-          localStorage.clear();
-        });
-    });
-
     describe('Meet', function meet() {
       before(() => {
         browserSetup({
@@ -64,11 +58,6 @@ export default function oneOnOneMeetTests({name, browserSetup}) {
           toPersonEmail: spock.email,
           initialActivity: 'message'
         });
-
-        browser.waitUntil(() =>
-          browserRemote.isVisible(elements.messageWidget) &&
-          browserLocal.isVisible(elements.messageWidget),
-        15000, 'failed to open widgets with message widget visible');
       });
 
       beforeEach(function beforeEachTest() {

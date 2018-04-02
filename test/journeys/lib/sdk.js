@@ -5,50 +5,38 @@ import '@ciscospark/plugin-logger';
 import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 
-const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTYiLCJuYW1lIjoiR3Vlc3QgR3V5IiwiaXNzIjoiWTJselkyOXpjR0Z5YXpvdkwzVnpMMDlTUjBGT1NWcEJWRWxQVGk5aE9XWmlPVGc1WVMwNFpqUmlMVFJrTkRRdFlqSmpNaTFqWVRJeU5UYzVORGc1TnpBIn0.2wr7JrWyJyZ5-MXp5loO_4h-sgv6pSEMRn5FFNwvFEw';
 
 /**
  * Creates a number of test users
  * @param {number} count number of users to generate
- * @param {Object} userInfo with config to pass to test user creator
+ * @param {Object} config with config to pass to test user creator
  * @returns {Object}
  */
-export function createTestUsers(count, userInfo = {
-  docbrown: {displayName: 'Emmett Brown'},
-  lorraine: {displayName: 'Lorraine Baines'},
-  marty: {displayName: 'Marty McFly'},
-  biff: {displayName: 'Biff Tannen'}
-}) {
-  const users = {};
-  const userKeys = Object.keys(userInfo);
-  this.spark.request({
-    method: 'POST',
-    service: 'hydra',
-    resource: 'jwt/login',
-    headers: {
-      authorization: jwt
-    }
-  }).then(({body}) => ({
-    access_token: body.token,
-    token_type: 'Bearer',
-    expires_in: body.expiresIn
-  }));
+export function createTestUsers(count, config) {
+  let users;
 
-  function storeUser(u, key) {
-    [users[key]] = u;
-    users[key].spark = new CiscoSpark();
-    users[key].spark.authorization.requestAccessTokenFromJwt({jwt});
-    return users[key];
+  function storeUsers(u) {
+    users = u.map((user) => {
+      const spark = new CiscoSpark({
+        credentials: {
+          authorization: user.token
+        },
+        config: {
+          logger: {
+            level: 'error'
+          }
+        }
+      });
+      return Object.assign({}, user, {
+        spark
+      });
+    });
+    return users;
   }
 
   browser.call(function createUsers() {
-    const promises = [];
-    for (let i = 0; i < count; i += 1) {
-      const key = userKeys[i];
-      promises.push(testUsers.create({count: 1, config: userInfo[key] || {}})
-        .then((u) => storeUser(u, key)));
-    }
-    return Promise.all(promises);
+    return testUsers.create({count, config: config || {}})
+      .then((u) => storeUsers(u));
   });
 
   return users;
@@ -96,4 +84,10 @@ export function createSpace({sparkInstance, participants, displayName}) {
   }));
 
   return space;
+}
+
+export function registerDevices(users) {
+  const promises = users.map((user) =>
+    user.spark.internal.device.register());
+  return browser.call(() => Promise.all(promises));
 }

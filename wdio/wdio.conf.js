@@ -106,7 +106,7 @@ exports.config = {
       './test/journeys/specs/oneOnOne/startup-settings.js'
     ],
     'oneOnOne-meet': [
-      './test/journeys/specs/oneOnOne/meet/*.js'
+      './test/journeys/specs/oneOnOne/meet.js'
     ],
     'oneOnOne-messaging': [
       './test/journeys/specs/oneOnOne/messaging/*.js'

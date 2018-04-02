@@ -10,7 +10,8 @@ module.exports = {
   desc: 'Bundle the main widgets into a distributable folder for testing',
   builder: {
     distPath: {
-      describe: 'path to output test distributables'
+      describe: 'path to output test distributables',
+      default: './dist-test'
     }
   },
   handler: ({distPath}) => {

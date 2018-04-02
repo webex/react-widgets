@@ -33,7 +33,6 @@ function closeSearch(aBrowser) {
   assert.isFalse(aBrowser.isVisible(elements.addParticipantArea), 'close button is not hiding search');
 }
 
-
 /**
  * Verifies that participants are listed by display name
  * @param {Object} aBrowser
@@ -84,6 +83,7 @@ export function searchForPerson({
     closeSearch(aBrowser);
   }
 }
+
 /**
  * Searchs for and adds a person
  * @param {Object} options

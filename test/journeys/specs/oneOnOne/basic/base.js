@@ -10,17 +10,19 @@ import {
   elements,
   openMenuAndClickButton
 } from '../../../lib/test-helpers/space-widget/main';
-import {setupOneOnOneUsers} from '../../../lib/test-helpers';
-import activityMenuTests from '../../../lib/constructors/activityMenu';
 
-export default function oneOnOneBasicTests({name, browserLocalSetup}) {
+import activityMenuTests from '../../../lib/constructors/activityMenu';
+import {createTestUsers} from '../../../lib/sdk';
+import MeetWidgetPage from '../../../lib/widgets/space/meet';
+
+export default function oneOnOneBasicTests({name}) {
   describe(`Widget Space: One on One - Basic (${name})`, () => {
-    const browserLocal = browser.select('1');
+    const LocalMeetWidget = MeetWidgetPage(browser.select('1'));
 
     let mccoy, spock, oneOnOneConversation;
 
     before('initialize test users', () => {
-      ({mccoy, spock} = setupOneOnOneUsers());
+      ({mccoy, spock} = createTestUsers(2));
 
       spock.spark.internal.device.register()
         .then(() => spock.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
@@ -46,24 +48,14 @@ export default function oneOnOneBasicTests({name, browserLocalSetup}) {
 
     it('loads browser and widgets', function loadBrowsers() {
       this.retries(3);
-
-      browserLocalSetup({
-        aBrowser: browserLocal,
-        accessToken: spock.token.access_token,
-        toPersonEmail: mccoy.email
-      });
-
-      browser.waitUntil(() =>
-        browserLocal.isVisible(elements.messageWidget),
-      10000, 'failed to load browsers and widgets');
+      MeetWidgetPage.open();
     });
 
     it('loads the user\'s name', () => {
       browser.waitUntil(() =>
-        browserLocal.isVisible('h1.ciscospark-title') &&
-        browserLocal.getText('h1.ciscospark-title') !== 'Loading...',
+        MeetWidgetPage.titleText !== 'Loading...',
       10000, 'failed to load widget title');
-      assert.equal(browserLocal.getText('h1.ciscospark-title'), mccoy.displayName);
+      assert.equal(MeetWidgetPage.titleText, mccoy.displayName);
     });
 
     activityMenuTests(browserLocal);

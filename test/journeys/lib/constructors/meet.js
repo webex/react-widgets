@@ -1,22 +1,60 @@
 import {
   hangupBeforeAnswerTest,
   declineIncomingCallTest,
-  hangupDuringCallTest
+  hangupDuringCallTest,
+  callEventTest
 } from '../test-helpers/space-widget/meet';
 
 export default function allMeetTests({
-  browserLocal, browserRemote, isGroup
+  localPage, remotePage, isGroup
 }) {
-  it('hangs up before answer', () => {
-    hangupBeforeAnswerTest(browserLocal, browserRemote);
-  });
+  describe('Data API', function meet() {
+    before(() => {
+      localPage.loadWithDataApi({
+        toPersonEmail: remotePage.user.email,
+        initialActivity: 'message'
+      });
 
-  it('declines an incoming call', () => {
-    declineIncomingCallTest({browserLocal, browserRemote, isGroup});
-  });
+      remotePage.loadWithDataApi({
+        toPersonEmail: localPage.user.email,
+        initialActivity: 'message'
+      });
 
-  it('hangs up active call', () => {
-    hangupDuringCallTest({browserLocal, browserRemote, isGroup});
+      browser.waitUntil(() =>
+        localPage.hasMessageWidget,
+      10000, 'failed to load local widget');
+
+      browser.waitUntil(() =>
+        remotePage.hasMessageWidget,
+      10000, 'failed to load remote widget');
+    });
+
+    beforeEach(function beforeEachTest() {
+      remotePage.setPageTestName(`Remote - ${this.currentTest.title}`);
+      localPage.setPageTestName(`Local - ${this.currentTest.title}`);
+    });
+
+    it('hangs up before answer', () => {
+      hangupBeforeAnswerTest({localPage, remotePage});
+    });
+
+    it('declines an incoming call', () => {
+      declineIncomingCallTest({localPage, remotePage, isGroup});
+    });
+
+    it('hangs up active call', () => {
+      hangupDuringCallTest({localPage, remotePage, isGroup});
+    });
+
+    it('has proper call event data', () => {
+      localPage.clearEventLog();
+      remotePage.clearEventLog();
+      hangupDuringCallTest({localPage, remotePage, isGroup: false});
+      callEventTest({
+        caller: localPage,
+        receiver: remotePage
+      });
+    });
   });
 }
 
