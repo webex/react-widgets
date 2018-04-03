@@ -179,7 +179,7 @@ exports.config = {
   baseUrl: process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 30000,
+  waitforTimeout: 60000,
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
