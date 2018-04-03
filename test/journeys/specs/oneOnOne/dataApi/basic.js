@@ -62,7 +62,7 @@ describe('Widget Space: One on One: Data API', () => {
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, spock.token.access_token, mccoy.email);
-    browserLocal.waitForVisible('.ciscospark-space-widget');
+    browserLocal.waitForVisible('.ciscospark-space-widget', 60000);
   });
 
   it('loads the test page', () => {
