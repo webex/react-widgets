@@ -20,11 +20,8 @@ describe('Widget Space: One on One', () => {
     let local, mccoy, remote, spock;
 
     before('load browsers', () => {
-      browser
-        .url('/data-api/space.html')
-        .execute(() => {
-          localStorage.clear();
-        });
+      browser.url('/data-api/space.html');
+      browser.refresh();
     });
 
     before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
