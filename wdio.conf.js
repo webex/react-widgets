@@ -36,7 +36,6 @@ const chromeCapabilities = {
   },
   idleTimeout: 300,
   maxDuration: 3600,
-  seleniumVersion: '3.4.0',
   screenResolution,
   platform
 };
@@ -45,7 +44,6 @@ const firefoxCapabilities = {
   name: `react-widget-${suite}`,
   idleTimeout: 300,
   maxDuration: 3600,
-  seleniumVersion: '3.4.0',
   screenResolution,
   platform
 };
@@ -55,7 +53,7 @@ if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
 if (process.env.SAUCE) {
-  mochaTimeout = 90000;
+  mochaTimeout = 120000;
 }
 const services = [];
 services.push('firefox-profile');
@@ -70,8 +68,6 @@ if (!process.env.TAP) {
 }
 
 exports.config = {
-  seleniumInstallArgs: {version: '3.4.0'},
-  seleniumArgs: {version: '3.4.0'},
   //
   // ==================
   // Specify Test Files
@@ -87,7 +83,15 @@ exports.config = {
       './test/journeys/specs/tap/**/*.js'
     ],
     oneOnOne: [
-      './test/journeys/specs/oneOnOne/**/*.js'
+      './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/dataApi/features.js',
+      './test/journeys/specs/oneOnOne/dataApi/meet.js',
+      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
+      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
+      './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/features.js',
+      './test/journeys/specs/oneOnOne/global/meet.js',
+      './test/journeys/specs/oneOnOne/global/messaging.js'
     ],
     space: [
       './test/journeys/specs/space/**/*.js'
@@ -165,7 +169,7 @@ exports.config = {
   //
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
-  bail: 0,
+  bail: 1,
   //
   // Saves a screenshot to a given path if a command fails.
   // screenshotPath: './errorShots/',
@@ -236,7 +240,8 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: mochaTimeout
+    timeout: mochaTimeout,
+    bail: 1
   },
 
   // =====
