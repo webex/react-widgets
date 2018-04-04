@@ -46,6 +46,7 @@ const firefoxCapabilities = {
   idleTimeout: 300,
   maxDuration: 3600,
   screenResolution,
+  seleniumVersion: '3.4.0',
   platform
 };
 let mochaTimeout = 30000;
