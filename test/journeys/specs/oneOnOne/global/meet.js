@@ -57,6 +57,7 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.email);
+    remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
   });
 
   describe('meet widget', () => {

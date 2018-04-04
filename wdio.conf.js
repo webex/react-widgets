@@ -24,6 +24,7 @@ const screenResolution = platform.toLowerCase().includes('os x') || platform ===
 const chromeCapabilities = {
   browserName: 'chrome',
   name: `react-widget-${suite}`,
+  extendedDebugging: true,
   chromeOptions: {
     args: [
       '--use-fake-device-for-media-stream',
@@ -298,14 +299,7 @@ if (process.env.SAUCE) {
     build: process.env.BUILD_NUMBER,
     sauceConnect: !process.env.TAP,
     sauceConnectOpts: {
-      noSslBumpDomains: [
-        '*.wbx2.com',
-        '*.ciscospark.com',
-        '*.webex.com',
-        '127.0.0.1',
-        'localhost',
-        '*.clouddrive.com'
-      ],
+      noSslBumpDomains: 'all',
       tunnelDomains: [
         '127.0.0.1',
         'localhost'
