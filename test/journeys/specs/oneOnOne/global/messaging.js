@@ -20,7 +20,7 @@ describe('Widget Space: One on One', () => {
   let local, mccoy, remote, spock;
 
   before('load browsers', () => {
-    browser.url('/space.html?meeting');
+    browser.url('/space.html?message');
     browser.refresh();
   });
 
