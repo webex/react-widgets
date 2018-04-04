@@ -45,9 +45,8 @@ describe('Widget Space: One on One', () => {
 
       it('opens meet widget', () => {
         browserLocal.waitForVisible(elements.meetButton);
+        browserLocal.refresh();
       });
-
-      after('refresh browsers to remove widgets', () => browserLocal.refresh());
     });
 
     describe('initial activity setting: message', () => {
@@ -66,9 +65,8 @@ describe('Widget Space: One on One', () => {
 
       it('opens message widget', () => {
         browserLocal.waitForVisible(elements.messageWidget);
+        browserLocal.refresh();
       });
-
-      after('refresh browsers to remove widgets', () => browserLocal.refresh());
     });
 
     describe('start call setting', () => {
@@ -105,9 +103,6 @@ describe('Widget Space: One on One', () => {
         answer(browserRemote);
         moveMouse(browserLocal, meetElements.callContainer);
         hangup(browserLocal);
-      });
-
-      after('refresh browsers to remove widgets', () => {
         browserLocal.refresh();
         browserRemote.refresh();
       });
