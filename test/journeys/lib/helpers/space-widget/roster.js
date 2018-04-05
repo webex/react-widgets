@@ -11,12 +11,8 @@ export const elements = {
   rosterList: '.ciscospark-roster-scrolling-list',
   addParticipantArea: '.ciscospark-roster-add-participant',
   addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
-<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
-  addParticipantResultItem: '.ciscospark-people-list-item:nth-child(1)',
-=======
   addParticipantResultItem: '.ciscospark-roster-add-participant-results .ciscospark-people-list-item',
   addParticipantResultName: '.ciscospark-roster-add-participant-results .ciscospark-people-list-name',
->>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   addPeopleButton: '.ciscospark-roster-add-people',
   searchInput: '.ciscospark-roster-add-participant-search-input',
   closeSearchButton: 'button[aria-label="Close Search"]'
@@ -76,20 +72,12 @@ export function searchForPerson({
   aBrowser.setValue(elements.searchInput, searchString);
   aBrowser.waitForVisible(elements.addParticipantResultsArea);
   aBrowser.waitForVisible(elements.addParticipantResultItem);
-<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
-  const resultsText = aBrowser.getText(elements.addParticipantResultItem);
-=======
   const resultsText = aBrowser.getText(elements.addParticipantResultName);
->>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);
     // Adding a participant immediately takes you back to roster
-<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
-    aBrowser.waitForVisible(elements.addParticipantArea, 60000, true);
-=======
     aBrowser.waitForVisible(elements.addPeopleButton, 3000);
->>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   }
   else {
     closeSearch(aBrowser);
