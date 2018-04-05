@@ -1,17 +1,17 @@
 import {assert} from 'chai';
 
-import testUsers from '@ciscospark/test-helper-test-users';
+import {declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/helpers/space-widget/meet';
+import {loginAndOpenWidget} from '../../../lib/helpers/tap/space';
+import {createTestUsers} from '../../../lib/sdk';
+import MessageWidgetPage from '../../../lib/widgetPages/space/messaging';
+import MeetWidgetPage from '../../../lib/widgetPages/space/meet';
 
-import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
-import {clearEventLog, getEventLog} from '../../../lib/events';
-import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
-import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
-import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
-
-describe('Widget Space: One on One: TAP', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  let local, mccoy, remote, spock;
+describe('Widget Space: One on One - TAP', () => {
+  const localMeetPage = new MeetWidgetPage({aBrowser: browser.select('1')});
+  const localMessagePage = new MessageWidgetPage({aBrowser: browser.select('1')});
+  const remoteMeetPage = new MeetWidgetPage({aBrowser: browser.select('2')});
+  const remoteMessagePage = new MessageWidgetPage({aBrowser: browser.select('2')});
+  let mccoy, spock;
 
   before('load browsers', () => {
     browser
@@ -21,86 +21,72 @@ describe('Widget Space: One on One: TAP', () => {
       });
   });
 
-  before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock TAP'}})
-    .then((users) => {
-      [spock] = users;
-      local = {browser: browserLocal, user: spock, displayName: spock.displayName};
-    }));
+  before('initialize test users', function intializeUsers() {
+    [mccoy, spock] = createTestUsers(2);
+    localMeetPage.user = spock;
+    localMessagePage.user = spock;
+    remoteMeetPage.user = mccoy;
+    remoteMessagePage.user = mccoy;
 
-  before('create mccoy', () => testUsers.create({count: 1, config: {displayName: 'Bones Mccoy TAP'}})
-    .then((users) => {
-      [mccoy] = users;
-      remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
-
-  before('inject token for spock', () => {
-    loginAndOpenWidget(local.browser, spock.token.access_token, true, mccoy.email);
-    local.browser.waitForExist(`[placeholder="Send a message to ${remote.displayName}"]`, 30000);
+    assert.exists(mccoy.spark, 'failed to create mccoy test user');
+    assert.exists(spock.spark, 'failed to create spock test user');
   });
 
-  before('open remote widget for mccoy', () => {
-    loginAndOpenWidget(remote.browser, mccoy.token.access_token, true, spock.email);
-    remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
+  it('inject token for spock', () => {
+    loginAndOpenWidget(localMeetPage.browser, spock.token.access_token, true, mccoy.email);
+    localMeetPage.browser.waitForExist(`[placeholder="Send a message to ${mccoy.displayName}"]`, 30000);
+  });
+
+  it('open remote widget for mccoy', () => {
+    loginAndOpenWidget(remoteMeetPage.browser, mccoy.token.access_token, true, spock.email);
+    remoteMeetPage.browser.waitForExist(`[placeholder="Send a message to ${spock.displayName}"]`, 30000);
   });
 
   describe('Activity Menu', () => {
     it('has a menu button', () => {
-      assert.isTrue(local.browser.isVisible(basicElements.menuButton));
+      assert.isTrue(localMessagePage.hasActivityMenuButton);
     });
 
     it('displays the menu when clicking the menu button', () => {
-      local.browser.click(basicElements.menuButton);
-      local.browser.waitForVisible(basicElements.activityMenu);
+      localMessagePage.openActivityMenu();
     });
 
     it('has an exit menu button', () => {
-      assert.isTrue(local.browser.isVisible(basicElements.activityMenu));
-      local.browser.waitForVisible(basicElements.exitButton);
+      browser.waitUntil(() =>
+        localMessagePage.hasExitButton,
+      5000, 'exit button not visible after opening activity menu');
     });
 
     it('closes the menu with the exit button', () => {
-      local.browser.click(basicElements.exitButton);
-      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
-    });
-
-    it('has a message button', () => {
-      local.browser.click(basicElements.menuButton);
-      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).waitForVisible();
+      localMessagePage.closeActivityMenu();
     });
 
     it('switches to message widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).click();
-      assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
-      assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
-    });
-
-    it('has a meet button', () => {
-      local.browser.click(basicElements.menuButton);
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).waitForVisible();
+      localMessagePage.switchToMessage();
     });
 
     it('switches to meet widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).click();
-      assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
-      assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
+      localMessagePage.switchToMeet();
     });
   });
 
   describe('message widget', () => {
     it('sends and receives messages', () => {
+      localMessagePage.switchToMessage();
+
       const message = 'Oh, I am sorry, Doctor. Were we having a good time?';
-      const response = 'God, I liked him better before he died.';
-      switchToMessage(local.browser);
-      sendMessage(local, remote, message);
-      verifyMessageReceipt(remote, local, message);
+      localMessagePage.sendMessage(message);
+      remoteMessagePage.verifyMessageReceipt(message);
+
+      localMessagePage.clearEventLog();
+      remoteMessagePage.clearEventLog();
+
       // Send a message back
-      clearEventLog(local.browser);
-      clearEventLog(remote.browser);
-      sendMessage(remote, local, response);
-      verifyMessageReceipt(local, remote, response);
-      const events = getEventLog(local.browser);
+      const response = 'God, I liked him better before he died.';
+      remoteMessagePage.sendMessage(response);
+      localMessagePage.verifyMessageReceipt(response);
+
+      const events = localMessagePage.getEventLog();
       const eventCreated = events.find((event) => event.eventName === 'messages:created');
       const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
       assert.isDefined(eventCreated, 'messages:created', 'has a message created event');
@@ -111,18 +97,20 @@ describe('Widget Space: One on One: TAP', () => {
   describe('meet widget', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
-        switchToMeet(local.browser);
-        local.browser.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        localMeetPage.switchToMeet();
+        browser.waitUntil(() =>
+          localMeetPage.hasCallButton,
+        5000, 'call button is not visible after switching to meet widget');
       });
     });
 
     describe('during call experience', () => {
       it('can hangup in call', () => {
-        hangupDuringCallTest(local.browser, remote.browser);
+        hangupDuringCallTest({localPage: localMeetPage, remotePage: remoteMeetPage});
       });
 
       it('can decline an incoming call', () => {
-        declineIncomingCallTest(local.browser, remote.browser);
+        declineIncomingCallTest({localPage: localMeetPage, remotePage: remoteMeetPage});
       });
     });
   });
