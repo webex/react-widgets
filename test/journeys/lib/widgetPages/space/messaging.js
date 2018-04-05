@@ -115,7 +115,6 @@ export default class MessageWidgetPage extends MainSpaceWidget {
           aBrowser.keys(['Shift', 'Enter', 'NULL']);
         }
       });
-      console.log(withBreaks);
     }
     else {
       aBrowser.setValue(textArea, message);

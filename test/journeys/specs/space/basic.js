@@ -27,78 +27,87 @@ export default function groupBasicTests(type) {
       15000, 'failed to register user devices');
     });
 
-    it('creates group space', function createGroupSpace() {
-      this.retries(2);
-      space = createSpace({
-        sparkInstance: marty.spark,
-        participants: [marty, docbrown, lorraine],
-        displayName: 'Test Widget Space'
+    describe('Setup', () => {
+      it('creates group space', function createGroupSpace() {
+        this.retries(2);
+        space = createSpace({
+          sparkInstance: marty.spark,
+          participants: [marty, docbrown, lorraine],
+          displayName: 'Test Widget Space'
+        });
+
+        browser.waitUntil(() => space && space.id,
+          15000, 'failed to create group space');
       });
 
-      browser.waitUntil(() => space && space.id,
-        15000, 'failed to create group space');
+      it('loads browser and widgets', function loadBrowsers() {
+        this.retries(2);
+        localPage.open('./space.html');
+
+        localPage[widgetInit[type]]({
+          spaceId: space.id
+        });
+
+        browser.waitUntil(() =>
+          localPage.hasMessageWidget,
+        10000, 'failed to laod browser and widgets');
+      });
+
+      it('loads the space\'s name', () => {
+        browser.waitUntil(() =>
+          localPage.titleText !== 'Loading...',
+        10000, 'failed to load widget title');
+        assert.equal(localPage.titleText, space.displayName);
+      });
     });
 
-    it('loads browser and widgets', function loadBrowsers() {
-      this.retries(2);
-      localPage.open('./space.html');
-
-      localPage[widgetInit[type]]({
-        spaceId: space.id
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        localPage.setPageTestName(this.currentTest.title);
       });
 
-      browser.waitUntil(() =>
-        localPage.hasMessageWidget,
-      10000, 'failed to laod browser and widgets');
-    });
+      activityMenuTests(localPage);
 
-    it('loads the space\'s name', () => {
-      browser.waitUntil(() =>
-        localPage.titleText !== 'Loading...',
-      10000, 'failed to load widget title');
-      assert.equal(localPage.titleText, space.displayName);
-    });
+      describe('Roster Widget', () => {
+        it('opens', () => {
+          localPage.openRoster();
+        });
 
-    activityMenuTests(localPage);
+        it('has a close button', () => {
+          assert.isTrue(localPage.hasCloseButton, 'cannot find button to close roster widget');
+        });
 
-    describe('roster tests', () => {
-      before('open roster widget', () => {
-        localPage.openRoster();
-      });
+        it('has the total count of participants', () => {
+          assert.equal(localPage.rosterTitle, 'People (3)');
+        });
 
-      it('has a close button', () => {
-        assert.isTrue(localPage.hasCloseButton, 'cannot find button to close roster widget');
-      });
+        it('has the participants listed', () => {
+          localPage.hasParticipants([marty, docbrown, lorraine]);
+        });
 
-      it('has the total count of participants', () => {
-        assert.equal(localPage.rosterTitle, 'People (3)');
-      });
+        it('has search for participants', () => {
+          localPage.canSearchForParticipants();
+        });
 
-      it('has the participants listed', () => {
-        localPage.hasParticipants([marty, docbrown, lorraine]);
-      });
+        it('searches and adds person to space', () => {
+          localPage.searchAndAddPerson({
+            searchString: biff.email,
+            searchResult: biff.displayName
+          });
+        });
 
-      it('has search for participants', () => {
-        localPage.canSearchForParticipants();
-      });
-
-      it('searches and adds person to space', () => {
-        localPage.searchAndAddPerson({
-          searchString: biff.email,
-          searchResult: biff.displayName
+        it('closes the people roster widget', () => {
+          localPage.closeRoster();
         });
       });
 
-      it('closes the people roster widget', () => {
-        localPage.closeRoster();
+      describe('accessibility', () => {
+        it('should have no accessibility violations', () =>
+          runAxe(localPage.browser, 'ciscospark-widget')
+            .then((results) => {
+              assert.equal(results.violations.length, 0);
+            }));
       });
-    });
-    describe('accessibility', () => {
-      it('should have no accessibility violations', () =>
-        runAxe(localPage.browser, 'ciscospark-widget')
-          .then((results) => {
-            assert.equal(results.violations.length, 0);
-          }));
     });
   });
 }

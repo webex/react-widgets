@@ -36,81 +36,91 @@ export default function groupMessageTests(type) {
       15000, 'failed to register user devices');
     });
 
-    it('creates group space', function createOneOnOneSpace() {
-      this.retries(2);
+    describe('Setup', () => {
+      it('creates group space', function createOneOnOneSpace() {
+        this.retries(2);
 
-      space = createSpace({
-        displayName: 'Test Widget Space',
-        sparkInstance: marty.spark,
-        participants: [marty, docbrown, lorraine]
+        space = createSpace({
+          displayName: 'Test Widget Space',
+          sparkInstance: marty.spark,
+          participants: [marty, docbrown, lorraine]
+        });
+
+        browser.waitUntil(() =>
+          space && space.id,
+        15000, 'failed to create one on one space');
       });
 
-      browser.waitUntil(() =>
-        space && space.id,
-      15000, 'failed to create one on one space');
-    });
+      it('loads browsers and widgets', function loadBrowsers() {
+        this.retries(3);
 
-    it('loads browsers and widgets', function loadBrowsers() {
-      this.retries(3);
+        localPage.open('./space.html');
+        remotePage.open('./space.html');
 
-      localPage.open('./space.html');
-      remotePage.open('./space.html');
+        localPage[widgetInit]({
+          spaceId: space.id,
+          initialActivity: 'message'
+        });
 
-      localPage[widgetInit]({
-        spaceId: space.id,
-        initialActivity: 'message'
-      });
+        remotePage[widgetInit]({
+          spaceId: space.id,
+          initialActivity: 'message'
+        });
 
-      remotePage[widgetInit]({
-        spaceId: space.id,
-        initialActivity: 'message'
-      });
+        browser.waitUntil(() =>
+          localPage.hasMessageWidget,
+        10000, 'failed to load local widget');
 
-      browser.waitUntil(() =>
-        localPage.hasMessageWidget,
-      10000, 'failed to load local widget');
-
-      browser.waitUntil(() =>
-        remotePage.hasMessageWidget,
-      10000, 'failed to load remote widget');
-    });
-
-    allMessagingTests({
-      localPage,
-      remotePage
-    });
-
-    describe('Multiple User Messaging Tests', () => {
-      it('sends and receives messages', () => {
-        const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-        remotePage.sendMessage(martyText);
-        localPage.verifyMessageReceipt(martyText);
-
-        const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
-        localPage.sendMessage(docText);
-        remotePage.verifyMessageReceipt(docText);
-
-        const lorraineText = 'Marty, will we ever see you again?';
-        browser.call(() => sendMessage({
-          sparkInstance: lorraine.spark,
-          space,
-          message: lorraineText
-        }));
-        localPage.verifyMessageReceipt(lorraineText);
-        remotePage.verifyMessageReceipt(lorraineText);
-
-        const martyText2 = 'I guarantee it.';
-        localPage.sendMessage(martyText2);
-        remotePage.verifyMessageReceipt(martyText2);
+        browser.waitUntil(() =>
+          remotePage.hasMessageWidget,
+        10000, 'failed to load remote widget');
       });
     });
 
-    describe('accessibility', () => {
-      it('should have no accessibility violations', () =>
-        runAxe(localPage.browser, 'ciscospark-widget')
-          .then((results) => {
-            assert.equal(results.violations.length, 0);
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        const {title} = this.currentTest;
+        localPage.setPageTestName(title);
+        remotePage.setPageTestName(title);
+      });
+
+      allMessagingTests({
+        localPage,
+        remotePage
+      });
+
+      describe('Multiple User Messaging Tests', () => {
+        it('sends and receives messages', () => {
+          const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
+          remotePage.sendMessage(martyText);
+          localPage.verifyMessageReceipt(martyText);
+
+          const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+          localPage.sendMessage(docText);
+          remotePage.verifyMessageReceipt(docText);
+
+          const lorraineText = 'Marty, will we ever see you again?';
+          browser.call(() => sendMessage({
+            sparkInstance: lorraine.spark,
+            space,
+            message: lorraineText
           }));
+          localPage.verifyMessageReceipt(lorraineText);
+          remotePage.verifyMessageReceipt(lorraineText);
+
+          const martyText2 = 'I guarantee it.';
+          localPage.sendMessage(martyText2);
+          remotePage.verifyMessageReceipt(martyText2);
+        });
+      });
+
+      describe('accessibility', () => {
+        it('should have no accessibility violations', () =>
+          runAxe(localPage.browser, 'ciscospark-widget')
+            .then((results) => {
+              assert.equal(results.violations.length, 0);
+            }));
+      });
     });
   });
 }

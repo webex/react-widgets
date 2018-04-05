@@ -69,7 +69,6 @@ export default class BaseWidgetObject {
   }
 
   setPageTestName(testName) {
-    console.log(testName);
     this.browser.execute((name) => {
       window.setTestName(name);
     }, testName);

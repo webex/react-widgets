@@ -29,46 +29,56 @@ export default function groupMeetTests(type) {
         15000, 'failed to register marty');
     });
 
-    it('creates group space', function createConversation() {
-      this.retries(2);
-      space = createSpace({
-        displayName: 'Test Widget Space',
-        sparkInstance: marty.spark,
-        participants: [marty, docbrown, lorraine]
+    describe('Setup', () => {
+      it('creates group space', function createConversation() {
+        this.retries(2);
+        space = createSpace({
+          displayName: 'Test Widget Space',
+          sparkInstance: marty.spark,
+          participants: [marty, docbrown, lorraine]
+        });
+
+        browser.waitUntil(() =>
+          space && space.id,
+        15000, 'failed to create conversation');
       });
 
-      browser.waitUntil(() =>
-        space && space.id,
-      15000, 'failed to create conversation');
+      it('loads browsers and widgets', () => {
+        localPage.open('./space.html');
+        remotePage.open('./space.html');
+
+        localPage[widgetInit[type]]({
+          spaceId: space.id,
+          initialActivity: 'meet'
+        });
+
+        remotePage[widgetInit[type]]({
+          spaceId: space.id,
+          initialActivity: 'meet'
+        });
+
+        browser.waitUntil(() =>
+          localPage.hasCallButton,
+        10000, 'failed to load local widget');
+
+        browser.waitUntil(() =>
+          remotePage.hasCallButton,
+        10000, 'failed to load remote widget');
+      });
     });
 
-    it('loads browsers and widgets', () => {
-      localPage.open('./space.html');
-      remotePage.open('./space.html');
-
-      localPage[widgetInit[type]]({
-        spaceId: space.id,
-        initialActivity: 'meet'
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        const {title} = this.currentTest;
+        localPage.setPageTestName(title);
+        remotePage.setPageTestName(title);
       });
 
-      remotePage[widgetInit[type]]({
-        spaceId: space.id,
-        initialActivity: 'meet'
+      allMeetTests({
+        localPage,
+        remotePage,
+        isGroup: true
       });
-
-      browser.waitUntil(() =>
-        localPage.hasCallButton,
-      10000, 'failed to load local widget');
-
-      browser.waitUntil(() =>
-        remotePage.hasCallButton,
-      10000, 'failed to load remote widget');
-    });
-
-    allMeetTests({
-      localPage,
-      remotePage,
-      isGroup: true
     });
   });
 }

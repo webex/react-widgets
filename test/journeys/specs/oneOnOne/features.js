@@ -34,40 +34,50 @@ export default function oneOnOneFeatureTests(type) {
       15000, 'failed to register user devices');
     });
 
-    it('can create one on one space', function createOneOnOneSpace() {
-      this.retries(2);
+    describe('Setup', () => {
+      it('can create one on one space', function createOneOnOneSpace() {
+        this.retries(2);
 
-      oneOnOneSpace = createSpace({
-        sparkInstance: userWithAllTheFeatures.spark,
-        participants: [userWithNoFeatures, userWithAllTheFeatures]
+        oneOnOneSpace = createSpace({
+          sparkInstance: userWithAllTheFeatures.spark,
+          participants: [userWithNoFeatures, userWithAllTheFeatures]
+        });
+
+        browser.waitUntil(() =>
+          oneOnOneSpace && oneOnOneSpace.id,
+        15000, 'failed to create one on one space');
       });
 
-      browser.waitUntil(() =>
-        oneOnOneSpace && oneOnOneSpace.id,
-      15000, 'failed to create one on one space');
+      it('loads browser and widgets', function loadBrowsers() {
+        allFeaturesPage.open('./space.html');
+        noFeaturesPage.open('./space.html');
+
+        allFeaturesPage[widgetInit[type]]({
+          toPersonEmail: userWithNoFeatures.email,
+          initialActivity: 'message'
+        });
+
+        noFeaturesPage[widgetInit[type]]({
+          toPersonEmail: userWithAllTheFeatures.email,
+          initialActivity: 'message'
+        });
+
+        browser.waitUntil(() =>
+          allFeaturesPage.hasMessageWidget &&
+          noFeaturesPage.hasMessageWidget,
+        10000, 'failed to load browsers and widgets');
+      });
     });
 
-    it('loads browser and widgets', function loadBrowsers() {
-      allFeaturesPage.open('./space.html');
-      noFeaturesPage.open('./space.html');
-
-      allFeaturesPage[widgetInit[type]]({
-        toPersonEmail: userWithNoFeatures.email,
-        initialActivity: 'message'
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        const {title} = this.currentTest;
+        allFeaturesPage.setPageTestName(title);
+        noFeaturesPage.setPageTestName(title);
       });
 
-      noFeaturesPage[widgetInit[type]]({
-        toPersonEmail: userWithAllTheFeatures.email,
-        initialActivity: 'message'
-      });
-
-      browser.waitUntil(() =>
-        allFeaturesPage.hasMessageWidget &&
-        noFeaturesPage.hasMessageWidget,
-      10000, 'failed to load browsers and widgets');
+      rosterFlagTests({allFeaturesPage, noFeaturesPage});
     });
-
-    rosterFlagTests({allFeaturesPage, noFeaturesPage});
   });
 }
 

@@ -28,68 +28,75 @@ export default function oneOnOneBasicTests(type) {
       15000, 'failed to register user devices');
     });
 
-    it('creates one on one space', function createOneOnOneSpace() {
-      this.retries(2);
-      oneOnOneSpace = createSpace({
-        sparkInstance: spock.spark,
-        participants: [spock, mccoy]
+    describe('Setup', () => {
+      it('creates one on one space', function createOneOnOneSpace() {
+        this.retries(2);
+        oneOnOneSpace = createSpace({
+          sparkInstance: spock.spark,
+          participants: [spock, mccoy]
+        });
+
+        browser.waitUntil(() => oneOnOneSpace && oneOnOneSpace.id,
+          15000, 'failed to create one on one space');
       });
 
-      browser.waitUntil(() => oneOnOneSpace && oneOnOneSpace.id,
-        15000, 'failed to create one on one space');
-    });
+      it('loads browser and widgets', function loadBrowsers() {
+        this.retries(2);
+        localPage.open('./space.html');
 
-    it('loads browser and widgets', function loadBrowsers() {
-      this.retries(2);
-      localPage.open('./space.html');
+        localPage[widgetInit[type]]({
+          toPersonEmail: mccoy.email,
+          initialActivity: 'message'
+        });
 
-      localPage[widgetInit[type]]({
-        toPersonEmail: mccoy.email,
-        initialActivity: 'message'
+        browser.waitUntil(() =>
+          localPage.hasMessageWidget,
+        10000, 'failed to load local widget');
       });
 
-      browser.waitUntil(() =>
-        localPage.hasMessageWidget,
-      10000, 'failed to load local widget');
-    });
-
-    it('loads the user\'s name', () => {
-      browser.waitUntil(() =>
-        localPage.titleText !== 'Loading...',
-      10000, 'failed to load widget title');
-      assert.equal(localPage.titleText, mccoy.displayName);
-    });
-
-    activityMenuTests(localPage);
-
-    describe('roster tests', () => {
-      it('opens roster widget', () => {
-        localPage.openRoster();
-      });
-
-      it('has a close button', () => {
-        assert.isTrue(localPage.hasCloseButton, 'cannot find button to close roster widget');
-      });
-
-      it('has the total count of participants', () => {
-        assert.equal(localPage.rosterTitle, 'People (2)');
-      });
-
-      it('has the participants listed', () => {
-        localPage.hasParticipants([mccoy, spock]);
-      });
-
-      it('closes the people roster widget', () => {
-        localPage.closeRoster();
+      it('loads the user\'s name', () => {
+        browser.waitUntil(() =>
+          localPage.titleText !== 'Loading...',
+        10000, 'failed to load widget title');
+        assert.equal(localPage.titleText, mccoy.displayName);
       });
     });
 
-    describe('accessibility', () => {
-      it('should have no accessibility violations', () =>
-        runAxe(localPage.browser, 'ciscospark-widget')
-          .then((results) => {
-            assert.equal(results.violations.length, 0);
-          }));
+    describe('Main Tests', () => {
+      beforeEach(function testName() {
+        localPage.setPageTestName(this.currentTest.title);
+      });
+      activityMenuTests(localPage);
+
+      describe('Roster Widget', () => {
+        it('opens', () => {
+          localPage.openRoster();
+        });
+
+        it('has a close button', () => {
+          assert.isTrue(localPage.hasCloseButton, 'cannot find button to close roster widget');
+        });
+
+        it('has the total count of participants', () => {
+          assert.equal(localPage.rosterTitle, 'People (2)');
+        });
+
+        it('has the participants listed', () => {
+          localPage.hasParticipants([mccoy, spock]);
+        });
+
+        it('closes the people roster widget', () => {
+          localPage.closeRoster();
+        });
+      });
+
+      describe('accessibility', () => {
+        it('should have no accessibility violations', () =>
+          runAxe(localPage.browser, 'ciscospark-widget')
+            .then((results) => {
+              assert.equal(results.violations.length, 0);
+            }));
+      });
     });
   });
 }
