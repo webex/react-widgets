@@ -18,7 +18,6 @@ describe('Widget Space: One on One', () => {
 
     before('load browsers', () => {
       browser.url('/space.html?basic');
-      browser.refresh();
     });
 
     before('create spock', () => testUsers.create({count: 1, config: {displayName: spockName}})

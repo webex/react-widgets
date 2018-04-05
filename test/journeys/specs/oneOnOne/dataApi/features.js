@@ -19,7 +19,6 @@ describe('Widget Space: One on One', () => {
 
     before('load browsers', () => {
       browser.url('/data-api/space.html');
-      browser.refresh();
     });
 
     before('create main user', () => testUsers.create({count: 1, config: {displayName: 'All Features'}})
