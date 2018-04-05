@@ -31,41 +31,51 @@ export default function oneOnOneMessageTests(type) {
       assert.exists(mccoy.spark.internal.device.userId, 'failed to register spock devices');
     });
 
-    it('creates one on one space', function createOneOnOneSpace() {
-      this.retries(2);
-      space = createSpace({
-        sparkInstance: mccoy.spark,
-        participants: [spock, mccoy]
+    describe('Setup', () => {
+      it('creates one on one space', function createOneOnOneSpace() {
+        this.retries(2);
+        space = createSpace({
+          sparkInstance: mccoy.spark,
+          participants: [spock, mccoy]
+        });
+        assert.exists(space.id, 'failed to create one on one space');
       });
-      assert.exists(space.id, 'failed to create one on one space');
+
+      it('loads browsers and widgets', () => {
+        localPage.open('./space.html');
+        remotePage.open('./space.html');
+
+        localPage[widgetInit]({
+          toPersonEmail: remotePage.user.email,
+          initialActivity: 'message'
+        });
+
+        remotePage[widgetInit]({
+          toPersonEmail: localPage.user.email,
+          initialActivity: 'message'
+        });
+
+        browser.waitUntil(() =>
+          localPage.hasMessageWidget,
+        10000, 'failed to load local widget');
+
+        browser.waitUntil(() =>
+          remotePage.hasMessageWidget,
+        10000, 'failed to load remote widget');
+      });
     });
 
-    it('loads browsers and widgets', () => {
-      localPage.open('./space.html');
-      remotePage.open('./space.html');
-
-      localPage[widgetInit]({
-        toPersonEmail: remotePage.user.email,
-        initialActivity: 'message'
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        const {title} = this.currentTest;
+        localPage.setPageTestName(title);
+        remotePage.setPageTestName(title);
       });
 
-      remotePage[widgetInit]({
-        toPersonEmail: localPage.user.email,
-        initialActivity: 'message'
+      allMessagingTests({
+        localPage,
+        remotePage
       });
-
-      browser.waitUntil(() =>
-        localPage.hasMessageWidget,
-      10000, 'failed to load local widget');
-
-      browser.waitUntil(() =>
-        remotePage.hasMessageWidget,
-      10000, 'failed to load remote widget');
-    });
-
-    allMessagingTests({
-      localPage,
-      remotePage
     });
 
     describe('accessibility', () => {

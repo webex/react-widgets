@@ -16,6 +16,7 @@ export default function spaceFeatureTests(type) {
     const noFeaturesPage = new RosterWidgetPage({aBrowser: browser.select('2')});
 
     let userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2, space;
+
     before('initialize test users', () => {
       [userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2] = createTestUsers(3);
 
@@ -40,46 +41,56 @@ export default function spaceFeatureTests(type) {
       15000, 'failed to register user devices');
     });
 
-    it('can create group space', function createOneOnOneSpace() {
-      this.retries(2);
+    describe('Setup', () => {
+      it('can create group space', function createOneOnOneSpace() {
+        this.retries(2);
 
-      space = createSpace({
-        sparkInstance: userWithAllTheFeatures.spark,
-        participants: [userWithNoFeatures1, userWithNoFeatures2, userWithAllTheFeatures]
-      });
-
-      browser.waitUntil(() =>
-        space && space.id,
-      15000, 'failed to create group space');
-    });
-
-    it('loads browsers and widgets', function loadGlobal() {
-      allFeaturesPage.open('./space.html');
-      noFeaturesPage.open('./space.html');
-
-      browser
-        .url('/space.html?basic')
-        .execute(() => {
-          localStorage.clear();
+        space = createSpace({
+          sparkInstance: userWithAllTheFeatures.spark,
+          participants: [userWithNoFeatures1, userWithNoFeatures2, userWithAllTheFeatures]
         });
 
-      allFeaturesPage[widgetInit[type]]({
-        spaceId: space.id,
-        initialActivity: 'message'
+        browser.waitUntil(() =>
+          space && space.id,
+        15000, 'failed to create group space');
       });
 
-      noFeaturesPage[widgetInit[type]]({
-        spaceId: space.id,
-        initialActivity: 'message'
-      });
+      it('loads browsers and widgets', function loadGlobal() {
+        allFeaturesPage.open('./space.html');
+        noFeaturesPage.open('./space.html');
 
-      browser.waitUntil(() =>
-        allFeaturesPage.hasMessageWidget &&
-        noFeaturesPage.hasMessageWidget,
-      10000, 'failed to load browsers and widgets');
+        browser
+          .url('/space.html?basic')
+          .execute(() => {
+            localStorage.clear();
+          });
+
+        allFeaturesPage[widgetInit[type]]({
+          spaceId: space.id,
+          initialActivity: 'message'
+        });
+
+        noFeaturesPage[widgetInit[type]]({
+          spaceId: space.id,
+          initialActivity: 'message'
+        });
+
+        browser.waitUntil(() =>
+          allFeaturesPage.hasMessageWidget &&
+          noFeaturesPage.hasMessageWidget,
+        10000, 'failed to load browsers and widgets');
+      });
     });
 
-    featureFlagTests({allFeaturesPage, noFeaturesPage});
+    describe('Main Tests', function main() {
+      beforeEach(function testName() {
+        const {title} = this.currentTest;
+        allFeaturesPage.setPageTestName(title);
+        noFeaturesPage.setPageTestName(title);
+      });
+
+      featureFlagTests({allFeaturesPage, noFeaturesPage});
+    });
   });
 }
 

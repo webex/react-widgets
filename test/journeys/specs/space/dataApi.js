@@ -22,105 +22,115 @@ describe('Widget Space: Group - Data API Settings', () => {
     15000, 'failed to register user devices');
   });
 
-  it('creates group space', function createGroupSpace() {
-    this.retries(2);
+  describe('Setup', () => {
+    it('creates group space', function createGroupSpace() {
+      this.retries(2);
 
-    space = createSpace({
-      sparkInstance: marty.spark,
-      displayName: 'Test Widget Space',
-      participants: [marty, docbrown, lorraine]
+      space = createSpace({
+        sparkInstance: marty.spark,
+        displayName: 'Test Widget Space',
+        participants: [marty, docbrown, lorraine]
+      });
+
+      browser.waitUntil(() =>
+        space && space.id,
+      5000, 'failed to create group space');
     });
 
-    browser.waitUntil(() =>
-      space && space.id,
-    5000, 'failed to create group space');
+    it('loads browser', function loadBrowser() {
+      localPage.open('./space.html');
+      remotePage.open('./space.html');
+    });
   });
 
-  it('loads browser', function loadBrowser() {
-    localPage.open('./space.html');
-    remotePage.open('./space.html');
-  });
-
-  it('opens meet widget when set as intial activity', function meetActivity() {
-    this.retries(2);
-
-    localPage.loadWithDataApi({
-      spaceId: space.id,
-      initialActivity: 'meet'
+  describe('Main Tests', function main() {
+    beforeEach(function testName() {
+      const {title} = this.currentTest;
+      localPage.setPageTestName(title);
+      remotePage.setPageTestName(title);
     });
 
-    browser.waitUntil(() =>
-      localPage.hasMeetWidget,
-    5000, 'failed to load widget with meet initial activity');
-  });
+    it('opens meet widget when set as intial activity', function meetActivity() {
+      this.retries(2);
 
-  it('opens message widget when set as initial activity', function messageActivity() {
-    this.retries(2);
+      localPage.loadWithDataApi({
+        spaceId: space.id,
+        initialActivity: 'meet'
+      });
 
-    localPage.loadWithDataApi({
-      spaceId: space.id,
-      initialActivity: 'meet'
+      browser.waitUntil(() =>
+        localPage.hasMeetWidget,
+      5000, 'failed to load widget with meet initial activity');
     });
 
-    browser.waitUntil(() =>
-      localPage.hasMeetWidget,
-    5000, 'failed to load widget with meet initial activity');
-  });
+    it('opens message widget when set as initial activity', function messageActivity() {
+      this.retries(2);
 
-  it('starts call when start call is set to true', function startCall() {
-    this.retries(2);
+      localPage.loadWithDataApi({
+        spaceId: space.id,
+        initialActivity: 'meet'
+      });
 
-    remotePage.loadWithDataApi({
-      spaceId: space.id,
-      initialActivity: 'meet'
+      browser.waitUntil(() =>
+        localPage.hasMeetWidget,
+      5000, 'failed to load widget with meet initial activity');
     });
 
-    browser.waitUntil(() =>
-      remotePage.hasCallButton,
-    5000, 'failed to load widget with meet initial activity');
+    it('starts call when start call is set to true', function startCall() {
+      this.retries(2);
 
-    localPage.loadWithDataApi({
-      spaceId: space.id,
-      startCall: true,
-      initialActivity: 'meet'
+      remotePage.loadWithDataApi({
+        spaceId: space.id,
+        initialActivity: 'meet'
+      });
+
+      browser.waitUntil(() =>
+        remotePage.hasCallButton,
+      5000, 'failed to load widget with meet initial activity');
+
+      localPage.loadWithDataApi({
+        spaceId: space.id,
+        startCall: true,
+        initialActivity: 'meet'
+      });
+
+      browser.waitUntil(() =>
+        localPage.hasMeetWidget,
+      5000, 'failed to load widget with meet initial activity');
+
+      remotePage.answerCall();
+      localPage.hangupCall();
+
+      browser.waitUntil(() =>
+        localPage.hasMessageWidget,
+      20000, 'browserLocal failed to return to message activity after hanging up a call');
+      remotePage.hangupCall();
+      // Should switch back to message widget after hangup
+      browser.waitUntil(() =>
+        remotePage.hasMessageWidget,
+      20000, 'browserRemote failed to return to message activity after hanging up a call');
     });
 
-    browser.waitUntil(() =>
-      localPage.hasMeetWidget,
-    5000, 'failed to load widget with meet initial activity');
+    it('opens using hydra id', function withHydraIds() {
+      this.retries(2);
 
-    remotePage.answerCall();
-    localPage.hangupCall();
+      remotePage.loadWithDataApi({
+        spaceId: constructHydraId('ROOM', space.id)
+      });
 
-    browser.waitUntil(() =>
-      localPage.hasMessageWidget,
-    20000, 'browserLocal failed to return to message activity after hanging up a call');
-    remotePage.hangupCall();
-    // Should switch back to message widget after hangup
-    browser.waitUntil(() =>
-      remotePage.hasMessageWidget,
-    20000, 'browserRemote failed to return to message activity after hanging up a call');
-  });
+      localPage.loadWithDataApi({
+        spaceId: constructHydraId('ROOM', space.id)
+      });
 
-  it('opens using hydra id', function withHydraIds() {
-    this.retries(2);
+      browser.waitUntil(() =>
+        localPage.hasMessageWidget &&
+        remotePage.hasMessageWidget,
+      15000, 'does not load message widget');
 
-    remotePage.loadWithDataApi({
-      spaceId: constructHydraId('ROOM', space.id)
+      browser.waitUntil(() =>
+        localPage.hasActivityList &&
+        remotePage.hasActivityList,
+      5000, 'failed to load widget with activity');
     });
-
-    localPage.loadWithDataApi({
-      spaceId: constructHydraId('ROOM', space.id)
-    });
-
-    browser.waitUntil(() =>
-      localPage.hasMessageWidget &&
-      remotePage.hasMessageWidget,
-    15000, 'does not load message widget');
-
-    browser.waitUntil(() =>
-      localPage.hasActivityList &&
-      remotePage.hasActivityList,
-    5000, 'failed to load widget with activity');
   });
 });
