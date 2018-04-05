@@ -17,16 +17,14 @@ export const elements = {
  * @param {string} accessToken
  */
 export function loginAndOpenWidget(aBrowser, accessToken) {
-  aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, 'access token input field not found');
+  browser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
   aBrowser.execute((myToken, accessTokenElement) => {
     document.querySelector(accessTokenElement).value = myToken;
   }, accessToken, elements.accessTokenInput);
   // Type a space and delete it to trigger react change
-  aBrowser.element(elements.accessTokenInput)
-    .click()
-    .keys(['End', ' ', 'Backspace']);
-  assert.equal(aBrowser.element(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
-  aBrowser.element(elements.saveTokenButton).click();
-  aBrowser.element(elements.openWidgetButton).click();
-  aBrowser.waitUntil(() => aBrowser.element(elements.widgetContainer).isVisible(), 3500, 'widget failed to open');
+  aBrowser.click(elements.accessTokenInput).keys(['End', ' ', 'Backspace']);
+  assert.equal(aBrowser.getValue(elements.accessTokenInput), accessToken, 'access token entry failed');
+  aBrowser.click(elements.saveTokenButton);
+  aBrowser.click(elements.openWidgetButton);
+  browser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
 }

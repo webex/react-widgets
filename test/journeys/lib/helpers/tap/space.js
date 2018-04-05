@@ -24,27 +24,26 @@ export const elements = {
  * @param {string} to
  */
 export function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to) {
-  if (aBrowser.element(elements.clearTokenButton).isVisible()) {
-    aBrowser.element(elements.clearTokenButton).click();
+  if (aBrowser.isVisible(elements.clearTokenButton)) {
+    aBrowser.clicke(elements.clearTokenButton);
   }
-  aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, 'access token input field not found');
+  browser.waitUntil(() => aBrowser.isVisible(elements.accessTokenInput), 3500, 'access token input field not found');
   aBrowser.execute((myToken, accessTokenElement) => {
     document.querySelector(accessTokenElement).value = myToken;
   }, accessToken, elements.accessTokenInput);
   // Type a space and delete it to trigger react change
-  aBrowser.element(elements.accessTokenInput)
-    .click()
+  aBrowser.click(elements.accessTokenInput)
     .keys(['End', ' ', 'Backspace']);
-  assert.equal(aBrowser.element(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
-  aBrowser.element(elements.saveTokenButton).click();
+  assert.equal(aBrowser.getValue(elements.accessTokenInput), accessToken, 'access token entry failed');
+  aBrowser.click(elements.saveTokenButton);
   if (isOneOnOne) {
-    aBrowser.element(elements.toPersonRadioButton).click();
-    aBrowser.element(elements.toPersonInput).setValue(to);
+    aBrowser.click(elements.toPersonRadioButton);
+    aBrowser.setValue(elements.toPersonInput, to);
   }
   else {
-    aBrowser.element(elements.toSpaceRadioButton).click();
-    aBrowser.element(elements.toSpaceInput).setValue(to);
+    aBrowser.click(elements.toSpaceRadioButton);
+    aBrowser.setValue(elements.toSpaceInput, to);
   }
-  aBrowser.element(elements.openWidgetButton).click();
-  aBrowser.waitUntil(() => aBrowser.element(elements.widgetContainer).isVisible(), 3500, 'widget failed to open');
+  aBrowser.click(elements.openWidgetButton);
+  browser.waitUntil(() => aBrowser.isVisible(elements.widgetContainer), 3500, 'widget failed to open');
 }
