@@ -12,7 +12,6 @@ describe('Widget Space: One on One', () => {
 
     before('load browsers', () => {
       browser.url('/data-api/space.html');
-      browser.refresh();
     });
 
 
@@ -44,7 +43,7 @@ describe('Widget Space: One on One', () => {
       });
 
       it('opens meet widget', () => {
-        browserLocal.waitForVisible(elements.meetButton);
+        browserLocal.element(elements.meetWidget).element(elements.meetButton).waitForVisible();
         browserLocal.refresh();
       });
     });
