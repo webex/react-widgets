@@ -7,7 +7,7 @@ const denodeify = require('denodeify');
 const FirefoxProfile = require('firefox-profile');
 const {stat} = require('fs-promise');
 
-const spawn = require('../utils/spawn');
+const spawn = require('../spawn');
 
 const {rimraf} = require('./async');
 
