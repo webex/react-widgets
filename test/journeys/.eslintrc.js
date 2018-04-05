@@ -8,6 +8,11 @@ module.exports = {
     $: true
   },
   rules: {
-    'no-console': 'off'
+    'no-console': 'off',
+    'prefer-arrow-callback': [
+      'error', {
+        allowNamedFunctions: true
+      }
+    ]
   }
 };
