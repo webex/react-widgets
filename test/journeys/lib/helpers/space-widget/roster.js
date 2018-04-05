@@ -6,12 +6,17 @@ export const elements = {
   rosterWidget: '.ciscospark-roster',
   closeButton: 'button[aria-label="Close"]',
   peopleButton: 'button[aria-label="People"]',
-  rosterTitle: '.ciscospark-widget-title',
+  rosterTitle: '.ciscospark-roster .ciscospark-widget-title',
   participantItem: '.ciscospark-participant-list-item',
   rosterList: '.ciscospark-roster-scrolling-list',
   addParticipantArea: '.ciscospark-roster-add-participant',
   addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
+<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
   addParticipantResultItem: '.ciscospark-people-list-item:nth-child(1)',
+=======
+  addParticipantResultItem: '.ciscospark-roster-add-participant-results .ciscospark-people-list-item',
+  addParticipantResultName: '.ciscospark-roster-add-participant-results .ciscospark-people-list-name',
+>>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   addPeopleButton: '.ciscospark-roster-add-people',
   searchInput: '.ciscospark-roster-add-participant-search-input',
   closeSearchButton: 'button[aria-label="Close Search"]'
@@ -31,7 +36,6 @@ function closeSearch(aBrowser) {
   aBrowser.click(elements.closeSearchButton);
   assert.isFalse(aBrowser.isVisible(elements.addParticipantArea), 'close button is not hiding search');
 }
-
 
 /**
  * Verifies that participants are listed by display name
@@ -65,19 +69,50 @@ export function canSearchForParticipants(aBrowser) {
  * @param {boolean} doAdd actually add the person to participants
  * @param {String} searchResult the string that should appear in search results
  */
-export function searchForPerson(aBrowser, searchString, doAdd = false, searchResult = searchString) {
+export function searchForPerson({
+  aBrowser, searchString, doAdd = false, searchResult = searchString
+}) {
   openSearch(aBrowser);
   aBrowser.setValue(elements.searchInput, searchString);
   aBrowser.waitForVisible(elements.addParticipantResultsArea);
   aBrowser.waitForVisible(elements.addParticipantResultItem);
+<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
   const resultsText = aBrowser.getText(elements.addParticipantResultItem);
+=======
+  const resultsText = aBrowser.getText(elements.addParticipantResultName);
+>>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);
     // Adding a participant immediately takes you back to roster
+<<<<<<< HEAD:test/journeys/lib/test-helpers/space-widget/roster.js
     aBrowser.waitForVisible(elements.addParticipantArea, 60000, true);
+=======
+    aBrowser.waitForVisible(elements.addPeopleButton, 3000);
+>>>>>>> chore(tests): Change helpers dir name and remove methods used in page objects:test/journeys/lib/helpers/space-widget/roster.js
   }
   else {
     closeSearch(aBrowser);
   }
+}
+
+/**
+ * Searchs for and adds a person
+ * @param {Object} options
+ * @param {Object} options.aBrowser
+ * @param {String} options.searchString
+ */
+export function searchAndAddPerson({aBrowser, searchString, searchResult}) {
+  searchForPerson({
+    aBrowser, searchString, doAdd: true, searchResult
+  });
+  browser.waitUntil(() => aBrowser.isVisible(elements.rosterList), 5000, 'roster does not become visible');
+  browser.waitUntil(() => {
+    const participantsText = aBrowser.getText(elements.rosterList);
+    return participantsText.includes(searchResult);
+  }, 5000, 'added person not found in participant list');
+  browser.waitUntil(() => {
+    const rosterTitle = aBrowser.getText(elements.rosterTitle);
+    return rosterTitle === 'People (4)';
+  }, 5000, 'Participant count should update once user is added');
 }
