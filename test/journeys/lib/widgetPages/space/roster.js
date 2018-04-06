@@ -53,11 +53,10 @@ export default class RosterWidgetPage extends MessageWidget {
   openSearch() {
     const {
       browser: aBrowser,
-      openRoster,
       elements
     } = this;
 
-    openRoster();
+    this.openRoster();
     assert.isTrue(this.hasAddPeopleButton, 'add people button is not visible');
     aBrowser.click(elements.addPeopleButton);
     browser.waitUntil(() =>
@@ -71,7 +70,9 @@ export default class RosterWidgetPage extends MessageWidget {
       assert.isTrue(this.hasCloseSearchButton, 'does not have a close search button');
       this.browser.click(this.elements.closeSearchButton);
     }
-    assert.isFalse(this.hasAddParticipants, 'close button is not hiding search');
+    browser.waitUntil(() =>
+      !this.hasAddParticipants,
+    5000, 'close button is not hiding search');
   }
 
   hasParticipants(participants) {
