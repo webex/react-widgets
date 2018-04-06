@@ -24,7 +24,7 @@ const commonCaps = {
   name: `react-widget-${suite}`,
   build,
   logLevel: 'verbose',
-  idleTimeout: 120,
+  idleTimeout: 300,
   maxDuration: 3600,
   screenResolution,
   platform
@@ -33,6 +33,7 @@ const commonCaps = {
 const capabilities = {
   firefox: {
     browserName: 'firefox',
+    seleniumVersion: SELENIUM_VERSION,
     ...commonCaps
   },
   chrome: {

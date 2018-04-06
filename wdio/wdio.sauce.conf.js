@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-const os = require('os');
-
 const uuid = require('uuid');
 
 const {inject} = require('../scripts/utils/tests/openh264');
@@ -19,23 +17,12 @@ config.onPrepare = function onPrepare(conf, caps) {
   const defs = Object.keys(caps).map((c) => caps[c].desiredCapabilities);
   /* eslint-disable no-param-reassign */
   defs.forEach((d) => {
-    if (process.env.SAUCE) {
-      d.base = 'SauceLabs';
-      d.build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
-      d.version = d.version || 'latest';
-      d.platform = d.platform.toLowerCase().includes('mac') || d.platform === 'darwin' ? 'macOS 10.12' : d.platform;
-    }
-    else {
-      d.base = d.browserName;
-      d.platform = os.platform();
-    }
+    d.build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
+    d.version = d.version || 'latest';
+    d.platform = d.platform.toLowerCase().includes('mac') || d.platform === 'darwin' ? 'OS X 10.12' : d.platform;
   });
   /* eslint-enable no-param-reassign */
-  return inject(defs)
-    .then(() => {
-      // Remove the base because it's not actually a selenium property
-      defs.forEach((d) => Reflect.deleteProperty(d, 'base'));
-    });
+  return inject(defs);
 };
 
 if (process.env.SAUCE_CONNECT) {
