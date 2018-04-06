@@ -14,11 +14,7 @@ describe('Widget Space: One on One - TAP', () => {
   let mccoy, spock;
 
   before('load browsers', () => {
-    browser
-      .url('/widget-space/production/demo/index.html?oneOnOne')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/widget-space/production/demo/index.html?oneOnOne');
   });
 
   before('initialize test users', function intializeUsers() {

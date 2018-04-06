@@ -15,11 +15,7 @@ export default class BaseWidgetObject {
   }
 
   open(page) {
-    this.browser
-      .url(page)
-      .execute(() => {
-        localStorage.clear();
-      });
+    this.browser.url(page);
   }
 
   moveMouse(selector) {

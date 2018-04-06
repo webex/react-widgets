@@ -59,12 +59,6 @@ export default function spaceFeatureTests(type) {
         allFeaturesPage.open('./space.html');
         noFeaturesPage.open('./space.html');
 
-        browser
-          .url('/space.html?basic')
-          .execute(() => {
-            localStorage.clear();
-          });
-
         allFeaturesPage[widgetInit[type]]({
           spaceId: space.id,
           initialActivity: 'message'
