@@ -75,11 +75,11 @@ describe('Widget Space: One on One: Data API Settings', () => {
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
         csmmDom.setAttribute('data-to-person-email', localToUserEmail);
-        csmmDom.setAttribute('data-initial-activity', 'meet');
+        csmmDom.setAttribute('data-initial-activity', 'message');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, mccoy.token.access_token, spock.email);
-      browserRemote.waitForVisible(elements.meetButton);
+      browserRemote.waitForVisible(elements.messageWidget);
     });
 
     before('inject token', () => {
