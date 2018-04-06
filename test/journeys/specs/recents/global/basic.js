@@ -28,19 +28,11 @@ describe('Widget Recents', () => {
   let conversation, oneOnOneConversation;
 
   before('load browser for recents widget', () => {
-    browserLocal
-      .url('/recents.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserLocal.url('/recents.html');
   });
 
   before('load browser for meet widget', () => {
-    browserRemote
-      .url('/space.html?meetRecents')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserRemote.url('/space.html?meetRecents');
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
@@ -141,6 +133,7 @@ describe('Widget Recents', () => {
       };
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
+    browserRemote.waitForVisible(meetElements.meetWidget);
   });
 
   it('loads the test page', () => {
