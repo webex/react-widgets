@@ -18,7 +18,7 @@ import {
   elements as recentsElements
 } from '../../lib/test-helpers/recents-widget';
 
-describe('Multiple widgets on a page', () => {
+describe('Multiple Widgets', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
   const browserName = process.env.BROWSER || 'chrome';
@@ -43,11 +43,7 @@ describe('Multiple widgets on a page', () => {
   });
 
   before('load browser', () => {
-    browser
-      .url('/multiple.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/multiple.html');
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
@@ -100,12 +96,6 @@ describe('Multiple widgets on a page', () => {
     }));
 
   before('pause to let test users establish', () => browser.pause(5000));
-
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect(),
-    docbrown.spark.internal.mercury.disconnect()
-  ]));
 
   before('create group space', () => marty.spark.internal.conversation.create({
     displayName: 'Test Group Space',
@@ -193,10 +183,7 @@ describe('Multiple widgets on a page', () => {
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
       moveMouse(browserLocal, recentsElements.firstSpace);
-      browserLocal.waitUntil(() =>
-        browserLocal.element(`${recentsElements.callButton}`).isVisible(),
-      1500,
-      'does not show call button');
+      browserLocal.waitForVisible(`${recentsElements.callButton}`);
     });
   });
 
@@ -223,17 +210,17 @@ describe('Multiple widgets on a page', () => {
 
       it('closes the menu with the exit button', () => {
         browserLocal.click(spaceElements.exitButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu, 1500, true);
+        browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
       });
 
       it('has a message button', () => {
         browserLocal.click(spaceElements.menuButton);
-        browserLocal.element(spaceElements.controlsContainer).element(spaceElements.messageButton).waitForVisible();
+        browserLocal.waitForVisible(spaceElements.messageButton);
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.element(spaceElements.controlsContainer).element(spaceElements.messageButton).click();
-        browserLocal.waitForVisible(spaceElements.activityMenu, 1500, true);
+        browserLocal.click(spaceElements.messageButton);
+        browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
       });
     });
@@ -260,4 +247,10 @@ describe('Multiple widgets on a page', () => {
       });
     });
   });
+
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect(),
+    docbrown.spark.internal.mercury.disconnect()
+  ]));
 });
