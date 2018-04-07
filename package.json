@@ -19,6 +19,7 @@
     "test:automation:oneOnOne": "wdio wdio.conf.js --suite oneOnOne",
     "test:automation:space": "wdio wdio.conf.js --suite space",
     "test:automation:recents": "wdio wdio.conf.js --suite recents",
+    "test:automation:multiple": "wdio wdio.conf.js --suite multiple",
     "test:tap": "cross-env TAP=true wdio wdio.conf.js --suite tap",
     "test:integration": "cross-env INTEGRATION=true wdio wdio.conf.js --suite integration",
     "jest": "cross-env TZ=utc jest --config=jest.config.json",
