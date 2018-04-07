@@ -96,7 +96,7 @@ exports.config = {
       './test/journeys/specs/recents/**/*.js'
     ],
     multiple: [
-      './test/journeys/specs/multiple/**/*.js'
+      './test/journeys/specs/multiple/index.js'
     ],
     integration: [
       './test/journeys/specs/multiple/**/*.js',
