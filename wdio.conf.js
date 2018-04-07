@@ -165,7 +165,7 @@ exports.config = {
   //
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
-  bail: 0,
+  bail: 1,
   //
   // Saves a screenshot to a given path if a command fails.
   // screenshotPath: './errorShots/',
@@ -236,7 +236,8 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: mochaTimeout
+    timeout: mochaTimeout,
+    bail: 1
   },
 
   // =====
