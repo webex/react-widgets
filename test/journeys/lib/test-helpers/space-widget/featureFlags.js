@@ -33,7 +33,12 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
     it('has a call option for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(browserWithAllTheFeatures.isVisible(meetElements.callButton));
+      assert.isTrue(
+        browserWithAllTheFeatures
+          .element(mainElements.controlsContainer)
+          .element(meetElements.callButton)
+          .isVisible()
+      );
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
