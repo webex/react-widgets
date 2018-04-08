@@ -126,7 +126,15 @@ exports.config = {
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js',
       './test/journeys/specs/recents/dataApi/basic.js',
-      './test/journeys/specs/recents/global/basic.js'
+      './test/journeys/specs/recents/global/basic.js',
+      './test/journeys/specs/space/dataApi/basic.js',
+      './test/journeys/specs/space/dataApi/meet.js',
+      './test/journeys/specs/space/dataApi/messaging.js',
+      './test/journeys/specs/space/dataApi/startup-settings.js',
+      './test/journeys/specs/space/global/basic.js',
+      './test/journeys/specs/space/global/meet.js',
+      './test/journeys/specs/space/global/messaging.js',
+      './test/journeys/specs/space/featureFlags.js'
 
     ]
   },
