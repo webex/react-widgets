@@ -64,9 +64,9 @@ export function sendMessage(sender, receiver, message) {
  */
 export function verifyMessageReceipt(receiver, sender, message) {
   receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
-  receiver.browser.waitForExist(elements.pendingActivity, 15000, true);
-  receiver.browser.waitForExist(elements.lastActivityText, 15000);
-  receiver.browser.waitUntil(() => receiver.browser.element(elements.lastActivityText).getText() === message);
+  receiver.browser.waitForExist(elements.pendingActivity, 60000, true);
+  receiver.browser.waitForExist(elements.lastActivityText);
+  receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityText) === message);
   // Move mouse to send read receipt
   moveMouse(receiver.browser, elements.lastActivityText);
   // Verify read receipt comes across
@@ -93,7 +93,7 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
   aBrowser.waitForVisible(mainElements.filesButton);
   aBrowser.click(mainElements.filesButton);
   aBrowser.waitForVisible(mainElements.filesWidget);
-  aBrowser.element(`${mainElements.filesWidget}${fileTitle}`).waitForExist();
+  aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
   if (hasThumbnail) {
     aBrowser.waitForVisible(fileThumbnail);
   }
@@ -108,29 +108,17 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
  * @returns {void}
  */
 export function flagMessage(testObject, messageToFlag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToFlag);
+  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
+  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToFlag);
   moveMouse(testObject.browser, elements.lastActivityText);
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(`${elements.lastActivity} ${elements.flagButton}`)
-      .isVisible(),
-  1500, 'flag button is not visible when hovering');
-
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.flagButton}`);
+  testObject.browser.click(`${elements.lastActivity} ${elements.flagButton}`);
 
   // Verify it is highlighted, showing it was flagged
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'flag button did not highlight');
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`);
 
   // Remove pending flag
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`)
-    .isVisible() === false, 7500, 'flag button did not remove pending state');
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`, 60000, true);
 }
 
 /**
@@ -140,21 +128,14 @@ export function flagMessage(testObject, messageToFlag) {
  * @returns {void}
  */
 export function removeFlagMessage(testObject, messageToUnflag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    testObject.browser.element(elements.lastActivityText).getText() === messageToUnflag, 1500, 'message was not found');
+  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
+  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToUnflag);
 
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`)
-    .isVisible(), 1500, 'message was not flagged');
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`);
 
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.flagButton}`)
-    .click();
+  testObject.browser.click(`${elements.lastActivity} ${elements.flagButton}`);
 
-  testObject.browser.waitUntil(() => testObject.browser
-    .element(`${elements.lastActivity} ${elements.highlighted}`)
-    .isVisible() === false, 3500, 'message was still flagged');
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted}`, 60000, true);
 }
 
 /**
@@ -164,15 +145,9 @@ export function removeFlagMessage(testObject, messageToUnflag) {
  * @returns {boolean}
  */
 export function canDeleteMessage(testObject, messageToDelete) {
-  testObject.browser.waitForExist(elements.pendingActivity, 15000, true);
-  testObject.browser.waitUntil(() =>
-    // Text matches message to delete
-    testObject.browser.element(elements.lastActivityText).getText() === messageToDelete);
-
-  return testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    // Delete button is hidden but still exists
-    .isExisting();
+  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
+  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToDelete);
+  return testObject.browser.isExisting(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 }
 
 /**
@@ -185,31 +160,16 @@ export function deleteMessage(testObject, messageToDelete) {
 
   moveMouse(testObject.browser, elements.lastActivityText);
 
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-      .isVisible(),
-  1500, 'delete button is not visible when hovering');
-
-  testObject.browser
-    .element(`${elements.lastActivity} ${elements.deleteMessageButton}`)
-    .click();
+  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.deleteMessageButton}`);
+  testObject.browser.click(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 
   // Click modal confirm
-  testObject.browser.waitUntil(() =>
-    testObject.browser
-      .element(elements.modalWindow)
-      .isVisible(),
-  3500, 'delete modal window is not visible after clicking delete button');
-  assert.isTrue(testObject.browser.element(elements.modalDeleteButton).isVisible(), 'modal delete button is not visible');
-  testObject.browser.element(elements.modalDeleteButton).click();
+  testObject.browser.waitForVisible(elements.modalWindow);
+  testObject.browser.waitForVisible(elements.modalDeleteButton);
+  testObject.browser.click(elements.modalDeleteButton);
 
   testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
-
-  testObject.browser.waitUntil(() => {
-    const text = testObject.browser.element(`${elements.lastActivity} ${elements.systemMessage}`).getText();
-    return text.includes(messages.youDeleted);
-  }, 3500, 'message was not deleted');
+  testObject.browser.waitUntil(() => testObject.browser.getText(`${elements.lastActivity} ${elements.systemMessage}`).includes(messages.youDeleted));
 }
 
 
@@ -226,13 +186,15 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   const filePath = path.join(uploadDir, fileName);
   const fileTitle = `//div[text()="${fileName}"]`;
   sender.browser.chooseFile(elements.inputFile, filePath);
+  sender.browser.waitForVisible(elements.shareButton);
   sender.browser.click(elements.shareButton);
-  receiver.browser.waitForExist(fileTitle, 30000);
+  sender.browser.waitForVisible(elements.shareButton, 120000, true);
+  receiver.browser.waitForExist(fileTitle);
   receiver.browser.scroll(fileTitle);
-  const localSize = sender.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
-  const remoteSize = receiver.browser.element(`${elements.lastActivity} .ciscospark-share-file-size`).getText();
   // Some files are embedded and don't display file sizes
   if (fileSizeVerify) {
+    const localSize = sender.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
+    const remoteSize = receiver.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
     assert.equal(localSize, remoteSize);
   }
   // Send receipt acknowledgement and verify before moving on
