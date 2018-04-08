@@ -12,16 +12,11 @@ describe('Widget Space: One on One', () => {
 
   const menuButton = 'button[aria-label="Main Menu"]';
   const activityMenu = '.ciscospark-activity-menu';
-  const controlsContainer = '.ciscospark-controls-container';
 
   let userWithAllTheFeatures, userWithNoFeatures;
 
   before('load browsers', () => {
-    browser
-      .url('/space.html?basic')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/space.html?basic');
   });
 
   before('create main user', () => testUsers.create({count: 1, config: {displayName: 'All Features'}})
@@ -69,7 +64,7 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, userWithAllTheFeatures.token.access_token, userWithNoFeatures.email);
-    browserLocal.waitForVisible(`[placeholder="Send a message to ${userWithNoFeatures.displayName}"]`, 30000);
+    browserLocal.waitForVisible(`[placeholder="Send a message to ${userWithNoFeatures.displayName}"]`);
   });
 
   before('open widget remote', () => {
@@ -81,7 +76,7 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, userWithNoFeatures.token.access_token, userWithAllTheFeatures.email);
-    browserRemote.waitForVisible(`[placeholder="Send a message to ${userWithAllTheFeatures.displayName}"]`, 30000);
+    browserRemote.waitForVisible(`[placeholder="Send a message to ${userWithAllTheFeatures.displayName}"]`);
   });
 
   describe('Feature Flags', () => {
@@ -89,13 +84,13 @@ describe('Widget Space: One on One', () => {
       it('has a roster for user with feature flag', () => {
         browserLocal.click(menuButton);
         browserLocal.waitForVisible(activityMenu);
-        assert.isTrue(browserLocal.element(controlsContainer).element(rosterElements.peopleButton).isVisible());
+        assert.isTrue(browserLocal.isVisible(rosterElements.peopleButton));
       });
 
       it('does not have a roster for user without flag', () => {
         browserRemote.click(menuButton);
         browserRemote.waitForVisible(activityMenu);
-        assert.isFalse(browserRemote.element(controlsContainer).element(rosterElements.peopleButton).isVisible());
+        assert.isFalse(browserRemote.isVisible(rosterElements.peopleButton));
       });
     });
   });
