@@ -28,19 +28,11 @@ describe('Widget Recents', () => {
   let conversation, oneOnOneConversation;
 
   before('load browser for recents widget', () => {
-    browserLocal
-      .url('/recents.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserLocal.url('/recents.html');
   });
 
   before('load browser for meet widget', () => {
-    browserRemote
-      .url('/space.html?meetRecents')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserRemote.url('/space.html?meetRecents');
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
@@ -95,12 +87,6 @@ describe('Widget Recents', () => {
 
   before('pause to let test users establish', () => browser.pause(5000));
 
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.phone.deregister(),
-    docbrown.spark.internal.mercury.disconnect()
-  ]));
-
   before('create group space', () => marty.spark.internal.conversation.create({
     displayName: 'Test Group Space',
     participants: [marty, docbrown, lorraine]
@@ -141,6 +127,7 @@ describe('Widget Recents', () => {
       };
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
+    browserRemote.waitForVisible(meetElements.meetWidget);
   });
 
   it('loads the test page', () => {
@@ -162,69 +149,63 @@ describe('Widget Recents', () => {
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
       moveMouse(browserLocal, elements.firstSpace);
-      browserLocal.waitUntil(() =>
-        browserLocal.element(elements.callButton).isVisible(),
-      1500,
-      'does not show call button');
+      browserLocal.waitUntil(() => browserLocal.isVisible(elements.callButton));
+    });
+  });
+
+  describe('events', () => {
+    // https://github.com/ciscospark/react-ciscospark/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
+    it('messages:created', () => {
+      clearEventLog(browserLocal);
+      const lorraineText = 'Don\'t be such a square';
+      displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
+      assert.include(getEventLog(browserLocal), 'messages:created', 'does not have event in log');
     });
 
-    describe('events', () => {
-      // https://github.com/ciscospark/react-ciscospark/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
-      it('messages:created', () => {
-        clearEventLog(browserLocal);
-        const lorraineText = 'Don\'t be such a square';
-        displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-        assert.include(getEventLog(browserLocal), 'messages:created', 'does not have event in log');
-      });
+    it('rooms:unread', () => {
+      clearEventLog(browserLocal);
+      const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+      displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
+      assert.include(getEventLog(browserLocal), 'rooms:unread', 'does not have event in log');
+    });
 
-      it('rooms:unread', () => {
-        clearEventLog(browserLocal);
-        const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
-        displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-        assert.include(getEventLog(browserLocal), 'rooms:unread', 'does not have event in log');
-      });
+    it('rooms:read', () => {
+      clearEventLog(browserLocal);
+      const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+      displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+      assert.include(getEventLog(browserLocal), 'rooms:read', 'does not have event in log');
+    });
 
-      it('rooms:read', () => {
-        clearEventLog(browserLocal);
-        const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
-        displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-        assert.include(getEventLog(browserLocal), 'rooms:read', 'does not have event in log');
-      });
+    it('rooms:selected', () => {
+      clearEventLog(browserLocal);
+      browserLocal.click(elements.firstSpace);
+      assert.include(getEventLog(browserLocal), 'rooms:selected', 'does not have event in log');
+    });
 
-      it('rooms:selected', () => {
-        clearEventLog(browserLocal);
-        browserLocal.element(elements.firstSpace).click();
-        assert.include(getEventLog(browserLocal), 'rooms:selected', 'does not have event in log');
-      });
+    it('memberships:created', () => {
+      const roomTitle = 'Test Group Space 2';
+      const firstPost = 'Everybody who\'s anybody drinks.';
+      clearEventLog(browserLocal);
+      createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
+      assert.include(getEventLog(browserLocal), 'memberships:created', 'does not have event in log');
+    });
 
-      it('memberships:created', () => {
-        const roomTitle = 'Test Group Space 2';
-        const firstPost = 'Everybody who\'s anybody drinks.';
-        clearEventLog(browserLocal);
-        createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
-        assert.include(getEventLog(browserLocal), 'memberships:created', 'does not have event in log');
-      });
-
-      it('memberships:deleted', () => {
-        // Create Room
-        const roomTitle = 'Kick Marty Out';
-        const firstPost = 'Goodbye Marty.';
-        const kickedConversation = createSpaceAndPost(
-          browserLocal,
-          lorraine,
-          [marty, docbrown, lorraine],
-          roomTitle,
-          firstPost
-        );
-        // Remove user from room
-        clearEventLog(browserLocal);
-        waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
-        browserLocal.waitUntil(() =>
-          browserLocal.element(`${elements.firstSpace} ${elements.title}`).getText() !== roomTitle,
-        5000,
-        'does not remove space from list');
-        assert.include(getEventLog(browserLocal), 'memberships:deleted', 'does not have event in log');
-      });
+    it('memberships:deleted', () => {
+      // Create Room
+      const roomTitle = 'Kick Marty Out';
+      const firstPost = 'Goodbye Marty.';
+      const kickedConversation = createSpaceAndPost(
+        browserLocal,
+        lorraine,
+        [marty, docbrown, lorraine],
+        roomTitle,
+        firstPost
+      );
+      // Remove user from room
+      clearEventLog(browserLocal);
+      waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
+      browserLocal.waitUntil(() => browserLocal.getText(`${elements.firstSpace} ${elements.title}`) !== roomTitle);
+      assert.include(getEventLog(browserLocal), 'memberships:deleted', 'does not have event in log');
     });
   });
 
@@ -247,21 +228,15 @@ describe('Widget Recents', () => {
     it('displays a call button on hover', () => {
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
       moveMouse(browserLocal, elements.firstSpace);
-      browserLocal.waitUntil(() =>
-        browserLocal.element(elements.callButton).isVisible(),
-      1500,
-      'does not show call button');
+      browserLocal.waitUntil(() => browserLocal.isVisible(elements.callButton));
     });
   });
 
   describe('incoming call', () => {
     it('should display incoming call screen', () => {
-      browserRemote.element(meetElements.meetWidget).element(meetElements.callButton).waitForVisible();
-      browserRemote.element(meetElements.callButton).click();
-      browserLocal.waitUntil(() =>
-        browserLocal.element(elements.answerButton).isVisible(),
-      15000,
-      'does not show call answer button');
+      browserRemote.waitForVisible(meetElements.callButton);
+      browserRemote.click(meetElements.callButton);
+      browserLocal.waitUntil(() => browserLocal.isVisible(elements.answerButton));
       hangup(browserRemote);
     });
   });
@@ -273,4 +248,11 @@ describe('Widget Recents', () => {
           assert.equal(results.violations.length, 0, 'has accessibilty violations');
         }));
   });
+
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.phone.deregister(),
+    docbrown.spark.internal.mercury.disconnect()
+  ]));
 });
+
