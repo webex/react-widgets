@@ -33,7 +33,7 @@ export const elements = {
  */
 export function answer(aBrowser) {
   aBrowser.waitForVisible(elements.answerButton);
-  aBrowser.element(elements.meetWidget).element(elements.answerButton).click();
+  aBrowser.click(elements.answerButton);
   aBrowser.waitForVisible(elements.remoteVideo);
   // Let call elapse 5 seconds before hanging up
   aBrowser.pause(5000);
@@ -46,8 +46,8 @@ export function answer(aBrowser) {
  * @returns {void}
  */
 export function call(caller, reciever) {
-  caller.element(elements.meetWidget).element(elements.callButton).waitForVisible();
-  caller.element(elements.meetWidget).element(elements.callButton).click();
+  caller.waitForVisible(elements.callButton);
+  caller.click(elements.callButton);
   // wait for call to establish
   reciever.waitForVisible(elements.answerButton);
 }
@@ -59,7 +59,8 @@ export function call(caller, reciever) {
  */
 export function decline(aBrowser) {
   aBrowser.waitForVisible(elements.declineButton);
-  aBrowser.element(elements.meetWidget).element(elements.declineButton).click();
+  aBrowser.click(elements.declineButton);
+  aBrowser.waitForVisible(elements.messageWidget);
 }
 
 /**
@@ -71,8 +72,9 @@ export function hangup(aBrowser) {
   // Call controls currently has a hover state
   moveMouse(aBrowser, elements.callContainer);
   aBrowser.waitForVisible(elements.callControls);
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).waitForVisible();
-  aBrowser.element(elements.meetWidget).element(elements.hangupButton).click();
+  aBrowser.waitForVisible(elements.hangupButton);
+  aBrowser.click(elements.hangupButton);
+  aBrowser.waitForVisible(elements.messageWidget);
 }
 
 /**
