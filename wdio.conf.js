@@ -36,7 +36,6 @@ const chromeCapabilities = {
   },
   idleTimeout: 300,
   maxDuration: 3600,
-  seleniumVersion: '3.4.0',
   screenResolution,
   platform
 };
@@ -49,7 +48,7 @@ const firefoxCapabilities = {
   screenResolution,
   platform
 };
-let mochaTimeout = 30000;
+let mochaTimeout = 60000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
@@ -87,25 +86,43 @@ exports.config = {
       './test/journeys/specs/tap/**/*.js'
     ],
     oneOnOne: [
-      './test/journeys/specs/oneOnOne/**/*.js'
+      './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/dataApi/features.js',
+      './test/journeys/specs/oneOnOne/dataApi/meet.js',
+      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
+      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
+      './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/features.js',
+      './test/journeys/specs/oneOnOne/global/meet.js',
+      './test/journeys/specs/oneOnOne/global/messaging.js'
     ],
     space: [
-      './test/journeys/specs/space/**/*.js'
+      './test/journeys/specs/space/dataApi/basic.js',
+      './test/journeys/specs/space/dataApi/meet.js',
+      './test/journeys/specs/space/dataApi/messaging.js',
+      './test/journeys/specs/space/dataApi/startup-settings.js',
+      './test/journeys/specs/space/global/basic.js',
+      './test/journeys/specs/space/global/meet.js',
+      './test/journeys/specs/space/global/messaging.js'
     ],
     recents: [
-      './test/journeys/specs/recents/**/*.js'
+      './test/journeys/specs/recents/dataApi/basic.js',
+      './test/journeys/specs/recents/global/basic.js'
     ],
     multiple: [
       './test/journeys/specs/multiple/index.js'
     ],
     integration: [
-      './test/journeys/specs/multiple/**/*.js',
-      './test/journeys/specs/oneOnOne/dataApi/*.js',
-      './test/journeys/specs/oneOnOne/global/*.js',
-      './test/journeys/specs/recents/dataApi/*.js',
-      './test/journeys/specs/recents/global/*.js',
-      './test/journeys/specs/space/dataApi/*.js',
-      './test/journeys/specs/space/global/*.js'
+      './test/journeys/specs/multiple/index.js',
+      './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/dataApi/features.js',
+      './test/journeys/specs/oneOnOne/dataApi/meet.js',
+      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
+      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
+      './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/features.js',
+      './test/journeys/specs/oneOnOne/global/meet.js',
+      './test/journeys/specs/oneOnOne/global/messaging.js'
     ]
   },
   // Patterns to exclude.
@@ -175,7 +192,7 @@ exports.config = {
   baseUrl: process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 30000,
+  waitforTimeout: 120000,
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
