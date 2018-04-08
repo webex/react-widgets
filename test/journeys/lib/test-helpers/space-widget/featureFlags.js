@@ -17,24 +17,14 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
     it('has a roster for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(
-        browserWithAllTheFeatures
-          .element(mainElements.controlsContainer)
-          .element(rosterElements.peopleButton)
-          .isVisible()
-      );
+      assert.isTrue(browserWithAllTheFeatures.isVisible(rosterElements.peopleButton));
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
     it('does not have a roster for user without flag', () => {
       browserWithNoFeatures.click(mainElements.menuButton);
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isFalse(
-        browserWithNoFeatures
-          .element(mainElements.controlsContainer)
-          .element(rosterElements.peopleButton)
-          .isVisible()
-      );
+      assert.isFalse(browserWithNoFeatures.isVisible(rosterElements.peopleButton));
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });
@@ -43,24 +33,14 @@ export default function featureFlagTests(browserWithAllTheFeatures, browserWithN
     it('has a call option for user with feature flag', () => {
       browserWithAllTheFeatures.click(mainElements.menuButton);
       browserWithAllTheFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isTrue(
-        browserWithAllTheFeatures
-          .element(mainElements.controlsContainer)
-          .element(meetElements.callButton)
-          .isVisible()
-      );
+      assert.isTrue(browserWithAllTheFeatures.isVisible(meetElements.callButton));
       browserWithAllTheFeatures.click(mainElements.exitButton);
     });
 
     it('does not have a call option for user without flag', () => {
       browserWithNoFeatures.click(mainElements.menuButton);
       browserWithNoFeatures.waitForVisible(mainElements.activityMenu);
-      assert.isFalse(
-        browserWithNoFeatures
-          .element(mainElements.controlsContainer)
-          .element(meetElements.callButton)
-          .isVisible()
-      );
+      assert.isFalse(browserWithNoFeatures.isVisible(meetElements.callButton));
       browserWithNoFeatures.click(mainElements.exitButton);
     });
   });
