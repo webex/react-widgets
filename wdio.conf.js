@@ -35,6 +35,7 @@ const chromeCapabilities = {
     }
   },
   idleTimeout: 300,
+  commandTimeout: 600,
   maxDuration: 3600,
   screenResolution,
   platform
