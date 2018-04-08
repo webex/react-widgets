@@ -23,7 +23,7 @@ export function switchToMessage(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+  aBrowser.waitForVisible(elements.messageButton);
   aBrowser.click(elements.messageButton);
 }
 
@@ -38,7 +38,7 @@ export function switchToMeet(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.element(elements.controlsContainer).element(elements.meetButton).waitForVisible();
+  aBrowser.waitForVisible(elements.meetButton);
   aBrowser.click(elements.meetButton);
 }
 
@@ -50,5 +50,5 @@ export function switchToMeet(aBrowser) {
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
   aBrowser.click(elements.menuButton);
   aBrowser.waitForVisible(elements.activityMenu);
-  aBrowser.element(elements.controlsContainer).element(buttonToClick).click();
+  aBrowser.click(buttonToClick);
 }
