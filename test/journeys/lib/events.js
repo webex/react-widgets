@@ -6,7 +6,7 @@
  * @returns {void}
  */
 export function clearEventLog(myBrowser) {
-  myBrowser.execute(() => { window.ciscoSparkEvents.length = 0; });
+  myBrowser.execute(() => { window.ciscoSparkEvents = []; });
 }
 
 /**
