@@ -5,7 +5,6 @@ import '@ciscospark/internal-plugin-feature';
 import '@ciscospark/internal-plugin-conversation';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
-import SauceLabs from 'saucelabs';
 
 import waitForPromise from '../../lib/wait-for-promise';
 import {moveMouse} from '../../lib/test-helpers';
@@ -21,33 +20,13 @@ import {
 describe('Multiple widgets on a page', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const browserName = process.env.BROWSER || 'chrome';
-  const platform = process.env.PLATFORM || 'mac 10.12';
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
   let local, remote;
 
-  before('update sauce job', () => {
-    if (process.env.SAUCE && process.env.INTEGRATION) {
-      const account = new SauceLabs({
-        username: process.env.SAUCE_USERNAME,
-        password: process.env.SAUCE_ACCESS_KEY
-      });
-      account.getJobs((err, jobs) => {
-        const widgetJobs = jobs.filter((job) => job.name === 'react-widget-integration' && job.consolidated_status === 'in progress'
-              && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
-        widgetJobs.forEach((job) => account.updateJob(job.id, {name: 'react-widget-multiple'}));
-      });
-    }
-  });
-
   before('load browser', () => {
-    browser
-      .url('/multiple.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/multiple.html');
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})

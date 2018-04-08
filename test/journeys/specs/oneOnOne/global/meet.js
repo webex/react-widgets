@@ -12,11 +12,7 @@ describe('Widget Space: One on One', () => {
   let mccoy, spock;
 
   before('load browsers', () => {
-    browser
-      .url('/space.html?meet')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/space.html?meet');
   });
 
   before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
@@ -60,6 +56,7 @@ describe('Widget Space: One on One', () => {
       };
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.email);
+    remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
   });
 
   describe('meet widget', () => {

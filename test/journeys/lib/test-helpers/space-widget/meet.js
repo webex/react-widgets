@@ -33,7 +33,7 @@ export const elements = {
  */
 export function answer(aBrowser) {
   aBrowser.waitForVisible(elements.answerButton);
-  aBrowser.element(elements.meetWidget).element(elements.answerButton).click();
+  aBrowser.element(elements.answerButton).click();
   aBrowser.waitForVisible(elements.remoteVideo);
   // Let call elapse 5 seconds before hanging up
   aBrowser.pause(5000);

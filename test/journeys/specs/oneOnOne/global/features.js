@@ -17,11 +17,7 @@ describe('Widget Space: One on One', () => {
   let userWithAllTheFeatures, userWithNoFeatures;
 
   before('load browsers', () => {
-    browser
-      .url('/space.html?basic')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/space.html?basic');
   });
 
   before('create main user', () => testUsers.create({count: 1, config: {displayName: 'All Features'}})

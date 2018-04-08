@@ -17,11 +17,7 @@ describe('Widget Space: One on One', () => {
     const spockName = 'Mr Spock';
 
     before('load browsers', () => {
-      browserLocal
-        .url('/space.html?basic')
-        .execute(() => {
-          localStorage.clear();
-        });
+      browser.url('/space.html?basic');
     });
 
     before('create spock', () => testUsers.create({count: 1, config: {displayName: spockName}})
