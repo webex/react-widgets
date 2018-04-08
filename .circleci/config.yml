@@ -1,0 +1,245 @@
+# Templates and Variables
+test_defaults: &test_defaults
+  docker:
+    - image: circleci/node:8.9.4
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - js-dependencies-{{ checksum "package-lock.json" }}
+        - js-dependencies-
+    - attach_workspace:
+        at: /tmp/workspace
+    - run:
+        name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
+        command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+    - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
+    - run:
+        name: Integration Test
+        command: npm run test:automation:sauce -- --suite ${TEST_SUITE}
+        no_output_timeout: 25m
+    - store_test_results:
+        path: reports/junit/wdio
+    - store_artifacts:
+        path: reports/junit/wdio
+        destination: wdio
+    - store_artifacts:
+        path: /home/circleci/.npm/_logs/
+        destination: npm-logs
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
+
+# Main Config
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-dependencies-{{ checksum "package-lock.json" }}
+
+  unit_tests_and_linting:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Run eslint
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: Run all Jest test suites
+          command: npm run jest -- --ci -i --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/jest/js-jest-results.xml
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+          destination: junit
+
+  build_for_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NODE_ENV: "test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Copy and build journey test static files
+          command: npm run build test /tmp/dist-test
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - dist-test
+
+  deploy_for_testing:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
+      - DEPLOY_PATH: "/tmp/workspace/dist-test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Deploy testing payload to Netlify
+          command: npm run deploy netlify ${DEPLOY_PATH} -- --saveUrlPath=/tmp/.netlifyUrl
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - .netlifyUrl
+
+  chrome_oneOnOne:
+    environment:
+      - TEST_SUITE: oneOnOne
+      - BROWSER: chrome
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  chrome_space:
+    environment:
+      - TEST_SUITE: space
+      - BROWSER: chrome
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  chrome_recents:
+    environment:
+      - TEST_SUITE: recents
+      - BROWSER: chrome
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  chrome_multiple:
+    environment:
+      - TEST_SUITE: multiple
+      - BROWSER: chrome
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  firefox_oneOnOne:
+    environment:
+      - TEST_SUITE: oneOnOne
+      - BROWSER: firefox
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  firefox_space:
+    environment:
+      - TEST_SUITE: space
+      - BROWSER: firefox
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  firefox_recents:
+    environment:
+      - TEST_SUITE: recents
+      - BROWSER: firefox
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  firefox_multiple:
+    environment:
+      - TEST_SUITE: multiple
+      - BROWSER: firefox
+      - PLATFORM: OS X 10.12
+    <<: *test_defaults
+
+  chrome_win10_oneOnOne:
+    environment:
+      - TEST_SUITE: oneOnOne
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+    <<: *test_defaults
+
+  chrome_win10_space:
+    environment:
+      - TEST_SUITE: space
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+    <<: *test_defaults
+
+  chrome_win10_recents:
+    environment:
+      - TEST_SUITE: recents
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+    <<: *test_defaults
+
+  chrome_win10_multiple:
+    environment:
+      - TEST_SUITE: multiple
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+    <<: *test_defaults
+
+workflows:
+  version: 2
+  run_all_tests:
+    jobs:
+      - install
+      - build_for_tests:
+          requires:
+            - install
+      - unit_tests_and_linting:
+          requires:
+            - install
+      - deploy_for_testing:
+          requires:
+            - build_for_tests
+      - chrome_oneOnOne:
+          requires:
+            - deploy_for_testing
+      - chrome_space:
+          requires:
+            - chrome_oneOnOne
+      - chrome_recents:
+          requires:
+            - chrome_space
+      - chrome_multiple:
+          requires:
+            - chrome_recents
+      - firefox_oneOnOne:
+          requires:
+            - deploy_for_testing
+      - firefox_space:
+          requires:
+            - firefox_oneOnOne
+      - firefox_recents:
+          requires:
+            - firefox_space
+      - firefox_multiple:
+          requires:
+            - firefox_recents
+      - chrome_win10_oneOnOne:
+          requires:
+            - deploy_for_testing
+      - chrome_win10_space:
+          requires:
+            - chrome_win10_oneOnOne
+      - chrome_win10_recents:
+          requires:
+            - chrome_win10_space
+      - chrome_win10_multiple:
+          requires:
+            - chrome_win10_recents

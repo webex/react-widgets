@@ -1,262 +1,189 @@
 import {assert} from 'chai';
 
-import '@ciscospark/plugin-logger';
-import '@ciscospark/internal-plugin-feature';
-import '@ciscospark/internal-plugin-conversation';
-import CiscoSpark from '@ciscospark/spark-core';
-import testUsers from '@ciscospark/test-helper-test-users';
-import SauceLabs from 'saucelabs';
-
-import waitForPromise from '../../lib/wait-for-promise';
-import {moveMouse} from '../../lib/test-helpers';
-import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
-import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
+import {
+  createTestUsers,
+  sendMessage,
+  createSpace
+} from '../../lib/sdk';
 
 import {
   displayAndReadIncomingMessage,
-  displayIncomingMessage,
-  elements as recentsElements
-} from '../../lib/test-helpers/recents-widget';
+  displayIncomingMessage
+} from '../../lib/helpers/recents-widget';
 
-describe('Multiple widgets on a page', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const browserName = process.env.BROWSER || 'chrome';
-  const platform = process.env.PLATFORM || 'mac 10.12';
+import MessageWidgetPage from '../../lib/widgetPages/space/messaging';
+import RecentsWidgetPage from '../../lib/widgetPages/recents/main';
+
+
+describe('Multiple Widgets on a Single Page', () => {
+  const localMessageWidget = new MessageWidgetPage({aBrowser: browser.select('1')});
+  const localRecentsWidget = new RecentsWidgetPage({aBrowser: browser.select('1')});
+  const remoteMessageWidget = new MessageWidgetPage({aBrowser: browser.select('2')});
+  const remoteRecentsWidget = new RecentsWidgetPage({aBrowser: browser.select('2')});
+
+  const allWidgets = [
+    localMessageWidget,
+    localRecentsWidget,
+    remoteMessageWidget,
+    remoteRecentsWidget
+  ];
 
   let docbrown, lorraine, marty;
-  let conversation, oneOnOneConversation;
-  let local, remote;
+  let groupSpace, oneOnOneSpace;
 
-  before('update sauce job', () => {
-    if (process.env.SAUCE && process.env.INTEGRATION) {
-      const account = new SauceLabs({
-        username: process.env.SAUCE_USERNAME,
-        password: process.env.SAUCE_ACCESS_KEY
-      });
-      account.getJobs((err, jobs) => {
-        const widgetJobs = jobs.filter((job) => job.name === 'react-widget-integration' && job.consolidated_status === 'in progress'
-              && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
-        widgetJobs.forEach((job) => account.updateJob(job.id, {name: 'react-widget-multiple'}));
-      });
-    }
+  before('initialize test users', () => {
+    [docbrown, lorraine, marty] = createTestUsers(3);
+    localMessageWidget.user = marty;
+    localRecentsWidget.user = marty;
+    remoteMessageWidget.user = docbrown;
+    remoteRecentsWidget.user = docbrown;
+
+    browser.call(() =>
+      Promise.all([
+        marty.spark.internal.device.register(),
+        lorraine.spark.internal.device.register()
+      ]));
+
+    browser.waitUntil(() => marty.spark.internal.device.userId && lorraine.spark.internal.device.userId,
+      15000, 'failed to register marty and lorraine');
   });
 
-  before('load browser', () => {
-    browser
-      .url('/multiple.html')
-      .execute(() => {
-        localStorage.clear();
+  describe('Setup', function setup() {
+    it('can create a group space', function createGroupSpace() {
+      this.retries(2);
+      groupSpace = createSpace({
+        sparkInstance: marty.spark,
+        displayName: 'Test Group Space',
+        participants: [marty, docbrown, lorraine]
       });
-  });
 
-  before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-    .then((users) => {
-      [marty] = users;
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return marty.spark.internal.device.register()
-        .then(() => marty.spark.internal.mercury.connect());
-    }));
-
-  before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-    .then((users) => {
-      [docbrown] = users;
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return docbrown.spark.internal.mercury.connect();
-    }));
-
-  before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-    .then((users) => {
-      [lorraine] = users;
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return lorraine.spark.internal.mercury.connect();
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
-
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect(),
-    docbrown.spark.internal.mercury.disconnect()
-  ]));
-
-  before('create group space', () => marty.spark.internal.conversation.create({
-    displayName: 'Test Group Space',
-    participants: [marty, docbrown, lorraine]
-  }).then((c) => {
-    conversation = c;
-    return conversation;
-  }));
-
-  before('create one on one converstation', () => lorraine.spark.internal.conversation.create({
-    participants: [marty, lorraine]
-  }).then((c) => {
-    oneOnOneConversation = c;
-    return oneOnOneConversation;
-  }));
-
-  before('open widgets local', () => {
-    local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
-    browserLocal.execute((localAccessToken) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push({widget: 'recents', eventName});
-        }
-      };
-      window.openRecentsWidget(options);
-    }, marty.token.access_token);
-    browserLocal.waitForVisible(recentsElements.recentsWidget);
-
-    browserLocal.execute((localAccessToken, spaceId) => {
-      const options = {
-        accessToken: localAccessToken,
-        spaceId,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push({widget: 'space', eventName});
-        }
-      };
-      window.openSpaceWidget(options);
-    }, marty.token.access_token, conversation.id);
-    browserLocal.waitForVisible(spaceElements.spaceWidget);
-  });
-
-  before('open space widget', () => {
-    remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
-    browserRemote.execute((localAccessToken) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push({widget: 'recents', eventName});
-        }
-      };
-      window.openRecentsWidget(options);
-    }, docbrown.token.access_token);
-    browserRemote.waitForVisible(recentsElements.recentsWidget);
-
-    browserRemote.execute((localAccessToken, spaceId) => {
-      const options = {
-        accessToken: localAccessToken,
-        spaceId,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push({widget: 'space', eventName});
-        }
-      };
-      window.openSpaceWidget(options);
-    }, docbrown.token.access_token, conversation.id);
-    browserRemote.waitForVisible(spaceElements.spaceWidget);
-  });
-
-  it('has the page loaded', () => {
-    const expectedTitle = 'Cisco Spark Multiple Widget Test';
-    assert.equal(browserLocal.getTitle(), expectedTitle, 'page title does not match expected');
-  });
-
-  describe('recents widget functionality', () => {
-    it('displays a new incoming message', () => {
-      const lorraineText = 'Marty, will we ever see you again?';
-      displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
+      assert.exists(groupSpace.id, 'failed to create group space');
     });
 
-    it('removes unread indicator when read', () => {
-      const lorraineText = 'You\'re safe and sound now!';
-      displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+    it('can create one on one space', function createOneOnOneSpace() {
+      this.retries(2);
+      oneOnOneSpace = createSpace({
+        sparkInstance: marty.spark,
+        participants: [marty, lorraine]
+      });
+
+      assert.exists(oneOnOneSpace.id, 'failed to create one on one space');
     });
 
-    it('displays a call button on hover', () => {
-      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      moveMouse(browserLocal, recentsElements.firstSpace);
-      browserLocal.waitUntil(() =>
-        browserLocal.element(`${recentsElements.callButton}`).isVisible(),
-      1500,
-      'does not show call button');
+    it('loads browsers and widgets', () => {
+      allWidgets.forEach((w) => w.open('./multiple.html'));
+      localMessageWidget.loadWithGlobals({spaceId: groupSpace.id});
+      localRecentsWidget.loadWidget();
+      remoteMessageWidget.loadWithGlobals({spaceId: groupSpace.id});
+      remoteRecentsWidget.loadWidget();
+
+      browser.waitUntil(() =>
+        localMessageWidget.hasMessageWidget &&
+        localRecentsWidget.hasRecentsWidget &&
+        remoteMessageWidget.hasMessageWidget &&
+        remoteRecentsWidget.hasRecentsWidget,
+      15000, 'failed to load browsers and widgets');
     });
   });
 
-  describe('space widget functionality', () => {
-    before('wait for conversation to be ready', () => {
-      const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
-      browserLocal.waitForVisible(textInputField);
+  describe('Main Tests', () => {
+    beforeEach(function testName() {
+      const {title} = this.currentTest;
+      localMessageWidget.setPageTestName(title);
+      remoteMessageWidget.setPageTestName(title);
     });
 
-    describe('Activity Menu', () => {
-      it('has a menu button', () => {
-        assert.isTrue(browserLocal.isVisible(spaceElements.menuButton));
+    describe('Recents Widget', () => {
+      it('can displays a new incoming message', () => {
+        displayIncomingMessage({
+          page: localRecentsWidget,
+          sender: lorraine,
+          space: groupSpace,
+          message: 'Marty, will we ever see you again?'
+        });
       });
 
-      it('displays the menu when clicking the menu button', () => {
-        browserLocal.click(spaceElements.menuButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu);
+      it('can remove unread indicator when read', () => {
+        displayAndReadIncomingMessage({
+          page: localRecentsWidget,
+          sender: lorraine,
+          receiver: marty,
+          space: groupSpace,
+          message: 'You\'re safe and sound now!'
+        });
       });
 
-      it('has an exit menu button', () => {
-        assert.isTrue(browserLocal.isVisible(spaceElements.activityMenu));
-        browserLocal.waitForVisible(spaceElements.exitButton);
-      });
+      it('can display a call button on hover', () => {
+        displayIncomingMessage({
+          page: localRecentsWidget,
+          sender: lorraine,
+          space: oneOnOneSpace,
+          message: 'Can you call me?',
+          isOneOnOne: true
+        });
 
-      it('closes the menu with the exit button', () => {
-        browserLocal.click(spaceElements.exitButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu, 1500, true);
-      });
+        localRecentsWidget.moveMouseToFirstSpace();
 
-      it('has a message button', () => {
-        browserLocal.click(spaceElements.menuButton);
-        browserLocal.element(spaceElements.controlsContainer).element(spaceElements.messageButton).waitForVisible();
-      });
-
-      it('hides menu and switches to message widget', () => {
-        browserLocal.element(spaceElements.controlsContainer).element(spaceElements.messageButton).click();
-        browserLocal.waitForVisible(spaceElements.activityMenu, 1500, true);
-        assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
+        browser.waitUntil(() =>
+          localRecentsWidget.hasCallButton,
+        1000, 'does not show call button');
       });
     });
 
-    describe('messaging', () => {
-      it('sends and receives messages', () => {
-        const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-        const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
-        const lorraineText = 'Marty, will we ever see you again?';
-        const martyText2 = 'I guarantee it.';
-        sendMessage(remote, local, martyText);
-        verifyMessageReceipt(local, remote, martyText);
-        sendMessage(remote, local, docText);
-        verifyMessageReceipt(local, remote, docText);
-        // Send a message from a 'client'
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }));
-        // Wait for both widgets to receive client message
-        verifyMessageReceipt(local, remote, lorraineText);
-        verifyMessageReceipt(remote, local, lorraineText);
-        sendMessage(local, remote, martyText2);
-        verifyMessageReceipt(remote, local, martyText2);
+    describe('Space Widget', () => {
+      describe('Activity Menu', () => {
+        it('has a menu button', () => {
+          assert.isTrue(localMessageWidget.hasActivityMenuButton);
+        });
+
+        it('displays the menu when clicking the menu button', () => {
+          localMessageWidget.openActivityMenu();
+        });
+
+        it('has an exit menu button', () => {
+          localMessageWidget.openActivityMenu();
+          browser.waitUntil(() =>
+            localMessageWidget.hasExitButton,
+          1000, 'exit button is not visible after activity menu is open');
+        });
+
+        it('closes the menu with the exit button', () => {
+          localMessageWidget.openActivityMenu();
+          localMessageWidget.closeActivityMenu();
+        });
+
+        it('has a message button and switchs to message widget', () => {
+          localMessageWidget.switchToMessage();
+          assert.isTrue(localMessageWidget.hasMessageWidget);
+        });
+      });
+
+      describe('messaging', () => {
+        it('sends and receives messages', () => {
+          const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
+          const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+          const lorraineText = 'Marty, will we ever see you again?';
+          const martyText2 = 'I guarantee it.';
+
+          localMessageWidget.sendMessage(martyText);
+          remoteMessageWidget.verifyMessageReceipt(martyText);
+
+          remoteMessageWidget.sendMessage(docText);
+          localMessageWidget.verifyMessageReceipt(docText);
+
+          // Send a message from a 'client'
+          sendMessage({
+            sparkInstance: lorraine.spark,
+            space: groupSpace,
+            message: lorraineText
+          });
+          // Wait for both widgets to receive client message
+          remoteMessageWidget.verifyMessageReceipt(lorraineText);
+          localMessageWidget.verifyMessageReceipt(lorraineText);
+
+          localMessageWidget.sendMessage(martyText2);
+          remoteMessageWidget.verifyMessageReceipt(martyText2);
+        });
       });
     });
   });
