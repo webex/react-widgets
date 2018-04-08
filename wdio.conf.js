@@ -54,7 +54,7 @@ if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
 if (process.env.SAUCE) {
-  mochaTimeout = 90000;
+  mochaTimeout = 120000;
 }
 const services = [];
 services.push('firefox-profile');
