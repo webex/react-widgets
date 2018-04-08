@@ -65,11 +65,7 @@ describe('Widget Space Feature Flags', () => {
 
   describe('Browser Global', () => {
     before('load browsers', () => {
-      browser
-        .url('/space.html?basic')
-        .execute(() => {
-          localStorage.clear();
-        });
+      browser.url('/space.html?basic');
     });
 
     before('open widget local', () => {
@@ -81,7 +77,7 @@ describe('Widget Space Feature Flags', () => {
         };
         window.openSpaceWidget(options);
       }, userWithAllTheFeatures.token.access_token, conversation.id);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });
 
     before('open widget remote', () => {
@@ -93,7 +89,7 @@ describe('Widget Space Feature Flags', () => {
         };
         window.openSpaceWidget(options);
       }, userWithNoFeatures1.token.access_token, conversation.id);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });
 
     describe('Feature Flag Tests', () => {
@@ -103,11 +99,7 @@ describe('Widget Space Feature Flags', () => {
 
   describe('Data API', () => {
     before('load browsers', () => {
-      browser
-        .url('/data-api/space.html')
-        .execute(() => {
-          localStorage.clear();
-        });
+      browser.url('/data-api/space.html');
     });
 
     before('open widget local', () => {
@@ -121,7 +113,7 @@ describe('Widget Space Feature Flags', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, userWithAllTheFeatures.token.access_token, conversation.id);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });
 
     before('open widget remote', () => {
@@ -135,7 +127,7 @@ describe('Widget Space Feature Flags', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, userWithNoFeatures1.token.access_token, conversation.id);
-      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+      browserRemote.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });
 
     describe('Feature Flag Tests', () => {
