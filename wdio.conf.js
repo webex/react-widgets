@@ -122,7 +122,10 @@ exports.config = {
       './test/journeys/specs/oneOnOne/global/basic.js',
       './test/journeys/specs/oneOnOne/global/features.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
-      './test/journeys/specs/oneOnOne/global/messaging.js'
+      './test/journeys/specs/oneOnOne/global/messaging.js',
+      './test/journeys/specs/recents/dataApi/basic.js',
+      './test/journeys/specs/recents/global/basic.js'
+
     ]
   },
   // Patterns to exclude.
