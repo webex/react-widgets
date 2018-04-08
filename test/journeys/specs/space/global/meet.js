@@ -15,11 +15,7 @@ describe('Widget Space', () => {
   let conversation, local, remote;
 
   before('load browsers', () => {
-    browser
-      .url('/space.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/space.html');
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
@@ -76,11 +72,6 @@ describe('Widget Space', () => {
 
   before('pause to let test users establish', () => browser.pause(5000));
 
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect()
-  ]));
-
   before('create space', () => marty.spark.internal.conversation.create({
     displayName: 'Test Widget Space',
     participants: [marty, docbrown, lorraine]
@@ -121,7 +112,7 @@ describe('Widget Space', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
         switchToMeet(browserLocal);
-        browserLocal.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        browserLocal.waitForVisible(elements.callButton);
       });
     });
 
@@ -145,4 +136,9 @@ describe('Widget Space', () => {
       });
     });
   });
+
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect()
+  ]));
 });

@@ -213,14 +213,8 @@ describe('Widget Space: Data API', () => {
       it('searches and adds person to space', () => {
         searchForPerson(browserLocal, biff.displayName, true);
         browserLocal.waitForVisible(rosterElements.rosterList);
-        browserLocal.waitUntil(() => {
-          const participantsText = browserLocal.getText(rosterElements.rosterList);
-          return participantsText.includes(biff.displayName);
-        }, 60000, 'added person not found in participant list');
-        browserLocal.waitUntil(() => {
-          const rosterTitle = browserLocal.getText(rosterElements.rosterTitle);
-          return rosterTitle === 'People (4)';
-        }, 60000, 'Participant count should update once user is added');
+        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterList).includes(biff.displayName));
+        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterTitle) === 'People (4)');
       });
 
       it('closes the people roster widget', () => {
