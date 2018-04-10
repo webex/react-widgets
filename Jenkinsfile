@@ -127,7 +127,7 @@ ansiColor('xterm') {
             source ~/.nvm/nvm.sh
             nvm use v8.9.1
             git diff
-            npm version patch -m "build %s"
+            npm run release -- --release-as patch --no-verify
             version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
             echo $version > .version
             '''
