@@ -49,6 +49,7 @@ export function call(caller, reciever) {
   caller.waitForVisible(elements.callButton);
   caller.click(elements.callButton);
   // wait for call to establish
+  browser.pause(5000);
   reciever.waitForVisible(elements.answerButton);
 }
 
