@@ -71,6 +71,7 @@ export function decline(aBrowser) {
  */
 export function hangup(aBrowser) {
   // Call controls currently has a hover state
+  aBrowser.waitForVisible(elements.callContainer);
   moveMouse(aBrowser, elements.callContainer);
   aBrowser.waitForVisible(elements.callControls);
   aBrowser.waitForVisible(elements.hangupButton);
