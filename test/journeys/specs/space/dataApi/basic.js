@@ -4,7 +4,6 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
-import SauceLabs from 'saucelabs';
 
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 import {
@@ -17,25 +16,8 @@ import {
 
 describe('Widget Space: Data API', () => {
   const browserLocal = browser.select('browserLocal');
-  const browserName = process.env.BROWSER || 'chrome';
-  const platform = process.env.PLATFORM || 'mac 10.12';
   let biff, docbrown, lorraine, marty;
   let conversation;
-
-  before('update sauce job', () => {
-    if (process.env.SAUCE && process.env.INTEGRATION) {
-      browser.reload();
-      const account = new SauceLabs({
-        username: process.env.SAUCE_USERNAME,
-        password: process.env.SAUCE_ACCESS_KEY
-      });
-      account.getJobs((err, jobs) => {
-        const widgetJobs = jobs.filter((job) => job.name === 'react-widget-integration' && job.consolidated_status === 'in progress'
-                  && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
-        widgetJobs.forEach((job) => account.updateJob(job.id, {name: 'react-widget-space'}));
-      });
-    }
-  });
 
   before('load browsers', () => {
     browser.url('/data-api/space.html');
