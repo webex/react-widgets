@@ -37,6 +37,7 @@ const chromeCapabilities = {
   idleTimeout: 300,
   commandTimeout: 600,
   maxDuration: 3600,
+  seleniumVersion: '3.4.0',
   screenResolution,
   platform
 };
@@ -135,7 +136,6 @@ exports.config = {
       './test/journeys/specs/space/global/meet.js',
       './test/journeys/specs/space/global/messaging.js',
       './test/journeys/specs/space/featureFlags.js'
-
     ]
   },
   // Patterns to exclude.
