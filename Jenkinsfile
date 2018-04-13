@@ -43,7 +43,7 @@ ansiColor('xterm') {
               currentBuild.description += 'Could not determine pusher';
             }
 
-            sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
+            sshagent(['d8533977-c4c5-4e2b-938d-ae7fcbe27aac']) {
               // return the exit code because we don't care about failures
               sh script: 'git remote add upstream git@github.com:ciscospark/react-ciscospark.git', returnStatus: true
 
@@ -179,7 +179,7 @@ ansiColor('xterm') {
 
 
             stage('Push to github'){
-              sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {
+              sshagent(['d8533977-c4c5-4e2b-938d-ae7fcbe27aac']) {
                 sh "git push upstream HEAD:master && git push --tags upstream"
               }
             }
