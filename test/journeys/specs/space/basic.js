@@ -63,7 +63,7 @@ export default function groupBasicTests(type) {
 
     describe('Main Tests', function main() {
       beforeEach(function testName() {
-        localPage.setPageTestName(this.currentTest.title);
+        localPage.setPageTestName(`Space - Basic - ${this.currentTest.title}`);
       });
 
       activityMenuTests(localPage);

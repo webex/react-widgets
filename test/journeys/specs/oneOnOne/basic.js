@@ -64,7 +64,7 @@ export default function oneOnOneBasicTests(type) {
 
     describe('Main Tests', () => {
       beforeEach(function testName() {
-        localPage.setPageTestName(this.currentTest.title);
+        localPage.setPageTestName(`One On One - Basic - ${this.currentTest.title}`);
       });
       activityMenuTests(localPage);
 

@@ -88,7 +88,7 @@ describe('Multiple Widgets on a Single Page', () => {
 
   describe('Main Tests', () => {
     beforeEach(function testName() {
-      const {title} = this.currentTest;
+      const {title} = `Multiple - ${this.currentTest.title}`;
       localMessageWidget.setPageTestName(title);
       remoteMessageWidget.setPageTestName(title);
     });

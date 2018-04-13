@@ -59,12 +59,6 @@ export default function spaceFeatureTests(type) {
         allFeaturesPage.open('./space.html');
         noFeaturesPage.open('./space.html');
 
-        browser
-          .url('/space.html?basic')
-          .execute(() => {
-            localStorage.clear();
-          });
-
         allFeaturesPage[widgetInit[type]]({
           spaceId: space.id,
           initialActivity: 'message'
@@ -84,7 +78,7 @@ export default function spaceFeatureTests(type) {
 
     describe('Main Tests', function main() {
       beforeEach(function testName() {
-        const {title} = this.currentTest;
+        const title = `Space - Features - ${this.currentTest.title}`;
         allFeaturesPage.setPageTestName(title);
         noFeaturesPage.setPageTestName(title);
       });

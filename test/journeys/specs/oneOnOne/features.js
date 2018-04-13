@@ -71,7 +71,7 @@ export default function oneOnOneFeatureTests(type) {
 
     describe('Main Tests', function main() {
       beforeEach(function testName() {
-        const {title} = this.currentTest;
+        const title = `One On One - Features - ${this.currentTest.title}`;
         allFeaturesPage.setPageTestName(title);
         noFeaturesPage.setPageTestName(title);
       });

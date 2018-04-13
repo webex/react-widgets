@@ -79,7 +79,7 @@ export default function groupMessageTests(type) {
 
     describe('Main Tests', function main() {
       beforeEach(function testName() {
-        const {title} = this.currentTest;
+        const title = `Space - Messaging - ${this.currentTest.title}`;
         localPage.setPageTestName(title);
         remotePage.setPageTestName(title);
       });

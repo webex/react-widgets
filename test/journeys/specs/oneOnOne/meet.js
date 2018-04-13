@@ -69,7 +69,7 @@ export default function oneOnOneMeetTests(type) {
 
     describe('Main Tests', function main() {
       beforeEach(function testName() {
-        const {title} = this.currentTest;
+        const title = `One On One - Meet - ${this.currentTest.title}`;
         localPage.setPageTestName(title);
         remotePage.setPageTestName(title);
       });

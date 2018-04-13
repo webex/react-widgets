@@ -45,7 +45,7 @@ describe('Widget Space: Group - Data API Settings', () => {
 
   describe('Main Tests', function main() {
     beforeEach(function testName() {
-      const {title} = this.currentTest;
+      const title = `Space - Data API Settings - ${this.currentTest.title}`;
       localPage.setPageTestName(title);
       remotePage.setPageTestName(title);
     });

@@ -42,7 +42,7 @@ describe('Widget Space: One on One - Data API Settings', () => {
 
   describe('Main Tests', () => {
     beforeEach(function testName() {
-      const {title} = this.currentTest;
+      const title = `One On One - Data API - ${this.currentTest.title}`;
       localPage.setPageTestName(title);
       remotePage.setPageTestName(title);
     });
