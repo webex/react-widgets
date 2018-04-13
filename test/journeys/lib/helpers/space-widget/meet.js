@@ -30,6 +30,7 @@ export function hangupBeforeAnswerTest({localPage, remotePage}) {
  */
 export function declineIncomingCallTest({localPage, remotePage, isGroup}) {
   remotePage.placeCall();
+  localPage.confirmReceivingCall();
   localPage.declineCall();
   // Should switch back to message widget after hangup
   browser.waitUntil(() =>
@@ -51,6 +52,7 @@ export function declineIncomingCallTest({localPage, remotePage, isGroup}) {
  */
 export function hangupDuringCallTest({localPage, remotePage, isGroup}) {
   localPage.placeCall();
+  remotePage.confirmReceivingCall();
   remotePage.answerCall();
   localPage.hangupCall();
   browser.waitUntil(() =>

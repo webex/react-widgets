@@ -15,11 +15,12 @@ export default class BaseWidgetObject {
   }
 
   open(page) {
-    this.browser
-      .url(page)
-      .execute(() => {
-        localStorage.clear();
-      });
+    this.url = page;
+    this.browser.url(page);
+  }
+
+  refresh() {
+    this.browser.url(this.url);
   }
 
   moveMouse(selector) {
@@ -34,17 +35,12 @@ export default class BaseWidgetObject {
       aBrowser.actions([{
         type: 'pointer',
         id: `mouse-${uuid.v4()}`,
-        parameters: {pointerType: 'mouse'},
         actions: [
           {
             type: 'pointerMove',
             duration: 0,
             x,
             y
-          },
-          {
-            type: 'pause',
-            duration: 500
           }
         ]
       }]);
@@ -54,11 +50,11 @@ export default class BaseWidgetObject {
     }
   }
 
-  clickButton(button) {
+  clickButton(button, timeout = 5000) {
     const aBrowser = this.browser;
     aBrowser.waitUntil(() =>
       aBrowser.isVisible(button),
-    5000, `button (${button}) was not visible after 5s and could not be clicked`);
+    timeout, `button (${button}) was not visible after ${timeout}ms and could not be clicked`);
     aBrowser.click(button);
   }
 

@@ -164,12 +164,10 @@ export default class MessageWidgetPage extends MainSpaceWidget {
 
     aBrowser.click(deleteMessageButton);
 
-    console.warn('after click delete button');
     // Click modal confirm
     browser.waitUntil(() =>
       this.hasModalWindow,
     3500, 'delete modal window is not visible after clicking delete button');
-    console.warn('after modal window open');
 
     assert.isTrue(this.hasModalDeleteButton, 'modal delete button is not visible');
     aBrowser.click(modalDeleteButton);

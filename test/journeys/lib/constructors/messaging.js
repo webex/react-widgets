@@ -59,12 +59,6 @@ export default function allMessagingTest({
         });
       }
 
-      before('clear shares in file uploader', function clearFiles() {
-        this.timeout(10000);
-        localPage.clearFileUploader();
-        remotePage.clearFileUploader();
-      });
-
       it('sends message with pdf attachment', () => {
         sendFile('pdf-sample.pdf');
       });

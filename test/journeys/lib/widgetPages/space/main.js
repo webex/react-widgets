@@ -56,7 +56,7 @@ export default class MainSpaceWidgetPage extends BaseWidgetObject {
     startCall
   }) {
     const aBrowser = this.browser;
-    aBrowser.refresh();
+    this.refresh();
     aBrowser.waitUntil(() =>
       this.hasWidgetContainer,
     15000, 'failed to load widget container');
@@ -88,7 +88,7 @@ export default class MainSpaceWidgetPage extends BaseWidgetObject {
     startCall
   }) {
     const aBrowser = this.browser;
-    aBrowser.refresh();
+    this.refresh();
     aBrowser.waitUntil(() =>
       this.hasWidgetContainer,
     15000, 'failed to load widget container');
