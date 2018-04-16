@@ -9,5 +9,6 @@ npm-debug*
 packages/**/es/*
 packages/**/cjs/*
 .tmp/*
+tmp.*
 reports/*
 .python-version
