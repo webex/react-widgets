@@ -238,10 +238,10 @@ describe('Widget Recents', () => {
   });
 
   describe('incoming call', () => {
-    it('should display incoming call screen', () => {
+    it('displays a call in progress button', () => {
       browserRemote.waitForVisible(meetElements.callButton);
       browserRemote.click(meetElements.callButton);
-      browserLocal.waitUntil(() => browserLocal.isVisible(elements.answerButton));
+      browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton));
       hangup(browserRemote);
     });
   });

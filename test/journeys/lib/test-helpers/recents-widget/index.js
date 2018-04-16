@@ -9,6 +9,7 @@ export const elements = {
   unreadIndicator: '.space-unread-indicator',
   lastActivity: '.space-last-activity',
   callButton: 'button[aria-label="Call Space"]',
+  joinCallButton: 'button[aria-label="Join Call"]',
   answerButton: 'button[aria-label="Answer"]'
 };
 
