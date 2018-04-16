@@ -46,8 +46,10 @@ ansiColor('xterm') {
             sshagent(['d8533977-c4c5-4e2b-938d-ae7fcbe27aac']) {
               // return the exit code because we don't care about failures
               sh script: 'git remote add upstream git@github.com:ciscospark/react-ciscospark.git', returnStatus: true
-
-              sh 'git fetch upstream'
+              // Make sure local tags don't include failed releases
+              sh 'git tag -l | xargs git tag -d'
+              sh 'git gc'
+              sh 'git fetch upstream --tags'
             }
 
             changedFiles = sh script: 'git diff --name-only upstream/master..$(git merge-base HEAD upstream/master)', returnStdout: true
@@ -57,8 +59,6 @@ ansiColor('xterm') {
             }
 
             sh 'git checkout upstream/master'
-            sh 'git reset --hard && git clean -f'
-            sh 'git tag -l | xargs git tag -d'
             try {
               sh "git merge --ff ${GIT_COMMIT}"
             }
