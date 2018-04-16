@@ -36,31 +36,59 @@
   <script src="/axe-core/axe.min.js"></script>
 </head>
 <body>
+  <h1>Multiple - <span id="testName"></span></h1>
   <div style="display: flex;">
     <div style="width: 500px; height: 500px">
-      <main class="ciscospark-widget"
-        id="ciscospark-recents-widget">
+      <main class="ciscospark-widget" id="ciscospark-recents-widget">
     </div>
     <div style="width: 500px; height: 500px">
-      <main class="ciscospark-widget"
-        id="ciscospark-space-widget">
+      <main class="ciscospark-widget" id="ciscospark-space-widget">
     </div>
   </div>
 
   <script src="/dist-space/bundle.js"></script>
   <script src="/dist-recents/bundle.js"></script>
   <script>
-    window.openSpaceWidget = function(options) {
-      var spaceWidgetEl = document.getElementById('ciscospark-space-widget');
-      // Init a new widget
-      ciscospark.widget(spaceWidgetEl).spaceWidget(options);
-    };
-    window.openRecentsWidget = function(options) {
       var recentsWidgetEl = document.getElementById('ciscospark-recents-widget');
-      // Init a new widget
-      ciscospark.widget(recentsWidgetEl).recentsWidget(options);
-    };
-    window.ciscoSparkEvents = [];
+      var spaceWidgetEl = document.getElementById('ciscospark-space-widget');
+      var title = document.getElementById('testType');
+      var testName = document.getElementById('testName');
+
+      window.ciscoSparkEvents = [];
+
+      window.setTestName = function(name) {
+        testName.innerHTML = name;
+      };
+
+      window.openWidget = function(options) {
+        loadBundle(function() {
+          window.ciscospark.widget(widgetEl).spaceWidget(Object.assign({}, options, {
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            }
+          }));
+        });
+      };
+
+      window.removeWidget = function(type) {
+        window.ciscospark.widget(widgetEl).remove();
+      };
+
+      window.openWidgetGlobal = function(options) {
+        ciscospark.widget(spaceWidgetEl).spaceWidget(Object.assign({}, options, {
+          onEvent: (eventName) => {
+            window.ciscoSparkEvents.push({widget: 'space', eventName});
+          }
+        }));
+      };
+      window.openRecentsWidget = function(options) {
+        ciscospark.widget(recentsWidgetEl).recentsWidget(Object.assign({}, options, {
+          onEvent: (eventName) => {
+            window.ciscoSparkEvents.push({widget: 'recents', eventName});
+          }
+        }));
+      };
+      window.ciscoSparkEvents = [];
   </script>
 </body>
 

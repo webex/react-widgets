@@ -2,11 +2,12 @@
 .DS_Store
 .idea
 *.log
-/node_modules
+/node_modules*
 .env
-package-lock.json
 npm-debug*
 packages/**/es/*
 packages/**/cjs/*
 .tmp/*
 reports/*
+/dist-test
+coverage/

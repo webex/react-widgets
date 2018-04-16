@@ -7,20 +7,64 @@
   <script src="/axe-core/axe.min.js"></script>
 </head>
 <body>
-<div style="width: 500px; height: 500px">
-  <main class="ciscospark-widget"
-    id="ciscospark-widget">
+  <h1>Recents - <span id="testType"></span> - <span id="testName"></span></h1>
+  <div style="width: 500px; height: 500px">
+    <main class="ciscospark-widget" id="ciscospark-widget">
+  </div>
+  <script>
+      var widgetEl = document.getElementById('ciscospark-widget');
+      var title = document.getElementById('testType');
+      var testName = document.getElementById('testName');
 
-</div>
-<script src="/dist-recents/bundle.js"></script>
-<script>
-  window.openRecentsWidget = function(options) {
-    var widgetEl = document.getElementById('ciscospark-widget');
-    // Init a new widget
-    ciscospark.widget(widgetEl).recentsWidget(options);
-  };
-  window.ciscoSparkEvents = [];
-</script>
+      window.ciscoSparkEvents = [];
+
+      window.setTestName = function(name) {
+        testName.innerHTML = name;
+      }
+
+      window.loadBundle = function(callback) {
+        var script = document.createElement('script');
+        script.src = '/dist-recents/bundle.js';
+        document.head.appendChild(script);
+        script.onload = function () {
+          var DOMContentLoaded_event = document.createEvent("Event");
+          DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+          window.document.dispatchEvent(DOMContentLoaded_event);
+          if (callback) {
+            callback();
+          }
+        }
+      };
+
+      window.openWidgetGlobal = function(options) {
+        title.innerHTML = "Global";
+        loadBundle(function() {
+          window.ciscospark.widget(widgetEl).recentsWidget(Object.assign({}, options, {
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            }
+          }));
+        });
+      };
+
+      window.openWidgetDataApi = function(options) {
+        title.innerHTML = "Data API";
+        const csmmDom = document.createElement('div');
+        csmmDom.setAttribute('class', 'ciscospark-widget');
+        csmmDom.setAttribute('data-toggle', `ciscospark-recents`);
+        csmmDom.setAttribute('data-access-token', options.accessToken);
+        widgetEl.appendChild(csmmDom);
+        window.loadBundle(function() {
+          window.ciscospark.widget(csmmDom).on('all', (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          });
+        });
+      };
+
+      window.removeWidget = function() {
+        window.ciscospark.widget(widgetEl).remove();
+      };
+  </script>
 </body>
 
 </html>

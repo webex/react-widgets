@@ -57,7 +57,7 @@ export default webpackBaseConfig({
   entry: './index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(process.cwd(), 'dist'),
+    path: process.env.BUILD_DIST_PATH || path.resolve(process.cwd(), 'dist'),
     sourceMapFilename: '[file].map',
     publicPath
   },
