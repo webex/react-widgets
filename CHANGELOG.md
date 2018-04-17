@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.276"></a>
+## [0.1.276](https://github.com/ciscospark/react-ciscospark/compare/v0.1.275...v0.1.276) (2018-04-17)
+
+
+
 <a name="0.1.275"></a>
 ## [0.1.275](https://github.com/ciscospark/react-ciscospark/compare/v0.1.273...v0.1.275) (2018-04-17)
 
@@ -1242,6 +1247,3 @@ All notable changes to this project will be documented in this file. See [standa
 ### Reverts
 
 * **widget-space:** revert index.html change ([edc403e](https://github.com/ciscospark/react-ciscospark/commit/edc403e))
-
-
-
