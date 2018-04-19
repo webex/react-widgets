@@ -63,7 +63,7 @@
     "@ciscospark/internal-plugin-presence": "1.28.5",
     "@ciscospark/internal-plugin-search": "1.28.5",
     "@ciscospark/internal-plugin-team": "1.28.5",
-    "@ciscospark/internal-plugin-user": "1.28.5",
+    "@ciscospark/internal-plugin-user": "1.31.1",
     "@ciscospark/plugin-authorization": "1.28.5",
     "@ciscospark/plugin-logger": "1.28.5",
     "@ciscospark/plugin-people": "1.28.5",
