@@ -112,7 +112,7 @@
     "@ciscospark/eslint-config-react": "^0.6.1",
     "@ciscospark/test-helper-appid": "1.28.5",
     "@ciscospark/test-helper-file": "1.28.5",
-    "@ciscospark/test-helper-server": "1.28.5",
+    "@ciscospark/test-helper-server": "1.31.1",
     "@ciscospark/test-helper-test-users": "1.28.5",
     "axe-core": "^2.3.1",
     "babel-cli": "^6.22.2",
