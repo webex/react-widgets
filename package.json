@@ -55,7 +55,7 @@
     "@ciscospark/common": "1.28.5",
     "@ciscospark/helper-html": "1.28.5",
     "@ciscospark/internal-plugin-conversation": "1.28.5",
-    "@ciscospark/internal-plugin-encryption": "1.28.5",
+    "@ciscospark/internal-plugin-encryption": "1.31.1",
     "@ciscospark/internal-plugin-feature": "1.28.5",
     "@ciscospark/internal-plugin-flag": "1.28.5",
     "@ciscospark/internal-plugin-mercury": "1.28.5",
