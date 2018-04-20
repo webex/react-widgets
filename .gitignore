@@ -10,5 +10,6 @@ packages/**/es/*
 packages/**/cjs/*
 .tmp/*
 tmp.*
+*.tmp
 reports/*
 .python-version
