@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ciscospark/react-ciscospark.git"
+    "url": "git+https://github.com/webex/react-ciscospark.git"
   },
   "contributors": [
     "Adam Weeks <adweeks@cisco.com>",
@@ -47,9 +47,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ciscospark/react-ciscospark/issues"
+    "url": "https://github.com/webex/react-ciscospark/issues"
   },
-  "homepage": "https://github.com/ciscospark/react-ciscospark#readme",
+  "homepage": "https://github.com/webex/react-ciscospark#readme",
   "main": "src/index.js",
   "dependencies": {
     "@ciscospark/common": "1.28.5",
