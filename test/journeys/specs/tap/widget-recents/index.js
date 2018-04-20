@@ -132,7 +132,7 @@ describe('Widget Recents', () => {
     });
 
     describe('events', () => {
-      // https://github.com/ciscospark/react-ciscospark/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
+      // https://github.com/webex/react-ciscospark/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
       it('messages:created', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Don\'t be such a square';
