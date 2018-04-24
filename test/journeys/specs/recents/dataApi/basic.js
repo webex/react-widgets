@@ -6,7 +6,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 
-import {moveMouse} from '../../../lib/test-helpers';
+import {moveMouse, renameSession} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -21,6 +21,12 @@ describe('Widget Recents: Data API', () => {
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
+
+  before('start new sauce session', () => {
+    browser.reload();
+    renameSession('react-widget-recents-dataApi');
+  });
+
 
   before('load browser', () => {
     browserLocal.url('/data-api/recents.html');

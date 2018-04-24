@@ -11,6 +11,7 @@ import {
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
+import {renameSession} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One: Data API', () => {
   const browserLocal = browser.select('browserLocal');
@@ -18,6 +19,11 @@ describe('Widget Space: One on One: Data API', () => {
   let mccoy, spock;
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
+
+  before('start new sauce session', () => {
+    browser.reload();
+    renameSession('react-widget-oneOnOne-dataApi');
+  });
 
   before('load browsers', () => {
     browser.url('/data-api/space.html');

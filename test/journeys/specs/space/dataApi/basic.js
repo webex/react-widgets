@@ -5,6 +5,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
+import {renameSession} from '../../../lib/test-helpers';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 import {
   elements as rosterElements,
@@ -18,6 +19,11 @@ describe('Widget Space: Data API', () => {
   const browserLocal = browser.select('browserLocal');
   let biff, docbrown, lorraine, marty;
   let conversation;
+
+  before('start new sauce session', () => {
+    browser.reload();
+    renameSession('react-widget-space-dataApi');
+  });
 
   before('load browsers', () => {
     browser.url('/data-api/space.html');

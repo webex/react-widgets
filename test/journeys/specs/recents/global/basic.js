@@ -10,7 +10,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
-import {moveMouse} from '../../../lib/test-helpers';
+import {moveMouse, renameSession} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -25,6 +25,11 @@ describe('Widget Recents', () => {
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
+
+  before('start new sauce session', () => {
+    browser.reload();
+    renameSession('react-widget-recents-global');
+  });
 
   before('load browser for recents widget', () => {
     browserLocal.url('/recents.html');

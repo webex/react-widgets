@@ -170,6 +170,7 @@
     "react-transform-hmr": "^1.0.4",
     "redux-mock-store": "^1.2.1",
     "rimraf": "^2.5.4",
+    "saucelabs": "^1.4.0",
     "semver": "^5.4.1",
     "sleep-ms": "^2.0.1",
     "sri-toolbox": "^0.2.0",

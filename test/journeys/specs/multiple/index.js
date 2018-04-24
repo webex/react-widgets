@@ -7,7 +7,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import waitForPromise from '../../lib/wait-for-promise';
-import {moveMouse} from '../../lib/test-helpers';
+import {moveMouse, renameSession} from '../../lib/test-helpers';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
 
@@ -24,6 +24,10 @@ describe('Multiple Widgets', () => {
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
   let local, remote;
+
+  before('start new sauce session', () => {
+    renameSession('react-widget-multiple');
+  });
 
   before('load browser', () => {
     browser.url('/multiple.html');

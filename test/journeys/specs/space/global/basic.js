@@ -5,6 +5,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
+import {renameSession} from '../../../lib/test-helpers';
 import {runAxe} from '../../../lib/axe';
 import {
   elements as rosterElements,
@@ -19,6 +20,11 @@ describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
   let biff, docbrown, lorraine, marty;
   let conversation;
+
+  before('start new sauce session', () => {
+    browser.reload();
+    renameSession('react-widget-space-global');
+  });
 
   before('load browsers', () => {
     browser.url('/space.html');
