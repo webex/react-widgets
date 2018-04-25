@@ -6,7 +6,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 
-import {moveMouse, renameSession} from '../../../lib/test-helpers';
+import {moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -18,13 +18,17 @@ import {
 describe('Widget Recents: Data API', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-recents-dataApi';
 
+  let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameSession('react-widget-recents-dataApi');
+    if (process.env.INTEGRATION) {
+      browser.reload();
+    }
+    renameJob(jobName);
   });
 
 
@@ -183,6 +187,15 @@ describe('Widget Recents: Data API', () => {
       browserLocal.waitUntil(() => browserLocal.isVisible(elements.answerButton));
       hangup(browserRemote);
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

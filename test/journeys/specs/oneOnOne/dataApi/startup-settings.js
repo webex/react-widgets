@@ -2,13 +2,15 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {moveMouse} from '../../../lib/test-helpers';
+import {moveMouse, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
 import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
 
 describe('Widget Space: One on One: Data API Settings', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-oneOnOne-dataApi';
+  let allPassed = true;
   let mccoy, spock, conversation;
 
   before('load browsers', () => {
@@ -136,5 +138,14 @@ describe('Widget Space: One on One: Data API Settings', () => {
       moveMouse(browserLocal, meetElements.callContainer);
       hangup(browserLocal);
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

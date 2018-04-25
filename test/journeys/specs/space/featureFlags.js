@@ -4,6 +4,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
+import {updateJobStatus} from '../../lib/test-helpers';
 import featureFlagTests from '../../lib/test-helpers/space-widget/featureFlags';
 import {FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/space-widget/roster';
 import {FEATURE_FLAG_GROUP_CALLING} from '../../lib/test-helpers/space-widget/meet';
@@ -12,7 +13,9 @@ import {FEATURE_FLAG_GROUP_CALLING} from '../../lib/test-helpers/space-widget/me
 describe('Widget Space Feature Flags', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-space-global';
 
+  let allPassed = true;
   let conversation;
   let userWithAllTheFeatures, userWithNoFeatures1, userWithNoFeatures2;
 
@@ -133,5 +136,14 @@ describe('Widget Space Feature Flags', () => {
     describe('Feature Flag Tests', () => {
       featureFlagTests(browserLocal, browserRemote);
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

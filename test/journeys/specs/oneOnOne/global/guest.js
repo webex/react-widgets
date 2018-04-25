@@ -10,11 +10,14 @@ import {
   verifyMessageReceipt
 } from '../../../lib/test-helpers/space-widget/messaging';
 import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
+import {updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One', () => {
   describe('Global: Guest', () => {
     let mccoy, spock;
+    let allPassed = true;
 
+    const jobName = 'react-widget-oneOnOne-global';
     const mccoyName = 'Bones Mccoy';
     const spockName = 'Mr Spock';
     const browserLocal = browser.select('browserLocal');
@@ -109,6 +112,15 @@ describe('Widget Space: One on One', () => {
           declineIncomingCallTest(browserLocal, browserRemote);
         });
       });
+    });
+
+    /* eslint-disable-next-line func-names */
+    afterEach(function () {
+      allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
+
+    after(() => {
+      updateJobStatus(jobName, allPassed);
     });
   });
 });

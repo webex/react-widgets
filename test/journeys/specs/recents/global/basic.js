@@ -10,7 +10,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
-import {moveMouse, renameSession} from '../../../lib/test-helpers';
+import {moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -22,13 +22,15 @@ import {
 describe('Widget Recents', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-recents-global';
 
+  let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
 
   before('start new sauce session', () => {
     browser.reload();
-    renameSession('react-widget-recents-global');
+    renameJob(jobName);
   });
 
   before('load browser for recents widget', () => {
@@ -251,6 +253,16 @@ describe('Widget Recents', () => {
         .then((results) => {
           assert.equal(results.violations.length, 0, 'has accessibilty violations');
         }));
+  });
+
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

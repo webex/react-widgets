@@ -5,7 +5,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {renameSession} from '../../../lib/test-helpers';
+import {renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 import {
   elements as rosterElements,
@@ -17,12 +17,17 @@ import {
 
 describe('Widget Space: Data API', () => {
   const browserLocal = browser.select('browserLocal');
+  const jobName = 'react-widget-space-dataApi';
+
+  let allPassed = true;
   let biff, docbrown, lorraine, marty;
   let conversation;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameSession('react-widget-space-dataApi');
+    if (process.env.INTEGRATION) {
+      browser.reload();
+    }
+    renameJob(jobName);
   });
 
   before('load browsers', () => {
@@ -211,5 +216,15 @@ describe('Widget Space: Data API', () => {
       });
     });
   });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
+  });
+
   after('disconnect', () => marty.spark.internal.mercury.disconnect());
 });

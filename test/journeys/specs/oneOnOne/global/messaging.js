@@ -13,11 +13,14 @@ import {
   sendMessage,
   verifyMessageReceipt
 } from '../../../lib/test-helpers/space-widget/messaging';
+import {updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-oneOnOne-global';
   let local, mccoy, remote, spock;
+  let allPassed = true;
 
   before('load browsers', () => {
     browser.url('/space.html?message');
@@ -227,5 +230,14 @@ describe('Widget Space: One on One', () => {
         messageTests.markdown.codeblock(local, remote);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

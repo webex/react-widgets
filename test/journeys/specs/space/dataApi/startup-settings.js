@@ -3,7 +3,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {moveMouse} from '../../../lib/test-helpers';
+import {moveMouse, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main';
 import {elements as messageElements} from '../../../lib/test-helpers/space-widget/messaging';
 import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet';
@@ -12,6 +12,9 @@ import {constructHydraId} from '../../../lib/hydra';
 describe('Widget Space: Data API Settings', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-space-dataApi';
+
+  let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation;
 
@@ -198,6 +201,15 @@ describe('Widget Space: Data API Settings', () => {
       browser.waitForVisible(elements.messageWidget);
       browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

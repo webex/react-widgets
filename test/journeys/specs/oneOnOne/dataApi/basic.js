@@ -11,18 +11,22 @@ import {
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
-import {renameSession} from '../../../lib/test-helpers';
+import {renameJob, updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One: Data API', () => {
   const browserLocal = browser.select('browserLocal');
 
   let mccoy, spock;
+  let allPassed = true;
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
+  const jobName = 'react-widget-oneOnOne-dataApi';
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameSession('react-widget-oneOnOne-dataApi');
+    if (process.env.INTEGRATION) {
+      browser.reload();
+    }
+    renameJob(jobName);
   });
 
   before('load browsers', () => {
@@ -167,5 +171,14 @@ describe('Widget Space: One on One: Data API', () => {
       browserLocal.click(rosterElements.closeButton);
       browserLocal.waitForVisible(rosterElements.rosterWidget, 60000, true);
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

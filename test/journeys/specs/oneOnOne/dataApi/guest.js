@@ -4,6 +4,7 @@ import testUsers from '@ciscospark/test-helper-test-users';
 
 import setupTestUserJwt from '../../../lib/test-users';
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {
   sendMessage,
   verifyMessageReceipt
@@ -13,9 +14,11 @@ import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest}
 describe('Widget Space: One on One', () => {
   describe('Data API: Guest', () => {
     let mccoy, spock;
+    let allPassed = true;
 
     const mccoyName = 'Bones Mccoy';
     const spockName = 'Mr Spock';
+    const jobName = 'react-widget-oneOnOne-dataApi';
     const browserLocal = browser.select('browserLocal');
     const browserRemote = browser.select('browserRemote');
 
@@ -103,6 +106,15 @@ describe('Widget Space: One on One', () => {
           declineIncomingCallTest(browserLocal, browserRemote);
         });
       });
+    });
+
+    /* eslint-disable-next-line func-names */
+    afterEach(function () {
+      allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
+
+    after(() => {
+      updateJobStatus(jobName, allPassed);
     });
   });
 });

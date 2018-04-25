@@ -3,6 +3,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog} from '../../../lib/events';
 import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
@@ -11,6 +12,9 @@ import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest, 
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-space-global';
+
+  let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation, local, remote;
 
@@ -135,6 +139,15 @@ describe('Widget Space', () => {
         callEventTest(local, remote, conversation);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

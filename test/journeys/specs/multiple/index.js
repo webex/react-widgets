@@ -7,7 +7,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import waitForPromise from '../../lib/wait-for-promise';
-import {moveMouse, renameSession} from '../../lib/test-helpers';
+import {moveMouse, renameJob, updateJobStatus} from '../../lib/test-helpers';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
 
@@ -20,13 +20,15 @@ import {
 describe('Multiple Widgets', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-multiple';
 
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
   let local, remote;
+  let allPassed = true;
 
   before('start new sauce session', () => {
-    renameSession('react-widget-multiple');
+    renameJob(jobName);
   });
 
   before('load browser', () => {
@@ -233,6 +235,15 @@ describe('Multiple Widgets', () => {
         verifyMessageReceipt(remote, local, martyText2);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

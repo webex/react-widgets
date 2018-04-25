@@ -1,6 +1,8 @@
 import uuid from 'uuid';
 import SauceLabs from 'saucelabs';
 
+// eslint-disable-next-line prefer-destructuring
+const argv = require('yargs').argv;
 /**
  * Move mouse a specified amount of pixels
  * Origin is set to the element that matches the selector passed
@@ -43,18 +45,36 @@ export function moveMouse(aBrowser, selector) {
  * @param {string} name
  * @returns {void}
  */
-export function renameSession(name) {
+export function renameJob(name) {
   const browserName = process.env.BROWSER || 'chrome';
   const platform = process.env.PLATFORM || 'mac 10.12';
-  if (process.env.SAUCE && process.env.INTEGRATION) {
+  const {suite} = argv || 'integration';
+
+  if (process.env.SAUCE) {
     const account = new SauceLabs({
       username: process.env.SAUCE_USERNAME,
       password: process.env.SAUCE_ACCESS_KEY
     });
     account.getJobs((err, jobs) => {
-      const widgetJobs = jobs.filter((job) => job.name === 'react-widget-integration' && job.consolidated_status === 'in progress'
+      const widgetJobs = jobs.filter((job) => job.name === `react-widget-${suite}` && job.status === 'in progress'
              && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
       widgetJobs.forEach((job) => account.updateJob(job.id, {name}));
+    });
+  }
+}
+
+export function updateJobStatus(name, passed) {
+  const browserName = process.env.BROWSER || 'chrome';
+  const platform = process.env.PLATFORM || 'mac 10.12';
+  if (process.env.SAUCE) {
+    const account = new SauceLabs({
+      username: process.env.SAUCE_USERNAME,
+      password: process.env.SAUCE_ACCESS_KEY
+    });
+    account.getJobs((err, jobs) => {
+      const widgetJobs = jobs.filter((job) => job.status === 'in progress'
+             && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
+      widgetJobs.forEach((job) => account.updateJob(job.id, {passed}));
     });
   }
 }

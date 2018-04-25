@@ -5,6 +5,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
+import {updateJobStatus} from '../../../lib/test-helpers';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {
   canDeleteMessage,
@@ -19,6 +20,9 @@ import {
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-space-global';
+
+  let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation, local, remote;
 
@@ -278,6 +282,15 @@ describe('Widget Space', () => {
         messageTests.markdown.codeblock(local, remote);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => Promise.all([

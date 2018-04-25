@@ -2,10 +2,13 @@ import testUsers from '@ciscospark/test-helper-test-users';
 
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {elements, hangupBeforeAnswerTest, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
+import {updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One: Data API', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-oneOnOne-dataApi';
+  let allPassed = true;
   let mccoy, spock;
 
   before('load browsers', () => {
@@ -74,5 +77,14 @@ describe('Widget Space: One on One: Data API', () => {
         hangupDuringCallTest(browserLocal, browserRemote);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

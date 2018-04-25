@@ -1,8 +1,9 @@
 import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/internal-plugin-conversation';
 
+import '@ciscospark/internal-plugin-conversation';
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {
   canDeleteMessage,
   deleteMessage,
@@ -16,6 +17,8 @@ import {
 describe('Widget Space: One on One: Data API', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = 'react-widget-oneOnOne-dataApi';
+  let allPassed = true;
   let local, mccoy, remote, spock;
 
   before('load browsers', () => {
@@ -213,5 +216,14 @@ describe('Widget Space: One on One: Data API', () => {
         messageTests.markdown.codeblock(local, remote);
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });

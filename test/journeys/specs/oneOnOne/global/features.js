@@ -5,6 +5,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import {elements as rosterElements, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
+import {updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One', () => {
   const browserLocal = browser.select('browserLocal');
@@ -12,7 +13,9 @@ describe('Widget Space: One on One', () => {
 
   const menuButton = 'button[aria-label="Main Menu"]';
   const activityMenu = '.ciscospark-activity-menu';
+  const jobName = 'react-widget-oneOnOne-global';
 
+  let allPassed = true;
   let userWithAllTheFeatures, userWithNoFeatures;
 
   before('load browsers', () => {
@@ -93,5 +96,14 @@ describe('Widget Space: One on One', () => {
         assert.isFalse(browserRemote.isVisible(rosterElements.peopleButton));
       });
     });
+  });
+
+  /* eslint-disable-next-line func-names */
+  afterEach(function () {
+    allPassed = allPassed && (this.currentTest.state === 'passed');
+  });
+
+  after(() => {
+    updateJobStatus(jobName, allPassed);
   });
 });
