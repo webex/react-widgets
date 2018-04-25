@@ -10,6 +10,6 @@ function npmPublishPackage(pkgName) {
   });
 }
 
-export default {
+module.exports = {
   npmPublishPackage
 };
