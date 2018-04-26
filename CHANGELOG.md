@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.281"></a>
+## [0.1.281](https://github.com/webex/react-ciscospark/compare/v0.1.280...v0.1.281) (2018-04-26)
+
+
+### Features
+
+* **widget-space:** add selector for other user ([e84436a](https://github.com/webex/react-ciscospark/commit/e84436a))
+
+
+
 <a name="0.1.280"></a>
 ## [0.1.280](https://github.com/webex/react-ciscospark/compare/v0.1.279...v0.1.280) (2018-04-25)
 
