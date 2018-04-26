@@ -198,7 +198,7 @@ ansiColor('xterm') {
               ]) {
                 try {
                   // Back up .npmrc
-                  sh '[[ -f $HOME/.npmrc ]] && mv $HOME/.npmrc $HOME/.npmrc.bak'
+                  sh '[ -f $HOME/.npmrc ] && mv $HOME/.npmrc $HOME/.npmrc.bak'
                   // Publish
                   sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
                   echo ''
@@ -210,7 +210,7 @@ ansiColor('xterm') {
                   npm run publish:components
                   '''
                   // Restore .npmrc
-                  sh '[[ -f $HOME/.npmrc.bak ]] && mv $HOME/.npmrc.bak $HOME/.npmrc'
+                  sh '[ -f $HOME/.npmrc.bak ] && mv $HOME/.npmrc.bak $HOME/.npmrc'
                 }
                 catch (error) {
                   warn("failed to publish to npm ${error.toString()}")
