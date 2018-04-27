@@ -59,7 +59,8 @@ export default (options) => {
           test: /\.js$/,
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
-            path.resolve(__dirname, '..', '..', 'src')
+            path.resolve(__dirname, '..', '..', 'src'),
+            path.resolve(__dirname, '..', '..', 'samples')
           ],
           exclude: [
             '/__fixtures__/',
