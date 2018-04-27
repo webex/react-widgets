@@ -13,6 +13,16 @@ def cleanup = { ->
   }
 }
 
+def warn = { msg ->
+  if (!currentBuild.description) {
+    currentBuild.description += ''
+  }
+  else if (currentBuild.description.substring(currentBuild.description.length() - 1) != '\n') {
+    currentBuild.description += '<br />\n'
+  }
+  currentBuild.description += "warning: ${msg}<br />\n"
+}
+
 ansiColor('xterm') {
   timestamps {
     timeout(90) {
