@@ -207,9 +207,6 @@ ansiColor('xterm') {
                 string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
               ]) {
                 try {
-                  // Back up .npmrc
-                  sh '[ -f $HOME/.npmrc ] && mv $HOME/.npmrc $HOME/.npmrc.bak'
-                  // Publish
                   sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' > $HOME/.npmrc'
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
@@ -219,8 +216,6 @@ ansiColor('xterm') {
                   nvm use v8.9.1
                   npm run publish:components
                   '''
-                  // Restore .npmrc
-                  sh '[ -f $HOME/.npmrc.bak ] && mv $HOME/.npmrc.bak $HOME/.npmrc'
                 }
                 catch (error) {
                   warn("failed to publish to npm ${error.toString()}")
