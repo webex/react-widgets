@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.288"></a>
+## [0.1.288](https://github.com/webex/react-ciscospark/compare/v0.1.287...v0.1.288) (2018-04-30)
+
+
+### Features
+
+* **widget-recents:** remove call.answer and call.reject events ([88e19d9](https://github.com/webex/react-ciscospark/commit/88e19d9))
+* **widget-recents:** remove incoming call screen ([7f2f0d2](https://github.com/webex/react-ciscospark/commit/7f2f0d2))
+
+
+
 <a name="0.1.287"></a>
 ## [0.1.287](https://github.com/webex/react-ciscospark/compare/v0.1.286...v0.1.287) (2018-04-30)
 
