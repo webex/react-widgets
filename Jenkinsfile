@@ -123,6 +123,7 @@ ansiColor('xterm') {
 
           stage('Journey Tests') {
             withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
               string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
               usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
               string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
@@ -141,20 +142,25 @@ ansiColor('xterm') {
             }
           }
 
-          stage('Bump version'){
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v8.9.1
-            git diff
-            npm run release -- --release-as patch --no-verify
-            version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
-            echo $version > .version
-            '''
-            packageJsonVersion = readFile '.version'
+          stage('Bump version') {
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v8.9.1
+              git diff
+              npm run release -- --release-as patch --no-verify
+              version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
+              echo $version > .version
+              '''
+              packageJsonVersion = readFile '.version'
+            }
           }
 
           stage('Build for CDN'){
             withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
               usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
               file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
               string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
