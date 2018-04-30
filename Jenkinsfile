@@ -110,11 +110,15 @@ ansiColor('xterm') {
           }
 
           stage('Unit Tests') {
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v8.9.1
-            npm run jest
-            '''
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v8.9.1
+              npm run jest
+              '''
+            }
           }
 
           stage('Journey Tests') {
