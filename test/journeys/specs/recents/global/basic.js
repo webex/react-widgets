@@ -10,7 +10,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
-import {moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -22,7 +22,6 @@ import {
 describe('Widget Recents', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const jobName = 'react-widget-recents-global';
 
   let allPassed = true;
   let docbrown, lorraine, marty;
@@ -30,7 +29,7 @@ describe('Widget Recents', () => {
 
   before('start new sauce session', () => {
     browser.reload();
-    renameJob(jobName);
+    renameJob(jobNames.recentsGlobal);
   });
 
   before('load browser for recents widget', () => {
@@ -262,7 +261,7 @@ describe('Widget Recents', () => {
   });
 
   after(() => {
-    updateJobStatus(jobName, allPassed);
+    updateJobStatus(jobNames.recentsGlobal, allPassed);
   });
 
   after('disconnect', () => Promise.all([

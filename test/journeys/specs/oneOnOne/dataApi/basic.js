@@ -11,7 +11,7 @@ import {
   FEATURE_FLAG_ROSTER
 } from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
-import {renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 
 describe('Widget Space: One on One: Data API', () => {
   const browserLocal = browser.select('browserLocal');
@@ -20,13 +20,12 @@ describe('Widget Space: One on One: Data API', () => {
   let allPassed = true;
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
-  const jobName = 'react-widget-oneOnOne-dataApi';
 
   before('start new sauce session', () => {
     if (process.env.INTEGRATION) {
       browser.reload();
     }
-    renameJob(jobName);
+    renameJob(jobNames.oneOnOneDataApi);
   });
 
   before('load browsers', () => {
@@ -179,6 +178,6 @@ describe('Widget Space: One on One: Data API', () => {
   });
 
   after(() => {
-    updateJobStatus(jobName, allPassed);
+    updateJobStatus(jobNames.oneOnOneDataApi, allPassed);
   });
 });

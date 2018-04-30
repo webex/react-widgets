@@ -3,6 +3,16 @@ import SauceLabs from 'saucelabs';
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
+
+export const jobNames = {
+  multiple: 'react-widget-multiple',
+  oneOnOneDataApi: 'react-widget-oneOnOne-dataApi',
+  oneOnOneGlobal: 'react-widget-oneOnOne-global',
+  recentsDataApi: 'react-widget-recents-dataApi',
+  recentsGlobal: 'react-widget-recents-global',
+  spaceDataApi: 'react-widget-space-dataApi',
+  spaceGlobal: 'react-widget-space-global'
+};
 /**
  * Move mouse a specified amount of pixels
  * Origin is set to the element that matches the selector passed

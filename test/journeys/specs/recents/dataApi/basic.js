@@ -6,7 +6,7 @@ import '@ciscospark/internal-plugin-conversation';
 import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 
-import {moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -18,7 +18,6 @@ import {
 describe('Widget Recents: Data API', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const jobName = 'react-widget-recents-dataApi';
 
   let allPassed = true;
   let docbrown, lorraine, marty;
@@ -28,7 +27,7 @@ describe('Widget Recents: Data API', () => {
     if (process.env.INTEGRATION) {
       browser.reload();
     }
-    renameJob(jobName);
+    renameJob(jobNames.recentsDataApi);
   });
 
 
@@ -195,7 +194,7 @@ describe('Widget Recents: Data API', () => {
   });
 
   after(() => {
-    updateJobStatus(jobName, allPassed);
+    updateJobStatus(jobNames.recentsDataApi, allPassed);
   });
 
   after('disconnect', () => Promise.all([

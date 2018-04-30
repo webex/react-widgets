@@ -4,7 +4,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import {renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as rosterElements, hasParticipants, FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
 import {runAxe} from '../../../lib/axe';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
@@ -14,13 +14,12 @@ describe('Widget Space: One on One', () => {
 
   let mccoy, spock;
   let allPassed = true;
-  const jobName = 'react-widget-oneOnOne-global';
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
 
   before('start new sauce session', () => {
     browser.reload();
-    renameJob(jobName);
+    renameJob(jobNames.oneOnOneGlobal);
   });
 
   before('load browsers', () => {
@@ -190,7 +189,7 @@ describe('Widget Space: One on One', () => {
   });
 
   after(() => {
-    updateJobStatus(jobName, allPassed);
+    updateJobStatus(jobNames.oneOnOneGlobal, allPassed);
   });
 
   if (process.env.DEBUG_JOURNEYS) {

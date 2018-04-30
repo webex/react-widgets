@@ -5,7 +5,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {runAxe} from '../../../lib/axe';
 import {
   elements as rosterElements,
@@ -18,7 +18,6 @@ import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-
 
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
-  const jobName = 'react-widget-space-global';
 
   let allPassed = true;
   let biff, docbrown, lorraine, marty;
@@ -26,7 +25,7 @@ describe('Widget Space', () => {
 
   before('start new sauce session', () => {
     browser.reload();
-    renameJob(jobName);
+    renameJob(jobNames.spaceGlobal);
   });
 
   before('load browsers', () => {
@@ -228,7 +227,7 @@ describe('Widget Space', () => {
   });
 
   after(() => {
-    updateJobStatus(jobName, allPassed);
+    updateJobStatus(jobNames.spaceGlobal, allPassed);
   });
 
   after('disconnect', () => marty.spark.internal.mercury.disconnect());
