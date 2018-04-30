@@ -79,7 +79,7 @@ ansiColor('xterm') {
           }
 
           stage('Clean') {
-           sh 'rm -rf node_modules'
+            sh 'rm -rf node_modules'
           }
 
           stage('Install') {
@@ -98,11 +98,15 @@ ansiColor('xterm') {
           }
 
           stage('Static Analysis') {
-            sh '''#!/bin/bash -ex
-            source ~/.nvm/nvm.sh
-            nvm use v8.9.1
-            npm run static-analysis
-            '''
+            withCredentials([
+              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            ]) {
+              sh '''#!/bin/bash -ex
+              source ~/.nvm/nvm.sh
+              nvm use v8.9.1
+              npm run static-analysis
+              '''
+            }
           }
 
           stage('Unit Tests') {
@@ -219,8 +223,6 @@ ansiColor('xterm') {
                   nvm use v8.9.1
                   npm run publish:components
                   '''
-                  // Clean up home dir
-                  sh 'rm $HOME/.npmrc'
                 }
                 catch (error) {
                   warn("failed to publish to npm ${error.toString()}")
