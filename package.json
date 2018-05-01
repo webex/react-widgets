@@ -13,6 +13,7 @@
     "clean": "npm run clean:dist && npm run clean:transpile",
     "clean:dist": "rimraf \"packages/**/dist/\"",
     "clean:transpile": "rimraf \"packages/**/es/\" && rimraf \"packages/**/cjs/\"",
+    "deploy": "./scripts/deploy/index.js",
     "test": "npm run static-analysis && npm run jest",
     "test:clean": "npm run clean && npm run test",
     "test:automation": "wdio wdio.conf.js",
