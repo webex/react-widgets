@@ -19,11 +19,8 @@ describe('Widget Space: Group Space - TAP', () => {
   let docbrown, lorraine, marty, space;
 
   before('load browsers', () => {
-    browser
-      .url('/widget-space/production/demo/index.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    localMeetPage.open('/widget-space/production/demo/index.html');
+    remoteMeetPage.open('/widget-space/production/demo/index.html');
   });
 
   before('initialize test users', function intializeUsers() {

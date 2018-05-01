@@ -5,6 +5,8 @@ export default class MainSpaceWidgetPage extends BaseWidgetObject {
 
   get hasActivityMenuButton() { return this.browser.isVisible(this.elements.menuButton); }
 
+  get hasActivityMenu() { return this.browser.isVisible(this.elements.activityMenu); }
+
   get hasExitButton() { return this.browser.isVisible(this.elements.exitButton); }
 
   get hasRosterButton() { return this.browser.isVisible(this.elements.rosterButton); }
@@ -104,31 +106,23 @@ export default class MainSpaceWidgetPage extends BaseWidgetObject {
   }
 
   openActivityMenu() {
-    const {
-      browser: aBrowser,
-      elements
-    } = this;
-    if (!aBrowser.isVisible(elements.activityMenu)) {
-      this.clickButton(elements.menuButton);
+    if (!this.hasActivityMenu) {
+      this.clickButton(this.elements.menuButton);
       browser.waitUntil(() =>
-        aBrowser.isVisible(elements.activityMenu),
+        this.hasActivityMenu,
       5000, 'could not open activity menu');
     }
   }
 
   closeActivityMenu() {
-    const {
-      browser: aBrowser,
-      elements
-    } = this;
-    if (aBrowser.isVisible(elements.activityMenu)) {
+    if (this.hasActivityMenu) {
       browser.waitUntil(() =>
-        aBrowser.isVisible(elements.exitButton),
+        this.hasExitButton,
       5000, 'could not find exit button');
 
-      this.clickButton(elements.exitButton);
+      this.clickButton(this.elements.exitButton);
       browser.waitUntil(() =>
-        !aBrowser.isVisible(elements.activityMenu),
+        !this.hasActivityMenu,
       5000, 'activity menu is still visible after close');
     }
   }
