@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.289"></a>
+## [0.1.289](https://github.com/webex/react-ciscospark/compare/v0.1.288...v0.1.289) (2018-05-01)
+
+
+### Features
+
+* **join-call-button:** moved to individual component ([4368e04](https://github.com/webex/react-ciscospark/commit/4368e04))
+* **samples:** add recents components to samples ([90c38ed](https://github.com/webex/react-ciscospark/commit/90c38ed))
+* **samples:** added samples section ([ab8a0de](https://github.com/webex/react-ciscospark/commit/ab8a0de))
+* **space-item:** moved to individual component ([3c32d6b](https://github.com/webex/react-ciscospark/commit/3c32d6b))
+* **spaces-list:** moved to individual component ([7c6c2de](https://github.com/webex/react-ciscospark/commit/7c6c2de))
+
+
+
 <a name="0.1.288"></a>
 ## [0.1.288](https://github.com/webex/react-ciscospark/compare/v0.1.287...v0.1.288) (2018-04-30)
 
