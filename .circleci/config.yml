@@ -1,7 +1,7 @@
 # Templates and Variables
 test_defaults: &test_defaults
   docker:
-    - image: circleci/node:8.9.4
+    - image: circleci/node:8.11.1
   steps:
     - checkout
     - restore_cache:
@@ -31,7 +31,7 @@ version: 2
 jobs:
   install:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.1
     steps:
       - checkout
       - restore_cache:
@@ -46,7 +46,7 @@ jobs:
 
   unit_tests_and_linting:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.1
     steps:
       - checkout
       - restore_cache:
@@ -69,7 +69,7 @@ jobs:
 
   build_for_tests:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.1
     environment:
       - NODE_ENV: "test"
     steps:
@@ -88,7 +88,7 @@ jobs:
 
   deploy_for_testing:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:8.11.1
     environment:
       - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
       - DEPLOY_PATH: "/tmp/workspace/dist-test"
