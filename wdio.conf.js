@@ -15,11 +15,12 @@ const uuid = require('uuid');
 const {inject} = require('./scripts/tests/openh264');
 const beforeSuite = require('./scripts/tests/beforeSuite');
 
-
+const port = process.env.PORT || 4567;
+const baseUrl = process.env.JOURNEY_TEST_BASE_URL
+  || process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
 const browser = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
-const port = process.env.PORT || 4567;
 const {suite} = argv || 'integration';
 const screenResolutionMac = '1920x1440';
 const screenResolutionWin = '1920x1080';
@@ -212,7 +213,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`,
+  baseUrl,
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 120000,

@@ -7,9 +7,12 @@ test_defaults: &test_defaults
     - restore_cache:
         keys:
         - js-dependencies-{{ checksum "package-lock.json" }}
-        - js-dependencies-
     - attach_workspace:
         at: /tmp/workspace
+    - run:
+        name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
+        command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+    - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
     - run:
         name: Integration Test
         command: npm run test:integration
@@ -77,7 +80,6 @@ jobs:
       - restore_cache:
           keys:
           - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
       - run:
           name: Copy and build journey test static files
           command: npm run build test /tmp/dist-test
@@ -97,7 +99,6 @@ jobs:
       - restore_cache:
           keys:
           - js-dependencies-{{ checksum "package-lock.json" }}
-          - js-dependencies-
       - attach_workspace:
           at: /tmp/workspace
       - run:
@@ -143,10 +144,10 @@ workflows:
             - build_for_tests
       - mac_firefox_integration:
           requires:
-            - build_for_tests
+            - deploy_for_testing
       - mac_chrome_integration:
           requires:
-            - build_for_tests
+            - deploy_for_testing
       - win10_chrome_integration:
           requires:
-            - build_for_tests
+            - deploy_for_testing
