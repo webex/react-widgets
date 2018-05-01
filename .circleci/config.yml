@@ -1,0 +1,152 @@
+# Templates and Variables
+test_defaults: &test_defaults
+  docker:
+    - image: circleci/node:8.9.4
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - js-dependencies-{{ checksum "package-lock.json" }}
+        - js-dependencies-
+    - attach_workspace:
+        at: /tmp/workspace
+    - run:
+        name: Integration Test
+        command: npm run test:integration
+        no_output_timeout: 25m
+    - store_test_results:
+        path: reports/junit/wdio
+    - store_artifacts:
+        path: reports/junit/wdio
+        destination: wdio
+    - store_artifacts:
+        path: /home/circleci/.npm/_logs/
+        destination: npm-logs
+    - store_artifacts:
+        path: reports/browser
+        destination: browser
+
+# Main Config
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-dependencies-{{ checksum "package-lock.json" }}
+
+  unit_tests_and_linting:
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Run eslint
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: Run all Jest test suites
+          command: npm run jest -- --ci -i --testResultsProcessor="jest-junit"
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/jest/js-jest-results.xml
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+          destination: junit
+
+  build_for_tests:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NODE_ENV: "test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - run:
+          name: Copy and build journey test static files
+          command: npm run build test /tmp/dist-test
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - dist-test
+
+  deploy_for_testing:
+    docker:
+      - image: circleci/node:8.9.4
+    environment:
+      - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
+      - DEPLOY_PATH: "/tmp/workspace/dist-test"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Deploy testing payload to Netlify
+          command: npm run deploy netlify ${DEPLOY_PATH} -- --saveUrlPath=/tmp/.netlifyUrl
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - .netlifyUrl
+
+  mac_firefox_integration:
+    environment:
+      - BROWSER: firefox
+      - SAUCE: true
+    <<: *test_defaults
+
+  mac_chrome_integration:
+    environment:
+      - BROWSER: chrome
+      - SAUCE: true
+    <<: *test_defaults
+
+  win10_chrome_integration:
+    environment:
+      - BROWSER: chrome
+      - PLATFORM: windows 10
+      - SAUCE: true
+    <<: *test_defaults
+
+workflows:
+  version: 2
+  run_all_tests:
+    jobs:
+      - install
+      - build_for_tests:
+          requires:
+            - install
+      - unit_tests_and_linting:
+          requires:
+            - install
+      - deploy_for_testing:
+          requires:
+            - build_for_tests
+      - mac_firefox_integration:
+          requires:
+            - build_for_tests
+      - mac_chrome_integration:
+          requires:
+            - build_for_tests
+      - win10_chrome_integration:
+          requires:
+            - build_for_tests
