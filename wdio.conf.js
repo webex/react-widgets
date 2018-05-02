@@ -21,6 +21,7 @@ if (!baseUrl) {
   baseUrl = process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
 }
 const browser = process.env.BROWSER || 'chrome';
+const version = process.env.VERSION || 'latest';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
 const {suite} = argv || 'integration';
@@ -46,7 +47,8 @@ const chromeCapabilities = {
   maxDuration: 3600,
   seleniumVersion: '3.4.0',
   screenResolution,
-  platform
+  platform,
+  version
 };
 const firefoxCapabilities = {
   browserName: 'firefox',
@@ -55,7 +57,8 @@ const firefoxCapabilities = {
   maxDuration: 3600,
   seleniumVersion: '3.4.0',
   screenResolution,
-  platform
+  platform,
+  version
 };
 let mochaTimeout = 60000;
 
