@@ -16,8 +16,10 @@ const {inject} = require('./scripts/tests/openh264');
 const beforeSuite = require('./scripts/tests/beforeSuite');
 
 const port = process.env.PORT || 4567;
-const baseUrl = process.env.JOURNEY_TEST_BASE_URL
-  || process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
+let baseUrl = process.env.JOURNEY_TEST_BASE_URL;
+if (!baseUrl) {
+  baseUrl = process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
+}
 const browser = process.env.BROWSER || 'chrome';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
