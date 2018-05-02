@@ -36,7 +36,8 @@
     "upgradespark": "./scripts/utils/update.js",
     "release": "standard-version",
     "precommit": "lint-staged",
-    "prepush": "npm run test"
+    "prepush": "npm run test",
+    "tooling": "./scripts/tooling/index.js"
   },
   "repository": {
     "type": "git",

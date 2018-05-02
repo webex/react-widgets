@@ -1,5 +1,4 @@
 #!groovy
-
 def cleanup = { ->
   // cleanup can't be a stage because it'll throw off the stage-view on the job's main page
   if (currentBuild.result != 'SUCCESS') {
@@ -29,6 +28,8 @@ ansiColor('xterm') {
       node('NODE_JS_BUILDER') {
 
         def packageJsonVersion
+        def skipAction
+        def skipTests = false
 
         try {
           // We're not currently using structured output, just relying
@@ -87,7 +88,7 @@ ansiColor('xterm') {
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm install v8.9.1
               nvm use v8.9.1
@@ -101,7 +102,7 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
               npm run static-analysis
@@ -109,41 +110,68 @@ ansiColor('xterm') {
             }
           }
 
-          stage('Unit Tests') {
+          stage('Test Skipping Check') {
+            echo "checking if tests should be skipped"
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
-              npm run jest
+              action=`npm run --silent tooling -- check-testable`
+              echo $action > .action
               '''
+              skipAction = readFile '.action'
+              if (skipAction.contains('skip')) {
+                echo "tests should be skipped"
+                skipTests = true
+                warn('Bypassing tests according to commit message instruction (or no changes requiring testing)');
+              }
+              else {
+                echo "tests should not be skipped"
+              }
+            }
+          }
+
+          stage('Unit Tests') {
+            if (!skipTests) {
+              withCredentials([
+                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              ]) {
+                sh '''#!/bin/bash -e
+                source ~/.nvm/nvm.sh
+                nvm use v8.9.1
+                npm run jest
+                '''
+              }
             }
           }
 
           stage('Journey Tests') {
-            withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
-              string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
-              usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
-              string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
-            ]) {
-              // set -m sets all integration commands under the same job process
-              // || kill 0 after each integration command will kill all other jobs in the parent process if the integration command preceding it fails with a non-zero exit code
-              sh '''#!/bin/bash -ex
-              source ~/.nvm/nvm.sh
-              nvm use 8.9.1
-              NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
-              set -m
-              (
-                (CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration || kill 0) &
-                (sleep 60; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration || kill 0) &
-                (sleep 120; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration || kill 0) &
-                wait
-              )
-              '''
-              archiveArtifacts 'reports/**/*'
-              junit '**/reports/junit/wdio/*.xml'
+            if (!skipTests) {
+              withCredentials([
+                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
+                string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
+                usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
+                string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
+              ]) {
+                // set -m sets all integration commands under the same job process
+                // || kill 0 after each integration command will kill all other jobs in the parent process if the integration command preceding it fails with a non-zero exit code
+                sh '''#!/bin/bash -e
+                source ~/.nvm/nvm.sh
+                nvm use 8.9.1
+                NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
+                set -m
+                (
+                  (CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration || kill 0) &
+                  (sleep 60; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration || kill 0) &
+                  (sleep 120; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration || kill 0) &
+                  wait
+                )
+                '''
+                archiveArtifacts 'reports/**/*'
+                junit '**/reports/junit/wdio/*.xml'
+              }
             }
           }
 
@@ -151,7 +179,7 @@ ansiColor('xterm') {
             withCredentials([
               string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
             ]) {
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
               git diff
@@ -170,11 +198,11 @@ ansiColor('xterm') {
               file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
               string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
             ]) {
-              sh '''#!/bin/bash -ex
+              sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm use v8.9.1
               version=`cat .version`
-              NODE_ENV=production
+              export NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build sri widget-space
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo
@@ -233,7 +261,7 @@ ansiColor('xterm') {
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
                   echo ''
-                  sh '''#!/bin/bash -ex
+                  sh '''#!/bin/bash -e
                   source ~/.nvm/nvm.sh
                   nvm use v8.9.1
                   npm run publish:components
