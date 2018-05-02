@@ -32,7 +32,7 @@
     "start:samples": "npm run start samples",
     "start:package": "npm run start package",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
-    "publish:components": "npm run build:components && npm run build:packagejson && npm run publish components",
+    "publish:components": "cross-env NODE_ENV=production npm run build:components && npm run build:packagejson && npm run publish components",
     "upgradespark": "./scripts/utils/update.js",
     "release": "standard-version",
     "precommit": "lint-staged",
