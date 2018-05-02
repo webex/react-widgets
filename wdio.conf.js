@@ -77,6 +77,19 @@ if (!process.env.TAP) {
   services.push('static-server');
 }
 
+let staticServerFolders = [
+  {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
+  {mount: '/dist-recents', path: './packages/node_modules/@ciscospark/widget-recents/dist'},
+  {mount: '/', path: './test/journeys/server/'},
+  {mount: '/axe-core', path: './node_modules/axe-core/'}
+];
+
+if (process.env.STATIC_SERVER_PATH) {
+  staticServerFolders = [
+    {mounth: '/', path: process.env.STATIC_SERVER_PATH}
+  ];
+}
+
 exports.config = {
   seleniumInstallArgs: {version: '3.4.0'},
   seleniumArgs: {version: '3.4.0'},
@@ -289,12 +302,7 @@ exports.config = {
   beforeSuite,
 
   // Static Server setup
-  staticServerFolders: [
-    {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
-    {mount: '/dist-recents', path: './packages/node_modules/@ciscospark/widget-recents/dist'},
-    {mount: '/', path: './test/journeys/server/'},
-    {mount: '/axe-core', path: './node_modules/axe-core/'}
-  ],
+  staticServerFolders,
   staticServerPort: port,
   onPrepare(config, capabilities) {
     const defs = [

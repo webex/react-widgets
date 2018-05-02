@@ -1,34 +1,3 @@
-# Templates and Variables
-test_defaults: &test_defaults
-  docker:
-    - image: circleci/node:8.11.1
-  steps:
-    - checkout
-    - restore_cache:
-        keys:
-        - js-dependencies-{{ checksum "package.json" }}
-    - attach_workspace:
-        at: /tmp/workspace
-    - run:
-        name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
-        command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
-    - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
-    - run:
-        name: Integration Test
-        command: npm run test:integration
-        no_output_timeout: 40m
-    - store_test_results:
-        path: reports/junit/wdio
-    - store_artifacts:
-        path: reports/junit/wdio
-        destination: wdio
-    - store_artifacts:
-        path: /home/circleci/.npm/_logs/
-        destination: npm-logs
-    - store_artifacts:
-        path: reports/browser
-        destination: browser
-
 # Main Config
 version: 2
 jobs:
@@ -88,12 +57,12 @@ jobs:
           paths:
             - dist-test
 
-  deploy_for_testing:
+  journey_tests:
     docker:
       - image: circleci/node:8.11.1
     environment:
-      - NETLIFY_SITE_ID: "cb5e410a-9679-4ef3-99dc-82b89143e494"
-      - DEPLOY_PATH: "/tmp/workspace/dist-test"
+      SAUCE: true
+      STATIC_SERVER_PATH: /tmp/workspace/dist-test
     steps:
       - checkout
       - restore_cache:
@@ -102,31 +71,32 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          name: Deploy testing payload to Netlify
-          command: npm run deploy netlify ${DEPLOY_PATH} -- --saveUrlPath=/tmp/.netlifyUrl
-      - persist_to_workspace:
-          root: /tmp
-          paths:
-            - .netlifyUrl
+          name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
+          command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+      - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
+      - run:
+          name: Integration Tests
+          no_output_timeout: 40m
+          command: |
+            set -m
+            (
+              (PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration || kill 0) &
+              (sleep 60; PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration || kill 0) &
+              (sleep 120; PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration || kill 0) &
+              wait
+            )
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_artifacts:
+          path: reports/junit/wdio
+          destination: wdio
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs/
+          destination: npm-logs
+      - store_artifacts:
+          path: reports/browser
+          destination: browser
 
-  mac_firefox_integration:
-    environment:
-      - BROWSER: firefox
-      - SAUCE: true
-    <<: *test_defaults
-
-  mac_chrome_integration:
-    environment:
-      - BROWSER: chrome
-      - SAUCE: true
-    <<: *test_defaults
-
-  win10_chrome_integration:
-    environment:
-      - BROWSER: chrome
-      - PLATFORM: windows 10
-      - SAUCE: true
-    <<: *test_defaults
 
 workflows:
   version: 2
@@ -139,15 +109,6 @@ workflows:
       - unit_tests_and_linting:
           requires:
             - install
-      - deploy_for_testing:
+      - journey_tests:
           requires:
             - build_for_tests
-      - mac_firefox_integration:
-          requires:
-            - deploy_for_testing
-      - mac_chrome_integration:
-          requires:
-            - deploy_for_testing
-      - win10_chrome_integration:
-          requires:
-            - deploy_for_testing
