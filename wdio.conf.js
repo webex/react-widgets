@@ -86,7 +86,7 @@ let staticServerFolders = [
 
 if (process.env.STATIC_SERVER_PATH) {
   staticServerFolders = [
-    {mounth: '/', path: process.env.STATIC_SERVER_PATH}
+    {mount: '/', path: process.env.STATIC_SERVER_PATH}
   ];
 }
 
