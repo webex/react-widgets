@@ -6,8 +6,8 @@ const rimraf = require('rimraf');
 const {exec} = require('../../utils/exec');
 
 module.exports = {
-  command: 'test <distPath>',
-  desc: 'Bundle the main widgets into a distributable folder for testing',
+  command: 'journey <distPath>',
+  desc: 'Bundle the main widgets into a distributable folder for journey testing',
   builder: {
     distPath: {
       describe: 'path to output test distributables',

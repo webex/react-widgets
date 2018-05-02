@@ -6,7 +6,7 @@ test_defaults: &test_defaults
     - checkout
     - restore_cache:
         keys:
-        - js-dependencies-{{ checksum "package-lock.json" }}
+        - js-dependencies-{{ checksum "package.json" }}
     - attach_workspace:
         at: /tmp/workspace
     - run:
@@ -39,13 +39,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-{{ checksum "package.json" }}
       - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
       - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: js-dependencies-{{ checksum "package-lock.json" }}
+          key: js-dependencies-{{ checksum "package.json" }}
 
   unit_tests_and_linting:
     docker:
@@ -54,7 +54,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-{{ checksum "package.json" }}
           - js-dependencies-
       - run:
           name: Run eslint
@@ -79,10 +79,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-{{ checksum "package.json" }}
       - run:
           name: Copy and build journey test static files
-          command: npm run build test /tmp/dist-test
+          command: npm run build journey /tmp/dist-test
       - persist_to_workspace:
           root: /tmp
           paths:
@@ -98,7 +98,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - js-dependencies-{{ checksum "package-lock.json" }}
+          - js-dependencies-{{ checksum "package.json" }}
       - attach_workspace:
           at: /tmp/workspace
       - run:
