@@ -13,7 +13,7 @@ test_defaults: &test_defaults
     - run:
         name: Integration Test
         command: npm run test:integration
-        no_output_timeout: 25m
+        no_output_timeout: 40m
     - store_test_results:
         path: reports/junit/wdio
     - store_artifacts:
