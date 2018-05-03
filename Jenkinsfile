@@ -157,10 +157,11 @@ ansiColor('xterm') {
               ]) {
                 // set -m sets all integration commands under the same job process
                 // || kill 0 after each integration command will kill all other jobs in the parent process if the integration command preceding it fails with a non-zero exit code
-                sh '''#!/bin/bash -e
+                sh """#!/bin/bash -e
                 source ~/.nvm/nvm.sh
                 nvm use 8.11.1
                 NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
+                export BUILD_NUMBER="pipeline-build-$BUILD_NUMBER"
                 set -m
                 (
                   (CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration || kill 0) &
@@ -168,7 +169,7 @@ ansiColor('xterm') {
                   (sleep 120; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration || kill 0) &
                   wait
                 )
-                '''
+                """
                 archiveArtifacts 'reports/**/*'
                 junit '**/reports/junit/wdio/*.xml'
               }
