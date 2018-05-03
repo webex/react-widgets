@@ -54,7 +54,6 @@
     "url": "https://github.com/webex/react-ciscospark/issues"
   },
   "homepage": "https://github.com/webex/react-ciscospark#readme",
-  "main": "src/index.js",
   "dependencies": {
     "@ciscospark/common": "1.32.22",
     "@ciscospark/helper-html": "1.32.22",
