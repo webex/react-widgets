@@ -31,8 +31,8 @@ pipeline {
             source ~/.profile || true'''
           sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm install 8.9.1
-            nvm use 8.9.1
+            nvm install 8.11.1
+            nvm use 8.11.1
             npm install
             rm .npmrc
           '''
@@ -49,7 +49,7 @@ pipeline {
         ]) {
             sh '''#!/bin/bash -ex
            source ~/.nvm/nvm.sh
-                nvm use 8.9.1
+                nvm use 8.11.1
                 NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
                 set -m
                 (
