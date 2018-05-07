@@ -99,6 +99,23 @@ function RecentsComponents() {
         teamColor="blue"
         teamName="Best Team"
       />
+      <SpaceItem
+        activityText="I'm an active space!"
+        currentUser={currentUser}
+        formatMessage={(a) => a}
+        id="active-space-id"
+        lastActivityTime="8:02 AM"
+        latestActivity={{
+          actorName: 'Andrew',
+          type: 'post'
+        }}
+        active
+        onCallClick={onCallClick}
+        onClick={onClick}
+        name="Webex Teams"
+        teamColor="green"
+        teamName="Web Team"
+      />
       <h3>SpaceList</h3>
       <SpacesList
         currentUser={currentUser}
