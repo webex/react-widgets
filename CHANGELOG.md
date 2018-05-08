@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.294"></a>
+## [0.1.294](https://github.com/webex/react-ciscospark/compare/v0.1.293...v0.1.294) (2018-05-08)
+
+
+### Features
+
+* **space-item:** add active prop ([c64761a](https://github.com/webex/react-ciscospark/commit/c64761a))
+
+
+
 <a name="0.1.293"></a>
 ## [0.1.293](https://github.com/webex/react-ciscospark/compare/v0.1.292...v0.1.293) (2018-05-07)
 
