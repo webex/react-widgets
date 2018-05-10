@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.296"></a>
+## [0.1.296](https://github.com/webex/react-ciscospark/compare/v0.1.295...v0.1.296) (2018-05-10)
+
+
+### Bug Fixes
+
+* **react-container-notifications:** undefined browser notification for space widget messages ([c522f02](https://github.com/webex/react-ciscospark/commit/c522f02))
+
+
+### Features
+
+* **react-container-notifications:** add support for muteNotifications parameter ([3e4ea6f](https://github.com/webex/react-ciscospark/commit/3e4ea6f))
+
+
+
 <a name="0.1.295"></a>
 ## [0.1.295](https://github.com/webex/react-ciscospark/compare/v0.1.294...v0.1.295) (2018-05-08)
 
