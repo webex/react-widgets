@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.297"></a>
+## [0.1.297](https://github.com/webex/react-ciscospark/compare/v0.1.296...v0.1.297) (2018-05-10)
+
+
+### Bug Fixes
+
+* **react-component-activity-item-base:** avatar is not hidden for additional messages ([14cf216](https://github.com/webex/react-ciscospark/commit/14cf216))
+
+
+
 <a name="0.1.296"></a>
 ## [0.1.296](https://github.com/webex/react-ciscospark/compare/v0.1.295...v0.1.296) (2018-05-10)
 
