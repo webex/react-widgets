@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.298"></a>
+## [0.1.298](https://github.com/webex/react-ciscospark/compare/v0.1.297...v0.1.298) (2018-05-11)
+
+
+### Bug Fixes
+
+* **widget-recents:** recent widget crash on undefined lastActivity ([c05b7bf](https://github.com/webex/react-ciscospark/commit/c05b7bf))
+
+
+
 <a name="0.1.297"></a>
 ## [0.1.297](https://github.com/webex/react-ciscospark/compare/v0.1.296...v0.1.297) (2018-05-10)
 
