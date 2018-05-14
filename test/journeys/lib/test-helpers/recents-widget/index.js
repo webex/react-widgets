@@ -4,7 +4,8 @@ import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
   recentsWidget: '.ciscospark-spaces-list-wrapper',
-  firstSpace: '.space-item:first-child',
+  listContainer: '.ciscospark-spaces-list',
+  firstSpace: '.ciscospark-spaces-list-item-0',
   title: '.space-title',
   unreadIndicator: '.space-unread-indicator',
   lastActivity: '.space-last-activity',
@@ -29,9 +30,9 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message
   }));
-  aBrowser.waitUntil(() => aBrowser.getText(`${elements.firstSpace} ${elements.title}`) === spaceTitle);
-  aBrowser.waitUntil(() => aBrowser.getText(`${elements.firstSpace} ${elements.lastActivity}`).includes(message));
-  assert.isTrue(aBrowser.isVisible(`${elements.firstSpace} ${elements.unreadIndicator}`), 'does not have unread indicator');
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle);
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message));
+  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
 }
 
 /**
@@ -53,11 +54,11 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
   }).then((a) => {
     activity = a;
   }));
-  aBrowser.waitUntil(() => aBrowser.getText(`${elements.firstSpace} ${elements.lastActivity}`).includes(message));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message));
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
-  aBrowser.waitUntil(() => !aBrowser.isVisible(`${elements.firstSpace} ${elements.unreadIndicator}`));
+  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
 }
 
 /**
@@ -89,7 +90,7 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
         displayName: firstPost
       });
     }));
-  aBrowser.waitUntil(() => aBrowser.getText(`${elements.firstSpace} ${elements.title}`).includes(spaceTitle));
-  aBrowser.waitUntil(() => aBrowser.getText(`${elements.firstSpace} ${elements.lastActivity}`).includes(firstPost));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(firstPost));
   return conversation;
 }
