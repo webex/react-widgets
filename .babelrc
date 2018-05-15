@@ -6,6 +6,7 @@
     ["transform-runtime", {
       "polyfill": false
     }],
+    "react-native-web",
     "transform-decorators-legacy",
     "transform-export-extensions",
     "transform-object-rest-spread",
