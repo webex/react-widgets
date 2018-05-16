@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.300"></a>
+## [0.1.300](https://github.com/webex/react-ciscospark/compare/v0.1.299...v0.1.300) (2018-05-16)
+
+
+### Features
+
+* **activity-item-base:** update to new icons component ([b9d1360](https://github.com/webex/react-ciscospark/commit/b9d1360))
+* **activity-menu:** update to new icons component ([72fdc8f](https://github.com/webex/react-ciscospark/commit/72fdc8f))
+* **activity-menu-header:** update to new icons component ([32e0a1e](https://github.com/webex/react-ciscospark/commit/32e0a1e))
+* **activity-post-action:** update to new icons component ([4b7da58](https://github.com/webex/react-ciscospark/commit/4b7da58))
+* **activity-share-file:** update to new icons component ([15356bd](https://github.com/webex/react-ciscospark/commit/15356bd))
+* **activity-share-thumbnail:** update to new icons component ([b62dedf](https://github.com/webex/react-ciscospark/commit/b62dedf))
+* **add-file-button:** update to new icons component ([1eeb2c7](https://github.com/webex/react-ciscospark/commit/1eeb2c7))
+* **avatar:** update to new icons component ([d8fb535](https://github.com/webex/react-ciscospark/commit/d8fb535))
+* **button:** update to new icons component ([ed9349a](https://github.com/webex/react-ciscospark/commit/ed9349a))
+* **button-controls:** update to new icons component ([9fa6668](https://github.com/webex/react-ciscospark/commit/9fa6668))
+* **chip-base:** update to new icons component ([0a45e0f](https://github.com/webex/react-ciscospark/commit/0a45e0f))
+* **chip-file:** update to new icons component ([c62179b](https://github.com/webex/react-ciscospark/commit/c62179b))
+* **container-activity-list:** update to new icons component ([7c8dabd](https://github.com/webex/react-ciscospark/commit/7c8dabd))
+* **container-file-uploader:** update to new icons component ([1951ae7](https://github.com/webex/react-ciscospark/commit/1951ae7))
+* **container-message-composer:** update to new icons component ([8ae0d64](https://github.com/webex/react-ciscospark/commit/8ae0d64))
+* **file-staging-area:** update to new icons component ([892adc5](https://github.com/webex/react-ciscospark/commit/892adc5))
+* **icon:** component now uses svg icons instead of fonts ([9fbf8ae](https://github.com/webex/react-ciscospark/commit/9fbf8ae))
+* **incoming-call:** update to new icons component ([cc3f914](https://github.com/webex/react-ciscospark/commit/cc3f914))
+* **presence-avatar:** update to new icons component ([b459d81](https://github.com/webex/react-ciscospark/commit/b459d81))
+* **samples:** add basic components ([d70aabd](https://github.com/webex/react-ciscospark/commit/d70aabd))
+* **scroll-to-bottom:** update to new icons component ([18b0f5c](https://github.com/webex/react-ciscospark/commit/18b0f5c))
+* **space-item:** update to new icons component ([6da071a](https://github.com/webex/react-ciscospark/commit/6da071a))
+* **widget-meet:** update to new icons component ([2ea26cf](https://github.com/webex/react-ciscospark/commit/2ea26cf))
+* **widget-roster:** update to new icons component ([2e1d815](https://github.com/webex/react-ciscospark/commit/2e1d815))
+* **widget-space:** update to new icons component ([21e8058](https://github.com/webex/react-ciscospark/commit/21e8058))
+
+
+
 <a name="0.1.299"></a>
 ## [0.1.299](https://github.com/webex/react-ciscospark/compare/v0.1.298...v0.1.299) (2018-05-14)
 
