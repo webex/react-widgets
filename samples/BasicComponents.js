@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Avatar from '@ciscospark/react-component-avatar';
 import Button from '@ciscospark/react-component-button';
 import Icon, {ICONS} from '@ciscospark/react-component-icon';
 
@@ -19,6 +20,19 @@ function BasicComponents() {
 
   return (
     <div>
+      <h3>Avatar</h3>
+      <h4>Basic No Avatar</h4>
+      <div style={{width: '50px', height: '50px'}}>
+        <Avatar name="Test User" />
+      </div>
+      <h4>Self Avatar</h4>
+      <div style={{width: '50px', height: '50px'}}>
+        <Avatar isSelfAvatar />
+      </div>
+      <h4>Image Avatar</h4>
+      <div style={{width: '50px', height: '50px'}}>
+        <Avatar image="https://1efa7a94ed216783e352-c62266528714497a17239ececf39e9e2.ssl.cf1.rackcdn.com/V1~aebdece11a795253ab6dd74cbcb3a113~WNPdL2bTRpqVQfRKYrJuKA==~110" name="Adam" />
+      </div>
       <h3>Buttons</h3>
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <div style={buttonContainerStyle}>

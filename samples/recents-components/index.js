@@ -20,10 +20,6 @@ function RecentsComponents() {
     window.alert('onJoinClick');
   }
 
-  const currentUser = {
-    id: 'abc-123'
-  };
-
   const spacesListSpaces = [
     {
       id: 'decrypting-space',
@@ -43,54 +39,57 @@ function RecentsComponents() {
       name: 'Webex User',
       teamColor: 'blue',
       teamName: 'Best Team'
+    },
+    {
+      activityText: 'Hey there!',
+      callStartTime: Date.now(),
+      id: 'red-team-group-space',
+      lastActivityTime: '9:05 PM',
+      latestActivity: {
+        actorName: 'Jane Doe',
+        type: 'post'
+      },
+      isUnread: true,
+      name: 'Red Team Group Space',
+      teamColor: 'red',
+      teamName: 'Red Team',
+      type: 'group'
     }
   ];
 
   return (
-    <div>
+    <div style={{maxWidth: 500}}>
       <h3>JoinCallButton</h3>
       <JoinCallButton
         callStartTime={Date.now()}
         onJoinClick={onJoinClick}
       />
       <h3>SpaceItem</h3>
+      <h4>Decrypting</h4>
       <SpaceItem
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         id="decrypting-space"
         isDecrypting
         name="Webex User"
         onClick={onClick}
       />
+      <h4>Unread without calling</h4>
       <SpaceItem
         activityText="Hi there!"
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         id="jane-doe-space"
         lastActivityTime="9:05 PM"
-        latestActivity={{
-          actorName: 'Jane Doe',
-          type: 'post'
-        }}
         isUnread
-        hasCalling
         onCallClick={onCallClick}
         onClick={onClick}
         name="Webex User"
         teamColor="blue"
         teamName="Best Team"
       />
+      <h4>Unread with calling</h4>
       <SpaceItem
         activityText="Calling!"
         callStartTime={Date.now()}
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         id="jane-doe-space"
         lastActivityTime="9:05 PM"
-        latestActivity={{
-          actorName: 'Jane Doe',
-          type: 'post'
-        }}
         isUnread
         hasCalling
         onCallClick={onCallClick}
@@ -99,10 +98,9 @@ function RecentsComponents() {
         teamColor="blue"
         teamName="Best Team"
       />
+      <h4>Active</h4>
       <SpaceItem
         activityText="I'm an active space!"
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         id="active-space-id"
         lastActivityTime="8:02 AM"
         latestActivity={{
@@ -116,18 +114,24 @@ function RecentsComponents() {
         teamColor="green"
         teamName="Web Team"
       />
+      <h4>No Team</h4>
+      <SpaceItem
+        activityText="I have no team!"
+        id="no-team-space"
+        lastActivityTime="9:05 PM"
+        onCallClick={onCallClick}
+        onClick={onClick}
+        name="Teamless"
+      />
       <h3>SpaceList</h3>
       <SpacesList
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         hasCalling
         onCallClick={onCallClick}
         onClick={onClick}
         spaces={spacesListSpaces}
       />
+      <h4>No Calling</h4>
       <SpacesList
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         onCallClick={onCallClick}
         onClick={onClick}
         spaces={spacesListSpaces}
