@@ -4,6 +4,8 @@ import JoinCallButton from '@ciscospark/react-component-join-call-button';
 import SpaceItem from '@ciscospark/react-component-space-item';
 import SpacesList from '@ciscospark/react-component-spaces-list';
 
+import ListSpeed from './ListSpeed';
+
 function RecentsComponents() {
   function onCallClick(id) {
     // eslint-disable-next-line no-alert
@@ -117,21 +119,23 @@ function RecentsComponents() {
         teamName="Web Team"
       />
       <h3>SpaceList</h3>
+      <b>With Calling</b>
       <SpacesList
-        currentUser={currentUser}
-        formatMessage={(a) => a}
         hasCalling
+        height={200}
         onCallClick={onCallClick}
         onClick={onClick}
         spaces={spacesListSpaces}
       />
+      <b>Without Calling</b>
       <SpacesList
-        currentUser={currentUser}
-        formatMessage={(a) => a}
+        height={200}
         onCallClick={onCallClick}
         onClick={onClick}
         spaces={spacesListSpaces}
       />
+      <h3>Large List Data</h3>
+      <ListSpeed />
     </div>
   );
 }

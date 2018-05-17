@@ -1,0 +1,17 @@
+[
+  {{#repeat 5000}}
+  {
+    "activityText": "{{lorem 5}}",
+    "id": "{{guid}}",
+    "lastActivityTime": "{{time '09:00' '17:30' 'h:mm a'}}",
+    "latestActivity": {
+      "actorName": "{{firstName}}",
+      "type": "post"
+    },
+    "isUnread": {{boolean}},
+    "name": "{{firstName}}",
+    "teamColor": "{{color}}",
+    "teamName": "{{country}}"
+   }
+   {{/repeat}}
+]
