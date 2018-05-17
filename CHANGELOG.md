@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.301"></a>
+## [0.1.301](https://github.com/webex/react-ciscospark/compare/v0.1.300...v0.1.301) (2018-05-17)
+
+
+### Bug Fixes
+
+* **call-data-activity:** add support for empty actor field ([0637eb0](https://github.com/webex/react-ciscospark/commit/0637eb0))
+* **call-data-activity:** add support for missing actor ([6661a2f](https://github.com/webex/react-ciscospark/commit/6661a2f))
+
+
+### Features
+
+* **spaces-list:** remove unused currentUser prop ([c95e2a1](https://github.com/webex/react-ciscospark/commit/c95e2a1))
+* **spaces-list:** use react-virtualized for rendering list ([c50840d](https://github.com/webex/react-ciscospark/commit/c50840d))
+* **widget-recents:** use updated spaces list ([a672ef8](https://github.com/webex/react-ciscospark/commit/a672ef8))
+
+
+
 <a name="0.1.300"></a>
 ## [0.1.300](https://github.com/webex/react-ciscospark/compare/v0.1.299...v0.1.300) (2018-05-16)
 
