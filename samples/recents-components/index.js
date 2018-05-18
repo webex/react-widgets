@@ -71,8 +71,9 @@ function RecentsComponents() {
         isDecrypting
         name="Webex User"
         onClick={onClick}
+        type="group"
       />
-      <h4>Unread without calling</h4>
+      <h4>Unread group without calling</h4>
       <SpaceItem
         activityText="Hi there!"
         id="jane-doe-space"
@@ -83,6 +84,7 @@ function RecentsComponents() {
         name="Webex User"
         teamColor="blue"
         teamName="Best Team"
+        type="group"
       />
       <h4>Unread with calling</h4>
       <SpaceItem
@@ -97,6 +99,7 @@ function RecentsComponents() {
         name="Webex User"
         teamColor="blue"
         teamName="Best Team"
+        type="group"
       />
       <h4>Active</h4>
       <SpaceItem
@@ -113,6 +116,18 @@ function RecentsComponents() {
         name="Webex Teams"
         teamColor="green"
         teamName="Web Team"
+        type="group"
+      />
+      <h4>Direct space</h4>
+      <SpaceItem
+        activityText="I'm a direct space!"
+        avatarUrl="https://1efa7a94ed216783e352-c62266528714497a17239ececf39e9e2.ssl.cf1.rackcdn.com/V1~aebdece11a795253ab6dd74cbcb3a113~WNPdL2bTRpqVQfRKYrJuKA==~110"
+        id="direct-space-id"
+        lastActivityTime="Yesterday"
+        onCallClick={onCallClick}
+        onClick={onClick}
+        name="Direct Space"
+        type="direct"
       />
       <h4>No Team</h4>
       <SpaceItem
@@ -122,6 +137,7 @@ function RecentsComponents() {
         onCallClick={onCallClick}
         onClick={onClick}
         name="Teamless"
+        type="group"
       />
       <h3>SpaceList</h3>
       <SpacesList
