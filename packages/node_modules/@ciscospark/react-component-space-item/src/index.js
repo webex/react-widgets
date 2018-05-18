@@ -181,7 +181,7 @@ function SpaceItem({
     <TouchableOpacity
       className="space-item"
       style={[rnStyles.item, active && rnStyles.itemActive]}
-      onPress={handleClick}
+      onPressIn={handleClick}
     >
       {
         isUnread &&
@@ -197,6 +197,8 @@ function SpaceItem({
           <View>
             <Text
               className="space-team-name"
+              numberOfLines={1}
+              ellipsizeMode="tail"
               style={[rnStyles.basicText, rnStyles.teamName,
                 {
                   color: active ? '#f5f5f5' : teamColor
