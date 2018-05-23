@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.302"></a>
+## [0.1.302](https://github.com/webex/react-ciscospark/compare/v0.1.301...v0.1.302) (2018-05-23)
+
+
+### Features
+
+* **react-container-notifications:** filter notifications with alertType none ([708cf7e](https://github.com/webex/react-ciscospark/commit/708cf7e))
+
+
+
 <a name="0.1.301"></a>
 ## [0.1.301](https://github.com/webex/react-ciscospark/compare/v0.1.300...v0.1.301) (2018-05-17)
 
