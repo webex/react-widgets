@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.303"></a>
+## [0.1.303](https://github.com/webex/react-ciscospark/compare/v0.1.302...v0.1.303) (2018-05-24)
+
+
+### Bug Fixes
+
+* **r-c-read-receipts:** add support for empty activities ([e9b16bc](https://github.com/webex/react-ciscospark/commit/e9b16bc))
+
+
+
 <a name="0.1.302"></a>
 ## [0.1.302](https://github.com/webex/react-ciscospark/compare/v0.1.301...v0.1.302) (2018-05-23)
 
