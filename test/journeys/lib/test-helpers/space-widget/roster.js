@@ -8,10 +8,10 @@ export const elements = {
   peopleButton: 'button[aria-label="People"]',
   rosterTitle: '.ciscospark-widget-title',
   participantItem: '.ciscospark-participant-list-item',
-  rosterList: '.ciscospark-roster-scrolling-list',
+  rosterList: '.ciscospark-people-list',
   addParticipantArea: '.ciscospark-roster-add-participant',
   addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
-  addParticipantResultItem: '.ciscospark-people-list-item:nth-child(1)',
+  addParticipantResultItem: '.ciscospark-people-list-name',
   addPeopleButton: '.ciscospark-roster-add-people',
   searchInput: '.ciscospark-roster-add-participant-search-input',
   closeSearchButton: 'button[aria-label="Close Search"]'
