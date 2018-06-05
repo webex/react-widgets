@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.305"></a>
+## [0.1.305](https://github.com/webex/react-ciscospark/compare/v0.1.304...v0.1.305) (2018-06-05)
+
+
+### Bug Fixes
+
+* **widget-roster:** external participant message height and width are not specified ([da54601](https://github.com/webex/react-ciscospark/commit/da54601))
+* **widget-roster:** get proper loading state of search ([7e6cb97](https://github.com/webex/react-ciscospark/commit/7e6cb97))
+
+
+### Features
+
+* **react-component-people-list:** use react-virtualized for rendering people list ([e60c566](https://github.com/webex/react-ciscospark/commit/e60c566))
+* **widget-message:** load avatars from activities list ([befaf9e](https://github.com/webex/react-ciscospark/commit/befaf9e))
+
+
+
 <a name="0.1.304"></a>
 ## [0.1.304](https://github.com/webex/react-ciscospark/compare/v0.1.303...v0.1.304) (2018-06-01)
 
