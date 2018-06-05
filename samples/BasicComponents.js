@@ -73,6 +73,13 @@ function BasicComponents() {
         <div style={{height: '25px', width: '25px', backgroundColor: 'blueviolet'}}>
           <Icon
             color="white"
+            title="Download"
+            type={ICONS.ICON_TYPE_DOWNLOAD}
+          />
+        </div>
+        <div style={{height: '25px', width: '25px', backgroundColor: 'blueviolet'}}>
+          <Icon
+            color="white"
             title="Exit Icon"
             type={ICONS.ICON_TYPE_EXIT}
           />
