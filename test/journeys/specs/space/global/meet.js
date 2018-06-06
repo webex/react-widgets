@@ -7,7 +7,7 @@ import {updateJobStatus} from '../../../lib/test-helpers';
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog} from '../../../lib/events';
 import {FEATURE_FLAG_ROSTER} from '../../../lib/test-helpers/space-widget/roster';
-import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest, FEATURE_FLAG_GROUP_CALLING} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
@@ -36,8 +36,7 @@ describe('Widget Space', () => {
         }
       });
       return marty.spark.internal.mercury.connect()
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
+        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
     }));
 
   before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
@@ -54,8 +53,7 @@ describe('Widget Space', () => {
         }
       });
       return docbrown.spark.internal.device.register()
-        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
+        .then(() => docbrown.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
     }));
 
   before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})

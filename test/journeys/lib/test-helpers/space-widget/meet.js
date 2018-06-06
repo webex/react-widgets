@@ -6,8 +6,6 @@ import {moveMouse} from '../';
 
 import {switchToMeet} from './main';
 
-export const FEATURE_FLAG_GROUP_CALLING = 'js-widgets-group-calling';
-
 export const elements = {
   callContainer: '.call-container',
   meetWidget: '.ciscospark-meet-wrapper',

@@ -7,7 +7,6 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import {updateJobStatus} from '../../lib/test-helpers';
 import featureFlagTests from '../../lib/test-helpers/space-widget/featureFlags';
 import {FEATURE_FLAG_ROSTER} from '../../lib/test-helpers/space-widget/roster';
-import {FEATURE_FLAG_GROUP_CALLING} from '../../lib/test-helpers/space-widget/meet';
 
 
 describe('Widget Space Feature Flags', () => {
@@ -34,8 +33,7 @@ describe('Widget Space Feature Flags', () => {
           }
         });
         return userWithAllTheFeatures.spark.internal.device.register()
-          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
-          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true));
+          .then(() => userWithAllTheFeatures.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
       }),
     testUsers.create({count: 2, config: {displayName: 'No Features'}})
       .then((users) => {
@@ -51,8 +49,7 @@ describe('Widget Space Feature Flags', () => {
           }
         });
         return userWithNoFeatures1.spark.internal.device.register()
-          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, false))
-          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, false));
+          .then(() => userWithNoFeatures1.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, false));
       })
   ]));
 
