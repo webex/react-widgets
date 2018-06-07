@@ -1,7 +1,5 @@
 import {assert} from 'chai';
 
-export const FEATURE_FLAG_ROSTER = 'js-widgets-roster';
-
 export const elements = {
   rosterWidget: '.ciscospark-roster',
   closeButton: 'button[aria-label="Close"]',

@@ -34,10 +34,6 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - closes the people roster widget
     - accessibility
       - should have no accessibility violations
-  - Feature Flags (Test Users Created)
-    - Roster Feature Flag
-      - has a roster for user with feature flag
-      - does not have a roster for user without flag
   - Meet widget (Test Users Created)
     - pre call experience
       - has a call button
@@ -118,10 +114,6 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
         - has the total count of participants
         - has the participants listed
         - closes the people roster widget
-  - Feature Flags (Test Users Created)
-    - Roster Feature Flag
-      - has a roster for user with feature flag
-      - does not have a roster for user without flag
   - Meet widget (Test Users Created)
     - pre call experience
       - has a call button
@@ -320,22 +312,6 @@ The "space" test suite opens a space widget to a group space and creates three t
       - opens message widget
     - start call setting
       - starts call when set to true
-
-- Feature Flags
-  - Global
-    - Roster Feature Flag
-      - has a roster for user with feature flag
-      - does not have a roster for user without flag
-    - Group Calling Feature Flag
-      - has a call option for user with feature flag
-      - does not have a call option for user without flag
-  - Data API
-    - Roster Feature Flag
-      - has a roster for user with feature flag
-      - does not have a roster for user without flag
-    - Group Calling Feature Flag
-      - has a call option for user with feature flag
-      - does not have a call option for user without flag
 
 ### Recents Suite
 

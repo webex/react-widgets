@@ -11,8 +11,7 @@ import {
   elements as rosterElements,
   canSearchForParticipants,
   hasParticipants,
-  searchForPerson,
-  FEATURE_FLAG_ROSTER
+  searchForPerson
 } from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 
@@ -46,7 +45,6 @@ describe('Widget Space', () => {
         }
       });
       return marty.spark.internal.device.register()
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true))
         .then(() => marty.spark.internal.mercury.connect());
     }));
 

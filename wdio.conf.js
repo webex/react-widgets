@@ -112,12 +112,10 @@ exports.config = {
     ],
     oneOnOne: [
       './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/dataApi/features.js',
       './test/journeys/specs/oneOnOne/dataApi/meet.js',
       './test/journeys/specs/oneOnOne/dataApi/messaging.js',
       './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
       './test/journeys/specs/oneOnOne/global/basic.js',
-      './test/journeys/specs/oneOnOne/global/features.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js'
     ],
@@ -128,8 +126,7 @@ exports.config = {
       './test/journeys/specs/space/dataApi/startup-settings.js',
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/featureFlags.js'
+      './test/journeys/specs/space/global/messaging.js'
     ],
     recents: [
       './test/journeys/specs/recents/dataApi/basic.js',
@@ -141,13 +138,11 @@ exports.config = {
     integration: [
       './test/journeys/specs/multiple/index.js',
       './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/dataApi/features.js',
       './test/journeys/specs/oneOnOne/dataApi/guest.js',
       './test/journeys/specs/oneOnOne/dataApi/meet.js',
       './test/journeys/specs/oneOnOne/dataApi/messaging.js',
       './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
       './test/journeys/specs/oneOnOne/global/basic.js',
-      './test/journeys/specs/oneOnOne/global/features.js',
       './test/journeys/specs/oneOnOne/global/guest.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js',
@@ -159,8 +154,7 @@ exports.config = {
       './test/journeys/specs/space/dataApi/startup-settings.js',
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/featureFlags.js'
+      './test/journeys/specs/space/global/messaging.js'
     ],
     guest: [
       './test/journeys/specs/oneOnOne/dataApi/guest.js',
