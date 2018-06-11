@@ -117,7 +117,8 @@ exports.config = {
       './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
       './test/journeys/specs/oneOnOne/global/basic.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
-      './test/journeys/specs/oneOnOne/global/messaging.js'
+      './test/journeys/specs/oneOnOne/global/messaging.js',
+      './test/journeys/specs/oneOnOne/global/startup-settings.js'
     ],
     space: [
       './test/journeys/specs/space/dataApi/basic.js',
@@ -126,7 +127,9 @@ exports.config = {
       './test/journeys/specs/space/dataApi/startup-settings.js',
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js'
+      './test/journeys/specs/space/global/messaging.js',
+      './test/journeys/specs/space/global/startup-settings.js',
+      './test/journeys/specs/space/featureFlags.js'
     ],
     recents: [
       './test/journeys/specs/recents/dataApi/basic.js',
@@ -146,6 +149,7 @@ exports.config = {
       './test/journeys/specs/oneOnOne/global/guest.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js',
+      './test/journeys/specs/oneOnOne/global/startup-settings.js',
       './test/journeys/specs/recents/dataApi/basic.js',
       './test/journeys/specs/recents/global/basic.js',
       './test/journeys/specs/space/dataApi/basic.js',
@@ -154,7 +158,9 @@ exports.config = {
       './test/journeys/specs/space/dataApi/startup-settings.js',
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js'
+      './test/journeys/specs/space/global/messaging.js',
+      './test/journeys/specs/space/global/startup-settings.js',
+      './test/journeys/specs/space/featureFlags.js'
     ],
     guest: [
       './test/journeys/specs/oneOnOne/dataApi/guest.js',

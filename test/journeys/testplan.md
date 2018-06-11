@@ -92,6 +92,9 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - during call experience
         - can hangup in call
         - can decline an incoming call
+  - Startup Settings
+    - Error message is displayed when the initial activity is disabled
+    - Properly disables activities in the activities menu 
 
 - Data API
   - "Basic Tests" (Test Users Created)
@@ -238,6 +241,9 @@ The "space" test suite opens a space widget to a group space and creates three t
       - sends message with link
       - sends message with inline code
       - sends message with codeblock
+  - Startup Settings
+    - Error message is displayed when the initial activity is disabled
+    - Properly disables activities in the activities menu 
 
 - Data API
   - "Basic Tests" (Test Users & Space Created)

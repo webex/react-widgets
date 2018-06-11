@@ -10,7 +10,8 @@ export const elements = {
   closeButton: 'button[aria-label="Close"]',
   exitButton: '.ciscospark-activity-menu-exit button',
   messageWidget: '.ciscospark-message-wrapper',
-  meetWidget: '.ciscospark-meet-wrapper'
+  meetWidget: '.ciscospark-meet-wrapper',
+  errorMessage: '.ciscospark-error-title'
 };
 
 /**
