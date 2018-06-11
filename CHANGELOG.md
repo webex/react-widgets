@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.307"></a>
+## [0.1.307](https://github.com/webex/react-ciscospark/compare/v0.1.306...v0.1.307) (2018-06-11)
+
+
+### Bug Fixes
+
+* **icon:** add missing download icon ([3f11f7f](https://github.com/webex/react-ciscospark/commit/3f11f7f))
+
+
+### Features
+
+* **samples:** add download icon ([2d49de7](https://github.com/webex/react-ciscospark/commit/2d49de7))
+
+
+
 <a name="0.1.306"></a>
 ## [0.1.306](https://github.com/webex/react-ciscospark/compare/v0.1.305...v0.1.306) (2018-06-11)
 
