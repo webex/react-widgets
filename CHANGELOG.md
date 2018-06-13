@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.309"></a>
+## [0.1.309](https://github.com/webex/react-ciscospark/compare/v0.1.308...v0.1.309) (2018-06-13)
+
+
+### Bug Fixes
+
+* **r-c-activity-item-base:** delete message button not displayed for long messages ([caed5eb](https://github.com/webex/react-ciscospark/commit/caed5eb))
+
+
+
 <a name="0.1.308"></a>
 ## [0.1.308](https://github.com/webex/react-ciscospark/compare/v0.1.307...v0.1.308) (2018-06-12)
 
