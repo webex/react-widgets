@@ -39,7 +39,8 @@ describe('Widget Space: One on One', () => {
         onEvent: (eventName, detail) => {
           window.ciscoSparkEvents.push({eventName, detail});
         },
-        toPersonEmail: localToUserEmail,
+        destinationId: localToUserEmail,
+        destinationType: 'email',
         initialActivity: 'message'
       };
       window.openSpaceWidget(options);
@@ -54,7 +55,8 @@ describe('Widget Space: One on One', () => {
         onEvent: (eventName, detail) => {
           window.ciscoSparkEvents.push({eventName, detail});
         },
-        toPersonEmail: localToUserEmail,
+        destinationId: localToUserEmail,
+        destinationType: 'email',
         initialActivity: 'message'
       };
       window.openSpaceWidget(options);
