@@ -2,7 +2,6 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/plugin-logger';
-import '@ciscospark/internal-plugin-feature';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
@@ -11,7 +10,7 @@ import {runAxe} from '../../../lib/axe';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 
 import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
-import {FEATURE_FLAG_GROUP_CALLING, elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
+import {elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
@@ -54,7 +53,6 @@ describe('Widget Recents', () => {
         }
       });
       return marty.spark.internal.device.register()
-        .then(() => marty.spark.internal.feature.setFeature('developer', FEATURE_FLAG_GROUP_CALLING, true))
         .then(() => marty.spark.internal.mercury.connect());
     }));
 

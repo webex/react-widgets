@@ -1,14 +1,12 @@
 import {assert} from 'chai';
 
-import '@ciscospark/internal-plugin-feature';
 import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
 import {
   elements as rosterElements,
-  hasParticipants,
-  FEATURE_FLAG_ROSTER
+  hasParticipants
 } from '../../../lib/test-helpers/space-widget/roster';
 import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
@@ -45,8 +43,7 @@ describe('Widget Space: One on One: Data API', () => {
           }
         }
       });
-      return spock.spark.internal.device.register()
-        .then(() => spock.spark.internal.feature.setFeature('developer', FEATURE_FLAG_ROSTER, true));
+      return spock.spark.internal.device.register();
     }));
 
   before('create mccoy', () => testUsers.create({count: 1, config: {displayName: mccoyName}})
