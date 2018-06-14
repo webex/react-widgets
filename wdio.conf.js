@@ -112,10 +112,12 @@ exports.config = {
     ],
     oneOnOne: [
       './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/dataApi/guest.js',
       './test/journeys/specs/oneOnOne/dataApi/meet.js',
       './test/journeys/specs/oneOnOne/dataApi/messaging.js',
       './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
       './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/guest.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js',
       './test/journeys/specs/oneOnOne/global/startup-settings.js'

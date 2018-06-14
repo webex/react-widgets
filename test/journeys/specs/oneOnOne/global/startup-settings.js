@@ -30,29 +30,36 @@ describe('Widget Space: One on One: Startup Settings', () => {
 
   before('pause to let test users establish', () => browser.pause(5000));
 
-  before('inject token', () => {
-    browserLocal.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: 'message'
-      };
-      window.openSpaceWidget(options);
-    }, spock.token.access_token, mccoy.email);
-  });
-
-  describe('message widget', () => {
-    before('open remote widget', () => {
-      browserRemote.execute((localAccessToken, localToUserEmail) => {
+  describe('destination type: userId', () => {
+    it('opens widget', () => {
+      browserLocal.execute((localAccessToken, localToPersonId) => {
         const options = {
           accessToken: localAccessToken,
           onEvent: (eventName, detail) => {
             window.ciscoSparkEvents.push({eventName, detail});
           },
-          toPersonEmail: localToUserEmail,
+          destinationId: localToPersonId,
+          destinationType: 'userId'
+        };
+        window.openSpaceWidget(options);
+      }, spock.token.access_token, mccoy.id);
+
+      browserLocal.waitForVisible(elements.messageWidget);
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+      browserLocal.refresh();
+    });
+  });
+
+  describe('spaceActivities setting', () => {
+    it('displays error message for disabled initial activity', () => {
+      browserLocal.execute((localAccessToken, localToUserEmail) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          destinationId: localToUserEmail,
+          destinationType: 'email',
           initialActivity: 'message',
           spaceActivities: {
             files: false,
@@ -63,24 +70,22 @@ describe('Widget Space: One on One: Startup Settings', () => {
         };
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
-    });
 
-    it('displays error message for disabled initial activity', () => {
-      browserRemote.waitForVisible(elements.errorMessage);
-      assert.equal(browserRemote.getText(elements.errorMessage), 'Error: The selected initial activity is invalid', 'does not display error message for invalid activity');
+      browserLocal.waitForVisible(elements.errorMessage);
+      assert.equal(browserLocal.getText(elements.errorMessage), 'Error: The selected initial activity is invalid', 'does not display error message for invalid activity');
+      browserLocal.refresh();
       browserRemote.refresh();
     });
-  });
 
-  describe('message widget', () => {
-    before('open remote widget', () => {
-      browserRemote.execute((localAccessToken, localToUserEmail) => {
+    it('disables the files and meet activities', () => {
+      browserLocal.execute((localAccessToken, localToUserEmail) => {
         const options = {
           accessToken: localAccessToken,
           onEvent: (eventName, detail) => {
             window.ciscoSparkEvents.push({eventName, detail});
           },
-          toPersonEmail: localToUserEmail,
+          destinationId: localToUserEmail,
+          destinationType: 'email',
           initialActivity: 'message',
           spaceActivities: {
             files: false,
@@ -91,16 +96,36 @@ describe('Widget Space: One on One: Startup Settings', () => {
         };
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
-    });
 
-    it('disables the files and meet activities', () => {
-      browserRemote.waitForVisible(elements.menuButton);
-      browserRemote.click(elements.menuButton);
-      browserRemote.waitForVisible(elements.activityMenu);
-      browserRemote.waitForVisible(elements.messageButton);
-      browserRemote.waitForVisible(rosterElements.peopleButton);
-      assert.isFalse(browserRemote.isExisting(elements.meetButton), 'meet button exists in activity menu when it should be disabled');
-      assert.isFalse(browserRemote.isExisting(elements.filesButton), 'files button exists in activity menu when it should be disabled');
+      browserLocal.waitForVisible(elements.menuButton);
+      browserLocal.click(elements.menuButton);
+      browserLocal.waitForVisible(elements.activityMenu);
+      browserLocal.waitForVisible(elements.messageButton);
+      browserLocal.waitForVisible(rosterElements.peopleButton);
+      assert.isFalse(browserLocal.isExisting(elements.meetButton), 'meet button exists in activity menu when it should be disabled');
+      assert.isFalse(browserLocal.isExisting(elements.filesButton), 'files button exists in activity menu when it should be disabled');
+      browserLocal.refresh();
+      browserRemote.refresh();
+    });
+  });
+
+  describe('legacy destination settings', () => {
+    it('opens message widget using legacy toPersonEmail', () => {
+      browserLocal.execute((localAccessToken, localToUserEmail) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          toPersonEmail: localToUserEmail,
+          initialActivity: 'message'
+        };
+        window.openSpaceWidget(options);
+      }, mccoy.token.access_token, spock.email);
+
+      browserLocal.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+      browserLocal.refresh();
+      browserRemote.refresh();
     });
   });
 

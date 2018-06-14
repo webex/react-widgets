@@ -54,7 +54,8 @@ describe('Widget Space: One on One', () => {
       console.info();
       console.info(`window.openSpaceWidget({
           accessToken: "${spock.token.access_token}",
-          toPersonEmail: "${mccoy.email}",
+          destinationId: "${mccoy.email}",
+          destinationType: "email",
           initialActivity: "message"
         });`);
       console.info();
@@ -63,7 +64,8 @@ describe('Widget Space: One on One', () => {
     browserLocal.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
-        toPersonEmail: localToUserEmail,
+        destinationId: localToUserEmail,
+        destinationType: 'email',
         initialActivity: 'message'
       };
       window.openSpaceWidget(options);

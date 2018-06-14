@@ -95,7 +95,8 @@ describe('Widget Space', () => {
         onEvent: (eventName, detail) => {
           window.ciscoSparkEvents.push({eventName, detail});
         },
-        spaceId
+        destinationId: spaceId,
+        destinationType: 'spaceId'
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
@@ -109,7 +110,8 @@ describe('Widget Space', () => {
         onEvent: (eventName, detail) => {
           window.ciscoSparkEvents.push({eventName, detail});
         },
-        spaceId
+        destinationId: spaceId,
+        destinationType: 'spaceId'
       };
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);

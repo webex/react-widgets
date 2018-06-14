@@ -107,7 +107,8 @@ describe('Widget Space', () => {
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
-        spaceId
+        destinationId: spaceId,
+        destinationType: 'spaceId'
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);

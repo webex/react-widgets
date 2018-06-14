@@ -59,7 +59,8 @@ describe('Widget Space: One on One: Data API', () => {
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-space');
       csmmDom.setAttribute('data-access-token', localAccessToken);
-      csmmDom.setAttribute('data-to-person-email', localToUserEmail);
+      csmmDom.setAttribute('data-destination-id', localToUserEmail);
+      csmmDom.setAttribute('data-destination-type', 'email');
       csmmDom.setAttribute('data-initial-activity', 'message');
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');

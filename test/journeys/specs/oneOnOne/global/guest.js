@@ -39,16 +39,15 @@ describe('Widget Space: One on One', () => {
 
       const title = browserLocal.getTitle();
       assert.equal(title, 'Cisco Spark Widget Test');
-
       browserLocal.execute((localGuestToken, localToUserEmail) => {
         const options = {
           guestToken: localGuestToken,
-          toPersonEmail: localToUserEmail,
+          destinationId: localToUserEmail,
+          destinationType: 'email',
           initialActivity: 'message'
         };
         window.openSpaceWidget(options);
       }, spock.jwt, mccoy.email);
-
       browserLocal.waitForVisible('h1.ciscospark-title');
       browserLocal.waitUntil(() => browserLocal.getText('h1.ciscospark-title') !== 'Loading...');
       assert.equal(browserLocal.getText('h1.ciscospark-title'), mccoy.displayName);
@@ -69,7 +68,8 @@ describe('Widget Space: One on One', () => {
           onEvent: (eventName, detail) => {
             window.ciscoSparkEvents.push({eventName, detail});
           },
-          toPersonId: localToPersonId,
+          destinationId: localToPersonId,
+          destinationType: 'userId',
           initialActivity: 'message'
         };
         window.openSpaceWidget(options);
