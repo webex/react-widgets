@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.310"></a>
+## [0.1.310](https://github.com/webex/react-ciscospark/compare/v0.1.309...v0.1.310) (2018-06-14)
+
+
+### Features
+
+* **all:** remove group calling feature flag ([dc3d285](https://github.com/webex/react-ciscospark/commit/dc3d285))
+* **all:** remove roster feature flag ([aff906d](https://github.com/webex/react-ciscospark/commit/aff906d))
+* **widget-message:** remove mentions feature flag ([46a8e81](https://github.com/webex/react-ciscospark/commit/46a8e81))
+
+
+
 <a name="0.1.309"></a>
 ## [0.1.309](https://github.com/webex/react-ciscospark/compare/v0.1.308...v0.1.309) (2018-06-13)
 
