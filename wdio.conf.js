@@ -128,8 +128,7 @@ exports.config = {
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
       './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/global/startup-settings.js',
-      './test/journeys/specs/space/featureFlags.js'
+      './test/journeys/specs/space/global/startup-settings.js'
     ],
     recents: [
       './test/journeys/specs/recents/dataApi/basic.js',
@@ -159,8 +158,7 @@ exports.config = {
       './test/journeys/specs/space/global/basic.js',
       './test/journeys/specs/space/global/meet.js',
       './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/global/startup-settings.js',
-      './test/journeys/specs/space/featureFlags.js'
+      './test/journeys/specs/space/global/startup-settings.js'
     ],
     guest: [
       './test/journeys/specs/oneOnOne/dataApi/guest.js',
