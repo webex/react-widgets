@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.312"></a>
+## [0.1.312](https://github.com/webex/react-ciscospark/compare/v0.1.311...v0.1.312) (2018-06-21)
+
+
+### Bug Fixes
+
+* **tooling:** featureFlag.js is in suite definitions ([1e536b1](https://github.com/webex/react-ciscospark/commit/1e536b1))
+* **widget-space:** does not verify default activity is not disabled if initial activity is not set ([eeb05e3](https://github.com/webex/react-ciscospark/commit/eeb05e3))
+
+
+### Features
+
+* **widget-space-demo:** add option to disable default activities ([abd1b39](https://github.com/webex/react-ciscospark/commit/abd1b39))
+
+
+
 <a name="0.1.311"></a>
 ## [0.1.311](https://github.com/webex/react-ciscospark/compare/v0.1.310...v0.1.311) (2018-06-20)
 
