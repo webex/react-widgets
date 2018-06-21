@@ -116,7 +116,8 @@ describe('Multiple Widgets', () => {
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
-        spaceId,
+        destinationId: spaceId,
+        destinationType: 'spaceId',
         onEvent: (eventName) => {
           window.ciscoSparkEvents.push({widget: 'space', eventName});
         }
@@ -126,7 +127,7 @@ describe('Multiple Widgets', () => {
     browserLocal.waitForVisible(spaceElements.spaceWidget);
   });
 
-  before('open space widget', () => {
+  before('open widgets remote', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
     browserRemote.execute((localAccessToken) => {
       const options = {
@@ -142,7 +143,8 @@ describe('Multiple Widgets', () => {
     browserRemote.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
-        spaceId,
+        destinationId: spaceId,
+        destinationType: 'spaceId',
         onEvent: (eventName) => {
           window.ciscoSparkEvents.push({widget: 'space', eventName});
         }

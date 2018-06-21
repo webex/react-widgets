@@ -87,7 +87,8 @@ describe('Widget Space: Data API Settings', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
+        csmmDom.setAttribute('data-destination-id', spaceId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
         csmmDom.setAttribute('data-initial-activity', 'meet');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
@@ -110,7 +111,8 @@ describe('Widget Space: Data API Settings', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
+        csmmDom.setAttribute('data-destination-id', spaceId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
         csmmDom.setAttribute('data-initial-activity', 'message');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
@@ -133,7 +135,8 @@ describe('Widget Space: Data API Settings', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
+        csmmDom.setAttribute('data-destination-id', spaceId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
         csmmDom.setAttribute('data-initial-activity', 'message');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
@@ -146,7 +149,8 @@ describe('Widget Space: Data API Settings', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-space-id', spaceId);
+        csmmDom.setAttribute('data-destination-id', spaceId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
         csmmDom.setAttribute('data-initial-activity', 'meet');
         csmmDom.setAttribute('data-start-call', true);
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
@@ -175,6 +179,43 @@ describe('Widget Space: Data API Settings', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
+        csmmDom.setAttribute('data-destination-id', hydraId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
+        document.getElementById('ciscospark-widget').appendChild(csmmDom);
+        window.loadBundle('/dist-space/bundle.js');
+      }, docbrown.token.access_token, constructHydraId('ROOM', conversation.id));
+      const spaceWidget = '.ciscospark-space-widget';
+      browserRemote.waitForVisible(spaceWidget);
+    });
+
+    before('inject marty token', () => {
+      browserLocal.execute((localAccessToken, hydraId) => {
+        const csmmDom = document.createElement('div');
+        csmmDom.setAttribute('class', 'ciscospark-widget');
+        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+        csmmDom.setAttribute('data-access-token', localAccessToken);
+        csmmDom.setAttribute('data-destination-id', hydraId);
+        csmmDom.setAttribute('data-destination-type', 'spaceId');
+        document.getElementById('ciscospark-widget').appendChild(csmmDom);
+        window.loadBundle('/dist-space/bundle.js');
+      }, marty.token.access_token, constructHydraId('ROOM', conversation.id));
+      const spaceWidget = '.ciscospark-space-widget';
+      browserLocal.waitForVisible(spaceWidget);
+    });
+
+    it('opens meet widget', () => {
+      browser.waitForVisible(elements.messageWidget);
+      browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
+    });
+  });
+
+  describe('opens using legacy space id', () => {
+    before('inject docbrown token', () => {
+      browserRemote.execute((localAccessToken, hydraId) => {
+        const csmmDom = document.createElement('div');
+        csmmDom.setAttribute('class', 'ciscospark-widget');
+        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+        csmmDom.setAttribute('data-access-token', localAccessToken);
         csmmDom.setAttribute('data-space-id', hydraId);
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
@@ -197,7 +238,7 @@ describe('Widget Space: Data API Settings', () => {
       browserLocal.waitForVisible(spaceWidget);
     });
 
-    it('opens meet widget', () => {
+    it('opens widget', () => {
       browser.waitForVisible(elements.messageWidget);
       browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
     });

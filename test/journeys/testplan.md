@@ -92,9 +92,12 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - during call experience
         - can hangup in call
         - can decline an incoming call
-  - Startup Settings
-    - Error message is displayed when the initial activity is disabled
-    - Properly disables activities in the activities menu 
+  - Startup Settings (Test Users Created)
+    - spaceActivities setting
+      - displays error message for disabled initial activity
+      - disables the files and meet activities
+    - legacy destination settings
+      - opens message widget using legacy toPersonEmail
 
 - Data API
   - "Basic Tests" (Test Users Created)
@@ -171,6 +174,14 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - during call experience
         - can hangup in call
         - can decline an incoming call
+  - Startup Settings (Test Users Created)
+    - initial activity setting: meet
+      - opens meet widget
+    - initial activity setting: message
+      - opens message widget
+    - start call setting
+      - starts call when set to true
+    - opens using legacy toPersonEmail
 
 ### Space Suite
 
@@ -241,9 +252,12 @@ The "space" test suite opens a space widget to a group space and creates three t
       - sends message with link
       - sends message with inline code
       - sends message with codeblock
-  - Startup Settings
-    - Error message is displayed when the initial activity is disabled
-    - Properly disables activities in the activities menu 
+  - Startup Settings (Test Users Created)
+    - spaceActivities setting
+      - displays error message for disabled initial activity
+      - disables the files and meet activities
+    - legacy destination settings
+      - opens message widget using legacy spaceId
 
 - Data API
   - "Basic Tests" (Test Users & Space Created)
@@ -318,6 +332,7 @@ The "space" test suite opens a space widget to a group space and creates three t
       - opens message widget
     - start call setting
       - starts call when set to true
+    - opens using legacy space id
 
 ### Recents Suite
 

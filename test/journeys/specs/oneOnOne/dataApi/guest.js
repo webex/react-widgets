@@ -44,7 +44,8 @@ describe('Widget Space: One on One', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-guest-token', localAccessToken);
-        csmmDom.setAttribute('data-to-person-email', localToUserEmail);
+        csmmDom.setAttribute('data-destination-id', localToUserEmail);
+        csmmDom.setAttribute('data-destination-type', 'email');
         csmmDom.setAttribute('data-initial-activity', 'message');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
@@ -67,7 +68,8 @@ describe('Widget Space: One on One', () => {
         csmmDom.setAttribute('class', 'ciscospark-widget');
         csmmDom.setAttribute('data-toggle', 'ciscospark-space');
         csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-to-person-id', localToPersonId);
+        csmmDom.setAttribute('data-destination-id', localToPersonId);
+        csmmDom.setAttribute('data-destination-type', 'userId');
         csmmDom.setAttribute('data-initial-activity', 'message');
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
