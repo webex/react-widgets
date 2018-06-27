@@ -12,7 +12,11 @@
     "@ciscospark/react-(.*)": "<rootDir>/packages/node_modules/@ciscospark/react-$1/src",
     "@ciscospark/redux-(.*)": "<rootDir>/packages/node_modules/@ciscospark/redux-$1/src",
     "@ciscospark/widget-(.*)": "<rootDir>/packages/node_modules/@ciscospark/widget-$1/src",
-    "@ciscospark/spark-widget-base": "<rootDir>/packages/node_modules/@ciscospark/spark-widget-base/src"
+    "@ciscospark/spark-widget-base": "<rootDir>/packages/node_modules/@ciscospark/spark-widget-base/src",
+    "@webex/react-(.*)": "<rootDir>/packages/node_modules/@webex/react-$1/src",
+    "@webex/redux-(.*)": "<rootDir>/packages/node_modules/@webex/redux-$1/src",
+    "@webex/widget-(.*)": "<rootDir>/packages/node_modules/@webex/widget-$1/src",
+    "@webex/spark-widget-base": "<rootDir>/packages/node_modules/@webex/spark-widget-base/src"
   },
   "testRegex": ".test.js$",
 
@@ -23,6 +27,7 @@
   "modulePaths": [
     "<rootDir>/node_modules",
     "<rootDir>/node_modules/@ciscospark",
+    "<rootDir>/node_modules/@webex",
     "<rootDir>/packages/node_modules"
   ],
   "haste": {

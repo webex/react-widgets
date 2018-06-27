@@ -9,7 +9,7 @@ module.exports = {
       if (packagePath) {
         return webpackBuild(packageName, packagePath);
       }
-      return webpackBuild(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
+      return webpackBuild(packageName);
     }
     return false;
   }

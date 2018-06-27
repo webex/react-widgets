@@ -4,10 +4,12 @@
     "allowJs": true
   },
   "include": [
-    "packages/node_modules/@ciscospark/**/*"
+    "packages/node_modules/@ciscospark/**/*",
+    "packages/node_modules/@webex/**/*"
   ],
   "exclude": [
     "packages/node_modules/@ciscospark/**/dist/*",
+    "packages/node_modules/@webex/**/dist/*",
     "node_modules/**/*",
     "dist"
   ]

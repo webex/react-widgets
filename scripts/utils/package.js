@@ -4,26 +4,77 @@ const {statSync, readdirSync} = require('fs');
 const {execSync} = require('./exec');
 
 /**
- * Get single packages full path
- * @param  {string} pkg specific package name or full path
- * @param  {string} packagesDir path where packages are stored
- * @returns {array} array of full path strings
+ * Determines if a given path is a directory
+ *
+ * @param {string} dirPath full directory path
+ * @returns {boolean}
  */
-function getPackage(pkg, packagesDir = 'packages/node_modules/@ciscospark') {
-  // check if this is a valid path
+function isDirectory(dirPath) {
   try {
-    if (statSync(pkg).isDirectory()) {
-      const fullpath = path.resolve(pkg);
-      statSync(path.resolve(fullpath, 'package.json'));
-      return fullpath;
+    if (statSync(dirPath).isDirectory()) {
+      return true;
     }
   }
   catch (err) {
-    if (err.code === 'ENOENT') {
-      return getPackage(path.resolve(packagesDir, pkg));
-    }
+    return false;
   }
   return false;
+}
+
+/**
+ * Checks if the given path is a directory containing a package.json file
+ *
+ * @param {string} packageDirectory
+ * @returns {boolean}
+ */
+function isPackageDirectory(packageDirectory) {
+  if (!isDirectory(packageDirectory)) {
+    return false;
+  }
+  try {
+    const fullpath = path.resolve(packageDirectory);
+    if (statSync(path.resolve(fullpath, 'package.json')).isFile()) {
+      return true;
+    }
+  }
+  catch (err) {
+    return false;
+  }
+  return false;
+}
+
+/**
+ * Get single packages full path
+ * @param  {string} pkg specific package name or full path
+ * @returns {string} full path string or empty if failed
+ */
+function getPackage(pkg) {
+  // check if this is a valid full package path
+  if (isPackageDirectory(pkg)) {
+    const fullpath = path.resolve(pkg);
+    return fullpath;
+  }
+  // Attempt to determine path by pkg name
+  let calculatedPackagesDir;
+  const sparkFullPath = path.resolve('packages/node_modules/@ciscospark', pkg);
+  const webexFullPath = path.resolve('packages/node_modules/@webex', pkg);
+  const sparkPathExists = isDirectory(sparkFullPath);
+  const webexPathExists = isDirectory(webexFullPath);
+  if (sparkPathExists && webexPathExists) {
+    console.error(`Unable to determine package path, multiple directories found for ${pkg}`);
+    return '';
+  }
+  if (webexPathExists) {
+    calculatedPackagesDir = webexFullPath;
+  }
+  if (sparkPathExists) {
+    calculatedPackagesDir = sparkFullPath;
+  }
+  if (!isPackageDirectory(calculatedPackagesDir)) {
+    console.error(`Unable to determine package path, no matching directory found for ${pkg}`);
+    return '';
+  }
+  return calculatedPackagesDir;
 }
 
 
@@ -62,14 +113,23 @@ function runInPackage({
  * @param  {string} packagesDir path where packages are stored
  * @returns {array} array of full path strings
  */
-function getAllPackagePaths(packagesDir = 'packages/node_modules/@ciscospark') {
-  return readdirSync(packagesDir).reduce((acc, packagePath) => {
-    const pkg = getPackage(packagePath, packagesDir);
-    if (pkg) {
-      acc.push(pkg);
-    }
-    return acc;
-  }, []);
+function getAllPackagePaths() {
+  const fullPaths = [];
+  const packagesDirs = ['packages/node_modules/@ciscospark', 'packages/node_modules/@webex'];
+  packagesDirs.forEach((packagesDir) => {
+    console.info(`Reading Directory: ${packagesDir}`);
+    readdirSync(packagesDir).forEach((packagePath) => {
+      console.info(`Reading Package Directory: ${packagePath}`);
+      const fullpath = path.resolve(packagesDir, packagePath);
+      if (isDirectory(fullpath)) {
+        const pkg = getPackage(fullpath);
+        if (pkg) {
+          fullPaths.push(pkg);
+        }
+      }
+    });
+  });
+  return fullPaths;
 }
 
 
