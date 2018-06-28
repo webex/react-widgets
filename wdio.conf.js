@@ -31,7 +31,6 @@ const screenResolution = platform.toLowerCase().includes('os x') || platform ===
 
 const chromeCapabilities = {
   browserName: 'chrome',
-  name: `react-widget-${suite}`,
   chromeOptions: {
     args: [
       '--use-fake-device-for-media-stream',
@@ -41,24 +40,10 @@ const chromeCapabilities = {
     prefs: {
       'profile.default_content_setting_values.notifications': 2
     }
-  },
-  idleTimeout: 300,
-  commandTimeout: 600,
-  maxDuration: 3600,
-  seleniumVersion: '3.4.0',
-  screenResolution,
-  platform,
-  version
+  }
 };
 const firefoxCapabilities = {
-  browserName: 'firefox',
-  name: `react-widget-${suite}`,
-  idleTimeout: 300,
-  maxDuration: 3600,
-  seleniumVersion: '3.4.0',
-  screenResolution,
-  platform,
-  version
+  browserName: 'firefox'
 };
 let mochaTimeout = 60000;
 
@@ -112,10 +97,12 @@ exports.config = {
     ],
     oneOnOne: [
       './test/journeys/specs/oneOnOne/dataApi/basic.js',
+      './test/journeys/specs/oneOnOne/dataApi/guest.js',
       './test/journeys/specs/oneOnOne/dataApi/meet.js',
       './test/journeys/specs/oneOnOne/dataApi/messaging.js',
       './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
       './test/journeys/specs/oneOnOne/global/basic.js',
+      './test/journeys/specs/oneOnOne/global/guest.js',
       './test/journeys/specs/oneOnOne/global/meet.js',
       './test/journeys/specs/oneOnOne/global/messaging.js',
       './test/journeys/specs/oneOnOne/global/startup-settings.js'
@@ -339,6 +326,31 @@ exports.config = {
 };
 
 if (process.env.SAUCE) {
+  let sauceCapabilities;
+  if (browser === 'chrome') {
+    sauceCapabilities = Object.assign({}, chromeCapabilities, {
+      name: `react-widget-${suite}`,
+      idleTimeout: 300,
+      commandTimeout: 600,
+      maxDuration: 3600,
+      seleniumVersion: '3.4.0',
+      screenResolution,
+      platform,
+      version
+    });
+  }
+  else {
+    sauceCapabilities = Object.assign({}, firefoxCapabilities, {
+      name: `react-widget-${suite}`,
+      idleTimeout: 300,
+      commandTimeout: 600,
+      maxDuration: 3600,
+      seleniumVersion: '3.4.0',
+      screenResolution,
+      platform,
+      version
+    });
+  }
   exports.config = Object.assign(exports.config, {
     deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
     user: process.env.SAUCE_USERNAME,
@@ -355,6 +367,14 @@ if (process.env.SAUCE) {
       ],
       tunnelIdentifier: tunnelId,
       port: process.env.SAUCE_CONNECT_PORT || 4445
+    },
+    capabilities: {
+      browserLocal: {
+        desiredCapabilities: sauceCapabilities
+      },
+      browserRemote: {
+        desiredCapabilities: sauceCapabilities
+      }
     }
   });
 }
