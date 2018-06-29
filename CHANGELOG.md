@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.313"></a>
+## [0.1.313](https://github.com/webex/react-ciscospark/compare/v0.1.312...v0.1.313) (2018-06-29)
+
+
+### Bug Fixes
+
+* **tooling:** cannot run journey tests locally ([2263166](https://github.com/webex/react-ciscospark/commit/2263166))
+
+
+### Features
+
+* **module-users:** use uuid for all user ids ([a450c54](https://github.com/webex/react-ciscospark/commit/a450c54))
+* **widget-demo:** add destination support ([c3a6857](https://github.com/webex/react-ciscospark/commit/c3a6857))
+* **widget-meet:** add destination support ([b0f3ffe](https://github.com/webex/react-ciscospark/commit/b0f3ffe))
+* **widget-message:** add destination prop support ([5d44ac3](https://github.com/webex/react-ciscospark/commit/5d44ac3))
+* **widget-space:** add destination prop ([67a4a0b](https://github.com/webex/react-ciscospark/commit/67a4a0b))
+* **widget-space-demo:** update props to destination ([9912b71](https://github.com/webex/react-ciscospark/commit/9912b71))
+
+
+
 <a name="0.1.312"></a>
 ## [0.1.312](https://github.com/webex/react-ciscospark/compare/v0.1.311...v0.1.312) (2018-06-21)
 
