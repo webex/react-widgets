@@ -200,6 +200,8 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
   // Send receipt acknowledgement and verify before moving on
   sendMessage(receiver, sender, `Received: ${fileName}`);
   verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
+  // Wait so we don't overload file uploads
+  sender.browser.pause(1000);
 };
 
 /**
