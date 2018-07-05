@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.314"></a>
+## [0.1.314](https://github.com/webex/react-ciscospark/compare/v0.1.313...v0.1.314) (2018-07-05)
+
+
+### Bug Fixes
+
+* **activity-system-message:** remove incorrect isRequired from props ([d9250c9](https://github.com/webex/react-ciscospark/commit/d9250c9))
+* **day-separator:** add correct prop type ([58285ee](https://github.com/webex/react-ciscospark/commit/58285ee))
+
+
+
 <a name="0.1.313"></a>
 ## [0.1.313](https://github.com/webex/react-ciscospark/compare/v0.1.312...v0.1.313) (2018-06-29)
 
