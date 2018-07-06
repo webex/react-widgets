@@ -68,7 +68,8 @@ export function searchForPerson(aBrowser, searchString, doAdd = false, searchRes
   aBrowser.setValue(elements.searchInput, searchString);
   aBrowser.waitForVisible(elements.addParticipantResultsArea);
   aBrowser.waitForVisible(elements.addParticipantResultItem);
-  const resultsText = aBrowser.getText(elements.addParticipantResultItem);
+  const element = aBrowser.element(elements.addParticipantResultItem);
+  const resultsText = element.getText();
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);
