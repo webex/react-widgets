@@ -199,7 +199,7 @@ describe('Widget Space', () => {
       it('searches and adds person to space', () => {
         openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
         browserLocal.waitForVisible(rosterElements.rosterWidget);
-        searchForPerson(browserLocal, biff.displayName, true);
+        searchForPerson(browserLocal, biff.email, true, biff.displayName);
         browserLocal.waitForVisible(rosterElements.rosterList);
         browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterList).includes(biff.displayName));
         browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterTitle) === 'People (4)');
