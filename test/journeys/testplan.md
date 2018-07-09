@@ -127,7 +127,7 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - delete message
         - should be able to delete a message from self
         - should not be able to delete a message from others
-    - File Transfer Tests
+    - File Transfer Tests (Skipped due to instability)
       - sends message with png attachment
       - verifies png-sample is in files tab
     - markdown messaging
@@ -204,7 +204,7 @@ The "space" test suite opens a space widget to a group space and creates three t
       - delete message
         - should be able to delete a message from self
         - should not be able to delete a message from others
-    - File Transfer Tests
+    - File Transfer Tests (Skipped due to instability)
       - sends message with png attachment
       - verifies png-sample is in files tab
     - markdown messaging
@@ -265,7 +265,7 @@ The "space" test suite opens a space widget to a group space and creates three t
       - delete message
         - should be able to delete a message from self
         - should not be able to delete a message from others
-    - File Transfer Tests
+    - File Transfer Tests (Skipped due to instability)
       - sends message with png attachment
       - verifies png-sample is in files tab
     - markdown messaging
