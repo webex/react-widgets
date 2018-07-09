@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.316"></a>
+## [0.1.316](https://github.com/webex/react-ciscospark/compare/v0.1.315...v0.1.316) (2018-07-09)
+
+
+### Bug Fixes
+
+* **widget-space:** update sdk version, fix firefox calling ([cde50e4](https://github.com/webex/react-ciscospark/commit/cde50e4))
+
+
+
 <a name="0.1.315"></a>
 ## [0.1.315](https://github.com/webex/react-ciscospark/compare/v0.1.314...v0.1.315) (2018-07-09)
 
