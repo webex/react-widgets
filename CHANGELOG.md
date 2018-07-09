@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.315"></a>
+## [0.1.315](https://github.com/webex/react-ciscospark/compare/v0.1.314...v0.1.315) (2018-07-09)
+
+
+### Features
+
+* **module-conversation:** add reset conversation action ([e1ab8b9](https://github.com/webex/react-ciscospark/commit/e1ab8b9))
+* **module-errors:** add reset errors action ([09d3bfb](https://github.com/webex/react-ciscospark/commit/09d3bfb))
+* **redux-module-users:** export immutable records for testing ([2421332](https://github.com/webex/react-ciscospark/commit/2421332))
+* **widget-demo:** use react component for space widget ([cb10fc2](https://github.com/webex/react-ciscospark/commit/cb10fc2))
+* **widget-message:** reset widget on destination change ([78e26bc](https://github.com/webex/react-ciscospark/commit/78e26bc))
+* **widget-space:** reload widget on destination change ([188d6f6](https://github.com/webex/react-ciscospark/commit/188d6f6))
+
+
+
 <a name="0.1.314"></a>
 ## [0.1.314](https://github.com/webex/react-ciscospark/compare/v0.1.313...v0.1.314) (2018-07-05)
 
