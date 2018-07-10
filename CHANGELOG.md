@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.317"></a>
+## [0.1.317](https://github.com/webex/react-ciscospark/compare/v0.1.316...v0.1.317) (2018-07-10)
+
+
+### Features
+
+* **webex-loading:** create new loading screen component ([1363c97](https://github.com/webex/react-ciscospark/commit/1363c97))
+
+
+
 <a name="0.1.316"></a>
 ## [0.1.316](https://github.com/webex/react-ciscospark/compare/v0.1.315...v0.1.316) (2018-07-09)
 
