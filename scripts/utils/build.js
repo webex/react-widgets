@@ -71,7 +71,7 @@ function webpackBuild(pkgName, pkgPath) {
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
       rimraf.sync(path.resolve(targetPkgPath, 'dist'));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath}`);
+      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env.package=${pkgName}`);
       console.info(`${pkgName}... Done\n\n`.cyan);
     }
     catch (err) {

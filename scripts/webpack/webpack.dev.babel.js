@@ -26,7 +26,8 @@ const plugins = [
   ])
 ];
 
-export default webpackConfigBase({
+// env config object from command line: https://webpack.js.org/guides/environment-variables/
+export default (env) => webpackConfigBase({
   entry: './index.js',
   plugins,
   devtool: 'source-map',
@@ -53,4 +54,4 @@ export default webpackConfigBase({
       'Content-Security-Policy': 'script-src \'self\' \'unsafe-inline\' code.s4d.io; style-src \'self\' \'unsafe-inline\' code.s4d.io; media-src \'self\' code.s4d.io *.clouddrive.com data: blob:; font-src \'self\' code.s4d.io; img-src \'self\' code.s4d.io *.clouddrive.com data: blob: *.rackcdn.com; connect-src \'self\' localhost ws://localhost:8000 wss://*.wbx.com wss://*.wbx2.com ws://*.wbx.com *.wbx2.com *.webex.com code.s4d.io *.ciscospark.com https://*.clouddrive.com/;'
     }
   }
-});
+}, env);

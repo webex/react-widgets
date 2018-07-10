@@ -158,7 +158,7 @@ function getWidgetPackages() {
  */
 function startPackage(pkgName, pkgPath) {
   return runInPackage({
-    constructCommand: (targetPath) => `webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback --context ${path.resolve(targetPath, 'src')}`,
+    constructCommand: (targetPath) => `webpack-dev-server --config scripts/webpack/webpack.dev.babel.js --hot --inline --history-api-fallback --context ${path.resolve(targetPath, 'src')} --env.package=${pkgName}`,
     commandName: 'Start Package',
     pkgName,
     pkgPath

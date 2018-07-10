@@ -10,7 +10,7 @@ dotenv.config();
 
 process.env.REACT_CISCOSPARK_VERSION = version;
 
-export default (options) => {
+export default (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
     new webpack.EnvironmentPlugin([
@@ -80,7 +80,7 @@ export default (options) => {
               options: {
                 camelCase: true,
                 modules: true,
-                localIdentName: '[local]--[hash:base64:5]',
+                localIdentName: `${env && env.package ? env.package : 'widget'}--[local]--[hash:base64:5]`,
                 importLoaders: 1,
                 sourceMap: true
               }

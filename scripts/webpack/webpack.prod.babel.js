@@ -53,7 +53,8 @@ if (fs.existsSync('./src/index.html')) {
 
 const publicPath = process.env.BUILD_PUBLIC_PATH;
 
-export default webpackBaseConfig({
+// env config object from command line: https://webpack.js.org/guides/environment-variables/
+export default (env) => webpackBaseConfig({
   entry: './index.js',
   output: {
     filename: 'bundle.js',
@@ -70,4 +71,4 @@ export default webpackBaseConfig({
     TO_PERSON_EMAIL: '',
     TO_PERSON_ID: ''
   }
-});
+}, env);
