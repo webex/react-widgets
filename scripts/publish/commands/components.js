@@ -9,13 +9,13 @@ module.exports = {
   desc: 'Publish all component and module packages',
   builder: {},
   handler: () =>
-    getAllPackagePaths().map((pkg) => {
+    getAllPackagePaths().map((pkgPath) => {
       try {
-        const pkgJson = require(path.resolve(pkg, 'package.json'));
+        const pkgJson = require(path.resolve(pkgPath, 'package.json'));
         const pkgName = pkgJson.name.split('/').pop();
         const isWidget = pkgName.startsWith('widget-');
         if (!isWidget && !pkgJson.private) {
-          return npmPublishPackage(pkgName);
+          return npmPublishPackage(pkgName, pkgPath);
         }
       }
       catch (err) {

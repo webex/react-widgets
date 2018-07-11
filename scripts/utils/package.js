@@ -90,16 +90,12 @@ function runInPackage({
   pkgName,
   pkgPath
 }) {
-  const outputPkgPath = getPackage(pkgName || pkgPath);
+  const outputPkgPath = getPackage(pkgPath || pkgName);
   if (outputPkgPath) {
     try {
       console.info(`${commandName} ${pkgName} ...`);
       const command = constructCommand(outputPkgPath);
-      execSync(command)
-        .catch((error) => {
-          console.error(error.stdout);
-          throw new Error(`Error when running ${commandName} on ${pkgName}`, error);
-        });
+      execSync(command);
     }
     catch (err) {
       throw new Error(`Error ${commandName} ${pkgName} package`, err);

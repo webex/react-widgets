@@ -2,11 +2,12 @@ const path = require('path');
 
 const {runInPackage} = require('./package');
 
-function npmPublishPackage(pkgName) {
+function npmPublishPackage(pkgName, pkgPath) {
   return runInPackage({
-    constructCommand: (targetPath) => `cd ${path.resolve(targetPath)} && npm publish --access public`,
+    constructCommand: (targetPath) => `cd ${path.resolve(targetPath)} && npm pack --access public`,
     commandName: 'Publish Package to NPM',
-    pkgName
+    pkgName,
+    pkgPath
   });
 }
 
