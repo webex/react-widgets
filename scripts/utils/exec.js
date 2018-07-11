@@ -2,7 +2,7 @@
  * Borrowed from React Bootstrap
  * https://github.com/react-bootstrap/react-bootstrap
  */
-const processExecSync = require('child_process').execSync;
+const {shellSync} = require('execa');
 
 const processExec = require('child-process-promise').exec;
 require('colors');
@@ -78,7 +78,7 @@ function setExecOptions(options) {
 }
 
 function execSync(command) {
-  return processExecSync(command, {stdio: 'inherit'});
+  return shellSync(command, {stdio: 'inherit'});
 }
 
 module.exports = {

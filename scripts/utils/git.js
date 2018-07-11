@@ -1,14 +1,14 @@
 /*!
  * Copyright (c) 2015-2017 Cisco Systems, Inc. See LICENSE file.
  */
-const {execSync} = require('child_process');
+const {shellSync} = require('execa');
 
 const debug = require('debug')('tooling:git');
 
 exports.diff = async function diff(tag) {
   debug(`diffing HEAD against ${tag}`);
   debug(`Shelling out to \`git diff --name-only HEAD..${tag}\``);
-  const raw = String(execSync(`git diff --name-only HEAD..${tag}`));
+  const raw = String(shellSync(`git diff --name-only HEAD..${tag}`));
 
   debug('Done');
 
@@ -22,7 +22,7 @@ exports.lastLog = function lastLog() {
   const treeLike = process.env.GIT_COMMIT || 'HEAD';
   const cmd = `git log -n 1 --format=%B ${treeLike}`;
   debug(`Shelling out to ${cmd}`);
-  const log = String(execSync(cmd));
+  const log = String(shellSync(cmd));
   debug('Done');
   return log;
 };
