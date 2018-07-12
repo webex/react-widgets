@@ -22,7 +22,7 @@ ansiColor('xterm') {
 
         stage('Install/Upgrade') {
           withCredentials([
-            string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+            string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
           ]) {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh

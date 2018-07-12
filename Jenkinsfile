@@ -85,9 +85,9 @@ ansiColor('xterm') {
 
           stage('Install') {
             withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
             ]) {
-              sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
+              sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
               nvm install v8.11.3
@@ -100,7 +100,7 @@ ansiColor('xterm') {
 
           stage('Static Analysis') {
             withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
@@ -113,7 +113,7 @@ ansiColor('xterm') {
           stage('Test Skipping Check') {
             echo "checking if tests should be skipped"
             withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
@@ -136,7 +136,7 @@ ansiColor('xterm') {
           stage('Unit Tests') {
             if (!skipTests) {
               withCredentials([
-                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+                string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
               ]) {
                 sh '''#!/bin/bash -e
                 source ~/.nvm/nvm.sh
@@ -150,7 +150,7 @@ ansiColor('xterm') {
           stage('Journey Tests') {
             if (!skipTests) {
               withCredentials([
-                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
+                string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN'),
                 string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
                 usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
                 string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
@@ -178,7 +178,7 @@ ansiColor('xterm') {
 
           stage('Bump version') {
             withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+              string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
@@ -194,7 +194,7 @@ ansiColor('xterm') {
 
           stage('Build for CDN'){
             withCredentials([
-              string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN'),
+              string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN'),
               usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
               file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
               string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
@@ -252,12 +252,12 @@ ansiColor('xterm') {
 
             stage('Publish to NPM') {
               withCredentials([
-                string(credentialsId: 'NPM_TOKEN', variable: 'NPM_TOKEN')
+                string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
               ]) {
                 try {
                   // Copy & update config file
                   sh 'cp .npmrc $HOME/.npmrc'
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> $HOME/.npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> $HOME/.npmrc'
                   // Publish
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
