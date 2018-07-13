@@ -252,7 +252,7 @@ ansiColor('xterm') {
 
             stage('Publish to NPM') {
               withCredentials([
-                string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
+                string(credentialsId: 'WIDGETS_NPM_PUBLISH_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
               ]) {
                 try {
                   // Copy & update config file
