@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.321"></a>
+## [0.1.321](https://github.com/webex/react-ciscospark/compare/v0.1.320...v0.1.321) (2018-07-16)
+
+
+### Features
+
+* **widget-space:** use new webex teams loading screen ([f294ba3](https://github.com/webex/react-ciscospark/commit/f294ba3))
+
+
+
 <a name="0.1.320"></a>
 ## [0.1.320](https://github.com/webex/react-ciscospark/compare/v0.1.319...v0.1.320) (2018-07-16)
 
