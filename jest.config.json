@@ -4,6 +4,7 @@
     "<rootDir>/src/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
+  "testURL": "http://localhost",
   "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "moduleNameMapper": {
     "^.+\\.(css|less)$": "identity-obj-proxy",

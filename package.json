@@ -46,7 +46,8 @@
   },
   "contributors": [
     "Adam Weeks <adweeks@cisco.com>",
-    "Bernie Zang <nzang@cisco.com>"
+    "Bernie Zang <nzang@cisco.com>",
+    "Moriah Maney <momaney@cisco.com>"
   ],
   "license": "MIT",
   "bugs": {
@@ -74,6 +75,7 @@
     "@ciscospark/spark-core": "1.32.22",
     "@ciscospark/storage-adapter-local-forage": "1.32.22",
     "@ciscospark/storage-adapter-local-storage": "1.32.22",
+    "@collab-ui/react": "^8.0.2",
     "ampersand-events": "^2.0.2",
     "classnames": "^2.2.5",
     "core-decorators": "^0.20.0",
@@ -167,6 +169,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
+    "node-sass": "^4.9.2",
     "npm-check-updates": "^2.12.1",
     "postcss": "^6.0.3",
     "postcss-cli": "^4.1.0",
@@ -178,6 +181,7 @@
     "react-transform-hmr": "^1.0.4",
     "redux-mock-store": "^1.2.1",
     "rimraf": "^2.5.4",
+    "sass-loader": "^7.0.3",
     "saucelabs": "^1.4.0",
     "semver": "^5.4.1",
     "sleep-ms": "^2.0.1",

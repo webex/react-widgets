@@ -45,13 +45,16 @@ export default (options, env) => {
     },
     target: 'web',
     resolve: {
+      alias: {
+        node_modules: path.resolve(__dirname, '..', '..', 'node_modules')
+      },
       mainFields: ['src', 'browser', 'module', 'main'],
       modules: [
         'src',
         path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
         'node_modules'
       ],
-      extensions: ['.js', '.css', '.json']
+      extensions: ['.js', '.css', '.json', '.scss']
     },
     module: {
       rules: [
@@ -99,6 +102,31 @@ export default (options, env) => {
           test: /\.css$/,
           include: [path.resolve(__dirname, '..', '..', 'node_modules')],
           use: ['style-loader', 'css-loader']
+        },
+        {
+          test: /\.scss$/,
+          include: [
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
+            path.resolve(__dirname, '..', '..', 'src'),
+            path.resolve(__dirname, '..', '..', 'node_modules')
+
+          ],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true
+                }
+              },
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: true
+                }
+              }]
+          })
         },
         {
           test: /\.woff$/,
