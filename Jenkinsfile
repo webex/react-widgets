@@ -90,8 +90,8 @@ ansiColor('xterm') {
               sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm install v8.11.1
-              nvm use v8.11.1
+              nvm install v8.11.3
+              nvm use v8.11.3
               npm install
               git checkout .npmrc
               '''
@@ -104,7 +104,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.1
+              nvm use v8.11.3
               npm run static-analysis
               '''
             }
@@ -117,7 +117,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.1
+              nvm use v8.11.3
               action=`npm run --silent tooling -- check-testable`
               echo $action > .action
               '''
@@ -140,7 +140,7 @@ ansiColor('xterm') {
               ]) {
                 sh '''#!/bin/bash -e
                 source ~/.nvm/nvm.sh
-                nvm use v8.11.1
+                nvm use v8.11.3
                 npm run jest
                 '''
               }
@@ -159,7 +159,7 @@ ansiColor('xterm') {
                 // || kill 0 after each integration command will kill all other jobs in the parent process if the integration command preceding it fails with a non-zero exit code
                 sh """#!/bin/bash -e
                 source ~/.nvm/nvm.sh
-                nvm use 8.11.1
+                nvm use 8.11.3
                 NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
                 export BUILD_NUMBER="pipeline-build-$BUILD_NUMBER"
                 set -m
@@ -182,7 +182,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.1
+              nvm use v8.11.3
               git diff
               npm run release -- --release-as patch --no-verify
               version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
@@ -201,7 +201,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.1
+              nvm use v8.11.3
               version=`cat .version`
               export NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
@@ -264,7 +264,7 @@ ansiColor('xterm') {
                   echo ''
                   sh '''#!/bin/bash -e
                   source ~/.nvm/nvm.sh
-                  nvm use v8.11.1
+                  nvm use v8.11.3
                   npm run publish:components
                   '''
                 }
