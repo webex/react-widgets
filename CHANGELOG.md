@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.324"></a>
+## [0.1.324](https://github.com/webex/react-ciscospark/compare/v0.1.323...v0.1.324) (2018-07-31)
+
+
+### Features
+
+* **widget-recents:** use new avatar design ([f9a5ba4](https://github.com/webex/react-ciscospark/commit/f9a5ba4))
+
+
+
 <a name="0.1.323"></a>
 ## [0.1.323](https://github.com/webex/react-ciscospark/compare/v0.1.322...v0.1.323) (2018-07-31)
 
