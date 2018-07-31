@@ -200,6 +200,10 @@
     "webpack-dev-server": "^2.7.1",
     "yargs": "^9.0.1"
   },
+  "engines": {
+    "node": ">=8.11.3",
+    "npm": ">=5.6.0"
+  },
   "lint-staged": {
     "*.js": "lint:eslint"
   },

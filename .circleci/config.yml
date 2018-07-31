@@ -1,30 +1,65 @@
 # Main Config
 version: 2
+
+base_image: &base_image
+  image: circleci/node:8.11.3
+
+job_common: &job_common
+  docker:
+    - <<: *base_image
+
+save: &save
+  save_cache:
+    key: js-dependencies-{{ .Branch }}-{{ .Revision }}
+    paths:
+      - node_modules
+
+restore: &restore
+  restore_cache:
+    key: js-dependencies-{{ .Branch }}-{{ .Revision }}
+
 jobs:
-  install:
-    docker:
-      - image: circleci/node:8.11.1
+  lockfile_update:
+    <<: *job_common
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package.json" }}
-      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: js-dependencies-{{ checksum "package.json" }}
+      - <<: *restore
+      - greenkeeper-lockfile-update
+      - <<: *save
+
+  lockfile_upload:
+    <<: *job_common
+    steps:
+      - checkout
+      - <<: *restore
+      - greenkeeper-lockfile-upload
+      - <<: *save
+
+  install:
+    <<: *job_common
+    steps:
+      - checkout
+      - <<: *restore
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+      - run:
+          name: Install dependencies
+          command: |
+            if [ ! -d node_modules ]; then
+              npm install
+            fi
+      - run:
+          name: Save NPM install log
+          command: npm ls --json > /tmp/npm_install.log || true
+      - store_artifacts:
+          path: /tmp/npm_install.log
+          destination: npm-install
+      - <<: *save
 
   unit_tests_and_linting:
-    docker:
-      - image: circleci/node:8.11.1
+    <<: *job_common
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package.json" }}
-          - js-dependencies-
+      - <<: *restore
       - run:
           name: Run eslint
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
@@ -40,15 +75,12 @@ jobs:
           destination: junit
 
   build_for_tests:
-    docker:
-      - image: circleci/node:8.11.1
+    <<: *job_common
     environment:
       - NODE_ENV: "test"
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package.json" }}
+      - <<: *restore
       - run:
           name: Copy and build journey test static files
           command: npm run build journey /tmp/dist-test
@@ -58,16 +90,13 @@ jobs:
             - dist-test
 
   journey_tests:
-    docker:
-      - image: circleci/node:8.11.1
+    <<: *job_common
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: /tmp/workspace/dist-test
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - js-dependencies-{{ checksum "package.json" }}
+      - <<: *restore
       - attach_workspace:
           at: /tmp/workspace
       - run:
@@ -103,6 +132,13 @@ workflows:
   run_all_tests:
     jobs:
       - install
+      - lockfile_update:
+          requires:
+            - install
+          filters:
+            branches:
+              only:
+                - /greenkeeper.*/
       - build_for_tests:
           requires:
             - install
@@ -112,3 +148,10 @@ workflows:
       - journey_tests:
           requires:
             - build_for_tests
+      - lockfile_upload:
+          requires:
+            - journey_tests
+          filters:
+            branches:
+              only:
+                - /greenkeeper.*/

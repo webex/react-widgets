@@ -4,7 +4,6 @@
 *.log
 /node_modules
 .env
-package-lock.json
 npm-debug*
 packages/**/es/*
 packages/**/cjs/*

@@ -19,7 +19,7 @@
     "@webex/spark-widget-base": "<rootDir>/packages/node_modules/@webex/spark-widget-base/src"
   },
   "testRegex": ".test.js$",
-
+  "testURL": "http://localhost",
   "moduleDirectories": [
     "/node_modules/",
     "/packages/node_modules/"
