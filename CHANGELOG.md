@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.328"></a>
+## [0.1.328](https://github.com/webex/react-ciscospark/compare/v0.1.327...v0.1.328) (2018-08-01)
+
+
+### Bug Fixes
+
+* **README:** update circle build status link ([8665781](https://github.com/webex/react-ciscospark/commit/8665781))
+
+
+
 <a name="0.1.327"></a>
 ## [0.1.327](https://github.com/webex/react-ciscospark/compare/v0.1.326...v0.1.327) (2018-08-01)
 
