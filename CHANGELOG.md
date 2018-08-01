@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.325"></a>
+## [0.1.325](https://github.com/webex/react-ciscospark/compare/v0.1.324...v0.1.325) (2018-08-01)
+
+
+### Features
+
+* **widget-demo:** add initial activity setting ([497aacb](https://github.com/webex/react-ciscospark/commit/497aacb))
+* **widget-demo:** save activities and initialActivity in cookies ([d038863](https://github.com/webex/react-ciscospark/commit/d038863))
+* **widget-space-demo:** add initial activity setting ([3106a7f](https://github.com/webex/react-ciscospark/commit/3106a7f))
+* **widget-space-demo:** save activities and initialActivity in cookies ([78730fa](https://github.com/webex/react-ciscospark/commit/78730fa))
+
+
+
 <a name="0.1.324"></a>
 ## [0.1.324](https://github.com/webex/react-ciscospark/compare/v0.1.323...v0.1.324) (2018-07-31)
 
