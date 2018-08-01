@@ -1,6 +1,6 @@
 # react-ciscospark
 
-[![CircleCI](https://img.shields.io/circleci/project/github/webex/react-ciscospark/master.svg)](https://circleci.com/gh/ciscospark/react-ciscospark)
+[![CircleCI](https://img.shields.io/circleci/project/github/webex/react-ciscospark/master.svg)](https://circleci.com/gh/webex/react-ciscospark)
 [![license](https://img.shields.io/github/license/webex/react-ciscospark.svg)](https://github.com/webex/react-ciscospark/blob/master/LICENSE)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
