@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.329"></a>
+## [0.1.329](https://github.com/webex/react-ciscospark/compare/v0.1.328...v0.1.329) (2018-08-03)
+
+
+### Bug Fixes
+
+* **widget-space:** only auto switch to message/meet when available ([e7eb805](https://github.com/webex/react-ciscospark/commit/e7eb805))
+* **widget-space:** use call start time from call object ([fa6e9ed](https://github.com/webex/react-ciscospark/commit/fa6e9ed))
+
+
+### Features
+
+* **r-m-media:** store locus id for destination when known ([33940d7](https://github.com/webex/react-ciscospark/commit/33940d7))
+* **widget-space:** fetch call by destination if convo not available ([3ed6af3](https://github.com/webex/react-ciscospark/commit/3ed6af3))
+* **widget-space:** generate spaceDetails prop without conversation ([38401dc](https://github.com/webex/react-ciscospark/commit/38401dc))
+
+
+
 <a name="0.1.328"></a>
 ## [0.1.328](https://github.com/webex/react-ciscospark/compare/v0.1.327...v0.1.328) (2018-08-01)
 
