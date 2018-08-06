@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.331"></a>
+## [0.1.331](https://github.com/webex/react-ciscospark/compare/v0.1.330...v0.1.331) (2018-08-06)
+
+
+### Features
+
+* **redux-module-media:** ignore inactive created calls ([2b35ae3](https://github.com/webex/react-ciscospark/commit/2b35ae3))
+
+
+
 <a name="0.1.330"></a>
 ## [0.1.330](https://github.com/webex/react-ciscospark/compare/v0.1.329...v0.1.330) (2018-08-06)
 
