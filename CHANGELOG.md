@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.333"></a>
+## [0.1.333](https://github.com/webex/react-ciscospark/compare/v0.1.332...v0.1.333) (2018-08-07)
+
+
+### Bug Fixes
+
+* **widget-recents:** order of loading enhancers ([b47df2b](https://github.com/webex/react-ciscospark/commit/b47df2b))
+
+
+
 <a name="0.1.332"></a>
 ## [0.1.332](https://github.com/webex/react-ciscospark/compare/v0.1.331...v0.1.332) (2018-08-07)
 
