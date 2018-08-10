@@ -29,3 +29,19 @@ export function getEventLog(myBrowser) {
   });
   return result.value;
 }
+
+/**
+ * Searches events object for matching event name
+ *
+ * @export
+ * @param {object} options
+ * @param {array} options.events
+ * @param {string} options.eventName
+ * @returns {(array|boolean)}
+ */
+export function findEventName({events, eventName}) {
+  if (Array.isArray(events)) {
+    return events.filter((val) => val.eventName === eventName);
+  }
+  return [];
+}

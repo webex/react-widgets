@@ -7,7 +7,11 @@ import '@ciscospark/internal-plugin-conversation';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
-import {clearEventLog, getEventLog} from '../../../lib/events';
+import {
+  clearEventLog,
+  getEventLog,
+  findEventName
+} from '../../../lib/events';
 
 import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
@@ -39,7 +43,7 @@ describe('Widget Recents', () => {
     browserRemote.url('/space.html?meetRecents');
   });
 
-  before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
+  it('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
     .then((users) => {
       [marty] = users;
       marty.spark = new CiscoSpark({
@@ -56,7 +60,7 @@ describe('Widget Recents', () => {
         .then(() => marty.spark.internal.mercury.connect());
     }));
 
-  before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
+  it('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
     .then((users) => {
       [docbrown] = users;
       docbrown.spark = new CiscoSpark({
@@ -72,7 +76,7 @@ describe('Widget Recents', () => {
       return docbrown.spark.internal.mercury.connect();
     }));
 
-  before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
+  it('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
     .then((users) => {
       [lorraine] = users;
       lorraine.spark = new CiscoSpark({
@@ -88,9 +92,9 @@ describe('Widget Recents', () => {
       return lorraine.spark.internal.mercury.connect();
     }));
 
-  before('pause to let test users establish', () => browser.pause(5000));
+  it('pause to let test users establish', () => browser.pause(5000));
 
-  before('create group space', () => marty.spark.internal.conversation.create({
+  it('create group space', () => marty.spark.internal.conversation.create({
     displayName: 'Test Group Space',
     participants: [marty, docbrown, lorraine]
   }).then((c) => {
@@ -98,19 +102,19 @@ describe('Widget Recents', () => {
     return conversation;
   }));
 
-  before('create one on one converstation', () => lorraine.spark.internal.conversation.create({
+  it('create one on one converstation', () => lorraine.spark.internal.conversation.create({
     participants: [marty, lorraine]
   }).then((c) => {
     oneOnOneConversation = c;
     return oneOnOneConversation;
   }));
 
-  before('open recents widget for marty', () => {
+  it('open recents widget for marty', () => {
     browserLocal.execute((localAccessToken) => {
       const options = {
         accessToken: localAccessToken,
-        onEvent: (eventName) => {
-          window.ciscoSparkEvents.push(eventName);
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
         }
       };
       window.openRecentsWidget(options);
@@ -118,7 +122,7 @@ describe('Widget Recents', () => {
     browserLocal.waitForVisible(elements.recentsWidget);
   });
 
-  before('open meet widget for lorraine', () => {
+  it('open meet widget for lorraine', () => {
     browserRemote.execute((localAccessToken, localToUserEmail) => {
       const options = {
         accessToken: localAccessToken,
@@ -158,31 +162,117 @@ describe('Widget Recents', () => {
 
   describe('events', () => {
     // https://github.com/webex/react-ciscospark/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
-    it('messages:created', () => {
+    it('messages:created - group space', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Don\'t be such a square';
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-      assert.include(getEventLog(browserLocal), 'messages:created', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'messages:created',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have messages:created event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.roomId, 'does not contain roomId');
+      assert.isNotEmpty(event.roomType, 'does not contain roomType');
+      assert.isNotEmpty(event.text, 'does not contain text');
+      assert.isNotEmpty(event.personId, 'does not contain personId');
+      assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
+      assert.isNotEmpty(event.created, 'does not contain created');
+    });
+
+    it('messages:created - one on one space', () => {
+      clearEventLog(browserLocal);
+      const lorraineText = 'Don\'t be such a square';
+      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
+      const events = findEventName({
+        eventName: 'messages:created',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have messages:created event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.roomId, 'does not contain roomId');
+      assert.isNotEmpty(event.roomType, 'does not contain roomType');
+      assert.isNotEmpty(event.toPersonId, 'does not contain toPersonId');
+      assert.isNotEmpty(event.toPersonEmail, 'does not contain toPersonEmail');
+      assert.isNotEmpty(event.text, 'does not contain text');
+      assert.isNotEmpty(event.personId, 'does not contain personId');
+      assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
+      assert.isNotEmpty(event.created, 'does not contain created');
     });
 
     it('rooms:unread', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
-      assert.include(getEventLog(browserLocal), 'rooms:unread', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'rooms:unread',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have rooms:unread event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.title, 'does not contain title');
+      assert.isNotEmpty(event.type, 'does not contain type');
+      assert.exists(event.isLocked, 'does not contain isLocked');
+      assert.isNotEmpty(event.lastActivity, 'does not contain lastActivity');
+      assert.isNotEmpty(event.created, 'does not contain created');
     });
 
     it('rooms:read', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-      assert.include(getEventLog(browserLocal), 'rooms:read', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'rooms:read',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have rooms:read event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.title, 'does not contain title');
+      assert.isNotEmpty(event.type, 'does not contain type');
+      assert.exists(event.isLocked, 'does not contain isLocked');
+      assert.isNotEmpty(event.lastActivity, 'does not contain lastActivity');
+      assert.isNotEmpty(event.created, 'does not contain created');
     });
 
-    it('rooms:selected', () => {
+    it('rooms:selected - group space', () => {
       clearEventLog(browserLocal);
       browserLocal.click(elements.firstSpace);
-      assert.include(getEventLog(browserLocal), 'rooms:selected', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'rooms:selected',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have rooms:selected event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.title, 'does not contain title');
+      assert.isNotEmpty(event.type, 'does not contain type');
+      assert.exists(event.isLocked, 'does not contain isLocked');
+      assert.isNotEmpty(event.lastActivity, 'does not contain lastActivity');
+      assert.isNotEmpty(event.created, 'does not contain created');
+    });
+
+    it('rooms:selected - oneOnOne space', () => {
+      const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
+      clearEventLog(browserLocal);
+      browserLocal.click(elements.firstSpace);
+      const events = findEventName({
+        eventName: 'rooms:selected',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have rooms:selected event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.title, 'does not contain title');
+      assert.isNotEmpty(event.type, 'does not contain type');
+      assert.exists(event.isLocked, 'does not contain isLocked');
+      assert.isNotEmpty(event.lastActivity, 'does not contain lastActivity');
+      assert.isNotEmpty(event.created, 'does not contain created');
+      assert.isNotEmpty(event.toPersonEmail, 'does not contain toPersonEmail');
     });
 
     it('memberships:created', () => {
@@ -190,7 +280,17 @@ describe('Widget Recents', () => {
       const firstPost = 'Everybody who\'s anybody drinks.';
       clearEventLog(browserLocal);
       createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
-      assert.include(getEventLog(browserLocal), 'memberships:created', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'memberships:created',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have memberships:created event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.roomId, 'does not contain roomId');
+      assert.isNotEmpty(event.personId, 'does not contain personId');
+      assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
+      assert.isNotEmpty(event.created, 'does not contain created');
     });
 
     it('memberships:deleted', () => {
@@ -208,7 +308,17 @@ describe('Widget Recents', () => {
       clearEventLog(browserLocal);
       waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
       browserLocal.waitUntil(() => browserLocal.getText(`${elements.firstSpace} ${elements.title}`) !== roomTitle);
-      assert.include(getEventLog(browserLocal), 'memberships:deleted', 'does not have event in log');
+      const events = findEventName({
+        eventName: 'memberships:deleted',
+        events: getEventLog(browserLocal)
+      });
+      assert.isNotEmpty(events, 'does not have memberships:deleted event in log');
+      const event = events[0].detail.data;
+      assert.isNotEmpty(event.id, 'does not contain id');
+      assert.isNotEmpty(event.roomId, 'does not contain roomId');
+      assert.isNotEmpty(event.personId, 'does not contain personId');
+      assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
+      assert.isNotEmpty(event.created, 'does not contain created');
     });
   });
 
