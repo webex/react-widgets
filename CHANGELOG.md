@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.335"></a>
+## [0.1.335](https://github.com/webex/react-ciscospark/compare/v0.1.334...v0.1.335) (2018-08-10)
+
+
+### Bug Fixes
+
+* **widget-meet:** Render error page when webrtc isn't supported ([c5728cb](https://github.com/webex/react-ciscospark/commit/c5728cb))
+
+
+### Features
+
+* **redux-module-activities:** Add delete/tombstone action ([d45abc5](https://github.com/webex/react-ciscospark/commit/d45abc5))
+
+
+
 <a name="0.1.334"></a>
 ## [0.1.334](https://github.com/webex/react-ciscospark/compare/v0.1.333...v0.1.334) (2018-08-07)
 
