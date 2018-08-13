@@ -37,7 +37,7 @@ export function getEventLog(myBrowser) {
  * @param {object} options
  * @param {array} options.events
  * @param {string} options.eventName
- * @returns {(array|boolean)}
+ * @returns {(array)}
  */
 export function findEventName({events, eventName}) {
   if (Array.isArray(events)) {

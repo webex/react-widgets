@@ -311,13 +311,15 @@ The "recents" test suite opens a recents widget and does things via the sdk that
     - displays a new incoming message
     - removes unread indicator when read
     - displays a call button on hover
-    - events
-      - messages:created
-      - rooms:unread
-      - rooms:read
-      - rooms:selected
-      - memberships:created
-      - memberships:deleted
+  - events
+    - messages:created - group space
+    - messages:created - one on one space
+    - rooms:unread
+    - rooms:read
+    - rooms:selected - group space
+    - rooms:selected - one on one space
+    - memberships:created
+    - memberships:deleted
   - one on one space
     - displays a new incoming message
     - removes unread indicator when read
