@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.337"></a>
+## [0.1.337](https://github.com/webex/react-ciscospark/compare/v0.1.336...v0.1.337) (2018-08-13)
+
+
+### Features
+
+* **recents-demo:** use TokenInput component ([ef806e1](https://github.com/webex/react-ciscospark/commit/ef806e1))
+* **space-demo:** use TokenInput and SpaceDestination components ([05abd3f](https://github.com/webex/react-ciscospark/commit/05abd3f))
+* **space-destination:** add space destination component for demos ([7247dd0](https://github.com/webex/react-ciscospark/commit/7247dd0))
+* **token-input:** add token input component for demos ([a8f6ce0](https://github.com/webex/react-ciscospark/commit/a8f6ce0))
+* **widget-demo:** use new shared token input component ([bb951ee](https://github.com/webex/react-ciscospark/commit/bb951ee))
+* **widget-demo:** use space destination component ([cf946f1](https://github.com/webex/react-ciscospark/commit/cf946f1))
+
+
+
 <a name="0.1.336"></a>
 ## [0.1.336](https://github.com/webex/react-ciscospark/compare/v0.1.335...v0.1.336) (2018-08-13)
 
