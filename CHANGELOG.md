@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.339"></a>
+## [0.1.339](https://github.com/webex/react-ciscospark/compare/v0.1.338...v0.1.339) (2018-08-14)
+
+
+### Bug Fixes
+
+* **activity-system-message:** remove incorrect required prop ([32c7831](https://github.com/webex/react-ciscospark/commit/32c7831))
+
+
+### Features
+
+* **message:** use convo loading status ([ee1b811](https://github.com/webex/react-ciscospark/commit/ee1b811))
+* **r-m-conversation:** filter update content activities from store ([7a5ae62](https://github.com/webex/react-ciscospark/commit/7a5ae62))
+
+
+
 <a name="0.1.338"></a>
 ## [0.1.338](https://github.com/webex/react-ciscospark/compare/v0.1.337...v0.1.338) (2018-08-14)
 
