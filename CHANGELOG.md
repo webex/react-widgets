@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.338"></a>
+## [0.1.338](https://github.com/webex/react-ciscospark/compare/v0.1.337...v0.1.338) (2018-08-14)
+
+
+### Bug Fixes
+
+* **react-component-activity-share-file:** missing file download button ([88cc125](https://github.com/webex/react-ciscospark/commit/88cc125))
+
+
+
 <a name="0.1.337"></a>
 ## [0.1.337](https://github.com/webex/react-ciscospark/compare/v0.1.336...v0.1.337) (2018-08-13)
 
