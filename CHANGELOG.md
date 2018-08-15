@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.340"></a>
+## [0.1.340](https://github.com/webex/react-ciscospark/compare/v0.1.339...v0.1.340) (2018-08-15)
+
+
+### Bug Fixes
+
+* **token-input:** update aria labels to match previous use ([170e066](https://github.com/webex/react-ciscospark/commit/170e066))
+
+
+
 <a name="0.1.339"></a>
 ## [0.1.339](https://github.com/webex/react-ciscospark/compare/v0.1.338...v0.1.339) (2018-08-14)
 
