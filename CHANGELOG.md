@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.342"></a>
+## [0.1.342](https://github.com/webex/react-ciscospark/compare/v0.1.341...v0.1.342) (2018-08-15)
+
+
+### Features
+
+* **widget-demo:** add sip calling ([d599d80](https://github.com/webex/react-ciscospark/commit/d599d80))
+
+
+
 <a name="0.1.341"></a>
 ## [0.1.341](https://github.com/webex/react-ciscospark/compare/v0.1.340...v0.1.341) (2018-08-15)
 
