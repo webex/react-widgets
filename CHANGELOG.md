@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.341"></a>
+## [0.1.341](https://github.com/webex/react-ciscospark/compare/v0.1.340...v0.1.341) (2018-08-15)
+
+
+### Bug Fixes
+
+* **r-m-activities:** add check for actor field ([2bcbeb0](https://github.com/webex/react-ciscospark/commit/2bcbeb0))
+
+
+### Features
+
+* **widget-meet:** enable sip calling ([ff6061a](https://github.com/webex/react-ciscospark/commit/ff6061a))
+* **widget-space:** enable sip calling ([ff540c6](https://github.com/webex/react-ciscospark/commit/ff540c6))
+
+
+
 <a name="0.1.340"></a>
 ## [0.1.340](https://github.com/webex/react-ciscospark/compare/v0.1.339...v0.1.340) (2018-08-15)
 
