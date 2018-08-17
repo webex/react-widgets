@@ -1,7 +1,6 @@
 {
   "roots": [
-    "<rootDir>/packages/node_modules/",
-    "<rootDir>/src/"
+    "<rootDir>/packages/node_modules/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
   "testURL": "http://localhost",
