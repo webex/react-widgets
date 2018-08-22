@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.343"></a>
+## [0.1.343](https://github.com/webex/react-ciscospark/compare/v0.1.342...v0.1.343) (2018-08-22)
+
+
+### Bug Fixes
+
+* **jest:** remove nonexistent root path ([4abcde5](https://github.com/webex/react-ciscospark/commit/4abcde5))
+
+
+### Features
+
+* **activity-list:** remove new line stripping ([c39a56d](https://github.com/webex/react-ciscospark/commit/c39a56d))
+* **r-m-activity:** add smart newline handling ([80b26d7](https://github.com/webex/react-ciscospark/commit/80b26d7))
+
+
+
 <a name="0.1.342"></a>
 ## [0.1.342](https://github.com/webex/react-ciscospark/compare/v0.1.341...v0.1.342) (2018-08-15)
 
