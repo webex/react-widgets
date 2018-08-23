@@ -81,7 +81,10 @@ describe('Widget Space: Group Space: TAP', () => {
 
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect()
+    lorraine.spark.internal.mercury.disconnect(),
+    // Demos use cookies to save state, clear before moving on
+    browserLocal.deleteCookie(),
+    browserRemote.deleteCookie()
   ]));
 
   before('create space', () => marty.spark.internal.conversation.create({

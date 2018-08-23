@@ -45,6 +45,9 @@ describe('Widget Space: One on One: TAP', () => {
     remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
   });
 
+  // Demos use cookies to save state, clear before moving on
+  after('delete cookies', () => browser.deleteCookie());
+
   describe('Activity Menu', () => {
     it('has a menu button', () => {
       assert.isTrue(local.browser.isVisible(basicElements.menuButton));

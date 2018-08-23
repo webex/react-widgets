@@ -82,7 +82,9 @@ describe('Widget Recents', () => {
   after('disconnect', () => Promise.all([
     marty.spark.internal.mercury.disconnect(),
     lorraine.spark.internal.mercury.disconnect(),
-    docbrown.spark.internal.mercury.disconnect()
+    docbrown.spark.internal.mercury.disconnect(),
+    // Demos use cookies to save state, clear before moving on
+    browser.deleteCookie()
   ]));
 
   before('create group space', () => marty.spark.internal.conversation.create({
