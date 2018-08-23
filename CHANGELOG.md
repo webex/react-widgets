@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.345"></a>
+## [0.1.345](https://github.com/webex/react-ciscospark/compare/v0.1.344...v0.1.345) (2018-08-23)
+
+
+### Bug Fixes
+
+* **tap:** clear cookies after tests ([0097c7b](https://github.com/webex/react-ciscospark/commit/0097c7b))
+
+
+
 <a name="0.1.344"></a>
 ## [0.1.344](https://github.com/webex/react-ciscospark/compare/v0.1.343...v0.1.344) (2018-08-23)
 
