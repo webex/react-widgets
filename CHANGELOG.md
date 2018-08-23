@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.346"></a>
+## [0.1.346](https://github.com/webex/react-ciscospark/compare/v0.1.345...v0.1.346) (2018-08-23)
+
+
+### Bug Fixes
+
+* **tap:** fix config prefix error ([d9ad41f](https://github.com/webex/react-ciscospark/commit/d9ad41f))
+
+
+
 <a name="0.1.345"></a>
 ## [0.1.345](https://github.com/webex/react-ciscospark/compare/v0.1.344...v0.1.345) (2018-08-23)
 
