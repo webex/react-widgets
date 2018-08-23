@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.344"></a>
+## [0.1.344](https://github.com/webex/react-ciscospark/compare/v0.1.343...v0.1.344) (2018-08-23)
+
+
+### Bug Fixes
+
+* **tap:** update aria label to fix tap test ([c982bb5](https://github.com/webex/react-ciscospark/commit/c982bb5))
+
+
+
 <a name="0.1.343"></a>
 ## [0.1.343](https://github.com/webex/react-ciscospark/compare/v0.1.342...v0.1.343) (2018-08-22)
 
