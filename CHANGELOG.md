@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.347"></a>
+## [0.1.347](https://github.com/webex/react-ciscospark/compare/v0.1.346...v0.1.347) (2018-08-27)
+
+
+### Bug Fixes
+
+* **widget-space:** cannot place call with direct room id ([98d66aa](https://github.com/webex/react-ciscospark/commit/98d66aa))
+
+
+
 <a name="0.1.346"></a>
 ## [0.1.346](https://github.com/webex/react-ciscospark/compare/v0.1.345...v0.1.346) (2018-08-23)
 
