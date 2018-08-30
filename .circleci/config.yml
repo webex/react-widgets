@@ -103,9 +103,6 @@ jobs:
       - checkout
       - <<: *restore_workspace
       - <<: *restore_node_modules
-      - run:
-          name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
-          command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests
