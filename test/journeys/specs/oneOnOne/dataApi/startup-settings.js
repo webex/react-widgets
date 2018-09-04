@@ -2,9 +2,9 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {moveMouse, updateJobStatus} from '../../../lib/test-helpers';
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
-import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
+import {answer, hangup} from '../../../lib/test-helpers/space-widget/meet.js';
 
 describe('Widget Space: One on One: Data API Settings', () => {
   const browserLocal = browser.select('browserLocal');
@@ -150,8 +150,8 @@ describe('Widget Space: One on One: Data API Settings', () => {
     it('starts call when set to true', () => {
       browser.pause(5000);
       answer(browserRemote);
-      moveMouse(browserLocal, meetElements.callContainer);
-      hangup(browserLocal);
+      hangup(browserRemote);
+      browser.refresh();
     });
   });
 
@@ -171,7 +171,7 @@ describe('Widget Space: One on One: Data API Settings', () => {
     });
 
     it('opens meet widget', () => {
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+      browserLocal.waitForVisible(elements.meetButton);
       browserLocal.refresh();
     });
   });
