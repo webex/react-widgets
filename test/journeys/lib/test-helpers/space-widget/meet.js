@@ -30,9 +30,13 @@ export const elements = {
  * @returns {void}
  */
 export function answer(aBrowser) {
-  aBrowser.waitForVisible(elements.answerButton);
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.answerButton),
+  5000, 'answer button is not visible while answering call');
   aBrowser.click(elements.answerButton);
-  aBrowser.waitForVisible(elements.remoteVideo);
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.remoteVideo),
+  5000, 'remote video is not visible after answering call');
   // Let call elapse 5 seconds before hanging up
   aBrowser.pause(5000);
 }
@@ -69,12 +73,20 @@ export function decline(aBrowser) {
  */
 export function hangup(aBrowser) {
   // Call controls currently has a hover state
-  aBrowser.waitForVisible(elements.callContainer);
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.callContainer),
+  5000, 'call container is not visible when trying to hang up call');
   moveMouse(aBrowser, elements.callContainer);
-  aBrowser.waitForVisible(elements.callControls);
-  aBrowser.waitForVisible(elements.hangupButton);
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.callControls),
+  5000, 'call controls is not visible when trying to hang up call');
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.hangupButton),
+  5000, 'hangup button is not visible when trying to hang up call');
   aBrowser.click(elements.hangupButton);
-  aBrowser.waitForVisible(elements.messageWidget);
+  aBrowser.waitUntil(() =>
+    aBrowser.isVisible(elements.messageWidget),
+  10000, 'message widget is not visible after hanging up call');
 }
 
 /**
