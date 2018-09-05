@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.350"></a>
+## [0.1.350](https://github.com/webex/react-ciscospark/compare/v0.1.349...v0.1.350) (2018-09-05)
+
+
+### Bug Fixes
+
+* **demo:** use correct activities property name ([d411231](https://github.com/webex/react-ciscospark/commit/d411231))
+* **r-m-conversation:** apply proper update content filter ([b0996d2](https://github.com/webex/react-ciscospark/commit/b0996d2))
+
+
+
 <a name="0.1.349"></a>
 ## [0.1.349](https://github.com/webex/react-ciscospark/compare/v0.1.348...v0.1.349) (2018-09-04)
 
