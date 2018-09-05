@@ -141,6 +141,8 @@ describe('Widget Space: Data API Settings', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, docbrown.token.access_token, conversation.id);
+      const spaceWidget = '.ciscospark-space-widget';
+      browserRemote.waitForVisible(spaceWidget);
     });
 
     before('inject marty token', () => {
@@ -161,8 +163,8 @@ describe('Widget Space: Data API Settings', () => {
     });
 
     it('starts call when set to true', () => {
-      answer(browserRemote);
       browser.pause(3000);
+      answer(browserRemote);
       hangup(browserLocal);
       hangup(browserRemote);
       // Wait for end of locus session before continuing
