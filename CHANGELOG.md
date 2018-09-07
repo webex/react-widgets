@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.351"></a>
+## [0.1.351](https://github.com/webex/react-ciscospark/compare/v0.1.350...v0.1.351) (2018-09-07)
+
+
+### Features
+
+* **r-m-conversation:** add support for giphy activities ([6a59951](https://github.com/webex/react-ciscospark/commit/6a59951))
+
+
+
 <a name="0.1.350"></a>
 ## [0.1.350](https://github.com/webex/react-ciscospark/compare/v0.1.349...v0.1.350) (2018-09-05)
 
