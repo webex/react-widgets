@@ -3,10 +3,10 @@ import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {moveMouse, updateJobStatus} from '../../../lib/test-helpers';
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main';
 import {elements as messageElements} from '../../../lib/test-helpers/space-widget/messaging';
-import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet';
+import {answer, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {constructHydraId} from '../../../lib/hydra';
 
 describe('Widget Space: Data API Settings', () => {
@@ -141,6 +141,8 @@ describe('Widget Space: Data API Settings', () => {
         document.getElementById('ciscospark-widget').appendChild(csmmDom);
         window.loadBundle('/dist-space/bundle.js');
       }, docbrown.token.access_token, conversation.id);
+      const spaceWidget = '.ciscospark-space-widget';
+      browserRemote.waitForVisible(spaceWidget);
     });
 
     before('inject marty token', () => {
@@ -161,8 +163,8 @@ describe('Widget Space: Data API Settings', () => {
     });
 
     it('starts call when set to true', () => {
+      browser.pause(3000);
       answer(browserRemote);
-      moveMouse(browserLocal, meetElements.callContainer);
       hangup(browserLocal);
       hangup(browserRemote);
       // Wait for end of locus session before continuing
@@ -206,6 +208,7 @@ describe('Widget Space: Data API Settings', () => {
     it('opens meet widget', () => {
       browser.waitForVisible(elements.messageWidget);
       browser.waitForVisible(`[placeholder="Send a message to ${conversation.displayName}"]`);
+      browser.refresh();
     });
   });
 

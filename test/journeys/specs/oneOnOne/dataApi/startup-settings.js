@@ -2,9 +2,9 @@ import testUsers from '@ciscospark/test-helper-test-users';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {moveMouse, updateJobStatus} from '../../../lib/test-helpers';
+import {updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/space-widget/main.js';
-import {answer, hangup, elements as meetElements} from '../../../lib/test-helpers/space-widget/meet.js';
+import {answer, hangup} from '../../../lib/test-helpers/space-widget/meet.js';
 
 describe('Widget Space: One on One: Data API Settings', () => {
   const browserLocal = browser.select('browserLocal');
@@ -114,6 +114,27 @@ describe('Widget Space: One on One: Data API Settings', () => {
     });
   });
 
+  describe('opens using legacy toPersonEmail', () => {
+    before('inject token', () => {
+      browserLocal.execute((localAccessToken, localToUserEmail) => {
+        const csmmDom = document.createElement('div');
+        csmmDom.setAttribute('class', 'ciscospark-widget');
+        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+        csmmDom.setAttribute('data-access-token', localAccessToken);
+        csmmDom.setAttribute('data-to-person-email', localToUserEmail);
+        csmmDom.setAttribute('data-initial-activity', 'meet');
+        document.getElementById('ciscospark-widget').appendChild(csmmDom);
+        window.loadBundle('/dist-space/bundle.js');
+      }, spock.token.access_token, mccoy.email);
+      browserLocal.waitForVisible(elements.meetWidget);
+    });
+
+    it('opens meet widget', () => {
+      browserLocal.waitForVisible(elements.meetButton);
+      browserLocal.refresh();
+    });
+  });
+
   describe('start call setting', () => {
     before('inject token', () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
@@ -150,31 +171,11 @@ describe('Widget Space: One on One: Data API Settings', () => {
     it('starts call when set to true', () => {
       browser.pause(5000);
       answer(browserRemote);
-      moveMouse(browserLocal, meetElements.callContainer);
-      hangup(browserLocal);
+      hangup(browserRemote);
+      browser.refresh();
     });
   });
 
-  describe('opens using legacy toPersonEmail', () => {
-    before('inject token', () => {
-      browserLocal.execute((localAccessToken, localToUserEmail) => {
-        const csmmDom = document.createElement('div');
-        csmmDom.setAttribute('class', 'ciscospark-widget');
-        csmmDom.setAttribute('data-toggle', 'ciscospark-space');
-        csmmDom.setAttribute('data-access-token', localAccessToken);
-        csmmDom.setAttribute('data-to-person-email', localToUserEmail);
-        csmmDom.setAttribute('data-initial-activity', 'meet');
-        document.getElementById('ciscospark-widget').appendChild(csmmDom);
-        window.loadBundle('/dist-space/bundle.js');
-      }, spock.token.access_token, mccoy.email);
-      browserLocal.waitForVisible(elements.meetWidget);
-    });
-
-    it('opens meet widget', () => {
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
-      browserLocal.refresh();
-    });
-  });
 
   /* eslint-disable-next-line func-names */
   afterEach(function () {

@@ -8,38 +8,36 @@ job_common: &job_common
   docker:
     - <<: *base_image
 
-save: &save
-  save_cache:
-    key: js-dependencies-{{ .Branch }}-{{ .Revision }}
-    paths:
-      - node_modules
+restore_workspace: &restore_workspace
+  attach_workspace:
+    at: /tmp/workspace
 
-restore: &restore
-  restore_cache:
-    key: js-dependencies-{{ .Branch }}-{{ .Revision }}
+restore_node_modules: &restore_node_modules
+  run:
+    name: Link cached node_modules to project
+    command: mv /tmp/workspace/node_modules ./ || true
 
 jobs:
   lockfile_update:
     <<: *job_common
     steps:
       - checkout
-      - <<: *restore
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
       - greenkeeper-lockfile-update
-      - <<: *save
 
   lockfile_upload:
     <<: *job_common
     steps:
       - checkout
-      - <<: *restore
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
       - greenkeeper-lockfile-upload
-      - <<: *save
 
   install:
     <<: *job_common
     steps:
       - checkout
-      - <<: *restore
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       - run:
           name: Install dependencies
@@ -48,19 +46,24 @@ jobs:
               npm install
             fi
       - run:
+          name: Copy node_modules to workspace
+          command: mv node_modules /tmp/
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - node_modules
+      - run:
           name: Save NPM install log
           command: npm ls --json > /tmp/npm_install.log || true
       - store_artifacts:
           path: /tmp/npm_install.log
           destination: npm-install
-      - <<: *save
-
-
   unit_tests_and_linting:
     <<: *job_common
     steps:
       - checkout
-      - <<: *restore
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
       - run:
           name: Run eslint
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
@@ -81,7 +84,8 @@ jobs:
       - NODE_ENV: "test"
     steps:
       - checkout
-      - <<: *restore
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
       - run:
           name: Copy and build journey test static files
           command: npm run build journey /tmp/dist-test
@@ -97,12 +101,8 @@ jobs:
       STATIC_SERVER_PATH: /tmp/workspace/dist-test
     steps:
       - checkout
-      - <<: *restore
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Get JOURNEY_TEST_BASE_URL from Netlify deploy
-          command: echo "export JOURNEY_TEST_BASE_URL=$(cat /tmp/workspace/.netlifyUrl)" >> $BASH_ENV
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests
