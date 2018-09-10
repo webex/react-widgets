@@ -12,11 +12,11 @@ The Cisco Spark for React library allows developers to easily incorporate Spark 
 
 - [Background](#background)
 - [Widgets](#widgets)
+- [Usage](#usage)
 - [Install](#install)
   - [Build from Source](#build-from-source)
 - [Version](#version)
 - [Development](#development)
-- [Coding Style](#coding-style)
 - [Coding Style](#coding-style)
 - [Code Verification](#code-verification)
 - [Contributing](#contributing)
@@ -34,6 +34,15 @@ While many of our components are purely presentational, some have extended funct
 
 - [Space Widget](./packages/node_modules/@ciscospark/widget-space)
 - [Recents Widget](./packages/node_modules/@ciscospark/widget-recents)
+
+## Usage
+
+A functional demo of both Space and Recents widgets can be loaded by
+simply running:
+
+```sh
+$ npm start
+```
 
 ## Install
 
