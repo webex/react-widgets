@@ -11,7 +11,7 @@ ncu.run({
   packageFile: 'package.json',
   // Any command-line option can be specified here.
   // These are set by default:
-  filter: /^@ciscospark.*$/,
+  filter: /^@(ciscospark|webex).*$/,
   upgrade: true
 }).then(() => {
   console.log('@ciscospark dependencies upgraded');
