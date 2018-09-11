@@ -24,7 +24,7 @@ const browser = process.env.BROWSER || 'chrome';
 const version = process.env.VERSION || 'latest';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const tunnelId = uuid.v4();
-const {suite} = argv || 'integration';
+const suite = argv.suite || 'integration';
 const screenResolutionMac = '1920x1440';
 const screenResolutionWin = '1920x1080';
 const screenResolution = platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac') ? screenResolutionMac : screenResolutionWin;
