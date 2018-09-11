@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.354"></a>
+## [0.1.354](https://github.com/webex/react-ciscospark/compare/v0.1.353...v0.1.354) (2018-09-11)
+
+
+### Bug Fixes
+
+* **wdio:** remove incorrect destructuring ([f729813](https://github.com/webex/react-ciscospark/commit/f729813))
+
+
+
 <a name="0.1.353"></a>
 ## [0.1.353](https://github.com/webex/react-ciscospark/compare/v0.1.352...v0.1.353) (2018-09-11)
 
