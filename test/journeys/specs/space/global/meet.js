@@ -6,7 +6,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 import {updateJobStatus} from '../../../lib/test-helpers';
 import {switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog} from '../../../lib/events';
-import {elements, declineIncomingCallTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
+import {elements, declineIncomingCallTest, hangupBeforeAnswerTest, hangupDuringCallTest, callEventTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe('Widget Space', () => {
   const browserLocal = browser.select('browserLocal');
@@ -119,7 +119,7 @@ describe('Widget Space', () => {
 
     describe('during call experience', () => {
       it('can hangup before answer', () => {
-        // hangupBeforeAnswerTest(browserLocal, browserRemote);
+        hangupBeforeAnswerTest(browserLocal, browserRemote, true);
       });
 
       it('can decline an incoming call', () => {
