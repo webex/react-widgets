@@ -38,6 +38,7 @@ pipeline {
           retry(2){
             sh '''#!/bin/bash -e
             source ~/.nvm/nvm.sh
+            nvm unalias default
             nvm use v8.11.3
             # Fix 'nvm is not compatible with the npm config "prefix" option'.
             # This error can happen when this agent's NODE_JS_BUILDER
