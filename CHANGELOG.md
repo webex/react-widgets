@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.357"></a>
+## [0.1.357](https://github.com/webex/react-ciscospark/compare/v0.1.356...v0.1.357) (2018-09-13)
+
+
+### Bug Fixes
+
+* **r-m-media:** add declined flag ([da5bfa3](https://github.com/webex/react-ciscospark/commit/da5bfa3))
+* **r-m-media:** clarify call storage, correctly remove all call data ([04b4778](https://github.com/webex/react-ciscospark/commit/04b4778))
+* **r-m-media:** correct call instance mappings ([07fc4de](https://github.com/webex/react-ciscospark/commit/07fc4de))
+* **r-m-media:** incoming call states ([35df60a](https://github.com/webex/react-ciscospark/commit/35df60a))
+* **r-m-media:** media event listeners ([5fede34](https://github.com/webex/react-ciscospark/commit/5fede34))
+* **r-m-media:** remove extraneous event listeners ([c59f465](https://github.com/webex/react-ciscospark/commit/c59f465))
+* **tooling:** update circle ci config for forked branch fix ([ee20750](https://github.com/webex/react-ciscospark/commit/ee20750))
+* **widget-meet:** filter extra meeting_bridge participant ([c5ce1c4](https://github.com/webex/react-ciscospark/commit/c5ce1c4))
+* **widget-meet:** prevent infinite look with avatar fetching ([1a0e6a5](https://github.com/webex/react-ciscospark/commit/1a0e6a5))
+* **widget-message:** add last message check ([e68e820](https://github.com/webex/react-ciscospark/commit/e68e820))
+* **widget-message:** reorder call state renderers ([232e790](https://github.com/webex/react-ciscospark/commit/232e790))
+* **widget-recents:** add support for call events without roomId ([9cd595e](https://github.com/webex/react-ciscospark/commit/9cd595e))
+* **widget-recents:** check fo locus before getting space ([f076ece](https://github.com/webex/react-ciscospark/commit/f076ece))
+* **widget-recents:** clean up call events ([b42ca6c](https://github.com/webex/react-ciscospark/commit/b42ca6c))
+* **widget-recents:** in progress call indicator ([29bbf8e](https://github.com/webex/react-ciscospark/commit/29bbf8e))
+* **widget-space:** error message logic ([b47af25](https://github.com/webex/react-ciscospark/commit/b47af25))
+
+
+### Features
+
+* **widget-demo:** add pstn to demos ([672067f](https://github.com/webex/react-ciscospark/commit/672067f))
+* **widget-meet:** enable pstn calling ([87228fd](https://github.com/webex/react-ciscospark/commit/87228fd))
+* **widget-space:** default to first available initialActivity ([8045a49](https://github.com/webex/react-ciscospark/commit/8045a49))
+* **widget-space:** enable pstn calling ([f30e40c](https://github.com/webex/react-ciscospark/commit/f30e40c))
+
+
+
 <a name="0.1.356"></a>
 ## [0.1.356](https://github.com/webex/react-ciscospark/compare/v0.1.355...v0.1.356) (2018-09-13)
 
