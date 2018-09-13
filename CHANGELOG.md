@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.356"></a>
+## [0.1.356](https://github.com/webex/react-ciscospark/compare/v0.1.355...v0.1.356) (2018-09-13)
+
+
+### Bug Fixes
+
+* **tap:** cannot use nvm with prefix error ([3843fb6](https://github.com/webex/react-ciscospark/commit/3843fb6))
+
+
+
 <a name="0.1.355"></a>
 ## [0.1.355](https://github.com/webex/react-ciscospark/compare/v0.1.354...v0.1.355) (2018-09-12)
 
