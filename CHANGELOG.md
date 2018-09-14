@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.358"></a>
+## [0.1.358](https://github.com/webex/react-ciscospark/compare/v0.1.357...v0.1.358) (2018-09-14)
+
+
+### Bug Fixes
+
+* **r-m-media:** fix call error handling for call id ([ce3eb4f](https://github.com/webex/react-ciscospark/commit/ce3eb4f))
+* **r-m-media:** fix return type of processCall ([7c80a28](https://github.com/webex/react-ciscospark/commit/7c80a28))
+* **widget-meet:** fix call error handling ([81ec636](https://github.com/webex/react-ciscospark/commit/81ec636))
+
+
+
 <a name="0.1.357"></a>
 ## [0.1.357](https://github.com/webex/react-ciscospark/compare/v0.1.356...v0.1.357) (2018-09-13)
 
