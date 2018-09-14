@@ -266,6 +266,7 @@ ansiColor('xterm') {
                   source ~/.nvm/nvm.sh
                   nvm use v8.11.3
                   npm run publish:components
+                  npm run publish:widgets
                   '''
                 }
                 catch (error) {
