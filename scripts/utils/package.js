@@ -1,6 +1,8 @@
 const path = require('path');
 const {statSync, readdirSync} = require('fs');
 
+const debug = require('debug')('scripts');
+
 const {execSync} = require('./exec');
 
 /**
@@ -93,7 +95,7 @@ function runInPackage({
   const outputPkgPath = getPackage(pkgPath || pkgName);
   if (outputPkgPath) {
     try {
-      console.info(`${commandName} ${pkgName} ...`);
+      debug(`${commandName} ${pkgName} ...`);
       const command = constructCommand(outputPkgPath);
       execSync(command);
     }
@@ -113,9 +115,9 @@ function getAllPackagePaths() {
   const fullPaths = [];
   const packagesDirs = ['packages/node_modules/@ciscospark', 'packages/node_modules/@webex'];
   packagesDirs.forEach((packagesDir) => {
-    console.info(`Reading Directory: ${packagesDir}`);
+    debug(`Reading Directory: ${packagesDir}`);
     readdirSync(packagesDir).forEach((packagePath) => {
-      console.info(`Reading Package Directory: ${packagePath}`);
+      debug(`Reading Package Directory: ${packagePath}`);
       const fullpath = path.resolve(packagesDir, packagePath);
       if (isDirectory(fullpath)) {
         const pkg = getPackage(fullpath);
