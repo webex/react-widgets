@@ -128,7 +128,7 @@ describe('Widget Space: Data API Settings', () => {
     });
   });
 
-  describe('start call setting', () => {
+  describe.skip('start call setting', () => {
     before('inject docbrown token', () => {
       browserRemote.execute((localAccessToken, spaceId) => {
         const csmmDom = document.createElement('div');
