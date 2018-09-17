@@ -1,20 +1,82 @@
 # Test Plan
 
+The Webex Teams Widgets have full integration (or "journey") tests performed to validate proper behavior.
+
+The widgets are tested via [Webdriver.io](https://webdriver.io) using devices powered by [Sauce Labs](https://saucelabs.com).
+
+Every code change pull request (PR) is tested and verified by [Circle CI](https://circleci.com) by running the smoke test suite on the supported browsers/operating systems. Before a PR is opened, it is the responsibility of the developer to run the full suite on the widget that has changes.
+
 ## Test Suites
 
-- oneOnOne
-- space
-- recents
-- multiple
-- tap
+- Smoke Test
+- Space Widget
+- Recents
 
-### One on One Suite
+### Smoke Test Suite
 
-The "oneOnOne" test suite opens a space widget between two individuals. The tests are performed by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
+The smoke test suite verifies basic functionality of all widgets. This suite is used for both TAP (tests against production) tests and validated merge (run on circle ci or Jenkins) builds.
 
-- Global
-  - "Basic Tests" (Test Users Created)
-    - Widget header has "to user"'s name
+- Widget Recents
+  - group space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - events
+      - messages:created
+      - rooms:unread
+      - rooms:read
+      - rooms:selected
+      - memberships:created
+      - memberships:deleted
+  - one on one space
+    - displays a new incoming message
+    - removes unread indicator when read
+    - displays a new one on one
+  - incoming call
+    - displays a call in progress button
+  - accessibility
+    - should have no accessibility violations
+- Widget Space
+  - Activity Menu
+    - has a menu button
+    - displays the menu when clicking the menu button
+    - has an exit menu button
+    - closes the menu with the exit button
+    - has a message button
+    - switches to message widget
+    - has a meet button
+    - switches to meet widget
+  - message widget
+    - sends and receives messages
+  - meet widget
+    - pre call experience
+    - has a call button
+    - during call experience
+    - can hangup in call
+    - can decline an incoming call
+  - accessibility
+    - should have no accessibility violations
+  - group space
+    - meet widget
+      - can hangup in call
+      - can decline an incoming call
+- Multiple Widgets (Recents & Space on one page)
+  - recents widget functionality
+    - displays a new incoming message
+    - removes unread indicator when read
+  - space widget functionality
+    - messaging
+      - sends and receives messages
+    - meet widget
+      - can hangup in call
+
+### Space Widget Suite
+
+The space widget suite tests the functionality of the space widget in a one on one space and a group space. It also verifies by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
+
+- Widget Functionality Tests
+  - Basic Widget Tests
+    - Widget header has to user's name
+    - Widget header has to group's name
     - Activity Menu
       - has a menu button
       - displays the menu when clicking the menu button
@@ -32,9 +94,47 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - has the total count of participants
       - has the participants listed
       - closes the people roster widget
+  - Message Widget Tests
+    - General Tests
+      - sends and receives messages
+      - receives proper events on messages
+      - message actions
+        - message flags
+          - should be able to flag a message
+          - should be able to unflag a message
+        - delete message
+          - should be able to delete a message from self
+          - should not be able to delete a message from others
+      - File Transfer Tests
+        - sends message with png attachment
+        - verifies png-sample is in files tab
+      - markdown messaging
+        - sends message with bold text
+        - sends message with italic text
+        - sends message with a blockquote
+        - sends message with numbered list
+        - sends message with bulleted list
+        - sends message with heading 1
+        - sends message with heading 2
+        - sends message with heading 3
+        - sends message with horizontal line
+        - sends message with link
+        - sends message with inline code
+        - sends message with codeblock
+    - Guest Access (Test User and JWT user created)
+      - sends and receives messages
+      - receives proper events on messages
+    - Group Specific
+      - Roster Tests
+        - has a close button
+        - has the total count of participants
+        - has the participants listed
+        - has search for participants
+        - searches and adds person to space
+        - closes the people roster widget
     - accessibility
       - should have no accessibility violations
-  - Meet widget (Test Users Created)
+  - Meet Widget Tests
     - pre call experience
       - has a call button
     - during call experience
@@ -42,117 +142,34 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
       - can decline an incoming call
       - can hangup in call
       - has proper call event data
-  - Message widget (Test Users Created)
-    - sends and receives messages
-    - receives proper events on messages
-    - message actions
-      - message flags
-        - should be able to flag a message
-        - should be able to unflag a message
-      - delete message
-        - should be able to delete a message from self
-        - should not be able to delete a message from others
-    - accessibility
-      - should have no accessibility violations
-    - File Transfer Tests
-      - sends message with png attachment
-      - verifies png-sample is in files tab
-    - markdown messaging
-      - sends message with bold text
-      - sends message with italic text
-      - sends message with a blockquote
-      - sends message with numbered list
-      - sends message with bulleted list
-      - sends message with heading 1
-      - sends message with heading 2
-      - sends message with heading 3
-      - sends message with horizontal line
-      - sends message with link
-      - sends message with inline code
-      - sends message with codeblock
-  - Guest Access (Test User and JWT user created)
-    - message widget
-      - sends and receives messages
-      - receives proper events on messages
-    - meet widget
-      - pre call experience
-        - has a call button
-      - during call experience
-        - can hangup in call
-        - can decline an incoming call
-  - Startup Settings (Test Users Created)
-    - destination type: userId
-      - opens widget
-    - spaceActivities setting
-      - displays error message for disabled initial activity
-      - disables the files and meet activities
-    - legacy destination settings
-      - opens message widget using legacy toPersonEmail
-
-- Data API
-  - "Basic Tests" (Test Users Created)
-    - loads the test page
-    - loads the user's name
-      - Activity Menu
-        - has a menu button
-        - displays the menu when clicking the menu button
-        - has a message button
-        - has a meet button
-        - has a people button
-        - has an exit menu button
-        - closes the menu with the exit button
-        - has a message button
-        - switches to message widget
-        - has a meet button
-        - switches to meet widget
-      - roster tests
-        - has a close button
-        - has the total count of participants
-        - has the participants listed
-        - closes the people roster widget
-  - Meet widget (Test Users Created)
-    - pre call experience
-      - has a call button
-    - during call experience
-      - can hangup before answer
+    - Group Call
       - can decline an incoming call
       - can hangup in call
-  - Message widget (Test Users Created)
-    - sends and receives messages
-    - receives proper events on messages
-    - message actions
-      - message flags
-        - should be able to flag a message
-        - should be able to unflag a message
-      - delete message
-        - should be able to delete a message from self
-        - should not be able to delete a message from others
-    - File Transfer Tests (Skipped due to instability)
-      - sends message with png attachment
-      - verifies png-sample is in files tab
-    - markdown messaging
-      - sends message with bold text
-      - sends message with italic text
-      - sends message with a blockquote
-      - sends message with numbered list
-      - sends message with bulleted list
-      - sends message with heading 1
-      - sends message with heading 2
-      - sends message with heading 3
-      - sends message with horizontal line
-      - sends message with link
-      - sends message with inline code
-      - sends message with codeblock
-  - Guest Access (Test User and JWT user created)
-    - message widget
-      - sends and receives messages
-    - meet widget
-      - pre call experience
-        - has a call button
+    - Guest Access (Test User and JWT user created)
       - during call experience
         - can hangup in call
         - can decline an incoming call
-  - Startup Settings (Test Users Created)
+    - accessibility
+      - should have no accessibility violations
+- Startup Settings (Test Users Created)
+  - destination type: userId
+    - opens widget
+  - spaceActivities setting
+    - displays error message for disabled initial activity
+    - disables the files and meet activities
+  - legacy destination settings
+    - opens message widget using legacy toPersonEmail
+- Data API instatiation
+  - Message Widget Tests
+    - General Tests
+      - sends and receives messages
+      - receives proper events on messages
+  - Meet Widget Tests
+    - during call experience
+      - can decline an incoming call
+      - can hangup in call
+      - has proper call event data
+  - Startup Settings
     - destination type: userId
       - opens widget
     - initial activity setting: meet
@@ -162,133 +179,6 @@ The "oneOnOne" test suite opens a space widget between two individuals. The test
     - start call setting
       - starts call when set to true
     - opens using legacy toPersonEmail
-
-### Space Suite
-
-The "space" test suite opens a space widget to a group space and creates three test users to interact. The tests are performed by instantiating the widget in two separate ways: via the data-api and via the global javascript method.
-
-- Global
-  - "Basic Tests" (Test Users & Space Created)
-    - loads the space name
-    - When conversation is established
-      - Activity Menu
-        - has a menu button
-        - displays the menu when clicking the menu button
-        - has an exit menu button
-        - closes the menu with the exit button
-        - has a message button
-        - hides menu and switches to message widget
-      - Roster Tests
-        - has a close button
-        - has the total count of participants
-        - has the participants listed
-        - has search for participants
-        - searches and adds person to space
-        - closes the people roster widget
-      - accessibility
-        - should have no accessibility violations
-  - Meet widget (Test Users & Space Created)
-    - pre call experience
-      - has a call button
-    - during call experience
-      - can hangup before answer
-      - can decline an incoming call
-      - can hangup in call
-  - Message widget (Test Users & Space Created)
-    - sends and receives messages
-    - receives proper events on messages
-    - message actions
-      - message flags
-        - should be able to flag a message
-        - should be able to unflag a message
-      - delete message
-        - should be able to delete a message from self
-        - should not be able to delete a message from others
-    - File Transfer Tests (Skipped due to instability)
-      - sends message with png attachment
-      - verifies png-sample is in files tab
-    - markdown messaging
-      - sends message with bold text
-      - sends message with italic text
-      - sends message with a blockquote
-      - sends message with numbered list
-      - sends message with bulleted list
-      - sends message with heading 1
-      - sends message with heading 2
-      - sends message with heading 3
-      - sends message with horizontal line
-      - sends message with link
-      - sends message with inline code
-      - sends message with codeblock
-  - Startup Settings (Test Users Created)
-    - spaceActivities setting
-      - displays error message for disabled initial activity
-      - disables the files and meet activities
-    - legacy destination settings
-      - opens message widget using legacy spaceId
-
-- Data API
-  - "Basic Tests" (Test Users & Space Created)
-    - loads the space name
-    - When conversation is established
-      - Activity Menu
-        - has a menu button
-        - displays the menu when clicking the menu button
-        - has an exit menu button
-        - closes the menu with the exit button
-        - has a message button
-        - hides menu and switches to message widget
-      - Roster Tests
-        - has a close button
-        - has the total count of participants
-        - has the participants listed
-        - has search for participants
-        - searches and adds person to space
-        - closes the people roster widget
-      - accessibility
-        - should have no accessibility violations
-      - messaging
-        - sends and receives messages
-  - Meet widget (Test Users & Space Created)
-    - pre call experience
-      - has a call button
-    - during call experience
-      - can hangup before answer
-      - can decline an incoming call
-      - can hangup in call
-  - Message widget (Test Users & Space Created)
-    - sends and receives messages
-    - message actions
-      - message flags
-        - should be able to flag a message
-        - should be able to unflag a message
-      - delete message
-        - should be able to delete a message from self
-        - should not be able to delete a message from others
-    - File Transfer Tests (Skipped due to instability)
-      - sends message with png attachment
-      - verifies png-sample is in files tab
-    - markdown messaging
-      - sends message with bold text
-      - sends message with italic text
-      - sends message with a blockquote
-      - sends message with numbered list
-      - sends message with bulleted list
-      - sends message with heading 1
-      - sends message with heading 2
-      - sends message with heading 3
-      - sends message with horizontal line
-      - sends message with link
-      - sends message with inline code
-      - sends message with codeblock
-  - Startup Settings (Test Users & Space Created)
-    - initial activity setting: meet
-      - opens meet widget
-    - initial activity setting: message
-      - opens message widget
-    - start call setting
-      - starts call when set to true
-    - opens using legacy space id
 
 ### Recents Suite
 
@@ -329,72 +219,3 @@ The "recents" test suite opens a recents widget and does things via the sdk that
     - displays a call in progress button
   - accessibility
     - should have no accessibility violations
-
-### Multiple Widgets Suite
-
-The "multiple" test suite opens a recents widget and a space widget. The tests are performed by instantiating the widgets via the global javascript method.
-
-- recents widget functionality
-  - displays a new incoming message
-  - removes unread indicator when read
-  - displays a call button on hover
-- space widget functionality
-  - Activity Menu
-    - has a menu button
-    - displays the menu when clicking the menu button
-    - has an exit menu button
-    - closes the menu with the exit button
-    - has a message button
-    - hides menu and switches to message widget
-  - messaging
-    - sends and receives messages
-
-### Tap Suite
-
-The "tap" test suite verifies that the production release behaves properly and tests against the public cdn widget bundle.
-
-- Widget Recents
-  - group space
-    - displays a new incoming message
-    - removes unread indicator when read
-    - events
-      - messages:created
-      - rooms:unread
-      - rooms:read
-      - rooms:selected
-      - memberships:created
-      - memberships:deleted
-  - one on one space
-    - displays a new incoming message
-    - removes unread indicator when read
-    - displays a new one on one
-
-- Widget Space
-  - one on one
-    - Activity Menu
-      - has a menu button
-      - displays the menu when clicking the menu button
-      - has an exit menu button
-      - closes the menu with the exit button
-      - has a message button
-      - switches to message widget
-      - has a meet button
-      - switches to meet widget
-    - message widget
-      - sends and receives messages
-    - meet widget
-      - pre call experience
-      - has a call button
-      - during call experience
-      - can hangup in call
-      - can decline an incoming call
-  - space
-    - Activity Menu
-      - has a menu button
-      - displays the menu when clicking the menu button
-      - has an exit menu button
-      - closes the menu with the exit button
-      - has a message button
-      - switches to message widget
-    - message widget
-      - sends and receives messages
