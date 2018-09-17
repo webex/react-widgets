@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.360"></a>
+## [0.1.360](https://github.com/webex/react-ciscospark/compare/v0.1.359...v0.1.360) (2018-09-17)
+
+
+### Features
+
+* **widget-meet:** use [@webex](https://github.com/webex) loading screen ([e314af1](https://github.com/webex/react-ciscospark/commit/e314af1))
+* **widget-message:** use [@webex](https://github.com/webex) loading screen ([289a24b](https://github.com/webex/react-ciscospark/commit/289a24b))
+* **widget-roster:** use [@webex](https://github.com/webex) loading screen ([72859e2](https://github.com/webex/react-ciscospark/commit/72859e2))
+
+
+
 <a name="0.1.359"></a>
 ## [0.1.359](https://github.com/webex/react-ciscospark/compare/v0.1.358...v0.1.359) (2018-09-17)
 
