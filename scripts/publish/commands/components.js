@@ -13,8 +13,8 @@ module.exports = {
       try {
         const pkgJson = require(path.resolve(pkgPath, 'package.json'));
         const pkgName = pkgJson.name.split('/').pop();
-        const isWidget = pkgName.startsWith('widget-');
-        if (!isWidget && !pkgJson.private) {
+        const isDemo = pkgName.endsWith('-demo');
+        if (!isDemo && !pkgJson.private) {
           return npmPublishPackage(pkgName, pkgPath);
         }
       }
