@@ -108,7 +108,7 @@ jobs:
           name: Integration Tests
           no_output_timeout: 40m
           command: |
-            set -m
+            set -em
             (
               (PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox VERSION=60 npm run test:integration || kill 0) &
               (sleep 60; PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration || kill 0) &
