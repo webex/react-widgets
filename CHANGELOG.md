@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.363"></a>
+## [0.1.363](https://github.com/webex/react-ciscospark/compare/v0.1.362...v0.1.363) (2018-09-19)
+
+
+### Features
+
+* **scripts:** publish all widgets except for demos ([391ed1d](https://github.com/webex/react-ciscospark/commit/391ed1d))
+
+
+
 <a name="0.1.362"></a>
 ## [0.1.362](https://github.com/webex/react-ciscospark/compare/v0.1.361...v0.1.362) (2018-09-18)
 
