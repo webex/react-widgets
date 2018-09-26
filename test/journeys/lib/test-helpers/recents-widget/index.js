@@ -6,8 +6,8 @@ export const elements = {
   recentsWidget: '.ciscospark-spaces-list-wrapper',
   listContainer: '.ciscospark-spaces-list',
   firstSpace: '.ciscospark-spaces-list-item-0',
-  title: '.space-title',
-  unreadIndicator: '.space-unread-indicator',
+  title: '.cui-list-item__header',
+  unreadIndicator: '.cui-list-item--unread',
   lastActivity: '.space-last-activity',
   callButton: 'button[aria-label="Call Space"]',
   joinCallButton: 'button[aria-label="Join Call"]',
@@ -31,7 +31,6 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
     displayName: message
   }));
   aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle);
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message));
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
 }
 
@@ -54,7 +53,6 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
   }).then((a) => {
     activity = a;
   }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(message));
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
@@ -91,6 +89,5 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
       });
     }));
   aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.lastActivity}`).getText().includes(firstPost));
   return conversation;
 }

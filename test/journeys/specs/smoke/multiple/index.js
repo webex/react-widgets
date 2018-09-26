@@ -2,7 +2,7 @@ import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import waitForPromise from '../../../lib/wait-for-promise';
-import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as spaceElements} from '../../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
@@ -18,7 +18,7 @@ describe('Multiple Widgets', () => {
   const jobName = jobNames.smokeMultiple;
 
   let docbrown, lorraine, marty, participants;
-  let conversation, oneOnOneConversation;
+  let conversation;
   let local, remote;
   let allPassed = true;
 
@@ -35,7 +35,6 @@ describe('Multiple Widgets', () => {
     assert.lengthOf(participants, 3, 'Test users were not created');
     registerDevices(participants);
     conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Widget Space'});
-    oneOnOneConversation = createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
   });
 
   it('open widgets local', () => {
@@ -106,12 +105,6 @@ describe('Multiple Widgets', () => {
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-    });
-
-    it('displays a call button on hover', () => {
-      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      moveMouse(browserLocal, recentsElements.firstSpace);
-      browserLocal.waitForVisible(`${recentsElements.callButton}`);
     });
   });
 

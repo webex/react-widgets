@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
-import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -81,12 +81,6 @@ describe('Widget Recents: Data API', () => {
       const lorraineText = 'You\'re safe and sound now!';
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
-
-    it('displays a call button on hover', () => {
-      displayIncomingMessage(browserLocal, lorraine, conversation, 'Can you call me?');
-      moveMouse(browserLocal, elements.firstSpace);
-      browserLocal.waitUntil(() => browserLocal.isVisible(elements.callButton));
-    });
   });
 
   describe('one on one space', () => {
@@ -103,12 +97,6 @@ describe('Widget Recents: Data API', () => {
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
-    });
-
-    it('displays a call button on hover', () => {
-      displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, 'Can you call me?', true);
-      moveMouse(browserLocal, elements.firstSpace);
-      browserLocal.waitUntil(() => browserLocal.isVisible(elements.callButton));
     });
   });
 
