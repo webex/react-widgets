@@ -6,7 +6,7 @@
   "testURL": "http://localhost",
   "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "moduleNameMapper": {
-    "^.+\\.(css|less)$": "identity-obj-proxy",
+    "^.+\\.(css|scss|less)$": "identity-obj-proxy",
     "^.+\\.(mp3|wav)$": "<rootDir>/__mocks__/sound-mock.js",
     "^.+\\.(gif|ttf|eot|svg|png|jpg)$": "<rootDir>/__mocks__/file-mock.js",
     "@ciscospark/react-(.*)": "<rootDir>/packages/node_modules/@ciscospark/react-$1/src",
