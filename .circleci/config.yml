@@ -18,22 +18,6 @@ restore_node_modules: &restore_node_modules
     command: mv /tmp/workspace/node_modules ./ || true
 
 jobs:
-  lockfile_update:
-    <<: *job_common
-    steps:
-      - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
-      - greenkeeper-lockfile-update
-
-  lockfile_upload:
-    <<: *job_common
-    steps:
-      - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
-      - greenkeeper-lockfile-upload
-
   install:
     <<: *job_common
     steps:
@@ -133,13 +117,6 @@ workflows:
   run_all_tests:
     jobs:
       - install
-      - lockfile_update:
-          requires:
-            - install
-          filters:
-            branches:
-              only:
-                - /greenkeeper.*/
       - build_for_tests:
           requires:
             - install
@@ -149,10 +126,3 @@ workflows:
       - journey_tests:
           requires:
             - build_for_tests
-      - lockfile_upload:
-          requires:
-            - journey_tests
-          filters:
-            branches:
-              only:
-                - /greenkeeper.*/
