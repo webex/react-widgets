@@ -1,6 +1,6 @@
 const {
   webpackBuild,
-  transpile
+  webpackTranspile
 } = require('../../utils/build');
 const {getWidgetPackages} = require('../../utils/package');
 
@@ -12,7 +12,7 @@ module.exports = {
     getWidgetPackages().forEach((pkgPath) => {
       try {
         const pkgName = pkgPath.split('/').pop();
-        transpile(pkgName, pkgPath);
+        webpackTranspile(pkgName, pkgPath);
         webpackBuild(pkgName, pkgPath);
       }
       catch (err) {
