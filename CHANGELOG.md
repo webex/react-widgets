@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.364"></a>
+## [0.1.364](https://github.com/webex/react-ciscospark/compare/v0.1.363...v0.1.364) (2018-10-01)
+
+
+### Bug Fixes
+
+* **message-composer:** export missing string constant ([98be811](https://github.com/webex/react-ciscospark/commit/98be811))
+* **r-m-activities:** add files directories to package.json ([eecfe9f](https://github.com/webex/react-ciscospark/commit/eecfe9f))
+* **spark-widget-base:** remove unused enhancers option ([dabfe19](https://github.com/webex/react-ciscospark/commit/dabfe19))
+* **widget-space:** export eventNames object ([4e3fa0d](https://github.com/webex/react-ciscospark/commit/4e3fa0d))
+
+
+### Features
+
+* **scripts:** transpile widgets using webpack ([ee6a45c](https://github.com/webex/react-ciscospark/commit/ee6a45c))
+
+
+
 <a name="0.1.363"></a>
 ## [0.1.363](https://github.com/webex/react-ciscospark/compare/v0.1.362...v0.1.363) (2018-09-19)
 
