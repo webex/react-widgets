@@ -42,23 +42,28 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
     - has an exit menu button
     - closes the menu with the exit button
     - has a message button
-    - switches to message widget
     - has a meet button
+    - has a files button
+    - has a roster button
+    - switches to message widget
     - switches to meet widget
+    - switches to files widget
+    - switches to roster widget
+    - roster tests
+      - has a close button
+      - has the total count of participants
+      - has the participants listed
+      - closes the people roster widget
   - message widget
     - sends and receives messages
   - meet widget
     - pre call experience
-    - has a call button
+      - has a call button
     - during call experience
-    - can hangup in call
-    - can decline an incoming call
-  - accessibility
-    - should have no accessibility violations
-  - group space
-    - meet widget
       - can hangup in call
       - can decline an incoming call
+  - accessibility
+    - should have no accessibility violations
 - Multiple Widgets (Recents & Space on one page)
   - recents widget functionality
     - displays a new incoming message

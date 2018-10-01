@@ -11,7 +11,10 @@ export const jobNames = {
   recentsDataApi: 'react-widget-recents-dataApi',
   recentsGlobal: 'react-widget-recents-global',
   spaceDataApi: 'react-widget-space-dataApi',
-  spaceGlobal: 'react-widget-space-global'
+  spaceGlobal: 'react-widget-space-global',
+  smokeMultiple: 'react-widget-multiple-smoke',
+  smokeRecents: 'react-widget-recents-smoke',
+  smokeSpace: 'react-widget-space-smoke'
 };
 /**
  * Move mouse a specified amount of pixels
