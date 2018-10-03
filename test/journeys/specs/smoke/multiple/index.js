@@ -27,7 +27,7 @@ describe('Multiple Widgets', () => {
   let allPassed = true;
 
   before('start new sauce session', () => {
-    renameJob(jobNames.smokeMultiple);
+    renameJob(jobNames.smokeMultiple, browser);
   });
 
   before('load browser', () => {

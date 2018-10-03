@@ -7,7 +7,10 @@ const argv = require('yargs').argv;
 export const jobNames = {
   recentsDataApi: 'react-widget-recents-dataApi',
   recentsGlobal: 'react-widget-recents-global',
-  space: 'react-widget-space',
+  space: 'react-widget-space-main',
+  spaceGuest: 'react-widget-space-guest',
+  spaceDataApi: 'react-widget-space-dataApi',
+  spaceStartup: 'react-widget-space-startup',
   smokeMultiple: 'react-widget-multiple-smoke',
   smokeRecents: 'react-widget-recents-smoke',
   smokeSpace: 'react-widget-space-smoke'
@@ -52,38 +55,60 @@ export function moveMouse(aBrowser, selector) {
  * Reload each active sauce session to a fresh session
  * and name session according to suite
  * @param {string} name
+ * @param {object} browser
  * @returns {void}
  */
-export function renameJob(name) {
+export function renameJob(name, browser) {
+  if (!process.env.SAUCE) {
+    return;
+  }
+  browser.reload();
   const browserName = process.env.BROWSER || 'chrome';
   const platform = process.env.PLATFORM || 'mac 10.12';
-  const {suite} = argv || 'integration';
+  const {suite} = argv || 'smoke';
 
-  if (process.env.SAUCE) {
-    const account = new SauceLabs({
-      username: process.env.SAUCE_USERNAME,
-      password: process.env.SAUCE_ACCESS_KEY
+  const account = new SauceLabs({
+    username: process.env.SAUCE_USERNAME,
+    password: process.env.SAUCE_ACCESS_KEY
+  });
+  account.getJobs((err, jobs) => {
+    // Something terrible has happened if we cannot get jobs from sauce
+    if (err) {
+      throw err;
+    }
+    // Job name `react-widget-${suite}` comes from wdio.conf.js
+    const widgetJobs = jobs.filter((job) => job.name && job.name.includes(`react-widget-${suite}`) && job.status === 'in progress'
+          && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
+    widgetJobs.forEach((job) => {
+      const remoteName = job.name.includes('local') ? 'local' : 'remote';
+      const jobName = `${name}-${remoteName}`;
+      // Only update name if it needs it
+      if (job.name !== jobName) {
+        account.updateJob(job.id, {name: jobName});
+      }
     });
-    account.getJobs((err, jobs) => {
-      const widgetJobs = jobs.filter((job) => job.name === `react-widget-${suite}` && job.status === 'in progress'
-             && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
-      widgetJobs.forEach((job) => account.updateJob(job.id, {name}));
-    });
-  }
+  });
 }
 
 export function updateJobStatus(name, passed) {
+  if (!process.env.SAUCE) {
+    return;
+  }
   const browserName = process.env.BROWSER || 'chrome';
   const platform = process.env.PLATFORM || 'mac 10.12';
-  if (process.env.SAUCE) {
-    const account = new SauceLabs({
-      username: process.env.SAUCE_USERNAME,
-      password: process.env.SAUCE_ACCESS_KEY
-    });
-    account.getJobs((err, jobs) => {
-      const widgetJobs = jobs.filter((job) => job.status === 'in progress'
-             && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
-      widgetJobs.forEach((job) => account.updateJob(job.id, {passed}));
-    });
-  }
+
+  const account = new SauceLabs({
+    username: process.env.SAUCE_USERNAME,
+    password: process.env.SAUCE_ACCESS_KEY
+  });
+  account.getJobs((err, jobs) => {
+    // Something terrible has happened if we cannot get jobs from sauce
+    if (err) {
+      throw err;
+    }
+
+    const widgetJobs = jobs.filter((job) => job.name === name && job.status === 'in progress'
+            && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
+    widgetJobs.forEach((job) => account.updateJob(job.id, {passed}));
+  });
 }

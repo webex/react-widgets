@@ -32,8 +32,7 @@ describe('Smoke Tests - Recents Widget', () => {
   let conversation, oneOnOneConversation;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameJob(jobName);
+    renameJob(jobName, browser);
   });
 
   before('load browser for recents widget', () => {

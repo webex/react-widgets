@@ -285,10 +285,21 @@ exports.config = {
 };
 
 if (process.env.SAUCE) {
-  let sauceCapabilities;
-  if (browser === 'chrome') {
-    sauceCapabilities = Object.assign({}, chromeCapabilities, {
-      name: `react-widget-${suite}`,
+  const sauceCapabilities = (remoteName = 'browser') => {
+    if (browser === 'chrome') {
+      return Object.assign({}, chromeCapabilities, {
+        name: `react-widget-${suite}-${remoteName}`,
+        idleTimeout: 300,
+        commandTimeout: 600,
+        maxDuration: 3600,
+        seleniumVersion: '3.4.0',
+        screenResolution,
+        platform,
+        version
+      });
+    }
+    return Object.assign({}, firefoxCapabilities, {
+      name: `react-widget-${suite}-${remoteName}`,
       idleTimeout: 300,
       commandTimeout: 600,
       maxDuration: 3600,
@@ -297,19 +308,7 @@ if (process.env.SAUCE) {
       platform,
       version
     });
-  }
-  else {
-    sauceCapabilities = Object.assign({}, firefoxCapabilities, {
-      name: `react-widget-${suite}`,
-      idleTimeout: 300,
-      commandTimeout: 600,
-      maxDuration: 3600,
-      seleniumVersion: '3.4.0',
-      screenResolution,
-      platform,
-      version
-    });
-  }
+  };
   exports.config = Object.assign(exports.config, {
     deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
     user: process.env.SAUCE_USERNAME,
@@ -329,10 +328,10 @@ if (process.env.SAUCE) {
     },
     capabilities: {
       browserLocal: {
-        desiredCapabilities: sauceCapabilities
+        desiredCapabilities: sauceCapabilities('local')
       },
       browserRemote: {
-        desiredCapabilities: sauceCapabilities
+        desiredCapabilities: sauceCapabilities('remote')
       }
     }
   });

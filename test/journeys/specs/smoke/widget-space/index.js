@@ -29,8 +29,7 @@ describe('Smoke Tests - Space Widget', () => {
   let conversation, local, remote;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameJob(jobName);
+    renameJob(jobName, browser);
   });
 
   before('load browsers', () => {
