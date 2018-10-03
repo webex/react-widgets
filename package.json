@@ -76,7 +76,7 @@
     "@ciscospark/spark-core": "1.40.0",
     "@ciscospark/storage-adapter-local-forage": "1.40.0",
     "@ciscospark/storage-adapter-local-storage": "1.40.0",
-    "@collab-ui/react": "^8.0.2",
+    "@collab-ui/react": "^9.7.1",
     "ampersand-events": "^2.0.2",
     "classnames": "^2.2.5",
     "core-decorators": "^0.20.0",
