@@ -12,6 +12,7 @@ export const jobNames = {
   recentsGlobal: 'react-widget-recents-global',
   spaceDataApi: 'react-widget-space-dataApi',
   spaceGlobal: 'react-widget-space-global',
+  space: 'react-widget-space',
   smokeMultiple: 'react-widget-multiple-smoke',
   smokeRecents: 'react-widget-recents-smoke',
   smokeSpace: 'react-widget-space-smoke'

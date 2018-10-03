@@ -100,61 +100,15 @@ exports.config = {
     tap: [
       './test/journeys/specs/tap/**/*.js'
     ],
-    oneOnOne: [
-      './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/dataApi/guest.js',
-      './test/journeys/specs/oneOnOne/dataApi/meet.js',
-      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
-      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
-      './test/journeys/specs/oneOnOne/global/basic.js',
-      './test/journeys/specs/oneOnOne/global/guest.js',
-      './test/journeys/specs/oneOnOne/global/meet.js',
-      './test/journeys/specs/oneOnOne/global/messaging.js',
-      './test/journeys/specs/oneOnOne/global/startup-settings.js'
-    ],
     space: [
-      './test/journeys/specs/space/dataApi/basic.js',
-      './test/journeys/specs/space/dataApi/meet.js',
-      './test/journeys/specs/space/dataApi/messaging.js',
-      './test/journeys/specs/space/dataApi/startup-settings.js',
-      './test/journeys/specs/space/global/basic.js',
-      './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/global/startup-settings.js'
+      './test/journeys/specs/space/index.js',
+      './test/journeys/specs/space/guest.js',
+      './test/journeys/specs/space/startup-settings.js',
+      './test/journeys/specs/space/data-api.js'
     ],
     recents: [
       './test/journeys/specs/recents/dataApi/basic.js',
       './test/journeys/specs/recents/global/basic.js'
-    ],
-    multiple: [
-      './test/journeys/specs/multiple/index.js'
-    ],
-    integration: [
-      './test/journeys/specs/multiple/index.js',
-      './test/journeys/specs/oneOnOne/dataApi/basic.js',
-      './test/journeys/specs/oneOnOne/dataApi/guest.js',
-      './test/journeys/specs/oneOnOne/dataApi/meet.js',
-      './test/journeys/specs/oneOnOne/dataApi/messaging.js',
-      './test/journeys/specs/oneOnOne/dataApi/startup-settings.js',
-      './test/journeys/specs/oneOnOne/global/basic.js',
-      './test/journeys/specs/oneOnOne/global/guest.js',
-      './test/journeys/specs/oneOnOne/global/meet.js',
-      './test/journeys/specs/oneOnOne/global/messaging.js',
-      './test/journeys/specs/oneOnOne/global/startup-settings.js',
-      './test/journeys/specs/recents/dataApi/basic.js',
-      './test/journeys/specs/recents/global/basic.js',
-      './test/journeys/specs/space/dataApi/basic.js',
-      './test/journeys/specs/space/dataApi/meet.js',
-      './test/journeys/specs/space/dataApi/messaging.js',
-      './test/journeys/specs/space/dataApi/startup-settings.js',
-      './test/journeys/specs/space/global/basic.js',
-      './test/journeys/specs/space/global/meet.js',
-      './test/journeys/specs/space/global/messaging.js',
-      './test/journeys/specs/space/global/startup-settings.js'
-    ],
-    guest: [
-      './test/journeys/specs/oneOnOne/dataApi/guest.js',
-      './test/journeys/specs/oneOnOne/global/guest.js'
     ]
   },
   // Patterns to exclude.
