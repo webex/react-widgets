@@ -3,7 +3,7 @@ import '@ciscospark/plugin-logger';
 import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
-import {jobNames, updateJobStatus} from '../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 import waitForPromise from '../../lib/wait-for-promise';
 import {switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {elements, declineIncomingCallTest, hangupBeforeAnswerTest, hangupDuringCallTest} from '../../lib/test-helpers/space-widget/meet';
@@ -16,11 +16,16 @@ describe('Space Widget Data API Tests', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
   const spaceWidget = '.ciscospark-space-widget';
-  const jobName = jobNames.space;
+  const jobName = jobNames.spaceDataApi;
 
   let allPassed = true;
   let docbrown, lorraine, marty;
   let conversation, local, remote;
+
+  before('start new sauce session', () => {
+    renameJob(jobName, browser);
+  });
+
 
   before('load browsers', () => {
     browser.url('/data-api/space.html');

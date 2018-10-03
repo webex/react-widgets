@@ -14,7 +14,7 @@ import {
   hasParticipants,
   searchForPerson
 } from '../../lib/test-helpers/space-widget/roster';
-import {elements, openMenuAndClickButton, switchToMeet} from '../../lib/test-helpers/space-widget/main';
+import {elements as mainElements, openMenuAndClickButton, switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {
   canDeleteMessage,
   deleteMessage,
@@ -24,20 +24,25 @@ import {
   sendMessage,
   verifyMessageReceipt
 } from '../../lib/test-helpers/space-widget/messaging';
-import {declineIncomingCallTest, hangupBeforeAnswerTest, hangupDuringCallTest, callEventTest} from '../../lib/test-helpers/space-widget/meet';
+import {
+  elements as meetElements,
+  declineIncomingCallTest,
+  hangupBeforeAnswerTest,
+  hangupDuringCallTest,
+  callEventTest
+} from '../../lib/test-helpers/space-widget/meet';
 import waitForPromise from '../../lib/wait-for-promise';
 
 describe('Space Widget Primary Tests', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-
+  const jobName = jobNames.space;
   let allPassed = true;
   let biff, docbrown, lorraine, marty;
   let conversation, local, remote;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameJob(jobNames.space);
+    renameJob(jobName, browser);
   });
 
   before('load browsers', () => {
@@ -89,6 +94,8 @@ describe('Space Widget Primary Tests', () => {
           }
         }
       });
+      return lorraine.spark.internal.device.register()
+        .then(() => lorraine.spark.internal.mercury.connect());
     }));
 
   before('create biff', () => testUsers.create({count: 1, config: {displayName: 'Biff Tannen'}})
@@ -121,6 +128,9 @@ describe('Space Widget Primary Tests', () => {
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
+        },
         destinationId: spaceId,
         destinationType: 'spaceId'
       };
@@ -162,45 +172,45 @@ describe('Space Widget Primary Tests', () => {
 
     describe('Activity Menu', () => {
       it('has a menu button', () => {
-        assert.isTrue(browserLocal.isVisible(elements.menuButton));
+        assert.isTrue(browserLocal.isVisible(mainElements.menuButton));
       });
 
       it('displays the menu when clicking the menu button', () => {
-        browserLocal.click(elements.menuButton);
-        browserLocal.waitForVisible(elements.activityMenu);
+        browserLocal.click(mainElements.menuButton);
+        browserLocal.waitForVisible(mainElements.activityMenu);
       });
 
       it('has an exit menu button', () => {
-        assert.isTrue(browserLocal.isVisible(elements.activityMenu));
-        browserLocal.waitForVisible(elements.exitButton);
+        assert.isTrue(browserLocal.isVisible(mainElements.activityMenu));
+        browserLocal.waitForVisible(mainElements.exitButton);
       });
 
       it('closes the menu with the exit button', () => {
-        browserLocal.click(elements.exitButton);
-        browserLocal.waitForVisible(elements.activityMenu, 60000, true);
+        browserLocal.click(mainElements.exitButton);
+        browserLocal.waitForVisible(mainElements.activityMenu, 60000, true);
       });
 
       it('has a message button', () => {
-        browserLocal.click(elements.menuButton);
-        browserLocal.waitForVisible(elements.messageButton);
+        browserLocal.click(mainElements.menuButton);
+        browserLocal.waitForVisible(mainElements.messageButton);
       });
 
       it('has a files button', () => {
-        browserLocal.waitForVisible(elements.filesButton);
+        browserLocal.waitForVisible(mainElements.filesButton);
       });
 
       it('switches to files widget', () => {
-        browserLocal.waitForVisible(elements.filesButton);
-        browserLocal.click(elements.filesButton);
-        browserLocal.waitForVisible(elements.filesWidget);
-        browserLocal.waitForVisible(elements.menuButton);
-        browserLocal.click(elements.menuButton);
+        browserLocal.waitForVisible(mainElements.filesButton);
+        browserLocal.click(mainElements.filesButton);
+        browserLocal.waitForVisible(mainElements.filesWidget);
+        browserLocal.waitForVisible(mainElements.menuButton);
+        browserLocal.click(mainElements.menuButton);
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(elements.messageButton);
-        browserLocal.waitForVisible(elements.activityMenu, 60000, true);
-        assert.isTrue(browserLocal.isVisible(elements.messageWidget));
+        browserLocal.click(mainElements.messageButton);
+        browserLocal.waitForVisible(mainElements.activityMenu, 60000, true);
+        assert.isTrue(browserLocal.isVisible(mainElements.messageWidget));
       });
     });
 
@@ -365,7 +375,7 @@ describe('Space Widget Primary Tests', () => {
       describe('pre call experience', () => {
         it('has a call button', () => {
           switchToMeet(browserLocal);
-          browserLocal.waitForVisible(elements.callButton);
+          browserLocal.waitForVisible(meetElements.callButton);
         });
       });
 
@@ -405,9 +415,12 @@ describe('Space Widget Primary Tests', () => {
   });
 
   after(() => {
-    updateJobStatus(jobNames.spaceGlobal, allPassed);
+    updateJobStatus(jobName, allPassed);
   });
 
-  after('disconnect', () => marty.spark.internal.mercury.disconnect());
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect()
+  ]));
 });
 

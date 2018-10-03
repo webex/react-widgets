@@ -5,14 +5,18 @@ import '@ciscospark/internal-plugin-conversation';
 
 import {elements} from '../../lib/test-helpers/space-widget/main';
 import {elements as rosterElements} from '../../lib/test-helpers/space-widget/roster';
-import {jobNames, updateJobStatus} from '../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('Space Widget Startup Settings Tests', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.space;
+  const jobName = jobNames.spaceStartup;
   let mccoy, spock;
   let allPassed = true;
+
+  before('start new sauce session', () => {
+    renameJob(jobName, browser);
+  });
 
   before('load browsers', () => {
     browser.url('/space.html?message');

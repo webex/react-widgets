@@ -10,17 +10,21 @@ import {
   verifyMessageReceipt
 } from '../../lib/test-helpers/space-widget/messaging';
 import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest} from '../../lib/test-helpers/space-widget/meet';
-import {jobNames, updateJobStatus} from '../../lib/test-helpers';
+import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('Space Widget Guest User Tests', () => {
   let mccoy, spock;
   let allPassed = true;
 
-  const jobName = jobNames.space;
+  const jobName = jobNames.spaceGuest;
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+
+  before('start new sauce session', () => {
+    renameJob(jobName, browser);
+  });
 
   before('create test users', () => Promise.all([
     setupTestUserJwt({displayName: spockName}).then((guestUser) => {
