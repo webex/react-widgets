@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.366"></a>
+## [0.1.366](https://github.com/webex/react-ciscospark/compare/v0.1.365...v0.1.366) (2018-10-03)
+
+
+### Features
+
+* **package:** update to latest [@collab-ui](https://github.com/collab-ui) version ([77478ca](https://github.com/webex/react-ciscospark/commit/77478ca))
+* **space-destination:** use input components from collab-ui ([0e6114d](https://github.com/webex/react-ciscospark/commit/0e6114d))
+* **token-input:** use input components from collab-ui ([17a1107](https://github.com/webex/react-ciscospark/commit/17a1107))
+* **widget-demo:** add Button component from collab-ui ([4c75b28](https://github.com/webex/react-ciscospark/commit/4c75b28))
+* **widget-demo:** add Topbar component from collab-ui ([dcbc96d](https://github.com/webex/react-ciscospark/commit/dcbc96d))
+* **widget-demos:** use updated onChange results from destination ([e792cff](https://github.com/webex/react-ciscospark/commit/e792cff))
+
+
+
 <a name="0.1.365"></a>
 ## [0.1.365](https://github.com/webex/react-ciscospark/compare/v0.1.364...v0.1.365) (2018-10-02)
 
