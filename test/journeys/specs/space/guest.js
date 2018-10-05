@@ -1,8 +1,9 @@
 import {assert} from 'chai';
 
-import testUsers from '@ciscospark/test-helper-test-users';
-
-import {setupTestUserJwt} from '../../lib/test-users';
+import {
+  createTestUsers,
+  setupTestUserJwt
+} from '../../lib/test-users';
 import {switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {
   messageTests,
@@ -26,16 +27,14 @@ describe('Space Widget Guest User Tests', () => {
     renameJob(jobName, browser);
   });
 
-  before('create test users', () => Promise.all([
-    setupTestUserJwt({displayName: spockName}).then((guestUser) => {
+  before('create test users', () => {
+    // create guest user
+    browser.call(() => setupTestUserJwt({displayName: spockName}).then((guestUser) => {
       spock = guestUser;
-    }),
+    }));
     // create standard user
-    testUsers.create({count: 1, config: {displayName: mccoyName}})
-      .then((users) => {
-        [mccoy] = users;
-      })
-  ]));
+    [mccoy] = createTestUsers(1, [{displayName: mccoyName}]);
+  });
 
   it('can load the widget for the guest user to the standard user', () => {
     browserLocal.url('/space.html?guest');

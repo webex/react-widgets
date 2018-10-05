@@ -1,8 +1,6 @@
 import {assert} from 'chai';
 
-import testUsers from '@ciscospark/test-helper-test-users';
-import '@ciscospark/internal-plugin-conversation';
-
+import {setupOneOnOneUsers} from '../../lib/test-users';
 import {elements} from '../../lib/test-helpers/space-widget/main';
 import {elements as rosterElements} from '../../lib/test-helpers/space-widget/roster';
 import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
@@ -22,17 +20,9 @@ describe('Space Widget Startup Settings Tests', () => {
     browser.url('/space.html?message');
   });
 
-  before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock'}})
-    .then((users) => {
-      [spock] = users;
-    }));
-
-  before('create mccoy', () => testUsers.create({count: 1, config: {displayName: 'Bones Mccoy'}})
-    .then((users) => {
-      [mccoy] = users;
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
+  before('create test users and spaces', () => {
+    [mccoy, spock] = setupOneOnOneUsers();
+  });
 
   describe('destination type: userId', () => {
     it('opens widget', () => {
