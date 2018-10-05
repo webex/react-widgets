@@ -1,11 +1,6 @@
 import {assert} from 'chai';
 
-import '@ciscospark/plugin-logger';
-import '@ciscospark/internal-plugin-feature';
-import '@ciscospark/internal-plugin-conversation';
-import CiscoSpark from '@ciscospark/spark-core';
-import testUsers from '@ciscospark/test-helper-test-users';
-
+import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as spaceElements} from '../../../lib/test-helpers/space-widget/main';
@@ -21,7 +16,7 @@ describe('Multiple Widgets', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
 
-  let docbrown, lorraine, marty;
+  let docbrown, lorraine, marty, participants;
   let conversation, oneOnOneConversation;
   let local, remote;
   let allPassed = true;
@@ -34,71 +29,13 @@ describe('Multiple Widgets', () => {
     browser.url('/multiple.html');
   });
 
-  before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-    .then((users) => {
-      [marty] = users;
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return marty.spark.internal.device.register()
-        .then(() => marty.spark.internal.mercury.connect());
-    }));
-
-  before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-    .then((users) => {
-      [docbrown] = users;
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return docbrown.spark.internal.mercury.connect();
-    }));
-
-  before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-    .then((users) => {
-      [lorraine] = users;
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-      return lorraine.spark.internal.mercury.connect();
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
-
-  before('create group space', () => marty.spark.internal.conversation.create({
-    displayName: 'Test Group Space',
-    participants: [marty, docbrown, lorraine]
-  }).then((c) => {
-    conversation = c;
-    return conversation;
-  }));
-
-  before('create one on one converstation', () => lorraine.spark.internal.conversation.create({
-    participants: [marty, lorraine]
-  }).then((c) => {
-    oneOnOneConversation = c;
-    return oneOnOneConversation;
-  }));
+  before('create test users and spaces', () => {
+    participants = setupGroupTestUsers();
+    [docbrown, lorraine, marty] = participants;
+    registerDevices(participants);
+    conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Widget Space'});
+    oneOnOneConversation = createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
+  });
 
   before('open widgets local', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
@@ -247,9 +184,5 @@ describe('Multiple Widgets', () => {
     updateJobStatus(jobNames.smokeMultiple, allPassed);
   });
 
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect(),
-    docbrown.spark.internal.mercury.disconnect()
-  ]));
+  after('disconnect', () => disconnectDevices(participants));
 });
