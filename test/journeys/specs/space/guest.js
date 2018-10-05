@@ -2,7 +2,7 @@ import {assert} from 'chai';
 
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import setupTestUserJwt from '../../lib/test-users';
+import {setupTestUserJwt} from '../../lib/test-users';
 import {switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {
   messageTests,
