@@ -37,8 +37,6 @@ export function answer(aBrowser) {
   aBrowser.waitUntil(() =>
     aBrowser.isVisible(elements.remoteVideo),
   5000, 'remote video is not visible after answering call');
-  // Let call elapse 5 seconds before hanging up
-  aBrowser.pause(5000);
 }
 
 /**
@@ -50,9 +48,7 @@ export function answer(aBrowser) {
 export function call(caller, reciever) {
   caller.waitForVisible(elements.callButton);
   caller.click(elements.callButton);
-  // wait for call to establish
-  browser.pause(5000);
-  reciever.waitForVisible(elements.answerButton);
+  reciever.waitForVisible(elements.answerButton, 5000);
 }
 
 /**
@@ -63,7 +59,6 @@ export function call(caller, reciever) {
 export function decline(aBrowser) {
   aBrowser.waitForVisible(elements.declineButton);
   aBrowser.click(elements.declineButton);
-  aBrowser.waitForVisible(elements.messageWidget);
 }
 
 /**
@@ -84,9 +79,6 @@ export function hangup(aBrowser) {
     aBrowser.isVisible(elements.hangupButton),
   5000, 'hangup button is not visible when trying to hang up call');
   aBrowser.click(elements.hangupButton);
-  aBrowser.waitUntil(() =>
-    aBrowser.isVisible(elements.messageWidget),
-  10000, 'message widget is not visible after hanging up call');
 }
 
 /**
@@ -134,6 +126,8 @@ export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = fa
   switchToMeet(browserLocal);
   call(browserLocal, browserRemote);
   answer(browserRemote);
+  // Let call elapse 5 seconds before hanging up
+  browser.pause(5000);
   hangup(browserLocal);
   browserLocal.waitForVisible(elements.messageWidget);
   if (isMeeting) {
