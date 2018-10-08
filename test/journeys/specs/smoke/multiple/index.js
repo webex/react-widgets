@@ -6,16 +6,16 @@ import '@ciscospark/internal-plugin-conversation';
 import CiscoSpark from '@ciscospark/spark-core';
 import testUsers from '@ciscospark/test-helper-test-users';
 
-import waitForPromise from '../../lib/wait-for-promise';
-import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../lib/test-helpers';
-import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
-import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
+import waitForPromise from '../../../lib/wait-for-promise';
+import {jobNames, moveMouse, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {elements as spaceElements} from '../../../lib/test-helpers/space-widget/main';
+import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
 import {
   displayAndReadIncomingMessage,
   displayIncomingMessage,
   elements as recentsElements
-} from '../../lib/test-helpers/recents-widget';
+} from '../../../lib/test-helpers/recents-widget';
 
 describe('Multiple Widgets', () => {
   const browserLocal = browser.select('browserLocal');
@@ -27,7 +27,7 @@ describe('Multiple Widgets', () => {
   let allPassed = true;
 
   before('start new sauce session', () => {
-    renameJob(jobNames.multiple);
+    renameJob(jobNames.smokeMultiple, browser);
   });
 
   before('load browser', () => {
@@ -244,7 +244,7 @@ describe('Multiple Widgets', () => {
   });
 
   after(() => {
-    updateJobStatus(jobNames.multiple, allPassed);
+    updateJobStatus(jobNames.smokeMultiple, allPassed);
   });
 
   after('disconnect', () => Promise.all([

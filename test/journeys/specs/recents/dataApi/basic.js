@@ -23,10 +23,7 @@ describe('Widget Recents: Data API', () => {
   let conversation, oneOnOneConversation;
 
   before('start new sauce session', () => {
-    if (process.env.INTEGRATION) {
-      browser.reload();
-    }
-    renameJob(jobNames.recentsDataApi);
+    renameJob(jobNames.recentsDataApi, browser);
   });
 
 

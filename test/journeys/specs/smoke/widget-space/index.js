@@ -6,25 +6,30 @@ import CiscoSpark from '@ciscospark/spark-core';
 import '@ciscospark/internal-plugin-conversation';
 
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
+
+import {elements, openMenuAndClickButton, switchToMeet} from '../../../lib/test-helpers/space-widget/main';
 import {
   elements as rosterElements,
-  canSearchForParticipants,
-  hasParticipants,
-  searchForPerson
+  hasParticipants
 } from '../../../lib/test-helpers/space-widget/roster';
-import {elements, openMenuAndClickButton} from '../../../lib/test-helpers/space-widget/main';
+import {
+  sendMessage,
+  verifyMessageReceipt
+} from '../../../lib/test-helpers/space-widget/messaging';
+import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
 
-describe('Widget Space', () => {
+describe('Smoke Tests - Space Widget', () => {
   const browserLocal = browser.select('browserLocal');
-
+  const browserRemote = browser.select('browserRemote');
+  const jobName = jobNames.smokeSpace;
   let allPassed = true;
   let biff, docbrown, lorraine, marty;
-  let conversation;
+  let conversation, local, remote;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameJob(jobNames.spaceGlobal);
+    renameJob(jobName, browser);
   });
 
   before('load browsers', () => {
@@ -76,6 +81,8 @@ describe('Widget Space', () => {
           }
         }
       });
+      return lorraine.spark.internal.device.register()
+        .then(() => lorraine.spark.internal.mercury.connect());
     }));
 
   before('create biff', () => testUsers.create({count: 1, config: {displayName: 'Biff Tannen'}})
@@ -104,6 +111,7 @@ describe('Widget Space', () => {
   }));
 
   before('open widget for marty in browserLocal', () => {
+    local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
         accessToken: localAccessToken,
@@ -112,6 +120,22 @@ describe('Widget Space', () => {
       };
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
+  });
+
+  before('open widget for docbrown in browserRemote', () => {
+    remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
+    remote.browser.execute((localAccessToken, spaceId) => {
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
+        },
+        destinationId: spaceId,
+        destinationType: 'spaceId'
+      };
+      window.openSpaceWidget(options);
+    }, docbrown.token.access_token, conversation.id);
+    remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
   });
 
   it('loads the test page', () => {
@@ -155,8 +179,16 @@ describe('Widget Space', () => {
         browserLocal.waitForVisible(elements.messageButton);
       });
 
+      it('has a meet button', () => {
+        browserLocal.waitForVisible(elements.meetButton);
+      });
+
       it('has a files button', () => {
         browserLocal.waitForVisible(elements.filesButton);
+      });
+
+      it('has a roster button', () => {
+        browserLocal.waitForVisible(elements.peopleButton);
       });
 
       it('switches to files widget', () => {
@@ -172,42 +204,70 @@ describe('Widget Space', () => {
         browserLocal.waitForVisible(elements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(elements.messageWidget));
       });
+
+      describe('roster tests', () => {
+        before('open roster widget', () => {
+          openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+          browserLocal.waitForVisible(rosterElements.rosterWidget);
+        });
+
+        it('has a close button', () => {
+          assert.isTrue(browserLocal.isVisible(rosterElements.closeButton));
+        });
+
+        it('has the total count of participants', () => {
+          assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
+        });
+
+        it('has the participants listed', () => {
+          hasParticipants(browserLocal, [marty, docbrown, lorraine]);
+        });
+
+        it('closes the people roster widget', () => {
+          browserLocal.click(rosterElements.closeButton);
+          browserLocal.waitForVisible(rosterElements.rosterWidget, 60000, true);
+        });
+      });
     });
 
-    describe('roster tests', () => {
-      before('open roster widget', () => {
-        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget);
+    describe('messaging', () => {
+      it('sends and receives messages', () => {
+        const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
+        const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+        const lorraineText = 'Marty, will we ever see you again?';
+        const martyText2 = 'I guarantee it.';
+        sendMessage(remote, local, martyText);
+        verifyMessageReceipt(local, remote, martyText);
+        sendMessage(remote, local, docText);
+        verifyMessageReceipt(local, remote, docText);
+        // Send a message from a 'client'
+        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
+          displayName: lorraineText
+        }));
+        // Wait for both widgets to receive client message
+        verifyMessageReceipt(local, remote, lorraineText);
+        verifyMessageReceipt(remote, local, lorraineText);
+        sendMessage(local, remote, martyText2);
+        verifyMessageReceipt(remote, local, martyText2);
+      });
+    });
+
+    describe('meet widget', () => {
+      describe('pre call experience', () => {
+        it('has a call button', () => {
+          switchToMeet(browserLocal);
+          browserLocal.waitForVisible(meetElements.callButton);
+        });
       });
 
-      it('has a close button', () => {
-        assert.isTrue(browserLocal.isVisible(rosterElements.closeButton));
-      });
+      describe('during call experience', () => {
+        it('can decline an incoming call', () => {
+          declineIncomingCallTest(browserLocal, browserRemote, true);
+        });
 
-      it('has the total count of participants', () => {
-        assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
-      });
-
-      it('has the participants listed', () => {
-        hasParticipants(browserLocal, [marty, docbrown, lorraine]);
-      });
-
-      it('has search for participants', () => {
-        canSearchForParticipants(browserLocal);
-      });
-
-      it('searches and adds person to space', () => {
-        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget);
-        searchForPerson(browserLocal, biff.email, true, biff.displayName);
-        browserLocal.waitForVisible(rosterElements.rosterList);
-        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterList).includes(biff.displayName));
-        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterTitle) === 'People (4)');
-      });
-
-      it('closes the people roster widget', () => {
-        browserLocal.click(rosterElements.closeButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget, 60000, true);
+        it('can hangup in call', () => {
+          hangupDuringCallTest(browserLocal, browserRemote, true);
+        });
       });
     });
 
@@ -226,9 +286,12 @@ describe('Widget Space', () => {
   });
 
   after(() => {
-    updateJobStatus(jobNames.spaceGlobal, allPassed);
+    updateJobStatus(jobName, allPassed);
   });
 
-  after('disconnect', () => marty.spark.internal.mercury.disconnect());
+  after('disconnect', () => Promise.all([
+    marty.spark.internal.mercury.disconnect(),
+    lorraine.spark.internal.mercury.disconnect()
+  ]));
 });
 

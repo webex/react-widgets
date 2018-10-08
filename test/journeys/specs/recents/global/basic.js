@@ -31,8 +31,7 @@ describe('Widget Recents', () => {
   let conversation, oneOnOneConversation;
 
   before('start new sauce session', () => {
-    browser.reload();
-    renameJob(jobNames.recentsGlobal);
+    renameJob(jobNames.recentsGlobal, browser);
   });
 
   before('load browser for recents widget', () => {

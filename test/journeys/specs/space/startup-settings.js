@@ -3,16 +3,20 @@ import {assert} from 'chai';
 import testUsers from '@ciscospark/test-helper-test-users';
 import '@ciscospark/internal-plugin-conversation';
 
-import {updateJobStatus} from '../../../lib/test-helpers';
-import {elements} from '../../../lib/test-helpers/space-widget/main';
-import {elements as rosterElements} from '../../../lib/test-helpers/space-widget/roster';
+import {elements} from '../../lib/test-helpers/space-widget/main';
+import {elements as rosterElements} from '../../lib/test-helpers/space-widget/roster';
+import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
-describe('Widget Space: One on One: Startup Settings', () => {
+describe('Space Widget Startup Settings Tests', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const jobName = 'react-widget-oneOnOne-global';
+  const jobName = jobNames.spaceStartup;
   let mccoy, spock;
   let allPassed = true;
+
+  before('start new sauce session', () => {
+    renameJob(jobName, browser);
+  });
 
   before('load browsers', () => {
     browser.url('/space.html?message');

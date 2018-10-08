@@ -4,6 +4,7 @@ export const elements = {
   messageButton: 'button[aria-label="Message"]',
   meetButton: 'button[aria-label="Call"]',
   filesButton: 'button[aria-label="Files"]',
+  peopleButton: 'button[aria-label="People"]',
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
   controlsContainer: '.ciscospark-controls-container',
