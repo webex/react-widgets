@@ -89,16 +89,23 @@ jobs:
       - <<: *restore_node_modules
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
-          name: Integration Tests
-          no_output_timeout: 40m
+          name: Integration Tests Firefox
+          no_output_timeout: 15m
           command: |
             set -em
-            (
-              (PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox VERSION=60 npm run test:integration || kill 0) &
-              (sleep 60; PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration || kill 0) &
-              (sleep 120; PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration || kill 0) &
-              wait
-            )
+            PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration
+      - run:
+          name: Integration Tests Chrome
+          no_output_timeout: 15m
+          command: |
+            set -em
+            PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration
+      - run:
+          name: Integration Tests Chrome Windows
+          no_output_timeout: 15m
+          command: |
+            set -em
+            PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
