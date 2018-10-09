@@ -15,29 +15,30 @@ import {
 describe('Multiple Widgets', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
+  const jobName = jobNames.smokeMultiple;
 
   let docbrown, lorraine, marty, participants;
   let conversation, oneOnOneConversation;
   let local, remote;
   let allPassed = true;
 
-  before('start new sauce session', () => {
-    renameJob(jobNames.smokeMultiple, browser);
+  it('start new sauce session', () => {
+    browser.reload();
+    browser.call(() => renameJob(jobName, browser));
+    browserLocal.url('/multiple.html?local');
+    browserRemote.url('/multiple.html?remote');
   });
 
-  before('load browser', () => {
-    browser.url('/multiple.html');
-  });
-
-  before('create test users and spaces', () => {
+  it('create test users and spaces', () => {
     participants = setupGroupTestUsers();
     [docbrown, lorraine, marty] = participants;
+    assert.lengthOf(participants, 3, 'Test users were not created');
     registerDevices(participants);
     conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Widget Space'});
     oneOnOneConversation = createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
   });
 
-  before('open widgets local', () => {
+  it('open widgets local', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
     browserLocal.execute((localAccessToken) => {
       const options = {
@@ -64,7 +65,7 @@ describe('Multiple Widgets', () => {
     browserLocal.waitForVisible(spaceElements.spaceWidget);
   });
 
-  before('open widgets remote', () => {
+  it('open widgets remote', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
     browserRemote.execute((localAccessToken) => {
       const options = {
@@ -175,14 +176,12 @@ describe('Multiple Widgets', () => {
     });
   });
 
+  it('disconnects test users', () => disconnectDevices(participants));
+
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(() => {
-    updateJobStatus(jobNames.smokeMultiple, allPassed);
-  });
-
-  after('disconnect', () => disconnectDevices(participants));
+  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 });

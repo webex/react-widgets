@@ -24,22 +24,21 @@ describe('Smoke Tests - Space Widget', () => {
   let docbrown, lorraine, marty, participants;
   let conversation, local, remote;
 
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
-
-  before('load browsers', () => {
+  it('start new sauce session', () => {
+    browser.reload();
+    browser.call(() => renameJob(jobName, browser));
     browser.url('/space.html');
   });
 
-  before('create test users and spaces', () => {
+  it('create test users and spaces', () => {
     participants = setupGroupTestUsers();
     [docbrown, lorraine, marty] = participants;
+    assert.lengthOf(participants, 3, 'Test users were not created');
     registerDevices(participants);
     conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Widget Space'});
   });
 
-  before('open widget for marty in browserLocal', () => {
+  it('open widget for marty in browserLocal', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
@@ -51,7 +50,7 @@ describe('Smoke Tests - Space Widget', () => {
     }, marty.token.access_token, conversation.id);
   });
 
-  before('open widget for docbrown in browserRemote', () => {
+  it('open widget for docbrown in browserRemote', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
     remote.browser.execute((localAccessToken, spaceId) => {
       const options = {
@@ -214,9 +213,7 @@ describe('Smoke Tests - Space Widget', () => {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(() => {
-    updateJobStatus(jobName, allPassed);
-  });
+  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 
   after('disconnect', () => disconnectDevices(participants));
 });

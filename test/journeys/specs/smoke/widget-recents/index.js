@@ -19,28 +19,27 @@ import {
 } from '../../../lib/test-helpers/recents-widget';
 
 describe('Smoke Tests - Recents Widget', () => {
+  const jobName = jobNames.smokeRecents;
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.smokeRecents;
 
   let allPassed = true;
   let docbrown, lorraine, marty, participants;
   let conversation, oneOnOneConversation;
 
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
-
-  before('load browser for recents widget', () => {
+  it('start new sauce session', () => {
+    // This is the first test in the smoke suite, no need to reload the session here
+    // browser.reload();
+    browser.call(() => renameJob(jobName, browser));
+    // load browser for recents widget
     browserLocal.url('/recents.html');
-  });
-
-  before('load browser for meet widget', () => {
+    // load browser for meet widget
     browserRemote.url('/space.html?meetRecents');
   });
 
-  before('create test users and spaces', () => {
+  it('create test users and spaces', () => {
     participants = setupGroupTestUsers();
+    assert.lengthOf(participants, 3, 'Test users were not created');
     [docbrown, lorraine, marty] = participants;
     registerDevices(participants);
     conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Group Space'});
@@ -275,7 +274,7 @@ describe('Smoke Tests - Recents Widget', () => {
     it('displays a call in progress button', () => {
       browserRemote.waitForVisible(meetElements.callButton);
       browserRemote.click(meetElements.callButton);
-      browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton));
+      browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton), 10000, 'Join Call button was not displayed');
       hangup(browserRemote);
     });
   });
@@ -290,14 +289,12 @@ describe('Smoke Tests - Recents Widget', () => {
     });
   });
 
+  it('disconnects test users', () => disconnectDevices(participants));
+
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(() => {
-    updateJobStatus(jobName, allPassed);
-  });
-
-  after('disconnect', () => disconnectDevices(participants));
+  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 });
