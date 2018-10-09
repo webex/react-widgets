@@ -23,6 +23,8 @@ if (!baseUrl) {
 const browser = process.env.BROWSER || 'chrome';
 const version = process.env.VERSION || 'latest';
 const platform = process.env.PLATFORM || 'mac 10.12';
+const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
+process.env.BUILD_NUMBER = build;
 const tunnelId = uuid.v4();
 const suite = argv.suite || 'smoke';
 const screenResolutionMac = '1920x1440';
@@ -79,6 +81,7 @@ if (process.env.STATIC_SERVER_PATH) {
 }
 
 exports.config = {
+  build,
   seleniumInstallArgs: {version: '3.4.0'},
   seleniumArgs: {version: '3.4.0'},
   //
@@ -257,7 +260,6 @@ exports.config = {
       capabilities.browserLocal.desiredCapabilities
     ];
 
-    const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
     /* eslint-disable no-param-reassign */
     defs.forEach((d) => {
       if (process.env.SAUCE) {
@@ -288,7 +290,7 @@ if (process.env.SAUCE) {
   const sauceCapabilities = (remoteName = 'browser') => {
     if (browser === 'chrome') {
       return Object.assign({}, chromeCapabilities, {
-        name: `react-widget-${suite}-${remoteName}`,
+        name: `react-widget-${suite}-unnamed-${remoteName}`,
         idleTimeout: 300,
         commandTimeout: 600,
         maxDuration: 3600,
@@ -299,7 +301,7 @@ if (process.env.SAUCE) {
       });
     }
     return Object.assign({}, firefoxCapabilities, {
-      name: `react-widget-${suite}-${remoteName}`,
+      name: `react-widget-${suite}-unnamed-${remoteName}`,
       idleTimeout: 300,
       commandTimeout: 600,
       maxDuration: 3600,
