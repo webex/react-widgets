@@ -276,6 +276,7 @@ describe('Smoke Tests - Recents Widget', () => {
       browserRemote.click(meetElements.callButton);
       browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton), 10000, 'Join Call button was not displayed');
       hangup(browserRemote);
+      browserLocal.waitUntil(() => !browserLocal.isVisible(elements.joinCallButton), 20000, 'Join Call button was not hidden after hanging up');
     });
   });
 
