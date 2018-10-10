@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.368"></a>
+## [0.1.368](https://github.com/webex/react-ciscospark/compare/v0.1.367...v0.1.368) (2018-10-10)
+
+
+### Bug Fixes
+
+* **journeys:** remove extra tests for message widget visibility ([665e4d2](https://github.com/webex/react-ciscospark/commit/665e4d2))
+* **react-component-chip-base:** Add aria-label ([1dca83e](https://github.com/webex/react-ciscospark/commit/1dca83e))
+
+
+
 <a name="0.1.367"></a>
 ## [0.1.367](https://github.com/webex/react-ciscospark/compare/v0.1.366...v0.1.367) (2018-10-08)
 
