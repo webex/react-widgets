@@ -96,8 +96,8 @@ exports.config = {
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     smoke: [
-      './test/journeys/specs/smoke/widget-recents/index.js',
       './test/journeys/specs/smoke/widget-space/index.js',
+      './test/journeys/specs/smoke/widget-recents/index.js',
       './test/journeys/specs/smoke/multiple/index.js'
     ],
     tap: [

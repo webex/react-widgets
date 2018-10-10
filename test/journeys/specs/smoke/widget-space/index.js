@@ -25,7 +25,8 @@ describe('Smoke Tests - Space Widget', () => {
   let conversation, local, remote;
 
   it('start new sauce session', () => {
-    browser.reload();
+    // This is the first test in the smoke suite, no need to reload the session here
+    // browser.reload();
     browser.call(() => renameJob(jobName, browser));
     browser.url('/space.html');
   });

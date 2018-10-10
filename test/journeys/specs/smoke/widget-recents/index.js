@@ -28,8 +28,7 @@ describe('Smoke Tests - Recents Widget', () => {
   let conversation, oneOnOneConversation;
 
   it('start new sauce session', () => {
-    // This is the first test in the smoke suite, no need to reload the session here
-    // browser.reload();
+    browser.reload();
     browser.call(() => renameJob(jobName, browser));
     // load browser for recents widget
     browserLocal.url('/recents.html');
