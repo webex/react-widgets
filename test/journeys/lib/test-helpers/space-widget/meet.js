@@ -48,7 +48,7 @@ export function answer(aBrowser) {
 export function call(caller, reciever) {
   caller.waitForVisible(elements.callButton);
   caller.click(elements.callButton);
-  reciever.waitForVisible(elements.answerButton, 5000);
+  reciever.waitForVisible(elements.answerButton, 10000);
 }
 
 /**
