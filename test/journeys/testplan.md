@@ -60,11 +60,8 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
 - message widget
   - sends and receives messages
 - meet widget
-  - pre call experience
-    - has a call button
-  - during call experience
-    - can hangup in call
-    - can decline an incoming call
+  - has a call button
+  - can hangup in call
 - accessibility
   - should have no accessibility violations
 

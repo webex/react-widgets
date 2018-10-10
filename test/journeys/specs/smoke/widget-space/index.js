@@ -14,7 +14,7 @@ import {
   sendMessage,
   verifyMessageReceipt
 } from '../../../lib/test-helpers/space-widget/messaging';
-import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
+import {elements as meetElements, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe('Smoke Tests - Space Widget', () => {
   const browserLocal = browser.select('browserLocal');
@@ -182,21 +182,13 @@ describe('Smoke Tests - Space Widget', () => {
     });
 
     describe('meet widget', () => {
-      describe('pre call experience', () => {
-        it('has a call button', () => {
-          switchToMeet(browserLocal);
-          browserLocal.waitForVisible(meetElements.callButton);
-        });
+      it('has a call button', () => {
+        switchToMeet(browserLocal);
+        browserLocal.waitForVisible(meetElements.callButton);
       });
 
-      describe('during call experience', () => {
-        it('can decline an incoming call', () => {
-          declineIncomingCallTest(browserLocal, browserRemote, true);
-        });
-
-        it('can hangup in call', () => {
-          hangupDuringCallTest(browserLocal, browserRemote, true);
-        });
+      it('can place a call and hangup after answer', () => {
+        hangupDuringCallTest(browserLocal, browserRemote, true);
       });
     });
 
