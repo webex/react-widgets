@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.369"></a>
+## [0.1.369](https://github.com/webex/react-ciscospark/compare/v0.1.368...v0.1.369) (2018-10-11)
+
+
+### Bug Fixes
+
+* **ciscospark:** fix widget call controls container CSS issue ([8097c46](https://github.com/webex/react-ciscospark/commit/8097c46))
+
+
+
 <a name="0.1.368"></a>
 ## [0.1.368](https://github.com/webex/react-ciscospark/compare/v0.1.367...v0.1.368) (2018-10-10)
 
