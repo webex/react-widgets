@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.370"></a>
+## [0.1.370](https://github.com/webex/react-ciscospark/compare/v0.1.369...v0.1.370) (2018-10-11)
+
+
+### Bug Fixes
+
+* **ciscospark:** Do not display device joins/leaves in message widget 1:1 ([1e87dc5](https://github.com/webex/react-ciscospark/commit/1e87dc5))
+
+
+
 <a name="0.1.369"></a>
 ## [0.1.369](https://github.com/webex/react-ciscospark/compare/v0.1.368...v0.1.369) (2018-10-11)
 
