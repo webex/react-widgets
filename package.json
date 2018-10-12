@@ -206,7 +206,7 @@
   },
   "engines": {
     "node": ">=8.11.3",
-    "npm": ">=5.6.0"
+    "npm": "6.4.1"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
