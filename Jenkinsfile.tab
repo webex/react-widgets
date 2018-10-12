@@ -32,6 +32,7 @@ pipeline {
             source ~/.profile || true
             nvm install 8.11.3
             nvm use 8.11.3
+            npm install -g npm@6.4.1
             npm install
             rm .npmrc
           '''

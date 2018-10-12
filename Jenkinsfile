@@ -92,6 +92,7 @@ ansiColor('xterm') {
               source ~/.nvm/nvm.sh
               nvm install v8.11.3
               nvm use v8.11.3
+              npm install -g npm@6.4.1
               npm install
               git checkout .npmrc
               '''
