@@ -255,7 +255,7 @@ ansiColor('xterm') {
                 string(credentialsId: 'WIDGETS_NPM_PUBLISH_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
               ]) {
                 try {
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> $HOME/.npmrc'
                   // Publish
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
@@ -264,7 +264,7 @@ ansiColor('xterm') {
                   source ~/.nvm/nvm.sh
                   nvm use v8.11.3
                   npm run publish:components
-                  git checkout .npmrc
+                  rm $HOME/.npmrc
                   '''
                 }
                 catch (error) {
