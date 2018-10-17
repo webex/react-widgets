@@ -10,6 +10,7 @@ const libraryName = pkg.name;
 module.exports = (env) => {
   console.info('webpacking for transpile');
   return {
+    devtool: 'source-map',
     entry: './src/index.js',
     output: {
       path: path.resolve(process.cwd(), 'es'),
@@ -155,8 +156,6 @@ module.exports = (env) => {
     },
     resolve: {
       alias: {
-        react: path.resolve(__dirname, './node_modules/react'),
-        'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         assets: path.resolve(__dirname, 'assets'),
         node_modules: path.resolve(__dirname, '..', '..', 'node_modules')
       },
