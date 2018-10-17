@@ -10,6 +10,10 @@
   "exclude": [
     "packages/node_modules/@ciscospark/**/dist/*",
     "packages/node_modules/@webex/**/dist/*",
+    "packages/node_modules/@ciscospark/**/es/*",
+    "packages/node_modules/@webex/**/es/*",
+    "packages/node_modules/@ciscospark/**/cjs/*",
+    "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
     "dist"
   ]
