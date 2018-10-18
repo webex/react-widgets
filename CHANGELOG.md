@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.374"></a>
+## [0.1.374](https://github.com/webex/react-ciscospark/compare/v0.1.373...v0.1.374) (2018-10-18)
+
+
+### Features
+
+* **r-m-media:** add ability to pass constraints to call answer ([63b606a](https://github.com/webex/react-ciscospark/commit/63b606a))
+* **webpack:** add source map to transpile ([6214bde](https://github.com/webex/react-ciscospark/commit/6214bde))
+* **widget-meet:** removes video constraint from audio only calls ([2445333](https://github.com/webex/react-ciscospark/commit/2445333))
+
+
+
 <a name="0.1.373"></a>
 ## [0.1.373](https://github.com/webex/react-ciscospark/compare/v0.1.372...v0.1.373) (2018-10-16)
 
