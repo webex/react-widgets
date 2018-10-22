@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.376"></a>
+## [0.1.376](https://github.com/webex/react-ciscospark/compare/v0.1.375...v0.1.376) (2018-10-22)
+
+
+### Bug Fixes
+
+* **space-demo:** handle mode change ([f3aebf8](https://github.com/webex/react-ciscospark/commit/f3aebf8))
+
+
+
 <a name="0.1.375"></a>
 ## [0.1.375](https://github.com/webex/react-ciscospark/compare/v0.1.374...v0.1.375) (2018-10-19)
 
