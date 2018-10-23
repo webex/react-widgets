@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.377"></a>
+## [0.1.377](https://github.com/webex/react-ciscospark/compare/v0.1.376...v0.1.377) (2018-10-23)
+
+
+### Features
+
+* **example-code:** create example code component ([bf116d1](https://github.com/webex/react-ciscospark/commit/bf116d1))
+* **Jenkinsfile:** build and archive the widget-demo ([6d23883](https://github.com/webex/react-ciscospark/commit/6d23883))
+* **package:** remove material-ui ([00ddf27](https://github.com/webex/react-ciscospark/commit/00ddf27))
+* **recents-demo:** remove material-ui ([89cbcd8](https://github.com/webex/react-ciscospark/commit/89cbcd8))
+* **recents-demo:** use example code component ([513e42f](https://github.com/webex/react-ciscospark/commit/513e42f))
+* **space-demo:** remove material-ui ([8577088](https://github.com/webex/react-ciscospark/commit/8577088))
+* **token-input:** remove material design components ([1bc879e](https://github.com/webex/react-ciscospark/commit/1bc879e))
+* **widget-demo:** add example code sections ([2ca5af1](https://github.com/webex/react-ciscospark/commit/2ca5af1))
+* **widget-demo:** remove material design ([618e155](https://github.com/webex/react-ciscospark/commit/618e155))
+* **widget-demo:** use react version of recents widget ([69d3253](https://github.com/webex/react-ciscospark/commit/69d3253))
+
+
+
 <a name="0.1.376"></a>
 ## [0.1.376](https://github.com/webex/react-ciscospark/compare/v0.1.375...v0.1.376) (2018-10-22)
 
