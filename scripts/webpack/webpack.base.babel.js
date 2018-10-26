@@ -17,7 +17,10 @@ export default (options, env) => {
       'NODE_ENV',
       'MESSAGE_DEMO_CLIENT_ID',
       'MESSAGE_DEMO_CLIENT_SECRET',
-      'REACT_CISCOSPARK_VERSION'
+      'REACT_CISCOSPARK_VERSION',
+      'WDM_SERVICE_URL',
+      'IDBROKER_BASE_URL',
+      'CONVERSATION_SERVICE'
     ]),
     new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: true}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
