@@ -29,6 +29,7 @@ const plugins = [
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 export default (env) => webpackConfigBase({
   entry: './index.js',
+  mode: 'development',
   plugins,
   devtool: 'source-map',
   devServer: {

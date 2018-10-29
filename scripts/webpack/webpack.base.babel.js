@@ -2,7 +2,7 @@ import path from 'path';
 
 import webpack from 'webpack';
 import dotenv from 'dotenv';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import {version} from '../../package.json';
 
@@ -22,13 +22,14 @@ export default (options, env) => {
       'IDBROKER_BASE_URL',
       'CONVERSATION_SERVICE'
     ]),
-    new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: true}),
+    new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
     new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`)
   ];
 
   return {
     context: options.context || path.resolve(process.cwd(), 'src'),
+    mode: options.mode,
     entry: options.entry,
     output: Object.assign({
       filename: 'bundle.js',
@@ -80,8 +81,11 @@ export default (options, env) => {
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'src')
           ],
-          use: ExtractTextPlugin.extract({
-            use: [{
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
               loader: 'css-loader',
               options: {
                 camelCase: true,
@@ -97,8 +101,8 @@ export default (options, env) => {
                 sourceMap: true,
                 path: path.resolve(__dirname, 'postcss.config.js')
               }
-            }]
-          })
+            }
+          ]
         },
         {
           // Do not transform vendor`s CSS with CSS-modules
@@ -114,22 +118,23 @@ export default (options, env) => {
             path.resolve(__dirname, '..', '..', 'node_modules')
 
           ],
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true
-                }
-              },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true
-                }
-              }]
-          })
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
         },
         {
           test: /\.woff$/,

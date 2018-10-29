@@ -12,13 +12,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpackBaseConfig from './webpack.base.babel';
 
 const plugins = [
-  // Setup uglify to compress and suppress warnings in logs
-  new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    compress: {
-      warnings: false
-    }
-  }),
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 ];
 
@@ -55,6 +48,7 @@ const publicPath = process.env.BUILD_PUBLIC_PATH;
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 export default (env) => webpackBaseConfig({
+  mode: 'production',
   entry: './index.js',
   output: {
     filename: 'bundle.js',

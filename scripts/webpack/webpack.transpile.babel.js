@@ -1,7 +1,7 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const pkg = require('../../package.json');
 
@@ -10,6 +10,7 @@ const libraryName = pkg.name;
 module.exports = (env) => {
   console.info('webpacking for transpile');
   return {
+    mode: 'production',
     devtool: 'source-map',
     entry: './src/index.js',
     output: {
@@ -22,7 +23,7 @@ module.exports = (env) => {
     },
     plugins: [
       new webpack.BannerPlugin(`react-ciscospark v${pkg.version}`),
-      new ExtractTextPlugin({
+      new MiniCssExtractPlugin({
         filename: '[name].css'
       })
     ],
@@ -88,8 +89,11 @@ module.exports = (env) => {
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'src')
           ],
-          use: ExtractTextPlugin.extract({
-            use: [{
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
               loader: 'css-loader',
               options: {
                 camelCase: true,
@@ -105,8 +109,8 @@ module.exports = (env) => {
                 sourceMap: true,
                 path: path.resolve(__dirname, 'postcss.config.js')
               }
-            }]
-          })
+            }
+          ]
         },
         {
           // Do not transform vendor`s CSS with CSS-modules
@@ -122,22 +126,23 @@ module.exports = (env) => {
             path.resolve(__dirname, '..', '..', 'node_modules')
 
           ],
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true
-                }
-              },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true
-                }
-              }]
-          })
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
         },
         {
           test: /\.js$/,
