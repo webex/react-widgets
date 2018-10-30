@@ -161,6 +161,14 @@ ansiColor('xterm') {
                 sh """#!/bin/bash -e
                 source ~/.nvm/nvm.sh
                 nvm use 8.11.3
+                export IDBROKER_BASE_URL='https://idbrokerbts.webex.com'
+                export IDENTITY_BASE_URL='https://identitybts.webex.com'
+                export CONVERSATION_SERVICE='https://conversation-intb.ciscospark.com/conversation/api/v1'
+                export ENCRYPTION_SERVICE_URL='https://encryption-intb.ciscospark.com/encryption/api/v1'
+                export ACL_SERVICE_URL='https://acl-intb.ciscospark.com/acl/api/v1'
+                export ATLAS_SERVICE_URL='https://atlas-intb.ciscospark.com/admin/api/v1'
+                export WDM_SERVICE_URL='https://wdm-intb.ciscospark.com/wdm/api/v1'
+
                 NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
                 export BUILD_NUMBER="pipeline-build-$BUILD_NUMBER"
                 set -m
