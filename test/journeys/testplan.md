@@ -76,6 +76,19 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
   - meet widget
     - can hangup in call
 
+#### Demo Page Smoke Tests (Built from widget-demo)
+
+- space widget functionality
+  - Activity Menu
+    - has a menu button
+    - displays the menu when clicking the menu button
+    - has an exit menu button
+    - closes the menu with the exit button
+  - messaging
+    - sends and receives messages
+- recents widget
+  - opens and loads recents widget
+
 ### Space Widget Suite
 
 The space widget suite tests the functionality of the space widget in a given space. It also verifies by instantiating the widget in two separate ways: via the data-api and via the global javascript method.

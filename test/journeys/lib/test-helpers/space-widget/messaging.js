@@ -60,20 +60,23 @@ export function sendMessage(sender, receiver, message) {
  * @param {TestObject} receiver
  * @param {TestObject} sender
  * @param {string} message
+ * @param {boolean} [sendReadReceipt=true]
  * @returns {void}
  */
-export function verifyMessageReceipt(receiver, sender, message) {
+export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt = true) {
   receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
   receiver.browser.waitForExist(elements.pendingActivity, 60000, true);
   receiver.browser.waitForExist(elements.lastActivityText);
   receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityText) === message);
-  // Move mouse to send read receipt
-  moveMouse(receiver.browser, elements.lastActivityText);
-  // Verify read receipt comes across
-  sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
-  // Move Mouse to text area so it doesn't cause any tool tips
-  moveMouse(receiver.browser, elements.messageComposer);
-  moveMouse(sender.browser, elements.messageComposer);
+  if (sendReadReceipt) {
+    // Move mouse to send read receipt
+    moveMouse(receiver.browser, elements.lastActivityText);
+    // Verify read receipt comes across
+    sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+    // Move Mouse to text area so it doesn't cause any tool tips
+    moveMouse(receiver.browser, elements.messageComposer);
+    moveMouse(sender.browser, elements.messageComposer);
+  }
 }
 
 /**

@@ -14,7 +14,8 @@ export const jobNames = {
   smokeInitial: 'react-widget-smoke-initial',
   smokeMultiple: 'react-widget-smoke-multiple',
   smokeRecents: 'react-widget-smoke-recents',
-  smokeSpace: 'react-widget-smoke-space'
+  smokeSpace: 'react-widget-smoke-space',
+  smokeDemo: 'react-widget-smoke-demo'
 };
 /**
  * Move mouse a specified amount of pixels
