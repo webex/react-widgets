@@ -295,7 +295,6 @@ if (process.env.SAUCE) {
         commandTimeout: 600,
         maxDuration: 3600,
         seleniumVersion: '3.4.0',
-        extendedDebugging: true,
         screenResolution,
         platform,
         version
@@ -307,7 +306,6 @@ if (process.env.SAUCE) {
       commandTimeout: 600,
       maxDuration: 3600,
       seleniumVersion: '3.4.0',
-      extendedDebugging: true,
       screenResolution,
       platform,
       version
