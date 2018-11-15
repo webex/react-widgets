@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.381"></a>
+## [0.1.381](https://github.com/webex/react-ciscospark/compare/v0.1.380...v0.1.381) (2018-11-15)
+
+
+### Bug Fixes
+
+* **journeys:** remove extended debugging option ([99e8aa6](https://github.com/webex/react-ciscospark/commit/99e8aa6))
+
+
+### Features
+
+* **r-c-presence-avatar:** use collab-ui component for presence avatar ([4a53cd5](https://github.com/webex/react-ciscospark/commit/4a53cd5))
+
+
+
 <a name="0.1.380"></a>
 ## [0.1.380](https://github.com/webex/react-ciscospark/compare/v0.1.379...v0.1.380) (2018-11-02)
 
