@@ -71,7 +71,8 @@ let staticServerFolders = [
   {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
   {mount: '/dist-recents', path: './packages/node_modules/@ciscospark/widget-recents/dist'},
   {mount: '/', path: './test/journeys/server/'},
-  {mount: '/axe-core', path: './node_modules/axe-core/'}
+  {mount: '/axe-core', path: './node_modules/axe-core/'},
+  {mount: '/dist-demo', path: './packages/node_modules/@ciscospark/widget-demo/dist'}
 ];
 
 if (process.env.STATIC_SERVER_PATH) {
@@ -98,7 +99,8 @@ exports.config = {
     smoke: [
       './test/journeys/specs/smoke/widget-space/index.js',
       './test/journeys/specs/smoke/widget-recents/index.js',
-      './test/journeys/specs/smoke/multiple/index.js'
+      './test/journeys/specs/smoke/multiple/index.js',
+      './test/journeys/specs/smoke/demo.js'
     ],
     tap: [
       './test/journeys/specs/tap/**/*.js'

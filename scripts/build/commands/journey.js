@@ -30,7 +30,8 @@ module.exports = {
             });
           return Promise.all([
             exec(`BUILD_DIST_PATH=${dest}/dist-space npm run build:package widget-space`),
-            exec(`BUILD_DIST_PATH=${dest}/dist-recents npm run build:package widget-recents`)
+            exec(`BUILD_DIST_PATH=${dest}/dist-recents npm run build:package widget-recents`),
+            exec(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-demo`)
           ]);
         })
         .catch((err) => {

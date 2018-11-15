@@ -169,7 +169,7 @@ ansiColor('xterm') {
                 export ATLAS_SERVICE_URL='https://atlas-intb.ciscospark.com/admin/api/v1'
                 export WDM_SERVICE_URL='https://wdm-intb.ciscospark.com/wdm/api/v1'
 
-                NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
+                NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents && npm run build:package widget-demo
                 export BUILD_NUMBER="pipeline-build-$BUILD_NUMBER"
                 set -m
                 (
