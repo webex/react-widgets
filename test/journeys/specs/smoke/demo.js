@@ -4,6 +4,7 @@ import {setupOneOnOneUsers} from '../../lib/test-users';
 import {elements, saveToken} from '../../lib/test-helpers/demo';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
+import {elements as meetElements} from '../../lib/test-helpers/space-widget/meet';
 import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('demo widget', () => {
@@ -97,6 +98,14 @@ describe('demo widget', () => {
           browserLocal.click(elements.changeActivityMeetButton);
           browserLocal.click(elements.updateSpaceWidgetButton);
           browserLocal.waitForVisible(spaceElements.meetWidget, 6000);
+        });
+
+        it('can start a call', () => {
+          browserLocal.click(elements.changeStartCallTrueButton);
+          browserLocal.click(elements.updateSpaceWidgetButton);
+          browserLocal.waitForVisible(spaceElements.meetWidget, 6000);
+          browserRemote.waitForVisible(meetElements.answerButton, 10000);
+          browserRemote.click(meetElements.declineButton);
         });
       });
     });

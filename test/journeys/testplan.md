@@ -88,6 +88,7 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
     - sends and receives messages
   - External Control
     - can change current activity
+    - can start a call
 - recents widget
   - opens and loads recents widget
 
