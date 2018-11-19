@@ -16,7 +16,9 @@ export const elements = {
   toSpaceInput: 'input[aria-label="To Space ID"]',
   toPersonInput: 'input[aria-label="To User Email"]',
   spaceWidgetContainer: '#my-ciscospark-space-widget',
-  recentsWidgetContainer: '#my-ciscospark-recents-widget'
+  recentsWidgetContainer: '#my-ciscospark-recents-widget',
+  changeActivityMeetButton: 'label[for="changeActivityMeet"]',
+  updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]'
 };
 
 /**

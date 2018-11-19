@@ -86,6 +86,8 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
     - closes the menu with the exit button
   - messaging
     - sends and receives messages
+  - External Control
+    - can change current activity
 - recents widget
   - opens and loads recents widget
 

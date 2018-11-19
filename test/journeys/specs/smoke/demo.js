@@ -85,6 +85,15 @@ describe('demo widget', () => {
           verifyMessageReceipt(remote, local, docText, false);
         });
       });
+
+      describe('external control', () => {
+        it('can change current activity', () => {
+          assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
+          browserLocal.click(elements.changeActivityMeetButton);
+          browserLocal.click(elements.updateSpaceWidgetButton);
+          browserLocal.waitForVisible(spaceElements.meetWidget, 6000);
+        });
+      });
     });
   });
 
