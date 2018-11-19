@@ -93,6 +93,13 @@ describe('demo widget', () => {
       });
 
       describe('external control', () => {
+        it('can send a message', () => {
+          const martyText = 'This is external';
+          browserLocal.setValue(elements.sendAMessageInput, martyText);
+          browserLocal.click(elements.updateSpaceWidgetButton);
+          verifyMessageReceipt(remote, local, martyText, false);
+        });
+
         it('can change current activity', () => {
           assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
           browserLocal.click(elements.changeActivityMeetButton);

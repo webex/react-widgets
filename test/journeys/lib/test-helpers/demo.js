@@ -19,7 +19,8 @@ export const elements = {
   recentsWidgetContainer: '#my-ciscospark-recents-widget',
   changeActivityMeetButton: 'label[for="changeActivityMeet"]',
   changeStartCallTrueButton: 'label[for="changeStartCallTrue"]',
-  updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]'
+  updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]',
+  sendAMessageInput: 'input[aria-label="Send A Message"'
 };
 
 /**
