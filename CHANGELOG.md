@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.384"></a>
+## [0.1.384](https://github.com/webex/react-ciscospark/compare/v0.1.383...v0.1.384) (2018-11-19)
+
+
+### Features
+
+* **widget-demo:** add external control options ([3e46fbd](https://github.com/webex/react-ciscospark/commit/3e46fbd))
+* **widget-space:** add setCurrentActivity prop to control ([29f11d1](https://github.com/webex/react-ciscospark/commit/29f11d1))
+* **widget-space:** send event when activity changes ([cf0f738](https://github.com/webex/react-ciscospark/commit/cf0f738))
+
+
+
 <a name="0.1.383"></a>
 ## [0.1.383](https://github.com/webex/react-ciscospark/compare/v0.1.382...v0.1.383) (2018-11-19)
 
