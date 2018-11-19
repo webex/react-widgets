@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.383"></a>
+## [0.1.383](https://github.com/webex/react-ciscospark/compare/v0.1.382...v0.1.383) (2018-11-19)
+
+
+### Features
+
+* **widget-demo:** add sticky mode support ([58189e1](https://github.com/webex/react-ciscospark/commit/58189e1))
+
+
+
 <a name="0.1.382"></a>
 ## [0.1.382](https://github.com/webex/react-ciscospark/compare/v0.1.381...v0.1.382) (2018-11-16)
 
