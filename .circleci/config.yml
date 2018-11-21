@@ -66,6 +66,15 @@ jobs:
     <<: *job_common
     environment:
       - NODE_ENV: "test"
+      - ACL_SERVICE_URL: "https://acl-intb.ciscospark.com/acl/api/v1"
+      - ATLAS_SERVICE_URL: "https://atlas-intb.ciscospark.com/admin/api/v1"
+      - CONVERSATION_SERVICE: "https://conversation-intb.ciscospark.com/conversation/api/v1"
+      - ENCRYPTION_SERVICE_URL: "https://encryption-intb.ciscospark.com/encryption/api/v1"
+      - IDBROKER_BASE_URL: "https://idbrokerbts.webex.com"
+      - IDENTITY_BASE_URL: "https://identitybts.webex.com"
+      - HYDRA_SERVICE_URL: "https://apialpha.ciscospark.com/v1/"
+      - WDM_SERVICE_URL: "https://wdm-intb.ciscospark.com/wdm/api/v1"
+
     steps:
       - checkout
       - <<: *restore_workspace
@@ -89,23 +98,11 @@ jobs:
       - <<: *restore_node_modules
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
-          name: Integration Tests Firefox
-          no_output_timeout: 15m
-          command: |
-            set -em
-            PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration
-      - run:
           name: Integration Tests Chrome
           no_output_timeout: 15m
           command: |
             set -em
-            PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration
-      - run:
-          name: Integration Tests Chrome Windows
-          no_output_timeout: 15m
-          command: |
-            set -em
-            PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration
+            BROWSER=chrome npm run test:integration
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
