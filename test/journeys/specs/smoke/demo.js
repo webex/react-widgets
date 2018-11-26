@@ -25,10 +25,15 @@ describe('demo widget', () => {
     [mccoy, spock] = setupOneOnOneUsers();
     local = {browser: browserLocal, user: mccoy, displayName: mccoy.displayName};
     remote = {browser: browserRemote, user: spock, displayName: spock.displayName};
+    // Refresh the browsers so an input timeout shouldn't happen
+    browser.refresh();
   });
 
-  it('saves token for users', () => {
+  it('saves token for local user', () => {
     saveToken(browserLocal, mccoy.token.access_token);
+  });
+
+  it('saves token for remote user', () => {
     saveToken(browserRemote, spock.token.access_token);
   });
 
