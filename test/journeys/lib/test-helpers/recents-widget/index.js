@@ -31,7 +31,8 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message
   }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle);
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).isVisible()
+    && aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle);
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
 }
 
@@ -145,6 +146,7 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
         displayName: firstPost
       });
     }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).isVisible()
+    && aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
   return conversation;
 }
