@@ -8,6 +8,7 @@ export const elements = {
   firstSpace: '.ciscospark-spaces-list-item-0',
   title: '.cui-list-item__header',
   unreadIndicator: '.cui-list-item--unread',
+  indicatorIcon: '.cui-list-item--unread .cui-list-item__right .cui-icon',
   lastActivity: '.space-last-activity',
   callButton: 'button[aria-label="Call Space"]',
   joinCallButton: 'button[aria-label="Join Call"]',
@@ -54,6 +55,62 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
     activity = a;
   }));
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
+  // Acknowledge the activity to mark it read
+  waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
+  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
+}
+
+/**
+ * Sends a message to a space and verifies that it is received and muted icon is displayed,
+ * then marks it read.
+ *
+ * @export
+ * @param {object} aBrowser
+ * @param {object} sender - Person with spark object
+ * @param {object} receiver - Person with spark object
+ * @param {object} conversation
+ * @param {string} message
+ * @returns {undefined}
+ */
+export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
+  let activity;
+  waitForPromise(sender.spark.internal.conversation.post(conversation, {
+    displayName: message
+  }).then((a) => {
+    activity = a;
+  }));
+  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
+  assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/alert-muted(.*)/g), 'does not have muted indicator');
+
+  // Acknowledge the activity to mark it read
+  waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
+  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
+}
+
+/**
+ * Sends a message to a space and verifies that it is received and mention icon is displayed,
+ * then marks it read.
+ *
+ * @export
+ * @param {object} aBrowser
+ * @param {object} sender - Person with spark object
+ * @param {object} receiver - Person with spark object
+ * @param {object} conversation
+ * @param {string} message
+ * @param {object} mentions
+ * @returns {undefined}
+ */
+export function displayMentionIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message, mentions) {
+  let activity;
+  waitForPromise(sender.spark.internal.conversation.post(conversation, {
+    displayName: message,
+    mentions
+  }).then((a) => {
+    activity = a;
+  }));
+  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
+  assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/mention(.*)/g), 'does not have mention indicator');
+
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
   aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());

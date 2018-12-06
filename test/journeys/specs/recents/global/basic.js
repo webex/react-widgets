@@ -1,6 +1,18 @@
 import {assert} from 'chai';
 
-import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
+import {
+  createSpace,
+  disconnectDevices,
+  registerDevices,
+  setupGroupTestUsers
+} from '../../../lib/test-users';
+import {
+  muteMessageNotification,
+  muteMentionsNotification,
+  removeAllMuteTags,
+  unmuteMentionsNotification,
+  unmuteMessageNotification
+} from '../../../lib/convo';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 import {
@@ -15,6 +27,8 @@ import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
   displayIncomingMessage,
+  displayMentionIconAndReadIncomingMessage,
+  displayMutedIconAndReadIncomingMessage,
   elements
 } from '../../../lib/test-helpers/recents-widget';
 
@@ -88,6 +102,46 @@ describe('Widget Recents', () => {
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+    });
+  });
+
+  describe('notifications', () => {
+    it('should display an unread indicator', () => {
+      const lorraineText = 'Marty, duck! Biff is behind you!';
+      unmuteMessageNotification(marty.spark, conversation.id);
+      displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+      removeAllMuteTags(marty.spark, conversation.id);
+    });
+
+    it('should display a mute indicator', () => {
+      const lorraineText = 'Marty, watch out for Biff!';
+      muteMessageNotification(marty.spark, conversation.id);
+      muteMentionsNotification(marty.spark, conversation.id);
+      displayMutedIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
+      removeAllMuteTags(marty.spark, conversation.id);
+    });
+
+    it('should display a mention indicator for @single person', () => {
+      const lorraineText = `@${marty.displayName} Ask Biff for 4 coats of wax.`;
+      const mentions = {
+        items: [{
+          id: `${marty.id}`,
+          objectType: 'person'
+        }]
+      };
+      unmuteMentionsNotification(marty.spark, conversation.id);
+      displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
+      removeAllMuteTags(marty.spark, conversation.id);
+    });
+
+    it('should display a mention indicator for @All', () => {
+      const lorraineText = '@All hi All!';
+      const mentions = {
+        items: conversation.participants.items
+      };
+      unmuteMentionsNotification(marty.spark, conversation.id);
+      displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
+      removeAllMuteTags(marty.spark, conversation.id);
     });
   });
 
@@ -286,7 +340,6 @@ describe('Widget Recents', () => {
           assert.equal(results.violations.length, 0, 'has accessibilty violations');
         }));
   });
-
 
   /* eslint-disable-next-line func-names */
   afterEach(function () {
