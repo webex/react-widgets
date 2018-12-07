@@ -4,7 +4,7 @@ import {
   createTestUsers,
   setupTestUserJwt
 } from '../../lib/test-users';
-import {switchToMeet} from '../../lib/test-helpers/space-widget/main';
+import {elements, switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {
   messageTests,
   sendMessage,
@@ -50,9 +50,9 @@ describe('Space Widget Guest User Tests', () => {
       };
       window.openSpaceWidget(options);
     }, spock.jwt, mccoy.email);
-    browserLocal.waitForVisible('h1.ciscospark-title');
-    browserLocal.waitUntil(() => browserLocal.getText('h1.ciscospark-title') !== 'Loading...');
-    assert.equal(browserLocal.getText('h1.ciscospark-title'), mccoy.displayName);
+    browserLocal.waitForVisible(elements.widgetTitle);
+    browserLocal.waitUntil(() => browserLocal.getText(elements.widgetTitle) !== 'Loading...');
+    assert.equal(browserLocal.getText(elements.widgetTitle), mccoy.displayName);
   });
 
   it('can load the widget for the standard user to the guest user', () => {
