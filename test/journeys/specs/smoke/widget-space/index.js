@@ -73,8 +73,8 @@ describe('Smoke Tests - Space Widget', () => {
   });
 
   it('loads the space name', () => {
-    browserLocal.waitForVisible('h1.ciscospark-title');
-    assert.equal(browserLocal.getText('h1.ciscospark-title'), conversation.displayName);
+    browserLocal.waitForVisible(elements.widgetTitle);
+    assert.equal(browserLocal.getText(elements.widgetTitle), conversation.displayName);
   });
 
   describe('When conversation is established', () => {
