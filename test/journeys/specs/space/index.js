@@ -90,8 +90,8 @@ describe('Space Widget Primary Tests', () => {
   });
 
   it('header has to group\'s name', () => {
-    browserLocal.waitForVisible('h1.ciscospark-title');
-    assert.equal(browserLocal.getText('h1.ciscospark-title'), conversation.displayName);
+    browserLocal.waitForVisible(mainElements.widgetTitle);
+    assert.equal(browserLocal.getText(mainElements.widgetTitle), conversation.displayName);
   });
 
   describe('When conversation is established', () => {

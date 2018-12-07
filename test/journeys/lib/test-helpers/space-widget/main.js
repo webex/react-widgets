@@ -12,7 +12,8 @@ export const elements = {
   exitButton: '.ciscospark-activity-menu-exit button',
   messageWidget: '.ciscospark-message-wrapper',
   meetWidget: '.ciscospark-meet-wrapper',
-  errorMessage: '.ciscospark-error-title'
+  errorMessage: '.ciscospark-error-title',
+  widgetTitle: '.ciscospark-title-text'
 };
 
 /**

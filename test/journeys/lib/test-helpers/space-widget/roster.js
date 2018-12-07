@@ -11,7 +11,7 @@ export const elements = {
   addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
   addParticipantResultItem: '.ciscospark-people-list-name',
   addPeopleButton: '.ciscospark-roster-add-people',
-  searchInput: '.ciscospark-roster-add-participant-search-input',
+  searchInput: '#addParticipantSearchInput',
   closeSearchButton: 'button[aria-label="Close Search"]'
 };
 

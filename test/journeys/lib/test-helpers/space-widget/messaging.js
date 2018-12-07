@@ -11,8 +11,8 @@ import {elements as mainElements} from './main';
 const uploadDir = path.join(__dirname, '../assets');
 
 export const elements = {
-  deleteMessageButton: 'button[aria-label="Delete this message"]',
-  flagButton: 'button[aria-label="Flag this message"]',
+  deleteMessageButton: 'button[aria-label="Delete message"]',
+  flagButton: 'button[aria-label="Flag for follow-up"]',
   highlighted: '.isHighlighted',
   pendingAction: '.flagActionPending',
   pendingActivity: '.activity-item-pending',
@@ -25,6 +25,8 @@ export const elements = {
   systemMessage: '.ciscospark-system-message',
   lastActivity: '.ciscospark-activity-item-container:last-child',
   lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
+  lastActivityActions: '.ciscospark-activity-item-container:last-child .ciscospark-activity-post-actions',
+  lastActivityAttachments: '.ciscospark-activity-item-container:last-child .ciscospark-activity-share-list',
   readReceiptsArea: '.ciscospark-read-receipts',
   readReceiptsAvatar: '.ciscospark-typing-avatar',
   messageComposer: '.ciscospark-message-composer'
@@ -83,12 +85,10 @@ export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt 
  * Verifies file is displayed in files tab
  * @param {object} aBrowser
  * @param {string} fileName
- * @param {boolean} hasThumbnail
  * @returns {void}
  */
-export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
-  const fileTitle = `//div[text()="${fileName}"]`;
-  const fileThumbnail = `[alt="Uploaded File ${fileName}"]`;
+export function verifyFilesActivityTab(aBrowser, fileName) {
+  const fileTitle = `//span[text()="${fileName}"]`;
   if (!aBrowser.isVisible(mainElements.activityMenu)) {
     aBrowser.click(mainElements.menuButton);
     aBrowser.waitForVisible(mainElements.activityMenu);
@@ -97,9 +97,6 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
   aBrowser.click(mainElements.filesButton);
   aBrowser.waitForVisible(mainElements.filesWidget);
   aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
-  if (hasThumbnail) {
-    aBrowser.waitForVisible(fileThumbnail);
-  }
   aBrowser.waitForVisible(mainElements.closeButton);
   aBrowser.click(mainElements.closeButton);
 }
@@ -113,7 +110,7 @@ export function verifyFilesActivityTab(aBrowser, fileName, hasThumbnail) {
 export function flagMessage(testObject, messageToFlag) {
   testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
   testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToFlag);
-  moveMouse(testObject.browser, elements.lastActivityText);
+  moveMouse(testObject.browser, elements.lastActivityActions);
   testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.flagButton}`);
   testObject.browser.click(`${elements.lastActivity} ${elements.flagButton}`);
 
@@ -161,7 +158,7 @@ export function canDeleteMessage(testObject, messageToDelete) {
 export function deleteMessage(testObject, messageToDelete) {
   assert.isTrue(canDeleteMessage(testObject, messageToDelete));
 
-  moveMouse(testObject.browser, elements.lastActivityText);
+  moveMouse(testObject.browser, elements.lastActivityActions);
 
   testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.deleteMessageButton}`);
   testObject.browser.click(`${elements.lastActivity} ${elements.deleteMessageButton}`);
@@ -182,24 +179,15 @@ export function deleteMessage(testObject, messageToDelete) {
  * @param {TestObject} sender
  * @param {TestObject} receiver
  * @param {string} fileName
- * @param {boolean} [fileSizeVerify=true] Some files are embedded and don't display file sizes
  * @returns {void}
  */
-const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
+const sendFileTest = (sender, receiver, fileName) => {
   const filePath = path.join(uploadDir, fileName);
-  const fileTitle = `//div[text()="${fileName}"]`;
   sender.browser.chooseFile(elements.inputFile, filePath);
-  sender.browser.waitForVisible(elements.shareButton);
-  sender.browser.click(elements.shareButton);
-  sender.browser.waitForVisible(elements.shareButton, 120000, true);
-  receiver.browser.waitForExist(fileTitle);
-  receiver.browser.scroll(fileTitle);
-  // Some files are embedded and don't display file sizes
-  if (fileSizeVerify) {
-    const localSize = sender.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
-    const remoteSize = receiver.browser.getText(`${elements.lastActivity} .ciscospark-share-file-size`);
-    assert.equal(localSize, remoteSize);
-  }
+  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `Sending: ${fileName}`);
+  sender.browser.keys(['Enter', 'NULL']);
+  receiver.browser.waitForVisible(elements.lastActivityAttachments);
+  receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityAttachments).includes(fileName));
   // Send receipt acknowledgement and verify before moving on
   sendMessage(receiver, sender, `Received: ${fileName}`);
   verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
@@ -212,12 +200,11 @@ const sendFileTest = (sender, receiver, fileName, fileSizeVerify = true) => {
  * @param {TestObject} sender
  * @param {TestObject} receiver
  * @param {string} fileName
- * @param {boolean} [hasThumbnail = true] Some files don't have a thumbnail
  * @returns {void}
  */
-const filesTabTest = (sender, receiver, fileName, hasThumbnail = true) => {
-  verifyFilesActivityTab(sender.browser, fileName, hasThumbnail);
-  verifyFilesActivityTab(receiver.browser, fileName, hasThumbnail);
+const filesTabTest = (sender, receiver, fileName) => {
+  verifyFilesActivityTab(sender.browser, fileName);
+  verifyFilesActivityTab(receiver.browser, fileName);
 };
 
 /**
