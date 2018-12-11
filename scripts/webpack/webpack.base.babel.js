@@ -6,6 +6,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import {version} from '../../package.json';
 
+const postcssPresetEnv = require('postcss-preset-env');
+
 dotenv.config();
 
 process.env.REACT_CISCOSPARK_VERSION = version;
@@ -82,24 +84,26 @@ export default (options, env) => {
             path.resolve(__dirname, '..', '..', 'src')
           ],
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader
-            },
+            'style-loader',
             {
               loader: 'css-loader',
               options: {
                 camelCase: true,
                 modules: true,
                 localIdentName: `${env && env.package ? env.package : 'widget'}--[local]--[hash:base64:5]`,
-                importLoaders: 1,
-                sourceMap: true
+                importLoaders: 1
               }
             },
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: true,
-                path: path.resolve(__dirname, 'postcss.config.js')
+                ident: 'postcss',
+                plugins: () => [
+                  postcssPresetEnv({
+                    stage: 0,
+                    browsers: ['last 2 versions', 'IE > 10']
+                  })
+                ]
               }
             }
           ]
@@ -116,23 +120,16 @@ export default (options, env) => {
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'src'),
             path.resolve(__dirname, '..', '..', 'node_modules')
-
           ],
           use: [
             {
               loader: MiniCssExtractPlugin.loader
             },
             {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true
-              }
+              loader: 'css-loader'
             },
             {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true
-              }
+              loader: 'sass-loader'
             }
           ]
         },
