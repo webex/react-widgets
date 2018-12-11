@@ -12,8 +12,12 @@ export const elements = {
   lastActivity: '.space-last-activity',
   callButton: 'button[aria-label="Call Space"]',
   joinCallButton: 'button[aria-label="Join Call"]',
-  answerButton: 'button[aria-label="Answer"]'
+  answerButton: 'button[aria-label="Answer"]',
+  searchInput: '#pillSearchInput',
+  clearButton: 'button[aria-label="clear input"]'
 };
+
+export * from './space-list-filter';
 
 /**
  * Sends a message to a space and verifies that it is received and displayed

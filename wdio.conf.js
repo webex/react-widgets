@@ -48,16 +48,17 @@ const firefoxCapabilities = {
   browserName: 'firefox'
 };
 let mochaTimeout = 60000;
+const isSauceEnabled = (process.env.SAUCE === 'true');
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
-if (process.env.SAUCE) {
+if (isSauceEnabled) {
   mochaTimeout = 120000;
 }
 const services = [];
 services.push('firefox-profile');
-if (process.env.SAUCE) {
+if (isSauceEnabled) {
   services.push('sauce');
 }
 else {
@@ -113,7 +114,9 @@ exports.config = {
     ],
     recents: [
       './test/journeys/specs/recents/dataApi/basic.js',
-      './test/journeys/specs/recents/global/basic.js'
+      './test/journeys/specs/recents/global/basic.js',
+      './test/journeys/specs/recents/dataApi/space-list-filter.js',
+      './test/journeys/specs/recents/global/space-list-filter.js'
     ]
   },
   // Patterns to exclude.
@@ -264,7 +267,7 @@ exports.config = {
 
     /* eslint-disable no-param-reassign */
     defs.forEach((d) => {
-      if (process.env.SAUCE) {
+      if (isSauceEnabled) {
         d.build = build;
         // Set the base to SauceLabs so that inject() does its thing.
         d.base = 'SauceLabs';
@@ -288,7 +291,7 @@ exports.config = {
   }
 };
 
-if (process.env.SAUCE) {
+if (isSauceEnabled) {
   const sauceCapabilities = (remoteName = 'browser') => {
     if (browser === 'chrome') {
       return Object.assign({}, chromeCapabilities, {
