@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.388"></a>
+## [0.1.388](https://github.com/webex/react-ciscospark/compare/v0.1.387...v0.1.388) (2018-12-12)
+
+
+### Features
+
+* **widget-recents:** load collab-ui styles at head ([c0598e6](https://github.com/webex/react-ciscospark/commit/c0598e6))
+
+
+
 <a name="0.1.387"></a>
 ## [0.1.387](https://github.com/webex/react-ciscospark/compare/v0.1.386...v0.1.387) (2018-12-11)
 
