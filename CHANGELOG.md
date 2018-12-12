@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.389"></a>
+## [0.1.389](https://github.com/webex/react-ciscospark/compare/v0.1.388...v0.1.389) (2018-12-12)
+
+
+### Features
+
+* **react-component-space-item:** Add notification level icon support (SPARK-38152) ([b87474c](https://github.com/webex/react-ciscospark/commit/b87474c))
+* **react-component-utils:** Add notification level icon support (SPARK-38152) ([1a7b44d](https://github.com/webex/react-ciscospark/commit/1a7b44d))
+* **redux-module-spaces:** Add notification level icon support (SPARK-38152) ([0c423b2](https://github.com/webex/react-ciscospark/commit/0c423b2))
+* **widget-recents:** Add notification level icon support (SPARK-38152) ([ad95142](https://github.com/webex/react-ciscospark/commit/ad95142))
+
+
+
 <a name="0.1.388"></a>
 ## [0.1.388](https://github.com/webex/react-ciscospark/compare/v0.1.387...v0.1.388) (2018-12-12)
 
