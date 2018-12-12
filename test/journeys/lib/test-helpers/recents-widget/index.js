@@ -55,6 +55,7 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
   }).then((a) => {
     activity = a;
   }));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
@@ -80,6 +81,7 @@ export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receive
   }).then((a) => {
     activity = a;
   }));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/alert-muted(.*)/g), 'does not have muted indicator');
 
@@ -109,6 +111,7 @@ export function displayMentionIconAndReadIncomingMessage(aBrowser, sender, recei
   }).then((a) => {
     activity = a;
   }));
+  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
   assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
   assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/mention(.*)/g), 'does not have mention indicator');
 
