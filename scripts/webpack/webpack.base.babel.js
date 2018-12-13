@@ -137,31 +137,7 @@ export default (options, env) => {
           ]
         },
         {
-          test: /\.woff$/,
-          // Inline small woff files and output them below font/.
-          // Set mimetype just in case.
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name].[ext]',
-              mimetype: 'application/font-woff'
-            }
-          }]
-        },
-        {
-          test: /\.woff2$/,
-          // Inline small woff files and output them below font/.
-          // Set mimetype just in case.
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name].[ext]',
-              mimetype: 'application/font-woff2'
-            }
-          }]
-        },
-        {
-          test: /\.ttf$|\.otf$|\.eot$|\.svg$/,
+          test: /\.woff$|\.woff2$|.ttf$|\.otf$|\.eot$|\.svg$/,
           use: [{
             loader: 'file-loader',
             options: {
