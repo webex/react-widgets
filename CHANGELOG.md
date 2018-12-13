@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.390"></a>
+## [0.1.390](https://github.com/webex/react-ciscospark/compare/v0.1.389...v0.1.390) (2018-12-13)
+
+
+### Bug Fixes
+
+* **r-m-users:** add support for a user with no display name ([ba2d2d3](https://github.com/webex/react-ciscospark/commit/ba2d2d3))
+* **widget-space:** load user data and connect to mercury ([05bb9c5](https://github.com/webex/react-ciscospark/commit/05bb9c5))
+
+
+
 <a name="0.1.389"></a>
 ## [0.1.389](https://github.com/webex/react-ciscospark/compare/v0.1.388...v0.1.389) (2018-12-12)
 
