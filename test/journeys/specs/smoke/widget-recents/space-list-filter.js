@@ -8,7 +8,7 @@ import {elements} from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents with Space Filter Input Box', () => {
   const browserLocal = browser.select('browserLocal');
-  const TIMEOUT = 12000;
+  const TIMEOUT = 20000;
   const SPACE1 = 'Test Group Space';
   const SPACE2 = 'Ask Group Space';
   const SPACE3 = 'General Group Space';

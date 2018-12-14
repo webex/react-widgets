@@ -236,7 +236,9 @@ describe('Smoke Tests - Recents Widget', () => {
         // Remove user from room
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
-        browserLocal.waitUntil(() => browserLocal.getText(`${elements.firstSpace} ${elements.title}`) !== roomTitle);
+        browserLocal.waitUntil((() => browserLocal.element(`${elements.firstSpace} ${elements.title}`).isVisible()
+          && browserLocal.getText(`${elements.firstSpace} ${elements.title}`) !== roomTitle)
+          , 20000, 'Room title was not displayed');
         const events = findEventName({
           eventName: 'memberships:deleted',
           events: getEventLog(browserLocal)
