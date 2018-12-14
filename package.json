@@ -34,7 +34,7 @@
     "start:package": "echo 'Deprecated. Please use npm run serve:package'; npm run serve package",
     "start:samples": "echo 'Deprecated. Please use npm run serve:samples'; npm run serve samples",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
-    "publish:components": "cross-env NODE_ENV=production npm run build:components && npm run build:widgets && npm run build:packagejson && npm run publish components",
+    "publish:components": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=2048 npm run build:components && npm run build:widgets && npm run build:packagejson && npm run publish components",
     "release": "standard-version",
     "precommit": "lint-staged",
     "prepush": "npm run test",
