@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.391"></a>
+## [0.1.391](https://github.com/webex/react-ciscospark/compare/v0.1.390...v0.1.391) (2018-12-14)
+
+
+### Bug Fixes
+
+* **button-controls:** use accessibility labels prop ([523fff9](https://github.com/webex/react-ciscospark/commit/523fff9))
+* **r-c-share-file:** fix css to add ie 11 compatibility ([382ab59](https://github.com/webex/react-ciscospark/commit/382ab59))
+* **title-bar:** remove hard coded font style ([3e22dd0](https://github.com/webex/react-ciscospark/commit/3e22dd0))
+* **widget-meet:** call control state doesn't update before call is connected ([5ac658a](https://github.com/webex/react-ciscospark/commit/5ac658a))
+* **widget-message:** support for empty lastActivity ([ebfb053](https://github.com/webex/react-ciscospark/commit/ebfb053))
+* **widget-space:** fetch space details ([fccc91b](https://github.com/webex/react-ciscospark/commit/fccc91b))
+
+
+### Features
+
+* **activity-item:** add support for isAdditional style ([6d54624](https://github.com/webex/react-ciscospark/commit/6d54624))
+* **activity-item-base:** use collab-ui icons and styling ([7036fc2](https://github.com/webex/react-ciscospark/commit/7036fc2))
+* **activity-list:** add padding at bottom of list ([e3324f9](https://github.com/webex/react-ciscospark/commit/e3324f9))
+* **activity-menu-header:** update to collab-ui components ([e2f3919](https://github.com/webex/react-ciscospark/commit/e2f3919))
+* **activity-share-thumbnail:** use collab-ui spinner ([4e78d50](https://github.com/webex/react-ciscospark/commit/4e78d50))
+* **demo-widget-space:** add ability to toggle composer buttons ([986042b](https://github.com/webex/react-ciscospark/commit/986042b))
+* **file-uploads:** update styles and use collab-ui components ([1e3cbf2](https://github.com/webex/react-ciscospark/commit/1e3cbf2))
+* **incoming-call:** add accessibility labels ([ed08e97](https://github.com/webex/react-ciscospark/commit/ed08e97))
+* **loading-screen:** use collab-ui spinner ([4c48614](https://github.com/webex/react-ciscospark/commit/4c48614))
+* **message-composer:** create message activities area ([5b94161](https://github.com/webex/react-ciscospark/commit/5b94161))
+* **message-composer:** update styles for existing input ([766208a](https://github.com/webex/react-ciscospark/commit/766208a))
+* **people-list:** use popover menu for moderator actions ([d2ad8b4](https://github.com/webex/react-ciscospark/commit/d2ad8b4))
+* **private-r-c-space-destination:** add ability to toggle composer buttons ([8841a82](https://github.com/webex/react-ciscospark/commit/8841a82))
+* **r-c-activity-item:** add actor and timestamp props ([53c02e7](https://github.com/webex/react-ciscospark/commit/53c02e7))
+* **r-c-activity-menu:** use collab-ui exit button in activity menu ([5b7b9d5](https://github.com/webex/react-ciscospark/commit/5b7b9d5))
+* **r-c-activity-menu-header:** add support for menu toggle ([bdd2282](https://github.com/webex/react-ciscospark/commit/bdd2282))
+* **r-c-activity-share-file:** new IA design ([18d10cf](https://github.com/webex/react-ciscospark/commit/18d10cf))
+* **r-c-activity-share-files:** add additional props for new design ([d21b644](https://github.com/webex/react-ciscospark/commit/d21b644))
+* **r-c-activity-share-thumbnail:** use collab-ui ContentItem component ([25bf9ba](https://github.com/webex/react-ciscospark/commit/25bf9ba))
+* **r-c-button-controls:** use collab-ui ActivityButtons ([83e3d8f](https://github.com/webex/react-ciscospark/commit/83e3d8f))
+* **r-c-button-controls:** use collab-ui call controls ([70513cb](https://github.com/webex/react-ciscospark/commit/70513cb))
+* **r-c-file-share-display:** use thumbnail component ([e6505bf](https://github.com/webex/react-ciscospark/commit/e6505bf))
+* **r-c-incoming-call:** use collab-ui call controls ([9c4225a](https://github.com/webex/react-ciscospark/commit/9c4225a))
+* **r-c-message-composer:** add ability to toggle composer buttons ([5297740](https://github.com/webex/react-ciscospark/commit/5297740))
+* **react-component-utils:** add helper function for file icons ([f47a4cd](https://github.com/webex/react-ciscospark/commit/f47a4cd))
+* **scrolling-activity:** use collab-ui loader ([6298708](https://github.com/webex/react-ciscospark/commit/6298708))
+* **title-bar:** create new webex title bar component ([2c6c5b4](https://github.com/webex/react-ciscospark/commit/2c6c5b4))
+* **widget-demo:** add ability to toggle composer buttons ([0f32b1c](https://github.com/webex/react-ciscospark/commit/0f32b1c))
+* **widget-demo:** add polyfill support for ie11 ([ceea47e](https://github.com/webex/react-ciscospark/commit/ceea47e))
+* **widget-files:** add props for actor, type, and timestamp ([63cc275](https://github.com/webex/react-ciscospark/commit/63cc275))
+* **widget-files:** add support for menu toggle ([63ae507](https://github.com/webex/react-ciscospark/commit/63ae507))
+* **widget-files:** add timestamp prop ([569c08e](https://github.com/webex/react-ciscospark/commit/569c08e))
+* **widget-message:** use collab-ui for scroll to bottom button ([0fd4b67](https://github.com/webex/react-ciscospark/commit/0fd4b67))
+* **widget-roster:** add support for menu toggle ([7fcfe34](https://github.com/webex/react-ciscospark/commit/7fcfe34))
+* **widget-roster:** remove participant editing screen ([9e1f28b](https://github.com/webex/react-ciscospark/commit/9e1f28b))
+* **widget-roster:** use collab-ui spinner ([a7a1b5c](https://github.com/webex/react-ciscospark/commit/a7a1b5c))
+* **widget-roster:** use collab-ui styles ([1d43510](https://github.com/webex/react-ciscospark/commit/1d43510))
+* **widget-space:** add ability to toggle composer buttons ([3046b6e](https://github.com/webex/react-ciscospark/commit/3046b6e))
+* **widget-space:** add ability to toggle composer buttons ([23bee04](https://github.com/webex/react-ciscospark/commit/23bee04))
+* **widget-space:** add collab-ui css stylesheet ([87fd05f](https://github.com/webex/react-ciscospark/commit/87fd05f))
+* **widget-space:** add support for menu toggle ([910ab8f](https://github.com/webex/react-ciscospark/commit/910ab8f))
+* **widget-space:** use webex title bar component and collab ui ([99b4be0](https://github.com/webex/react-ciscospark/commit/99b4be0))
+
+
+
 <a name="0.1.390"></a>
 ## [0.1.390](https://github.com/webex/react-ciscospark/compare/v0.1.389...v0.1.390) (2018-12-13)
 
