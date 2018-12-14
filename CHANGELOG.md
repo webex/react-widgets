@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.392"></a>
+## [0.1.392](https://github.com/webex/react-ciscospark/compare/v0.1.391...v0.1.392) (2018-12-14)
+
+
+### Features
+
+* **widget-demos:** add support for secondaryActivitiesFullWidth ([23c8954](https://github.com/webex/react-ciscospark/commit/23c8954))
+* **widget-space:** add secondaryActivitiesFullWidth param ([8b8940e](https://github.com/webex/react-ciscospark/commit/8b8940e))
+
+
+
 <a name="0.1.391"></a>
 ## [0.1.391](https://github.com/webex/react-ciscospark/compare/v0.1.390...v0.1.391) (2018-12-14)
 
