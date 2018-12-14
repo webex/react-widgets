@@ -6,7 +6,7 @@ import {enterKeywordAndWait} from '../../../lib/test-helpers/recents-widget/spac
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
-describe('Widget Recents with Keyword Filter Input Box', () => {
+describe('Widget Recents with Space Filter Input Box', () => {
   const browserLocal = browser.select('browserLocal');
   const TIMEOUT = 10000;
   const SPACE1 = 'Test Group Space';

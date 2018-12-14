@@ -6,7 +6,7 @@ import {enterKeywordAndWait} from '../../../lib/test-helpers/recents-widget/spac
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
-describe('Widget Recents with Space Filter Input Box: Data API', () => {
+describe('Widget Recents with Space Filter Input Box', () => {
   const browserLocal = browser.select('browserLocal');
   const TIMEOUT = 10000;
   const SPACE1 = 'Test Group Space';
@@ -14,24 +14,20 @@ describe('Widget Recents with Space Filter Input Box: Data API', () => {
   const SPACE3 = 'General Group Space';
   const SPACE4 = 'Ask Widgets';
   const KEYWORD1 = 'ask';
-  const KEYWORD2 = 'group';
-  const KEYWORD3 = 'test';
-  const KEYWORD4 = 'something';
-  const BACKSPACES = ['\b', '\b', '\b', '\b', '\b'];
   const EXPECTED_RESULT_2 = [SPACE2, SPACE4];
-  const EXPECTED_RESULT_3 = [SPACE1, SPACE2, SPACE3];
   const EXPECTED_RESULT_4 = [SPACE1, SPACE2, SPACE3, SPACE4];
 
   let allPassed = true;
   let marty, participants;
 
   before('start new sauce session', () => {
-    renameJob(jobNames.recentsDataApi, browser);
+    renameJob(jobNames.recentsGlobal, browser);
   });
 
-  before('load browser', () => {
-    browserLocal.url('/data-api/recents.html');
+  before('load browser for recents widget', () => {
+    browserLocal.url('/recents.html');
   });
+
 
   before('create test users and spaces', () => {
     participants = setupGroupTestUsers();
@@ -45,15 +41,17 @@ describe('Widget Recents with Space Filter Input Box: Data API', () => {
 
   before('opens recents widget for marty', () => {
     browserLocal.execute((localAccessToken) => {
-      const csmmDom = document.createElement('div');
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
-      csmmDom.setAttribute('data-access-token', localAccessToken);
-      csmmDom.setAttribute('data-enable-space-list-filter', true);
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
-      window.loadBundle('/dist-recents/bundle.js');
+      const options = {
+        accessToken: localAccessToken,
+        onEvent: (eventName, detail) => {
+          window.ciscoSparkEvents.push({eventName, detail});
+        },
+        enableSpaceListFilter: true
+      };
+      window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);
+    browserLocal.waitForVisible(elements.listContainer);
   });
 
   beforeEach(() => {
@@ -70,43 +68,6 @@ describe('Widget Recents with Space Filter Input Box: Data API', () => {
       return expect(EXPECTED_RESULT_2).contains(itemLabel);
     });
     assert(result.length, 2);
-  });
-
-  it(`display 3 items for keyword filter '${KEYWORD2}'`, () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
-    });
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_3).contains(itemLabel);
-    });
-    assert(result.length, 3);
-  });
-
-  it(`display 1 item for keyword filter '${KEYWORD3}'`, () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD3, expectedTotal: 1, timeout: TIMEOUT
-    });
-    expect(result).to.be.an('string').that.does.contain(SPACE1);
-    assert(result.length, 1);
-  });
-
-  it('display original list for backspaces to the 1st index', () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: BACKSPACES, expectedTotal: EXPECTED_RESULT_4.length, timeout: TIMEOUT
-    });
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_4).contains(itemLabel);
-    });
-    assert(result.length, 4);
-  });
-
-  it('does not display anything if keyword filter does not match items in list ', () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD4, expectedTotal: 0, timeout: TIMEOUT
-    });
-    assert.equal(result.value.length, 0, 'result exists');
   });
 
   it('displays original list if clear icon is clicked', () => {
@@ -129,7 +90,7 @@ describe('Widget Recents with Space Filter Input Box: Data API', () => {
   });
 
   after(() => {
-    updateJobStatus(jobNames.recentsDataApi, allPassed);
+    updateJobStatus(jobNames.recentsGlobal, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));
