@@ -8,13 +8,15 @@ import {elements} from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents with Space Filter Input Box', () => {
   const browserLocal = browser.select('browserLocal');
-  const TIMEOUT = 10000;
+  const TIMEOUT = 12000;
   const SPACE1 = 'Test Group Space';
   const SPACE2 = 'Ask Group Space';
   const SPACE3 = 'General Group Space';
   const SPACE4 = 'Ask Widgets';
   const KEYWORD1 = 'ask';
+  const KEYWORD2 = 'group';
   const EXPECTED_RESULT_2 = [SPACE2, SPACE4];
+  const EXPECTED_RESULT_3 = [SPACE1, SPACE2, SPACE3];
   const EXPECTED_RESULT_4 = [SPACE1, SPACE2, SPACE3, SPACE4];
 
   let allPassed = true;
@@ -56,7 +58,7 @@ describe('Widget Recents with Space Filter Input Box', () => {
 
   beforeEach(() => {
     browserLocal.waitForVisible(elements.listContainer);
-    browserLocal.waitForExist(elements.searchInput);
+    browserLocal.waitForVisible(elements.searchInput);
   });
 
   it(`display 2 items for keyword filter '${KEYWORD1}'`, () => {
@@ -72,9 +74,9 @@ describe('Widget Recents with Space Filter Input Box', () => {
 
   it('displays original list if clear icon is clicked', () => {
     enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+      browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
     });
-    browserLocal.click(elements.clearButton);
+    browserLocal.waitUntil((() => browserLocal.click(elements.clearButton)), TIMEOUT);
     browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
     const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
     result.map((x) => {

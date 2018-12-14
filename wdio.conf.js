@@ -100,9 +100,9 @@ exports.config = {
     smoke: [
       './test/journeys/specs/smoke/widget-space/index.js',
       './test/journeys/specs/smoke/widget-recents/index.js',
+      './test/journeys/specs/smoke/widget-recents/space-list-filter.js',
       './test/journeys/specs/smoke/multiple/index.js',
-      './test/journeys/specs/smoke/demo.js',
-      './test/journeys/specs/smoke/widget-recents/space-list-filter.js'
+      './test/journeys/specs/smoke/demo.js'
     ],
     tap: [
       './test/journeys/specs/tap/**/*.js'
