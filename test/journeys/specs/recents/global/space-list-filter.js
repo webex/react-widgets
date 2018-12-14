@@ -128,6 +128,9 @@ describe('Widget Recents with Space Filter Input Box', () => {
 
   /* eslint-disable-next-line func-names */
   afterEach(function () {
+    if (browserLocal.element(elements.clearButton).isExisting()) {
+      browserLocal.click(elements.clearButton);
+    }
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
 
