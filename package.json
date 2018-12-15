@@ -4,8 +4,8 @@
   "description": "The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
-    "build:all": "cross-env NODE_ENV=${NODE_ENV:-production} npm run build all",
-    "build:package": "cross-env NODE_ENV=${NODE_ENV:-production} npm run build dist",
+    "build:all": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 npm run build all",
+    "build:package": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 npm run build dist",
     "build:components": "npm run build components",
     "build:packagejson": "npm run build package.json",
     "build:widgets": "cross-env NODE_ENV=${NODE_ENV:-production} npm run build widgets",
