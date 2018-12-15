@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.396"></a>
+## [0.1.396](https://github.com/webex/react-ciscospark/compare/v0.1.395...v0.1.396) (2018-12-15)
+
+
+
 <a name="0.1.395"></a>
 ## [0.1.395](https://github.com/webex/react-ciscospark/compare/v0.1.394...v0.1.395) (2018-12-15)
 
