@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.397"></a>
+## [0.1.397](https://github.com/webex/react-ciscospark/compare/v0.1.396...v0.1.397) (2018-12-17)
+
+
+### Features
+
+* **demo-widget:** recents widget space filter ([bb06907](https://github.com/webex/react-ciscospark/commit/bb06907))
+* **react-component-space-item:** recents widget space filter ([6eb4da5](https://github.com/webex/react-ciscospark/commit/6eb4da5))
+* **react-component-spaces-list:** recents widget space filter ([1fbe6cf](https://github.com/webex/react-ciscospark/commit/1fbe6cf))
+* **react-component-utils:** recents widget space filter ([1affe3d](https://github.com/webex/react-ciscospark/commit/1affe3d))
+* **redux-module-spaces:** recents widget space filter ([1dde27d](https://github.com/webex/react-ciscospark/commit/1dde27d))
+* **widget-recents:** recents widget space filter ([e45b887](https://github.com/webex/react-ciscospark/commit/e45b887))
+
+
+
 <a name="0.1.396"></a>
 ## [0.1.396](https://github.com/webex/react-ciscospark/compare/v0.1.395...v0.1.396) (2018-12-15)
 
