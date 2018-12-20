@@ -86,6 +86,9 @@ export default (options, env) => {
           use: [
             'style-loader',
             {
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
               loader: 'css-loader',
               options: {
                 camelCase: true,
