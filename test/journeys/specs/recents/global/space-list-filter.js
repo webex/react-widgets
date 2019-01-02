@@ -6,7 +6,7 @@ import {enterKeywordAndWait} from '../../../lib/test-helpers/recents-widget/spac
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
-describe('Widget Recents with Space Filter Input Box', () => {
+describe('Widget Recents Space Filters', () => {
   const browserLocal = browser.select('browserLocal');
   const TIMEOUT = 10000;
   const SPACE1 = 'Test Group Space';
@@ -23,16 +23,11 @@ describe('Widget Recents with Space Filter Input Box', () => {
   const EXPECTED_RESULT_4 = [SPACE1, SPACE2, SPACE3, SPACE4];
 
   let allPassed = true;
-  let marty, participants;
+  let docbrown, lorraine, marty, participants;
 
   before('start new sauce session', () => {
-    renameJob(jobNames.recentsGlobal, browser);
+    renameJob(jobNames.recentsFilterGlobal, browser);
   });
-
-  before('load browser for recents widget', () => {
-    browserLocal.url('/recents.html');
-  });
-
 
   before('create test users and spaces', () => {
     participants = setupGroupTestUsers();
@@ -44,100 +39,197 @@ describe('Widget Recents with Space Filter Input Box', () => {
     createSpace({sparkInstance: marty.spark, participants, displayName: SPACE4});
   });
 
-  before('opens recents widget for marty', () => {
-    browserLocal.execute((localAccessToken) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        },
-        enableSpaceListFilter: true
-      };
-      window.openRecentsWidget(options);
-    }, marty.token.access_token);
-    browserLocal.waitForVisible(elements.recentsWidget);
-    browserLocal.waitForVisible(elements.listContainer);
-  });
+  describe('With search input box', () => {
+    before('load browser', () => {
+      browserLocal.url('/recents.html');
+    });
 
-  beforeEach(() => {
-    browserLocal.waitForVisible(elements.listContainer);
-    browserLocal.waitForExist(elements.searchInput);
-  });
+    before('opens recents widget for marty', () => {
+      browserLocal.execute((localAccessToken) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          enableSpaceListFilter: true
+        };
+        window.openRecentsWidget(options);
+      }, marty.token.access_token);
+      browserLocal.waitForVisible(elements.recentsWidget);
+    });
 
-  it(`display 2 items for keyword filter '${KEYWORD1}'`, () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+    beforeEach(() => {
+      browserLocal.waitForVisible(elements.listContainer);
+      browserLocal.waitForExist(elements.searchInput);
     });
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_2).contains(itemLabel);
-    });
-    assert(result.length, 2);
-  });
 
-  it(`display 3 items for keyword filter '${KEYWORD2}'`, () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
+    it(`displays 2 items for keyword filter '${KEYWORD1}'`, () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+      });
+      result.map((x) => {
+        const itemLabel = x.trim();
+        return expect(EXPECTED_RESULT_2).contains(itemLabel);
+      });
+      assert(result.length, 2);
     });
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_3).contains(itemLabel);
-    });
-    assert(result.length, 3);
-  });
 
-  it(`display 1 item for keyword filter '${KEYWORD3}'`, () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD3, expectedTotal: 1, timeout: TIMEOUT
+    it(`displays 3 items for keyword filter '${KEYWORD2}'`, () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
+      });
+      result.map((x) => {
+        const itemLabel = x.trim();
+        return expect(EXPECTED_RESULT_3).contains(itemLabel);
+      });
+      assert(result.length, 3);
     });
-    expect(result).to.be.an('string').that.does.contain(SPACE1);
-    assert(result.length, 1);
-  });
 
-  it('display original list for backspaces to the 1st index', () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: BACKSPACES, expectedTotal: EXPECTED_RESULT_4.length, timeout: TIMEOUT
+    it(`displays 1 item for keyword filter '${KEYWORD3}'`, () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD3, expectedTotal: 1, timeout: TIMEOUT
+      });
+      expect(result).to.be.an('string').that.does.contain(SPACE1);
+      assert(result.length, 1);
     });
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_4).contains(itemLabel);
-    });
-    assert(result.length, 4);
-  });
 
-  it('does not display anything if keyword filter does not match items in list ', () => {
-    const result = enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD4, expectedTotal: 0, timeout: TIMEOUT
+    it('displays original list for backspaces to the 1st index', () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: BACKSPACES, expectedTotal: EXPECTED_RESULT_4.length, timeout: TIMEOUT
+      });
+      result.map((x) => {
+        const itemLabel = x.trim();
+        return expect(EXPECTED_RESULT_4).contains(itemLabel);
+      });
+      assert(result.length, 4);
     });
-    assert.equal(result.value.length, 0, 'result exists');
-  });
 
-  it('displays original list if clear icon is clicked', () => {
-    enterKeywordAndWait({
-      browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+    it('displays no result if keyword filter does not match items in list ', () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD4, expectedTotal: 0, timeout: TIMEOUT
+      });
+      assert.equal(result.value.length, 0, 'result does not exist');
     });
-    browserLocal.click(elements.clearButton);
-    browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
-    const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
-    result.map((x) => {
-      const itemLabel = x.trim();
-      return expect(EXPECTED_RESULT_4).contains(itemLabel);
-    });
-    assert(result.length, 4);
-  });
 
-  /* eslint-disable-next-line func-names */
-  afterEach(function () {
-    if (browserLocal.element(elements.clearButton).isExisting()) {
+    it('displays original list if clear icon is clicked', () => {
+      enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+      });
       browserLocal.click(elements.clearButton);
-    }
-    allPassed = allPassed && (this.currentTest.state === 'passed');
+      browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
+      const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
+      result.map((x) => {
+        const itemLabel = x.trim();
+        return expect(EXPECTED_RESULT_4).contains(itemLabel);
+      });
+      assert(result.length, 4);
+    });
+
+    /* eslint-disable-next-line func-names */
+    afterEach(function () {
+      if (browserLocal.element(elements.clearButton).isExisting()) {
+        browserLocal.click(elements.clearButton);
+      }
+      allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
+  });
+
+  describe('With space type filter', () => {
+    describe('Space type of group', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            enableSpaceListFilter: true,
+            spaceTypeFilter: 'group'
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 4 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 4);
+      });
+    });
+
+    describe('Space type of direct (one on one)', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('create one on one conversations', () => {
+        [lorraine, marty, docbrown] = participants;
+        createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
+        createSpace({sparkInstance: marty.spark, participants: [docbrown, marty]});
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            enableSpaceListFilter: true,
+            spaceTypeFilter: 'direct'
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 2 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 2), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 2);
+      });
+    });
+
+    describe('Space type filter is not set', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            enableSpaceListFilter: true
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 6 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 6), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 6);
+      });
+    });
+
+    /* eslint-disable-next-line func-names */
+    afterEach(function () {
+      allPassed = allPassed && (this.currentTest.state === 'passed');
+    });
   });
 
   after(() => {
-    updateJobStatus(jobNames.recentsGlobal, allPassed);
+    updateJobStatus(jobNames.recentsFilterGlobal, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));
 });
-

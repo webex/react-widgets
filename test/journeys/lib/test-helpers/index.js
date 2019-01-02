@@ -7,6 +7,8 @@ const argv = require('yargs').argv;
 export const jobNames = {
   recentsDataApi: 'react-widget-recents-dataApi',
   recentsGlobal: 'react-widget-recents-global',
+  recentsFilterDataApi: 'react-widget-recents-filter-dataApi',
+  recentsFilterGlobal: 'react-widget-recents-filter-global',
   space: 'react-widget-space-main',
   spaceGuest: 'react-widget-space-guest',
   spaceDataApi: 'react-widget-space-dataApi',

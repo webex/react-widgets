@@ -1,4 +1,4 @@
-import {assert} from 'chai';
+import {assert, expect} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import waitForPromise from '../../../lib/wait-for-promise';
@@ -17,6 +17,7 @@ import {
   displayIncomingMessage,
   elements
 } from '../../../lib/test-helpers/recents-widget';
+import {enterKeywordAndWait} from '../../../lib/test-helpers/recents-widget/space-list-filter';
 
 describe('Smoke Tests - Recents Widget', () => {
   const jobName = jobNames.smokeRecents;
@@ -26,6 +27,12 @@ describe('Smoke Tests - Recents Widget', () => {
   let allPassed = true;
   let docbrown, lorraine, marty, participants;
   let conversation, oneOnOneConversation;
+
+  const TIMEOUT = 12000;
+  const SPACE1 = 'Test Group Space';
+  const SPACE2 = 'Test Group Space 2';
+  const KEYWORD1 = 'test';
+  const EXPECTED_RESULT_2 = [SPACE1, SPACE2];
 
   it('start new sauce session', () => {
     browser.reload();
@@ -290,6 +297,132 @@ describe('Smoke Tests - Recents Widget', () => {
           .then((results) => {
             assert.equal(results.violations.length, 0, 'has accessibilty violations');
           }));
+    });
+  });
+
+  describe('With keyword / search term input box', () => {
+    it(`displays 2 items for keyword filter '${KEYWORD1}'`, () => {
+      const result = enterKeywordAndWait({
+        browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+      });
+      result.map((x) => {
+        const itemLabel = x.trim();
+        return expect(EXPECTED_RESULT_2).contains(itemLabel);
+      });
+      assert(result.length, 2);
+    });
+
+    it('displays original list if clear icon is clicked', () => {
+      browserLocal.waitUntil((() => browserLocal.click(elements.clearButton)), TIMEOUT);
+      browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
+      const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
+      assert(result.length, 4);
+    });
+  });
+
+  describe('With space type filter', () => {
+    describe('Space type is not set', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            }
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 6 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 4);
+      });
+    });
+
+
+    describe('Space type is all', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            spaceTypeFilter: 'all'
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 4 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 4);
+      });
+    });
+
+    describe('Space type of group', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            spaceTypeFilter: 'group'
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 4 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 2), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 2);
+      });
+    });
+
+    describe('Space type of direct (one on one)', () => {
+      before('load browser', () => {
+        browserLocal.url('/recents.html');
+      });
+
+      before('opens recents widget for marty', () => {
+        browserLocal.execute((localAccessToken) => {
+          const options = {
+            accessToken: localAccessToken,
+            onEvent: (eventName, detail) => {
+              window.ciscoSparkEvents.push({eventName, detail});
+            },
+            spaceTypeFilter: 'direct'
+          };
+          window.openRecentsWidget(options);
+        }, marty.token.access_token);
+        browserLocal.waitForVisible(elements.recentsWidget);
+      });
+
+      it('displays 2 items', () => {
+        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
+          && browserLocal.elements(elements.title).getText().length === 2), TIMEOUT);
+        assert(browserLocal.elements(elements.title).getText().length, 2);
+      });
     });
   });
 
