@@ -32,6 +32,8 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
   - displays a new incoming message
   - removes unread indicator when read
   - displays a new one on one
+  - events
+    - messages:created
 - incoming call
   - displays a call in progress button
 - accessibility

@@ -117,29 +117,6 @@ describe('Smoke Tests - Recents Widget', () => {
         assert.isNotEmpty(event.created, 'does not contain created');
       });
 
-      it('messages:created - one on one space', () => {
-        clearEventLog(browserLocal);
-        const lorraineText = 'Don\'t be such a square';
-        displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
-        const events = findEventName({
-          eventName: 'messages:created',
-          events: getEventLog(browserLocal)
-        });
-        assert.isNotEmpty(events, 'does not have messages:created event in log');
-        const event = events[0].detail.data;
-        assert.isNotEmpty(event.id, 'does not contain id');
-        assert.isNotEmpty(event.roomId, 'does not contain roomId');
-        assert.isNotEmpty(event.roomType, 'does not contain roomType');
-
-        // Note: these 2 attributes randomly show/don not show
-        // assert.isNotEmpty(event.toPersonId, 'does not contain toPersonId');
-        // assert.isNotEmpty(event.toPersonEmail, 'does not contain toPersonEmail');
-        assert.isNotEmpty(event.text, 'does not contain text');
-        assert.isNotEmpty(event.personId, 'does not contain personId');
-        assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
-        assert.isNotEmpty(event.created, 'does not contain created');
-      });
-
       it('rooms:unread', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
@@ -277,6 +254,29 @@ describe('Smoke Tests - Recents Widget', () => {
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
+    });
+
+    describe('events', () => {
+      it('messages:created - one on one space', () => {
+        clearEventLog(browserLocal);
+        const lorraineText = 'Don\'t be such a square';
+        displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
+        const events = findEventName({
+          eventName: 'messages:created',
+          events: getEventLog(browserLocal)
+        });
+        assert.isNotEmpty(events, 'does not have messages:created event in log');
+        const event = events[0].detail.data;
+        assert.isNotEmpty(event.id, 'does not contain id');
+        assert.isNotEmpty(event.roomId, 'does not contain roomId');
+        assert.isNotEmpty(event.roomType, 'does not contain roomType');
+        assert.isNotEmpty(event.toPersonId, 'does not contain toPersonId');
+        assert.isNotEmpty(event.toPersonEmail, 'does not contain toPersonEmail');
+        assert.isNotEmpty(event.text, 'does not contain text');
+        assert.isNotEmpty(event.personId, 'does not contain personId');
+        assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
+        assert.isNotEmpty(event.created, 'does not contain created');
+      });
     });
   });
 
