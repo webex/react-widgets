@@ -148,43 +148,6 @@ ansiColor('xterm') {
             }
           }
 
-          stage('Journey Tests') {
-            if (!skipTests) {
-              withCredentials([
-                string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN'),
-                string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
-                usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
-                string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
-              ]) {
-                // set -m sets all integration commands under the same job process
-                // || kill 0 after each integration command will kill all other jobs in the parent process if the integration command preceding it fails with a non-zero exit code
-                sh """#!/bin/bash -e
-                source ~/.nvm/nvm.sh
-                nvm use 8.11.3
-                export IDBROKER_BASE_URL='https://idbrokerbts.webex.com'
-                export IDENTITY_BASE_URL='https://identitybts.webex.com'
-                export CONVERSATION_SERVICE='https://conversation-intb.ciscospark.com/conversation/api/v1'
-                export ENCRYPTION_SERVICE_URL='https://encryption-intb.ciscospark.com/encryption/api/v1'
-                export ACL_SERVICE_URL='https://acl-intb.ciscospark.com/acl/api/v1'
-                export ATLAS_SERVICE_URL='https://atlas-intb.ciscospark.com/admin/api/v1'
-                export WDM_SERVICE_URL='https://wdm-intb.ciscospark.com/wdm/api/v1'
-
-                NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents && npm run build:package widget-demo
-                export BUILD_NUMBER="pipeline-build-$BUILD_NUMBER"
-                set -m
-                (
-                  (CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox npm run test:integration) &
-                  (sleep 60; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome npm run test:integration) &
-                  (sleep 120; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" npm run test:integration) &
-                  wait
-                )
-                """
-                archiveArtifacts 'reports/**/*'
-                junit '**/reports/junit/wdio/*.xml'
-              }
-            }
-          }
-
           stage('Bump version') {
             withCredentials([
               string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
