@@ -17,6 +17,7 @@ const beforeSuite = require('./scripts/tests/beforeSuite');
 
 const port = process.env.PORT || 4567;
 let baseUrl = process.env.JOURNEY_TEST_BASE_URL;
+
 if (!baseUrl) {
   baseUrl = process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
 }
@@ -24,6 +25,7 @@ const browser = process.env.BROWSER || 'chrome';
 const version = process.env.VERSION || 'latest';
 const platform = process.env.PLATFORM || 'mac 10.12';
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
+
 process.env.BUILD_NUMBER = build;
 const tunnelId = uuid.v4();
 const suite = argv.suite || 'smoke';
@@ -57,6 +59,7 @@ if (isSauceEnabled) {
   mochaTimeout = 120000;
 }
 const services = [];
+
 services.push('firefox-profile');
 if (isSauceEnabled) {
   services.push('sauce');
@@ -306,6 +309,7 @@ if (isSauceEnabled) {
         version
       });
     }
+
     return Object.assign({}, firefoxCapabilities, {
       name: `react-widget-${suite}-unnamed-${remoteName}`,
       idleTimeout: 300,
@@ -317,6 +321,7 @@ if (isSauceEnabled) {
       version
     });
   };
+
   exports.config = Object.assign(exports.config, {
     deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
     user: process.env.SAUCE_USERNAME,

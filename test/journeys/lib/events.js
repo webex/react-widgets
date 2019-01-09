@@ -23,10 +23,13 @@ export function getEventLog(myBrowser) {
       if (event.detail && event.detail.data && Object.prototype.hasOwnProperty.call(event.detail.data, 'call')) {
         Reflect.deleteProperty(event.detail.data, 'call');
       }
+
       return event;
     });
+
     return events;
   });
+
   return result.value;
 }
 
@@ -43,5 +46,6 @@ export function findEventName({events, eventName}) {
   if (Array.isArray(events)) {
     return events.filter((val) => val.eventName === eventName);
   }
+
   return [];
 }

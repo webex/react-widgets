@@ -5,6 +5,7 @@
 const {shellSync} = require('execa');
 
 const processExec = require('child-process-promise').exec;
+
 require('colors');
 
 let executionOptions = {
@@ -35,6 +36,7 @@ function logWithPrefix(prefix, message) {
  */
 function exec(command, options = {}) {
   const proc = processExec(command, options);
+
   if (!executionOptions.verbose) {
     return proc;
   }
@@ -47,6 +49,7 @@ function exec(command, options = {}) {
   })
     .then((result) => {
       logWithPrefix(`[${title}]`, 'Complete'.cyan);
+
       return result;
     });
 }
@@ -62,6 +65,7 @@ function safeExec(command, options = {}) {
 
   if (executionOptions.dryRun) {
     logWithPrefix(`[${title}]`.grey, 'DRY RUN'.magenta);
+
     return Promise.resolve();
   }
 

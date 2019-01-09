@@ -42,6 +42,7 @@ describe('Widget Recents', () => {
           }
         }
       });
+
       return marty.spark.internal.mercury.connect();
     }));
 
@@ -58,6 +59,7 @@ describe('Widget Recents', () => {
           }
         }
       });
+
       return docbrown.spark.internal.mercury.connect();
     }));
 
@@ -74,6 +76,7 @@ describe('Widget Recents', () => {
           }
         }
       });
+
       return lorraine.spark.internal.mercury.connect();
     }));
 
@@ -92,6 +95,7 @@ describe('Widget Recents', () => {
     participants: [marty, docbrown, lorraine]
   }).then((c) => {
     conversation = c;
+
     return conversation;
   }));
 
@@ -99,23 +103,27 @@ describe('Widget Recents', () => {
     participants: [marty, lorraine]
   }).then((c) => {
     oneOnOneConversation = c;
+
     return oneOnOneConversation;
   }));
 
   before('inject token', () => {
     loginAndOpenWidget(browserLocal, marty.token.access_token);
     const recentsWidget = '.ciscospark-spaces-list-wrapper';
+
     browserLocal.waitUntil(() => browserLocal.element(recentsWidget).isVisible(), 3500, 'widget was never created');
   });
 
   describe('group space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
 
@@ -124,6 +132,7 @@ describe('Widget Recents', () => {
       it('messages:created', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Don\'t be such a square';
+
         displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'messages:created'), 'event was not seen');
       });
@@ -131,6 +140,7 @@ describe('Widget Recents', () => {
       it('rooms:unread', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
         displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'rooms:unread'), 'event was not seen');
       });
@@ -138,6 +148,7 @@ describe('Widget Recents', () => {
       it('rooms:read', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
         displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'rooms:read'), 'event was not seen');
       });
@@ -151,6 +162,7 @@ describe('Widget Recents', () => {
       it('memberships:created', () => {
         const roomTitle = 'Test Group Space 2';
         const firstPost = 'Everybody who\'s anybody drinks.';
+
         clearEventLog(browserLocal);
         createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'memberships:created'), 'event was not seen');
@@ -167,6 +179,7 @@ describe('Widget Recents', () => {
           roomTitle,
           firstPost
         );
+
         // Remove user from room
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
@@ -179,16 +192,19 @@ describe('Widget Recents', () => {
   describe('one on one space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty? Why are you so nervous?';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
     });
 
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
+
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
     });
   });

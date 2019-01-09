@@ -32,6 +32,7 @@ export * from './space-list-filter';
  */
 export function displayIncomingMessage(aBrowser, sender, conversation, message, isOneOnOne = false) {
   const spaceTitle = isOneOnOne ? sender.displayName : conversation.displayName;
+
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message
   }));
@@ -54,6 +55,7 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
  */
 export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
   let activity;
+
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message
   }).then((a) => {
@@ -80,6 +82,7 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
  */
 export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
   let activity;
+
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message
   }).then((a) => {
@@ -109,6 +112,7 @@ export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receive
  */
 export function displayMentionIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message, mentions) {
   let activity;
+
   waitForPromise(sender.spark.internal.conversation.post(conversation, {
     displayName: message,
     mentions
@@ -143,17 +147,20 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
   const createOptions = {
     participants
   };
+
   if (roomTitle) {
     createOptions.displayName = roomTitle;
   }
   waitForPromise(sender.spark.internal.conversation.create(createOptions)
     .then((c) => {
       conversation = c;
+
       return sender.spark.internal.conversation.post(c, {
         displayName: firstPost
       });
     }));
   aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).isVisible()
     && aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
+
   return conversation;
 }

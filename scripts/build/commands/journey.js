@@ -19,11 +19,13 @@ module.exports = {
     if (distPath) {
       const cwd = process.cwd();
       const dest = path.resolve(cwd, distPath);
+
       rimraf.sync(dest);
       fse.ensureDir(dest)
         .then(() => {
           fse.copy(path.resolve(cwd, './test/journeys/server'), dest);
           const axeCore = path.join(dest, 'axe-core');
+
           fse.mkdir(axeCore)
             .then(() => {
               fse.copy(path.resolve(cwd, './node_modules/axe-core'), axeCore);
@@ -36,6 +38,7 @@ module.exports = {
           console.log(err);
         });
     }
+
     return false;
   }
 };

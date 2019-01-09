@@ -9,6 +9,7 @@ module.exports = {
     if (packageName) {
       return updatePackageJson(getPackage(packageName));
     }
+
     return updateAllPackageJson();
   }
 };

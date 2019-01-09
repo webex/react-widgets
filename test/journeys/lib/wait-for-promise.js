@@ -5,13 +5,16 @@
  */
 export default function waitForPromise(promise) {
   let err, res;
+
   browser.waitUntil(() => promise
     .then((r) => {
       res = r;
+
       return true;
     })
     .catch((r) => {
       err = r;
+
       return true;
     }));
   if (err) {

@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const netlify = require('netlify');
+
 require('dotenv').config();
 
 module.exports = {
@@ -19,10 +20,12 @@ module.exports = {
     if (deployDir) {
       const siteId = process.env.NETLIFY_SITE_ID;
       const deployPath = path.resolve(process.cwd(), deployDir);
+
       if (!deployPath) {
         throw new Error(`No directory found at ${deployPath}`);
       }
       console.log(`Deploying ${deployDir} to ${siteId}`);
+
       return netlify.deploy({
         access_token: process.env.NETLIFY_ACCESS_TOKEN,
         site_id: siteId,
@@ -30,10 +33,12 @@ module.exports = {
       })
         .then((deploy) => {
           const deployUrl = deploy.deploy_ssl_url;
+
           console.log('Deploy successful!');
           console.log(deployUrl);
           if (saveUrlPath) {
             const saveUrl = path.resolve(process.cwd(), saveUrlPath);
+
             fs.writeFile(saveUrl, deployUrl, (err) => {
               if (err) {
                 throw new Error('Could not write URL to file', err);
@@ -41,6 +46,7 @@ module.exports = {
               console.log(`Deploy URL written to ${saveUrlPath}`);
             });
           }
+
           return deployUrl;
         })
         .catch((error) => {
@@ -49,6 +55,7 @@ module.exports = {
           }
         });
     }
+
     return false;
   }
 };

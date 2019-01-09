@@ -38,6 +38,7 @@ describe('Space Widget Data API Tests', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
     local.browser.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
+
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-space');
       csmmDom.setAttribute('data-access-token', localAccessToken);
@@ -54,6 +55,7 @@ describe('Space Widget Data API Tests', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
     remote.browser.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
+
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-space');
       csmmDom.setAttribute('data-access-token', localAccessToken);
@@ -72,6 +74,7 @@ describe('Space Widget Data API Tests', () => {
       const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
       const lorraineText = 'Marty, will we ever see you again?';
       const martyText2 = 'I guarantee it.';
+
       sendMessage(remote, local, martyText);
       verifyMessageReceipt(local, remote, martyText);
       sendMessage(remote, local, docText);

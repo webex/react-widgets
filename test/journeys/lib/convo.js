@@ -6,10 +6,12 @@
  */
 export function unmuteMessageNotification(spark, convoId) {
   let activity;
+
   browser.call(() => spark.internal.conversation.unmuteMessages({
     id: convoId
   }).then((a) => {
     activity = a;
+
     return activity;
   }).catch((e) => {
     console.error('Unable to unmute message notification');
@@ -28,10 +30,12 @@ export function unmuteMessageNotification(spark, convoId) {
  */
 export function muteMessageNotification(spark, convoId) {
   let activity;
+
   browser.call(() => spark.internal.conversation.muteMessages({
     id: convoId
   }).then((a) => {
     activity = a;
+
     return activity;
   }).catch((e) => {
     console.error('Unable to mute message notification');
@@ -50,10 +54,12 @@ export function muteMessageNotification(spark, convoId) {
  */
 export function unmuteMentionsNotification(spark, convoId) {
   let activity;
+
   browser.call(() => spark.internal.conversation.unmuteMentions({
     id: convoId
   }).then((a) => {
     activity = a;
+
     return activity;
   }).catch((e) => {
     console.error('Unable to unmute mentions notification');
@@ -72,10 +78,12 @@ export function unmuteMentionsNotification(spark, convoId) {
  */
 export function muteMentionsNotification(spark, convoId) {
   let activity;
+
   browser.call(() => spark.internal.conversation.muteMentions({
     id: convoId
   }).then((a) => {
     activity = a;
+
     return activity;
   }).catch((e) => {
     console.error('Unable to mute mentions notification');
@@ -94,10 +102,12 @@ export function muteMentionsNotification(spark, convoId) {
  */
 export function removeAllMuteTags(spark, convoId) {
   let activity;
+
   browser.call(() => spark.internal.conversation.removeAllMuteTags({
     id: convoId
   }).then((a) => {
     activity = a;
+
     return activity;
   }).catch((e) => {
     console.error('Unable to remove all mute tags');

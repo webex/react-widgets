@@ -43,6 +43,7 @@ describe('Widget Space: Group Space: TAP', () => {
           }
         }
       });
+
       return marty.spark.internal.mercury.connect();
     }));
 
@@ -74,6 +75,7 @@ describe('Widget Space: Group Space: TAP', () => {
           }
         }
       });
+
       return lorraine.spark.internal.mercury.connect();
     }));
 
@@ -92,6 +94,7 @@ describe('Widget Space: Group Space: TAP', () => {
     participants: [marty, docbrown, lorraine]
   }).then((c) => {
     conversation = c;
+
     return conversation;
   }));
 
@@ -149,12 +152,14 @@ describe('Widget Space: Group Space: TAP', () => {
       const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
       const lorraineText = 'Marty, will we ever see you again?';
       const martyText2 = 'I guarantee it.';
+
       sendMessage(local, remote, martyText);
       verifyMessageReceipt(remote, local, martyText);
       clearEventLog(local.browser);
       sendMessage(remote, local, docText);
       verifyMessageReceipt(local, remote, docText);
       const remoteSendEvents = getEventLog(browserLocal);
+
       assert.isTrue(remoteSendEvents.some((event) => event.eventName === 'messages:created'), 'event was not seen');
       assert.isTrue(remoteSendEvents.some((event) => event.eventName === 'rooms:unread'), 'event was not seen');
       clearEventLog(local.browser);
@@ -166,6 +171,7 @@ describe('Widget Space: Group Space: TAP', () => {
       verifyMessageReceipt(local, remote, lorraineText);
       verifyMessageReceipt(remote, local, lorraineText);
       const clientSendEvents = getEventLog(local.browser);
+
       assert.isTrue(clientSendEvents.some((event) => event.eventName === 'messages:created'), 'event was not seen');
       assert.isTrue(clientSendEvents.some((event) => event.eventName === 'rooms:unread'), 'event was not seen');
       sendMessage(local, remote, martyText2);

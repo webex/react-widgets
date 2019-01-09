@@ -35,6 +35,7 @@ describe('Space Widget Startup Settings Tests', () => {
           destinationId: localToPersonId,
           destinationType: 'userId'
         };
+
         window.openSpaceWidget(options);
       }, spock.token.access_token, mccoy.id);
 
@@ -62,6 +63,7 @@ describe('Space Widget Startup Settings Tests', () => {
             people: true
           }
         };
+
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
 
@@ -88,6 +90,7 @@ describe('Space Widget Startup Settings Tests', () => {
             people: true
           }
         };
+
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
 
@@ -114,6 +117,7 @@ describe('Space Widget Startup Settings Tests', () => {
           toPersonEmail: localToUserEmail,
           initialActivity: 'message'
         };
+
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
 

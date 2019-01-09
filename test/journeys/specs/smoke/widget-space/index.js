@@ -47,6 +47,7 @@ describe('Smoke Tests - Space Widget', () => {
         destinationId: spaceId,
         destinationType: 'spaceId'
       };
+
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
   });
@@ -62,6 +63,7 @@ describe('Smoke Tests - Space Widget', () => {
         destinationId: spaceId,
         destinationType: 'spaceId'
       };
+
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
     remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
@@ -69,6 +71,7 @@ describe('Smoke Tests - Space Widget', () => {
 
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
   });
 
@@ -80,6 +83,7 @@ describe('Smoke Tests - Space Widget', () => {
   describe('When conversation is established', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
+
       browserLocal.waitForVisible(textInputField);
     });
 
@@ -165,6 +169,7 @@ describe('Smoke Tests - Space Widget', () => {
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
+
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
         sendMessage(remote, local, docText);

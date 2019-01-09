@@ -12,6 +12,7 @@ module.exports = {
     getWidgetPackages().forEach((pkgPath) => {
       try {
         const pkgName = pkgPath.split('/').pop();
+
         webpackTranspile(pkgName, pkgPath);
         webpackBuild(pkgName, pkgPath);
       }

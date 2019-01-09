@@ -95,6 +95,7 @@ describe('Widget Space: One on One: TAP', () => {
     it('sends and receives messages', () => {
       const message = 'Oh, I am sorry, Doctor. Were we having a good time?';
       const response = 'God, I liked him better before he died.';
+
       switchToMessage(local.browser);
       sendMessage(local, remote, message);
       verifyMessageReceipt(remote, local, message);
@@ -106,6 +107,7 @@ describe('Widget Space: One on One: TAP', () => {
       const events = getEventLog(local.browser);
       const eventCreated = events.find((event) => event.eventName === 'messages:created');
       const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
+
       assert.isDefined(eventCreated, 'messages:created', 'has a message created event');
       assert.isDefined(eventUnread, 'rooms:unread', 'has an unread message event');
     });

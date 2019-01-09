@@ -153,6 +153,7 @@ export function callEventTest(caller, receiver, space = false) {
   const findCreated = (event) => event.eventName === 'calls:created';
   const eventCreated = callerEvents.find(findCreated);
   const receiverEventCreated = receiverEvents.find(findCreated);
+
   assert.isDefined(eventCreated, 'has a calls created event');
   assert.isDefined(receiverEventCreated, 'has a calls created event');
   if (space) {
@@ -176,6 +177,7 @@ export function callEventTest(caller, receiver, space = false) {
 
   let errorMessage = 'calls connected event is missing data';
   const eventConnected = callerEvents.find((event) => event.eventName === 'calls:connected');
+
   assert.isDefined(eventConnected, 'has a calls connected event', errorMessage);
   assert.containsAllKeys(eventConnected.detail, ['resource', 'event', 'actorId', 'data'], errorMessage);
   assert.containsAllKeys(eventConnected.detail.data, ['actorName', 'roomId'], 'calls:connected', errorMessage);
@@ -189,6 +191,7 @@ export function callEventTest(caller, receiver, space = false) {
 
   errorMessage = 'calls disconnected event is missing data';
   const eventDisconnected = callerEvents.find((event) => event.eventName === 'calls:disconnected');
+
   assert.isDefined(eventDisconnected, 'has a calls disconnected event', errorMessage);
   assert.containsAllKeys(eventDisconnected.detail, ['resource', 'event', 'actorId', 'data'], errorMessage);
   assert.containsAllKeys(eventDisconnected.detail.data, ['actorName', 'roomId'], errorMessage);

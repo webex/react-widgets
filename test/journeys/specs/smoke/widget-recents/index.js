@@ -60,6 +60,7 @@ describe('Smoke Tests - Recents Widget', () => {
           window.ciscoSparkEvents.push({eventName, detail});
         }
       };
+
       window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);
@@ -75,6 +76,7 @@ describe('Smoke Tests - Recents Widget', () => {
         toPersonEmail: localToUserEmail,
         initialActivity: 'meet'
       };
+
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
     browserRemote.waitForVisible(meetElements.meetWidget);
@@ -82,17 +84,20 @@ describe('Smoke Tests - Recents Widget', () => {
 
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
   });
 
   describe('Group Space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
 
@@ -101,13 +106,16 @@ describe('Smoke Tests - Recents Widget', () => {
       it('messages:created - group space', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Don\'t be such a square';
+
         displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
         const events = findEventName({
           eventName: 'messages:created',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have messages:created event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.roomId, 'does not contain roomId');
         assert.isNotEmpty(event.roomType, 'does not contain roomType');
@@ -120,13 +128,16 @@ describe('Smoke Tests - Recents Widget', () => {
       it('rooms:unread', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
         displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
         const events = findEventName({
           eventName: 'rooms:unread',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have rooms:unread event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.title, 'does not contain title');
         assert.isNotEmpty(event.type, 'does not contain type');
@@ -138,13 +149,16 @@ describe('Smoke Tests - Recents Widget', () => {
       it('rooms:read', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
         displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
         const events = findEventName({
           eventName: 'rooms:read',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have rooms:read event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.title, 'does not contain title');
         assert.isNotEmpty(event.type, 'does not contain type');
@@ -160,8 +174,10 @@ describe('Smoke Tests - Recents Widget', () => {
           eventName: 'rooms:selected',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have rooms:selected event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.title, 'does not contain title');
         assert.isNotEmpty(event.type, 'does not contain type');
@@ -172,6 +188,7 @@ describe('Smoke Tests - Recents Widget', () => {
 
       it('rooms:selected - oneOnOne space', () => {
         const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
         displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
         clearEventLog(browserLocal);
         browserLocal.click(elements.firstSpace);
@@ -179,8 +196,10 @@ describe('Smoke Tests - Recents Widget', () => {
           eventName: 'rooms:selected',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have rooms:selected event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.title, 'does not contain title');
         assert.isNotEmpty(event.type, 'does not contain type');
@@ -193,14 +212,17 @@ describe('Smoke Tests - Recents Widget', () => {
       it('memberships:created', () => {
         const roomTitle = 'Test Group Space 2';
         const firstPost = 'Everybody who\'s anybody drinks.';
+
         clearEventLog(browserLocal);
         createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
         const events = findEventName({
           eventName: 'memberships:created',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have memberships:created event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.roomId, 'does not contain roomId');
         assert.isNotEmpty(event.personId, 'does not contain personId');
@@ -219,6 +241,7 @@ describe('Smoke Tests - Recents Widget', () => {
           roomTitle,
           firstPost
         );
+
         // Remove user from room
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
@@ -229,8 +252,10 @@ describe('Smoke Tests - Recents Widget', () => {
           eventName: 'memberships:deleted',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have memberships:deleted event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.roomId, 'does not contain roomId');
         assert.isNotEmpty(event.personId, 'does not contain personId');
@@ -243,16 +268,19 @@ describe('Smoke Tests - Recents Widget', () => {
   describe('1:1 Space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty? Why are you so nervous?';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
     });
 
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
+
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
     });
 
@@ -260,13 +288,16 @@ describe('Smoke Tests - Recents Widget', () => {
       it('messages:created - one on one space', () => {
         clearEventLog(browserLocal);
         const lorraineText = 'Don\'t be such a square';
+
         displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
         const events = findEventName({
           eventName: 'messages:created',
           events: getEventLog(browserLocal)
         });
+
         assert.isNotEmpty(events, 'does not have messages:created event in log');
         const event = events[0].detail.data;
+
         assert.isNotEmpty(event.id, 'does not contain id');
         assert.isNotEmpty(event.roomId, 'does not contain roomId');
         assert.isNotEmpty(event.roomType, 'does not contain roomType');
@@ -305,8 +336,10 @@ describe('Smoke Tests - Recents Widget', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
       });
+
       result.map((x) => {
         const itemLabel = x.trim();
+
         return expect(EXPECTED_RESULT_2).contains(itemLabel);
       });
       assert(result.length, 2);
@@ -316,6 +349,7 @@ describe('Smoke Tests - Recents Widget', () => {
       browserLocal.waitUntil((() => browserLocal.click(elements.clearButton)), TIMEOUT);
       browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
       const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
+
       assert(result.length, 4);
     });
   });
@@ -334,6 +368,7 @@ describe('Smoke Tests - Recents Widget', () => {
               window.ciscoSparkEvents.push({eventName, detail});
             }
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);
@@ -361,6 +396,7 @@ describe('Smoke Tests - Recents Widget', () => {
             },
             spaceTypeFilter: 'all'
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);
@@ -387,6 +423,7 @@ describe('Smoke Tests - Recents Widget', () => {
             },
             spaceTypeFilter: 'group'
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);
@@ -413,6 +450,7 @@ describe('Smoke Tests - Recents Widget', () => {
             },
             spaceTypeFilter: 'direct'
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);

@@ -6,12 +6,14 @@ module.exports = {
   builder: {},
   handler: ({widgetName}) => {
     let pkgName;
+
     if (widgetName.startsWith('widget-')) {
       pkgName = widgetName;
     }
     else {
       pkgName = `widget-${widgetName}`;
     }
+
     return startPackage(pkgName);
   }
 };

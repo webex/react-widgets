@@ -6,6 +6,7 @@ module.exports = {
   builder: {},
   handler: ({widgetName}) => {
     let pkgName;
+
     if (widgetName.startsWith('widget-')) {
       if (widgetName.endsWith('-demo')) {
         pkgName = widgetName;
@@ -24,6 +25,7 @@ module.exports = {
     if (pkgName) {
       return startPackage(pkgName);
     }
+
     return Promise.reject(new Error(false));
   }
 };

@@ -10,6 +10,7 @@ import {execSync} from './utils/exec';
  */
 export default function jestPackage(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
+
   if (targetPkgPath) {
     try {
       execSync(`npm run jest ${targetPkgPath}/*`);
@@ -19,6 +20,7 @@ export default function jestPackage(pkgName, pkgPath) {
       throw new Error(`Error when running jest on ${pkgName}`, error);
     }
   }
+
   return false;
 }
 

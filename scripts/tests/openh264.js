@@ -14,6 +14,7 @@ const {rimraf} = require('./async');
 const PROFILE_DIR = './.tmp/selenium';
 
 const copy = denodeify(FirefoxProfile.copy);
+
 /**
  * denodeifies FirefoxProfile.encode
  * @param {FirefoxProfile} fp
@@ -24,6 +25,7 @@ function encode(fp) {
     fp.encode((err, encoded) => {
       if (err) {
         reject(err);
+
         return;
       }
       resolve(encoded);
@@ -53,6 +55,7 @@ function platformToShortName(platform) {
 async function injectProfile(def) {
   if (def.browserName.toLowerCase().includes('firefox')) {
     const platform = platformToShortName(def.platform);
+
     if (platform !== 'mac') {
       throw new Error(`No tooling implemented for injecting h264 into ${platform} (${def.platform})`);
     }
@@ -73,6 +76,7 @@ async function injectProfile(def) {
 async function exists(dir) {
   try {
     const s = await stat(dir);
+
     return s.isDirectory();
   }
   catch (err) {
@@ -93,6 +97,7 @@ exports.inject = async function inject(browsers) {
   /* eslint-disable no-await-in-loop */
   for (const key of Object.keys(browsers)) {
     const def = browsers[key];
+
     await injectProfile(def);
   }
 };

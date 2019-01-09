@@ -13,6 +13,7 @@ export function constructHydraId(type, id) {
  */
 export function deconstructHydraId(id) {
   const payload = base64.decode(id).split('/');
+
   return {
     id: payload.pop(),
     type: payload.pop()

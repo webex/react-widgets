@@ -6,6 +6,7 @@ dotenv.config();
 // Set up fake localstorage for tests
 const localStorageMock = (() => {
   let store = {};
+
   return {
     getItem: (key) => store[key],
     setItem: (key, value) => {

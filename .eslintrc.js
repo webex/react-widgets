@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '@ciscospark/eslint-config-react',
+  extends: '@webex/eslint-config-react',
   env: {
     jest: true,
     browser: true

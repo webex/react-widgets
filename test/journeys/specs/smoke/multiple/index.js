@@ -46,6 +46,7 @@ describe('Multiple Widgets', () => {
           window.ciscoSparkEvents.push({widget: 'recents', eventName});
         }
       };
+
       window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(recentsElements.recentsWidget);
@@ -59,6 +60,7 @@ describe('Multiple Widgets', () => {
           window.ciscoSparkEvents.push({widget: 'space', eventName});
         }
       };
+
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
     browserLocal.waitForVisible(spaceElements.spaceWidget);
@@ -73,6 +75,7 @@ describe('Multiple Widgets', () => {
           window.ciscoSparkEvents.push({widget: 'recents', eventName});
         }
       };
+
       window.openRecentsWidget(options);
     }, docbrown.token.access_token);
     browserRemote.waitForVisible(recentsElements.recentsWidget);
@@ -86,6 +89,7 @@ describe('Multiple Widgets', () => {
           window.ciscoSparkEvents.push({widget: 'space', eventName});
         }
       };
+
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
     browserRemote.waitForVisible(spaceElements.spaceWidget);
@@ -93,17 +97,20 @@ describe('Multiple Widgets', () => {
 
   it('has the page loaded', () => {
     const expectedTitle = 'Cisco Spark Multiple Widget Test';
+
     assert.equal(browserLocal.getTitle(), expectedTitle, 'page title does not match expected');
   });
 
   describe('recents widget functionality', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
   });
@@ -111,6 +118,7 @@ describe('Multiple Widgets', () => {
   describe('space widget functionality', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
+
       browserLocal.waitForVisible(textInputField);
     });
 
@@ -152,6 +160,7 @@ describe('Multiple Widgets', () => {
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
+
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
         sendMessage(remote, local, docText);

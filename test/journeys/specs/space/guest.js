@@ -40,6 +40,7 @@ describe('Space Widget Guest User Tests', () => {
     browserLocal.url('/space.html?guest');
 
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
     browserLocal.execute((localGuestToken, localToUserEmail) => {
       const options = {
@@ -48,6 +49,7 @@ describe('Space Widget Guest User Tests', () => {
         destinationType: 'email',
         initialActivity: 'message'
       };
+
       window.openSpaceWidget(options);
     }, spock.jwt, mccoy.email);
     browserLocal.waitForVisible(elements.widgetTitle);
@@ -59,6 +61,7 @@ describe('Space Widget Guest User Tests', () => {
     browserRemote.url('/space.html?guest');
 
     const title = browserRemote.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
 
     // We have to use the guest id instead of email because (currently)
@@ -74,6 +77,7 @@ describe('Space Widget Guest User Tests', () => {
         destinationType: 'userId',
         initialActivity: 'message'
       };
+
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.id);
     browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
@@ -81,6 +85,7 @@ describe('Space Widget Guest User Tests', () => {
 
   describe('message widget', () => {
     let local, remote;
+
     before('create test objects for message suite', () => {
       local = {browser: browser.select('browserLocal'), displayName: spockName, user: spock};
       remote = {browser: browser.select('browserRemote'), displayName: mccoyName, user: mccoy};
@@ -88,6 +93,7 @@ describe('Space Widget Guest User Tests', () => {
 
     it('sends and receives messages', () => {
       const message = 'Oh, I am sorry, Doctor. Were we having a good time?';
+
       sendMessage(local, remote, message);
       verifyMessageReceipt(remote, local, message);
     });

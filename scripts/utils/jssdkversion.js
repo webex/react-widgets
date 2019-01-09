@@ -18,4 +18,5 @@ const devDependencies = Object.keys(psjson.devDependencies)
   .reduce((maxVer, currentVer) => (semver.gt(currentVer, maxVer) ? currentVer : maxVer));
 
 const max = semver.gt(dependencies, devDependencies) ? dependencies : devDependencies;
+
 console.log(max);

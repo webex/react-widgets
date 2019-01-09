@@ -17,6 +17,7 @@ const plugins = [
 
 // Bundle paths are used for demos only
 let scriptBundle, styleBundle;
+
 if (process.env.BUILD_BUNDLE_PUBLIC_PATH) {
   scriptBundle = `<script src="${process.env.BUILD_BUNDLE_PUBLIC_PATH}bundle.js"></script>`;
   styleBundle = `<link rel="stylesheet" href="${process.env.BUILD_BUNDLE_PUBLIC_PATH}main.css">`;

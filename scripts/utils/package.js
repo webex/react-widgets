@@ -20,6 +20,7 @@ function isDirectory(dirPath) {
   catch (err) {
     return false;
   }
+
   return false;
 }
 
@@ -35,6 +36,7 @@ function isPackageDirectory(packageDirectory) {
   }
   try {
     const fullpath = path.resolve(packageDirectory);
+
     if (statSync(path.resolve(fullpath, 'package.json')).isFile()) {
       return true;
     }
@@ -42,6 +44,7 @@ function isPackageDirectory(packageDirectory) {
   catch (err) {
     return false;
   }
+
   return false;
 }
 
@@ -54,6 +57,7 @@ function getPackage(pkg) {
   // check if this is a valid full package path
   if (isPackageDirectory(pkg)) {
     const fullpath = path.resolve(pkg);
+
     return fullpath;
   }
   // Attempt to determine path by pkg name
@@ -62,8 +66,10 @@ function getPackage(pkg) {
   const webexFullPath = path.resolve('packages/node_modules/@webex', pkg);
   const sparkPathExists = isDirectory(sparkFullPath);
   const webexPathExists = isDirectory(webexFullPath);
+
   if (sparkPathExists && webexPathExists) {
     console.error(`Unable to determine package path, multiple directories found for ${pkg}`);
+
     return '';
   }
   if (webexPathExists) {
@@ -74,8 +80,10 @@ function getPackage(pkg) {
   }
   if (!isPackageDirectory(calculatedPackagesDir)) {
     console.error(`Unable to determine package path, no matching directory found for ${pkg}`);
+
     return '';
   }
+
   return calculatedPackagesDir;
 }
 
@@ -93,10 +101,12 @@ function runInPackage({
   pkgPath
 }) {
   const outputPkgPath = getPackage(pkgPath || pkgName);
+
   if (outputPkgPath) {
     try {
       debug(`${commandName} ${pkgName} ...`);
       const command = constructCommand(outputPkgPath);
+
       execSync(command);
     }
     catch (err) {
@@ -114,36 +124,44 @@ function runInPackage({
 function getAllPackagePaths() {
   const fullPaths = [];
   const packagesDirs = ['packages/node_modules/@ciscospark', 'packages/node_modules/@webex'];
+
   packagesDirs.forEach((packagesDir) => {
     debug(`Reading Directory: ${packagesDir}`);
     readdirSync(packagesDir).forEach((packagePath) => {
       debug(`Reading Package Directory: ${packagePath}`);
       const fullpath = path.resolve(packagesDir, packagePath);
+
       if (isDirectory(fullpath)) {
         const pkg = getPackage(fullpath);
+
         if (pkg) {
           fullPaths.push(pkg);
         }
       }
     });
   });
+
   return fullPaths;
 }
 
 
 function getAllPackages(omitPrivate) {
   let pkgPaths = getAllPackagePaths();
+
   if (omitPrivate) {
     pkgPaths = pkgPaths.filter((pkgPath) => !require(path.resolve(pkgPath, 'package.json')).private);
   }
+
   return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, 'package.json')).name);
 }
 
 function getWidgetPackages() {
   const pkgPaths = getAllPackagePaths();
+
   return pkgPaths
     .filter((pkgPath) => {
       const pkgName = require(path.resolve(pkgPath, 'package.json')).name;
+
       return pkgName.startsWith('@ciscospark/widget');
     });
 }

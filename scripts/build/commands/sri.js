@@ -7,6 +7,7 @@ module.exports = {
   handler: ({packageName}) => {
     if (!process.env.PRIVATE_KEY_PATH) {
       console.error('No private key found! Please set your PRIVATE_KEY_PATH environment variable');
+
       return false;
     }
 
@@ -18,6 +19,7 @@ module.exports = {
         passphrase: process.env.PRIVATE_KEY_PASSPHRASE
       });
     }
+
     return false;
   }
 };

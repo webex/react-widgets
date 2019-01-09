@@ -9,6 +9,7 @@ const libraryName = pkg.name;
 
 module.exports = (env) => {
   console.info('webpacking for transpile');
+
   return {
     mode: 'production',
     devtool: 'source-map',

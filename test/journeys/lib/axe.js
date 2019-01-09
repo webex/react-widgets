@@ -21,10 +21,12 @@ export const runAxe = (aBrowser, elementId, rules = ['best-practice']) =>
           values: theRules
         }
       };
+
       return window.axe.run(widgetElement, options, (err, results) => {
         done({err, results});
       });
     }, elementId, rules);
+
     if (axeResults.value.err) {
       reject(axeResults.value.err);
     }

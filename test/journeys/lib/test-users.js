@@ -23,17 +23,21 @@ export function setupTestUserJwt({displayName}) {
   return createGuestUser({displayName})
     .then(({jwt}) => {
       const guestSpark = new CiscoSpark();
+
       return guestSpark.authorization.requestAccessTokenFromJwt({jwt}).then(() =>
         // We don't have a user id for guest users until a record is looked up
         guestSpark.people.get('me').then((p) => {
           const guestUser = Object.assign({}, p);
           // id is hydra from get people, but is expected to be a uuid
           const {id} = deconstructHydraId(p.id);
+
           guestUser.id = id;
           const email = p.emails[0];
+
           guestUser.email = email;
           guestUser.jwt = jwt;
           guestUser.spark = guestSpark;
+
           return guestUser;
         }));
     })
@@ -52,6 +56,7 @@ export function setupTestUserJwt({displayName}) {
  */
 export function createTestUsers(count, config) {
   let users;
+
   if (config && count !== config.length) {
     throw new Error('Test user configuration count must match amount of test users or empty');
   }
@@ -68,18 +73,22 @@ export function createTestUsers(count, config) {
           }
         }
       });
+
       return Object.assign({}, user, {
         spark
       });
     });
+
     return users;
   }
 
   function createUsers() {
     const promises = [];
     const createdUsers = [];
+
     for (let i = 0; i < count; i += 1) {
       const userConfig = config ? config[i] : {};
+
       promises.push(testUsers.create({count: 1, config: userConfig}).then((usersArray) => {
         createdUsers.push(usersArray[0]);
       }));
@@ -90,6 +99,7 @@ export function createTestUsers(count, config) {
   }
 
   browser.call(createUsers);
+
   return users;
 }
 
@@ -126,11 +136,13 @@ export function setupOneOnOneUsers() {
  */
 export function createSpace({sparkInstance, participants, displayName}) {
   let space;
+
   browser.call(() => sparkInstance.internal.conversation.create({
     displayName,
     participants
   }).then((c) => {
     space = c;
+
     return space;
   }));
 
@@ -147,11 +159,13 @@ export function createSpace({sparkInstance, participants, displayName}) {
  */
 export function sendMessage({sparkInstance, space, message}) {
   let activity;
+
   browser.call(() => sparkInstance.internal.conversation.post(space, {
     displayName: message,
     content: message
   }).then((a) => {
     activity = a;
+
     return activity;
   }));
 
@@ -166,6 +180,7 @@ export function sendMessage({sparkInstance, space, message}) {
 export function registerDevices(users) {
   const promises = users.map((user) =>
     user.spark.internal.device.register());
+
   return browser.call(() => Promise.all(promises));
 }
 
@@ -177,5 +192,6 @@ export function registerDevices(users) {
 export function disconnectDevices(users) {
   const promises = users.map((user) =>
     user.spark.internal.mercury.disconnect());
+
   return browser.call(() => Promise.all(promises));
 }

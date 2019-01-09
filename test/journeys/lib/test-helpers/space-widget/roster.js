@@ -40,6 +40,7 @@ function closeSearch(aBrowser) {
 export function hasParticipants(aBrowser, participants) {
   aBrowser.waitForVisible(elements.rosterList);
   const participantsText = aBrowser.getText(elements.rosterList);
+
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
 }
 
@@ -70,6 +71,7 @@ export function searchForPerson(aBrowser, searchString, doAdd = false, searchRes
   aBrowser.waitForVisible(elements.addParticipantResultItem);
   const element = aBrowser.element(elements.addParticipantResultItem);
   const resultsText = element.getText();
+
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
     aBrowser.click(elements.addParticipantResultItem);

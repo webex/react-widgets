@@ -17,6 +17,7 @@ module.exports = {
         const pkgJson = require(path.resolve(pkg, 'package.json'));
         const pkgName = pkgJson.name.split('/').pop();
         const isWidget = pkgName.startsWith('widget-');
+
         if (!isWidget && !pkgJson.private) {
           transpile(pkgName, pkg);
         }

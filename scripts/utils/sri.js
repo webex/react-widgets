@@ -19,6 +19,7 @@ function generateSRI({
   const integrity = sriToolbox.generate({
     algorithms: ['sha384']
   }, data);
+
   return integrity;
 }
 
@@ -40,6 +41,7 @@ function signSRI({
   }
   // generate RSA signature
   const sign = crypto.createSign('RSA-SHA384');
+
   sign.write(sri);
   sign.end();
 
@@ -64,6 +66,7 @@ function verifySignature({
   }
   // Verify that we signed correctly using public key
   const verify = crypto.createVerify('RSA-SHA384');
+
   verify.write(data);
   verify.end();
 
@@ -90,6 +93,7 @@ function generateDistSRI({
   // Check to ensure this is a package dir
   if (!pkgJson) {
     console.error(`No package.json found in: ${packagePath}`);
+
     return false;
   }
 
@@ -136,6 +140,7 @@ function generateDistSRI({
     };
 
     const jsonString = `${JSON.stringify(manifest, null, 2)}\n`;
+
     fs.writeFileSync(path.resolve(packagePath, 'dist/manifest.json'), jsonString, 'utf8');
   }
 

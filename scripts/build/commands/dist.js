@@ -9,8 +9,10 @@ module.exports = {
       if (packagePath) {
         return webpackBuild(packageName, packagePath);
       }
+
       return webpackBuild(packageName);
     }
+
     return false;
   }
 };

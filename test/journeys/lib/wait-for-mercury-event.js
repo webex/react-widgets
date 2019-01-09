@@ -6,9 +6,11 @@
  */
 export default function waitForMercuryEvent(spark, eventName) {
   let event;
+
   browser.waitUntil(() => new Promise((resolve) => spark.internal.mercury.once(eventName, (e) => {
     event = e;
     resolve(true);
   })));
+
   return event;
 }

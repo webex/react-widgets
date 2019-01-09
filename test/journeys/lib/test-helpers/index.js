@@ -37,6 +37,7 @@ export function moveMouse(aBrowser, selector) {
 
     const x = Math.round(elementX + width / 2);
     const y = Math.round(elementY + height / 2);
+
     aBrowser.actions([{
       type: 'pointer',
       id: `mouse-${uuid.v4()}`,
@@ -77,6 +78,7 @@ function getWidgetJobs(name) {
       }
       const widgetJobs = jobs.filter((job) => job.build === build && job.name && job.name.includes(name) && job.status === 'in progress'
               && job.os.toLowerCase().includes(platform) && job.browser.toLowerCase().includes(browserName));
+
       resolve(widgetJobs);
     });
   });
@@ -94,6 +96,7 @@ function updateJob(id, details) {
       username: process.env.SAUCE_USERNAME,
       password: process.env.SAUCE_ACCESS_KEY
     });
+
     account.updateJob(id, details, (err, response) => {
       if (err) {
         reject(err);
@@ -116,14 +119,17 @@ export function renameJob(name) {
   }
 
   const {suite} = argv || 'smoke';
+
   // 'unnamed' jobs are those which haven't been renamed
   // When we do browser.reload, it will create a new job with the initial name
   return getWidgetJobs(`react-widget-${suite}-unnamed`).then((widgetJobs) => {
     const promises = widgetJobs.map((job) => {
       const remoteName = job.name.includes('local') ? 'local' : 'remote';
       const jobName = `${name}-${remoteName}`;
+
       return updateJob(job.id, {name: jobName});
     });
+
     return Promise.all(promises);
   });
 }
@@ -138,8 +144,10 @@ export function updateJobStatus(name, passed) {
   if (!process.env.SAUCE) {
     return Promise.resolve();
   }
+
   return getWidgetJobs(name).then((widgetJobs) => {
     const promises = widgetJobs.map((job) => updateJob(job.id, {passed}));
+
     return Promise.all(promises);
   });
 }

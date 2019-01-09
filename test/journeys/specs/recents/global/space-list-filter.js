@@ -53,6 +53,7 @@ describe('Widget Recents Space Filters', () => {
           },
           enableSpaceListFilter: true
         };
+
         window.openRecentsWidget(options);
       }, marty.token.access_token);
       browserLocal.waitForVisible(elements.recentsWidget);
@@ -67,8 +68,10 @@ describe('Widget Recents Space Filters', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
       });
+
       result.map((x) => {
         const itemLabel = x.trim();
+
         return expect(EXPECTED_RESULT_2).contains(itemLabel);
       });
       assert(result.length, 2);
@@ -78,8 +81,10 @@ describe('Widget Recents Space Filters', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
       });
+
       result.map((x) => {
         const itemLabel = x.trim();
+
         return expect(EXPECTED_RESULT_3).contains(itemLabel);
       });
       assert(result.length, 3);
@@ -89,6 +94,7 @@ describe('Widget Recents Space Filters', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: KEYWORD3, expectedTotal: 1, timeout: TIMEOUT
       });
+
       expect(result).to.be.an('string').that.does.contain(SPACE1);
       assert(result.length, 1);
     });
@@ -97,8 +103,10 @@ describe('Widget Recents Space Filters', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: BACKSPACES, expectedTotal: EXPECTED_RESULT_4.length, timeout: TIMEOUT
       });
+
       result.map((x) => {
         const itemLabel = x.trim();
+
         return expect(EXPECTED_RESULT_4).contains(itemLabel);
       });
       assert(result.length, 4);
@@ -108,6 +116,7 @@ describe('Widget Recents Space Filters', () => {
       const result = enterKeywordAndWait({
         browserLocal, keyword: KEYWORD4, expectedTotal: 0, timeout: TIMEOUT
       });
+
       assert.equal(result.value.length, 0, 'result does not exist');
     });
 
@@ -118,8 +127,10 @@ describe('Widget Recents Space Filters', () => {
       browserLocal.click(elements.clearButton);
       browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
       const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
+
       result.map((x) => {
         const itemLabel = x.trim();
+
         return expect(EXPECTED_RESULT_4).contains(itemLabel);
       });
       assert(result.length, 4);
@@ -150,6 +161,7 @@ describe('Widget Recents Space Filters', () => {
             enableSpaceListFilter: true,
             spaceTypeFilter: 'group'
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);
@@ -183,6 +195,7 @@ describe('Widget Recents Space Filters', () => {
             enableSpaceListFilter: true,
             spaceTypeFilter: 'direct'
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);
@@ -209,6 +222,7 @@ describe('Widget Recents Space Filters', () => {
             },
             enableSpaceListFilter: true
           };
+
           window.openRecentsWidget(options);
         }, marty.token.access_token);
         browserLocal.waitForVisible(elements.recentsWidget);

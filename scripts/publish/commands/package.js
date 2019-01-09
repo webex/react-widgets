@@ -13,6 +13,7 @@ module.exports = {
           return npmPublishPackage(packageName);
       }
     }
+
     return false;
   }
 };

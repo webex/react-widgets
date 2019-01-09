@@ -44,6 +44,7 @@ describe('demo widget', () => {
       browserLocal.click(elements.openSpaceWidgetButton);
       // Wait for conversation to be ready
       const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
+
       browserLocal.waitForVisible(textInputField);
       browserLocal.scroll(textInputField);
     });
@@ -54,6 +55,7 @@ describe('demo widget', () => {
       browserRemote.click(elements.openSpaceWidgetButton);
       // Wait for conversation to be ready
       const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
+
       browserRemote.waitForVisible(textInputFieldRemote);
       browserRemote.scroll(textInputFieldRemote);
     });
@@ -84,6 +86,7 @@ describe('demo widget', () => {
         it('sends and receives messages', () => {
           const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
           const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+
           sendMessage(remote, local, martyText);
           verifyMessageReceipt(local, remote, martyText, false);
           sendMessage(local, remote, docText);

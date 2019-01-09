@@ -89,6 +89,7 @@ export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt 
  */
 export function verifyFilesActivityTab(aBrowser, fileName) {
   const fileTitle = `//span[text()="${fileName}"]`;
+
   if (!aBrowser.isVisible(mainElements.activityMenu)) {
     aBrowser.click(mainElements.menuButton);
     aBrowser.waitForVisible(mainElements.activityMenu);
@@ -147,6 +148,7 @@ export function removeFlagMessage(testObject, messageToUnflag) {
 export function canDeleteMessage(testObject, messageToDelete) {
   testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
   testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToDelete);
+
   return testObject.browser.isExisting(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 }
 
@@ -183,6 +185,7 @@ export function deleteMessage(testObject, messageToDelete) {
  */
 const sendFileTest = (sender, receiver, fileName) => {
   const filePath = path.join(uploadDir, fileName);
+
   sender.browser.chooseFile(elements.inputFile, filePath);
   sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `Sending: ${fileName}`);
   sender.browser.keys(['Enter', 'NULL']);
@@ -215,12 +218,14 @@ const filesTabTest = (sender, receiver, fileName) => {
  */
 const messageEventTest = (sender, receiver) => {
   const message = 'God, I liked him better before he died.';
+
   clearEventLog(receiver.browser);
   sendMessage(sender, receiver, message);
   verifyMessageReceipt(receiver, sender, message);
   const events = getEventLog(receiver.browser);
   const eventCreated = events.find((event) => event.eventName === 'messages:created');
   const eventUnread = events.find((event) => event.eventName === 'rooms:unread');
+
   assert.isDefined(eventCreated, 'has a message created event');
   assert.containsAllKeys(eventCreated.detail, ['resource', 'event', 'actorId', 'data']);
   assert.containsAllKeys(eventCreated.detail.data, ['actorId', 'actorName', 'id', 'personId', 'roomId', 'roomType', 'text']);

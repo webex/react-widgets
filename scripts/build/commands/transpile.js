@@ -7,6 +7,7 @@ module.exports = {
   handler: ({packageName, packagePath}) => {
     if (packageName) {
       const command = packageName.includes('widget') ? webpackTranspile : transpile;
+
       if (packagePath) {
         command(packageName, packagePath);
       }

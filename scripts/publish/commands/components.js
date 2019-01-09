@@ -14,6 +14,7 @@ module.exports = {
         const pkgJson = require(path.resolve(pkgPath, 'package.json'));
         const pkgName = pkgJson.name.split('/').pop();
         const isDemo = pkgName.endsWith('-demo');
+
         if (!isDemo && !pkgJson.private) {
           return npmPublishPackage(pkgName, pkgPath);
         }
@@ -21,6 +22,7 @@ module.exports = {
       catch (err) {
         // Ignore errors
       }
+
       return false;
     })
 };

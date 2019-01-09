@@ -68,6 +68,7 @@ describe('Widget Recents', () => {
           window.ciscoSparkEvents.push({eventName, detail});
         }
       };
+
       window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);
@@ -83,6 +84,7 @@ describe('Widget Recents', () => {
         toPersonEmail: localToUserEmail,
         initialActivity: 'meet'
       };
+
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
     browserRemote.waitForVisible(meetElements.meetWidget);
@@ -90,17 +92,20 @@ describe('Widget Recents', () => {
 
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
   });
 
   describe('group space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
   });
@@ -108,6 +113,7 @@ describe('Widget Recents', () => {
   describe('notifications', () => {
     it('should display an unread indicator', () => {
       const lorraineText = 'Marty, duck! Biff is behind you!';
+
       unmuteMessageNotification(marty.spark, conversation.id);
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
       removeAllMuteTags(marty.spark, conversation.id);
@@ -115,6 +121,7 @@ describe('Widget Recents', () => {
 
     it('should display a mute indicator', () => {
       const lorraineText = 'Marty, watch out for Biff!';
+
       muteMessageNotification(marty.spark, conversation.id);
       muteMentionsNotification(marty.spark, conversation.id);
       displayMutedIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
@@ -129,6 +136,7 @@ describe('Widget Recents', () => {
           objectType: 'person'
         }]
       };
+
       unmuteMentionsNotification(marty.spark, conversation.id);
       displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
       removeAllMuteTags(marty.spark, conversation.id);
@@ -139,6 +147,7 @@ describe('Widget Recents', () => {
       const mentions = {
         items: conversation.participants.items
       };
+
       unmuteMentionsNotification(marty.spark, conversation.id);
       displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
       removeAllMuteTags(marty.spark, conversation.id);
@@ -150,13 +159,16 @@ describe('Widget Recents', () => {
     it('messages:created - group space', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Don\'t be such a square';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
       const events = findEventName({
         eventName: 'messages:created',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have messages:created event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.roomId, 'does not contain roomId');
       assert.isNotEmpty(event.roomType, 'does not contain roomType');
@@ -169,13 +181,16 @@ describe('Widget Recents', () => {
     it('messages:created - one on one space', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Don\'t be such a square';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
       const events = findEventName({
         eventName: 'messages:created',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have messages:created event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.roomId, 'does not contain roomId');
       assert.isNotEmpty(event.roomType, 'does not contain roomType');
@@ -191,13 +206,16 @@ describe('Widget Recents', () => {
     it('rooms:unread', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
       const events = findEventName({
         eventName: 'rooms:unread',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have rooms:unread event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.title, 'does not contain title');
       assert.isNotEmpty(event.type, 'does not contain type');
@@ -209,13 +227,16 @@ describe('Widget Recents', () => {
     it('rooms:read', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
       const events = findEventName({
         eventName: 'rooms:read',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have rooms:read event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.title, 'does not contain title');
       assert.isNotEmpty(event.type, 'does not contain type');
@@ -231,8 +252,10 @@ describe('Widget Recents', () => {
         eventName: 'rooms:selected',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have rooms:selected event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.title, 'does not contain title');
       assert.isNotEmpty(event.type, 'does not contain type');
@@ -243,6 +266,7 @@ describe('Widget Recents', () => {
 
     it('rooms:selected - oneOnOne space', () => {
       const lorraineText = 'Your Uncle Joey didn\'t make parole again.';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
       clearEventLog(browserLocal);
       browserLocal.click(elements.firstSpace);
@@ -250,8 +274,10 @@ describe('Widget Recents', () => {
         eventName: 'rooms:selected',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have rooms:selected event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.title, 'does not contain title');
       assert.isNotEmpty(event.type, 'does not contain type');
@@ -264,14 +290,17 @@ describe('Widget Recents', () => {
     it('memberships:created', () => {
       const roomTitle = 'Test Group Space 2';
       const firstPost = 'Everybody who\'s anybody drinks.';
+
       clearEventLog(browserLocal);
       createSpaceAndPost(browserLocal, lorraine, [marty, docbrown, lorraine], roomTitle, firstPost);
       const events = findEventName({
         eventName: 'memberships:created',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have memberships:created event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.roomId, 'does not contain roomId');
       assert.isNotEmpty(event.personId, 'does not contain personId');
@@ -290,6 +319,7 @@ describe('Widget Recents', () => {
         roomTitle,
         firstPost
       );
+
       // Remove user from room
       clearEventLog(browserLocal);
       waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
@@ -298,8 +328,10 @@ describe('Widget Recents', () => {
         eventName: 'memberships:deleted',
         events: getEventLog(browserLocal)
       });
+
       assert.isNotEmpty(events, 'does not have memberships:deleted event in log');
       const event = events[0].detail.data;
+
       assert.isNotEmpty(event.id, 'does not contain id');
       assert.isNotEmpty(event.roomId, 'does not contain roomId');
       assert.isNotEmpty(event.personId, 'does not contain personId');
@@ -311,16 +343,19 @@ describe('Widget Recents', () => {
   describe('one on one space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty? Why are you so nervous?';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
     });
 
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
+
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
     });
   });

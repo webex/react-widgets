@@ -42,6 +42,7 @@ describe('Widget Recents: Data API', () => {
   before('open recents widget for marty', () => {
     browserLocal.execute((localAccessToken) => {
       const csmmDom = document.createElement('div');
+
       csmmDom.setAttribute('class', 'ciscospark-widget');
       csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
       csmmDom.setAttribute('data-access-token', localAccessToken);
@@ -61,6 +62,7 @@ describe('Widget Recents: Data API', () => {
         toPersonEmail: localToUserEmail,
         initialActivity: 'meet'
       };
+
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
     browserRemote.waitForVisible(meetElements.meetWidget);
@@ -68,17 +70,20 @@ describe('Widget Recents: Data API', () => {
 
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
   });
 
   describe('group space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
+
       displayIncomingMessage(browserLocal, lorraine, conversation, lorraineText);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
     });
   });
@@ -86,16 +91,19 @@ describe('Widget Recents: Data API', () => {
   describe('one on one space', () => {
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty? Why are you so nervous?';
+
       displayIncomingMessage(browserLocal, lorraine, oneOnOneConversation, lorraineText, true);
     });
 
     it('removes unread indicator when read', () => {
       const lorraineText = 'You\'re safe and sound now!';
+
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, oneOnOneConversation, lorraineText);
     });
 
     it('displays a new one on one', () => {
       const docText = 'Marty! We have to talk!';
+
       createSpaceAndPost(browserLocal, docbrown, [marty, docbrown], undefined, docText, true);
     });
   });

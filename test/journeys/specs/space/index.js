@@ -64,6 +64,7 @@ describe('Space Widget Primary Tests', () => {
         destinationId: spaceId,
         destinationType: 'spaceId'
       };
+
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.id);
   });
@@ -79,6 +80,7 @@ describe('Space Widget Primary Tests', () => {
         destinationId: spaceId,
         destinationType: 'spaceId'
       };
+
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.id);
     remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
@@ -86,6 +88,7 @@ describe('Space Widget Primary Tests', () => {
 
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
+
     assert.equal(title, 'Cisco Spark Widget Test');
   });
 
@@ -97,6 +100,7 @@ describe('Space Widget Primary Tests', () => {
   describe('When conversation is established', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
+
       browserLocal.waitForVisible(textInputField);
     });
 
@@ -187,6 +191,7 @@ describe('Space Widget Primary Tests', () => {
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
+
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
         sendMessage(remote, local, docText);
@@ -209,6 +214,7 @@ describe('Space Widget Primary Tests', () => {
       describe('message actions', () => {
         describe('message flags', () => {
           const message = 'Do you really think this is a good idea?';
+
           before('create a message to flag', () => {
             sendMessage(remote, local, message);
             verifyMessageReceipt(local, remote, message);
@@ -226,6 +232,7 @@ describe('Space Widget Primary Tests', () => {
         describe('delete message', () => {
           it('should be able to delete a message from self', () => {
             const message = 'There is no spoon!';
+
             sendMessage(local, remote, message);
             verifyMessageReceipt(remote, local, message);
             deleteMessage(local, message);
@@ -233,6 +240,7 @@ describe('Space Widget Primary Tests', () => {
 
           it('should not be able to delete a message from others', () => {
             const message = 'Hey you guys!';
+
             sendMessage(remote, local, message);
             verifyMessageReceipt(local, remote, message);
             assert.isFalse(canDeleteMessage(local, message));

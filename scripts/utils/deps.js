@@ -18,11 +18,13 @@ const flatten = (arr) => arr.reduce(
 
 function updatePackageJson(pkgPath, packages, topPkgJson) {
   let outputPackages = packages;
+
   if (!outputPackages) {
     outputPackages = getAllPackages();
   }
 
   let outputTopPkgJson = topPkgJson;
+
   if (!outputTopPkgJson) {
     outputTopPkgJson = JSON.parse(readFileSync('./package.json', 'utf8'));
   }
@@ -45,6 +47,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
       srcFiles.map(
         (srcFile) => {
           const code = readFileSync(srcFile, 'utf8');
+
           try {
             return detective(code);
           }
@@ -70,6 +73,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
   uniqDeps.forEach((dep) => {
     const depArray = dep.split('/');
     let cleanDep = depArray[0];
+
     if (depArray[0].startsWith('@')) {
       cleanDep = depArray.slice(0, 2).join('/');
     }
@@ -87,6 +91,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
   pkgJson.version = outputTopPkgJson.version;
 
   const jsonString = `${JSON.stringify(pkgJson, null, '')}\n`;
+
   writeFileSync(pkgJsonPath, jsonString, 'utf8');
 }
 
@@ -98,6 +103,7 @@ function updateAllPackageJson() {
   const packages = getAllPackages();
   const pkgPaths = getAllPackagePaths();
   const topPkgJson = JSON.parse(readFileSync('./package.json', 'utf8'));
+
   console.log(packages);
 
   pkgPaths.forEach((pkgPath) => updatePackageJson(pkgPath, packages, topPkgJson));

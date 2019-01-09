@@ -22,6 +22,7 @@ export function enterKeywordAndWait({
   else if (expectedTotal === 0) {
     return browserLocal.waitUntil((() => browserLocal.elements(elements.title)), timeout);
   }
+
   return browserLocal.elements(elements.title).getText();
 }
 

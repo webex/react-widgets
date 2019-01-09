@@ -15,20 +15,24 @@ function buildFile(filename, destination, babelOptions = {}) {
   const content = fs.readFileSync(filename, {encoding: 'utf8'});
   const ext = path.extname(filename);
   const outputPath = path.join(destination, path.basename(filename));
+
   // Ignore non-JS files and test scripts
   if (!filename.includes('.test.')) {
     if (ext === '.js') {
       options.filename = filename;
       const result = transform(content, options);
+
       return outputFileSync(outputPath, result.code, {encoding: 'utf8'});
     }
     // process with postcss if it's a css file
     if (ext === '.css') {
       return execSync(`postcss ${filename} -o ${outputPath}`);
     }
+
     // Copy if it's any other type of file
     return outputFileSync(outputPath, content);
   }
+
   return false;
 }
 
@@ -46,6 +50,7 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
   else if (stats.isDirectory()) {
     const outputPath = firstFolder ? destination : path.join(destination, path.basename(folderPath));
     const files = fs.readdirSync(folderPath).map((file) => path.join(folderPath, file));
+
     files.forEach((filename) => {
       // Ignore fixtures, mocks, and snapshots
       if (!filename.includes('__')) {
@@ -64,9 +69,11 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
+
   if (targetPkgPath) {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
+
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
       rimraf.sync(path.resolve(targetPkgPath, 'dist'));
@@ -78,6 +85,7 @@ function webpackBuild(pkgName, pkgPath) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
   }
+
   return false;
 }
 
@@ -89,9 +97,11 @@ function webpackBuild(pkgName, pkgPath) {
  */
 function webpackTranspile(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
+
   if (targetPkgPath) {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.transpile.babel.js');
+
       // Delete dist folder
       console.info(`Cleaning ${targetPkgPath}/es folder...`.cyan);
       rimraf.sync(path.resolve(targetPkgPath, 'es'));
@@ -103,6 +113,7 @@ function webpackTranspile(pkgName, pkgPath) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
   }
+
   return false;
 }
 
@@ -118,6 +129,7 @@ function buildCommonJS(pkgName, pkgPath) {
   rimraf.sync(path.resolve(pkgPath, 'cjs'));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
   const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
+
   babelrc.plugins.push('transform-postcss');
   babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelrc);
 }
@@ -135,6 +147,7 @@ function buildES(pkgName, pkgPath) {
 
   console.info(`Transpiling ${pkgName} to ES5 with import/export ...`.cyan);
   const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
+
   Object.assign(babelrc, {
     babelrc: false,
     sourceMaps: true,
@@ -152,6 +165,7 @@ function buildES(pkgName, pkgPath) {
     ]
   });
   babelrc.plugins.push('transform-postcss');
+
   return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, babelrc);
 }
 
