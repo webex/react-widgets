@@ -166,7 +166,6 @@ ansiColor('xterm') {
           stage('Build for CDN'){
             withCredentials([
               string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN'),
-              usernamePassword(credentialsId: 'MESSAGE_DEMO_CLIENT', passwordVariable: 'MESSAGE_DEMO_CLIENT_SECRET', usernameVariable: 'MESSAGE_DEMO_CLIENT_ID'),
               file(credentialsId: 'web-sdk-cdn-private-key', variable: 'PRIVATE_KEY_PATH'),
               string(credentialsId: 'web-sdk-cdn-private-key-passphrase', variable: 'PRIVATE_KEY_PASSPHRASE'),
             ]) {

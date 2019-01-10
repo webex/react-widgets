@@ -17,8 +17,7 @@ export default (options, env) => {
   const plugins = [
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
-      'MESSAGE_DEMO_CLIENT_ID',
-      'MESSAGE_DEMO_CLIENT_SECRET',
+      'CISCOSPARK_CLIENT_ID',
       'REACT_CISCOSPARK_VERSION',
       'WDM_SERVICE_URL',
       'IDBROKER_BASE_URL',
