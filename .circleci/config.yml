@@ -87,7 +87,7 @@ jobs:
           paths:
             - dist-test
 
-  journey_tests:
+  journey_tests_chrome:
     <<: *job_common
     environment:
       SAUCE: true
@@ -102,7 +102,35 @@ jobs:
           no_output_timeout: 15m
           command: |
             set -em
-            BROWSER=chrome npm run test:integration
+            PORT=4567 BROWSER=chrome npm run test:integration
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_artifacts:
+          path: reports/junit/wdio
+          destination: wdio
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs/
+          destination: npm-logs
+      - store_artifacts:
+          path: reports/browser
+          destination: browser
+
+  journey_tests_firefox:
+    <<: *job_common
+    environment:
+      SAUCE: true
+      STATIC_SERVER_PATH: /tmp/workspace/dist-test
+    steps:
+      - checkout
+      - <<: *restore_workspace
+      - <<: *restore_node_modules
+      - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
+      - run:
+          name: Integration Tests Firefox
+          no_output_timeout: 15m
+          command: |
+            set -em
+            PORT=4568 BROWSER=firefox npm run test:integration
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
@@ -127,6 +155,9 @@ workflows:
       - unit_tests_and_linting:
           requires:
             - install
-      - journey_tests:
+      - journey_tests_chrome:
+          requires:
+            - build_for_tests
+      - journey_tests_firefox:
           requires:
             - build_for_tests
