@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.406"></a>
+## [0.1.406](https://github.com/webex/react-ciscospark/compare/v0.1.405...v0.1.406) (2019-01-11)
+
+
+### Bug Fixes
+
+* **presence-avatar:** remove empty div causing layout issues ([c11aaa7](https://github.com/webex/react-ciscospark/commit/c11aaa7))
+
+
+
 <a name="0.1.405"></a>
 ## [0.1.405](https://github.com/webex/react-ciscospark/compare/v0.1.404...v0.1.405) (2019-01-10)
 
