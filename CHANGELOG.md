@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.409"></a>
+## [0.1.409](https://github.com/webex/react-ciscospark/compare/v0.1.408...v0.1.409) (2019-01-15)
+
+
+### Bug Fixes
+
+* **widget-recents:** padding for search input box for lower resolutions ([4376a02](https://github.com/webex/react-ciscospark/commit/4376a02))
+
+
+
 <a name="0.1.408"></a>
 ## [0.1.408](https://github.com/webex/react-ciscospark/compare/v0.1.407...v0.1.408) (2019-01-15)
 
