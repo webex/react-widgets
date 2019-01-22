@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.412"></a>
+## [0.1.412](https://github.com/webex/react-ciscospark/compare/v0.1.411...v0.1.412) (2019-01-22)
+
+
+### Bug Fixes
+
+* **space-item:** fix call start time display ([f46b5d2](https://github.com/webex/react-ciscospark/commit/f46b5d2))
+
+
+### Features
+
+* **r-m-spaces:** add decrypt promise to space item ([a3abdeb](https://github.com/webex/react-ciscospark/commit/a3abdeb))
+* **r-m-spaces:** optimize convo request and storage ([aa0cc26](https://github.com/webex/react-ciscospark/commit/aa0cc26))
+* **recents:** add avatars to initial fetch before continuing ([f3b170d](https://github.com/webex/react-ciscospark/commit/f3b170d))
+* **recents:** optimize initial space loading via enhancers ([e34956d](https://github.com/webex/react-ciscospark/commit/e34956d))
+
+
+
 <a name="0.1.411"></a>
 ## [0.1.411](https://github.com/webex/react-ciscospark/compare/v0.1.410...v0.1.411) (2019-01-18)
 
