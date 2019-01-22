@@ -110,7 +110,8 @@ describe('Widget Recents', () => {
     });
   });
 
-  describe('notifications', () => {
+  // Skipped until SPARK-53992
+  describe.skip('notifications', () => {
     it('should display an unread indicator', () => {
       const lorraineText = 'Marty, duck! Biff is behind you!';
 
