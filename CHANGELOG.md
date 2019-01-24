@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.413"></a>
+## [0.1.413](https://github.com/webex/react-ciscospark/compare/v0.1.412...v0.1.413) (2019-01-24)
+
+
+### Bug Fixes
+
+* **widget-demo:** correct spaceActivities prop ([2f938e3](https://github.com/webex/react-ciscospark/commit/2f938e3))
+
+
+
 <a name="0.1.412"></a>
 ## [0.1.412](https://github.com/webex/react-ciscospark/compare/v0.1.411...v0.1.412) (2019-01-22)
 
