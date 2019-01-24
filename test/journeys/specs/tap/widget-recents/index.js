@@ -8,7 +8,7 @@ import CiscoSpark from '@ciscospark/spark-core';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {clearEventLog, getEventLog} from '../../../lib/events';
-import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/recents';
+import loginAndOpenWidget from '../../../lib/test-helpers/tap/recents';
 import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
@@ -23,7 +23,7 @@ describe('Widget Recents', () => {
 
   before('load browser', () => {
     browserLocal
-      .url('/widget-recents/production/demo/index.html')
+      .url('/widget-demo/production/index.html')
       .execute(() => {
         localStorage.clear();
       });
@@ -109,9 +109,6 @@ describe('Widget Recents', () => {
 
   before('inject token', () => {
     loginAndOpenWidget(browserLocal, marty.token.access_token);
-    const recentsWidget = '.ciscospark-spaces-list-wrapper';
-
-    browserLocal.waitUntil(() => browserLocal.element(recentsWidget).isVisible(), 3500, 'widget was never created');
   });
 
   describe('group space', () => {

@@ -6,7 +6,7 @@ import {elements as basicElements, switchToMeet, switchToMessage} from '../../..
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
-import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
+import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
 
 describe('Widget Space: One on One: TAP', () => {
   const browserLocal = browser.select('browserLocal');
@@ -15,7 +15,7 @@ describe('Widget Space: One on One: TAP', () => {
 
   before('load browsers', () => {
     browser
-      .url('/widget-space/production/demo/index.html?oneOnOne')
+      .url('/widget-demo/production/index.html?oneOnOne')
       .execute(() => {
         localStorage.clear();
       });

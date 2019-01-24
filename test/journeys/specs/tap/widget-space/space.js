@@ -9,7 +9,7 @@ import waitForPromise from '../../../lib/wait-for-promise';
 import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
-import {loginAndOpenWidget} from '../../../lib/test-helpers/tap/space';
+import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
 
 describe('Widget Space: Group Space: TAP', () => {
   const browserLocal = browser.select('browserLocal');
@@ -19,12 +19,12 @@ describe('Widget Space: Group Space: TAP', () => {
 
   before('load browsers', () => {
     browserLocal
-      .url('/widget-space/production/demo/index.html?space&local')
+      .url('/widget-demo/production/index.html?space&local')
       .execute(() => {
         localStorage.clear();
       });
     browserRemote
-      .url('/widget-space/production/demo/index.html?space&remote')
+      .url('/widget-demo/production/index.html?space&remote')
       .execute(() => {
         localStorage.clear();
       });
