@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.414"></a>
+## [0.1.414](https://github.com/webex/react-ciscospark/compare/v0.1.413...v0.1.414) (2019-01-25)
+
+
+### Features
+
+* **recents:** add extendedLoad property ([3be5cd3](https://github.com/webex/react-ciscospark/commit/3be5cd3))
+* **recents:** add spaceLoadCount property ([150e405](https://github.com/webex/react-ciscospark/commit/150e405))
+* **widget-demo:** add extendedLoad config to recents ([6aece07](https://github.com/webex/react-ciscospark/commit/6aece07))
+* **widget-demo:** add support for recents spaceLoadCount prop ([5bffd7c](https://github.com/webex/react-ciscospark/commit/5bffd7c))
+
+
+
 <a name="0.1.413"></a>
 ## [0.1.413](https://github.com/webex/react-ciscospark/compare/v0.1.412...v0.1.413) (2019-01-24)
 
