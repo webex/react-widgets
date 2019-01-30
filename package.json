@@ -47,7 +47,8 @@
   "contributors": [
     "Adam Weeks <adweeks@cisco.com>",
     "Bernie Zang <nzang@cisco.com>",
-    "Moriah Maney <momaney@cisco.com>"
+    "Moriah Maney <momaney@cisco.com>",
+    "Arash Koushkebaghi <akoushke@cisco.com>"
   ],
   "license": "MIT",
   "bugs": {
