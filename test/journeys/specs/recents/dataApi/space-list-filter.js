@@ -23,7 +23,7 @@ describe('Widget Recents Space Filters: Data API', () => {
   const EXPECTED_RESULT_4 = [SPACE1, SPACE2, SPACE3, SPACE4];
 
   let allPassed = true;
-  let docbrown, lorraine, marty, participants;
+  let marty, participants;
 
   before('start new sauce session', () => {
     renameJob(jobNames.recentsFilterDataApi, browser);
@@ -140,96 +140,6 @@ describe('Widget Recents Space Filters: Data API', () => {
       if (browserLocal.element(elements.clearButton).isExisting()) {
         browserLocal.click(elements.clearButton);
       }
-      allPassed = allPassed && (this.currentTest.state === 'passed');
-    });
-  });
-
-  describe('With space type filter', () => {
-    describe('Space type of group', () => {
-      before('load browser', () => {
-        browserLocal.url('/data-api/recents.html');
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const csmmDom = document.createElement('div');
-
-          csmmDom.setAttribute('class', 'ciscospark-widget');
-          csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
-          csmmDom.setAttribute('data-access-token', localAccessToken);
-          csmmDom.setAttribute('data-space-type-filter', 'group');
-          document.getElementById('ciscospark-widget').appendChild(csmmDom);
-          window.loadBundle('/dist-recents/bundle.js');
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 4 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 4);
-      });
-    });
-
-    describe('Space type of direct (one on one)', () => {
-      before('load browser', () => {
-        browserLocal.url('/data-api/recents.html');
-      });
-
-      before('create one on one conversations', () => {
-        [lorraine, marty, docbrown] = participants;
-        createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
-        createSpace({sparkInstance: marty.spark, participants: [docbrown, marty]});
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const csmmDom = document.createElement('div');
-
-          csmmDom.setAttribute('class', 'ciscospark-widget');
-          csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
-          csmmDom.setAttribute('data-access-token', localAccessToken);
-          csmmDom.setAttribute('data-space-type-filter', 'direct');
-          document.getElementById('ciscospark-widget').appendChild(csmmDom);
-          window.loadBundle('/dist-recents/bundle.js');
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 2 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 2), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 2);
-      });
-    });
-
-    describe('Space type filter is not set', () => {
-      before('load browser', () => {
-        browserLocal.url('/data-api/recents.html');
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const csmmDom = document.createElement('div');
-
-          csmmDom.setAttribute('class', 'ciscospark-widget');
-          csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
-          csmmDom.setAttribute('data-access-token', localAccessToken);
-          document.getElementById('ciscospark-widget').appendChild(csmmDom);
-          window.loadBundle('/dist-recents/bundle.js');
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 6 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 6), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 6);
-      });
-    });
-
-    /* eslint-disable-next-line func-names */
-    afterEach(function () {
       allPassed = allPassed && (this.currentTest.state === 'passed');
     });
   });

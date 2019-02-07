@@ -23,7 +23,7 @@ describe('Widget Recents Space Filters', () => {
   const EXPECTED_RESULT_4 = [SPACE1, SPACE2, SPACE3, SPACE4];
 
   let allPassed = true;
-  let docbrown, lorraine, marty, participants;
+  let marty, participants;
 
   before('start new sauce session', () => {
     renameJob(jobNames.recentsFilterGlobal, browser);
@@ -141,102 +141,6 @@ describe('Widget Recents Space Filters', () => {
       if (browserLocal.element(elements.clearButton).isExisting()) {
         browserLocal.click(elements.clearButton);
       }
-      allPassed = allPassed && (this.currentTest.state === 'passed');
-    });
-  });
-
-  describe('With space type filter', () => {
-    describe('Space type of group', () => {
-      before('load browser', () => {
-        browserLocal.url('/recents.html');
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const options = {
-            accessToken: localAccessToken,
-            onEvent: (eventName, detail) => {
-              window.ciscoSparkEvents.push({eventName, detail});
-            },
-            enableSpaceListFilter: true,
-            spaceTypeFilter: 'group'
-          };
-
-          window.openRecentsWidget(options);
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 4 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 4);
-      });
-    });
-
-    describe('Space type of direct (one on one)', () => {
-      before('load browser', () => {
-        browserLocal.url('/recents.html');
-      });
-
-      before('create one on one conversations', () => {
-        [lorraine, marty, docbrown] = participants;
-        createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
-        createSpace({sparkInstance: marty.spark, participants: [docbrown, marty]});
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const options = {
-            accessToken: localAccessToken,
-            onEvent: (eventName, detail) => {
-              window.ciscoSparkEvents.push({eventName, detail});
-            },
-            enableSpaceListFilter: true,
-            spaceTypeFilter: 'direct'
-          };
-
-          window.openRecentsWidget(options);
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 2 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 2), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 2);
-      });
-    });
-
-    describe('Space type filter is not set', () => {
-      before('load browser', () => {
-        browserLocal.url('/recents.html');
-      });
-
-      before('opens recents widget for marty', () => {
-        browserLocal.execute((localAccessToken) => {
-          const options = {
-            accessToken: localAccessToken,
-            onEvent: (eventName, detail) => {
-              window.ciscoSparkEvents.push({eventName, detail});
-            },
-            enableSpaceListFilter: true
-          };
-
-          window.openRecentsWidget(options);
-        }, marty.token.access_token);
-        browserLocal.waitForVisible(elements.recentsWidget);
-      });
-
-      it('displays 6 items', () => {
-        browserLocal.waitUntil((() => browserLocal.elements(elements.title).isVisible()
-          && browserLocal.elements(elements.title).getText().length === 6), TIMEOUT);
-        assert(browserLocal.elements(elements.title).getText().length, 6);
-      });
-    });
-
-    /* eslint-disable-next-line func-names */
-    afterEach(function () {
       allPassed = allPassed && (this.currentTest.state === 'passed');
     });
   });
