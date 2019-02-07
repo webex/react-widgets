@@ -23,7 +23,7 @@ if (!baseUrl) {
 }
 const browser = process.env.BROWSER || 'chrome';
 const version = process.env.VERSION || 'latest';
-const platform = process.env.PLATFORM || 'mac 10.12';
+const platform = process.env.PLATFORM || 'mac 10.13';
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 
 process.env.BUILD_NUMBER = build;
