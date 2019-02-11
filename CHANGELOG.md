@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.417"></a>
+## [0.1.417](https://github.com/webex/react-ciscospark/compare/v0.1.416...v0.1.417) (2019-02-11)
+
+
+### Bug Fixes
+
+* **widget-recents:** fetch proper to user avatar in direct spaces ([bb5cb6e](https://github.com/webex/react-ciscospark/commit/bb5cb6e))
+* **widget-recents:** use proper selector method in setup ([8435ae8](https://github.com/webex/react-ciscospark/commit/8435ae8))
+
+
+
 <a name="0.1.416"></a>
 ## [0.1.416](https://github.com/webex/react-ciscospark/compare/v0.1.415...v0.1.416) (2019-02-04)
 
