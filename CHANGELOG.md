@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.418"></a>
+## [0.1.418](https://github.com/webex/react-ciscospark/compare/v0.1.417...v0.1.418) (2019-02-12)
+
+
+### Bug Fixes
+
+* **recents:** use proper selector method in setup ([ffddab2](https://github.com/webex/react-ciscospark/commit/ffddab2))
+
+
+### Features
+
+* **r-m-spaces:** add add/remove tags actions ([9faf95b](https://github.com/webex/react-ciscospark/commit/9faf95b))
+* **react-component-utils:** add api activity verb constants ([c555b16](https://github.com/webex/react-ciscospark/commit/c555b16))
+* **recents:** move activity listener to enhancer ([c794323](https://github.com/webex/react-ciscospark/commit/c794323))
+* **utils:** update getBadgeState to ignore "MUTED" tag ([0427503](https://github.com/webex/react-ciscospark/commit/0427503))
+* **widget-recents:** add support for TAG and UNTAG activities ([6f16f07](https://github.com/webex/react-ciscospark/commit/6f16f07))
+
+
+
 <a name="0.1.417"></a>
 ## [0.1.417](https://github.com/webex/react-ciscospark/compare/v0.1.416...v0.1.417) (2019-02-11)
 
