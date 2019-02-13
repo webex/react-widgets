@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.419"></a>
+## [0.1.419](https://github.com/webex/react-ciscospark/compare/v0.1.418...v0.1.419) (2019-02-13)
+
+
+### Bug Fixes
+
+* **circleci:** pin firefox version to 64 ([6f990a0](https://github.com/webex/react-ciscospark/commit/6f990a0))
+
+
+
 <a name="0.1.418"></a>
 ## [0.1.418](https://github.com/webex/react-ciscospark/compare/v0.1.417...v0.1.418) (2019-02-12)
 
