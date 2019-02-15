@@ -102,7 +102,7 @@ jobs:
           no_output_timeout: 15m
           command: |
             set -em
-            PORT=4567 BROWSER=chrome npm run test:integration
+            BROWSER=chrome npm run test:integration
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
@@ -130,7 +130,7 @@ jobs:
           no_output_timeout: 15m
           command: |
             set -em
-            PORT=4568 VERSION=64 BROWSER=firefox npm run test:integration
+            VERSION=64 BROWSER=firefox npm run test:integration
       - store_test_results:
           path: reports/junit/wdio
       - store_artifacts:
