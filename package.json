@@ -193,7 +193,7 @@
     "wdio-firefox-profile-service": "^0.1.2",
     "wdio-junit-reporter": "^0.4.4",
     "wdio-mocha-framework": "^0.6.3",
-    "wdio-sauce-service": "^0.4.10",
+    "wdio-sauce-service": "^0.4.14",
     "wdio-selenium-standalone-service": "0.0.10",
     "wdio-spec-reporter": "^0.1.5",
     "wdio-static-server-service": "^1.0.1",
