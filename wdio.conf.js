@@ -337,7 +337,15 @@ if (isSauceEnabled) {
         'localhost'
       ],
       tunnelIdentifier: tunnelId,
-      port: process.env.SAUCE_CONNECT_PORT || 4445
+      port: process.env.SAUCE_CONNECT_PORT || 4445,
+      // retry to establish a tunnel multiple times. (optional)
+      connectRetries: 4,
+      // time to wait between connection retries in ms. (optional)
+      connectRetryTimeout: 2000,
+      // retry to download the sauce connect archive multiple times. (optional)
+      downloadRetries: 4,
+      // time to wait between download retries in ms. (optional)
+      downloadRetryTimeout: 1000
     },
     capabilities: {
       browserLocal: {
