@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.422"></a>
+## [0.1.422](https://github.com/webex/react-ciscospark/compare/v0.1.421...v0.1.422) (2019-02-19)
+
+
+### Bug Fixes
+
+* **space:** ECM files are displayed as links now ([cc65e8d](https://github.com/webex/react-ciscospark/commit/cc65e8d))
+
+
+### Features
+
+* **space:** Upgraded Cisco Spark SDK to 1.47.3 ([14e304f](https://github.com/webex/react-ciscospark/commit/14e304f))
+
+
+
 <a name="0.1.421"></a>
 ## [0.1.421](https://github.com/webex/react-ciscospark/compare/v0.1.420...v0.1.421) (2019-02-19)
 
