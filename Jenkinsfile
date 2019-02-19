@@ -90,8 +90,8 @@ ansiColor('xterm') {
               sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc'
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm install v8.11.3
-              nvm use v8.11.3
+              nvm install v8.15.0
+              nvm use v8.15.0
               npm install -g npm@6.4.1
               npm install
               git checkout .npmrc
@@ -105,7 +105,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.3
+              nvm use v8.15.0
               npm run static-analysis
               '''
             }
@@ -118,7 +118,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.3
+              nvm use v8.15.0
               action=`npm run --silent tooling -- check-testable`
               echo $action > .action
               '''
@@ -141,7 +141,7 @@ ansiColor('xterm') {
               ]) {
                 sh '''#!/bin/bash -e
                 source ~/.nvm/nvm.sh
-                nvm use v8.11.3
+                nvm use v8.15.0
                 npm run jest
                 '''
               }
@@ -154,7 +154,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.3
+              nvm use v8.15.0
               npm run release -- --release-as patch --no-verify
               version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
               echo $version > .version
@@ -171,7 +171,7 @@ ansiColor('xterm') {
             ]) {
               sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use v8.11.3
+              nvm use v8.15.0
               version=`cat .version`
               export NODE_ENV=production
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
@@ -234,7 +234,7 @@ ansiColor('xterm') {
                   echo ''
                   sh '''#!/bin/bash -e
                   source ~/.nvm/nvm.sh
-                  nvm use v8.11.3
+                  nvm use v8.15.0
                   npm run publish:components
                   rm $HOME/.npmrc
                   '''

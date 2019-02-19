@@ -30,8 +30,8 @@ pipeline {
             echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc
             source ~/.bashrc || true
             source ~/.profile || true
-            nvm install 8.11.3
-            nvm use 8.11.3
+            nvm install v8.15.0
+            nvm use v8.15.0
             npm install -g npm@6.4.1
             npm install
             rm .npmrc
@@ -49,7 +49,7 @@ pipeline {
         ]) {
             sh '''#!/bin/bash -e
               source ~/.nvm/nvm.sh
-              nvm use 8.11.3
+              nvm use v8.15.0
               NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
               set -m
               (
