@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.421"></a>
+## [0.1.421](https://github.com/webex/react-ciscospark/compare/v0.1.420...v0.1.421) (2019-02-19)
+
+
+### Features
+
+* **widget-demo:** remove spaceTypeFilter option ([864afbc](https://github.com/webex/react-ciscospark/commit/864afbc))
+* **widget-recents:** remove spaceTypeFilter ([1bd514a](https://github.com/webex/react-ciscospark/commit/1bd514a))
+
+
+
 <a name="0.1.420"></a>
 ## [0.1.420](https://github.com/webex/react-ciscospark/compare/v0.1.419...v0.1.420) (2019-02-18)
 
