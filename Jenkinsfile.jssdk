@@ -26,8 +26,8 @@ ansiColor('xterm') {
           ]) {
             sh '''#!/bin/bash -ex
             source ~/.nvm/nvm.sh
-            nvm install v8.11.3
-            nvm use v8.11.3
+            nvm install v8.15.0
+            nvm use v8.15.0
             npm install -g npm@6.4.1
             npm install
             npm run upgradespark
@@ -41,7 +41,7 @@ ansiColor('xterm') {
           def version
           sh '''#!/bin/bash -ex
           source ~/.nvm/nvm.sh
-          nvm use v8.11.3
+          nvm use v8.15.0
           version=$(node ./scripts/utils/jssdkversion.js)
           echo $version > .version
           git add package.json package-lock.json
