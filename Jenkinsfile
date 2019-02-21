@@ -224,10 +224,10 @@ ansiColor('xterm') {
 
             stage('Publish to NPM') {
               withCredentials([
-                string(credentialsId: 'WIDGETS_NPM_PUBLISH_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
+                string(credentialsId: 'JS_SDK_NPM_PUBLISH_TOKEN', variable: 'NPM_PUBLISH_TOKEN')
               ]) {
                 try {
-                  sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> $HOME/.npmrc'
+                  sh 'echo \'//registry.npmjs.org/:_authToken=${NPM_PUBLISH_TOKEN}\' >> $HOME/.npmrc'
                   // Publish
                   echo ''
                   echo 'Reminder: E403 errors below are normal. They occur for any package that has no updates to publish'
