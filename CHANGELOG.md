@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.426"></a>
+## [0.1.426](https://github.com/webex/react-ciscospark/compare/v0.1.425...v0.1.426) (2019-02-22)
+
+
+### Bug Fixes
+
+* **widget-message:** use proper toUser object in activity event ([a8f3393](https://github.com/webex/react-ciscospark/commit/a8f3393))
+
+
+### Features
+
+* **r-m-spaces:** add fetchSpacesEncrypted action ([dad2bcf](https://github.com/webex/react-ciscospark/commit/dad2bcf))
+* **widget-recents:** add get avatar and user for new space to listeners ([b775d6a](https://github.com/webex/react-ciscospark/commit/b775d6a))
+* **widget-recents:** add helpers ([52fa1af](https://github.com/webex/react-ciscospark/commit/52fa1af))
+* **widget-recents:** add support for empty 1:1 in selector ([6c48c4d](https://github.com/webex/react-ciscospark/commit/6c48c4d))
+* **widget-recents:** use fetchSpacesEncrypted in setup ([7b49601](https://github.com/webex/react-ciscospark/commit/7b49601))
+
+
+
 <a name="0.1.425"></a>
 ## [0.1.425](https://github.com/webex/react-ciscospark/compare/v0.1.424...v0.1.425) (2019-02-21)
 
