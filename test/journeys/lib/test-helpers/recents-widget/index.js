@@ -3,6 +3,7 @@ import {assert} from 'chai';
 import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
+  loadingScreen: '.ciscospark-loading',
   recentsWidget: '.ciscospark-spaces-list-wrapper',
   listContainer: '.ciscospark-spaces-list',
   firstSpace: '.ciscospark-spaces-list-item-0',
@@ -14,7 +15,10 @@ export const elements = {
   joinCallButton: 'button[aria-label="Join Call"]',
   answerButton: 'button[aria-label="Answer"]',
   searchInput: '#pillSearchInput',
-  clearButton: 'button[aria-label="clear input"]'
+  clearButton: 'button[aria-label="clear input"]',
+  headerBar: '.ciscospark-recents-header',
+  headerProfile: '.ciscospark-recents-header .ciscospark-recents-header-left button',
+  headerAddButton: 'button[aria-label="Contact a person or create a space"]'
 };
 
 export * from './space-list-filter';

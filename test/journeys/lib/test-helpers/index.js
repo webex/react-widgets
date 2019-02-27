@@ -9,6 +9,7 @@ export const jobNames = {
   recentsGlobal: 'react-widget-recents-global',
   recentsFilterDataApi: 'react-widget-recents-filter-dataApi',
   recentsFilterGlobal: 'react-widget-recents-filter-global',
+  recentsStartupSettings: 'react-widget-recents-startup',
   space: 'react-widget-space-main',
   spaceGuest: 'react-widget-space-guest',
   spaceDataApi: 'react-widget-space-dataApi',

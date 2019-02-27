@@ -119,7 +119,8 @@ exports.config = {
       './test/journeys/specs/recents/dataApi/basic.js',
       './test/journeys/specs/recents/global/basic.js',
       './test/journeys/specs/recents/dataApi/space-list-filter.js',
-      './test/journeys/specs/recents/global/space-list-filter.js'
+      './test/journeys/specs/recents/global/space-list-filter.js',
+      './test/journeys/specs/recents/global/startup-settings.js'
     ]
   },
   // Patterns to exclude.

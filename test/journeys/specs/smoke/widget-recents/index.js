@@ -58,7 +58,10 @@ describe('Smoke Tests - Recents Widget', () => {
         accessToken: localAccessToken,
         onEvent: (eventName, detail) => {
           window.ciscoSparkEvents.push({eventName, detail});
-        }
+        },
+        enableAddButton: true,
+        enableSpaceListFilter: true,
+        enableUserProfile: true
       };
 
       window.openRecentsWidget(options);
@@ -86,6 +89,20 @@ describe('Smoke Tests - Recents Widget', () => {
     const title = browserLocal.getTitle();
 
     assert.equal(title, 'Cisco Spark Widget Test');
+  });
+
+  describe('Header Items', () => {
+    it('has a search bar for space filtering', () => {
+      assert.isTrue(browserLocal.element(elements.searchInput).isVisible(), 'does not have header search bar');
+    });
+
+    it('has a user profile picture', () => {
+      assert.isTrue(browserLocal.element(elements.headerProfile).isVisible(), 'does not have header profile');
+    });
+
+    it('has an add space button', () => {
+      assert.isTrue(browserLocal.element(elements.headerAddButton).isVisible(), 'does not have header add space button');
+    });
   });
 
   describe('Group Space', () => {
@@ -262,6 +279,35 @@ describe('Smoke Tests - Recents Widget', () => {
         assert.isNotEmpty(event.personEmail, 'does not contain personEmail');
         assert.isNotEmpty(event.created, 'does not contain created');
       });
+
+      it('add:clicked', () => {
+        clearEventLog(browserLocal);
+        browserLocal.element(elements.headerAddButton).click();
+        const events = findEventName({
+          eventName: 'add:clicked',
+          events: getEventLog(browserLocal)
+        });
+
+        assert.isNotEmpty(events, 'does not have add:clicked event in log');
+      });
+
+      it('profile:clicked', () => {
+        clearEventLog(browserLocal);
+        browserLocal.element(elements.headerProfile).click();
+        const events = findEventName({
+          eventName: 'profile:clicked',
+          events: getEventLog(browserLocal)
+        });
+
+        assert.isNotEmpty(events, 'does not have profile:clicked event in log');
+
+        const event = events[0].detail.data;
+
+        assert.isNotEmpty(event.id, 'profile:clicked data does not contain id');
+        assert.isNotEmpty(event.displayName, 'profile:clicked data does not contain displayName');
+        assert.isNotEmpty(event.email, 'profile:clicked data does not contain email');
+        assert.isNotEmpty(event.orgId, 'profile:clicked data does not contain orgId');
+      });
     });
   });
 
@@ -321,16 +367,6 @@ describe('Smoke Tests - Recents Widget', () => {
     });
   });
 
-  describe('Accessibility', () => {
-    it('should have no accessibility violations', () => {
-      it('should have no accessibility violations', () =>
-        runAxe(browserLocal, 'ciscospark-widget')
-          .then((results) => {
-            assert.equal(results.violations.length, 0, 'has accessibilty violations');
-          }));
-    });
-  });
-
   describe('With keyword / search term input box', () => {
     it(`displays 2 items for keyword filter '${KEYWORD1}'`, () => {
       const result = enterKeywordAndWait({
@@ -353,6 +389,17 @@ describe('Smoke Tests - Recents Widget', () => {
       assert(result.length, 4);
     });
   });
+
+  describe('Accessibility', () => {
+    it('should have no accessibility violations', () => {
+      it('should have no accessibility violations', () =>
+        runAxe(browserLocal, 'ciscospark-widget')
+          .then((results) => {
+            assert.equal(results.violations.length, 0, 'has accessibilty violations');
+          }));
+    });
+  });
+
 
   it('disconnects test users', () => disconnectDevices(participants));
 
