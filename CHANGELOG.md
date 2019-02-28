@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.428"></a>
+## [0.1.428](https://github.com/webex/react-ciscospark/compare/v0.1.427...v0.1.428) (2019-02-28)
+
+
+### Bug Fixes
+
+* **r-m-users:** check correct avatar property ([6f7e128](https://github.com/webex/react-ciscospark/commit/6f7e128))
+
+
+### Features
+
+* **r-component-presence-avatar:** add onclick ([4fa7c3d](https://github.com/webex/react-ciscospark/commit/4fa7c3d))
+* **r-component-presence-avatar:** add onclick ([fee6f87](https://github.com/webex/react-ciscospark/commit/fee6f87))
+* **r-m-users:** subscribe to current user presence ([69cb037](https://github.com/webex/react-ciscospark/commit/69cb037))
+* **spaces-list:** add prop for onScoll event ([2441a01](https://github.com/webex/react-ciscospark/commit/2441a01))
+* **widget-demo:** add recents header options ([1585197](https://github.com/webex/react-ciscospark/commit/1585197))
+* **widget-recents:** add user profile and add button to header ([504365e](https://github.com/webex/react-ciscospark/commit/504365e))
+* **widget-recents:** hide bottom border based on scroll position ([dae8db2](https://github.com/webex/react-ciscospark/commit/dae8db2))
+
+
+
 <a name="0.1.427"></a>
 ## [0.1.427](https://github.com/webex/react-ciscospark/compare/v0.1.426...v0.1.427) (2019-02-22)
 
