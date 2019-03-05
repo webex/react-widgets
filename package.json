@@ -45,10 +45,11 @@
     "url": "git+https://github.com/webex/react-ciscospark.git"
   },
   "contributors": [
-    "Adam Weeks <adweeks@cisco.com>",
-    "Bernie Zang <nzang@cisco.com>",
+    "Arash Koushkebaghi <akoushke@cisco.com>",
     "Moriah Maney <momaney@cisco.com>",
-    "Arash Koushkebaghi <akoushke@cisco.com>"
+    "Matt Norris <matnorri@cisco.com> (http://mattnorris.me)",
+    "Adam Weeks <adweeks@cisco.com>",
+    "Bernie Zang <nzang@cisco.com>"
   ],
   "license": "MIT",
   "bugs": {
