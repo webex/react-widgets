@@ -57,7 +57,9 @@
   "homepage": "https://github.com/webex/react-ciscospark#readme",
   "dependencies": {
     "@ciscospark/common": "1.49.3",
+    "@ciscospark/common-timers": "1.49.3",
     "@ciscospark/helper-html": "1.49.3",
+    "@ciscospark/http-core": "1.49.3",
     "@ciscospark/internal-plugin-conversation": "1.49.3",
     "@ciscospark/internal-plugin-encryption": "1.49.3",
     "@ciscospark/internal-plugin-feature": "1.49.3",
@@ -68,6 +70,7 @@
     "@ciscospark/internal-plugin-search": "1.49.3",
     "@ciscospark/internal-plugin-team": "1.49.3",
     "@ciscospark/internal-plugin-user": "1.49.3",
+    "@ciscospark/internal-plugin-wdm": "1.49.3",
     "@ciscospark/plugin-authorization": "1.49.3",
     "@ciscospark/plugin-logger": "1.49.3",
     "@ciscospark/plugin-people": "1.49.3",
