@@ -6,7 +6,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({path: '.env.default'});
 
-
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').argv;
 
@@ -16,6 +15,7 @@ const {inject} = require('./scripts/tests/openh264');
 const beforeSuite = require('./scripts/tests/beforeSuite');
 
 const port = process.env.PORT || 4567;
+const isSauceEnabled = (process.env.SAUCE === 'true');
 let baseUrl = process.env.JOURNEY_TEST_BASE_URL;
 
 if (!baseUrl) {
@@ -35,7 +35,7 @@ const screenResolution = platform.toLowerCase().includes('os x') || platform ===
 
 const chromeCapabilities = {
   browserName: 'chrome',
-  chromeOptions: {
+  'goog:chromeOptions': {
     args: [
       '--use-fake-device-for-media-stream',
       '--use-fake-ui-for-media-stream',
@@ -47,10 +47,20 @@ const chromeCapabilities = {
   }
 };
 const firefoxCapabilities = {
-  browserName: 'firefox'
+  browserName: 'firefox',
+  'moz:firefoxOptions': {
+    prefs: {
+      'media.navigator.permission.disabled': true,
+      'media.peerconnection.video.h264_enabled': true,
+      'media.navigator.streams.fake': true,
+      'media.getusermedia.screensharing.enabled': true,
+      'media.getusermedia.screensharing.allowed_domains': 'localhost, 127.0.0.1',
+      'dom.webnotifications.enabled': false,
+      'media.gmp-manager.updateEnabled': true
+    }
+  }
 };
 let mochaTimeout = 60000;
-const isSauceEnabled = (process.env.SAUCE === 'true');
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
@@ -305,6 +315,7 @@ if (isSauceEnabled) {
         commandTimeout: 600,
         maxDuration: 3600,
         seleniumVersion: '3.4.0',
+        extendedDebugging: true,
         screenResolution,
         platform,
         version
@@ -317,6 +328,19 @@ if (isSauceEnabled) {
       commandTimeout: 600,
       maxDuration: 3600,
       seleniumVersion: '3.4.0',
+      extendedDebugging: true,
+      // extended debugging
+      'moz:firefoxOptions': {
+        args: [
+          '-start-debugger-server',
+          '9222'
+        ],
+        prefs: {
+          'devtools.chrome.enabled': true,
+          'devtools.debugger.prompt-connection': false,
+          'devtools.debugger.remote-enabled': true
+        }
+      },
       screenResolution,
       platform,
       version
