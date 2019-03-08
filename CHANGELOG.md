@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.430"></a>
+## [0.1.430](https://github.com/webex/react-ciscospark/compare/v0.1.429...v0.1.430) (2019-03-08)
+
+
+### Features
+
+* **hoc-conversation-mercury:** ignore reply activities ([f0c0328](https://github.com/webex/react-ciscospark/commit/f0c0328))
+* **r-m-conversation:** filter out reply activities ([e7cec51](https://github.com/webex/react-ciscospark/commit/e7cec51))
+* **utils:** add activity type constants ([feae011](https://github.com/webex/react-ciscospark/commit/feae011))
+* **widget-message:** ignore reply activities ([d01d339](https://github.com/webex/react-ciscospark/commit/d01d339))
+* **widget-recents:** ignore reply activities ([660d763](https://github.com/webex/react-ciscospark/commit/660d763))
+
+
+
 <a name="0.1.429"></a>
 ## [0.1.429](https://github.com/webex/react-ciscospark/compare/v0.1.428...v0.1.429) (2019-03-06)
 
