@@ -24,7 +24,7 @@ def warn = { msg ->
 
 ansiColor('xterm') {
   timestamps {
-    timeout(90) {
+    timeout(120) {
       node('NODE_JS_BUILDER') {
 
         def packageJsonVersion
