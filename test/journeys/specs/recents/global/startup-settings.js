@@ -7,6 +7,7 @@ import {
   setupGroupTestUsers
 } from '../../../lib/test-users';
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
+import {findEventName, getEventLog} from '../../../lib/events';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents', () => {
@@ -46,7 +47,8 @@ describe('Widget Recents', () => {
           },
           enableAddButton: false,
           enableSpaceListFilter: false,
-          enableUserProfile: false
+          enableUserProfile: false,
+          enableUserProfileMenu: false
         };
 
         window.openRecentsWidget(options);
@@ -67,7 +69,8 @@ describe('Widget Recents', () => {
             },
             enableAddButton: true,
             enableSpaceListFilter: true,
-            enableUserProfile: true
+            enableUserProfile: true,
+            enableUserProfileMenu: true
           };
 
           window.openRecentsWidget(options);
@@ -87,6 +90,23 @@ describe('Widget Recents', () => {
       it('has an add space button', () => {
         assert.isTrue(browserRemote.element(elements.headerAddButton).isVisible(), 'does not have header add space button');
       });
+
+      it('has a user profile avatar setting menu', () => {
+        browserRemote.element(elements.headerProfile).click();
+        assert.isTrue(browserRemote.element(elements.headerSignout).isVisible(), 'does not have header sign out menu');
+      });
+
+      it('fires out the sign out event, if the user signs out', () => {
+        browserRemote.element(elements.headerProfile).click();
+        browserRemote.waitForVisible(elements.headerSignout);
+        browserRemote.element(elements.headerSignout).click();
+        const events = findEventName({
+          eventName: 'user_signout:clicked',
+          events: getEventLog(browserRemote)
+        });
+
+        assert.isNotEmpty(events, 'does not have user_signout:clicked event in log');
+      });
     });
   });
 
@@ -101,4 +121,3 @@ describe('Widget Recents', () => {
 
   after('disconnect', () => disconnectDevices(participants));
 });
-

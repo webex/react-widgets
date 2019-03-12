@@ -18,6 +18,7 @@ export const elements = {
   clearButton: 'button[aria-label="clear input"]',
   headerBar: '.ciscospark-recents-header',
   headerProfile: '.ciscospark-recents-header .ciscospark-recents-header-left button',
+  headerSignout: '.ciscospark-recents-header-profile-menu-signout',
   headerAddButton: 'button[aria-label="Contact a person or create a space"]'
 };
 
