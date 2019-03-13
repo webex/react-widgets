@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.433"></a>
+## [0.1.433](https://github.com/webex/react-ciscospark/compare/v0.1.432...v0.1.433) (2019-03-13)
+
+
+### Bug Fixes
+
+* **webdriver:** fix firefox automation problems ([fc26110](https://github.com/webex/react-ciscospark/commit/fc26110))
+
+
+
 <a name="0.1.432"></a>
 ## [0.1.432](https://github.com/webex/react-ciscospark/compare/v0.1.431...v0.1.432) (2019-03-13)
 
