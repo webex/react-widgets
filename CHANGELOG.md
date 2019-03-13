@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.432"></a>
+## [0.1.432](https://github.com/webex/react-ciscospark/compare/v0.1.431...v0.1.432) (2019-03-13)
+
+
+### Features
+
+* **presence-avatar:** replaced "default" with empty string type from avatar props ([131b5dd](https://github.com/webex/react-ciscospark/commit/131b5dd))
+* **widget-demo:** Added an additional checkbox to enable the user signout menu ([41b0aa0](https://github.com/webex/react-ciscospark/commit/41b0aa0))
+* **widget-recents:** Added  User profile sign out menu ([9ec73e3](https://github.com/webex/react-ciscospark/commit/9ec73e3))
+
+
+
 <a name="0.1.431"></a>
 ## [0.1.431](https://github.com/webex/react-ciscospark/compare/v0.1.430...v0.1.431) (2019-03-11)
 
