@@ -34,7 +34,8 @@ describe('Widget Recents', () => {
       [marty] = users;
       marty.spark = new CiscoSpark({
         credentials: {
-          authorization: marty.token
+          authorization: marty.token,
+          federation: true
         },
         config: {
           logger: {
@@ -51,7 +52,8 @@ describe('Widget Recents', () => {
       [docbrown] = users;
       docbrown.spark = new CiscoSpark({
         credentials: {
-          authorization: docbrown.token
+          authorization: docbrown.token,
+          federation: true
         },
         config: {
           logger: {
@@ -68,7 +70,8 @@ describe('Widget Recents', () => {
       [lorraine] = users;
       lorraine.spark = new CiscoSpark({
         credentials: {
-          authorization: lorraine.token
+          authorization: lorraine.token,
+          federation: true
         },
         config: {
           logger: {

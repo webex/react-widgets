@@ -65,6 +65,7 @@ jobs:
   build_for_tests:
     <<: *job_common
     environment:
+      - FEDERATION: "true"
       - NODE_ENV: "test"
       - ACL_SERVICE_URL: "https://acl-intb.ciscospark.com/acl/api/v1"
       - ATLAS_SERVICE_URL: "https://atlas-intb.ciscospark.com/admin/api/v1"

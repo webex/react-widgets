@@ -21,7 +21,8 @@ export default (options, env) => {
       'REACT_CISCOSPARK_VERSION',
       'WDM_SERVICE_URL',
       'IDBROKER_BASE_URL',
-      'CONVERSATION_SERVICE'
+      'CONVERSATION_SERVICE',
+      'FEDERATION'
     ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.

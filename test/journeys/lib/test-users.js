@@ -22,7 +22,11 @@ export function setupTestUserJwt({displayName}) {
 
   return createGuestUser({displayName})
     .then(({jwt}) => {
-      const guestSpark = new CiscoSpark();
+      const guestSpark = new CiscoSpark({
+        credentials: {
+          federation: true
+        }
+      });
 
       return guestSpark.authorization.requestAccessTokenFromJwt({jwt}).then(() =>
         // We don't have a user id for guest users until a record is looked up
@@ -65,7 +69,8 @@ export function createTestUsers(count, config) {
     users = u.map((user) => {
       const spark = new CiscoSpark({
         credentials: {
-          authorization: user.token
+          authorization: user.token,
+          federation: true
         },
         config: {
           logger: {
