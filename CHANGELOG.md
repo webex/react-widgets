@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.436"></a>
+## [0.1.436](https://github.com/webex/react-ciscospark/compare/v0.1.435...v0.1.436) (2019-03-20)
+
+
+### Features
+
+* **react-redux-spark:** make federation configurable ([e56d557](https://github.com/webex/react-ciscospark/commit/e56d557))
+* **spark:** add federation support ([efc8996](https://github.com/webex/react-ciscospark/commit/efc8996))
+
+
+
 <a name="0.1.435"></a>
 ## [0.1.435](https://github.com/webex/react-ciscospark/compare/v0.1.434...v0.1.435) (2019-03-19)
 
