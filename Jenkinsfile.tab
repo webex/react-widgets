@@ -1,6 +1,6 @@
 pipeline {
   agent{
-    label 'BASIC_SLAVE&&!beefy_BASIC_SLAVE'
+    label 'NODE_JS_BUILDER'
   }
 
   options {
@@ -27,13 +27,13 @@ pipeline {
             rm .nvmrc
             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
             ~/.nvm/nvm.sh
-            echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc
+            sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc'
             source ~/.bashrc || true
             source ~/.profile || true
             nvm install v8.15.0
             nvm use v8.15.0
             npm install -g npm@6.4.1
-            npm install
+            npm ci
             rm .npmrc
           '''
         }
@@ -42,23 +42,26 @@ pipeline {
 
     stage('Test') {
       steps {
+        echo "Starting Tab Tests"
         withCredentials([
-            string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
-            usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
-            string(credentialsId: 'CISCOSPARK_APPID_SECRET', variable: 'CISCOSPARK_APPID_SECRET'),
+          string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
+          usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
         ]) {
+          retry(2){
             sh '''#!/bin/bash -e
-              source ~/.nvm/nvm.sh
-              nvm use v8.15.0
-              NODE_ENV=test npm run build:package widget-space && npm run build:package widget-recents
-              set -m
-              (
-                (CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4569 SAUCE_CONNECT_PORT=5006 BROWSER=firefox VERSION=beta npm run test:integration || kill 0) &
-                (sleep 60; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4568 SAUCE_CONNECT_PORT=5005 BROWSER=chrome VERSION=beta npm run test:integration || kill 0) &
-                (sleep 120; CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true PORT=4567 SAUCE_CONNECT_PORT=5004 BROWSER=chrome PLATFORM="windows 10" VERSION=beta npm run test:integration || kill 0) &
-                wait
-              )
+            source ~/.nvm/nvm.sh
+            nvm unalias default
+            nvm use v8.15.0
+            # Fix 'nvm is not compatible with the npm config "prefix" option'.
+            # This error can happen when this agent's NODE_JS_BUILDER
+            # alters the environment.
+            npm config delete prefix
+            # Run tests
+            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=firefox VERSION=beta npm run test:tap
+            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome VERSION=beta npm run test:tap
+            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome PLATFORM="windows 10" VERSION=beta npm run test:tap
             '''
+          }
         }
       }
     }
