@@ -78,7 +78,6 @@
     "@ciscospark/plugin-phone": "1.49.3",
     "@ciscospark/spark-core": "1.49.3",
     "@ciscospark/storage-adapter-local-forage": "1.40.1",
-
     "@ciscospark/storage-adapter-local-storage": "1.49.3",
     "@collab-ui/react": "^12.0.3",
     "ampersand-events": "^2.0.2",
@@ -165,7 +164,7 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^22.1.2",
+    "jest": "^23.6.0",
     "lint-staged": "^4.2.2",
     "mini-css-extract-plugin": "^0.4.4",
     "minimist": "^1.2.0",
