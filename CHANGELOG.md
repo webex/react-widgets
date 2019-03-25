@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.439"></a>
+## [0.1.439](https://github.com/webex/react-ciscospark/compare/v0.1.438...v0.1.439) (2019-03-25)
+
+
+### Features
+
+* **widget-base:** Aligned our scrollbar styling with web client ([cd29a3e](https://github.com/webex/react-ciscospark/commit/cd29a3e))
+* **widget-recents:** Semi-customized the scrollbar on IE11 to match with web client ([9d72602](https://github.com/webex/react-ciscospark/commit/9d72602))
+* **widget-space:** Semi-customized the scrollbar on IE11 to match with web client ([62c3bfc](https://github.com/webex/react-ciscospark/commit/62c3bfc))
+
+
+
 <a name="0.1.438"></a>
 ## [0.1.438](https://github.com/webex/react-ciscospark/compare/v0.1.437...v0.1.438) (2019-03-25)
 
