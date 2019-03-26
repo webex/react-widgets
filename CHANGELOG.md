@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.441"></a>
+## [0.1.441](https://github.com/webex/react-ciscospark/compare/v0.1.440...v0.1.441) (2019-03-26)
+
+
+### Bug Fixes
+
+* **widget-recents:** recents widget does not load for user with no spaces ([06ccc66](https://github.com/webex/react-ciscospark/commit/06ccc66))
+
+
+
 <a name="0.1.440"></a>
 ## [0.1.440](https://github.com/webex/react-ciscospark/compare/v0.1.439...v0.1.440) (2019-03-26)
 
