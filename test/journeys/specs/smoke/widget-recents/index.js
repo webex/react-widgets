@@ -43,13 +43,11 @@ describe('Smoke Tests - Recents Widget', () => {
     browserRemote.url('/space.html?meetRecents');
   });
 
-  it('create test users and spaces', () => {
+  it('create test users', () => {
     participants = setupGroupTestUsers();
     assert.lengthOf(participants, 3, 'Test users were not created');
     [docbrown, lorraine, marty] = participants;
     registerDevices(participants);
-    conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Group Space'});
-    oneOnOneConversation = createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
   });
 
   it('open recents widget for marty', () => {
@@ -105,7 +103,24 @@ describe('Smoke Tests - Recents Widget', () => {
     });
   });
 
+  describe('No Spaces Message', () => {
+    it('has no spaces title', () => {
+      assert.isTrue(browserLocal.element(elements.noSpacesTitle).isVisible(), 'does not have no spaces title');
+      assert.equal(browserLocal.element(elements.noSpacesTitle).getText(), 'No spaces yet');
+    });
+
+    it('has no spaces message', () => {
+      assert.isTrue(browserLocal.element(elements.noSpacesMessage).isVisible(), 'does not have no spaces message');
+      assert.equal(browserLocal.element(elements.noSpacesMessage).getText(), 'Create a space using the plus button next to the search bar above.');
+    });
+  });
+
   describe('Group Space', () => {
+    it('creates spaces', () => {
+      conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Group Space'});
+      oneOnOneConversation = createSpace({sparkInstance: marty.spark, participants: [lorraine, marty]});
+    });
+
     it('displays a new incoming message', () => {
       const lorraineText = 'Marty, will we ever see you again?';
 

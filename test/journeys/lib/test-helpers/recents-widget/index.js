@@ -4,8 +4,10 @@ import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
   loadingScreen: '.ciscospark-loading',
-  recentsWidget: '.ciscospark-spaces-list-wrapper',
+  recentsWidget: '.ciscospark-recents-widget',
   listContainer: '.ciscospark-spaces-list',
+  noSpacesTitle: '.ciscospark-no-spaces-title',
+  noSpacesMessage: '.ciscospark-no-spaces-message',
   firstSpace: '.ciscospark-spaces-list-item-0',
   title: '.cui-list-item__header',
   unreadIndicator: '.cui-list-item--unread',
