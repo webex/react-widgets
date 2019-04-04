@@ -76,8 +76,8 @@ export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt 
     // Verify read receipt comes across
     sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
     // Move Mouse to text area so it doesn't cause any tool tips
-    moveMouse(receiver.browser, elements.messageComposer);
-    moveMouse(sender.browser, elements.messageComposer);
+    receiver.browser.click(elements.messageComposer);
+    sender.browser.click(elements.messageComposer);
   }
 }
 

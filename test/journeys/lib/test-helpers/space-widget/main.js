@@ -13,7 +13,8 @@ export const elements = {
   messageWidget: '.ciscospark-message-wrapper',
   meetWidget: '.ciscospark-meet-wrapper',
   errorMessage: '.ciscospark-error-title',
-  widgetTitle: '.ciscospark-title-text'
+  widgetTitle: '.ciscospark-title-text',
+  stickyButton: '#toggleStickyModeButton'
 };
 
 /**
