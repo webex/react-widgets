@@ -77,6 +77,7 @@
     "@ciscospark/plugin-logger": "1.50.18",
     "@ciscospark/plugin-people": "1.50.18",
     "@ciscospark/plugin-phone": "1.50.18",
+    "@ciscospark/plugin-rooms": "1.50.18",
     "@ciscospark/spark-core": "1.50.18",
     "@ciscospark/storage-adapter-local-forage": "1.40.1",
     "@ciscospark/storage-adapter-local-storage": "1.50.18",
