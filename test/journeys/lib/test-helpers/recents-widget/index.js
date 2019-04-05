@@ -3,7 +3,7 @@ import {assert} from 'chai';
 import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
-  loadingScreen: '.ciscospark-loading',
+  loadingScreen: '.webex-teams-loading',
   recentsWidget: '.ciscospark-recents-widget',
   listContainer: '.ciscospark-spaces-list',
   noSpacesTitle: '.ciscospark-no-spaces-title',

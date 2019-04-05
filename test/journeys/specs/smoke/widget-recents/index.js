@@ -65,6 +65,7 @@ describe('Smoke Tests - Recents Widget', () => {
       window.openRecentsWidget(options);
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);
+    browserLocal.waitForVisible(elements.loadingScreen, 7500, true);
   });
 
   it('loads the test page', () => {
