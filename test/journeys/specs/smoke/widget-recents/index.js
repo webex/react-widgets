@@ -67,22 +67,6 @@ describe('Smoke Tests - Recents Widget', () => {
     browserLocal.waitForVisible(elements.recentsWidget);
   });
 
-  it('open meet widget for lorraine', () => {
-    browserRemote.execute((localAccessToken, localToUserEmail) => {
-      const options = {
-        accessToken: localAccessToken,
-        onEvent: (eventName, detail) => {
-          window.ciscoSparkEvents.push({eventName, detail});
-        },
-        toPersonEmail: localToUserEmail,
-        initialActivity: 'meet'
-      };
-
-      window.openSpaceWidget(options);
-    }, lorraine.token.access_token, marty.email);
-    browserRemote.waitForVisible(meetElements.meetWidget);
-  });
-
   it('loads the test page', () => {
     const title = browserLocal.getTitle();
 
@@ -373,6 +357,22 @@ describe('Smoke Tests - Recents Widget', () => {
   });
 
   describe('Incoming Call', () => {
+    it('open meet widget for lorraine', () => {
+      browserRemote.execute((localAccessToken, localToUserEmail) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          toPersonEmail: localToUserEmail,
+          initialActivity: 'meet'
+        };
+
+        window.openSpaceWidget(options);
+      }, lorraine.token.access_token, marty.email);
+      browserRemote.waitForVisible(meetElements.meetWidget);
+    });
+
     it('displays a call in progress button', () => {
       browserRemote.waitForVisible(meetElements.callButton);
       browserRemote.click(meetElements.callButton);
