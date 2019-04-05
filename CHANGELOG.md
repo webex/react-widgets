@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.444"></a>
+## [0.1.444](https://github.com/webex/react-ciscospark/compare/v0.1.443...v0.1.444) (2019-04-05)
+
+
+### Features
+
+* **package:** update to [@ciscospark](https://github.com/ciscospark) sdk 1.50.18 ([6201642](https://github.com/webex/react-ciscospark/commit/6201642))
+
+
+
 <a name="0.1.443"></a>
 ## [0.1.443](https://github.com/webex/react-ciscospark/compare/v0.1.442...v0.1.443) (2019-04-01)
 
