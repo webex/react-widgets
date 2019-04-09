@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.447"></a>
+## [0.1.447](https://github.com/webex/react-ciscospark/compare/v0.1.446...v0.1.447) (2019-04-09)
+
+
+### Features
+
+* **loading-screen:** use Img component to display images ([2bc4fcf](https://github.com/webex/react-ciscospark/commit/2bc4fcf))
+
+
+
 <a name="0.1.446"></a>
 ## [0.1.446](https://github.com/webex/react-ciscospark/compare/v0.1.445...v0.1.446) (2019-04-09)
 
