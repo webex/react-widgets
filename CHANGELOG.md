@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.446"></a>
+## [0.1.446](https://github.com/webex/react-ciscospark/compare/v0.1.445...v0.1.446) (2019-04-09)
+
+
+### Features
+
+* **widget-meet:** remove old spark logo ([c94f865](https://github.com/webex/react-ciscospark/commit/c94f865))
+
+
+
 <a name="0.1.445"></a>
 ## [0.1.445](https://github.com/webex/react-ciscospark/compare/v0.1.444...v0.1.445) (2019-04-08)
 
