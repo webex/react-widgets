@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.448"></a>
+## [0.1.448](https://github.com/webex/react-ciscospark/compare/v0.1.447...v0.1.448) (2019-04-09)
+
+
+### Bug Fixes
+
+* **journeys:** fix firefox messaging journey test ([8c977e7](https://github.com/webex/react-ciscospark/commit/8c977e7))
+
+
+
 <a name="0.1.447"></a>
 ## [0.1.447](https://github.com/webex/react-ciscospark/compare/v0.1.446...v0.1.447) (2019-04-09)
 
