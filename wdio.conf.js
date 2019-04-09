@@ -29,7 +29,7 @@ const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date
 process.env.BUILD_NUMBER = build;
 const tunnelId = uuid.v4();
 const suite = argv.suite || 'smoke';
-const screenResolutionMac = '1920x1440';
+const screenResolutionMac = '2360x1770';
 const screenResolutionWin = '1920x1080';
 const screenResolution = platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac') ? screenResolutionMac : screenResolutionWin;
 
