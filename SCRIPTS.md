@@ -10,7 +10,17 @@ Starts a webpack dev server with the [config](./scripts/webpack/webpack.dev.babe
 
 Serves the [samples](./samples) folder, an easy to use component demo.
 
-## Build
+## Build - build.js
+
+See [build.js](./scripts/utils/build.js) for implementation.
+
+### `buildCommonJS`
+
+Build a package to CommonJS using babel.
+
+### `buildES`
+
+Uses [rollup](https://rollupjs.org) to bundle the modules in a [ES Module](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/) compatible output.
 
 ### `webpackBuild`
 
@@ -23,20 +33,11 @@ It then executes the following command:
 webpack --config `(path to webpack.prod.babel.js)` --env.package=`(package name)`
 ```
 
-Implemented in [scripts/utils/build.js](./scripts/utils/build.js)
+### `transpile`
 
-### `webpackTranspile`
+Runs the [buildES](#buildES) and [buildCommonJS](#buildCommonJS) commands to build a package to ES Modules and CommonJS.
 
-Builds a component with webpack and outputs an [ES Module](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
-
-This command does a webpack build by first `cd` into the package directory.
-It then executes the following command:
-
-```bash
-webpack --config `(path to webpack.transpile.babel.js)` --env.package=`(package name)`
-```
-
-Implemented in [scripts/utils/build.js](./scripts/utils/build.js)
+## Build - npm run
 
 ### `npm run build:components`
 
@@ -44,9 +45,13 @@ Builds all component and module packages. Components are defined as not starting
 
 The components are "transpiled" with babel and have commonJS and ES5 outputs.
 
-See [build.js](./scripts/utils/build.js) for implementation.
-
 Executes [`webpackBuild`](#webpackBuild) command.
+
+### `npm run build:esm [all]`
+
+Builds one or all components for ES Modules.
+
+Executes [`buildES`](#buildES) command.
 
 ### `npm run build:package`
 
@@ -67,7 +72,7 @@ Builds the dependency chain for each module by utilizing the [detective-es6](htt
 Runs a webpack build and transpile on all packages that start with '@ciscospark/widget'.
 
 * Executes [`webpackBuild`](#webpackBuild) command.
-* Executes [`webpackTranspile`](#webpackTranspile) command.
+* Executes [`transpile`](#transpile) command.
 
 ## Publish
 
@@ -91,3 +96,5 @@ It looks through all the packages, excludes demos and private packages, and issu
 ```bash
 npm publish --access public
 ```
+
+Implemented in [scripts/utils/publish.js](./scripts/utils/publish.js)
