@@ -90,7 +90,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
 
   pkgJson.version = outputTopPkgJson.version;
 
-  const jsonString = `${JSON.stringify(pkgJson, null, '')}\n`;
+  const jsonString = `${JSON.stringify(pkgJson, null, 2)}\n`;
 
   writeFileSync(pkgJsonPath, jsonString, 'utf8');
 }
