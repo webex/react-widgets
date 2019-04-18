@@ -89,34 +89,6 @@ function webpackBuild(pkgName, pkgPath) {
   return false;
 }
 
-/**
- * Builds a specific package with Webpack
- * @param  {string} pkgName
- * @param  {string} pkgPath
- * @returns {undefined}
- */
-function webpackTranspile(pkgName, pkgPath) {
-  const targetPkgPath = pkgPath || getPackage(pkgName);
-
-  if (targetPkgPath) {
-    try {
-      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.transpile.babel.js');
-
-      // Delete dist folder
-      console.info(`Cleaning ${targetPkgPath}/es folder...`.cyan);
-      rimraf.sync(path.resolve(targetPkgPath, 'es'));
-      console.info(`Transpiling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && pwd && webpack --config ${webpackConfigPath} --env.package=${pkgName}`);
-      console.info(`${pkgName}... Done\n\n`.cyan);
-    }
-    catch (err) {
-      throw new Error(`Error building ${pkgName} package, ${err}`, err);
-    }
-  }
-
-  return false;
-}
-
 
 /**
  * Build a package to CommonJS
@@ -147,6 +119,7 @@ function buildES(pkg) {
     try {
       const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
 
+      // Rollup cleans the `es` folder automatically
       console.info(`Packaging ${pkg}...`.cyan);
       execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
       console.info(`${pkg}... Done\n\n`.cyan);
@@ -176,7 +149,6 @@ function transpile(pkgName, pkgPath) {
 
 module.exports = {
   webpackBuild,
-  webpackTranspile,
   buildCommonJS,
   buildES,
   transpile
