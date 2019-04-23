@@ -57,6 +57,7 @@ describe('Widget Recents', () => {
       browserLocal.waitForVisible(elements.loadingScreen, 7500, true);
 
       assert.isFalse(browserLocal.elements(elements.headerBar).isVisible());
+      browserLocal.refresh();
     });
 
     describe('when all header options are enabled', () => {
@@ -107,6 +108,26 @@ describe('Widget Recents', () => {
 
         assert.isNotEmpty(events, 'does not have user_signout:clicked event in log');
       });
+    });
+  });
+
+  describe('basicMode', () => {
+    it('should not display a header when all options are disabled', () => {
+      browserLocal.execute((localAccessToken) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          basicMode: true
+        };
+
+        window.openRecentsWidget(options);
+      }, marty.token.access_token);
+      browserLocal.waitForVisible(elements.recentsWidget);
+      browserLocal.waitForVisible(elements.loadingScreen, 7500, true);
+
+      browserLocal.waitForVisible(elements.listContainer);
     });
   });
 
