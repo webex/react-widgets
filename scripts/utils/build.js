@@ -89,34 +89,6 @@ function webpackBuild(pkgName, pkgPath) {
   return false;
 }
 
-/**
- * Builds a specific package with Webpack
- * @param  {string} pkgName
- * @param  {string} pkgPath
- * @returns {undefined}
- */
-function webpackTranspile(pkgName, pkgPath) {
-  const targetPkgPath = pkgPath || getPackage(pkgName);
-
-  if (targetPkgPath) {
-    try {
-      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.transpile.babel.js');
-
-      // Delete dist folder
-      console.info(`Cleaning ${targetPkgPath}/es folder...`.cyan);
-      rimraf.sync(path.resolve(targetPkgPath, 'es'));
-      console.info(`Transpiling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && pwd && webpack --config ${webpackConfigPath} --env.package=${pkgName}`);
-      console.info(`${pkgName}... Done\n\n`.cyan);
-    }
-    catch (err) {
-      throw new Error(`Error building ${pkgName} package, ${err}`, err);
-    }
-  }
-
-  return false;
-}
-
 
 /**
  * Build a package to CommonJS
@@ -137,36 +109,27 @@ function buildCommonJS(pkgName, pkgPath) {
 
 /**
  * Build a package to ES5 with import/export
- * @param {Stinrg} pkgName
- * @param {String} pkgPath
+ * @param {Stinrg} pkg
  * @returns {undefined}
  */
-function buildES(pkgName, pkgPath) {
-  console.info(`Cleaning ${pkgName} es folder...`.cyan);
-  rimraf.sync(path.resolve(pkgPath, 'es'));
+function buildES(pkg) {
+  const targetPkgPath = getPackage(pkg);
 
-  console.info(`Transpiling ${pkgName} to ES5 with import/export ...`.cyan);
-  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
+  if (targetPkgPath) {
+    try {
+      const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
 
-  Object.assign(babelrc, {
-    babelrc: false,
-    sourceMaps: true,
-    presets: [
-      [
-        'env',
-        {
-          targets: {
-            node: '6.5'
-          },
-          modules: false
-        }
-      ],
-      'react'
-    ]
-  });
-  babelrc.plugins.push('transform-postcss');
+      // Rollup cleans the `es` folder automatically
+      console.info(`Packaging ${pkg}...`.cyan);
+      execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+      console.info(`${pkg}... Done\n\n`.cyan);
+    }
+    catch (err) {
+      throw new Error(`Error building ${pkg} package, ${err}`, err);
+    }
+  }
 
-  return babelBuild(`${pkgPath}/src`, `${pkgPath}/es`, babelrc);
+  return false;
 }
 
 
@@ -186,7 +149,6 @@ function transpile(pkgName, pkgPath) {
 
 module.exports = {
   webpackBuild,
-  webpackTranspile,
   buildCommonJS,
   buildES,
   transpile

@@ -1,4 +1,4 @@
-const {transpile, webpackTranspile} = require('../../utils/build');
+const {transpile} = require('../../utils/build');
 
 module.exports = {
   command: 'transpile <packageName> [packagePath]',
@@ -6,13 +6,11 @@ module.exports = {
   builder: {},
   handler: ({packageName, packagePath}) => {
     if (packageName) {
-      const command = packageName.includes('widget') ? webpackTranspile : transpile;
-
       if (packagePath) {
-        command(packageName, packagePath);
+        transpile(packageName, packagePath);
       }
       else {
-        command(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
+        transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
       }
     }
   }
