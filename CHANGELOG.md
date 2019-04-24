@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/webex/react-ciscospark/compare/v0.2.1...v0.2.2) (2019-04-24)
+
+
+### Features
+
+* **r-m-spaces:** add fetchSpacesHydra action ([2b237a9](https://github.com/webex/react-ciscospark/commit/2b237a9))
+* **widget-demo:** add recents basicMode prop ([2828af8](https://github.com/webex/react-ciscospark/commit/2828af8))
+* **widget-recents:** add basicMode property ([1171611](https://github.com/webex/react-ciscospark/commit/1171611))
+* **widget-recents:** show spaces as read in basicMode ([f5b7e82](https://github.com/webex/react-ciscospark/commit/f5b7e82))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/webex/react-ciscospark/compare/v0.1.448...v0.2.1) (2019-04-23)
 
