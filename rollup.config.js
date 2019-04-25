@@ -3,6 +3,7 @@ import url from 'rollup-plugin-url';
 import clear from 'rollup-plugin-clear';
 import postcss from 'rollup-plugin-postcss';
 import localResolve from 'rollup-plugin-local-resolve';
+import {base64} from '@ciscospark/common';
 
 export default {
   plugins: [
@@ -15,7 +16,27 @@ export default {
     localResolve(),
     // Convert css to css modules
     postcss({
-      modules: true,
+      modules: {
+        generateScopedName: (name, filename, css) => {
+          let componentName;
+          const cssHash = base64.encode(css).substring(0, 8);
+          const paths = filename.split('/');
+          let index = paths.indexOf('@ciscospark');
+
+          if (index === -1) {
+            index = paths.indexOf('@webex');
+          }
+
+          if (index !== -1) {
+            componentName = paths[index + 1];
+          }
+          else {
+            componentName = filename;
+          }
+
+          return `${componentName}__${name}__${cssHash}`;
+        }
+      },
       // Don't use sass loader due to collab-ui issues
       use: [],
       config: false
