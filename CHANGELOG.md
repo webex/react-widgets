@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.7"></a>
+## [0.2.7](https://github.com/webex/react-ciscospark/compare/v0.2.6...v0.2.7) (2019-05-08)
+
+
+### Features
+
+* **r-m-spaces:** add error when service fails ([22afc46](https://github.com/webex/react-ciscospark/commit/22afc46))
+
+
+
 <a name="0.2.6"></a>
 ## [0.2.6](https://github.com/webex/react-ciscospark/compare/v0.2.5...v0.2.6) (2019-05-07)
 
