@@ -37,7 +37,7 @@ export default {
           return `${componentName}__${name}__${cssHash}`;
         }
       },
-      // Don't use sass loader due to collab-ui issues
+      // Don't use sass loader due to momentum-ui issues
       use: [],
       config: false
     }),
@@ -72,5 +72,5 @@ export default {
     format: 'esm',
     sourcemap: true
   }],
-  external: ['react', 'react-dom', 'prop-types', 'classnames', '@collab-ui/react']
+  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react']
 };
