@@ -11,6 +11,9 @@ function Main() {
       <BasicComponents />
       <h2>Recents Components</h2>
       <RecentsComponents />
+      <h2>Base Elements that should not be modified by momentum css</h2>
+      <p><a href=".">Link</a></p>
+      <p><b>bold</b></p>
     </div>
   );
 }

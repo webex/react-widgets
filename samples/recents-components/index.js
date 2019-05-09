@@ -1,8 +1,8 @@
 import React from 'react';
 
 import JoinCallButton from '@ciscospark/react-component-join-call-button';
-import SpaceItem from '@ciscospark/react-component-space-item';
-import SpacesList from '@ciscospark/react-component-spaces-list';
+import SpaceItem from '@webex/react-component-space-item';
+import SpacesList from '@webex/react-component-spaces-list';
 
 import ListSpeed from './ListSpeed';
 
@@ -49,7 +49,7 @@ function RecentsComponents() {
   ];
 
   return (
-    <div>
+    <div style={{backgroundColor: 'black'}}>
       <h3>JoinCallButton</h3>
       <JoinCallButton
         callStartTime={Date.now()}
@@ -61,7 +61,7 @@ function RecentsComponents() {
         formatMessage={(a) => a}
         id="decrypting-space"
         isDecrypting
-        name="Webex User"
+        name="isDecrypting"
         onClick={onClick}
       />
       <SpaceItem

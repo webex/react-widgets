@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
 
-import SpacesList from '@ciscospark/react-component-spaces-list';
+import SpacesList from '@webex/react-component-spaces-list';
 
 import spaces from './spaces.json';
 

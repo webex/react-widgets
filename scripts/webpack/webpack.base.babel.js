@@ -119,6 +119,7 @@ export default (options, env) => {
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'src'),
+            path.resolve(__dirname, '..', '..', 'samples'),
             path.resolve(__dirname, '..', '..', 'node_modules')
           ],
           use: [
