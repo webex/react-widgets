@@ -81,7 +81,7 @@
     "@ciscospark/spark-core": "1.50.18",
     "@ciscospark/storage-adapter-local-forage": "1.40.1",
     "@ciscospark/storage-adapter-local-storage": "1.50.18",
-    "@collab-ui/react": "^12.0.3",
+    "@momentum-ui/react": "^17.1.0",
     "ampersand-events": "^2.0.2",
     "bowser": "^1.9.4",
     "classnames": "^2.2.5",
