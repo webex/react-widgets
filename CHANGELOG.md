@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.8"></a>
+## [0.2.8](https://github.com/webex/react-ciscospark/compare/v0.2.7...v0.2.8) (2019-05-16)
+
+
+### Features
+
+* **widget-recents:** remove extendedLoad ([6593ed5](https://github.com/webex/react-ciscospark/commit/6593ed5))
+
+
+
 <a name="0.2.7"></a>
 ## [0.2.7](https://github.com/webex/react-ciscospark/compare/v0.2.6...v0.2.7) (2019-05-08)
 
