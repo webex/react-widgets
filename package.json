@@ -83,6 +83,7 @@
     "@ciscospark/storage-adapter-local-storage": "1.50.18",
     "@momentum-ui/react": "^17.1.0",
     "ampersand-events": "^2.0.2",
+    "babel-polyfill": "^6.26.0",
     "bowser": "^1.9.4",
     "classnames": "^2.2.5",
     "core-decorators": "^0.20.0",
