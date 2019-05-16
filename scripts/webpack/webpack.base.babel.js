@@ -68,7 +68,6 @@ export default (options, env) => {
           test: /\.js$/,
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
-            path.resolve(__dirname, '..', '..', 'src'),
             path.resolve(__dirname, '..', '..', 'samples')
           ],
           exclude: [
@@ -80,11 +79,12 @@ export default (options, env) => {
         {
           test: /\.css$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
-            path.resolve(__dirname, '..', '..', 'src')
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules')
           ],
           use: [
-            'style-loader',
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
             {
               loader: 'css-loader',
               options: {
@@ -118,13 +118,12 @@ export default (options, env) => {
           test: /\.scss$/,
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
-            path.resolve(__dirname, '..', '..', 'src'),
-            path.resolve(__dirname, '..', '..', 'samples'),
-            path.resolve(__dirname, '..', '..', 'node_modules')
+            path.resolve(__dirname, '..', '..', 'samples')
           ],
           use: [
             {
-              loader: MiniCssExtractPlugin.loader
+              // Adding sass converted files to our main.css does not work on IE/Edge
+              loader: 'style-loader'
             },
             {
               loader: 'css-loader'
