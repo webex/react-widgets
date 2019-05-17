@@ -97,10 +97,10 @@ describe('Space Widget Startup Settings Tests', () => {
       browserLocal.waitForVisible(elements.menuButton);
       browserLocal.click(elements.menuButton);
       browserLocal.waitForVisible(elements.activityMenu);
-      browserLocal.waitForVisible(elements.messageButton);
+      browserLocal.waitForVisible(elements.messageActivityButton);
       browserLocal.waitForVisible(rosterElements.peopleButton);
-      assert.isFalse(browserLocal.isExisting(elements.meetButton), 'meet button exists in activity menu when it should be disabled');
-      assert.isFalse(browserLocal.isExisting(elements.filesButton), 'files button exists in activity menu when it should be disabled');
+      assert.isFalse(browserLocal.isExisting(elements.meetActivityButton), 'meet button exists in activity menu when it should be disabled');
+      assert.isFalse(browserLocal.isExisting(elements.filesActivityButton), 'files button exists in activity menu when it should be disabled');
       browserLocal.refresh();
       browserRemote.refresh();
     });

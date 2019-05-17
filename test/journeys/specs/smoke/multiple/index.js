@@ -144,11 +144,11 @@ describe('Multiple Widgets', () => {
 
       it('has a message button', () => {
         browserLocal.click(spaceElements.menuButton);
-        browserLocal.waitForVisible(spaceElements.messageButton);
+        browserLocal.waitForVisible(spaceElements.messageActivityButton);
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(spaceElements.messageButton);
+        browserLocal.click(spaceElements.messageActivityButton);
         browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
       });

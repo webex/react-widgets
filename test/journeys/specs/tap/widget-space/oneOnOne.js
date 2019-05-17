@@ -77,22 +77,25 @@ describe('Widget Space: One on One: TAP', () => {
 
     it('has a message button', () => {
       local.browser.click(basicElements.menuButton);
-      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).waitForVisible();
+      local.browser
+        .element(basicElements.controlsContainer)
+        .element(basicElements.messageActivityButton)
+        .waitForVisible();
     });
 
     it('switches to message widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.messageButton).click();
+      local.browser.element(basicElements.controlsContainer).element(basicElements.messageActivityButton).click();
       assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
       assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
     });
 
     it('has a meet button', () => {
       local.browser.click(basicElements.menuButton);
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).waitForVisible();
+      local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).waitForVisible();
     });
 
     it('switches to meet widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetButton).click();
+      local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).click();
       assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
       assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
     });

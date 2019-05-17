@@ -94,8 +94,8 @@ export function verifyFilesActivityTab(aBrowser, fileName) {
     aBrowser.click(mainElements.menuButton);
     aBrowser.waitForVisible(mainElements.activityMenu);
   }
-  aBrowser.waitForVisible(mainElements.filesButton);
-  aBrowser.click(mainElements.filesButton);
+  aBrowser.waitForVisible(mainElements.filesActivityButton);
+  aBrowser.click(mainElements.filesActivityButton);
   aBrowser.waitForVisible(mainElements.filesWidget);
   aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
   aBrowser.waitForVisible(mainElements.closeButton);
