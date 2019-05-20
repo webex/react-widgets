@@ -158,6 +158,7 @@ ansiColor('xterm') {
               npm run release -- --release-as patch --no-verify
               version=`grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g'`
               echo $version > .version
+              git rev-parse HEAD > gitcommit
               '''
               packageJsonVersion = readFile '.version'
             }
@@ -207,6 +208,7 @@ ansiColor('xterm') {
             archive 'packages/node_modules/@ciscospark/widget-space-demo/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-recents-demo/dist/**/*'
             archive 'packages/node_modules/@ciscospark/widget-demo/dist/**/*'
+            archive 'gitcommit'
 
 
             stage('Push to github'){
