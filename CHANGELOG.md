@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.11"></a>
+## [0.2.11](https://github.com/webex/react-ciscospark/compare/v0.2.10...v0.2.11) (2019-05-21)
+
+
+### Features
+
+* **widget-meet:** update start call aria label ([d0041f6](https://github.com/webex/react-ciscospark/commit/d0041f6))
+
+
+
 <a name="0.2.10"></a>
 ## [0.2.10](https://github.com/webex/react-ciscospark/compare/v0.2.9...v0.2.10) (2019-05-21)
 
