@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.10"></a>
+## [0.2.10](https://github.com/webex/react-ciscospark/compare/v0.2.9...v0.2.10) (2019-05-21)
+
+
+### Features
+
+* **r-c-activity-item-base:** upgrade to momentum-ui ([fd8490b](https://github.com/webex/react-ciscospark/commit/fd8490b))
+* **r-c-activity-list:** upgrade to momentum-ui ([28eb673](https://github.com/webex/react-ciscospark/commit/28eb673))
+* **r-c-activity-menu:** upgrade to momentum-ui ([8b191b3](https://github.com/webex/react-ciscospark/commit/8b191b3))
+* **r-c-activity-menu-header:** upgrade to momentum-ui ([e409abe](https://github.com/webex/react-ciscospark/commit/e409abe))
+* **r-c-activity-share-file:** upgrade to momentum-ui ([0926a1c](https://github.com/webex/react-ciscospark/commit/0926a1c))
+* **r-c-activity-share-thumbnail:** upgrade to momentum-ui ([d9f453b](https://github.com/webex/react-ciscospark/commit/d9f453b))
+* **r-c-button:** upgrade to momentum-ui ([2a95294](https://github.com/webex/react-ciscospark/commit/2a95294))
+* **r-c-button-controls:** upgrade to momentum-ui ([2fb6671](https://github.com/webex/react-ciscospark/commit/2fb6671))
+* **r-c-chip-base:** upgrade to momentum-ui ([0c28c30](https://github.com/webex/react-ciscospark/commit/0c28c30))
+* **r-c-chip-file:** upgrade to momentum-ui ([baee61e](https://github.com/webex/react-ciscospark/commit/baee61e))
+* **r-c-loading-screen:** upgrade to momentum-ui ([2ff74d8](https://github.com/webex/react-ciscospark/commit/2ff74d8))
+* **r-c-message-composer:** upgrade to momentum-ui ([a6ef2ee](https://github.com/webex/react-ciscospark/commit/a6ef2ee))
+* **r-c-people-list:** upgrade to momentum-ui ([d4b6493](https://github.com/webex/react-ciscospark/commit/d4b6493))
+* **r-c-presence-avatar:** upgrade to momentum-ui ([a3a5113](https://github.com/webex/react-ciscospark/commit/a3a5113))
+* **r-c-scrolling-activity:** upgrade to momentum-ui ([5e671df](https://github.com/webex/react-ciscospark/commit/5e671df))
+* **r-c-space-item:** upgrade to momentum-ui ([b001cc8](https://github.com/webex/react-ciscospark/commit/b001cc8))
+* **r-c-space-item:** upgrade to momentum-ui ([11dbabc](https://github.com/webex/react-ciscospark/commit/11dbabc))
+* **r-c-spaces-list:** upgrade to momentum-ui ([bd148f8](https://github.com/webex/react-ciscospark/commit/bd148f8))
+* **r-c-spark-fonts:** upgrade to momentum-ui ([d3a5e1f](https://github.com/webex/react-ciscospark/commit/d3a5e1f))
+* **samples:** added momentum style changes ([7e9afbc](https://github.com/webex/react-ciscospark/commit/7e9afbc))
+* **widget-demo:** upgrade to momentum-ui ([d7f059a](https://github.com/webex/react-ciscospark/commit/d7f059a))
+* **widget-demo:** use babel-polyfill directly ([f751750](https://github.com/webex/react-ciscospark/commit/f751750))
+* **widget-meet:** upgrade to momentum-ui ([2f6d451](https://github.com/webex/react-ciscospark/commit/2f6d451))
+* **widget-message:** upgrade to momentum-ui ([34e390e](https://github.com/webex/react-ciscospark/commit/34e390e))
+* **widget-recents:** upgrade to momentum-ui ([9419110](https://github.com/webex/react-ciscospark/commit/9419110))
+* **widget-recents-demo:** upgrade to momentum-ui ([064b19d](https://github.com/webex/react-ciscospark/commit/064b19d))
+* **widget-roster:** upgrade to momentum-ui ([c204521](https://github.com/webex/react-ciscospark/commit/c204521))
+* **widget-space:** upgrade to momentum-ui ([ba89fba](https://github.com/webex/react-ciscospark/commit/ba89fba))
+* **widget-space-demo:** upgrade to momentum-ui ([baa2cac](https://github.com/webex/react-ciscospark/commit/baa2cac))
+
+
+
 <a name="0.2.9"></a>
 ## [0.2.9](https://github.com/webex/react-ciscospark/compare/v0.2.8...v0.2.9) (2019-05-20)
 
