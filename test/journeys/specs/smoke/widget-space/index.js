@@ -109,31 +109,31 @@ describe('Smoke Tests - Space Widget', () => {
 
       it('has a message button', () => {
         browserLocal.click(elements.menuButton);
-        browserLocal.waitForVisible(elements.messageButton);
+        browserLocal.waitForVisible(elements.messageActivityButton);
       });
 
       it('has a meet button', () => {
-        browserLocal.waitForVisible(elements.meetButton);
+        browserLocal.waitForVisible(elements.meetActivityButton);
       });
 
       it('has a files button', () => {
-        browserLocal.waitForVisible(elements.filesButton);
+        browserLocal.waitForVisible(elements.filesActivityButton);
       });
 
       it('has a roster button', () => {
-        browserLocal.waitForVisible(elements.peopleButton);
+        browserLocal.waitForVisible(elements.peopleActivityButton);
       });
 
       it('switches to files widget', () => {
-        browserLocal.waitForVisible(elements.filesButton);
-        browserLocal.click(elements.filesButton);
+        browserLocal.waitForVisible(elements.filesActivityButton);
+        browserLocal.click(elements.filesActivityButton);
         browserLocal.waitForVisible(elements.filesWidget);
         browserLocal.waitForVisible(elements.menuButton);
         browserLocal.click(elements.menuButton);
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(elements.messageButton);
+        browserLocal.click(elements.messageActivityButton);
         browserLocal.waitForVisible(elements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(elements.messageWidget));
       });

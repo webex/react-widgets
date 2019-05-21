@@ -1,10 +1,10 @@
 export const elements = {
   spaceWidget: '.ciscospark-space-widget',
   menuButton: 'button[aria-label="Main Menu"]',
-  messageButton: 'button[aria-label="Message"]',
-  meetButton: 'button[aria-label="Call"]',
-  filesButton: 'button[aria-label="Files"]',
-  peopleButton: 'button[aria-label="People"]',
+  messageActivityButton: 'button[aria-label="Message"]',
+  meetActivityButton: 'button[aria-label="Call"]',
+  filesActivityButton: 'button[aria-label="Files"]',
+  peopleActivityButton: 'button[aria-label="People"]',
   filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
   activityMenu: '.ciscospark-activity-menu',
   controlsContainer: '.ciscospark-controls-container',
@@ -27,8 +27,8 @@ export function switchToMessage(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.waitForVisible(elements.messageButton);
-  aBrowser.click(elements.messageButton);
+  aBrowser.waitForVisible(elements.messageActivityButton);
+  aBrowser.click(elements.messageActivityButton);
 }
 
 /**
@@ -42,8 +42,8 @@ export function switchToMeet(aBrowser) {
     aBrowser.click(elements.menuButton);
     aBrowser.waitForVisible(elements.activityMenu);
   }
-  aBrowser.waitForVisible(elements.meetButton);
-  aBrowser.click(elements.meetButton);
+  aBrowser.waitForVisible(elements.meetActivityButton);
+  aBrowser.click(elements.meetActivityButton);
 }
 
 /**

@@ -10,7 +10,7 @@ export const elements = {
   callContainer: '.call-container',
   meetWidget: '.ciscospark-meet-wrapper',
   messageWidget: '.ciscospark-message-wrapper',
-  callButton: 'button[aria-label="Call"]',
+  callButton: 'button[aria-label="Start Call"]',
   answerButton: 'button[aria-label="Answer"]',
   declineButton: 'button[aria-label="Decline"]',
   hangupButton: 'button[aria-label="Hangup"]',
