@@ -12,20 +12,15 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        withCredentials([
-          string(credentialsId: 'WIDGETS_NPM_TOKEN', variable: 'WIDGETS_NPM_TOKEN')
-        ]) {
-          sh 'echo \'//registry.npmjs.org/:_authToken=${WIDGETS_NPM_TOKEN}\' >> .npmrc'
-          sh '''#!/bin/bash -e
-          source ~/.nvm/nvm.sh
-          nvm install v8.15.0
-          nvm use v8.15.0
-          npm install -g npm@6.4.1
-          rm -rf node_modules/
-          npm install
-          git checkout .npmrc
-          '''
-        }
+        sh '''#!/bin/bash -e
+        source ~/.nvm/nvm.sh
+        nvm install v8.15.0
+        nvm use v8.15.0
+        npm install -g npm@6.4.1
+        rm -rf node_modules/
+        npm install
+        git checkout .npmrc
+        '''
       }
     }
 
