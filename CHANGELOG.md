@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.13"></a>
+## [0.2.13](https://github.com/webex/react-ciscospark/compare/v0.2.12...v0.2.13) (2019-05-22)
+
+
+### Bug Fixes
+
+* **widget-demo:** spaceLoadCount empty value is now converted to default value ([4e8edff](https://github.com/webex/react-ciscospark/commit/4e8edff))
+
+
+### Features
+
+* **widget-recent:** Setting spaceLoadcount to total number of the rooms ([1184335](https://github.com/webex/react-ciscospark/commit/1184335))
+
+
+
 <a name="0.2.12"></a>
 ## [0.2.12](https://github.com/webex/react-ciscospark/compare/v0.2.11...v0.2.12) (2019-05-22)
 
