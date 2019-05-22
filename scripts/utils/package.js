@@ -162,7 +162,7 @@ function getWidgetPackages() {
     .filter((pkgPath) => {
       const pkgName = require(path.resolve(pkgPath, 'package.json')).name;
 
-      return pkgName.startsWith('@ciscospark/widget');
+      return pkgName.startsWith('@ciscospark/widget') && !pkgName.endsWith('-demo');
     });
 }
 
