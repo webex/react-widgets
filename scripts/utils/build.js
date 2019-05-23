@@ -92,7 +92,7 @@ function webpackBuild(pkgName, pkgPath) {
 
 /**
  * Build a package to CommonJS
- * @param {Stinrg} pkgName
+ * @param {String} pkgName
  * @param {String} pkgPath
  * @returns {undefined}
  */
@@ -109,7 +109,7 @@ function buildCommonJS(pkgName, pkgPath) {
 
 /**
  * Build a package to ES5 with import/export
- * @param {Stinrg} pkg
+ * @param {String} pkg
  * @returns {undefined}
  */
 function buildES(pkg) {
@@ -135,7 +135,7 @@ function buildES(pkg) {
 
 /**
  * Build a package to ES5 and CommonJS
- * @param {Stinrg} pkgName
+ * @param {String} pkgName
  * @param {String} pkgPath
  * @returns {Promise}
  */
