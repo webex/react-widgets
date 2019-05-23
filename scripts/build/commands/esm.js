@@ -1,5 +1,5 @@
 const {buildES} = require('../../utils/build');
-const {getAllPackagePaths} = require('../../utils/package');
+const {getAllPackages} = require('../../utils/package');
 
 module.exports = {
   command: 'esm [packageName]',
@@ -7,7 +7,9 @@ module.exports = {
   builder: {},
   handler: ({packageName}) => {
     if (packageName === 'all') {
-      return getAllPackagePaths().forEach((pkg) => {
+      const omitPrivatePackages = true;
+
+      return getAllPackages(omitPrivatePackages).forEach((pkg) => {
         buildES(pkg);
       });
     }
