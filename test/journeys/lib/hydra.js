@@ -1,4 +1,4 @@
-import {base64} from '@ciscospark/common';
+import {base64} from '@webex/common';
 
 export function constructHydraId(type, id) {
   return base64.encode(`ciscospark://us/${type.toUpperCase()}/${id}`);

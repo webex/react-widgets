@@ -1,9 +1,9 @@
 import {assert} from 'chai';
 
-import '@ciscospark/internal-plugin-conversation';
-import '@ciscospark/plugin-logger';
-import testUsers from '@ciscospark/test-helper-test-users';
-import CiscoSpark from '@ciscospark/spark-core';
+import '@webex/internal-plugin-conversation';
+import '@webex/plugin-logger';
+import testUsers from '@webex/test-helper-test-users';
+import CiscoSpark from '@webex/webex-core';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';

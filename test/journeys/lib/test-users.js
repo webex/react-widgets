@@ -1,11 +1,11 @@
-import '@ciscospark/plugin-authorization';
-import '@ciscospark/plugin-logger';
-import '@ciscospark/plugin-people';
-import '@ciscospark/internal-plugin-conversation';
+import '@webex/plugin-authorization';
+import '@webex/plugin-logger';
+import '@webex/plugin-people';
+import '@webex/internal-plugin-conversation';
 
-import CiscoSpark from '@ciscospark/spark-core';
-import {createUser as createGuestUser} from '@ciscospark/test-helper-appid';
-import testUsers from '@ciscospark/test-helper-test-users';
+import CiscoSpark from '@webex/webex-core';
+import {createUser as createGuestUser} from '@webex/test-helper-appid';
+import testUsers from '@webex/test-helper-test-users';
 
 import {deconstructHydraId} from './hydra';
 

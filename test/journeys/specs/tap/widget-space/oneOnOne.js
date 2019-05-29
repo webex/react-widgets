@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 
-import testUsers from '@ciscospark/test-helper-test-users';
+import testUsers from '@webex/test-helper-test-users';
 
 import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
