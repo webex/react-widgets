@@ -161,4 +161,4 @@ workflows:
             - build_for_tests
       - journey_tests_firefox:
           requires:
-            - build_for_tests
+            - journey_tests_chrome
