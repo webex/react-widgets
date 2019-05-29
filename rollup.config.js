@@ -3,7 +3,7 @@ import url from 'rollup-plugin-url';
 import clear from 'rollup-plugin-clear';
 import postcss from 'rollup-plugin-postcss';
 import localResolve from 'rollup-plugin-local-resolve';
-import {base64} from '@ciscospark/common';
+import {base64} from '@webex/common';
 
 export default {
   plugins: [
