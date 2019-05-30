@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.18"></a>
+## [0.2.18](https://github.com/webex/react-ciscospark/compare/v0.2.17...v0.2.18) (2019-05-30)
+
+
+### Features
+
+* **Jenkinsfile:** Implemented es-check into the pipeline ([e5afa7d](https://github.com/webex/react-ciscospark/commit/e5afa7d))
+* **package:** Added es-check dependency ([66c5e42](https://github.com/webex/react-ciscospark/commit/66c5e42))
+* **SCRIPTS:** Updated the SCRIPTS file with es-check scripts accordingly ([1e25b8f](https://github.com/webex/react-ciscospark/commit/1e25b8f))
+
+
+
 <a name="0.2.17"></a>
 ## [0.2.17](https://github.com/webex/react-ciscospark/compare/v0.2.16...v0.2.17) (2019-05-30)
 
