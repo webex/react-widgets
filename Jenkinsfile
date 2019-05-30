@@ -182,6 +182,7 @@ ansiColor('xterm') {
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" npm run build sri widget-recents
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${version}/demo/" npm run build:package widget-recents-demo
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${version}/" npm run build:package widget-demo
+              npm run es5-check:dist
               '''
             }
           }
