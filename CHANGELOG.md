@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.21](https://github.com/webex/react-ciscospark/compare/v0.2.20...v0.2.21) (2019-06-07)
+
+
+### Features
+
+* **Spark:** Replaced static methods with class internal methods ([b3ae58c](https://github.com/webex/react-ciscospark/commit/b3ae58c))
+* **sparkComponent:** Verify spark instance plugins had been injected properly ([590bac6](https://github.com/webex/react-ciscospark/commit/590bac6))
+
+
+
 ### [0.2.20](https://github.com/webex/react-ciscospark/compare/v0.2.19...v0.2.20) (2019-06-06)
 
 
