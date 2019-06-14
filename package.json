@@ -68,7 +68,7 @@
     "@webex/internal-plugin-conversation": "1.58.5",
     "@webex/internal-plugin-encryption": "1.58.5",
     "@webex/internal-plugin-feature": "1.58.5",
-    "@webex/internal-plugin-flag": "^1.58.5",
+    "@webex/internal-plugin-flag": "1.58.5",
     "@webex/internal-plugin-mercury": "1.58.5",
     "@webex/internal-plugin-metrics": "1.58.5",
     "@webex/internal-plugin-presence": "1.58.5",
