@@ -60,7 +60,9 @@
   },
   "homepage": "https://github.com/webex/react-ciscospark#readme",
   "dependencies": {
-    "@momentum-ui/react": "^17.2.0",
+    "@momentum-ui/core": "15.2.1",
+    "@momentum-ui/icons": "6.2.1",
+    "@momentum-ui/react": "17.2.0",
     "@webex/common": "1.58.5",
     "@webex/common-timers": "1.58.5",
     "@webex/helper-html": "1.58.5",
