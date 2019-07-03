@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.25](https://github.com/webex/react-ciscospark/compare/v0.2.24...v0.2.25) (2019-07-03)
+
+
+### Bug Fixes
+
+* **Jenkinsfile:** add CISCOSPARK_SCOPES to Jenkinsfile ([82f1a71](https://github.com/webex/react-ciscospark/commit/82f1a71))
+
+
+
 ### [0.2.24](https://github.com/webex/react-ciscospark/compare/v0.2.23...v0.2.24) (2019-06-18)
 
 

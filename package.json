@@ -1,6 +1,6 @@
 {
   "name": "@ciscospark/react-ciscospark",
-  "version": "0.2.24",
+  "version": "0.2.25",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Webex Teams functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
