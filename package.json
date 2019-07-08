@@ -41,7 +41,8 @@
     "release": "standard-version",
     "precommit": "lint-staged",
     "prepush": "npm run test",
-    "tooling": "./scripts/tooling/index.js"
+    "tooling": "./scripts/tooling/index.js",
+    "upgradesdk": "./scripts/utils/jssdkupgrade.js"
   },
   "repository": {
     "type": "git",
@@ -181,6 +182,7 @@
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
     "node-sass": "^4.12.0",
+    "package-json": "^6.4.0",
     "postcss": "^6.0.3",
     "postcss-cli": "^4.1.0",
     "postcss-cssnext": "^3.0.2",
