@@ -62,7 +62,7 @@ export default (env) => webpackBaseConfig({
   plugins,
   // Reset env values we don't want to see in bundles
   env: {
-    CISCOSPARK_ACCESS_TOKEN: '',
+    WEBEX_ACCESS_TOKEN: '',
     TO_PERSON_EMAIL: '',
     TO_PERSON_ID: ''
   }

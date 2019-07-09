@@ -175,7 +175,7 @@ ansiColor('xterm') {
               nvm use v8.15.0
               version=`cat .version`
               export NODE_ENV=production
-              export CISCOSPARK_SCOPES="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
+              export WEBEX_SCOPE="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build:package widget-space
               BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" npm run build sri widget-space
               BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${version}/demo/" npm run build:package widget-space-demo

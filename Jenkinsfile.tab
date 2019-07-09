@@ -27,7 +27,7 @@ pipeline {
       steps {
         echo "Starting Tab Tests"
         withCredentials([
-          string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'CISCOSPARK_CLIENT_SECRET'),
+          string(credentialsId: 'ddfd04fb-e00a-4df0-9250-9a7cb37bce0e', variable: 'WEBEX_CLIENT_SECRET'),
           usernamePassword(credentialsId: 'SAUCE_LABS_VALIDATED_MERGE_CREDENTIALS', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME'),
         ]) {
           retry(2){
@@ -40,9 +40,9 @@ pipeline {
             # alters the environment.
             npm config delete prefix
             # Run tests
-            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=firefox VERSION=beta npm run test:tap
-            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome VERSION=beta npm run test:tap
-            CISCOSPARK_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome PLATFORM="windows 10" VERSION=beta npm run test:tap
+            WEBEX_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=firefox VERSION=beta npm run test:tap
+            WEBEX_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome VERSION=beta npm run test:tap
+            WEBEX_CLIENT_ID=C873b64d70536ed26df6d5f81e01dafccbd0a0af2e25323f7f69c7fe46a7be340 SAUCE=true BROWSER=chrome PLATFORM="windows 10" VERSION=beta npm run test:tap
             '''
           }
         }

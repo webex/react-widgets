@@ -17,8 +17,8 @@ const plugins = [
     }
   }),
   new webpack.EnvironmentPlugin([
-    'CISCOSPARK_ACCESS_TOKEN',
-    'CISCOSPARK_CLIENT_ID',
+    'WEBEX_ACCESS_TOKEN',
+    'WEBEX_CLIENT_ID',
     'SPACE_ID',
     'TO_PERSON_EMAIL',
     'TO_PERSON_ID'
