@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.27](https://github.com/webex/react-ciscospark/compare/v0.2.26...v0.2.27) (2019-07-11)
+
+
+### Bug Fixes
+
+* **scripts:** fix handler logic for transpiling all components ([4cd7706](https://github.com/webex/react-ciscospark/commit/4cd7706))
+
+
+
 ### [0.2.26](https://github.com/webex/react-ciscospark/compare/v0.2.25...v0.2.26) (2019-07-11)
 
 
