@@ -30,7 +30,7 @@ ansiColor('xterm') {
             nvm use v8.15.0
             npm install -g npm@6.4.1
             npm install
-            npm run upgradespark
+            npm run upgradesdk
             npm install
             '''
           }
@@ -45,7 +45,7 @@ ansiColor('xterm') {
           version=$(node ./scripts/utils/jssdkversion.js)
           echo $version > .version
           git add package.json package-lock.json
-          git commit -m "chore(package): update @ciscospark packages to ${version}"
+          git commit -m "chore(package): update @webex packages to ${version}"
           '''
           version = readFile '.version'
           sshagent(['6c8a75fb-5e5f-4803-9b6d-1933a3111a34']) {

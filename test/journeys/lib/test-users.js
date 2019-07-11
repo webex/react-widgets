@@ -16,8 +16,8 @@ import {deconstructHydraId} from './hydra';
  * @returns {Promise<object>}
  */
 export function setupTestUserJwt({displayName}) {
-  if (!(process.env.CISCOSPARK_APPID_ORGID && process.env.CISCOSPARK_APPID_SECRET)) {
-    throw new Error('CISCOSPARK_APPID_ORGID and CISCOSPARK_APPID_SECRET are required to generate guest tokens');
+  if (!(process.env.WEBEX_APPID_ORGID && process.env.WEBEX_APPID_SECRET)) {
+    throw new Error('WEBEX_APPID_ORGID and WEBEX_APPID_SECRET are required to generate guest tokens');
   }
 
   return createGuestUser({displayName})

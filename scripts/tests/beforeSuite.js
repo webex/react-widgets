@@ -3,7 +3,7 @@
  * @param {Object} suite suite details
  */
 module.exports = () => {
-  process.env.CISCOSPARK_SCOPE = [
+  process.env.WEBEX_SCOPE = [
     'webexsquare:get_conversation',
     'spark:people_read',
     'spark:rooms_read',

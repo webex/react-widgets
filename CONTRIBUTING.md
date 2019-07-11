@@ -82,11 +82,11 @@ npm install
 
 You'll need to create a file called `.env` that defines, at a minimum:
 
-- `CISCOSPARK_CLIENT_ID`
-- `CISCOSPARK_CLIENT_SECRET`
-- `CISCOSPARK_REDIRECT_URI`
-- `CISCOSPARK_SCOPE`
-- `CISCOSPARK_ACCESS_TOKEN`
+- `WEBEX_CLIENT_ID`
+- `WEBEX_CLIENT_SECRET`
+- `WEBEX_REDIRECT_URI`
+- `WEBEX_SCOPE`
+- `WEBEX_ACCESS_TOKEN`
 
 You can get these values by registering a new integration on the [developer portal](https://developer.ciscospark.com/add-integration.html).
 
