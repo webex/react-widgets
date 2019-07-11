@@ -14,11 +14,10 @@ module.exports = {
           transpile(pkg, `./packages/node_modules/${pkg}`);
         });
       }
-
-      if (packagePath) {
-        transpile(packageName, packagePath);
-      }
       else {
+        if (packagePath) {
+          transpile(packageName, packagePath);
+        }
         transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
       }
     }
