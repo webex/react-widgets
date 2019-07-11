@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.28](https://github.com/webex/react-ciscospark/compare/v0.2.27...v0.2.28) (2019-07-11)
+
+
+### Features
+
+* **webpack:** update csp for s3 uploads ([bc36bb1](https://github.com/webex/react-ciscospark/commit/bc36bb1))
+
+
+
 ### [0.2.27](https://github.com/webex/react-ciscospark/compare/v0.2.26...v0.2.27) (2019-07-11)
 
 
