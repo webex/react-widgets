@@ -1,12 +1,12 @@
-# react-ciscospark
+# react-widgets
 
-[![CircleCI](https://img.shields.io/circleci/project/github/webex/react-ciscospark/master.svg)](https://circleci.com/gh/webex/react-ciscospark)
-[![license](https://img.shields.io/github/license/webex/react-ciscospark.svg)](https://github.com/webex/react-ciscospark/blob/master/LICENSE)
+[![CircleCI](https://img.shields.io/circleci/project/github/webex/react-widgets/master.svg)](https://circleci.com/gh/webex/react-widgets)
+[![license](https://img.shields.io/github/license/webex/react-widgets.svg)](https://github.com/webex/react-widgets/blob/master/LICENSE)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-> Cisco Spark for React
+> Webex Widgets for React
 
-The Cisco Spark for React library allows developers to easily incorporate Spark functionality into an application.
+The Webex Widgets for React library allows developers to easily incorporate Spark functionality into an application.
 
 ## Table of Contents
 
@@ -24,13 +24,13 @@ The Cisco Spark for React library allows developers to easily incorporate Spark 
 
 ## Background
 
-This library allows React developers to quickly and easily create a Cisco Spark experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Spark, along with more complex, complete widgets, such as the Spark Space Widget.
+This library allows React developers to quickly and easily create a Webex experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Spark, along with more complex, complete widgets, such as the Spark Space Widget.
 
 The basic components are just presentational React <https://github.com/facebook/react> components, while our widgets leverage Redux <https://github.com/reactjs/redux> and the Spark Javascript SDK <https://github.com/webex/spark-js-sdk>.
 
 ## Widgets
 
-While many of our components are purely presentational, some have extended functionality that provide a piece of the full Cisco Spark experience. These fully self contained elements are called `Widgets` and are available here:
+While many of our components are purely presentational, some have extended functionality that provide a piece of the full Webex experience. These fully self contained elements are called `Widgets` and are available here:
 
 - [Space Widget](./packages/node_modules/@ciscospark/widget-space)
 - [Recents Widget](./packages/node_modules/@ciscospark/widget-recents)
@@ -48,7 +48,7 @@ $ npm start
 
 ### Build From Source
 
-1. Clone this repo using a git client (e.g. `git clone https://github.com/webex/react-ciscospark.git`)
+1. Clone this repo using a git client (e.g. `git clone https://github.com/webex/react-widgets.git`)
 1. Run `npm install` from the root of the repo. You will want to run this every time you pull down any new updates.
 1. From the root of the repo, run the following to build the widget:
     ```sh
@@ -70,7 +70,7 @@ Once a widget is bundled, the version number is available in the following ways:
 
 ## Coding Style
 
-We follow our [Cisco Spark Web Styleguide](https://github.com/webex/web-styleguide) when developing any web based libraries and tools. Please check it out and do your best to follow our norms when contributing to this codebase.
+We follow our [Webex Web Styleguide](https://github.com/webex/web-styleguide) when developing any web based libraries and tools. Please check it out and do your best to follow our norms when contributing to this codebase.
 
 ## Code Verification
 

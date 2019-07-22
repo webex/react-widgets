@@ -37,7 +37,7 @@ if [ -z $DRY_RUN ]; then
  if [ -z $BETA ]; then
     # Tag and push
     git tag $VERSION
-    git push --tags git@github.com:webex/react-ciscospark.git $VERSION
+    git push --tags git@github.com:webex/react-widgets.git $VERSION
 
     # Cleanup
     git checkout $SOURCE_DIR

@@ -26,7 +26,7 @@ export default (options, env) => {
     ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
-    new webpack.BannerPlugin(`react-ciscospark v${packageJson.version}`)
+    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`)
   ];
 
   return {

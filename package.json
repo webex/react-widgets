@@ -1,5 +1,5 @@
 {
-  "name": "@ciscospark/react-ciscospark",
+  "name": "@ciscospark/react-widgets",
   "version": "0.2.29",
   "description": "The Cisco Spark for React library allows developers to easily incorporate Webex Teams functionality into an application.",
   "scripts": {
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webex/react-ciscospark.git"
+    "url": "git+https://github.com/webex/react-widgets.git"
   },
   "contributors": [
     "Arash Koushkebaghi <akoushke@cisco.com>",
@@ -58,9 +58,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/webex/react-ciscospark/issues"
+    "url": "https://github.com/webex/react-widgets/issues"
   },
-  "homepage": "https://github.com/webex/react-ciscospark#readme",
+  "homepage": "https://github.com/webex/react-widgets#readme",
   "dependencies": {
     "@momentum-ui/core": "15.2.1",
     "@momentum-ui/icons": "6.2.1",
