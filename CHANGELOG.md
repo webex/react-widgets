@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.30](https://github.com/webex/react-widgets/compare/v0.2.29...v0.2.30) (2019-07-25)
+
+
+### Features
+
+* rename github repo ([e047770](https://github.com/webex/react-widgets/commit/e047770))
+
+
+
 ### [0.2.29](https://github.com/webex/react-widgets/compare/v0.2.28...v0.2.29) (2019-07-23)
 
 
