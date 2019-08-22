@@ -106,27 +106,6 @@ describe('Space Widget Startup Settings Tests', () => {
     });
   });
 
-  describe('legacy destination settings', () => {
-    it('opens message widget using legacy toPersonEmail', () => {
-      browserLocal.execute((localAccessToken, localToUserEmail) => {
-        const options = {
-          accessToken: localAccessToken,
-          onEvent: (eventName, detail) => {
-            window.ciscoSparkEvents.push({eventName, detail});
-          },
-          toPersonEmail: localToUserEmail,
-          initialActivity: 'message'
-        };
-
-        window.openSpaceWidget(options);
-      }, mccoy.token.access_token, spock.email);
-
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
-      browserLocal.refresh();
-      browserRemote.refresh();
-    });
-  });
-
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
