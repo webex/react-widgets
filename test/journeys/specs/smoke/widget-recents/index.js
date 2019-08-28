@@ -365,7 +365,8 @@ describe('Smoke Tests - Recents Widget', () => {
           onEvent: (eventName, detail) => {
             window.ciscoSparkEvents.push({eventName, detail});
           },
-          toPersonEmail: localToUserEmail,
+          destinationType: 'email',
+          destinationId: localToUserEmail,
           initialActivity: 'meet'
         };
 

@@ -1,6 +1,7 @@
 import '@webex/plugin-authorization';
 import '@webex/plugin-logger';
 import '@webex/plugin-people';
+import '@webex/plugin-rooms';
 import '@webex/internal-plugin-conversation';
 
 import CiscoSpark from '@webex/webex-core';
@@ -135,7 +136,7 @@ export function setupOneOnOneUsers() {
  * Creates a space using the JS SDK
  * @param {Object} options
  * @param {Object} options.sparkInstance
- * @param {Object} options.participants
+ * @param {Array} options.participants
  * @param {Object} options.displayName
  * @returns {Object}
  */
@@ -148,18 +149,22 @@ export function createSpace({sparkInstance, participants, displayName}) {
   }).then((c) => {
     space = c;
 
-    return space;
-  }));
+    return sparkInstance.rooms.get(space);
+  })
+    .then((room) => {
+      // Get the hydra ID for created space
+      space.hydraId = room.id;
+    }));
 
   return space;
 }
 
 /**
- * Creates a space using the JS SDK
+ * Sends a message to a space using the JS SDK
  * @param {Object} options
  * @param {Object} options.sparkInstance
- * @param {Object} options.participants
- * @param {Object} options.displayName
+ * @param {Object} options.space
+ * @param {String} options.message
  * @returns {Object}
  */
 export function sendMessage({sparkInstance, space, message}) {

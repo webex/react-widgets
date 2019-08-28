@@ -47,7 +47,7 @@ describe('Space Widget Data API Tests', () => {
       csmmDom.setAttribute('data-initial-activity', 'message');
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
-    }, marty.token.access_token, conversation.id);
+    }, marty.token.access_token, conversation.hydraId);
     local.browser.waitForVisible(spaceWidget);
   });
 
@@ -64,7 +64,7 @@ describe('Space Widget Data API Tests', () => {
       csmmDom.setAttribute('data-initial-activity', 'message');
       document.getElementById('ciscospark-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
-    }, docbrown.token.access_token, conversation.id);
+    }, docbrown.token.access_token, conversation.hydraId);
     remote.browser.waitForVisible(spaceWidget);
   });
 

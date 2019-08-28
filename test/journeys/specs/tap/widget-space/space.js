@@ -103,13 +103,13 @@ describe('Widget Space: Group Space: TAP', () => {
 
   before('inject marty token', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
-    loginAndOpenWidget(local.browser, marty.token.access_token, false, conversation.id);
+    loginAndOpenWidget(local.browser, marty.token.access_token, false, conversation.hydraId);
     local.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
 
   before('inject docbrown token', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
-    loginAndOpenWidget(remote.browser, docbrown.token.access_token, false, conversation.id);
+    loginAndOpenWidget(remote.browser, docbrown.token.access_token, false, conversation.hydraId);
     remote.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
 

@@ -66,7 +66,7 @@ describe('Space Widget Primary Tests', () => {
       };
 
       window.openSpaceWidget(options);
-    }, marty.token.access_token, conversation.id);
+    }, marty.token.access_token, conversation.hydraId);
   });
 
   before('open widget for docbrown in browserRemote', () => {
@@ -82,7 +82,7 @@ describe('Space Widget Primary Tests', () => {
       };
 
       window.openSpaceWidget(options);
-    }, docbrown.token.access_token, conversation.id);
+    }, docbrown.token.access_token, conversation.hydraId);
     remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
   });
 

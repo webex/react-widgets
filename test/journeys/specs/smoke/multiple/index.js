@@ -62,7 +62,7 @@ describe('Multiple Widgets', () => {
       };
 
       window.openSpaceWidget(options);
-    }, marty.token.access_token, conversation.id);
+    }, marty.token.access_token, conversation.hydraId);
     browserLocal.waitForVisible(spaceElements.spaceWidget);
   });
 
@@ -91,7 +91,7 @@ describe('Multiple Widgets', () => {
       };
 
       window.openSpaceWidget(options);
-    }, docbrown.token.access_token, conversation.id);
+    }, docbrown.token.access_token, conversation.hydraId);
     browserRemote.waitForVisible(spaceElements.spaceWidget);
   });
 

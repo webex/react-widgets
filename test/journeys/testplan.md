@@ -181,8 +181,6 @@ The space widget suite tests the functionality of the space widget in a given sp
   - opens message widget
 - start call setting
   - starts call when set to true
-- legacy destination settings
-  - opens message widget using legacy toPersonEmail
 
 #### Space Widget Data API Instantiation Tests
 
@@ -201,7 +199,6 @@ The space widget suite tests the functionality of the space widget in a given sp
     - opens message widget
   - start call setting
     - starts call when set to true
-  - opens using legacy toPersonEmail
 
 ### Recents Suite
 

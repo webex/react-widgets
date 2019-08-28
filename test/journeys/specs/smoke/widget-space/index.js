@@ -49,7 +49,7 @@ describe('Smoke Tests - Space Widget', () => {
       };
 
       window.openSpaceWidget(options);
-    }, marty.token.access_token, conversation.id);
+    }, marty.token.access_token, conversation.hydraId);
   });
 
   it('open widget for docbrown in browserRemote', () => {
@@ -65,7 +65,7 @@ describe('Smoke Tests - Space Widget', () => {
       };
 
       window.openSpaceWidget(options);
-    }, docbrown.token.access_token, conversation.id);
+    }, docbrown.token.access_token, conversation.hydraId);
     remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
   });
 
