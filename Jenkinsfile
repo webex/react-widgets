@@ -245,6 +245,7 @@ ansiColor('xterm') {
                 }
                 catch (error) {
                   warn("failed to publish to npm ${error.toString()}")
+                  currentBuild.result = 'FAILURE'
                 }
               }
             }
