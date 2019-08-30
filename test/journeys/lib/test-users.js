@@ -101,7 +101,11 @@ export function createTestUsers(count, config) {
     }
 
     return Promise.all(promises)
-      .then(() => storeUsers(createdUsers));
+      .then(() => storeUsers(createdUsers))
+      // Adding delay for test user creation propagation
+      .then(() => new Promise((resolve) => {
+        setTimeout(resolve, 3000);
+      }));
   }
 
   browser.call(createUsers);
