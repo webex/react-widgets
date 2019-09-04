@@ -83,6 +83,7 @@
     "@webex/internal-plugin-wdm": "1.79.0",
     "@webex/plugin-authorization": "1.79.0",
     "@webex/plugin-logger": "1.79.0",
+    "@webex/plugin-meetings": "^1.79.0",
     "@webex/plugin-people": "1.79.0",
     "@webex/plugin-phone": "1.79.0",
     "@webex/plugin-rooms": "1.79.0",
