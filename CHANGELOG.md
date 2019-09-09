@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.34](https://github.com/webex/react-widgets/compare/v0.2.33...v0.2.34) (2019-09-09)
+
+
+### Features
+
+* **widget-space:** add error for UUID destination ids ([5018685](https://github.com/webex/react-widgets/commit/5018685))
+* **widget-space:** remove deprecated destinations props ([23d44a6](https://github.com/webex/react-widgets/commit/23d44a6))
+
+
+### Tests
+
+* **journeys:** add test user creation delay ([56b15f5](https://github.com/webex/react-widgets/commit/56b15f5))
+* **journeys:** use hydra id for conversation ([13293b7](https://github.com/webex/react-widgets/commit/13293b7))
+
+
+### BREAKING CHANGES
+
+* **widget-space:** SPACE ID and USER ID destinations must be identified by
+the fully encoded ID provided by the developer portal.
+* **widget-space:** The deprecated destination props are no
+longer supported: "spaceId", "toPersonEmail", and "toPersonId".
+Destination must use the "destinationId" and "destinationType" props.
+
+
+
 ### [0.2.33](https://github.com/webex/react-widgets/compare/v0.2.32...v0.2.33) (2019-09-06)
 
 
