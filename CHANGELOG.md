@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.35](https://github.com/webex/react-widgets/compare/v0.2.34...v0.2.35) (2019-09-12)
+
+
+### Features
+
+* **r-m-media:** add isRegistering support ([7ec9b5e](https://github.com/webex/react-widgets/commit/7ec9b5e))
+
+
+
 ### [0.2.34](https://github.com/webex/react-widgets/compare/v0.2.33...v0.2.34) (2019-09-09)
 
 
