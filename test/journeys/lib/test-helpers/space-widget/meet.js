@@ -129,11 +129,11 @@ export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = fa
   // Let call elapse 5 seconds before hanging up
   browser.pause(5000);
   hangup(browserLocal);
-  browserLocal.waitForVisible(elements.messageWidget);
   if (isMeeting) {
     // Meetings have to be manually disconnected (waiting for participants)
     hangup(browserRemote);
   }
+  browserLocal.waitForVisible(elements.messageWidget);
   // Should switch back to message widget after hangup
   browserRemote.waitForVisible(elements.messageWidget);
 }
