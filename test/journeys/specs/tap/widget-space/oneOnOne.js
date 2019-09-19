@@ -1,12 +1,11 @@
 import {assert} from 'chai';
 
-import testUsers from '@webex/test-helper-test-users';
-
 import {elements as basicElements, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 import {elements, declineIncomingCallTest, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
 import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
+import {setupOneOnOneUsers} from '../../../lib/test-users';
 
 describe('Widget Space: One on One: TAP', () => {
   const browserLocal = browser.select('browserLocal');
@@ -21,19 +20,11 @@ describe('Widget Space: One on One: TAP', () => {
       });
   });
 
-  before('create spock', () => testUsers.create({count: 1, config: {displayName: 'Mr Spock TAP'}})
-    .then((users) => {
-      [spock] = users;
-      local = {browser: browserLocal, user: spock, displayName: spock.displayName};
-    }));
-
-  before('create mccoy', () => testUsers.create({count: 1, config: {displayName: 'Bones Mccoy TAP'}})
-    .then((users) => {
-      [mccoy] = users;
-      remote = {browser: browserRemote, user: mccoy, displayName: mccoy.displayName};
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
+  before('create test users', () => {
+    [mccoy, spock] = setupOneOnOneUsers();
+    local = {browser: browserLocal, user: mccoy, displayName: mccoy.displayName};
+    remote = {browser: browserRemote, user: spock, displayName: spock.displayName};
+  });
 
   before('inject token for spock', () => {
     loginAndOpenWidget(local.browser, spock.token.access_token, true, mccoy.email);
