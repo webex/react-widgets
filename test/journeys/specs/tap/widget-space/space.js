@@ -74,6 +74,7 @@ describe('Widget Space: Group Space: TAP', () => {
 
     it('closes the menu with the exit button', () => {
       local.browser.click(elements.exitButton);
+      // Activity menu animates the hide, wait for it to be gone
       local.browser.waitForVisible(elements.activityMenu, 1500, true);
     });
 
@@ -84,6 +85,8 @@ describe('Widget Space: Group Space: TAP', () => {
 
     it('switches to message widget', () => {
       local.browser.element(elements.controlsContainer).element(elements.messageButton).click();
+      // Activity menu animates the hide, wait for it to be gone
+      local.browser.waitForVisible(elements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(elements.messageWidget));
     });
   });

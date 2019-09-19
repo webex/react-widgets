@@ -10,7 +10,7 @@ import {setupOneOnOneUsers} from '../../../lib/test-users';
 describe('Widget Space: One on One: TAP', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  let local, mccoy, remote, spock;
+  let local, localUser, remote, remoteUser;
 
   before('load browsers', () => {
     browser
@@ -21,18 +21,18 @@ describe('Widget Space: One on One: TAP', () => {
   });
 
   before('create test users', () => {
-    [mccoy, spock] = setupOneOnOneUsers();
-    local = {browser: browserLocal, user: mccoy, displayName: mccoy.displayName};
-    remote = {browser: browserRemote, user: spock, displayName: spock.displayName};
+    [localUser, remoteUser] = setupOneOnOneUsers();
+    local = {browser: browserLocal, user: localUser, displayName: localUser.displayName};
+    remote = {browser: browserRemote, user: remoteUser, displayName: remoteUser.displayName};
   });
 
-  before('inject token for spock', () => {
-    loginAndOpenWidget(local.browser, spock.token.access_token, true, mccoy.email);
+  before('inject token for local user', () => {
+    loginAndOpenWidget(local.browser, local.user.token.access_token, true, remote.user.email);
     local.browser.waitForExist(`[placeholder="Send a message to ${remote.displayName}"]`, 30000);
   });
 
-  before('open remote widget for mccoy', () => {
-    loginAndOpenWidget(remote.browser, mccoy.token.access_token, true, spock.email);
+  before('open remote widget for remote user', () => {
+    loginAndOpenWidget(remote.browser, remote.user.token.access_token, true, local.user.email);
     remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
   });
 
@@ -63,6 +63,7 @@ describe('Widget Space: One on One: TAP', () => {
 
     it('closes the menu with the exit button', () => {
       local.browser.click(basicElements.exitButton);
+      // Activity menu animates the hide, wait for it to be gone
       local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
     });
 
@@ -76,6 +77,8 @@ describe('Widget Space: One on One: TAP', () => {
 
     it('switches to message widget', () => {
       local.browser.element(basicElements.controlsContainer).element(basicElements.messageActivityButton).click();
+      // Activity menu animates the hide, wait for it to be gone
+      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
       assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
     });
@@ -87,6 +90,8 @@ describe('Widget Space: One on One: TAP', () => {
 
     it('switches to meet widget', () => {
       local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).click();
+      // Activity menu animates the hide, wait for it to be gone
+      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
       assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
     });
