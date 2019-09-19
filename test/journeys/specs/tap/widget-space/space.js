@@ -2,20 +2,19 @@ import {assert} from 'chai';
 
 import '@webex/internal-plugin-conversation';
 import '@webex/plugin-logger';
-import testUsers from '@webex/test-helper-test-users';
-import CiscoSpark from '@webex/webex-core';
 
 import waitForPromise from '../../../lib/wait-for-promise';
 import {elements, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {clearEventLog, getEventLog} from '../../../lib/events';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
+import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 
 describe('Widget Space: Group Space: TAP', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
   let docbrown, lorraine, marty;
-  let conversation, local, remote;
+  let conversation, local, remote, participants;
 
   before('load browsers', () => {
     browserLocal
@@ -30,76 +29,14 @@ describe('Widget Space: Group Space: TAP', () => {
       });
   });
 
-  before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
-    .then((users) => {
-      [marty] = users;
-      marty.spark = new CiscoSpark({
-        credentials: {
-          authorization: marty.token,
-          federation: true
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
+  before('create test users and spaces', () => {
+    participants = setupGroupTestUsers();
 
-      return marty.spark.internal.mercury.connect();
-    }));
-
-  before('create docbrown', () => testUsers.create({count: 1, config: {displayName: 'Emmett Brown'}})
-    .then((users) => {
-      [docbrown] = users;
-      docbrown.spark = new CiscoSpark({
-        credentials: {
-          authorization: docbrown.token,
-          federation: true
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-    }));
-
-  before('create lorraine', () => testUsers.create({count: 1, config: {displayName: 'Lorraine Baines'}})
-    .then((users) => {
-      [lorraine] = users;
-      lorraine.spark = new CiscoSpark({
-        credentials: {
-          authorization: lorraine.token,
-          federation: true
-        },
-        config: {
-          logger: {
-            level: 'error'
-          }
-        }
-      });
-
-      return lorraine.spark.internal.mercury.connect();
-    }));
-
-  before('pause to let test users establish', () => browser.pause(5000));
-
-  after('disconnect', () => Promise.all([
-    marty.spark.internal.mercury.disconnect(),
-    lorraine.spark.internal.mercury.disconnect(),
-    // Demos use cookies to save state, clear before moving on
-    browserLocal.deleteCookie(),
-    browserRemote.deleteCookie()
-  ]));
-
-  before('create space', () => marty.spark.internal.conversation.create({
-    displayName: 'Test Widget Space',
-    participants: [marty, docbrown, lorraine]
-  }).then((c) => {
-    conversation = c;
-
-    return conversation;
-  }));
+    [docbrown, lorraine, marty] = participants;
+    assert.lengthOf(participants, 3, 'Test users were not created');
+    registerDevices(participants);
+    conversation = createSpace({sparkInstance: marty.spark, participants, displayName: 'Test Widget Space'});
+  });
 
   before('inject marty token', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
@@ -112,6 +49,13 @@ describe('Widget Space: Group Space: TAP', () => {
     loginAndOpenWidget(remote.browser, docbrown.token.access_token, false, conversation.hydraId);
     remote.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
+
+  after('disconnect', () => Promise.all([
+    disconnectDevices(participants),
+    // Demos use cookies to save state, clear before moving on
+    browserLocal.deleteCookie(),
+    browserRemote.deleteCookie()
+  ]));
 
   describe('Activity Menu', () => {
     it('has a menu button', () => {
