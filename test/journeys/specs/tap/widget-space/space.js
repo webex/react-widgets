@@ -50,6 +50,13 @@ describe('Widget Space: Group Space: TAP', () => {
     remote.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
   });
 
+  before('stick widgets to bottom of viewport', () => {
+    local.browser.waitForVisible(elements.stickyButton);
+    local.browser.click(elements.stickyButton);
+    remote.browser.waitForVisible(elements.stickyButton);
+    remote.browser.click(elements.stickyButton);
+  });
+
   after('disconnect', () => Promise.all([
     disconnectDevices(participants),
     // Demos use cookies to save state, clear before moving on
@@ -80,29 +87,42 @@ describe('Widget Space: Group Space: TAP', () => {
 
     it('has a message button', () => {
       local.browser.click(elements.menuButton);
-      local.browser.element(elements.controlsContainer).element(elements.messageButton).waitForVisible();
+      local.browser
+        .element(elements.controlsContainer)
+        .element(elements.messageActivityButton)
+        .waitForVisible();
     });
 
     it('switches to message widget', () => {
-      local.browser.element(elements.controlsContainer).element(elements.messageButton).click();
+      local.browser.element(elements.controlsContainer).element(elements.messageActivityButton).click();
       // Activity menu animates the hide, wait for it to be gone
       local.browser.waitForVisible(elements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(elements.messageWidget));
+      assert.isFalse(local.browser.isVisible(elements.meetWidget));
+    });
+
+    it('has a meet button', () => {
+      local.browser.click(elements.menuButton);
+      local.browser.element(elements.controlsContainer).element(elements.meetActivityButton).waitForVisible();
+    });
+
+    it('switches to meet widget', () => {
+      local.browser.element(elements.controlsContainer).element(elements.meetActivityButton).click();
+      // Activity menu animates the hide, wait for it to be gone
+      local.browser.waitForVisible(elements.activityMenu, 1500, true);
+      assert.isTrue(local.browser.isVisible(elements.meetWidget));
+      assert.isFalse(local.browser.isVisible(elements.messageWidget));
     });
   });
 
   describe('messaging', () => {
-    before('widget switches to message', () => {
-      switchToMessage(local.browser);
-      switchToMessage(remote.browser);
-    });
-
     it('sends and receives messages', () => {
       const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
       const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
       const lorraineText = 'Marty, will we ever see you again?';
       const martyText2 = 'I guarantee it.';
 
+      switchToMessage(local.browser);
       sendMessage(local, remote, martyText);
       verifyMessageReceipt(remote, local, martyText);
       clearEventLog(local.browser);
