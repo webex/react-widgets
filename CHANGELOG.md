@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.38](https://github.com/webex/react-widgets/compare/v0.2.37...v0.2.38) (2019-09-20)
+
+
+### Bug Fixes
+
+* **tap:** use helper fns in space tap ([14678ac](https://github.com/webex/react-widgets/commit/14678ac))
+
+
+### Tests
+
+* **journeys:** add activity menu hide delay ([1f56794](https://github.com/webex/react-widgets/commit/1f56794))
+* **tap:** add wait for animations ([3f364ea](https://github.com/webex/react-widgets/commit/3f364ea))
+* **tap:** standardize space test with oneOnOne ([39dadee](https://github.com/webex/react-widgets/commit/39dadee))
+* **tap:** use test users helper ([028e9f7](https://github.com/webex/react-widgets/commit/028e9f7))
+
+
+
 ### [0.2.37](https://github.com/webex/react-widgets/compare/v0.2.36...v0.2.37) (2019-09-16)
 
 
