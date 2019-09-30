@@ -16,7 +16,6 @@ The Webex Widgets for React library allows developers to easily incorporate Webe
 - [Install](#install)
   - [Serve from Source](#serve-from-source)
 - [Version](#version)
-- [Development](#development)
 - [Coding Style](#coding-style)
 - [Code Verification](#code-verification)
 - [Contributing](#contributing)
@@ -63,10 +62,6 @@ When a widget is bundled and loaded via script tag, the version number is availa
 - A comment at the top of each bundled file
 - Programmatic access after a widget has been registered: `window.ciscospark.widgetFn.{widgetName}.version` (e.g. `window.ciscospark.widgetFn.spaceWidget.version`)
 - Access after a widget has been instantiated: `window.ciscospark.widget({widgetEl}).version` (e.g. `window.ciscospark.widget(document.getElementById('myWidget')).version`)
-
-## Development
-
-- `stylelint` currently ignores all `node_modules` directories, and will not lint our packages. Discussion: <https://github.com/stylelint/stylelint/issues/2236>
 
 ## Coding Style
 
