@@ -1,25 +1,30 @@
 # Main Config
-version: 2
+version: 2.1
 
-base_image: &base_image
-  image: circleci/node:carbon-browsers
+# reusable environment for all jobs
+executors:
+  main-executor:
+    working_directory: ~/react-widgets
+    docker:
+      - image: circleci/node:carbon-browsers
 
-job_common: &job_common
-  docker:
-    - <<: *base_image
 
-restore_workspace: &restore_workspace
-  attach_workspace:
-    at: /tmp/workspace
-
-restore_node_modules: &restore_node_modules
-  run:
-    name: Link cached node_modules to project
-    command: mv /tmp/workspace/node_modules ./ || true
+# Reusable commands for jobs
+commands:
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: ~/react-widgets
+  restore_node_modules:
+    description: 'Restore the node_modules dependencies cache'
+    steps:
+      - run:
+          name: Link cached node_modules to project
+          command: mv /tmp/workspace/node_modules ./ || true
 
 jobs:
   install:
-    <<: *job_common
+    executor: main-executor
     steps:
       - checkout
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
@@ -43,11 +48,11 @@ jobs:
           path: /tmp/npm_install.log
           destination: npm-install
   unit_tests_and_linting:
-    <<: *job_common
+    executor: main-executor
     steps:
       - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
+      - restore_workspace
+      - restore_node_modules
       - run:
           name: Run eslint
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
@@ -63,7 +68,7 @@ jobs:
           destination: junit
 
   build_for_tests:
-    <<: *job_common
+    executor: main-executor
     environment:
       - FEDERATION: "true"
       - NODE_ENV: "test"
@@ -78,25 +83,25 @@ jobs:
 
     steps:
       - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
+      - restore_workspace
+      - restore_node_modules
       - run:
           name: Copy and build journey test static files
-          command: npm run build journey /tmp/dist-test
+          command: npm run build journey dist-test
       - persist_to_workspace:
-          root: /tmp
+          root: ~/react-widgets
           paths:
             - dist-test
 
   journey_tests_chrome:
-    <<: *job_common
+    executor: main-executor
     environment:
       SAUCE: true
-      STATIC_SERVER_PATH: /tmp/workspace/dist-test
+      STATIC_SERVER_PATH: dist-test
     steps:
       - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
+      - restore_workspace
+      - restore_node_modules
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests Chrome
@@ -117,14 +122,14 @@ jobs:
           destination: browser
 
   journey_tests_firefox:
-    <<: *job_common
+    executor: main-executor
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: /tmp/workspace/dist-test
     steps:
       - checkout
-      - <<: *restore_workspace
-      - <<: *restore_node_modules
+      - restore_workspace
+      - restore_node_modules
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests Firefox
@@ -144,9 +149,7 @@ jobs:
           path: reports/browser
           destination: browser
 
-
 workflows:
-  version: 2
   run_all_tests:
     jobs:
       - install
