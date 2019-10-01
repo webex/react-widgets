@@ -8,7 +8,6 @@ executors:
     docker:
       - image: circleci/node:carbon-browsers
 
-
 # Reusable commands for jobs
 commands:
   restore_workspace:
@@ -18,9 +17,10 @@ commands:
   restore_node_modules:
     description: 'Restore the node_modules dependencies cache'
     steps:
-      - run:
-          name: Link cached node_modules to project
-          command: mv /tmp/workspace/node_modules ./ || true
+      - restore_cache:
+          keys:
+            - node-module-cache-v1-{{ checksum "package-lock.json" }}
+            - node-module-cache-v1-
 
 jobs:
   install:
@@ -28,17 +28,13 @@ jobs:
     steps:
       - checkout
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+      - restore_node_modules
       - run:
-          name: Install dependencies
-          command: |
-            if [ ! -d node_modules ]; then
-              npm install
-            fi
-      - run:
-          name: Copy node_modules to workspace
-          command: mv node_modules /tmp/
-      - persist_to_workspace:
-          root: /tmp
+          name: 'Install dependencies'
+          command: npm i
+      # Cache node_modules across different internal jobs in the workflow and across different circleci runs
+      - save_cache:
+          key: node-module-cache-v1-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       - run:
@@ -47,6 +43,7 @@ jobs:
       - store_artifacts:
           path: /tmp/npm_install.log
           destination: npm-install
+
   unit_tests_and_linting:
     executor: main-executor
     steps:
