@@ -22,7 +22,8 @@ export default (options, env) => {
       'WDM_SERVICE_URL',
       'IDBROKER_BASE_URL',
       'CONVERSATION_SERVICE',
-      'FEDERATION'
+      'FEDERATION',
+      'U2C_SERVICE_URL'
     ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
