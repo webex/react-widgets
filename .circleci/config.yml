@@ -10,7 +10,7 @@ executors:
 
 # Orb to grab `s3` capability for us
 orbs:
-  aws-s3: circleci/aws-s3@1.0.0
+  aws-s3: circleci/aws-s3@1.0.11
 
 # Reusable commands for jobs
 commands:
@@ -244,11 +244,28 @@ jobs:
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}/demo
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
-          to: s3://${AWS_BUCKET}/widget/latest/demo
+          to: s3://${AWS_BUCKET}/widget-demo/latest
           overwrite: true
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
+
+  promote_latest_to_prerelease:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-space/latest
+          to: s3://${AWS_BUCKET}/widget-space/prerelease
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-recents/latest
+          to: s3://${AWS_BUCKET}/widget-recents/prerelease
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-demo/latest
+          to: s3://${AWS_BUCKET}/widget-demo/prerelease
+          overwrite: true
 
 workflows:
   run_all_tests:
@@ -278,4 +295,13 @@ workflows:
       - deploy_to_cdn:
           requires:
               - version_and_publish
-
+  promotions:
+    triggers:
+      - schedule:
+          cron: "15 2 * * 3"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - promote_latest_to_prerelease
