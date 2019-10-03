@@ -14,7 +14,7 @@ The Webex Widgets for React library allows developers to easily incorporate Webe
 - [Widgets](#widgets)
 - [Usage](#usage)
 - [Install](#install)
-  - [Build from Source](#build-from-source)
+  - [Serve from Source](#serve-from-source)
 - [Version](#version)
 - [Development](#development)
 - [Coding Style](#coding-style)
@@ -46,19 +46,19 @@ $ npm start
 
 ## Install
 
-### Build From Source
+### Serve From Source
 
 1. Clone this repo using a git client (e.g. `git clone https://github.com/webex/react-widgets.git`)
 1. Run `npm install` from the root of the repo. You will want to run this every time you pull down any new updates.
-1. From the root of the repo, run the following to build the widget:
+1. From the root of the repo, run the following to serve the widgets demo:
     ```sh
-    npm run build
+    npm start
     ```
-1. The built bundles are located at `packages/node_modules/@ciscospark/PACKAGE_NAME/dist`.
+1. The widget demo will be running on http://localhost:8000
 
 ## Version
 
-Once a widget is bundled, the version number is available in the following ways:
+When a widget is bundled and loaded via script tag, the version number is available in the following ways:
 
 - A comment at the top of each bundled file
 - Programmatic access after a widget has been registered: `window.ciscospark.widgetFn.{widgetName}.version` (e.g. `window.ciscospark.widgetFn.spaceWidget.version`)
