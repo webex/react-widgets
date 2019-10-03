@@ -8,6 +8,10 @@ executors:
     docker:
       - image: circleci/node:carbon-browsers
 
+# Orb to grab `s3` capability for us
+orbs:
+  aws-s3: circleci/aws-s3@1.0.0
+
 # Reusable commands for jobs
 commands:
   restore_workspace:
@@ -145,7 +149,7 @@ jobs:
           path: reports/browser
           destination: browser
 
-  versioning_and_publish:
+  version_and_publish:
     executor: main-executor
     steps:
       - checkout
@@ -179,7 +183,7 @@ jobs:
 
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/demo/" npm run build:package widget-recents-demo
 
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION}/" npm run build:package widget-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget/archives/${VERSION}/" npm run build:package widget-demo
 
             npm run es5-check:dist
       - run:
@@ -191,6 +195,60 @@ jobs:
       - run:
           name: 'Publish to NPM'
           command: npm run publish:components
+      - persist_to_workspace:
+          root: ~/react-widgets
+          paths:
+            - packages/node_modules/@ciscospark/widget-space/dist
+            - packages/node_modules/@ciscospark/widget-recents/dist
+            - packages/node_modules/@ciscospark/widget-space-demo/dist
+            - packages/node_modules/@ciscospark/widget-recents-demo/dist
+            - packages/node_modules/@ciscospark/widget-demo/dist
+
+  deploy_to_cdn:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - checkout
+      - restore_workspace
+      - run:
+          name: 'Grab Version Number'
+          command: |
+            echo "export VERSION_NUMBER=\"$(grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')\//[[:space:]]/" >> "${BASH_ENV}"
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
+          to: s3://${AWS_BUCKET}/widget-space/latest
+          overwrite: true
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
+          to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space-demo/dist
+          to: s3://${AWS_BUCKET}/widget-space/latest/demo
+          overwrite: true
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space-demo/dist
+          to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}/demo
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents/dist
+          to: s3://${AWS_BUCKET}/widget-recents/latest
+          overwrite: true
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents/dist
+          to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents-demo/dist
+          to: s3://${AWS_BUCKET}/widget-recents/latest/demo
+          overwrite: true
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents-demo/dist
+          to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}/demo
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
+          to: s3://${AWS_BUCKET}/widget/latest/demo
+          overwrite: true
+      - aws-s3/sync:
+          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
+          to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
 
 workflows:
   run_all_tests:
@@ -214,9 +272,10 @@ workflows:
           filters:
               branches:
                 only: master
-      - versioning_and_publish:
-          filters:
-            branches:
-              only: master
+      - version_and_publish:
           requires:
               - install
+      - deploy_to_cdn:
+          requires:
+              - version_and_publish
+
