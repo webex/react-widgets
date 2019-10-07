@@ -154,6 +154,9 @@ jobs:
     steps:
       - checkout
       - restore_node_modules
+      - add_ssh_keys:
+          fingerprints:
+            - "df:fe:3e:ee:15:bd:fb:a1:15:0d:74:78:65:98:db:76"
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: 'Generate Version Number'
