@@ -39,7 +39,7 @@
     "start:samples": "echo 'Deprecated. Please use npm run serve:samples'; npm run serve samples",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=2048 npm run build:packagejson && npm run build:transpile all && npm run es6-check:esm && npm run publish components",
-    "release": "standard-version",
+    "release": "standard-version -m 'chore(release): %s [skip ci]",
     "precommit": "lint-staged",
     "prepush": "npm run test",
     "tooling": "./scripts/tooling/index.js",
