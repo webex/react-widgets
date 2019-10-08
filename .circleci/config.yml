@@ -222,13 +222,20 @@ jobs:
   deploy_to_cdn:
     executor: main-executor
     working_directory: ~/react-widgets
+    environment:
+      - AWS_BUCKET: "code.s4d.io"
+      - AWS_REGION: "us-east-1"
     steps:
       - checkout
       - restore_workspace
       - run:
           name: 'Grab Version Number'
           command: |
-            echo "export VERSION_NUMBER=\"$(grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')\//[[:space:]]/" >> "${BASH_ENV}"
+            echo 'VERSION_NUMBER="$(npx -c \'echo "$npm_package_version"\')"' >> $BASH_ENV
+      - run:
+          name: 'Verify version number'
+          command: |
+            echo ${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/latest
