@@ -174,7 +174,7 @@ jobs:
           name: 'Generate Version Number'
           command: |
             npm run release -- --release-as patch --no-verify
-            echo "export VERSION=$(grep "version" package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')" >> $BASH_ENV
+            echo export VERSION=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
             git rev-parse HEAD > gitcommit
       - run:
           name: 'Build for CDN'
@@ -232,7 +232,7 @@ jobs:
       - run:
           name: 'Grab Version Number'
           command: |
-            echo VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
+            echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
       - run:
           name: 'Verify version number'
           command: |
