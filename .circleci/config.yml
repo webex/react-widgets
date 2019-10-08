@@ -198,7 +198,7 @@ jobs:
 
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/demo/" npm run build:package widget-recents-demo
 
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget/archives/${VERSION}/" npm run build:package widget-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION}/" npm run build:package widget-demo
 
             npm run es5-check:dist
       - run:
