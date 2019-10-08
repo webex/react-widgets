@@ -213,6 +213,7 @@ jobs:
       - persist_to_workspace:
           root: ~/react-widgets
           paths:
+            - package.json
             - packages/node_modules/@ciscospark/widget-space/dist
             - packages/node_modules/@ciscospark/widget-recents/dist
             - packages/node_modules/@ciscospark/widget-space-demo/dist
