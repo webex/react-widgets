@@ -164,6 +164,7 @@ jobs:
     executor: main-executor
     steps:
       - checkout
+      - run: git remote add upstream git@github.com:webex/react-widgets.git
       - restore_node_modules
       - add_ssh_keys:
           fingerprints:
