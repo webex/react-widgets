@@ -231,7 +231,7 @@ jobs:
       - run:
           name: 'Grab Version Number'
           command: |
-            echo 'VERSION_NUMBER="$(npx -c \'echo "$npm_package_version"\')"' >> $BASH_ENV
+            echo VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
       - run:
           name: 'Verify version number'
           command: |
