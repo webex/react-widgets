@@ -270,6 +270,23 @@ jobs:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
 
+  promote_prerelease_to_production:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-space/prerelease
+          to: s3://${AWS_BUCKET}/widget-space/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-recents/prerelease
+          to: s3://${AWS_BUCKET}/widget-recents/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-demo/prerelease
+          to: s3://${AWS_BUCKET}/widget-demo/production
+          overwrite: true
+
   promote_latest_to_prerelease:
     executor: main-executor
     working_directory: ~/react-widgets
@@ -329,4 +346,8 @@ workflows:
               only:
                 - master
     jobs:
-      - promote_latest_to_prerelease
+     - promote_prerelease_to_production
+     - promote_latest_to_prerelease:
+        requires:
+          - promote_prerelease_to_production
+
