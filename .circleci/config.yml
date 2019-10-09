@@ -322,7 +322,8 @@ workflows:
   promotions:
     triggers:
       - schedule:
-          cron: "15 2 * * 3"
+          # Wednesdays @ 7AM UTC | 3AM EST | 12AM PST
+          cron: "0 7 * * 3"
           filters:
             branches:
               only:
