@@ -7,6 +7,10 @@ executors:
     working_directory: ~/react-widgets
     docker:
       - image: circleci/node:carbon-browsers
+        # environment variables for all commands executed in the main-executor
+        environment:
+          AWS_BUCKET: code.s4d.io
+          AWS_REGION: us-east-1
 
 # Orb to grab `s3` capability for us
 orbs:
@@ -219,9 +223,6 @@ jobs:
   deploy_to_cdn:
     executor: main-executor
     working_directory: ~/react-widgets
-    environment:
-      AWS_BUCKET: code.s4d.io
-      AWS_REGION: us-east-1
     steps:
       - checkout
       - restore_workspace
