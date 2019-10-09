@@ -88,7 +88,7 @@ You'll need to create a file called `.env` that defines, at a minimum:
 - `WEBEX_SCOPE`
 - `WEBEX_ACCESS_TOKEN`
 
-You can get these values by registering a new integration on the [developer portal](https://developer.ciscospark.com/add-integration.html).
+You can get these values by registering a new integration on [Webex for Developers](https://developer.webex.com/my-apps/new/integration).
 
 Finally, to run all tests:
 
