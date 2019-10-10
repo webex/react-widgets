@@ -29,6 +29,9 @@ export function switchToMessage(aBrowser) {
   }
   aBrowser.waitForVisible(elements.messageActivityButton);
   aBrowser.click(elements.messageActivityButton);
+
+  // Activity menu animates the hide, wait for it to be gone
+  aBrowser.waitForVisible(elements.activityMenu, 1500, true);
 }
 
 /**

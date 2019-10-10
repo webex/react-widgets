@@ -2,6 +2,91 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.47](https://github.com/webex/react-widgets/compare/v0.2.46...v0.2.47) (2019-10-09)
+
+
+
+### [0.2.46](https://github.com/webex/react-widgets/compare/v0.2.45...v0.2.46) (2019-10-09)
+
+
+
+### [0.2.45](https://github.com/webex/react-widgets/compare/v0.2.44...v0.2.45) (2019-10-08)
+
+
+
+### [0.2.44](https://github.com/webex/react-widgets/compare/v0.2.43...v0.2.44) (2019-10-08)
+
+
+
+### [0.2.43](https://github.com/webex/react-widgets/compare/v0.2.42...v0.2.43) (2019-10-08)
+
+
+
+### [0.2.42](https://github.com/webex/react-widgets/compare/v0.2.41...v0.2.42) (2019-10-08)
+
+
+
+### [0.2.41](https://github.com/webex/react-widgets/compare/v0.2.40...v0.2.41) (2019-10-08)
+
+
+### Bug Fixes
+
+* **circle:** version number for cdn ([4f05713](https://github.com/webex/react-widgets/commit/4f05713))
+
+
+
+### [0.2.40](https://github.com/webex/react-widgets/compare/v0.2.39...v0.2.40) (2019-10-08)
+
+
+
+### [0.2.39](https://github.com/webex/react-widgets/compare/v0.2.38...v0.2.39) (2019-10-08)
+
+
+
+### [0.2.38](https://github.com/webex/react-widgets/compare/v0.2.37...v0.2.38) (2019-09-20)
+
+
+### Bug Fixes
+
+* **tap:** use helper fns in space tap ([14678ac](https://github.com/webex/react-widgets/commit/14678ac))
+
+
+### Tests
+
+* **journeys:** add activity menu hide delay ([1f56794](https://github.com/webex/react-widgets/commit/1f56794))
+* **tap:** add wait for animations ([3f364ea](https://github.com/webex/react-widgets/commit/3f364ea))
+* **tap:** standardize space test with oneOnOne ([39dadee](https://github.com/webex/react-widgets/commit/39dadee))
+* **tap:** use test users helper ([028e9f7](https://github.com/webex/react-widgets/commit/028e9f7))
+
+
+
+### [0.2.37](https://github.com/webex/react-widgets/compare/v0.2.36...v0.2.37) (2019-09-16)
+
+
+### Features
+
+* **package:** add plugin-meetings ([a8aa21a](https://github.com/webex/react-widgets/commit/a8aa21a))
+* **r-m-meetings:** add leave meeting support ([57e2839](https://github.com/webex/react-widgets/commit/57e2839))
+* **r-m-meetings:** change to createAndJoinMeeting ([a844397](https://github.com/webex/react-widgets/commit/a844397))
+* **r-m-meetings:** create meeting module ([a3644d6](https://github.com/webex/react-widgets/commit/a3644d6))
+* **r-m-meetings:** store meeting media state ([a0d9add](https://github.com/webex/react-widgets/commit/a0d9add))
+* **spark:** add meetings plugin ([dda91c0](https://github.com/webex/react-widgets/commit/dda91c0))
+* **widget-meetings:** add error support ([4d09892](https://github.com/webex/react-widgets/commit/4d09892))
+* **widget-meetings:** add leave meeting button ([453fe87](https://github.com/webex/react-widgets/commit/453fe87))
+* **widget-meetings:** add media view ([9640468](https://github.com/webex/react-widgets/commit/9640468))
+* **widget-meetings:** add meetings handlers ([12d15bd](https://github.com/webex/react-widgets/commit/12d15bd))
+* **widget-meetings:** create and join meeting ([cc34aca](https://github.com/webex/react-widgets/commit/cc34aca))
+* **widget-meetings:** create initial package ([b011566](https://github.com/webex/react-widgets/commit/b011566))
+* **widget-meetings:** fetch user data for email ([cadccf6](https://github.com/webex/react-widgets/commit/cadccf6))
+* **widget-meetings:** setup redux and sdk connection ([f0cfe40](https://github.com/webex/react-widgets/commit/f0cfe40))
+
+
+### Tests
+
+* **widget-meetings:** add snapshot tests for components ([13436c2](https://github.com/webex/react-widgets/commit/13436c2))
+
+
+
 ### [0.2.36](https://github.com/webex/react-widgets/compare/v0.2.35...v0.2.36) (2019-09-13)
 
 
