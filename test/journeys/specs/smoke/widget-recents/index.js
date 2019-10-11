@@ -1,5 +1,6 @@
 import {assert, expect} from 'chai';
 
+import {skipInFirefox} from '../../../lib/browser';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
@@ -357,7 +358,7 @@ describe('Smoke Tests - Recents Widget', () => {
     });
   });
 
-  describe('Incoming Call', () => {
+  skipInFirefox(describe)('Incoming Call', () => {
     it('open meet widget for lorraine', () => {
       browserRemote.execute((localAccessToken, localToUserEmail) => {
         const options = {
