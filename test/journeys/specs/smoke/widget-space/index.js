@@ -1,5 +1,6 @@
 import {assert} from 'chai';
 
+import {skipInFirefox} from '../../../lib/browser';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import waitForPromise from '../../../lib/wait-for-promise';
@@ -163,7 +164,7 @@ describe('Smoke Tests - Space Widget', () => {
       });
     });
 
-    describe('messaging', () => {
+    describe.skip('messaging', () => {
       it('sends and receives messages', () => {
         const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
@@ -192,7 +193,7 @@ describe('Smoke Tests - Space Widget', () => {
         browserLocal.waitForVisible(meetElements.callButton);
       });
 
-      it('can place a call and hangup after answer', () => {
+      skipInFirefox(it)('can place a call and hangup after answer', () => {
         hangupDuringCallTest(browserLocal, browserRemote, true);
       });
     });
