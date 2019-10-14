@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.49](https://github.com/webex/react-widgets/compare/v0.2.48...v0.2.49) (2019-10-14)
+
+
+### Tests
+
+* **journeys:** add skip in browser helpers ([d2c1a23](https://github.com/webex/react-widgets/commit/d2c1a23))
+* **journeys:** skip flaky calling tests on firefox ([cea457a](https://github.com/webex/react-widgets/commit/cea457a))
+
+
+
 ### [0.2.48](https://github.com/webex/react-widgets/compare/v0.2.47...v0.2.48) (2019-10-10)
 
 
