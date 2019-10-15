@@ -80,18 +80,25 @@ The smoke test suite verifies basic functionality of all widgets. This suite is 
 
 #### Demo Page Smoke Tests (Built from widget-demo)
 
-- space widget functionality
-  - Activity Menu
-    - has a menu button
-    - displays the menu when clicking the menu button
-    - has an exit menu button
-    - closes the menu with the exit button
-  - messaging
-    - sends and receives messages
-  - External Control
-    - can change current activity
-- recents widget
-  - opens and loads recents widget
+- access token authentication
+  - space widget functionality
+    - Activity Menu
+      - has a menu button
+      - displays the menu when clicking the menu button
+      - has an exit menu button
+      - closes the menu with the exit button
+    - messaging
+      - sends and receives messages
+    - External Control
+      - can change current activity
+  - recents widget
+    - opens and loads recents widget
+- sdk instance authentication
+  - space widget functionality
+    - messaging
+      - sends and receives messages
+  - recents widget
+    - opens and loads recents widget
 
 ### Space Widget Suite
 

@@ -9,6 +9,9 @@ export const elements = {
   accessTokenInput: 'input[aria-label="Access Token"]',
   saveTokenButton: 'button[aria-label="Save Token"]',
   clearTokenButton: 'button[aria-label="Clear Token"]',
+  accessTokenTypeTokenButton: 'label[for="tokenTypeAccessToken"]',
+  generateSDKTrueButton: 'label[for="generateSDKTrue"]',
+  generateSDKFalseButton: 'label[for="generateSDKTrue"]',
   toSpaceRadioButton: 'label[for="toTypeSpace"]',
   toPersonRadioButton: 'label[for="toTypeEmail"]',
   openSpaceWidgetButton: 'button[aria-label="Open Space Widget"]',
@@ -27,13 +30,20 @@ export const elements = {
  * @export
  * @param {object} aBrowser
  * @param {string} accessToken
+ * @param {boolean} [useSdk=false] set use sdk instance
  */
-export function saveToken(aBrowser, accessToken) {
+export function saveToken(aBrowser, accessToken, useSdk = false) {
   if (aBrowser.element(elements.clearTokenButton).isVisible()) {
     aBrowser.element(elements.clearTokenButton).click();
   }
+  aBrowser.element(elements.accessTokenTypeTokenButton).click();
   aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, 'access token input field not found');
   aBrowser.setValue(elements.accessTokenInput, accessToken);
   assert.equal(aBrowser.element(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
+
+  if (useSdk) {
+    aBrowser.element(elements.generateSDKTrueButton).click();
+  }
+
   aBrowser.element(elements.saveTokenButton).click();
 }
