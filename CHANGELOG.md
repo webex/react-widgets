@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.50](https://github.com/webex/react-widgets/compare/v0.2.49...v0.2.50) (2019-10-21)
+
+
+### Features
+
+* **demo:** add control for generating sdk instance ([70f2ea2](https://github.com/webex/react-widgets/commit/70f2ea2))
+* **r-r-spark:** adds the ability to receive a sdk instance ([f55979e](https://github.com/webex/react-widgets/commit/f55979e))
+* **r-r-spark:** get status from instance ([079354a](https://github.com/webex/react-widgets/commit/079354a))
+* **r-r-spark:** rename spark instance creator ([506bbb0](https://github.com/webex/react-widgets/commit/506bbb0))
+
+
+### Tests
+
+* **journeys:** add sdk instance testing ([a8f9268](https://github.com/webex/react-widgets/commit/a8f9268))
+* **react-redux-spark:** add jest tests for sdkInstance ([84e48a0](https://github.com/webex/react-widgets/commit/84e48a0))
+
+
+
 ### [0.2.49](https://github.com/webex/react-widgets/compare/v0.2.48...v0.2.49) (2019-10-14)
 
 
