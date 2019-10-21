@@ -270,21 +270,21 @@ jobs:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
 
-  promote_alpha_to_prerelease:
+  promote_alpha_to_beta:
     executor: main-executor
     working_directory: ~/react-widgets
     steps:
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-space/alpha
-          to: s3://${AWS_BUCKET}/widget-space/prerelease
+          to: s3://${AWS_BUCKET}/widget-space/beta
           overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-recents/alpha
-          to: s3://${AWS_BUCKET}/widget-recents/prerelease
+          to: s3://${AWS_BUCKET}/widget-recents/beta
           overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-demo/alpha
-          to: s3://${AWS_BUCKET}/widget-demo/prerelease
+          to: s3://${AWS_BUCKET}/widget-demo/beta
           overwrite: true
 
   rename_latest_to_alpha:
@@ -349,4 +349,4 @@ workflows:
               only:
                 - master
     jobs:
-      - promote_alpha_to_prerelease
+      - promote_alpha_to_beta
