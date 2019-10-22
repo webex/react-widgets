@@ -287,6 +287,23 @@ jobs:
           to: s3://${AWS_BUCKET}/widget-demo/beta
           overwrite: true
 
+  promote_beta_to_production:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-space/beta
+          to: s3://${AWS_BUCKET}/widget-space/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-recents/beta
+          to: s3://${AWS_BUCKET}/widget-recents/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-demo/beta
+          to: s3://${AWS_BUCKET}/widget-demo/production
+          overwrite: true
+
   rename_latest_to_alpha:
     executor: main-executor
     working_directory: ~/react-widgets
@@ -349,4 +366,7 @@ workflows:
               only:
                 - master
     jobs:
-      - promote_alpha_to_beta
+      - promote_beta_to_production
+      - promote_alpha_to_beta:
+          requires:
+            - promote_beta_to_production
