@@ -321,6 +321,23 @@ jobs:
           to: s3://${AWS_BUCKET}/widget-demo/alpha
           overwrite: true
 
+  promote_prerelease_to_production:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-space/prerelease
+          to: s3://${AWS_BUCKET}/widget-space/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-recents/prerelease
+          to: s3://${AWS_BUCKET}/widget-recents/production
+          overwrite: true
+      - aws-s3/sync:
+          from: s3://${AWS_BUCKET}/widget-demo/prerelease
+          to: s3://${AWS_BUCKET}/widget-demo/production
+          overwrite: true
+
 workflows:
   run_all_tests:
     jobs:
@@ -347,12 +364,12 @@ workflows:
           filters:
               branches:
                 only: master
-      - rename_latest_to_alpha:
+      - promote_prerelease_to_production:
           requires:
               - install
       - version_and_publish:
           requires:
-              - rename_latest_to_alpha
+              - promote_prerelease_to_production
       - deploy_to_cdn:
           requires:
               - version_and_publish
