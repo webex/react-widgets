@@ -168,7 +168,7 @@ jobs:
       - restore_node_modules
       - add_ssh_keys:
           fingerprints:
-            - "df:fe:3e:ee:15:bd:fb:a1:15:0d:74:78:65:98:db:76"
+            - 'df:fe:3e:ee:15:bd:fb:a1:15:0d:74:78:65:98:db:76'
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: 'Generate Version Number'
@@ -304,31 +304,14 @@ jobs:
           to: s3://${AWS_BUCKET}/widget-demo/production
           overwrite: true
 
-  rename_latest_to_alpha:
-    executor: main-executor
-    working_directory: ~/react-widgets
-    steps:
-      - aws-s3/sync:
-          from: s3://${AWS_BUCKET}/widget-space/latest
-          to: s3://${AWS_BUCKET}/widget-space/alpha
-          overwrite: true
-      - aws-s3/sync:
-          from: s3://${AWS_BUCKET}/widget-recents/latest
-          to: s3://${AWS_BUCKET}/widget-recents/alpha
-          overwrite: true
-      - aws-s3/sync:
-          from: s3://${AWS_BUCKET}/widget-demo/latest
-          to: s3://${AWS_BUCKET}/widget-demo/alpha
-          overwrite: true
-
 workflows:
   run_all_tests:
     jobs:
       - install:
           filters:
-                branches:
-                  ignore:
-                      - master
+            branches:
+              ignore:
+                - master
       - build_for_tests:
           requires:
             - install
@@ -345,22 +328,19 @@ workflows:
     jobs:
       - install:
           filters:
-              branches:
-                only: master
-      - rename_latest_to_alpha:
-          requires:
-              - install
+            branches:
+              only: master
       - version_and_publish:
           requires:
-              - rename_latest_to_alpha
+            - install
       - deploy_to_cdn:
           requires:
-              - version_and_publish
+            - version_and_publish
   promotions:
     triggers:
       - schedule:
           # Wednesdays @ 7AM UTC | 3AM EST | 12AM PST
-          cron: "0 7 * * 3"
+          cron: '0 7 * * 3'
           filters:
             branches:
               only:
