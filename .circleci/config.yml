@@ -197,8 +197,8 @@ jobs:
           name: 'Push tag to upstream/master'
           command: git push --tags upstream
       - run:
-          name: 'Publish to NPM'
-          command: npm run publish:components
+          name: 'Publish to alpha build to NPM'
+          command: npm run publish:components -- --tag alpha
       - persist_to_workspace:
           root: ~/react-widgets
           paths:

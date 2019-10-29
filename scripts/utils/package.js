@@ -97,9 +97,11 @@ function getPackage(pkg) {
 
 /**
  * Starts a specific package with Webpack Dev Server
- * @param  {string} pkgName
- * @param  {string} pkgPath
- * @returns {undefined}
+ * @param {object} command
+ * @param {function} command.constructCommand
+ * @param {string} command.commandName
+ * @param {string} command.pkgName
+ * @param {string} command.pkgPath
  */
 function runInPackage({
   constructCommand,

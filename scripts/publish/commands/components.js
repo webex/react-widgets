@@ -7,8 +7,13 @@ const {getAllPackagePaths} = require('../../utils/package');
 module.exports = {
   command: 'components',
   desc: 'Publish all component and module packages',
-  builder: {},
-  handler: () =>
+  builder: {
+    tag: {
+      description: 'Pass npm tag for alpha/beta',
+      type: 'string'
+    }
+  },
+  handler: (argv) =>
     getAllPackagePaths().map((pkgPath) => {
       try {
         const pkgJson = require(path.resolve(pkgPath, 'package.json'));
@@ -16,7 +21,7 @@ module.exports = {
         const isDemo = pkgName.endsWith('-demo');
 
         if (!isDemo && !pkgJson.private) {
-          return npmPublishPackage(pkgName, pkgPath);
+          return npmPublishPackage(pkgName, pkgPath, argv.tag);
         }
       }
       catch (err) {
