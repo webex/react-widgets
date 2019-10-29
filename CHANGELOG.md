@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.54](https://github.com/webex/react-widgets/compare/v0.2.53...v0.2.54) (2019-10-29)
+
+
+### Features
+
+* **r-c-activity-iteam:** add support for adaptive card posts and shares ([5cc3980](https://github.com/webex/react-widgets/commit/5cc3980))
+* **r-c-adaptive-card:** adaptive card component ([50c6671](https://github.com/webex/react-widgets/commit/50c6671))
+* **r-c-utils:** add adaptive card utilities ([d8d0674](https://github.com/webex/react-widgets/commit/d8d0674))
+* **widget-message:** load adaptive card features ([b1bdce1](https://github.com/webex/react-widgets/commit/b1bdce1))
+
+
+
 ### [0.2.53](https://github.com/webex/react-widgets/compare/v0.2.52...v0.2.53) (2019-10-28)
 
 
