@@ -303,11 +303,14 @@ jobs:
           name: 'Publish beta release to npm'
           command: npm run publish:components -- --tag beta
 
-
   promote_beta_to_production:
     executor: main-executor
     working_directory: ~/react-widgets
     steps:
+      - run:
+          name: 'Grab Version Number'
+          command: |
+            echo export VERSION_NUMBER=$(curl 'https://code.s4d.io/widget-demo/beta/.version') >> $BASH_ENV
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-space/beta
           to: s3://${AWS_BUCKET}/widget-space/production
@@ -320,6 +323,20 @@ jobs:
           from: s3://${AWS_BUCKET}/widget-demo/beta
           to: s3://${AWS_BUCKET}/widget-demo/production
           overwrite: true
+      - checkout
+      - run: git remote add upstream git@github.com:webex/react-widgets.git
+      - restore_node_modules
+      - run: git fetch --all --tags --prune
+      - run: git checkout tags/v${VERSION_NUMBER}
+      - run:
+          name: 'Create production release'
+          command: npm run release -- --release-as patch --no-verify
+      - run:
+          name: 'Push tag to upstream/master'
+          command: git push --tags upstream
+      - run:
+          name: 'Publish beta release to npm'
+          command: npm run publish:components
 
 workflows:
   run_all_tests:
