@@ -173,21 +173,21 @@ jobs:
       - run:
           name: 'Generate Version Number'
           command: |
-            npm run release -- --release-as patch --no-verify
-            echo export VERSION=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
+            npm run release -- --release-as patch --prerelease alpha --no-verify
+            echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
             git rev-parse HEAD > gitcommit
       - run:
           name: 'Build for CDN'
           command: |
             export NODE_ENV=production
             export WEBEX_SCOPE="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" npm run build:package widget-space
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" npm run build sri widget-space
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/demo/" npm run build:package widget-space-demo
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" npm run build:package widget-recents
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" npm run build sri widget-recents
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/demo/" npm run build:package widget-recents-demo
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION}/" npm run build:package widget-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:package widget-space
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build sri widget-space
+            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-space-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:package widget-recents
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
+            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-recents-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
 
             npm run es5-check:dist
       - run:
@@ -222,8 +222,7 @@ jobs:
             echo $VERSION_NUMBER > .version
       - run:
           name: 'Verify version number'
-          command: |
-            echo ${VERSION_NUMBER}
+          command: echo ${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha
