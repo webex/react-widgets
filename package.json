@@ -89,6 +89,7 @@
     "@webex/storage-adapter-local-forage": "1.80.15",
     "@webex/storage-adapter-local-storage": "1.80.15",
     "@webex/webex-core": "1.80.15",
+    "adaptivecards": "1.2.0",
     "ampersand-events": "^2.0.2",
     "babel-polyfill": "^6.26.0",
     "bowser": "^1.9.4",
