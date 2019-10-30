@@ -28,13 +28,11 @@ function generateSRI({
  * @param {Object} options
  * @param {String} options.sri SRI hash
  * @param {String} options.privateKey
- * @param {String} options.passphrase associated with private key
  * @returns {String} signature
  */
 function signSRI({
   sri,
-  privateKey,
-  passphrase
+  privateKey
 }) {
   if (!sri || !sri.length) {
     throw Error('No sri hash provided to sign');
@@ -45,7 +43,7 @@ function signSRI({
   sign.write(sri);
   sign.end();
 
-  return sign.sign({key: privateKey, passphrase}, 'base64');
+  return sign.sign({key: privateKey}, 'base64');
 }
 
 /**
@@ -77,16 +75,14 @@ function verifySignature({
  * Generates manifest file with SRI and signatures for a specific package
  * @param {Object} options
  * @param {String} options.packagePath path to widget package
- * @param {String} options.privateKeyPath
- * @param {String} options.publicKeyPath
- * @param {String} options.passphrase
+ * @param {Buffer} options.privateKey data buffer from a utf8 encoded file
+ * @param {String} options.publicKey utf8 encoded string from public key file
  * @returns {Boolean}
  */
 function generateDistSRI({
   packagePath,
-  privateKeyPath,
-  publicKeyPath,
-  passphrase
+  privateKey,
+  publicKey
 }) {
   const pkgJson = require(path.resolve(packagePath, 'package.json'));
 
@@ -105,8 +101,6 @@ function generateDistSRI({
 
   if (distFiles && distFiles.length) {
     const fileList = [];
-    const publicKey = fs.readFileSync(publicKeyPath, 'utf8');
-    const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
 
     distFiles.forEach((file) => {
       const data = fs.readFileSync(file, 'utf8');
@@ -114,7 +108,7 @@ function generateDistSRI({
       const name = file.replace(path.join(packagePath, 'dist', '/'), '');
 
       const sri = generateSRI({data});
-      const signature = signSRI({sri, privateKey, passphrase});
+      const signature = signSRI({sri, privateKey});
       const fileDetails = {
         name,
         signature,
