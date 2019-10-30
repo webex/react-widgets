@@ -89,7 +89,7 @@ As a best practice, we provide a [Sub-resource Integrity (SRI)](https://www.w3.o
 
 To find the SRI hash for a specific build of the widgets, you can use the following URL, replacing {VERSION} with the specific version you are looking for: `https://code.s4d.io/widget-space/archives/{VERSION}/manifest.json`.
 
-Additionally, for those who want an additional layer of verification, a `signature` has been provided that is signed by a private key. You can use our [public key](./public-key.pem) to verify this signature. Here is example of the verification process using the nodeJS built-in `cryto` library:
+Additionally, for those who want an additional layer of verification, a `signature` has been provided that is signed by a private key. You can use our [public key](./widget-key.pub) to verify this signature. Here is example of the verification process using the nodeJS built-in `crypto` library:
 
 ``` js
 const crypto = require('crypto');
