@@ -31,6 +31,14 @@ commands:
             - node-module-cache-v1-
 
 jobs:
+  key_check:
+    executor: main-executor
+    steps:
+      - checkout
+      - restore_node_modules
+      - run:
+          name: 'Test env var'
+          command: node ./envprivate.js
   install:
     executor: main-executor
     steps:
@@ -294,48 +302,10 @@ jobs:
           overwrite: true
 
 workflows:
-  run_all_tests:
+  test_env:
     jobs:
-      - install:
+      - key_check:
           filters:
             branches:
               ignore:
                 - master
-      - build_for_tests:
-          requires:
-            - install
-      - unit_tests_and_linting:
-          requires:
-            - install
-      - journey_tests_chrome:
-          requires:
-            - build_for_tests
-      - journey_tests_firefox:
-          requires:
-            - journey_tests_chrome
-  build_for_cdn:
-    jobs:
-      - install:
-          filters:
-            branches:
-              only: master
-      - version_and_publish:
-          requires:
-            - install
-      - deploy_to_cdn:
-          requires:
-            - version_and_publish
-  promotions:
-    triggers:
-      - schedule:
-          # Wednesdays @ 7AM UTC | 3AM EST | 12AM PST
-          cron: '0 7 * * 3'
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - promote_beta_to_production
-      - promote_alpha_to_beta:
-          requires:
-            - promote_beta_to_production
