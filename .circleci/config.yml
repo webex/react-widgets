@@ -174,20 +174,20 @@ jobs:
           name: 'Generate Version Number'
           command: |
             npm run release -- --release-as patch --no-verify
-            echo export VERSION=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
+            echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
             git rev-parse HEAD > gitcommit
       - run:
           name: 'Build for CDN'
           command: |
             export NODE_ENV=production
             export WEBEX_SCOPE="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" npm run build:package widget-space
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" npm run build sri widget-space
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION}/demo/" npm run build:package widget-space-demo
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" npm run build:package widget-recents
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" npm run build sri widget-recents
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION}/demo/" npm run build:package widget-recents-demo
-            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION}/" npm run build:package widget-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:package widget-space
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build sri widget-space
+            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-space-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:package widget-recents
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
+            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-recents-demo
+            BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
 
             npm run es5-check:dist
       - run:
@@ -219,10 +219,10 @@ jobs:
           name: 'Grab Version Number'
           command: |
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
+            echo $VERSION_NUMBER > .version
       - run:
           name: 'Verify version number'
-          command: |
-            echo ${VERSION_NUMBER}
+          command: echo ${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha
@@ -258,6 +258,15 @@ jobs:
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
+      - aws-s3/copy:
+          from: ~/react-widgets/.version
+          to: s3://${AWS_BUCKET}/widget-space/alpha
+      - aws-s3/copy:
+          from: ~/react-widgets/.version
+          to: s3://${AWS_BUCKET}/widget-recents/alpha
+      - aws-s3/copy:
+          from: ~/react-widgets/.version
+          to: s3://${AWS_BUCKET}/widget-demo/alpha
 
   promote_alpha_to_beta:
     executor: main-executor
@@ -292,6 +301,32 @@ jobs:
           from: s3://${AWS_BUCKET}/widget-demo/beta
           to: s3://${AWS_BUCKET}/widget-demo/production
           overwrite: true
+
+  tag_for_production:
+    executor: main-executor
+    working_directory: ~/react-widgets
+    steps:
+      - checkout
+      - run: git remote add upstream git@github.com:webex/react-widgets.git
+      - run: git fetch --all --tags --prune
+      - run:
+          name: 'Grab Version Number'
+          command: |
+            PRODUCTION_VERSION_NUMBER=$(curl -f 'https://code.s4d.io/widget-demo/production/.version')
+
+            echo PRODUCTION_VERSION_NUMBER="${PRODUCTION_VERSION_NUMBER}" >> $BASH_ENV
+      - run:
+          name: 'Delete old production tag'
+          command: git push upstream :refs/tags/production
+      - run: git checkout tags/v${PRODUCTION_VERSION_NUMBER}
+      - run:
+          name: 'Create new production tag'
+          command: |
+            git tag -f production
+      - run:
+          name: 'Push tag to upstream/master'
+          command: git push --tags upstream
+
 
 workflows:
   run_all_tests:
@@ -337,5 +372,8 @@ workflows:
     jobs:
       - promote_beta_to_production
       - promote_alpha_to_beta:
+          requires:
+            - promote_beta_to_production
+      - tag_for_production:
           requires:
             - promote_beta_to_production
