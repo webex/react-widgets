@@ -220,7 +220,6 @@ jobs:
           name: 'Grab Version Number'
           command: |
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
-            echo $VERSION_NUMBER > .version
       - run:
           name: 'Verify version number'
           command: echo ${VERSION_NUMBER}
@@ -259,15 +258,6 @@ jobs:
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-space/alpha
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-recents/alpha
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-demo/alpha
 
   promote_alpha_to_beta:
     executor: main-executor
