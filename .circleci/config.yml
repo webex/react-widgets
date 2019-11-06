@@ -15,6 +15,7 @@ executors:
 # Orb to grab `s3` capability for us
 orbs:
   aws-s3: circleci/aws-s3@1.0.11
+  jq: circleci/jq@1.9.0
 
 # Reusable commands for jobs
 commands:
@@ -309,10 +310,11 @@ jobs:
       - checkout
       - run: git remote add upstream git@github.com:webex/react-widgets.git
       - run: git fetch --all --tags --prune
+      - jq/install
       - run:
           name: 'Grab Version Number'
           command: |
-            PRODUCTION_VERSION_NUMBER=$(curl -f 'https://code.s4d.io/widget-demo/production/.version')
+            PRODUCTION_VERSION_NUMBER=$(curl -s -f 'https://code.s4d.io/widget-space/production/manifest.json' | jq -r '.version')
 
             echo PRODUCTION_VERSION_NUMBER="${PRODUCTION_VERSION_NUMBER}" >> $BASH_ENV
       - run:
