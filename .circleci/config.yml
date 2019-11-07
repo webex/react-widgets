@@ -15,6 +15,7 @@ executors:
 # Orb to grab `s3` capability for us
 orbs:
   aws-s3: circleci/aws-s3@1.0.11
+  jq: circleci/jq@1.9.0
 
 # Reusable commands for jobs
 commands:
@@ -219,7 +220,6 @@ jobs:
           name: 'Grab Version Number'
           command: |
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
-            echo $VERSION_NUMBER > .version
       - run:
           name: 'Verify version number'
           command: echo ${VERSION_NUMBER}
@@ -258,15 +258,6 @@ jobs:
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-space/alpha
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-recents/alpha
-      - aws-s3/copy:
-          from: ~/react-widgets/.version
-          to: s3://${AWS_BUCKET}/widget-demo/alpha
 
   promote_alpha_to_beta:
     executor: main-executor
@@ -309,10 +300,11 @@ jobs:
       - checkout
       - run: git remote add upstream git@github.com:webex/react-widgets.git
       - run: git fetch --all --tags --prune
+      - jq/install
       - run:
           name: 'Grab Version Number'
           command: |
-            PRODUCTION_VERSION_NUMBER=$(curl -f 'https://code.s4d.io/widget-demo/production/.version')
+            PRODUCTION_VERSION_NUMBER=$(curl -s -f 'https://code.s4d.io/widget-space/production/manifest.json' | jq -r '.version')
 
             echo PRODUCTION_VERSION_NUMBER="${PRODUCTION_VERSION_NUMBER}" >> $BASH_ENV
       - run:
