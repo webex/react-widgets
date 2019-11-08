@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.59](https://github.com/webex/react-widgets/compare/v0.2.58...v0.2.59) (2019-11-08)
+
+
+### Bug Fixes
+
+* **r-r-spark:** reenable spark-mention ([bb37819](https://github.com/webex/react-widgets/commit/bb37819))
+
+
+### Tests
+
+* **journeys:** reenable messaging tests ([fb68398](https://github.com/webex/react-widgets/commit/fb68398))
+
+
+
 ### [0.2.58](https://github.com/webex/react-widgets/compare/v0.2.57...v0.2.58) (2019-11-07)
 
 
