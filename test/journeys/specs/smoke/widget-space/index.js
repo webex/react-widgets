@@ -164,7 +164,7 @@ describe('Smoke Tests - Space Widget', () => {
       });
     });
 
-    describe.skip('messaging', () => {
+    describe('messaging', () => {
       it('sends and receives messages', () => {
         const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
