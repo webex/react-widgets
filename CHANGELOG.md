@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.60](https://github.com/webex/react-widgets/compare/v0.2.59...v0.2.60) (2019-11-13)
+
+
+### Features
+
+* **momentum-ui:** changes in momentum UI components ([28b2247](https://github.com/webex/react-widgets/commit/28b2247))
+* **utils:**  Getting patched adaptive card ([2a25901](https://github.com/webex/react-widgets/commit/2a25901))
+
+
+
 ### [0.2.59](https://github.com/webex/react-widgets/compare/v0.2.58...v0.2.59) (2019-11-08)
 
 
