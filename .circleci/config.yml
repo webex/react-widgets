@@ -319,6 +319,34 @@ jobs:
           name: 'Push tag to upstream/master'
           command: git push --tags upstream
 
+  tap_test:
+    executor: main-executor
+    environment:
+      SAUCE: true
+    steps:
+      - checkout
+      - run: |
+          git remote add upstream git@github.com:webex/react-widgets.git
+          git fetch --all --tags --prune
+          git checkout tags/production
+      - restore_node_modules
+      - run: npm i
+      - run: npm run test:tap
+      - store_test_results:
+          path: reports/
+      - store_test_results:
+          path: reports/junit/wdio
+      - store_test_results:
+          path: reports/cobertura.xml
+      - store_artifacts:
+          path: reports/junit/wdio
+          destination: wdio
+      - store_artifacts:
+          path: reports/cobertura.xml
+          destination: cobertura.xml
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs/
+          destination: npm-logs
 
 workflows:
   run_all_tests:
@@ -369,3 +397,17 @@ workflows:
       - tag_for_production:
           requires:
             - promote_beta_to_production
+  tap:
+    triggers:
+      - schedule:
+          # Everyday @ 6PM UTC | 4PM EST | 1PM PST
+          cron: '0 18 * * 1-5'
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - install
+      - tap_test:
+          requires:
+            - install
