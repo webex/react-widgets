@@ -331,7 +331,9 @@ jobs:
           git checkout tags/production
       - restore_node_modules
       - run: npm i
-      - run: npm run test:tap
+      - run:
+          command: npm run test:tap
+          no_output_timeout: 30m
       - store_test_results:
           path: reports/
       - store_test_results:
