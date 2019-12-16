@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.65](https://github.com/webex/react-widgets/compare/v0.2.64...v0.2.65) (2019-12-16)
+
+
+### Features
+
+* **widget-space:** add lowercase email to setup ([fcd93da](https://github.com/webex/react-widgets/commit/fcd93da))
+
+
+### Tests
+
+* **widget-space:** add setup tests ([71f65a8](https://github.com/webex/react-widgets/commit/71f65a8))
+
+
+
 ### [0.2.64](https://github.com/webex/react-widgets/compare/v0.2.63...v0.2.64) (2019-12-04)
 
 
