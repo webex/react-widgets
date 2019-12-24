@@ -6,7 +6,7 @@ executors:
   main-executor:
     working_directory: ~/react-widgets
     docker:
-      - image: circleci/node:carbon-browsers
+      - image: circleci/node:dubnium-browsers
         # environment variables for all commands executed in the main-executor
         environment:
           AWS_BUCKET: code.s4d.io
@@ -28,8 +28,8 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - node-module-cache-v1-{{ checksum "package-lock.json" }}
-            - node-module-cache-v1-
+            - node-modules-cache-node-dubnium-npm-6-v1-{{ checksum "package-lock.json" }}
+            - node-modules-cache-node-dubnium-npm-6-v1-
 
 jobs:
   install:
@@ -42,7 +42,7 @@ jobs:
           command: npm i
       # Cache node_modules across different internal jobs in the workflow and across different circleci runs
       - save_cache:
-          key: node-module-cache-v1-{{ checksum "package-lock.json" }}
+          key: node-modules-cache-node-dubnium-npm-6-v1-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       - run:
