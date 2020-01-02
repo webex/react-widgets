@@ -28,6 +28,10 @@
           "locals": ["module"]
         }]
       }]]
+    },
+    "test": {
+      "retainLines": true,
+      "sourceMaps": "inline"
     }
   }
 }
