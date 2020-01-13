@@ -63,27 +63,15 @@ function getPackage(pkg) {
   // Attempt to determine path by pkg name
   let calculatedPackagesDir;
   const fullPathWithPrefix = path.resolve('packages/node_modules', pkg);
-  const sparkFullPath = path.resolve('packages/node_modules/@ciscospark', pkg);
   const webexFullPath = path.resolve('packages/node_modules/@webex', pkg);
   const fullPathWithPrefixExists = isDirectory(fullPathWithPrefix);
-  const sparkPathExists = isDirectory(sparkFullPath);
   const webexPathExists = isDirectory(webexFullPath);
 
   if (fullPathWithPrefixExists) {
     calculatedPackagesDir = fullPathWithPrefix;
   }
-  else {
-    if (sparkPathExists && webexPathExists) {
-      console.error(`Unable to determine package path, multiple directories found for ${pkg}`);
-
-      return '';
-    }
-    if (webexPathExists) {
-      calculatedPackagesDir = webexFullPath;
-    }
-    if (sparkPathExists) {
-      calculatedPackagesDir = sparkFullPath;
-    }
+  else if (webexPathExists) {
+    calculatedPackagesDir = webexFullPath;
   }
   if (!isPackageDirectory(calculatedPackagesDir)) {
     console.error(`Unable to determine package path, no matching directory found for ${pkg}`);
