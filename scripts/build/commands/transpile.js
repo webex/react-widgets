@@ -18,7 +18,7 @@ module.exports = {
         if (packagePath) {
           transpile(packageName, packagePath);
         }
-        transpile(packageName, `./packages/node_modules/@ciscospark/${packageName}`);
+        transpile(packageName, `./packages/node_modules/@webex/${packageName}`);
       }
     }
   }
