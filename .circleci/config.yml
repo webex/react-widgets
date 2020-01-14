@@ -204,11 +204,11 @@ jobs:
           root: ~/react-widgets
           paths:
             - package.json
-            - packages/node_modules/@ciscospark/widget-space/dist
-            - packages/node_modules/@ciscospark/widget-recents/dist
-            - packages/node_modules/@ciscospark/widget-space-demo/dist
-            - packages/node_modules/@ciscospark/widget-recents-demo/dist
-            - packages/node_modules/@ciscospark/widget-demo/dist
+            - packages/node_modules/@webex/widget-space/dist
+            - packages/node_modules/@webex/widget-recents/dist
+            - packages/node_modules/@webex/widget-space-demo/dist
+            - packages/node_modules/@webex/widget-recents-demo/dist
+            - packages/node_modules/@webex/widget-demo/dist
 
   deploy_to_cdn:
     executor: main-executor
@@ -224,39 +224,39 @@ jobs:
           name: 'Verify version number'
           command: echo ${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha
           overwrite: true
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-space-demo/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha/demo
           overwrite: true
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-space-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-space-demo/dist
           to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}/demo
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/alpha
           overwrite: true
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-recents-demo/dist
           to: s3://${AWS_BUCKET}/widget-recents/alpha/demo
           overwrite: true
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-recents-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-recents-demo/dist
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}/demo
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/alpha
           overwrite: true
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@ciscospark/widget-demo/dist
+          from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
 
   promote_alpha_to_beta:
