@@ -1,7 +1,7 @@
 {
-  "name": "@ciscospark/react-widgets",
+  "name": "@webex/react-widgets",
   "version": "0.2.70",
-  "description": "The Cisco Spark for React library allows developers to easily incorporate Webex Teams functionality into an application.",
+  "description": "The Webex for React library allows developers to easily incorporate Webex Teams functionality into an application.",
   "scripts": {
     "build": "./scripts/build/index.js",
     "build:all": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 npm run build all",
@@ -34,8 +34,6 @@
     "serve:package": "npm run serve package",
     "serve:samples": "npm run serve samples",
     "start": "npm run serve demo widget-demo",
-    "start:package": "echo 'Deprecated. Please use npm run serve:package'; npm run serve package",
-    "start:samples": "echo 'Deprecated. Please use npm run serve:samples'; npm run serve samples",
     "publish": "cross-env-shell NODE_ENV='' ./scripts/publish/index.js",
     "publish:components": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=2048 npm run build:packagejson && npm run build:transpile all && npm run es6-check:esm && npm run publish components",
     "release": "standard-version -m 'chore(release): %s [skip ci]'",
@@ -48,14 +46,7 @@
     "type": "git",
     "url": "git+https://github.com/webex/react-widgets.git"
   },
-  "contributors": [
-    "Arash Koushkebaghi <akoushke@cisco.com>",
-    "Moriah Maney <momaney@cisco.com>",
-    "Matt Norris <matnorri@cisco.com> (http://mattnorris.me)",
-    "Taymoor Khan <taykhan@cisco.com>",
-    "Adam Weeks <adweeks@cisco.com>",
-    "Bernie Zang <nzang@cisco.com>"
-  ],
+  "author": "devsupport@webex.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/webex/react-widgets/issues"
