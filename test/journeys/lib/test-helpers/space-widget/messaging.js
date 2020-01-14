@@ -16,20 +16,20 @@ export const elements = {
   highlighted: '.isHighlighted',
   pendingAction: '.flagActionPending',
   pendingActivity: '.activity-item-pending',
-  inputFile: '.ciscospark-file-input',
-  modalWindow: '.ciscospark-dialogue-modal',
+  inputFile: '.webex-file-input',
+  modalWindow: '.webex-dialogue-modal',
   modalDeleteButton: 'button[title="Delete"].dialogue-modal-action-btn',
-  downloadButtonContainer: '(//div[starts-with(@class,"ciscospark-activity-content")])[last()]',
+  downloadButtonContainer: '(//div[starts-with(@class,"webex-activity-content")])[last()]',
   downloadFileButton: '(//div[@title="Download this file"]/parent::button)[last()]',
   shareButton: 'button[aria-label="Share"]',
-  systemMessage: '.ciscospark-system-message',
-  lastActivity: '.ciscospark-activity-item-container:last-child',
-  lastActivityText: '.ciscospark-activity-item-container:last-child .ciscospark-activity-text',
-  lastActivityActions: '.ciscospark-activity-item-container:last-child .ciscospark-activity-post-actions',
-  lastActivityAttachments: '.ciscospark-activity-item-container:last-child .ciscospark-activity-share-list',
-  readReceiptsArea: '.ciscospark-read-receipts',
-  readReceiptsAvatar: '.ciscospark-typing-avatar',
-  messageComposer: '.ciscospark-message-composer'
+  systemMessage: '.webex-system-message',
+  lastActivity: '.webex-activity-item-container:last-child',
+  lastActivityText: '.webex-activity-item-container:last-child .webex-activity-text',
+  lastActivityActions: '.webex-activity-item-container:last-child .webex-activity-post-actions',
+  lastActivityAttachments: '.webex-activity-item-container:last-child .webex-activity-share-list',
+  readReceiptsArea: '.webex-read-receipts',
+  readReceiptsAvatar: '.webex-typing-avatar',
+  messageComposer: '.webex-message-composer'
 };
 
 export const messages = {

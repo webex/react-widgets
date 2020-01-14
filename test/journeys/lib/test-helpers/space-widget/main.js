@@ -1,19 +1,19 @@
 export const elements = {
-  spaceWidget: '.ciscospark-space-widget',
+  spaceWidget: '.webex-space-widget',
   menuButton: 'button[aria-label="Main Menu"]',
   messageActivityButton: 'button[aria-label="Message"]',
   meetActivityButton: 'button[aria-label="Call"]',
   filesActivityButton: 'button[aria-label="Files"]',
   peopleActivityButton: 'button[aria-label="People"]',
-  filesWidget: '//div[contains(@class, "ciscospark-widget-files")]',
-  activityMenu: '.ciscospark-activity-menu',
-  controlsContainer: '.ciscospark-controls-container',
+  filesWidget: '//div[contains(@class, "webex-widget-files")]',
+  activityMenu: '.webex-activity-menu',
+  controlsContainer: '.webex-controls-container',
   closeButton: 'button[aria-label="Close"]',
-  exitButton: '.ciscospark-activity-menu-exit button',
-  messageWidget: '.ciscospark-message-wrapper',
-  meetWidget: '.ciscospark-meet-wrapper',
-  errorMessage: '.ciscospark-error-title',
-  widgetTitle: '.ciscospark-title-text',
+  exitButton: '.webex-activity-menu-exit button',
+  messageWidget: '.webex-message-wrapper',
+  meetWidget: '.webex-meet-wrapper',
+  errorMessage: '.webex-error-title',
+  widgetTitle: '.webex-title-text',
   stickyButton: '#toggleStickyModeButton'
 };
 

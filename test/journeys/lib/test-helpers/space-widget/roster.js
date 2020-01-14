@@ -1,16 +1,16 @@
 import {assert} from 'chai';
 
 export const elements = {
-  rosterWidget: '.ciscospark-roster',
+  rosterWidget: '.webex-roster',
   closeButton: 'button[aria-label="Close"]',
   peopleButton: 'button[aria-label="People"]',
-  rosterTitle: '.ciscospark-widget-title',
-  participantItem: '.ciscospark-participant-list-item',
-  rosterList: '.ciscospark-people-list',
-  addParticipantArea: '.ciscospark-roster-add-participant',
-  addParticipantResultsArea: '.ciscospark-roster-add-participant-results',
-  addParticipantResultItem: '.ciscospark-people-list-name',
-  addPeopleButton: '.ciscospark-roster-add-people',
+  rosterTitle: '.webex-widget-title',
+  participantItem: '.webex-participant-list-item',
+  rosterList: '.webex-people-list',
+  addParticipantArea: '.webex-roster-add-participant',
+  addParticipantResultsArea: '.webex-roster-add-participant-results',
+  addParticipantResultItem: '.webex-people-list-name',
+  addPeopleButton: '.webex-roster-add-people',
   searchInput: '#addParticipantSearchInput',
   closeSearchButton: 'button[aria-label="Close Search"]'
 };

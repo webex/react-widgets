@@ -411,7 +411,7 @@ describe('Smoke Tests - Recents Widget', () => {
   describe('Accessibility', () => {
     it('should have no accessibility violations', () => {
       it('should have no accessibility violations', () =>
-        runAxe(browserLocal, 'ciscospark-widget')
+        runAxe(browserLocal, 'webex-widget')
           .then((results) => {
             assert.equal(results.violations.length, 0, 'has accessibilty violations');
           }));
