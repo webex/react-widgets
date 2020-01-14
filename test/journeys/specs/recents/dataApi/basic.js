@@ -43,10 +43,10 @@ describe('Widget Recents: Data API', () => {
     browserLocal.execute((localAccessToken) => {
       const csmmDom = document.createElement('div');
 
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-recents');
+      csmmDom.setAttribute('class', 'webex-widget');
+      csmmDom.setAttribute('data-toggle', 'webex-recents');
       csmmDom.setAttribute('data-access-token', localAccessToken);
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
+      document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-recents/bundle.js');
     }, marty.token.access_token);
     browserLocal.waitForVisible(elements.recentsWidget);

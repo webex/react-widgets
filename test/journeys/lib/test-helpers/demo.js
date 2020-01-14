@@ -18,8 +18,8 @@ export const elements = {
   openRecentsWidgetButton: 'button[aria-label="Open Recents Widget"]',
   toSpaceInput: 'input[aria-label="To Space ID"]',
   toPersonInput: 'input[aria-label="To User Email"]',
-  spaceWidgetContainer: '#my-ciscospark-space-widget',
-  recentsWidgetContainer: '#my-ciscospark-recents-widget',
+  spaceWidgetContainer: '#my-webex-space-widget',
+  recentsWidgetContainer: '#my-webex-recents-widget',
   changeActivityMeetButton: 'label[for="changeActivityMeet"]',
   updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]'
 };

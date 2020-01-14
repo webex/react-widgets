@@ -4,11 +4,11 @@ import waitForPromise from '../../wait-for-promise';
 
 export const elements = {
   loadingScreen: '.webex-teams-loading',
-  recentsWidget: '.ciscospark-recents-widget',
-  listContainer: '.ciscospark-spaces-list',
-  noSpacesTitle: '.ciscospark-no-spaces-title',
-  noSpacesMessage: '.ciscospark-no-spaces-message',
-  firstSpace: '.ciscospark-spaces-list-item-0',
+  recentsWidget: '.webex-recents-widget',
+  listContainer: '.webex-spaces-list',
+  noSpacesTitle: '.webex-no-spaces-title',
+  noSpacesMessage: '.webex-no-spaces-message',
+  firstSpace: '.webex-spaces-list-item-0',
   title: '.md-list-item__header',
   unreadIndicator: '.md-list-item--unread',
   indicatorIcon: '.md-list-item--unread .md-list-item__right .md-icon',
@@ -18,9 +18,9 @@ export const elements = {
   answerButton: 'button[aria-label="Answer"]',
   searchInput: '#pillSearchInput',
   clearButton: 'button[aria-label="clear input"]',
-  headerBar: '.ciscospark-recents-header',
-  headerProfile: '.ciscospark-recents-header .ciscospark-recents-header-left button',
-  headerSignout: '.ciscospark-recents-header-profile-menu-signout',
+  headerBar: '.webex-recents-header',
+  headerProfile: '.webex-recents-header .webex-recents-header-left button',
+  headerSignout: '.webex-recents-header-profile-menu-signout',
   headerAddButton: 'button[aria-label="Contact a person or create a space"]'
 };
 

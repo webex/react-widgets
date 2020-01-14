@@ -8,8 +8,8 @@ import {switchToMeet} from './main';
 
 export const elements = {
   callContainer: '.call-container',
-  meetWidget: '.ciscospark-meet-wrapper',
-  messageWidget: '.ciscospark-message-wrapper',
+  meetWidget: '.webex-meet-wrapper',
+  messageWidget: '.webex-message-wrapper',
   callButton: 'button[aria-label="Start Call"]',
   answerButton: 'button[aria-label="Answer"]',
   declineButton: 'button[aria-label="Decline"]',

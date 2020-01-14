@@ -11,7 +11,7 @@ import {
 describe('Space Widget Data API Tests', () => {
   const browserLocal = browser.select('browserLocal');
   const browserRemote = browser.select('browserRemote');
-  const spaceWidget = '.ciscospark-space-widget';
+  const spaceWidget = '.webex-space-widget';
   const jobName = jobNames.spaceDataApi;
 
   let allPassed = true;
@@ -39,13 +39,13 @@ describe('Space Widget Data API Tests', () => {
     local.browser.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
 
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+      csmmDom.setAttribute('class', 'webex-widget');
+      csmmDom.setAttribute('data-toggle', 'webex-space');
       csmmDom.setAttribute('data-access-token', localAccessToken);
       csmmDom.setAttribute('data-destination-id', spaceId);
       csmmDom.setAttribute('data-destination-type', 'spaceId');
       csmmDom.setAttribute('data-initial-activity', 'message');
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
+      document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, marty.token.access_token, conversation.hydraId);
     local.browser.waitForVisible(spaceWidget);
@@ -56,13 +56,13 @@ describe('Space Widget Data API Tests', () => {
     remote.browser.execute((localAccessToken, spaceId) => {
       const csmmDom = document.createElement('div');
 
-      csmmDom.setAttribute('class', 'ciscospark-widget');
-      csmmDom.setAttribute('data-toggle', 'ciscospark-space');
+      csmmDom.setAttribute('class', 'webex-widget');
+      csmmDom.setAttribute('data-toggle', 'webex-space');
       csmmDom.setAttribute('data-access-token', localAccessToken);
       csmmDom.setAttribute('data-destination-id', spaceId);
       csmmDom.setAttribute('data-destination-type', 'spaceId');
       csmmDom.setAttribute('data-initial-activity', 'message');
-      document.getElementById('ciscospark-widget').appendChild(csmmDom);
+      document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, docbrown.token.access_token, conversation.hydraId);
     remote.browser.waitForVisible(spaceWidget);
