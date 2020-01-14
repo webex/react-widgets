@@ -38,12 +38,12 @@
 <body>
   <div style="display: flex;">
     <div style="width: 500px; height: 500px">
-      <main class="ciscospark-widget"
-        id="ciscospark-recents-widget">
+      <main class="webex-widget"
+        id="webex-recents-widget">
     </div>
     <div style="width: 500px; height: 500px">
-      <main class="ciscospark-widget"
-        id="ciscospark-space-widget">
+      <main class="webex-widget"
+        id="webex-space-widget">
     </div>
   </div>
 
@@ -51,12 +51,12 @@
   <script src="/dist-recents/bundle.js"></script>
   <script>
     window.openSpaceWidget = function(options) {
-      var spaceWidgetEl = document.getElementById('ciscospark-space-widget');
+      var spaceWidgetEl = document.getElementById('webex-space-widget');
       // Init a new widget
       ciscospark.widget(spaceWidgetEl).spaceWidget(options);
     };
     window.openRecentsWidget = function(options) {
-      var recentsWidgetEl = document.getElementById('ciscospark-recents-widget');
+      var recentsWidgetEl = document.getElementById('webex-recents-widget');
       // Init a new widget
       ciscospark.widget(recentsWidgetEl).recentsWidget(options);
     };
