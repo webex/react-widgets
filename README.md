@@ -31,8 +31,8 @@ The basic components are just presentational React <https://github.com/facebook/
 
 While many of our components are purely presentational, some have extended functionality that provide a piece of the full Webex experience. These fully self contained elements are called `Widgets` and are available here:
 
-- [Space Widget](./packages/node_modules/@ciscospark/widget-space)
-- [Recents Widget](./packages/node_modules/@ciscospark/widget-recents)
+- [Space Widget](./packages/node_modules/@webex/widget-space)
+- [Recents Widget](./packages/node_modules/@webex/widget-recents)
 
 ## Usage
 
@@ -60,8 +60,8 @@ $ npm start
 When a widget is bundled and loaded via script tag, the version number is available in the following ways:
 
 - A comment at the top of each bundled file
-- Programmatic access after a widget has been registered: `window.ciscospark.widgetFn.{widgetName}.version` (e.g. `window.ciscospark.widgetFn.spaceWidget.version`)
-- Access after a widget has been instantiated: `window.ciscospark.widget({widgetEl}).version` (e.g. `window.ciscospark.widget(document.getElementById('myWidget')).version`)
+- Programmatic access after a widget has been registered: `window.webex.widgetFn.{widgetName}.version` (e.g. `window.webex.widgetFn.spaceWidget.version`)
+- Access after a widget has been instantiated: `window.webex.widget({widgetEl}).version` (e.g. `window.webex.widget(document.getElementById('myWidget')).version`)
 
 ## Coding Style
 
