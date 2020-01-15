@@ -82,11 +82,11 @@ if (!process.env.TAP) {
 }
 
 let staticServerFolders = [
-  {mount: '/dist-space', path: './packages/node_modules/@ciscospark/widget-space/dist'},
-  {mount: '/dist-recents', path: './packages/node_modules/@ciscospark/widget-recents/dist'},
+  {mount: '/dist-space', path: './packages/node_modules/@webex/widget-space/dist'},
+  {mount: '/dist-recents', path: './packages/node_modules/@webex/widget-recents/dist'},
   {mount: '/', path: './test/journeys/server/'},
   {mount: '/axe-core', path: './node_modules/axe-core/'},
-  {mount: '/dist-demo', path: './packages/node_modules/@ciscospark/widget-demo/dist'}
+  {mount: '/dist-demo', path: './packages/node_modules/@webex/widget-demo/dist'}
 ];
 
 if (process.env.STATIC_SERVER_PATH) {
