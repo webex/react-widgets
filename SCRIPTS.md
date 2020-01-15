@@ -69,7 +69,7 @@ Builds the dependency chain for each module by utilizing the [detective-es6](htt
 
 ### `npm run build:widgets`
 
-Runs a webpack build and transpile on all packages that start with '@ciscospark/widget'.
+Runs a webpack build and transpile on all packages that start with '@webex/widget'.
 
 * Executes [`webpackBuild`](#webpackBuild) command.
 * Executes [`transpile`](#transpile) command.
