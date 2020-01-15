@@ -1,0 +1,5 @@
+$brand-font-folder: "~@momentum-ui/core/fonts";
+$icon-font-path: "~@momentum-ui/icons/fonts";
+
+// importing the base momentum so we can style the demo page
+@import '~@momentum-ui/core/scss/momentum-ui';
