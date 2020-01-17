@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.72](https://github.com/webex/react-widgets/compare/v0.2.71...v0.2.72) (2020-01-17)
+
+
+### Bug Fixes
+
+* **federation:** use 'url' to fetch a space ([0312f38](https://github.com/webex/react-widgets/commit/0312f38))
+* **federation:** use space id ([2cd9dcc](https://github.com/webex/react-widgets/commit/2cd9dcc))
+* **widget-space:** make hydra call using hydra ID ([690fc99](https://github.com/webex/react-widgets/commit/690fc99))
+
+
+
 ### [0.2.71](https://github.com/webex/react-widgets/compare/v0.2.70...v0.2.71) (2020-01-17)
 
 
