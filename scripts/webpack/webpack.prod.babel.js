@@ -3,13 +3,13 @@
  */
 /* eslint no-sync:0 */
 
-import path from 'path';
-import fs from 'fs';
+const path = require('path');
+const fs = require('fs');
 
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-import webpackBaseConfig from './webpack.base.babel';
+const webpackBaseConfig = require('./webpack.base.babel');
 
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
@@ -48,7 +48,7 @@ if (fs.existsSync('./src/index.html')) {
 const publicPath = process.env.BUILD_PUBLIC_PATH;
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
-export default (env) => webpackBaseConfig({
+module.exports = (env) => webpackBaseConfig({
   mode: 'production',
   entry: './index.js',
   output: {

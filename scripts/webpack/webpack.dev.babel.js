@@ -3,10 +3,10 @@
  * webpack dev server and we are bundling into a single js file.
  */
 
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-import webpackConfigBase from './webpack.base.babel';
+const webpackConfigBase = require('./webpack.base.babel');
 
 const plugins = [
   new HtmlWebpackPlugin({
@@ -26,7 +26,7 @@ const plugins = [
 ];
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
-export default (env) => webpackConfigBase({
+module.exports = (env) => webpackConfigBase({
   entry: './index.js',
   mode: 'development',
   plugins,
