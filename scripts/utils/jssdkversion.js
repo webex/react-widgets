@@ -1,4 +1,3 @@
-#!/usr/bin/env babel-node
 /**
  * Gets the highest version of @webex js-sdk packages
  * for use in the Jenkinsfile.jssdk script
