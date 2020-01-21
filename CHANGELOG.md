@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.74](https://github.com/webex/react-widgets/compare/v0.2.73...v0.2.74) (2020-01-21)
+
+
+### Features
+
+* **globals:** convert to 'webex' global name ([daebe1e](https://github.com/webex/react-widgets/commit/daebe1e))
+
+
+### Tests
+
+* **journeys:** use webex global name ([4d5934c](https://github.com/webex/react-widgets/commit/4d5934c))
+
+
+
 ### [0.2.73](https://github.com/webex/react-widgets/compare/v0.2.72...v0.2.73) (2020-01-21)
 
 
