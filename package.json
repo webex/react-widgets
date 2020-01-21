@@ -156,7 +156,6 @@
     "cross-env": "^5.0.0",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
-    "denodeify": "^1.2.1",
     "detective-es6": "^1.1.6",
     "dotenv": "^4.0.0",
     "es-check": "^5.0.0",

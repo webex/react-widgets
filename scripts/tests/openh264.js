@@ -3,7 +3,8 @@
  */
 const path = require('path');
 
-const denodeify = require('denodeify');
+const {promisify} = require('util');
+
 const FirefoxProfile = require('firefox-profile');
 const {stat} = require('fs-promise');
 
@@ -13,7 +14,7 @@ const {rimraf} = require('./async');
 
 const PROFILE_DIR = './.tmp/selenium';
 
-const copy = denodeify(FirefoxProfile.copy);
+const copy = promisify(FirefoxProfile.copy);
 
 /**
  * denodeifies FirefoxProfile.encode
