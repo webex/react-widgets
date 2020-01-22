@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.75](https://github.com/webex/react-widgets/compare/v0.2.74...v0.2.75) (2020-01-22)
+
+
+### Bug Fixes
+
+* **spaces-list:** stop scrollbar flickering at certain sizes ([fd4547e](https://github.com/webex/react-widgets/commit/fd4547e))
+
+
+
 ### [0.2.74](https://github.com/webex/react-widgets/compare/v0.2.73...v0.2.74) (2020-01-21)
 
 
