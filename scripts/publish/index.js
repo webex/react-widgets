@@ -1,4 +1,3 @@
-#!/usr/bin/env babel-node
 /**
  * Publish a Package
  */

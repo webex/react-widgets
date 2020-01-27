@@ -1,18 +1,18 @@
-import path from 'path';
+const path = require('path');
 
-import webpack from 'webpack';
-import dotenv from 'dotenv';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
-import {version} from '../../package.json';
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const postcssPresetEnv = require('postcss-preset-env');
+
+const {version} = require('../../package.json');
 
 dotenv.config();
 
 process.env.REACT_CISCOSPARK_VERSION = version;
 
-export default (options, env) => {
+module.exports = (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
     new webpack.EnvironmentPlugin([
@@ -75,7 +75,12 @@ export default (options, env) => {
             '/__fixtures__/',
             '/__mocks__/'
           ],
-          use: ['babel-loader']
+          use: {
+            loader: 'babel-loader',
+            options: {
+              rootMode: 'upward'
+            }
+          }
         },
         {
           test: /\.css$/,

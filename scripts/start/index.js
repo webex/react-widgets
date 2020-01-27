@@ -1,4 +1,3 @@
-#!/usr/bin/env babel-node
 /**
  * Start a widget
  */

@@ -1,4 +1,3 @@
-#!/usr/bin/env babel-node
 const path = require('path');
 
 const {

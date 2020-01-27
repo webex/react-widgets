@@ -1,4 +1,4 @@
-#!/usr/bin/env babel-node
+
 /**
  * Build Targets
  * Bundle : Single JS file with everything

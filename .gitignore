@@ -13,3 +13,4 @@ tmp.*
 reports/*
 .python-version
 .cache
+coverage/

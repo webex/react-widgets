@@ -1,9 +1,8 @@
-#!/usr/bin/env babel-node
 const fs = require('fs');
 const path = require('path');
 
 const rimraf = require('rimraf');
-const {transform} = require('babel-core');
+const {transform} = require('@babel/core');
 const outputFileSync = require('output-file-sync');
 
 const {getPackage} = require('./package');

@@ -1,4 +1,3 @@
-#!/usr/bin/env babel-node
 /**
  * Tooling Utilities
  * check-testable : Check if this build has anything to test. Prints "run" or "skip"

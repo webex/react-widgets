@@ -3,7 +3,6 @@
     "<rootDir>/packages/node_modules/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
-  "testURL": "http://localhost",
   "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "moduleNameMapper": {
     "^.+\\.(css|scss|less)$": "identity-obj-proxy",
