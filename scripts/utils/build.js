@@ -5,6 +5,8 @@ const rimraf = require('rimraf');
 const {transform} = require('@babel/core');
 const outputFileSync = require('output-file-sync');
 
+const babelConfig = require('../../babel.config');
+
 const {getPackage} = require('./package');
 const {execSync} = require('./exec');
 
@@ -99,10 +101,9 @@ function buildCommonJS(pkgName, pkgPath) {
   console.info(`Cleaning ${pkgName} cjs folder...`.cyan);
   rimraf.sync(path.resolve(pkgPath, 'cjs'));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
-  const babelrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.babelrc'), 'utf8'));
 
-  babelrc.plugins.push('transform-postcss');
-  babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelrc);
+  babelConfig.plugins.push('transform-postcss');
+  babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelConfig);
 }
 
 
