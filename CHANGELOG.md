@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.78](https://github.com/webex/react-widgets/compare/v0.2.77...v0.2.78) (2020-01-28)
+
+
+### Tests
+
+* **journey:** remove unnecessary `activity` ([bcd166a](https://github.com/webex/react-widgets/commit/bcd166a))
+* **journey:** update helper funcs to use convo ([210aa82](https://github.com/webex/react-widgets/commit/210aa82))
+
+
+
 ### [0.2.77](https://github.com/webex/react-widgets/compare/v0.2.76...v0.2.77) (2020-01-28)
 
 
