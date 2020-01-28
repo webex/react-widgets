@@ -40,7 +40,7 @@ module.exports = {
     development: {
       plugins: [
         [
-          'react-transform',
+          './scripts/utils/babel7-plugin-react-transform',
           {
             transforms: [
               {

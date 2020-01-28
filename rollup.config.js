@@ -1,5 +1,5 @@
 import babel from 'rollup-plugin-babel';
-import url from 'rollup-plugin-url';
+import url from '@rollup/plugin-url';
 import clear from 'rollup-plugin-clear';
 import postcss from 'rollup-plugin-postcss';
 import localResolve from 'rollup-plugin-local-resolve';
@@ -54,16 +54,21 @@ export default {
       babelrc: false,
       exclude: 'node_modules/**',
       plugins: [
-        // Support for @autobind decorators
-        'transform-decorators-legacy',
-        // Support for ...props
-        'transform-object-rest-spread',
-        'external-helpers'
+        [
+          // Support for @autobind decorators
+          '@babel/plugin-proposal-decorators',
+          {
+            legacy: true
+          }
+        ],
+        '@babel/plugin-proposal-object-rest-spread',
+        '@babel/plugin-transform-exponentiation-operator',
+        '@babel/plugin-external-helpers'
       ],
       presets: [
-        ['env', {modules: false}],
-        'react'
-      ]
+        '@babel/preset-react'
+      ],
+      externalHelpers: true
     })
   ],
   input: 'src/index.js',
