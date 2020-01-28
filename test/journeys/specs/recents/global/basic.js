@@ -115,18 +115,18 @@ describe('Widget Recents', () => {
     it('should display an unread indicator', () => {
       const lorraineText = 'Marty, duck! Biff is behind you!';
 
-      unmuteMessageNotification(marty.spark, conversation.id);
+      unmuteMessageNotification(marty.spark, conversation);
       displayAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-      removeAllMuteTags(marty.spark, conversation.id);
+      removeAllMuteTags(marty.spark, conversation);
     });
 
     it('should display a mute indicator', () => {
       const lorraineText = 'Marty, watch out for Biff!';
 
-      muteMessageNotification(marty.spark, conversation.id);
-      muteMentionsNotification(marty.spark, conversation.id);
+      muteMessageNotification(marty.spark, conversation);
+      muteMentionsNotification(marty.spark, conversation);
       displayMutedIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText);
-      removeAllMuteTags(marty.spark, conversation.id);
+      removeAllMuteTags(marty.spark, conversation);
     });
 
     it('should display a mention indicator for @single person', () => {
@@ -138,9 +138,9 @@ describe('Widget Recents', () => {
         }]
       };
 
-      unmuteMentionsNotification(marty.spark, conversation.id);
+      unmuteMentionsNotification(marty.spark, conversation);
       displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
-      removeAllMuteTags(marty.spark, conversation.id);
+      removeAllMuteTags(marty.spark, conversation);
     });
 
     it('should display a mention indicator for @All', () => {
@@ -149,9 +149,9 @@ describe('Widget Recents', () => {
         items: conversation.participants.items
       };
 
-      unmuteMentionsNotification(marty.spark, conversation.id);
+      unmuteMentionsNotification(marty.spark, conversation);
       displayMentionIconAndReadIncomingMessage(browserLocal, lorraine, marty, conversation, lorraineText, mentions);
-      removeAllMuteTags(marty.spark, conversation.id);
+      removeAllMuteTags(marty.spark, conversation);
     });
   });
 

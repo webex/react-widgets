@@ -1,23 +1,22 @@
 /**
  * Unmute message notification
  * @param {Object} spark
- * @param {String} convoId
+ * @param {String} convo
  * @returns {Object}
  */
-export function unmuteMessageNotification(spark, convoId) {
+export function unmuteMessageNotification(spark, convo) {
   let activity;
 
-  browser.call(() => spark.internal.conversation.unmuteMessages({
-    id: convoId
-  }).then((a) => {
-    activity = a;
+  browser.call(() => spark.internal.conversation.unmuteMessages(convo)
+    .then((a) => {
+      activity = a;
 
-    return activity;
-  }).catch((e) => {
-    console.error('Unable to unmute message notification');
-    console.error(e);
-    throw (e);
-  }));
+      return activity;
+    }).catch((e) => {
+      console.error('Unable to unmute message notification');
+      console.error(e);
+      throw (e);
+    }));
 
   return activity;
 }
@@ -25,23 +24,22 @@ export function unmuteMessageNotification(spark, convoId) {
 /**
  * Mute message notification
  * @param {Object} spark
- * @param {String} convoId
+ * @param {String} convo
  * @returns {Object}
  */
-export function muteMessageNotification(spark, convoId) {
+export function muteMessageNotification(spark, convo) {
   let activity;
 
-  browser.call(() => spark.internal.conversation.muteMessages({
-    id: convoId
-  }).then((a) => {
-    activity = a;
+  browser.call(() => spark.internal.conversation.muteMessages(convo)
+    .then((a) => {
+      activity = a;
 
-    return activity;
-  }).catch((e) => {
-    console.error('Unable to mute message notification');
-    console.error(e);
-    throw (e);
-  }));
+      return activity;
+    }).catch((e) => {
+      console.error('Unable to mute message notification');
+      console.error(e);
+      throw (e);
+    }));
 
   return activity;
 }
@@ -49,23 +47,22 @@ export function muteMessageNotification(spark, convoId) {
 /**
  * Unmute mentions notification
  * @param {Object} spark
- * @param {String} convoId
+ * @param {String} convo
  * @returns {Object}
  */
-export function unmuteMentionsNotification(spark, convoId) {
+export function unmuteMentionsNotification(spark, convo) {
   let activity;
 
-  browser.call(() => spark.internal.conversation.unmuteMentions({
-    id: convoId
-  }).then((a) => {
-    activity = a;
+  browser.call(() => spark.internal.conversation.unmuteMentions(convo)
+    .then((a) => {
+      activity = a;
 
-    return activity;
-  }).catch((e) => {
-    console.error('Unable to unmute mentions notification');
-    console.error(e);
-    throw (e);
-  }));
+      return activity;
+    }).catch((e) => {
+      console.error('Unable to unmute mentions notification');
+      console.error(e);
+      throw (e);
+    }));
 
   return activity;
 }
@@ -73,23 +70,22 @@ export function unmuteMentionsNotification(spark, convoId) {
 /**
  * Mute mentions notification
  * @param {Object} spark
- * @param {String} convoId
+ * @param {String} convo
  * @returns {Object}
  */
-export function muteMentionsNotification(spark, convoId) {
+export function muteMentionsNotification(spark, convo) {
   let activity;
 
-  browser.call(() => spark.internal.conversation.muteMentions({
-    id: convoId
-  }).then((a) => {
-    activity = a;
+  browser.call(() => spark.internal.conversation.muteMentions(convo)
+    .then((a) => {
+      activity = a;
 
-    return activity;
-  }).catch((e) => {
-    console.error('Unable to mute mentions notification');
-    console.error(e);
-    throw (e);
-  }));
+      return activity;
+    }).catch((e) => {
+      console.error('Unable to mute mentions notification');
+      console.error(e);
+      throw (e);
+    }));
 
   return activity;
 }
@@ -97,23 +93,22 @@ export function muteMentionsNotification(spark, convoId) {
 /**
  * Remove mutes
  * @param {Object} spark
- * @param {String} convoId
+ * @param {String} convo
  * @returns {Object}
  */
-export function removeAllMuteTags(spark, convoId) {
+export function removeAllMuteTags(spark, convo) {
   let activity;
 
-  browser.call(() => spark.internal.conversation.removeAllMuteTags({
-    id: convoId
-  }).then((a) => {
-    activity = a;
+  browser.call(() => spark.internal.conversation.removeAllMuteTags(convo)
+    .then((a) => {
+      activity = a;
 
-    return activity;
-  }).catch((e) => {
-    console.error('Unable to remove all mute tags');
-    console.error(e);
-    throw (e);
-  }));
+      return activity;
+    }).catch((e) => {
+      console.error('Unable to remove all mute tags');
+      console.error(e);
+      throw (e);
+    }));
 
   return activity;
 }
