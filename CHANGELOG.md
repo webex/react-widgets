@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.79](https://github.com/webex/react-widgets/compare/v0.2.78...v0.2.79) (2020-01-29)
+
+
+### Bug Fixes
+
+* **w-m:** allow a call to a space ([3a99e75](https://github.com/webex/react-widgets/commit/3a99e75))
+
+
+
 ### [0.2.78](https://github.com/webex/react-widgets/compare/v0.2.77...v0.2.78) (2020-01-28)
 
 
