@@ -10,7 +10,7 @@ const {version} = require('../../package.json');
 
 dotenv.config();
 
-process.env.REACT_CISCOSPARK_VERSION = version;
+process.env.REACT_WEBEX_VERSION = version;
 
 module.exports = (options, env) => {
   const packageJson = require('../../package.json');
@@ -18,7 +18,7 @@ module.exports = (options, env) => {
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
       'WEBEX_CLIENT_ID',
-      'REACT_CISCOSPARK_VERSION',
+      'REACT_WEBEX_VERSION',
       'WDM_SERVICE_URL',
       'IDBROKER_BASE_URL',
       'CONVERSATION_SERVICE',
