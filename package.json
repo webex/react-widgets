@@ -46,6 +46,7 @@
     "type": "git",
     "url": "git+https://github.com/webex/react-widgets.git"
   },
+  "merge": false,
   "author": "devsupport@webex.com",
   "license": "MIT",
   "bugs": {
