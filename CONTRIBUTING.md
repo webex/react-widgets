@@ -1,5 +1,39 @@
 # Contributing
 
+We'd love for you to contribute to our source code and to make **Webex React Widgets** even better than it is today!
+If you would like to contribute to this repository by adding features, enhancements or bug fixes, you must follow our process:
+
+  1. [Create an issue](https://github.com/webex/react-widgets/issues) to propose your solution _before_ you get coding
+  2. Let core members know about your proposal by posting a message in the [contributor's Webex Teams space](https://eurl.io/#Bk9WGfRcB)
+  3. A core member will review your proposal and if necessary may suggest to have a meeting to better understand your approach
+      - You are welcomed you join our [weekly review meeting](https://cisco.webex.com/m/f4ebbec6-c306-49ca-83f4-fb2d098fc946) (Thursdays, 11:30a-12:30p PST) to propose your contribution as well
+  4. If your proposal is approved you should start coding at this point
+  5. We recommend opening a draft PR to receive feedback before finalizing your solution
+      - When opening a draft PR, specify with PR comments where in the code you would like to get feedback
+  6. Before opening a PR ensure **all** [PR guidelines](#submitting-a-pull-request) are followed
+  7. Let core members know about your PR by posting a message in the [contributor's Webex Teams space](https://eurl.io/#Bk9WGfRcB)
+  8. Core members will review the pull request and provide feedback when necessary
+      - If a PR is too large, you may be asked to break it down into multiple smaller-scoped PRs
+  9. Once the PR is approved by a core member, it will be merged
+  10. Celebrate! Your code is released 🎈🎉🍻
+
+## Table of Contents
+
+- [Contributing](#contributing)
+  - [Opening an Issue](#opening-an-issue)
+    - [Grammar](#grammar)
+  - [Git Commit Guidelines](#git-commit-guidelines)
+    - [Commit Message Format](#commit-message-format)
+    - [Revert](#revert)
+    - [Type](#type)
+    - [Scope](#scope)
+    - [Subject](#subject)
+    - [Body](#body)
+    - [Footer](#footer)
+  - [Running the tests](#running-the-tests)
+    - [Static Analysis (e.g. linting)](#static-analysis)
+    - [Submitting a Pull Request](#submitting-a-pull-request)
+
 ## Opening an Issue
 
 The title of a Bug or Enhancement should clearly indicate what is broken or desired. Use the description to explain possible solutions or add details and (especially for Enhancemnts) explain *how* or *why* the issue is broken or desired.
@@ -51,7 +85,7 @@ Must be one of the following:
 
 ### Scope
 
-The scope should indicate what is being changed. Generally, these should match package names. For example, `http-core`, `common`, `ciscospark`, etc. Other than package names, `tooling` tends to be the most common.
+The scope should indicate what is being changed. Generally, these should match package names. For example, `widget-space`, `widget-recents`, `avatar`, etc. Other than package names, `tooling` tends to be the most common.
 
 ### Subject
 
@@ -99,9 +133,28 @@ npm test
 And to run the tests for a specific package:
 
 ```bash
-npm run jest -- packages/node_modules/@ciscospark/PACKAGE_NAME
+npm run jest -- packages/node_modules/@webex/PACKAGE_NAME
 ```
 
-### Static Analysis (e.g. linting)
+### Static Analysis
 
-We use eslint as a part of our static analysis step. Before contributing any code, please be sure to install eslint and be sure to following the instructions to correctly install peerDependnencies  <https://www.npmjs.com/package/@ciscospark/eslint-config-react>
+We use eslint as a part of our static analysis step. Before contributing any code, please be sure to install eslint and be sure to following the instructions to correctly install peerDependnencies  <https://www.npmjs.com/package/@webex/eslint-config-react>
+
+### Submitting a Pull Request
+
+Prior to developing a new feature, be sure to search the [Pull Requests](https://github.com/webex/react-widgets/pulls) for your idea to ensure you're not creating a duplicate change. Then, create a development branch in your forked repository for your idea and start coding!
+
+When you're ready to submit your change, first check that new commits haven't been made in the upstream's `master` branch. If there are new commits, rebase your development branch to ensure a fast-forward merge when your Pull Request is approved:
+
+```bash
+# Fetch upstream master and update your local master branch
+git fetch upstream
+git checkout master
+git merge upstream/master
+
+# Rebase your development branch
+git checkout feature
+git rebase master
+```
+
+Finally, open a [new Pull Request](https://github.com/webex/react-widgets/compare) with your changes. Be sure to mention the issues this request addresses in the body of the request. Once your request is opened, a developer will review, comment, and, when approved, merge your changes!
