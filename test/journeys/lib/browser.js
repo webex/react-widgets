@@ -1,12 +1,3 @@
-/* global: browser */
-function inFirefox() {
-  return browser.desiredCapabilities.browserName === 'firefox';
-}
-
-function inChrome() {
-  return browser.desiredCapabilities.browserName === 'chrome';
-}
-
 /**
  * Wrap the desired mochaMethod with `skipInFirefox` to prevent the
  * corresponding test or group of tests from running in Firefox.
@@ -22,7 +13,10 @@ export function skipInFirefox(mochaMethod) {
     return mochaMethod;
   }
 
-  return inFirefox() ? mochaMethod.skip : mochaMethod;
+  // Make sure process.env.BROWSER is not undefined and that is equal to `firefox`
+  return (!!process.env.BROWSER && process.env.BROWSER === 'firefox')
+    ? mochaMethod.skip
+    : mochaMethod;
 }
 
 /**
@@ -40,5 +34,8 @@ export function skipInChrome(mochaMethod) {
     return mochaMethod;
   }
 
-  return inChrome() ? mochaMethod.skip : mochaMethod;
+  // If process.env.BROWSER is not undefined or it's defined and equal to `chrome`
+  return (typeof process.env.BROWSER === 'undefined' || process.env.BROWSER === 'chrome')
+    ? mochaMethod.skip
+    : mochaMethod;
 }
