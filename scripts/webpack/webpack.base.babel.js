@@ -21,7 +21,8 @@ module.exports = (options, env) => {
       'REACT_WEBEX_VERSION',
       'WDM_SERVICE_URL',
       'IDBROKER_BASE_URL',
-      'CONVERSATION_SERVICE',
+      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
+      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
       'FEDERATION',
       'U2C_SERVICE_URL'
     ]),
