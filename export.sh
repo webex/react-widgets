@@ -1,6 +1,6 @@
 export ACL_SERVICE_URL="https://acl-intb.ciscospark.com/acl/api/v1"
 export ATLAS_SERVICE_URL="https://atlas-intb.ciscospark.com/admin/api/v1"
-export CONVERSATION_SERVICE="https://conversation-intb.ciscospark.com/conversation/api/v1"
+export WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL="https://conversation-intb.ciscospark.com/conversation/api/v1"
 export ENCRYPTION_SERVICE_URL="https://encryption-intb.ciscospark.com/encryption/api/v1"
 export IDBROKER_BASE_URL="https://idbrokerbts.webex.com"
 export IDENTITY_BASE_URL="https://identitybts.webex.com"
