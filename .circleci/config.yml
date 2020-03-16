@@ -77,7 +77,8 @@ jobs:
     environment:
       FEDERATION: true
       NODE_ENV: test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
@@ -100,7 +101,8 @@ jobs:
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: dist-test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
@@ -133,7 +135,8 @@ jobs:
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: dist-test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
