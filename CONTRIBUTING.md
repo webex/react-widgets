@@ -22,16 +22,18 @@ If you would like to contribute to this repository by adding features, enhanceme
 - [Contributing](#contributing)
   - [Opening an Issue](#opening-an-issue)
     - [Grammar](#grammar)
-  - [Git Commit Guidelines](#git-commit-guidelines)
-    - [Commit Message Format](#commit-message-format)
-    - [Revert](#revert)
-    - [Type](#type)
-    - [Scope](#scope)
-    - [Subject](#subject)
-    - [Body](#body)
-    - [Footer](#footer)
-  - [Running the tests](#running-the-tests)
-    - [Static Analysis (e.g. linting)](#static-analysis)
+  - [Contributing Code](#contributing-code)
+    - [Build Dependencies](#build-dependencies)
+    - [Git Commit Guidelines](#git-commit-guidelines)
+      - [Commit Message Format](#commit-message-format)
+      - [Revert](#revert)
+      - [Type](#type)
+      - [Scope](#scope)
+      - [Subject](#subject)
+      - [Body](#body)
+      - [Footer](#footer)
+    - [Running the tests](#running-the-tests)
+      - [Static Analysis (e.g. linting)](#static-analysis)
     - [Submitting a Pull Request](#submitting-a-pull-request)
 
 ## Opening an Issue
@@ -46,11 +48,24 @@ While quibbling about grammar in issue titles may seem a bit pedantic, adhering 
 
 - Bugs: The title should be a declarative statement of how things are. **"Text does not blink"**
 
-## Git Commit Guidelines
+## Contributing Code
+
+### Build Dependencies
+
+Before you can build the Cisco Webex React Widgets, you will need the following dependencies:
+
+- [Node.js](https://nodejs.org/) (LTS)
+  - We recommend using [nvm](https://github.com/creationix/nvm) (or [nvm-windows](https://github.com/coreybutler/nvm-windows))
+    to easily switch between Node.js versions.
+  - Run `nvm use` to set your node version to the one this package expects.  If it is not installed, this program will tell you the command needed to install the required version.
+  - Install the latest npm to enable security audits using `npm install npm@latest -g`
+- [Git](https://git-scm.com/)
+
+### Git Commit Guidelines
 
 As part of the build process, commits are run through [conventional changelog](https://github.com/conventional-changelog/conventional-changelog) to generate the changelog. Please adhere to the following guidelines when formatting your commit messages.
 
-### Commit Message Format
+#### Commit Message Format
 
 Each commit message consists of a **header**, a **body** and a **footer**. The header has a special format that includes a **type**, a **scope** and a **subject**:
 
@@ -66,11 +81,11 @@ The **header** is mandatory and the scope of the header is optional.
 
 Any line of the commit message cannot be longer 100 characters! This allows the message to be easier to read on GitHub as well as in various git tools.
 
-### Revert
+#### Revert
 
 If the commit reverts a previous commit, it should begin with `revert:`, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>`., where the hash is the SHA of the commit being reverted.
 
-### Type
+#### Type
 
 Must be one of the following:
 
@@ -83,11 +98,11 @@ Must be one of the following:
 - **test**: Adding missing tests
 - **chore**: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
-### Scope
+#### Scope
 
 The scope should indicate what is being changed. Generally, these should match package names. For example, `widget-space`, `widget-recents`, `avatar`, etc. Other than package names, `tooling` tends to be the most common.
 
-### Subject
+#### Subject
 
 The subject contains succinct description of the change:
 
@@ -95,17 +110,17 @@ The subject contains succinct description of the change:
 - don't capitalize first letter
 - no dot (.) at the end
 
-### Body
+#### Body
 
 Just as in the **subject** the imperative, present tense: "change" not "changed" nor "changes". The body should include the motivation for the change and contrast this with previous behavior.
 
-### Footer
+#### Footer
 
 The footer should contain any information about **Breaking changes** and is also the place to reference GitHub issues that this commit **closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-## Running the tests
+### Running the tests
 
 Install dependencies:
 
@@ -136,7 +151,7 @@ And to run the tests for a specific package:
 npm run jest -- packages/node_modules/@webex/PACKAGE_NAME
 ```
 
-### Static Analysis
+#### Static Analysis
 
 We use eslint as a part of our static analysis step. Before contributing any code, please be sure to install eslint and be sure to following the instructions to correctly install peerDependnencies  <https://www.npmjs.com/package/@webex/eslint-config-react>
 
