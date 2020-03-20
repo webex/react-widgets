@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.92](https://github.com/webex/react-widgets/compare/v0.2.91...v0.2.92) (2020-03-20)
+
+
+### Bug Fixes
+
+* **widget-space:** convert mercuryStatus to js object ([ffae33c](https://github.com/webex/react-widgets/commit/ffae33c))
+
+
+
 ### [0.2.91](https://github.com/webex/react-widgets/compare/v0.2.90...v0.2.91) (2020-03-18)
 
 
