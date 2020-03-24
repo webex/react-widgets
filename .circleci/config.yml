@@ -192,8 +192,6 @@ jobs:
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
             BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-recents-demo
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
-
-            npm run es5-check:dist
       - run:
           name: 'Push to upstream/master'
           command: git push upstream HEAD:master
