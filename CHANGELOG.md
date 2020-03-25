@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.94](https://github.com/webex/react-widgets/compare/v0.2.93...v0.2.94) (2020-03-25)
+
+
+### Bug Fixes
+
+* **package:** remove esm check from publish ([70073f8](https://github.com/webex/react-widgets/commit/70073f8))
+
+
+
 ### [0.2.93](https://github.com/webex/react-widgets/compare/v0.2.92...v0.2.93) (2020-03-25)
 
 
