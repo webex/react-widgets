@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.97](https://github.com/webex/react-widgets/compare/v0.2.96...v0.2.97) (2020-03-31)
+
+
+### Features
+
+* **r-m-teams:** add support for error handling ([0c1805a](https://github.com/webex/react-widgets/commit/0c1805a))
+
+
+
 ### [0.2.96](https://github.com/webex/react-widgets/compare/v0.2.95...v0.2.96) (2020-03-31)
 
 
