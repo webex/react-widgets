@@ -333,6 +333,9 @@ jobs:
       - restore_node_modules
       - run: npm i
       - run:
+          name: 'Generate Build Number'
+          command: echo "export BUILD_NUMBER=CircleCI-React-Widgets-TAP_${CIRCLE_WORKFLOW_ID}" >> $BASH_ENV
+      - run:
           command: npm run test:tap
           no_output_timeout: 30m
       - store_test_results:
@@ -354,7 +357,12 @@ jobs:
           name: 'Create Incident on PagerDuty'
           when: on_fail
           command: |
-            curl -X POST --header 'Content-Type: application/json' -d '{
+            # Easier way of assigning variables in a json object without escaping double quotes in the curl command
+            generate_incident_data() {
+              # '\<<' must be escaped in v2.1+ due to yaml conflicts
+              # https://discuss.circleci.com/t/2-1-config-and-build-processing/24102/31
+              cat \<<EOF
+            {
               "routing_key": "${PAGERDUTY_KEY}",
               "event_action": "trigger",
               "payload": {
@@ -370,7 +378,11 @@ jobs:
               ],
               "client": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}",
               "client_url": "${CIRCLE_BUILD_URL}"
-            }' https://events.pagerduty.com/v2/enqueue
+            }
+            EOF
+            }
+
+            curl -X POST --header 'Content-Type: application/json' -d "$(generate_incident_data)" https://events.pagerduty.com/v2/enqueue
 
 workflows:
   run_all_tests:
