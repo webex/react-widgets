@@ -32,7 +32,7 @@ module.exports = (env) => webpackConfigBase({
   plugins,
   devtool: 'source-map',
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
     port: process.env.PORT || 8000,
     stats: {
       colors: true,
