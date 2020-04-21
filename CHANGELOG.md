@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.101](https://github.com/webex/react-widgets/compare/v0.2.100...v0.2.101) (2020-04-21)
+
+
+### Bug Fixes
+
+* **redux-module-spaces:** add convo creation actions ([1131860](https://github.com/webex/react-widgets/commit/1131860))
+* **widget-message:** reset trigger ([320128c](https://github.com/webex/react-widgets/commit/320128c))
+* **widget-space:** add reset convo trigger ([a66c3d4](https://github.com/webex/react-widgets/commit/a66c3d4))
+
+
+
 ### [0.2.100](https://github.com/webex/react-widgets/compare/v0.2.99...v0.2.100) (2020-04-21)
 
 
