@@ -53,7 +53,7 @@ $ npm start
     ```sh
     npm start
     ```
-1. The widget demo will be running on http://localhost:8000
+1. The widget demo will be running on https://localhost:8000
 
 ## Version
 
