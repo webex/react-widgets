@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.100](https://github.com/webex/react-widgets/compare/v0.2.99...v0.2.100) (2020-04-21)
+
+
+### Features
+
+* **webex:** set audio and video dynamically to calls in widgets ([b22a07a](https://github.com/webex/react-widgets/commit/b22a07a))
+
+
+
 ### [0.2.99](https://github.com/webex/react-widgets/compare/v0.2.98...v0.2.99) (2020-04-16)
 
 
