@@ -19,7 +19,7 @@ const isSauceEnabled = (process.env.SAUCE === 'true');
 let baseUrl = process.env.JOURNEY_TEST_BASE_URL;
 
 if (!baseUrl) {
-  baseUrl = process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
+  baseUrl = process.env.TAP ? 'https://code.s4d.io' : `https://localhost:${port}`;
 }
 const browser = process.env.BROWSER || 'chrome';
 const version = process.env.VERSION || 'latest';
