@@ -2,6 +2,8 @@
  * In development we assume that the code generated is going to be consumed by
  * webpack dev server and we are bundling into a single js file.
  */
+const fs = require('fs');
+const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -33,6 +35,9 @@ module.exports = (env) => webpackConfigBase({
   devtool: 'source-map',
   devServer: {
     host: 'localhost',
+    https: true,
+    key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
+    cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt')),
     port: process.env.PORT || 8000,
     stats: {
       colors: true,
