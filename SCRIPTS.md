@@ -74,11 +74,6 @@ Runs a webpack build and transpile on all packages that start with '@webex/widge
 * Executes [`webpackBuild`](#webpackBuild) command.
 * Executes [`transpile`](#transpile) command.
 
-### `npm run es5-check:dist`
-Verifies that the bundles are es5 compatible.
-
-### `npm run es6-check:esm`
-Verifies that the ES modules are es6 compatible.
 ## Publish
 
 Publishing the different packages to NPM.
@@ -90,7 +85,6 @@ Runs the commands necessary to publish all of the widgets and components to NPM
 * `build:components`
 * `build:widgets`
 * `build:packagejson`
-* `es6-check:esm`
 * `publish components`
 
 ### `npm run publish components`

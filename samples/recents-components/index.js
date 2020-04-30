@@ -1,6 +1,6 @@
 import React from 'react';
 
-import JoinCallButton from '@ciscospark/react-component-join-call-button';
+import JoinCallButton from '@webex/react-component-join-call-button';
 import SpaceItem from '@webex/react-component-space-item';
 import SpacesList from '@webex/react-component-spaces-list';
 

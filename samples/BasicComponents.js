@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Button from '@ciscospark/react-component-button';
-import Icon, {ICONS} from '@ciscospark/react-component-icon';
+import Button from '@webex/react-component-button';
+import Icon, {ICONS} from '@webex/react-component-icon';
 
 
 function BasicComponents() {

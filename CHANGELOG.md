@@ -2,6 +2,132 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.103](https://github.com/webex/react-widgets/compare/v0.2.102...v0.2.103) (2020-04-28)
+
+
+### Features
+
+* **widget-meet:** rename spark references ([2ef8d70](https://github.com/webex/react-widgets/commit/2ef8d70))
+
+
+
+### [0.2.102](https://github.com/webex/react-widgets/compare/v0.2.101...v0.2.102) (2020-04-24)
+
+
+
+### [0.2.101](https://github.com/webex/react-widgets/compare/v0.2.100...v0.2.101) (2020-04-21)
+
+
+### Bug Fixes
+
+* **redux-module-spaces:** add convo creation actions ([1131860](https://github.com/webex/react-widgets/commit/1131860))
+* **widget-message:** reset trigger ([320128c](https://github.com/webex/react-widgets/commit/320128c))
+* **widget-space:** add reset convo trigger ([a66c3d4](https://github.com/webex/react-widgets/commit/a66c3d4))
+
+
+
+### [0.2.100](https://github.com/webex/react-widgets/compare/v0.2.99...v0.2.100) (2020-04-21)
+
+
+### Features
+
+* **webex:** set audio and video dynamically to calls in widgets ([b22a07a](https://github.com/webex/react-widgets/commit/b22a07a))
+
+
+
+### [0.2.99](https://github.com/webex/react-widgets/compare/v0.2.98...v0.2.99) (2020-04-16)
+
+
+### Features
+
+* **sdk:** upgrade to 1.80.180 ([04d3560](https://github.com/webex/react-widgets/commit/04d3560))
+
+
+
+### [0.2.98](https://github.com/webex/react-widgets/compare/v0.2.97...v0.2.98) (2020-04-03)
+
+
+
+### [0.2.97](https://github.com/webex/react-widgets/compare/v0.2.96...v0.2.97) (2020-03-31)
+
+
+### Features
+
+* **r-m-teams:** add support for error handling ([0c1805a](https://github.com/webex/react-widgets/commit/0c1805a))
+
+
+
+### [0.2.96](https://github.com/webex/react-widgets/compare/v0.2.95...v0.2.96) (2020-03-31)
+
+
+### Build System
+
+* add CODEOWNERS file [skip ci] ([a8ae69a](https://github.com/webex/react-widgets/commit/a8ae69a))
+
+
+
+### [0.2.95](https://github.com/webex/react-widgets/compare/v0.2.94...v0.2.95) (2020-03-30)
+
+
+
+### [0.2.94](https://github.com/webex/react-widgets/compare/v0.2.93...v0.2.94) (2020-03-25)
+
+
+### Bug Fixes
+
+* **package:** remove esm check from publish ([70073f8](https://github.com/webex/react-widgets/commit/70073f8))
+
+
+
+### [0.2.93](https://github.com/webex/react-widgets/compare/v0.2.92...v0.2.93) (2020-03-25)
+
+
+### Features
+
+* **webex:** upgrade to 1.80.151 ([d432efd](https://github.com/webex/react-widgets/commit/d432efd))
+
+
+
+### [0.2.92](https://github.com/webex/react-widgets/compare/v0.2.91...v0.2.92) (2020-03-20)
+
+
+### Bug Fixes
+
+* **widget-space:** convert mercuryStatus to js object ([ffae33c](https://github.com/webex/react-widgets/commit/ffae33c))
+
+
+
+### [0.2.91](https://github.com/webex/react-widgets/compare/v0.2.90...v0.2.91) (2020-03-18)
+
+
+
+### [0.2.90](https://github.com/webex/react-widgets/compare/v0.2.89...v0.2.90) (2020-03-18)
+
+
+### Bug Fixes
+
+* **video:** use proper react property naming ([136c8cb](https://github.com/webex/react-widgets/commit/136c8cb))
+
+
+
+### [0.2.89](https://github.com/webex/react-widgets/compare/v0.2.88...v0.2.89) (2020-03-17)
+
+
+### Bug Fixes
+
+* **media:** use proper webex object ([ef3e943](https://github.com/webex/react-widgets/commit/ef3e943))
+
+
+
+### [0.2.88](https://github.com/webex/react-widgets/compare/v0.2.87...v0.2.88) (2020-03-17)
+
+
+### Bug Fixes
+
+* **message:** use widget status object properly ([53fc3a6](https://github.com/webex/react-widgets/commit/53fc3a6))
+
+
+
 ### [0.2.87](https://github.com/webex/react-widgets/compare/v0.2.86...v0.2.87) (2020-02-25)
 
 

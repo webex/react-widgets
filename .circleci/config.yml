@@ -77,7 +77,8 @@ jobs:
     environment:
       FEDERATION: true
       NODE_ENV: test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
@@ -100,7 +101,8 @@ jobs:
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: dist-test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
@@ -133,7 +135,8 @@ jobs:
     environment:
       SAUCE: true
       STATIC_SERVER_PATH: dist-test
-      CONVERSATION_SERVICE: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: https://conversation-intb.ciscospark.com/conversation/api/v1
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: urn:TEAM:us-east-1_int13:identityLookup
       HYDRA_SERVICE_URL: https://apialpha.ciscospark.com/v1/
       IDBROKER_BASE_URL: https://idbrokerbts.webex.com
       U2C_SERVICE_URL: https://u2c-intb.ciscospark.com/u2c/api/v1
@@ -189,8 +192,6 @@ jobs:
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
             BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-recents-demo
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
-
-            npm run es5-check:dist
       - run:
           name: 'Push to upstream/master'
           command: git push upstream HEAD:master
@@ -332,6 +333,9 @@ jobs:
       - restore_node_modules
       - run: npm i
       - run:
+          name: 'Generate Build Number'
+          command: echo "export BUILD_NUMBER=CircleCI-React-Widgets-TAP_${CIRCLE_WORKFLOW_ID}" >> $BASH_ENV
+      - run:
           command: npm run test:tap
           no_output_timeout: 30m
       - store_test_results:
@@ -349,6 +353,36 @@ jobs:
       - store_artifacts:
           path: /home/circleci/.npm/_logs/
           destination: npm-logs
+      - run:
+          name: 'Create Incident on PagerDuty'
+          when: on_fail
+          command: |
+            # Easier way of assigning variables in a json object without escaping double quotes in the curl command
+            generate_incident_data() {
+              # '\<<' must be escaped in v2.1+ due to yaml conflicts
+              # https://discuss.circleci.com/t/2-1-config-and-build-processing/24102/31
+              cat \<<EOF
+            {
+              "routing_key": "${PAGERDUTY_KEY}",
+              "event_action": "trigger",
+              "payload": {
+                "summary": "FAILURE: React Widgets TAP Test",
+                "source": "CircleCI - React Widgets",
+                "severity": "critical"
+              },
+              "links": [
+                {
+                  "href": "${CIRCLE_BUILD_URL}",
+                  "text": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}"
+                }
+              ],
+              "client": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}",
+              "client_url": "${CIRCLE_BUILD_URL}"
+            }
+            EOF
+            }
+
+            curl -X POST --header 'Content-Type: application/json' -d "$(generate_incident_data)" https://events.pagerduty.com/v2/enqueue
 
 workflows:
   run_all_tests:
