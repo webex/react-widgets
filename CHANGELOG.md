@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.106](https://github.com/webex/react-widgets/compare/v0.2.105...v0.2.106) (2020-05-06)
+
+
+### Features
+
+* **widget-demo:** add composer actions to example ([2294ebf](https://github.com/webex/react-widgets/commit/2294ebf))
+
+
+
 ### [0.2.105](https://github.com/webex/react-widgets/compare/v0.2.104...v0.2.105) (2020-05-06)
 
 
