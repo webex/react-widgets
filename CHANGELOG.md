@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.105](https://github.com/webex/react-widgets/compare/v0.2.104...v0.2.105) (2020-05-06)
+
+
+
+### [0.2.104](https://github.com/webex/react-widgets/compare/v0.2.103...v0.2.104) (2020-05-06)
+
+
+
+### [0.2.103](https://github.com/webex/react-widgets/compare/v0.2.102...v0.2.103) (2020-04-28)
+
+
+### Features
+
+* **widget-meet:** rename spark references ([2ef8d70](https://github.com/webex/react-widgets/commit/2ef8d70))
+
+
+
+### [0.2.102](https://github.com/webex/react-widgets/compare/v0.2.101...v0.2.102) (2020-04-24)
+
+
+
 ### [0.2.101](https://github.com/webex/react-widgets/compare/v0.2.100...v0.2.101) (2020-04-21)
 
 
