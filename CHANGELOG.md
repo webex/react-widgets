@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.107](https://github.com/webex/react-widgets/compare/v0.2.106...v0.2.107) (2020-05-07)
+
+
+### Bug Fixes
+
+* **redux-module-spaces:** add code to error message ([f5a2d37](https://github.com/webex/react-widgets/commit/f5a2d37))
+
+
+
 ### [0.2.106](https://github.com/webex/react-widgets/compare/v0.2.105...v0.2.106) (2020-05-06)
 
 
