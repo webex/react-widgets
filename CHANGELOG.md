@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.109](https://github.com/webex/react-widgets/compare/v0.2.108...v0.2.109) (2020-06-24)
+
+
+### Features
+
+* **react-redux-spark:** add function to unregister device ([78d68be](https://github.com/webex/react-widgets/commit/78d68be))
+* **widget-space:** unregister device when unmounting component ([bd84c52](https://github.com/webex/react-widgets/commit/bd84c52))
+
+
+
 ### [0.2.108](https://github.com/webex/react-widgets/compare/v0.2.107...v0.2.108) (2020-05-18)
 
 
