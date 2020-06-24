@@ -187,10 +187,8 @@ jobs:
             export WEBEX_SCOPE="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:package widget-space
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build sri widget-space
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-space-demo
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:package widget-recents
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
-            BUILD_BUNDLE_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/demo/" npm run build:package widget-recents-demo
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
       - run:
           name: 'Push to upstream/master'
@@ -207,8 +205,6 @@ jobs:
             - package.json
             - packages/node_modules/@webex/widget-space/dist
             - packages/node_modules/@webex/widget-recents/dist
-            - packages/node_modules/@webex/widget-space-demo/dist
-            - packages/node_modules/@webex/widget-recents-demo/dist
             - packages/node_modules/@webex/widget-demo/dist
 
   deploy_to_cdn:
@@ -232,26 +228,12 @@ jobs:
           from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-space-demo/dist
-          to: s3://${AWS_BUCKET}/widget-space/alpha/demo
-          overwrite: true
-      - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-space-demo/dist
-          to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}/demo
-      - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/alpha
           overwrite: true
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}
-      - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-recents-demo/dist
-          to: s3://${AWS_BUCKET}/widget-recents/alpha/demo
-          overwrite: true
-      - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-recents-demo/dist
-          to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}/demo
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/alpha
