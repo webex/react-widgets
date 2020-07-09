@@ -57,7 +57,7 @@
     "@formatjs/intl-relativetimeformat": "^4.5.11",
     "@momentum-ui/core": "15.2.1",
     "@momentum-ui/icons": "6.2.1",
-    "@momentum-ui/react": "17.2.0",
+    "@momentum-ui/react": "23.15.4",
     "@webex/common": "1.80.212",
     "@webex/common-timers": "1.80.212",
     "@webex/helper-html": "1.80.212",
