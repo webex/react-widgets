@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.112](https://github.com/webex/react-widgets/compare/v0.2.111...v0.2.112) (2020-07-24)
+
+
+### Bug Fixes
+
+* **activity-item-base:** use proper momentum style ([51998f2](https://github.com/webex/react-widgets/commit/51998f2))
+* **typing-avatar:** use proper momentum size ([4b6657e](https://github.com/webex/react-widgets/commit/4b6657e))
+
+
+
 ### [0.2.111](https://github.com/webex/react-widgets/compare/v0.2.110...v0.2.111) (2020-07-13)
 
 
