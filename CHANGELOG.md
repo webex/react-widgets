@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.113](https://github.com/webex/react-widgets/compare/v0.2.112...v0.2.113) (2020-07-27)
+
+
+### Bug Fixes
+
+* **activity-text:** do not html render displayName ([9c2875b](https://github.com/webex/react-widgets/commit/9c2875b))
+
+
+### Features
+
+* **r-m-activity:** use sanitize utility function ([1a44850](https://github.com/webex/react-widgets/commit/1a44850))
+* **utils:** add ability to santize activities ([4cce11e](https://github.com/webex/react-widgets/commit/4cce11e))
+
+
+
 ### [0.2.112](https://github.com/webex/react-widgets/compare/v0.2.111...v0.2.112) (2020-07-24)
 
 
