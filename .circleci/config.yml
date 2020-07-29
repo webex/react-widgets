@@ -415,17 +415,17 @@ workflows:
       - tag_for_production:
           requires:
             - promote_beta_to_production
-  tap:
-    triggers:
-      - schedule:
-          # Everyday @ 6PM UTC | 4PM EST | 1PM PST
-          cron: '0 18 * * 1-5'
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - install
-      - tap_test:
-          requires:
-            - install
+  # tap:
+  #   triggers:
+  #     - schedule:
+  #         # Everyday @ 6PM UTC | 4PM EST | 1PM PST
+  #         cron: '0 18 * * 1-5'
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #   jobs:
+  #     - install
+  #     - tap_test:
+  #         requires:
+  #           - install
