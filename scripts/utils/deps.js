@@ -67,7 +67,7 @@ function updatePackageJson(pkgPath, packages, topPkgJson) {
         && dep[0] !== '.')
     .sort();
 
-  pkgJson.dependencies = {};
+  pkgJson.dependencies = pkgJson.dependencies || {};
   const deps = pkgJson.dependencies;
 
   uniqDeps.forEach((dep) => {
