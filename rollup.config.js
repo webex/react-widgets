@@ -62,13 +62,11 @@ export default {
           }
         ],
         '@babel/plugin-proposal-object-rest-spread',
-        '@babel/plugin-transform-exponentiation-operator',
-        '@babel/plugin-external-helpers'
+        '@babel/plugin-transform-exponentiation-operator'
       ],
       presets: [
         '@babel/preset-react'
-      ],
-      externalHelpers: true
+      ]
     })
   ],
   input: 'src/index.js',
