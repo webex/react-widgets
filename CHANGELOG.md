@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.115](https://github.com/webex/react-widgets/compare/v0.2.114...v0.2.115) (2020-08-05)
+
+
+### Bug Fixes
+
+* **packages:** remove external helpers for proper build ([607dbd6](https://github.com/webex/react-widgets/commit/607dbd6))
+* **webex-widget-base:** add formatjs dependencies for dynamic loaders ([39d3793](https://github.com/webex/react-widgets/commit/39d3793))
+
+
+
 ### [0.2.114](https://github.com/webex/react-widgets/compare/v0.2.113...v0.2.114) (2020-07-29)
 
 
