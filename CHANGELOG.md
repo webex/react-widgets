@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.117](https://github.com/webex/react-widgets/compare/v0.2.116...v0.2.117) (2020-08-21)
+
+
+### Features
+
+* **message-composer:** add error for oversized attachments ([c2f0b17](https://github.com/webex/react-widgets/commit/c2f0b17))
+
+
+
 ### [0.2.116](https://github.com/webex/react-widgets/compare/v0.2.115...v0.2.116) (2020-08-20)
 
 
