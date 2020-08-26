@@ -19,6 +19,7 @@ The Webex Widgets for React library allows developers to easily incorporate Webe
 - [Coding Style](#coding-style)
 - [Code Verification](#code-verification)
 - [Contributing](#contributing)
+- [Issues](#issues)
 - [License](#license)
 
 ## Background
@@ -112,8 +113,15 @@ function verifySignature({
 
 See [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+## Issues
+
+Please reach out to our developer support team for any issues you may be experiencing with the SDK.
+
+- <https://developer.webex.com/support>
+- <devsupport@webex.com>
+
 ## License
 
-&copy; 2017 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
+&copy; 2017-2020 Cisco Systems, Inc. and/or its affiliates. All Rights Reserved.
 
 See [LICENSE](LICENSE) for details.
