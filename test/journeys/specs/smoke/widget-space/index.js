@@ -1,6 +1,5 @@
 import {assert} from 'chai';
 
-import {skipInFirefox} from '../../../lib/browser';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import waitForPromise from '../../../lib/wait-for-promise';
@@ -165,7 +164,7 @@ describe('Smoke Tests - Space Widget', () => {
         browserLocal.waitForVisible(meetElements.callButton);
       });
 
-      skipInFirefox(it)('can place a call and hangup after answer', () => {
+      it('can place a call and hangup after answer', () => {
         hangupDuringCallTest(browserLocal, browserRemote, true);
       });
     });

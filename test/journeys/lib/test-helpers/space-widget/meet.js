@@ -13,9 +13,9 @@ export const elements = {
   callButton: 'button[aria-label="Start Call"]',
   answerButton: 'button[aria-label="Answer"]',
   declineButton: 'button[aria-label="Decline"]',
-  hangupButton: 'button[aria-label="Hangup"]',
-  callControls: '.call-controls',
-  remoteVideo: '.remote-video video'
+  hangupButton: 'button[aria-label="Leave"]',
+  callControls: '.wxc-meeting-controls',
+  remoteVideo: '.wxc-in-meeting'
 };
 /**
  * @typedef {object} TestObject
