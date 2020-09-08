@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.120](https://github.com/webex/react-widgets/compare/v0.2.119...v0.2.120) (2020-09-08)
+
+
+### Bug Fixes
+
+* **message-composer:** use unique id for input ([5210e51](https://github.com/webex/react-widgets/commit/5210e51))
+
+
+
 ### [0.2.119](https://github.com/webex/react-widgets/compare/v0.2.118...v0.2.119) (2020-08-31)
 
 
