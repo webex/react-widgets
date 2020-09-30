@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.121](https://github.com/webex/react-widgets/compare/v0.2.120...v0.2.121) (2020-09-30)
+
+
+### Features
+
+* **ActivityText:** add block padding ([a1efb9e](https://github.com/webex/react-widgets/commit/a1efb9e))
+
+
+
 ### [0.2.120](https://github.com/webex/react-widgets/compare/v0.2.119...v0.2.120) (2020-09-08)
 
 
