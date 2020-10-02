@@ -7,7 +7,7 @@
 npm-debug*
 packages/**/es/*
 packages/**/cjs/*
-packages/**/node_modules/*
+packages/node_modules/@webex/**/node_modules/*
 .tmp/*
 tmp.*
 *.tmp
