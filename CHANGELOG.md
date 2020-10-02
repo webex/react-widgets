@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.123](https://github.com/webex/react-widgets/compare/v0.2.122...v0.2.123) (2020-10-02)
+
+
+### Features
+
+* **MessageWidget:** add check for large files on drop ([cfd28ad](https://github.com/webex/react-widgets/commit/cfd28ad))
+* **utils:** add checkMaxFileSize function ([23b76ad](https://github.com/webex/react-widgets/commit/23b76ad))
+
+
+
 ### [0.2.122](https://github.com/webex/react-widgets/compare/v0.2.121...v0.2.122) (2020-10-02)
 
 
