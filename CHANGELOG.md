@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.125](https://github.com/webex/react-widgets/compare/v0.2.124...v0.2.125) (2020-10-07)
+
+
+### Bug Fixes
+
+* **adaptive-card-bugs:** bug fixes ([820d2aa](https://github.com/webex/react-widgets/commit/820d2aa))
+* **adaptive-card-bugs:** returns null when there is no value and no default value submitted of choice set ([89df18b](https://github.com/webex/react-widgets/commit/89df18b))
+* **card-button:** fix disable button and code refactor ([96ca5d0](https://github.com/webex/react-widgets/commit/96ca5d0))
+
+
+
 ### [0.2.124](https://github.com/webex/react-widgets/compare/v0.2.123...v0.2.124) (2020-10-02)
 
 
