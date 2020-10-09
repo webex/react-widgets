@@ -335,36 +335,36 @@ jobs:
       - store_artifacts:
           path: /home/circleci/.npm/_logs/
           destination: npm-logs
-      - run:
-          name: 'Create Incident on PagerDuty'
-          when: on_fail
-          command: |
-            # Easier way of assigning variables in a json object without escaping double quotes in the curl command
-            generate_incident_data() {
-              # '\<<' must be escaped in v2.1+ due to yaml conflicts
-              # https://discuss.circleci.com/t/2-1-config-and-build-processing/24102/31
-              cat \<<EOF
-            {
-              "routing_key": "${PAGERDUTY_KEY}",
-              "event_action": "trigger",
-              "payload": {
-                "summary": "FAILURE: React Widgets TAP Test",
-                "source": "CircleCI - React Widgets",
-                "severity": "critical"
-              },
-              "links": [
-                {
-                  "href": "${CIRCLE_BUILD_URL}",
-                  "text": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}"
-                }
-              ],
-              "client": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}",
-              "client_url": "${CIRCLE_BUILD_URL}"
-            }
-            EOF
-            }
+      # - run:
+      #     name: 'Create Incident on PagerDuty'
+      #     when: on_fail
+      #     command: |
+      #       # Easier way of assigning variables in a json object without escaping double quotes in the curl command
+      #       generate_incident_data() {
+      #         # '\<<' must be escaped in v2.1+ due to yaml conflicts
+      #         # https://discuss.circleci.com/t/2-1-config-and-build-processing/24102/31
+      #         cat \<<EOF
+      #       {
+      #         "routing_key": "${PAGERDUTY_KEY}",
+      #         "event_action": "trigger",
+      #         "payload": {
+      #           "summary": "FAILURE: React Widgets TAP Test",
+      #           "source": "CircleCI - React Widgets",
+      #           "severity": "critical"
+      #         },
+      #         "links": [
+      #           {
+      #             "href": "${CIRCLE_BUILD_URL}",
+      #             "text": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}"
+      #           }
+      #         ],
+      #         "client": "CircleCI - React Widgets TAP Test - Build #${CIRCLE_BUILD_NUM}",
+      #         "client_url": "${CIRCLE_BUILD_URL}"
+      #       }
+      #       EOF
+      #       }
 
-            curl -X POST --header 'Content-Type: application/json' -d "$(generate_incident_data)" https://events.pagerduty.com/v2/enqueue
+      #       curl -X POST --header 'Content-Type: application/json' -d "$(generate_incident_data)" https://events.pagerduty.com/v2/enqueue
 
 workflows:
   run_all_tests:
@@ -415,17 +415,17 @@ workflows:
       - tag_for_production:
           requires:
             - promote_beta_to_production
-  # tap:
-  #   triggers:
-  #     - schedule:
-  #         # Everyday @ 6PM UTC | 4PM EST | 1PM PST
-  #         cron: '0 18 * * 1-5'
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - install
-  #     - tap_test:
-  #         requires:
-  #           - install
+  tap:
+    triggers:
+      - schedule:
+          # Everyday @ 6PM UTC | 4PM EST | 1PM PST
+          cron: '0 18 * * 1-5'
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - install
+      - tap_test:
+          requires:
+            - install
