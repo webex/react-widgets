@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.127](https://github.com/webex/react-widgets/compare/v0.2.126...v0.2.127) (2020-10-21)
+
+
+### Bug Fixes
+
+* **card-custom-element:** required changes for version update ([9af8611](https://github.com/webex/react-widgets/commit/9af8611))
+* **test-cases:** removed/added test cases ([d34cdcb](https://github.com/webex/react-widgets/commit/d34cdcb))
+
+
+
 ### [0.2.126](https://github.com/webex/react-widgets/compare/v0.2.125...v0.2.126) (2020-10-12)
 
 
