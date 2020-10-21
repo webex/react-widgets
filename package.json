@@ -82,7 +82,7 @@
     "@webex/storage-adapter-local-forage": "1.80.271",
     "@webex/storage-adapter-local-storage": "1.80.271",
     "@webex/webex-core": "1.80.271",
-    "adaptivecards": "1.2.0",
+    "adaptivecards": "^2.0.0",
     "ampersand-events": "^2.0.2",
     "bowser": "^1.9.4",
     "classnames": "^2.2.5",
