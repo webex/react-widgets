@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.128](https://github.com/webex/react-widgets/compare/v0.2.127...v0.2.128) (2020-10-23)
+
+
+### Bug Fixes
+
+* **card-element:**  fix to enter input value for zero length of text element ([b473669](https://github.com/webex/react-widgets/commit/b473669))
+
+
+
 ### [0.2.127](https://github.com/webex/react-widgets/compare/v0.2.126...v0.2.127) (2020-10-21)
 
 
