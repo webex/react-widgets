@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.133](https://github.com/webex/react-widgets/compare/v0.2.132...v0.2.133) (2020-12-08)
+
+
+### Tests
+
+* **journey:** disable meet widget tests ([b354956](https://github.com/webex/react-widgets/commit/b354956))
+
+
+
 ### [0.2.132](https://github.com/webex/react-widgets/compare/v0.2.131...v0.2.132) (2020-12-08)
 
 
