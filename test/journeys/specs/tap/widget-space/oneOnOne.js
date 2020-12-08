@@ -119,7 +119,7 @@ describe('Widget Space: One on One: TAP', () => {
     });
   });
 
-  describe('meet widget', () => {
+  describe.skip('meet widget', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
         switchToMeet(local.browser);
