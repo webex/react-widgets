@@ -187,7 +187,7 @@ describe('Smoke Tests - Space Widget', () => {
       });
     });
 
-    describe('meet widget', () => {
+    describe.skip('meet widget', () => {
       it('has a call button', () => {
         switchToMeet(browserLocal);
         browserLocal.waitForVisible(meetElements.callButton);
