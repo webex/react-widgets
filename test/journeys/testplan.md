@@ -1,6 +1,6 @@
 # Test Plan
 
-The Webex Teams Widgets have full integration (or "journey") tests performed to validate proper behavior.
+The Webex Widgets have full integration (or "journey") tests performed to validate proper behavior.
 
 The widgets are tested via [Webdriver.io](https://webdriver.io) using devices powered by [Sauce Labs](https://saucelabs.com).
 
