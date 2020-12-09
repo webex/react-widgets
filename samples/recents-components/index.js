@@ -114,7 +114,7 @@ function RecentsComponents() {
         active
         onCallClick={onCallClick}
         onClick={onClick}
-        name="Webex Teams"
+        name="Webex"
         teamColor="green"
         teamName="Web Team"
       />
