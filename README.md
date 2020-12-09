@@ -24,7 +24,7 @@ The Webex Widgets for React library allows developers to easily incorporate Webe
 
 ## Background
 
-This library allows React developers to quickly and easily create a Webex experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Webex Teams, along with more complex, complete widgets, such as the Webex Space Widget.
+This library allows React developers to quickly and easily create a Webex experience within their apps. Here we provide basic components (e.g. buttons, text fields, icons) that reflect the styles and aesthetics of Webex, along with more complex, complete widgets, such as the Webex Space Widget.
 
 The basic components are just presentational React <https://github.com/facebook/react> components, while our widgets leverage Redux <https://github.com/reactjs/redux> and the Webex Javascript SDK <https://github.com/webex/webex-js-sdk>.
 

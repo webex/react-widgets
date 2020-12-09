@@ -3,13 +3,13 @@
 We'd love for you to contribute to our source code and to make **Webex React Widgets** even better than it is today!
 If you would like to contribute to this repository by adding features, enhancements or bug fixes, you must follow our process:
 
-  1. Let core members know about your proposal by posting a message in the [contributor's Webex Teams space](https://eurl.io/#Bk9WGfRcB)
+  1. Let core members know about your proposal by posting a message in the [contributor's Webex space](https://eurl.io/#Bk9WGfRcB)
   2. A core member will review your proposal and if necessary may suggest to have a meeting to better understand your approach
   3. If your proposal is approved you should start coding at this point
   4. We recommend opening a draft PR to receive feedback before finalizing your solution
       - When opening a draft PR, specify with PR comments where in the code you would like to get feedback
   5. Before opening a PR ensure **all** [PR guidelines](#submitting-a-pull-request) are followed
-  6. Let core members know about your PR by posting a message in the [contributor's Webex Teams space](https://eurl.io/#Bk9WGfRcB)
+  6. Let core members know about your PR by posting a message in the [contributor's Webex space](https://eurl.io/#Bk9WGfRcB)
   7. Core members will review the pull request and provide feedback when necessary
       - If a PR is too large, you may be asked to break it down into multiple smaller-scoped PRs
   8. Once the PR is approved by a core member, it will be merged
