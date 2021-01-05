@@ -64,37 +64,15 @@ describe('Widget Space: Group Space: TAP', () => {
     browserRemote.deleteCookie()
   ]));
 
-  describe('Activity Menu', () => {
-    it('has a menu button', () => {
-      assert.isTrue(local.browser.isVisible(elements.menuButton));
-    });
-
-    it('displays the menu when clicking the menu button', () => {
-      local.browser.click(elements.menuButton);
-      local.browser.waitForVisible(elements.activityMenu);
-    });
-
-    it('has an exit menu button', () => {
-      assert.isTrue(local.browser.isVisible(elements.activityMenu));
-      local.browser.waitForVisible(elements.exitButton);
-    });
-
-    it('closes the menu with the exit button', () => {
-      local.browser.click(elements.exitButton);
-      // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(elements.activityMenu, 1500, true);
-    });
-
+  describe('Activity Section', () => {
     it('has a message button', () => {
-      local.browser.click(elements.menuButton);
       local.browser
-        .element(elements.controlsContainer)
         .element(elements.messageActivityButton)
         .waitForVisible();
     });
 
     it('switches to message widget', () => {
-      local.browser.element(elements.controlsContainer).element(elements.messageActivityButton).click();
+      local.browser.element(elements.messageActivityButton).click();
       // Activity menu animates the hide, wait for it to be gone
       local.browser.waitForVisible(elements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(elements.messageWidget));
@@ -102,12 +80,11 @@ describe('Widget Space: Group Space: TAP', () => {
     });
 
     it('has a meet button', () => {
-      local.browser.click(elements.menuButton);
-      local.browser.element(elements.controlsContainer).element(elements.meetActivityButton).waitForVisible();
+      local.browser.element(elements.meetActivityButton).waitForVisible();
     });
 
     it('switches to meet widget', () => {
-      local.browser.element(elements.controlsContainer).element(elements.meetActivityButton).click();
+      local.browser.element(elements.meetActivityButton).click();
       // Activity menu animates the hide, wait for it to be gone
       local.browser.waitForVisible(elements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(elements.meetWidget));

@@ -6,7 +6,7 @@ import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 
-import {elements, openMenuAndClickButton, switchToMeet} from '../../../lib/test-helpers/space-widget/main';
+import {elements, openMenuAndClickButton, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
 import {
   elements as rosterElements,
   hasParticipants
@@ -88,28 +88,8 @@ describe('Smoke Tests - Space Widget', () => {
       browserLocal.waitForVisible(textInputField);
     });
 
-    describe('Activity Menu', () => {
-      it('has a menu button', () => {
-        assert.isTrue(browserLocal.isVisible(elements.menuButton));
-      });
-
-      it('displays the menu when clicking the menu button', () => {
-        browserLocal.click(elements.menuButton);
-        browserLocal.waitForVisible(elements.activityMenu);
-      });
-
-      it('has an exit menu button', () => {
-        assert.isTrue(browserLocal.isVisible(elements.activityMenu));
-        browserLocal.waitForVisible(elements.exitButton);
-      });
-
-      it('closes the menu with the exit button', () => {
-        browserLocal.click(elements.exitButton);
-        browserLocal.waitForVisible(elements.activityMenu, 60000, true);
-      });
-
+    describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.click(elements.menuButton);
         browserLocal.waitForVisible(elements.messageActivityButton);
       });
 
@@ -129,8 +109,6 @@ describe('Smoke Tests - Space Widget', () => {
         browserLocal.waitForVisible(elements.filesActivityButton);
         browserLocal.click(elements.filesActivityButton);
         browserLocal.waitForVisible(elements.filesWidget);
-        browserLocal.waitForVisible(elements.menuButton);
-        browserLocal.click(elements.menuButton);
       });
 
       it('hides menu and switches to message widget', () => {
@@ -145,21 +123,12 @@ describe('Smoke Tests - Space Widget', () => {
           browserLocal.waitForVisible(rosterElements.rosterWidget);
         });
 
-        it('has a close button', () => {
-          assert.isTrue(browserLocal.isVisible(rosterElements.closeButton));
-        });
-
         it('has the total count of participants', () => {
           assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
         });
 
         it('has the participants listed', () => {
           hasParticipants(browserLocal, [marty, docbrown, lorraine]);
-        });
-
-        it('closes the people roster widget', () => {
-          browserLocal.click(rosterElements.closeButton);
-          browserLocal.waitForVisible(rosterElements.rosterWidget, 60000, true);
         });
       });
     });
@@ -170,6 +139,9 @@ describe('Smoke Tests - Space Widget', () => {
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
+
+        switchToMessage(local.browser);
+        switchToMessage(remote.browser);
 
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);

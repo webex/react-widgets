@@ -1,9 +1,9 @@
 export const elements = {
   spaceWidget: '.webex-space-widget',
   menuButton: 'button[aria-label="Main Menu"]',
-  messageActivityButton: 'button[aria-label="Message"]',
+  messageActivityButton: 'button[aria-label="Messages"]',
   meetActivityButton: 'button[aria-label="Call"]',
-  filesActivityButton: 'button[aria-label="Files"]',
+  filesActivityButton: 'button[aria-label="Content"]',
   peopleActivityButton: 'button[aria-label="People"]',
   filesWidget: '//div[contains(@class, "webex-widget-files")]',
   activityMenu: '.webex-activity-menu',
@@ -23,10 +23,6 @@ export const elements = {
  * @returns {void}
  */
 export function switchToMessage(aBrowser) {
-  if (!aBrowser.isVisible(elements.activityMenu)) {
-    aBrowser.click(elements.menuButton);
-    aBrowser.waitForVisible(elements.activityMenu);
-  }
   aBrowser.waitForVisible(elements.messageActivityButton);
   aBrowser.click(elements.messageActivityButton);
 
@@ -40,11 +36,6 @@ export function switchToMessage(aBrowser) {
  * @returns {void}
  */
 export function switchToMeet(aBrowser) {
-  if (!aBrowser.isVisible(elements.activityMenu)) {
-    aBrowser.waitForVisible(elements.menuButton);
-    aBrowser.click(elements.menuButton);
-    aBrowser.waitForVisible(elements.activityMenu);
-  }
   aBrowser.waitForVisible(elements.meetActivityButton);
   aBrowser.click(elements.meetActivityButton);
 }
@@ -55,7 +46,5 @@ export function switchToMeet(aBrowser) {
  * @param {string} buttonToClick element selector
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
-  aBrowser.click(elements.menuButton);
-  aBrowser.waitForVisible(elements.activityMenu);
   aBrowser.click(buttonToClick);
 }

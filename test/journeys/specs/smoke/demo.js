@@ -62,27 +62,6 @@ describe('demo widget', () => {
       });
 
       describe('space widget functionality', () => {
-        describe('Activity Menu', () => {
-          it('has a menu button', () => {
-            assert.isTrue(browserLocal.isVisible(spaceElements.menuButton));
-          });
-
-          it('displays the menu when clicking the menu button', () => {
-            browserLocal.click(spaceElements.menuButton);
-            browserLocal.waitForVisible(spaceElements.activityMenu);
-          });
-
-          it('has an exit menu button', () => {
-            assert.isTrue(browserLocal.isVisible(spaceElements.activityMenu));
-            browserLocal.waitForVisible(spaceElements.exitButton);
-          });
-
-          it('closes the menu with the exit button', () => {
-            browserLocal.click(spaceElements.exitButton);
-            browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
-          });
-        });
-
         describe('messaging', () => {
           it('sends and receives messages', () => {
             const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';

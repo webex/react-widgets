@@ -10,7 +10,7 @@ import {
   hasParticipants,
   searchForPerson
 } from '../../lib/test-helpers/space-widget/roster';
-import {elements as mainElements, openMenuAndClickButton, switchToMeet} from '../../lib/test-helpers/space-widget/main';
+import {elements as mainElements, switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {
   canDeleteMessage,
   deleteMessage,
@@ -104,45 +104,23 @@ describe('Space Widget Primary Tests', () => {
       browserLocal.waitForVisible(textInputField);
     });
 
-    describe('Activity Menu', () => {
-      it('has a menu button', () => {
-        assert.isTrue(browserLocal.isVisible(mainElements.menuButton));
-      });
-
-      it('displays the menu when clicking the menu button', () => {
-        browserLocal.click(mainElements.menuButton);
-        browserLocal.waitForVisible(mainElements.activityMenu);
-      });
-
-      it('has an exit menu button', () => {
-        assert.isTrue(browserLocal.isVisible(mainElements.activityMenu));
-        browserLocal.waitForVisible(mainElements.exitButton);
-      });
-
-      it('closes the menu with the exit button', () => {
-        browserLocal.click(mainElements.exitButton);
-        browserLocal.waitForVisible(mainElements.activityMenu, 60000, true);
-      });
-
+    describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.click(mainElements.menuButton);
-        browserLocal.waitForVisible(mainElements.messageButton);
+        browserLocal.waitForVisible(mainElements.messageActivityButton);
       });
 
       it('has a files button', () => {
-        browserLocal.waitForVisible(mainElements.filesButton);
+        browserLocal.waitForVisible(mainElements.filesActivityButton);
       });
 
       it('switches to files widget', () => {
-        browserLocal.waitForVisible(mainElements.filesButton);
-        browserLocal.click(mainElements.filesButton);
+        browserLocal.waitForVisible(mainElements.filesActivityButton);
+        browserLocal.click(mainElements.filesActivityButton);
         browserLocal.waitForVisible(mainElements.filesWidget);
-        browserLocal.waitForVisible(mainElements.menuButton);
-        browserLocal.click(mainElements.menuButton);
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(mainElements.messageButton);
+        browserLocal.click(mainElements.messageActivityButton);
         browserLocal.waitForVisible(mainElements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(mainElements.messageWidget));
       });
@@ -150,12 +128,8 @@ describe('Space Widget Primary Tests', () => {
 
     describe('roster tests', () => {
       before('open roster widget', () => {
-        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+        browserLocal.click(rosterElements.peopleButton);
         browserLocal.waitForVisible(rosterElements.rosterWidget);
-      });
-
-      it('has a close button', () => {
-        assert.isTrue(browserLocal.isVisible(rosterElements.closeButton));
       });
 
       it('has the total count of participants', () => {
@@ -171,17 +145,12 @@ describe('Space Widget Primary Tests', () => {
       });
 
       it('searches and adds person to space', () => {
-        openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
+        browserLocal.click(rosterElements.peopleButton);
         browserLocal.waitForVisible(rosterElements.rosterWidget);
         searchForPerson(browserLocal, biff.email, true, biff.displayName);
         browserLocal.waitForVisible(rosterElements.rosterList);
         browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterList).includes(biff.displayName));
         browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterTitle) === 'People (4)');
-      });
-
-      it('closes the people roster widget', () => {
-        browserLocal.click(rosterElements.closeButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget, 60000, true);
       });
     });
 
@@ -191,6 +160,9 @@ describe('Space Widget Primary Tests', () => {
         const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
+
+        local.browser.click(rosterElements.messagesButton);
+        remote.browser.click(rosterElements.messagesButton);
 
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
