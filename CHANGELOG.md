@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.135](https://github.com/webex/react-widgets/compare/v0.2.134...v0.2.135) (2021-01-27)
+
+
+### Features
+
+* display threads in activity list ([9902c69](https://github.com/webex/react-widgets/commit/9902c69))
+
+
+
 ### [0.2.134](https://github.com/webex/react-widgets/compare/v0.2.133...v0.2.134) (2020-12-09)
 
 
