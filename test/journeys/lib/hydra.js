@@ -1,26 +1,15 @@
-import {base64} from '@webex/common';
+export const hydraTypes = {
+  ATTACHMENT_ACTION: 'ATTACHMENT_ACTION',
+  CONTENT: 'CONTENT',
+  MEMBERSHIP: 'MEMBERSHIP',
+  MESSAGE: 'MESSAGE',
+  ORGANIZATION: 'ORGANIZATION',
+  PEOPLE: 'PEOPLE',
+  ROOM: 'ROOM',
+  TEAM: 'TEAM'
+};
 
-export function constructHydraId(type, id) {
-  return base64.encode(`ciscospark://us/${type.toUpperCase()}/${id}`);
-}
-
-/**
- * Deconstructs a hydra id and provides the uuid
- *
- * @export
- * @param {String} id
- * @returns {String}
- */
-export function deconstructHydraId(id) {
-  const payload = base64.decode(id).split('/');
-
-  return {
-    id: payload.pop(),
-    type: payload.pop()
-  };
-}
-
-export default {
+export {
   constructHydraId,
   deconstructHydraId
-};
+} from '@webex/common';
