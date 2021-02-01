@@ -18,14 +18,10 @@ export default {
     postcss({
       modules: {
         generateScopedName: (name, filename, css) => {
-          let componentName;
           const cssHash = base64.encode(css).substring(0, 8);
           const paths = filename.split('/');
-          let index = paths.indexOf('@ciscospark');
-
-          if (index === -1) {
-            index = paths.indexOf('@webex');
-          }
+          const index = paths.indexOf('@webex');
+          let componentName;
 
           if (index !== -1) {
             componentName = paths[index + 1];
@@ -61,8 +57,8 @@ export default {
             legacy: true
           }
         ],
-        '@babel/plugin-proposal-object-rest-spread',
-        '@babel/plugin-transform-exponentiation-operator'
+        '@babel/plugin-proposal-nullish-coalescing-operator',
+        '@babel/plugin-proposal-optional-chaining'
       ],
       presets: [
         '@babel/preset-react'
