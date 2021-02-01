@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.136](https://github.com/webex/react-widgets/compare/v0.2.135...v0.2.136) (2021-02-01)
+
+
+### Bug Fixes
+
+* **react-component-utils:** match cluster utils against SDK ([2690c7b](https://github.com/webex/react-widgets/commit/2690c7b))
+* **redux-module-spaces:** add cluster information to space object in the store ([4b68f0f](https://github.com/webex/react-widgets/commit/4b68f0f))
+* **redux-module-spaces:** store cluster information when using basic mode ([efa6dc9](https://github.com/webex/react-widgets/commit/efa6dc9))
+* **widget-recents:** store and pass cluster information ([8dbeb38](https://github.com/webex/react-widgets/commit/8dbeb38))
+* **widget-space:** store and pass cluster information ([1e9a2b9](https://github.com/webex/react-widgets/commit/1e9a2b9))
+
+
+### Tests
+
+* update cluster passing utils ([e074d76](https://github.com/webex/react-widgets/commit/e074d76))
+* **redux-module-spaces:** add cluster property to tests and update snapshots ([a18463a](https://github.com/webex/react-widgets/commit/a18463a))
+
+
+
 ### [0.2.135](https://github.com/webex/react-widgets/compare/v0.2.134...v0.2.135) (2021-01-27)
 
 
