@@ -114,7 +114,7 @@ jobs:
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests Chrome
-          no_output_timeout: 15m
+          no_output_timeout: 30m
           command: |
             set -em
             BROWSER=chrome npm run test:integration
@@ -148,7 +148,7 @@ jobs:
       - run: echo "export BUILD_NUMBER=circle-ci-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
       - run:
           name: Integration Tests Firefox
-          no_output_timeout: 15m
+          no_output_timeout: 30m
           command: |
             set -em
             BROWSER=firefox npm run test:integration
