@@ -122,34 +122,13 @@ describe('Multiple Widgets', () => {
       browserLocal.waitForVisible(textInputField);
     });
 
-    describe('Activity Menu', () => {
-      it('has a menu button', () => {
-        assert.isTrue(browserLocal.isVisible(spaceElements.menuButton));
-      });
-
-      it('displays the menu when clicking the menu button', () => {
-        browserLocal.click(spaceElements.menuButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu);
-      });
-
-      it('has an exit menu button', () => {
-        assert.isTrue(browserLocal.isVisible(spaceElements.activityMenu));
-        browserLocal.waitForVisible(spaceElements.exitButton);
-      });
-
-      it('closes the menu with the exit button', () => {
-        browserLocal.click(spaceElements.exitButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
-      });
-
+    describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.click(spaceElements.menuButton);
         browserLocal.waitForVisible(spaceElements.messageActivityButton);
       });
 
-      it('hides menu and switches to message widget', () => {
+      it('switches to message widget', () => {
         browserLocal.click(spaceElements.messageActivityButton);
-        browserLocal.waitForVisible(spaceElements.activityMenu, 60000, true);
         assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
       });
     });

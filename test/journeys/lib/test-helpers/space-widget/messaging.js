@@ -90,16 +90,11 @@ export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt 
 export function verifyFilesActivityTab(aBrowser, fileName) {
   const fileTitle = `//span[text()="${fileName}"]`;
 
-  if (!aBrowser.isVisible(mainElements.activityMenu)) {
-    aBrowser.click(mainElements.menuButton);
-    aBrowser.waitForVisible(mainElements.activityMenu);
-  }
   aBrowser.waitForVisible(mainElements.filesActivityButton);
   aBrowser.click(mainElements.filesActivityButton);
   aBrowser.waitForVisible(mainElements.filesWidget);
   aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
-  aBrowser.waitForVisible(mainElements.closeButton);
-  aBrowser.click(mainElements.closeButton);
+  aBrowser.click(mainElements.messageActivityButton);
 }
 
 /**
