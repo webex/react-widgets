@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.139](https://github.com/webex/react-widgets/compare/v0.2.138...v0.2.139) (2021-02-10)
+
+
+### Features
+
+* **widget-space:** move title section to tabs ([da9ac4e](https://github.com/webex/react-widgets/commit/da9ac4e))
+
+
+
 ### [0.2.138](https://github.com/webex/react-widgets/compare/v0.2.137...v0.2.138) (2021-02-02)
 
 
