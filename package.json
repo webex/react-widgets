@@ -97,7 +97,7 @@
     "immutable": "^3.8.1",
     "jest-junit": "^10.0.0",
     "linkifyjs": "^2.1.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "marked": "^0.7.0",
     "moment": "^2.17.1",
     "netlify": "^1.2.0",
