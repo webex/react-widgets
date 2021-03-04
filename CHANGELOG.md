@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.141](https://github.com/webex/react-widgets/compare/v0.2.140...v0.2.141) (2021-03-04)
+
+
+### Bug Fixes
+
+* **package:** use only momentum react dependency ([6962b72](https://github.com/webex/react-widgets/commit/6962b72))
+
+
+### Tests
+
+* **presence-avatar:** update snapshot due to momentum upgrade ([5a003d3](https://github.com/webex/react-widgets/commit/5a003d3))
+* **recents:** update snapshot due to momentum upgrade ([94ab29f](https://github.com/webex/react-widgets/commit/94ab29f))
+
+
+
 ### [0.2.140](https://github.com/webex/react-widgets/compare/v0.2.139...v0.2.140) (2021-02-24)
 
 
