@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.140](https://github.com/webex/react-widgets/compare/v0.2.139...v0.2.140) (2021-02-24)
+
+
+### Features
+
+* **r-m-spaces:** update spaces convo options ([c9e11f6](https://github.com/webex/react-widgets/commit/c9e11f6))
+* **recents:** use display name for space title ([2727435](https://github.com/webex/react-widgets/commit/2727435))
+
+
+
 ### [0.2.139](https://github.com/webex/react-widgets/compare/v0.2.138...v0.2.139) (2021-02-10)
 
 
