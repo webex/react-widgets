@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.145](https://github.com/webex/react-widgets/compare/v0.2.144...v0.2.145) (2021-03-23)
+
+
+### Bug Fixes
+
+* **widget-files:** use threaded activities for content display ([d981e74](https://github.com/webex/react-widgets/commit/d981e74))
+
+
+### Features
+
+* **r-m-convesation:** add default state for thread data ([89746a3](https://github.com/webex/react-widgets/commit/89746a3))
+
+
+
 ### [0.2.144](https://github.com/webex/react-widgets/compare/v0.2.143...v0.2.144) (2021-03-23)
 
 
