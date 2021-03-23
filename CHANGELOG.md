@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.144](https://github.com/webex/react-widgets/compare/v0.2.143...v0.2.144) (2021-03-23)
+
+
+### Bug Fixes
+
+* fetch globalId ([1906cb2](https://github.com/webex/react-widgets/commit/1906cb2))
+
+
+
 ### [0.2.143](https://github.com/webex/react-widgets/compare/v0.2.142...v0.2.143) (2021-03-16)
 
 
