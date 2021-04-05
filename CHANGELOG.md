@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/webex/react-widgets/compare/v0.2.145...v0.3.0) (2021-04-05)
+
+
+### Bug Fixes
+
+* upgrade sdk and wait for adaptor ([bc815b6](https://github.com/webex/react-widgets/commit/bc815b6))
+
+
+### Features
+
+* move to meetings plugin ([c37a88c](https://github.com/webex/react-widgets/commit/c37a88c))
+
+
+
 ### [0.2.145](https://github.com/webex/react-widgets/compare/v0.2.144...v0.2.145) (2021-03-23)
 
 
