@@ -3,7 +3,7 @@
     "<rootDir>/packages/node_modules/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
-  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@webex/sdk-component-adapter)"],
   "moduleNameMapper": {
     "^.+\\.(css|scss|less)$": "identity-obj-proxy",
     "^.+\\.(mp3|wav)$": "<rootDir>/__mocks__/sound-mock.js",
@@ -15,6 +15,7 @@
     "@webex/react-(.*)": "<rootDir>/packages/node_modules/@webex/react-$1/src",
     "@webex/redux-(.*)": "<rootDir>/packages/node_modules/@webex/redux-$1/src",
     "@webex/widget-(.*)": "<rootDir>/packages/node_modules/@webex/widget-$1/src",
+    "@webex/components": "<rootDir>/node_modules/@webex/components/dist/umd/webex-components.umd.js",
     "@webex/webex-widget-base": "<rootDir>/packages/node_modules/@webex/webex-widget-base/src"
   },
   "testRegex": ".test.js$",

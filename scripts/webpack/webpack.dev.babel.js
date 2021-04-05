@@ -51,7 +51,7 @@ module.exports = (env) => webpackConfigBase({
       publicPath: false
     },
     headers: {
-      'Content-Security-Policy': "script-src 'self' 'unsafe-inline' https://code.s4d.io; "
+      'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.s4d.io; "
         + "style-src 'self' 'unsafe-inline' https://code.s4d.io; "
         + "media-src 'self' https://code.s4d.io https://*.clouddrive.com https://*.giphy.com https://*.webexcontent.com data: blob:; "
         + "font-src 'self' https://code.s4d.io; "

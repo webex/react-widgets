@@ -177,7 +177,7 @@ jobs:
       - run:
           name: 'Generate Version Number'
           command: |
-            npm run release -- --release-as patch --no-verify
+            npm run release -- --release-as minor --no-verify
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
             git rev-parse HEAD > gitcommit
       - run:
