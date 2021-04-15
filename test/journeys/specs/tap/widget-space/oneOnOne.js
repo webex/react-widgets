@@ -46,65 +46,36 @@ describe('Widget Space: One on One: TAP', () => {
   // Demos use cookies to save state, clear before moving on
   after('delete cookies', () => browser.deleteCookie());
 
-  describe('Activity Menu', () => {
-    it('has a menu button', () => {
-      assert.isTrue(local.browser.isVisible(basicElements.menuButton));
-    });
-
-    it('displays the menu when clicking the menu button', () => {
-      local.browser.click(basicElements.menuButton);
-      local.browser.waitForVisible(basicElements.activityMenu);
-    });
-
-    it('has an exit menu button', () => {
-      assert.isTrue(local.browser.isVisible(basicElements.activityMenu));
-      local.browser.waitForVisible(basicElements.exitButton);
-    });
-
-    it('closes the menu with the exit button', () => {
-      local.browser.click(basicElements.exitButton);
-      // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
-    });
-
-    it('has a message button', () => {
-      local.browser.click(basicElements.menuButton);
-      local.browser
-        .element(basicElements.controlsContainer)
-        .element(basicElements.messageActivityButton)
-        .waitForVisible();
-    });
-
+  describe('Tab Menu', () => {
     it('switches to message widget', () => {
       local.browser.element(basicElements.controlsContainer).element(basicElements.messageActivityButton).click();
-      // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
       assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
     });
 
     it('has a meet button', () => {
-      local.browser.click(basicElements.menuButton);
       local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).waitForVisible();
     });
 
     it('switches to meet widget', () => {
       local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).click();
-      // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(basicElements.activityMenu, 1500, true);
       assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
       assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
     });
   });
 
   describe('message widget', () => {
-    it('sends and receives messages', () => {
+    it('sends a messages', () => {
       const message = 'Oh, I am sorry, Doctor. Were we having a good time?';
-      const response = 'God, I liked him better before he died.';
 
       switchToMessage(local.browser);
       sendMessage(local, remote, message);
       verifyMessageReceipt(remote, local, message);
+    });
+
+    it('receives a message', () => {
+      const response = 'God, I liked him better before he died.';
+
       // Send a message back
       clearEventLog(local.browser);
       clearEventLog(remote.browser);
