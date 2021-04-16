@@ -7,7 +7,7 @@ export const elements = {
   peopleActivityButton: 'button[aria-label="People"]',
   filesWidget: '//div[contains(@class, "webex-widget-files")]',
   activityMenu: '.webex-activity-menu',
-  controlsContainer: '.webex-controls-container',
+  controlsContainer: '.webex-tabs',
   closeButton: 'button[aria-label="Close"]',
   exitButton: '.webex-activity-menu-exit button',
   messageWidget: '.webex-message-wrapper',
@@ -25,9 +25,6 @@ export const elements = {
 export function switchToMessage(aBrowser) {
   aBrowser.waitForVisible(elements.messageActivityButton);
   aBrowser.click(elements.messageActivityButton);
-
-  // Activity menu animates the hide, wait for it to be gone
-  aBrowser.waitForVisible(elements.activityMenu, 1500, true);
 }
 
 /**
