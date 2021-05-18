@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/webex/react-widgets/compare/v0.9.0...v0.10.0) (2021-05-18)
+
+
+### Bug Fixes
+
+* **rc-activity-item-base:** make sure correct flag icon is used ([492960e](https://github.com/webex/react-widgets/commit/492960e))
+
+
+### Tests
+
+* update snapshots ([40eba30](https://github.com/webex/react-widgets/commit/40eba30))
+
+
+
 ## [0.9.0](https://github.com/webex/react-widgets/compare/v0.8.0...v0.9.0) (2021-05-04)
 
 
