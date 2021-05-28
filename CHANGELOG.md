@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/webex/react-widgets/compare/v0.10.0...v0.11.0) (2021-05-28)
+
+
+### Features
+
+* **r-m-sapces:** use conversationsSummary ([6cb987d](https://github.com/webex/react-widgets/commit/6cb987d))
+
+
+### Tests
+
+* update snapshots ([70fa088](https://github.com/webex/react-widgets/commit/70fa088))
+
+
+
 ## [0.10.0](https://github.com/webex/react-widgets/compare/v0.9.0...v0.10.0) (2021-05-18)
 
 
