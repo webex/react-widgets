@@ -24,6 +24,9 @@ Reflect.defineProperty(window, 'performance', {
     now: jest.fn().mockReturnValue(10)
   }
 });
+Reflect.defineProperty(global, 'MediaStream', {
+  value: jest.fn((instance) => instance)
+});
 
 // Date will always be the same for all tests
 MockDate.set(new Date('2017'));
