@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://github.com/webex/react-widgets/compare/v0.14.0...v0.15.0) (2021-07-20)
+
+
+### Features
+
+* **widget-space:** add ability to turn off presence ([4baec7e](https://github.com/webex/react-widgets/commit/4baec7e))
+
+
+
 ## [0.14.0](https://github.com/webex/react-widgets/compare/v0.13.0...v0.14.0) (2021-06-29)
 
 
