@@ -14,7 +14,7 @@ executors:
 
 # Orb to grab `s3` capability for us
 orbs:
-  aws-s3: circleci/aws-s3@1.0.11
+  aws-s3: circleci/aws-s3@2.0.0
   jq: circleci/jq@1.9.0
 
 # Reusable commands for jobs
@@ -24,7 +24,7 @@ commands:
       - attach_workspace:
           at: ~/react-widgets
   restore_node_modules:
-    description: 'Restore the node_modules dependencies cache'
+    description: "Restore the node_modules dependencies cache"
     steps:
       - restore_cache:
           keys:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: 'Install dependencies'
+          name: "Install dependencies"
           command: npm ci
       # Cache node_modules across different internal jobs in the workflow and across different circleci runs
       - save_cache:
@@ -172,16 +172,16 @@ jobs:
       - restore_node_modules
       - add_ssh_keys:
           fingerprints:
-            - 'df:fe:3e:ee:15:bd:fb:a1:15:0d:74:78:65:98:db:76'
+            - "df:fe:3e:ee:15:bd:fb:a1:15:0d:74:78:65:98:db:76"
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
-          name: 'Generate Version Number'
+          name: "Generate Version Number"
           command: |
             npm run release -- --release-as minor --no-verify
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
             git rev-parse HEAD > gitcommit
       - run:
-          name: 'Build for CDN'
+          name: "Build for CDN"
           command: |
             export NODE_ENV=production
             export WEBEX_SCOPE="Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms"
@@ -191,13 +191,13 @@ jobs:
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build sri widget-recents
             BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
       - run:
-          name: 'Push to upstream/master'
+          name: "Push to upstream/master"
           command: git push upstream HEAD:master
       - run:
-          name: 'Push tag to upstream/master'
+          name: "Push tag to upstream/master"
           command: git push --tags upstream
       - run:
-          name: 'Publish to NPM'
+          name: "Publish to NPM"
           command: npm run publish:components
       - persist_to_workspace:
           root: ~/react-widgets
@@ -214,30 +214,27 @@ jobs:
       - checkout
       - restore_workspace
       - run:
-          name: 'Grab Version Number'
+          name: "Grab Version Number"
           command: |
             echo export VERSION_NUMBER=$(npx -c 'echo \"$npm_package_version\"') >> $BASH_ENV
       - run:
-          name: 'Verify version number'
+          name: "Verify version number"
           command: echo ${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha
-          overwrite: true
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/alpha
-          overwrite: true
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/alpha
-          overwrite: true
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
@@ -249,15 +246,12 @@ jobs:
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-space/alpha
           to: s3://${AWS_BUCKET}/widget-space/beta
-          overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-recents/alpha
           to: s3://${AWS_BUCKET}/widget-recents/beta
-          overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-demo/alpha
           to: s3://${AWS_BUCKET}/widget-demo/beta
-          overwrite: true
 
   promote_beta_to_production:
     executor: main-executor
@@ -266,15 +260,12 @@ jobs:
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-space/beta
           to: s3://${AWS_BUCKET}/widget-space/production
-          overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-recents/beta
           to: s3://${AWS_BUCKET}/widget-recents/production
-          overwrite: true
       - aws-s3/sync:
           from: s3://${AWS_BUCKET}/widget-demo/beta
           to: s3://${AWS_BUCKET}/widget-demo/production
-          overwrite: true
 
   tag_for_production:
     executor: main-executor
@@ -285,21 +276,21 @@ jobs:
       - run: git fetch --all --tags --prune
       - jq/install
       - run:
-          name: 'Grab Version Number'
+          name: "Grab Version Number"
           command: |
             PRODUCTION_VERSION_NUMBER=$(curl -s -f 'https://code.s4d.io/widget-space/production/manifest.json' | jq -r '.version')
 
             echo PRODUCTION_VERSION_NUMBER="${PRODUCTION_VERSION_NUMBER}" >> $BASH_ENV
       - run:
-          name: 'Delete old production tag'
+          name: "Delete old production tag"
           command: git push upstream :refs/tags/production
       - run: git checkout tags/v${PRODUCTION_VERSION_NUMBER}
       - run:
-          name: 'Create new production tag'
+          name: "Create new production tag"
           command: |
             git tag -f production
       - run:
-          name: 'Push tag to upstream/master'
+          name: "Push tag to upstream/master"
           command: git push --tags upstream
 
   tap_test:
@@ -315,7 +306,7 @@ jobs:
       - restore_node_modules
       - run: npm i
       - run:
-          name: 'Generate Build Number'
+          name: "Generate Build Number"
           command: echo "export BUILD_NUMBER=CircleCI-React-Widgets-TAP_${CIRCLE_WORKFLOW_ID}" >> $BASH_ENV
       - run:
           command: npm run test:tap
@@ -363,7 +354,6 @@ jobs:
       #       }
       #       EOF
       #       }
-
       #       curl -X POST --header 'Content-Type: application/json' -d "$(generate_incident_data)" https://events.pagerduty.com/v2/enqueue
 
 workflows:
@@ -402,7 +392,7 @@ workflows:
     triggers:
       - schedule:
           # Wednesdays @ 7AM UTC | 3AM EST | 12AM PST
-          cron: '0 7 * * 3'
+          cron: "0 7 * * 3"
           filters:
             branches:
               only:
@@ -419,7 +409,7 @@ workflows:
     triggers:
       - schedule:
           # Everyday @ 6PM UTC | 4PM EST | 1PM PST
-          cron: '0 18 * * 1-5'
+          cron: "0 18 * * 1-5"
           filters:
             branches:
               only:
