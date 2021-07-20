@@ -374,12 +374,14 @@ describe('Smoke Tests - Recents Widget', () => {
         window.openSpaceWidget(options);
       }, lorraine.token.access_token, marty.email);
       browserRemote.waitForVisible(meetElements.meetWidget);
+      browserRemote.waitForVisible(meetElements.callButton);
     });
 
     it('displays a call in progress button', () => {
-      browserRemote.waitForVisible(meetElements.callButton);
       browserRemote.click(meetElements.callButton);
       browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton), 10000, 'Join Call button was not displayed');
+
+      // Hangup
       hangup(browserRemote);
       browserLocal.waitUntil(() => !browserLocal.isVisible(elements.joinCallButton), 20000, 'Join Call button was not hidden after hanging up');
     });
