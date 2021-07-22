@@ -14,7 +14,7 @@ executors:
 
 # Orb to grab `s3` capability for us
 orbs:
-  aws-s3: circleci/aws-s3@2.0.0
+  aws-s3: circleci/aws-s3@3.0.0
   jq: circleci/jq@1.9.0
 
 # Reusable commands for jobs
