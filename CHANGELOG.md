@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.0](https://github.com/webex/react-widgets/compare/v0.19.0...v0.20.0) (2021-07-28)
+
+
+
+## [0.19.0](https://github.com/webex/react-widgets/compare/v0.18.0...v0.19.0) (2021-07-22)
+
+
+### Bug Fixes
+
+* **loading-screen:** update react-image package ([35f6155](https://github.com/webex/react-widgets/commit/35f6155))
+
+
+
+## [0.18.0](https://github.com/webex/react-widgets/compare/v0.17.0...v0.18.0) (2021-07-22)
+
+
+
+## [0.17.0](https://github.com/webex/react-widgets/compare/v0.16.0...v0.17.0) (2021-07-20)
+
+
+
+## [0.16.0](https://github.com/webex/react-widgets/compare/v0.15.0...v0.16.0) (2021-07-20)
+
+
+### Features
+
+* **meet:** add ability to screenshare during a meeting ([8e87a0d](https://github.com/webex/react-widgets/commit/8e87a0d))
+
+
+
+## [0.15.0](https://github.com/webex/react-widgets/compare/v0.14.0...v0.15.0) (2021-07-20)
+
+
+### Features
+
+* **widget-space:** add ability to turn off presence ([4baec7e](https://github.com/webex/react-widgets/commit/4baec7e))
+
+
+
+## [0.14.0](https://github.com/webex/react-widgets/compare/v0.13.0...v0.14.0) (2021-06-29)
+
+
+### Bug Fixes
+
+* **widget-roster:** fix scrollbar for people tab ([f5b9438](https://github.com/webex/react-widgets/commit/f5b9438))
+
+
+
 ## [0.13.0](https://github.com/webex/react-widgets/compare/v0.12.0...v0.13.0) (2021-06-22)
 
 
