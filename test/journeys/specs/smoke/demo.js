@@ -89,21 +89,14 @@ describe('demo widget', () => {
   });
 
   describe('sdk instance authentication', () => {
-    it('reloads demo page and stores access token with sdk for local', () => {
+    before('reloads demo page and stores access token', () => {
       // Widget demo uses cookies to save info
-      browserLocal.deleteCookies();
-      browserLocal.refresh();
+      browser.deleteCookies();
+      browser.refresh();
 
       saveToken(browserLocal, mccoy.token.access_token, true);
-    });
-
-    it('reloads demo page and stores access token with sdk for browser', () => {
-      // Widget demo uses cookies to save info
-      browserRemote.deleteCookies();
-      browserRemote.refresh();
-
       saveToken(browserRemote, spock.token.access_token, true);
-    });
+    }, 3);
 
     describe('space widget', () => {
       it('opens space widget for mccoy in local', () => {

@@ -110,6 +110,9 @@ export function createTestUsers(count, config) {
 
   browser.call(createUsers);
 
+  // Wait for users to propogate
+  browser.pause(3000);
+
   return users;
 }
 
@@ -138,10 +141,11 @@ export function setupOneOnOneUsers() {
 
 /**
  * Creates a space using the JS SDK
+ *
  * @param {Object} options
  * @param {Object} options.sparkInstance
  * @param {Array} options.participants
- * @param {Object} options.displayName
+ * @param {Object=} options.displayName
  * @returns {Object}
  */
 export function createSpace({sparkInstance, participants, displayName}) {
