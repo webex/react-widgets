@@ -4,61 +4,54 @@ import {setupOneOnOneUsers} from '../../lib/test-users';
 import {elements, saveToken} from '../../lib/test-helpers/demo';
 import {elements as spaceElements} from '../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
-import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('demo widget', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.smokeDemo;
   let allPassed = true;
   let mccoy, spock, local, remote;
 
-  it('start new sauce session', () => {
-    browser.reload();
-    browser.call(() => renameJob(jobName, browser));
+  before('loads the page', () => {
+    browser.refresh();
 
     browserLocal.url('/dist-demo/index.html?local');
     browserRemote.url('/dist-demo/index.html?remote');
   });
 
-  it('create test users', () => {
+  before('create test users', () => {
     [mccoy, spock] = setupOneOnOneUsers();
     local = {browser: browserLocal, user: mccoy, displayName: mccoy.displayName};
     remote = {browser: browserRemote, user: spock, displayName: spock.displayName};
-    // Refresh the browsers so an input timeout shouldn't happen
-    browser.refresh();
   });
 
   describe('access token authentication', () => {
-    it('saves token for local user', () => {
+    before('saves token for local user', () => {
       saveToken(browserLocal, mccoy.token.access_token);
-    });
+    }, 3);
 
-    it('saves token for remote user', () => {
+    before('saves token for remote user', () => {
       saveToken(browserRemote, spock.token.access_token);
-    });
+    }, 3);
 
     describe('space widget', () => {
       it('opens space widget for mccoy in local', () => {
-        browserLocal.click(elements.toPersonRadioButton);
-        browserLocal.element(elements.toPersonInput).setValue(spock.email);
-        browserLocal.click(elements.openSpaceWidgetButton);
+        browserLocal.$(elements.toPersonRadioButton).click();
+        browserLocal.$(elements.toPersonInput).setValue(spock.email);
+        browserLocal.$(elements.openSpaceWidgetButton).click();
         // Wait for conversation to be ready
         const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
 
-        browserLocal.waitForVisible(textInputField);
-        browserLocal.scroll(textInputField);
+        browserLocal.$(textInputField).waitForDisplayed();
+        browserLocal.$(textInputField).scrollIntoView();
       });
 
       it('opens space widget for spock in remote', () => {
-        browserRemote.click(elements.toPersonRadioButton);
-        browserRemote.element(elements.toPersonInput).setValue(mccoy.email);
-        browserRemote.click(elements.openSpaceWidgetButton);
+        browserRemote.$(elements.toPersonRadioButton).click();
+        browserRemote.$(elements.toPersonInput).setValue(mccoy.email);
+        browserRemote.$(elements.openSpaceWidgetButton).click();
         // Wait for conversation to be ready
         const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
 
-        browserRemote.waitForVisible(textInputFieldRemote);
-        browserRemote.scroll(textInputFieldRemote);
+        browserRemote.$(textInputFieldRemote).waitForDisplayed();
+        browserRemote.$(textInputFieldRemote).scrollIntoView();
       });
 
       describe('space widget functionality', () => {
@@ -76,10 +69,12 @@ describe('demo widget', () => {
 
         describe('external control', () => {
           it('can change current activity', () => {
-            assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
-            browserLocal.click(elements.changeActivityMeetButton);
-            browserLocal.click(elements.updateSpaceWidgetButton);
-            browserLocal.waitForVisible(spaceElements.meetWidget, 6000);
+            assert.isTrue(browserLocal.$(spaceElements.messageWidget).isDisplayed());
+            browserLocal.$(elements.changeActivityMeetButton).click();
+            browserLocal.$(elements.updateSpaceWidgetButton).click();
+            browserLocal.$(spaceElements.meetWidget).waitForDisplayed({
+              timeout: 6000
+            });
           });
         });
       });
@@ -87,8 +82,8 @@ describe('demo widget', () => {
 
     describe('recents widget', () => {
       it('opens recents widget for mccoy in local', () => {
-        browserLocal.click(elements.openRecentsWidgetButton);
-        browserLocal.waitForVisible(elements.recentsWidgetContainer);
+        browserLocal.$(elements.openRecentsWidgetButton).click();
+        browserLocal.$(elements.recentsWidgetContainer).waitForDisplayed();
       });
     });
   });
@@ -96,7 +91,7 @@ describe('demo widget', () => {
   describe('sdk instance authentication', () => {
     it('reloads demo page and stores access token with sdk for local', () => {
       // Widget demo uses cookies to save info
-      browserLocal.deleteCookie();
+      browserLocal.deleteCookies();
       browserLocal.refresh();
 
       saveToken(browserLocal, mccoy.token.access_token, true);
@@ -104,7 +99,7 @@ describe('demo widget', () => {
 
     it('reloads demo page and stores access token with sdk for browser', () => {
       // Widget demo uses cookies to save info
-      browserRemote.deleteCookie();
+      browserRemote.deleteCookies();
       browserRemote.refresh();
 
       saveToken(browserRemote, spock.token.access_token, true);
@@ -112,25 +107,25 @@ describe('demo widget', () => {
 
     describe('space widget', () => {
       it('opens space widget for mccoy in local', () => {
-        browserLocal.click(elements.toPersonRadioButton);
-        browserLocal.element(elements.toPersonInput).setValue(spock.email);
-        browserLocal.click(elements.openSpaceWidgetButton);
+        browserLocal.$(elements.toPersonRadioButton).click();
+        browserLocal.$(elements.toPersonInput).setValue(spock.email);
+        browserLocal.$(elements.openSpaceWidgetButton).click();
         // Wait for conversation to be ready
         const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
 
-        browserLocal.waitForVisible(textInputField);
-        browserLocal.scroll(textInputField);
+        browserLocal.$(textInputField).waitForDisplayed();
+        browserLocal.$(textInputField).scrollIntoView();
       });
 
       it('opens space widget for spock in remote', () => {
-        browserRemote.click(elements.toPersonRadioButton);
-        browserRemote.element(elements.toPersonInput).setValue(mccoy.email);
-        browserRemote.click(elements.openSpaceWidgetButton);
+        browserRemote.$(elements.toPersonRadioButton).click();
+        browserRemote.$(elements.toPersonInput).setValue(mccoy.email);
+        browserRemote.$(elements.openSpaceWidgetButton).click();
         // Wait for conversation to be ready
         const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
 
-        browserRemote.waitForVisible(textInputFieldRemote);
-        browserRemote.scroll(textInputFieldRemote);
+        browserRemote.$(textInputFieldRemote).waitForDisplayed();
+        browserRemote.$(textInputFieldRemote).scrollIntoView();
       });
 
       describe('messaging', () => {
@@ -148,8 +143,8 @@ describe('demo widget', () => {
 
     describe('recents widget', () => {
       it('opens recents widget for mccoy in local', () => {
-        browserLocal.click(elements.openRecentsWidgetButton);
-        browserLocal.waitForVisible(elements.recentsWidgetContainer);
+        browserLocal.$(elements.openRecentsWidgetButton).click();
+        browserLocal.$(elements.recentsWidgetContainer).waitForDisplayed();
       });
     });
   });
@@ -158,6 +153,4 @@ describe('demo widget', () => {
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
-
-  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 });
