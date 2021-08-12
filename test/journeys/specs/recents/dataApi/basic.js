@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
-import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
@@ -11,17 +10,9 @@ import {
 } from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents: Data API', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-
   let allPassed = true;
   let docbrown, lorraine, marty, participants;
   let conversation, oneOnOneConversation;
-
-  before('start new sauce session', () => {
-    renameJob(jobNames.recentsDataApi, browser);
-  });
-
 
   before('load browser', () => {
     browserLocal.url('/data-api/recents.html');
@@ -49,7 +40,7 @@ describe('Widget Recents: Data API', () => {
       document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-recents/bundle.js');
     }, marty.token.access_token);
-    browserLocal.waitForVisible(elements.recentsWidget);
+    browserLocal.$(elements.recentsWidget).waitForDisplayed();
   });
 
   before('open meet widget for lorraine', () => {
@@ -66,7 +57,7 @@ describe('Widget Recents: Data API', () => {
 
       window.openSpaceWidget(options);
     }, lorraine.token.access_token, marty.email);
-    browserRemote.waitForVisible(meetElements.meetWidget);
+    browserRemote.$(meetElements.meetWidget).waitForDisplayed();
   });
 
   it('loads the test page', () => {
@@ -111,9 +102,9 @@ describe('Widget Recents: Data API', () => {
 
   describe('incoming call', () => {
     it('displays a call in progress button', () => {
-      browserRemote.waitForVisible(meetElements.callButton);
-      browserRemote.click(meetElements.callButton);
-      browserLocal.waitUntil(() => browserLocal.isVisible(elements.joinCallButton));
+      browserRemote.$(meetElements.callButton).waitForDisplayed();
+      browserRemote.$(meetElements.callButton).click();
+      browserLocal.waitUntil(() => browserLocal.$((elements.joinCallButton)).isDisplayed, {});
       hangup(browserRemote);
     });
   });
@@ -121,10 +112,6 @@ describe('Widget Recents: Data API', () => {
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobNames.recentsDataApi, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));
