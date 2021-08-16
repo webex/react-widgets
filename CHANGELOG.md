@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.22.0](https://github.com/webex/react-widgets/compare/v0.21.0...v0.22.0) (2021-08-16)
+
+
+### Bug Fixes
+
+* **style:** remove padding above thread ([8b6ba21](https://github.com/webex/react-widgets/commit/8b6ba21))
+
+
+
 ## [0.21.0](https://github.com/webex/react-widgets/compare/v0.20.0...v0.21.0) (2021-08-11)
 
 
