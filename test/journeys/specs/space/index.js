@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 
 import {createTestUsers, createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../lib/test-users';
-import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 import {runAxe} from '../../lib/axe';
 import {clearEventLog} from '../../lib/events';
 import {
@@ -30,16 +29,9 @@ import {
 import waitForPromise from '../../lib/wait-for-promise';
 
 describe('Space Widget Primary Tests', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.space;
   let allPassed = true;
   let biff, docbrown, lorraine, marty, participants;
   let conversation, local, remote;
-
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
 
   before('load browsers', () => {
     browser.url('/space.html');
@@ -83,7 +75,7 @@ describe('Space Widget Primary Tests', () => {
 
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.hydraId);
-    remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
+    remote.browser.$(`[placeholder="Send a message to ${local.displayName}"]`).waitForDisplayed();
   });
 
   it('loads the test page', () => {
@@ -93,47 +85,50 @@ describe('Space Widget Primary Tests', () => {
   });
 
   it('header has to group\'s name', () => {
-    browserLocal.waitForVisible(mainElements.widgetTitle);
-    assert.equal(browserLocal.getText(mainElements.widgetTitle), conversation.displayName);
+    browserLocal.$(mainElements.widgetTitle).waitForDisplayed();
+    assert.equal(browserLocal.$(mainElements.widgetTitle).getText(), conversation.displayName);
   });
 
   describe('When conversation is established', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
 
-      browserLocal.waitForVisible(textInputField);
+      browserLocal.$(textInputField).waitForDisplayed();
     });
 
     describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.waitForVisible(mainElements.messageActivityButton);
+        browserLocal.$(mainElements.messageActivityButton).waitForDisplayed();
       });
 
       it('has a files button', () => {
-        browserLocal.waitForVisible(mainElements.filesActivityButton);
+        browserLocal.$(mainElements.filesActivityButton).waitForDisplayed();
       });
 
       it('switches to files widget', () => {
-        browserLocal.waitForVisible(mainElements.filesActivityButton);
-        browserLocal.click(mainElements.filesActivityButton);
-        browserLocal.waitForVisible(mainElements.filesWidget);
+        browserLocal.$(mainElements.filesActivityButton).waitForDisplayed();
+        browserLocal.$(mainElements.filesActivityButton).click();
+        browserLocal.$(mainElements.filesWidget).waitForDisplayed();
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(mainElements.messageActivityButton);
-        browserLocal.waitForVisible(mainElements.activityMenu, 60000, true);
-        assert.isTrue(browserLocal.isVisible(mainElements.messageWidget));
+        browserLocal.$(mainElements.messageActivityButton).click();
+        browserLocal.$(mainElements.activityMenu).waitForDisplayed({
+          timeout: 60000,
+          reverse: true
+        });
+        assert.isTrue(browserLocal.$(mainElements.messageWidget).isDisplayed());
       });
     });
 
     describe('roster tests', () => {
       before('open roster widget', () => {
-        browserLocal.click(rosterElements.peopleButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget);
+        browserLocal.$(rosterElements.peopleButton).click();
+        browserLocal.$(rosterElements.rosterWidget).waitForDisplayed();
       });
 
       it('has the total count of participants', () => {
-        assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
+        assert.equal(browserLocal.$(rosterElements.rosterTitle).getText(), 'People (3)');
       });
 
       it('has the participants listed', () => {
@@ -145,12 +140,18 @@ describe('Space Widget Primary Tests', () => {
       });
 
       it('searches and adds person to space', () => {
-        browserLocal.click(rosterElements.peopleButton);
-        browserLocal.waitForVisible(rosterElements.rosterWidget);
+        browserLocal.$(rosterElements.peopleButton).click();
+        browserLocal.$(rosterElements.rosterWidget).waitForDisplayed();
         searchForPerson(browserLocal, biff.email, true, biff.displayName);
-        browserLocal.waitForVisible(rosterElements.rosterList);
-        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterList).includes(biff.displayName));
-        browserLocal.waitUntil(() => browserLocal.getText(rosterElements.rosterTitle) === 'People (4)');
+        browserLocal.$(rosterElements.rosterList).waitForDisplayed();
+        browserLocal.waitUntil(
+          () => browserLocal.$(rosterElements.rosterList).getText().includes(biff.displayName),
+          {}
+        );
+        browserLocal.waitUntil(
+          () => browserLocal.$(rosterElements.rosterTitle).getText() === 'People (4)',
+          {}
+        );
       });
     });
 
@@ -161,8 +162,8 @@ describe('Space Widget Primary Tests', () => {
         const lorraineText = 'Marty, will we ever see you again?';
         const martyText2 = 'I guarantee it.';
 
-        local.browser.click(rosterElements.messagesButton);
-        remote.browser.click(rosterElements.messagesButton);
+        local.browser.$(rosterElements.messagesButton).click();
+        remote.browser.$(rosterElements.messagesButton).click();
 
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
@@ -285,7 +286,7 @@ describe('Space Widget Primary Tests', () => {
       describe('pre call experience', () => {
         it('has a call button', () => {
           switchToMeet(browserLocal);
-          browserLocal.waitForVisible(meetElements.callButton);
+          browserLocal.$(meetElements.callButton).waitForDisplayed();
         });
       });
 
@@ -322,10 +323,6 @@ describe('Space Widget Primary Tests', () => {
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));

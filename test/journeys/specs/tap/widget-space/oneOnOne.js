@@ -8,16 +8,13 @@ import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
 import {setupOneOnOneUsers} from '../../../lib/test-users';
 
 describe('Widget Space: One on One: TAP', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
   let local, localUser, remote, remoteUser;
 
   before('load browsers', () => {
-    browser
-      .url('/widget-demo/production/index.html?oneOnOne')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browser.url('/widget-demo/production/index.html?oneOnOne');
+    browser.execute(() => {
+      localStorage.clear();
+    });
   });
 
   before('create test users', () => {
@@ -28,39 +25,43 @@ describe('Widget Space: One on One: TAP', () => {
 
   before('inject token for local user', () => {
     loginAndOpenWidget(local.browser, local.user.token.access_token, true, remote.user.email);
-    local.browser.waitForExist(`[placeholder="Send a message to ${remote.displayName}"]`, 30000);
+    local.browser.$(`[placeholder="Send a message to ${remote.displayName}"]`).waitForExist({
+      timeout: 30000
+    });
   });
 
   before('open remote widget for remote user', () => {
     loginAndOpenWidget(remote.browser, remote.user.token.access_token, true, local.user.email);
-    remote.browser.waitForExist(`[placeholder="Send a message to ${local.displayName}"]`, 30000);
+    remote.browser.$(`[placeholder="Send a message to ${local.displayName}"]`).waitForExist({
+      timeout: 30000
+    });
   });
 
   before('stick widgets to bottom of viewport', () => {
-    local.browser.waitForVisible(basicElements.stickyButton);
-    local.browser.click(basicElements.stickyButton);
-    remote.browser.waitForVisible(basicElements.stickyButton);
-    remote.browser.click(basicElements.stickyButton);
+    local.browser.$(basicElements.stickyButton).waitForDisplayed();
+    local.browser.$(basicElements.stickyButton).click();
+    remote.browser.$(basicElements.stickyButton).waitForDisplayed();
+    remote.browser.$(basicElements.stickyButton).click();
   });
 
   // Demos use cookies to save state, clear before moving on
-  after('delete cookies', () => browser.deleteCookie());
+  after('delete cookies', () => browser.deleteCookies());
 
   describe('Tab Menu', () => {
     it('switches to message widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.messageActivityButton).click();
-      assert.isTrue(local.browser.isVisible(basicElements.messageWidget));
-      assert.isFalse(local.browser.isVisible(basicElements.meetWidget));
+      local.browser.$(basicElements.controlsContainer).$(basicElements.messageActivityButton).click();
+      assert.isTrue(local.browser.$(basicElements.messageWidget).isDisplayed());
+      assert.isFalse(local.browser.$(basicElements.meetWidget).isDisplayed());
     });
 
     it('has a meet button', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).waitForVisible();
+      local.browser.$(basicElements.controlsContainer).$(basicElements.meetActivityButton).waitForDisplayed();
     });
 
     it('switches to meet widget', () => {
-      local.browser.element(basicElements.controlsContainer).element(basicElements.meetActivityButton).click();
-      assert.isTrue(local.browser.isVisible(basicElements.meetWidget));
-      assert.isFalse(local.browser.isVisible(basicElements.messageWidget));
+      local.browser.$(basicElements.controlsContainer).$(basicElements.meetActivityButton).click();
+      assert.isTrue(local.browser.$(basicElements.meetWidget).isDisplayed());
+      assert.isFalse(local.browser.$(basicElements.messageWidget).isDisplayed());
     });
   });
 
@@ -94,7 +95,7 @@ describe('Widget Space: One on One: TAP', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
         switchToMeet(local.browser);
-        local.browser.element(elements.meetWidget).element(elements.callButton).waitForVisible();
+        local.browser.$(elements.meetWidget).$(elements.callButton).waitForDisplayed();
       });
     });
 

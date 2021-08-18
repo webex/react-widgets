@@ -20,14 +20,14 @@ export const elements = {
 function openSearch(aBrowser) {
   assert.isTrue(aBrowser.isVisible(elements.rosterWidget), 'roster should be visible for this test');
   assert.isTrue(aBrowser.isVisible(elements.addPeopleButton), 'add people button is not visible');
-  aBrowser.click(elements.addPeopleButton);
-  aBrowser.waitForVisible(elements.addParticipantArea);
+  aBrowser.$(elements.addPeopleButton).click();
+  aBrowser.$(elements.addParticipantArea).waitForDisplayed();
   assert.isTrue(aBrowser.isVisible(elements.searchInput), 'does not have participant search input');
 }
 
 function closeSearch(aBrowser) {
   assert.isTrue(aBrowser.isVisible(elements.closeSearchButton), 'does not have a close search button');
-  aBrowser.click(elements.closeSearchButton);
+  aBrowser.$(elements.closeSearchButton).click();
   assert.isFalse(aBrowser.isVisible(elements.addParticipantArea), 'close button is not hiding search');
 }
 
@@ -39,8 +39,8 @@ function closeSearch(aBrowser) {
  * @returns {Array}
  */
 export function hasParticipants(aBrowser, participants) {
-  aBrowser.waitForVisible(elements.rosterList);
-  const participantsText = aBrowser.getText(elements.rosterList);
+  aBrowser.$(elements.rosterList).waitForDisplayed();
+  const participantsText = aBrowser.$(elements.rosterList).getText();
 
   return participants.map((participant) => assert.isTrue(participantsText.includes(participant.displayName)));
 }
@@ -67,17 +67,20 @@ export function canSearchForParticipants(aBrowser) {
  */
 export function searchForPerson(aBrowser, searchString, doAdd = false, searchResult = searchString) {
   openSearch(aBrowser);
-  aBrowser.setValue(elements.searchInput, searchString);
-  aBrowser.waitForVisible(elements.addParticipantResultsArea);
-  aBrowser.waitForVisible(elements.addParticipantResultItem);
-  const element = aBrowser.element(elements.addParticipantResultItem);
+  aBrowser.$(elements.searchInput).setValue(searchString);
+  aBrowser.$(elements.addParticipantResultsArea).waitForDisplayed();
+  aBrowser.$(elements.addParticipantResultItem).waitForDisplayed();
+  const element = aBrowser.$(elements.addParticipantResultItem);
   const resultsText = element.getText();
 
   assert.isTrue(resultsText.includes(searchResult), 'matching search result is not found in results');
   if (doAdd) {
-    aBrowser.click(elements.addParticipantResultItem);
+    aBrowser.$(elements.addParticipantResultItem).click();
     // Adding a participant immediately takes you back to roster
-    aBrowser.waitForVisible(elements.addParticipantArea, 60000, true);
+    aBrowser.$(elements.addParticipantArea).waitForDisplayed({
+      timeout: 60000,
+      reverse: true
+    });
   }
   else {
     closeSearch(aBrowser);

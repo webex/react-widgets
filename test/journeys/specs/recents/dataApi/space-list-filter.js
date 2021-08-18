@@ -3,11 +3,9 @@ import {assert, expect} from 'chai';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import {enterKeywordAndWait} from '../../../lib/test-helpers/recents-widget/space-list-filter.js';
 
-import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents Space Filters: Data API', () => {
-  const browserLocal = browser.select('browserLocal');
   const TIMEOUT = 10000;
   const SPACE1 = 'Test Group Space';
   const SPACE2 = 'Ask Group Space';
@@ -24,10 +22,6 @@ describe('Widget Recents Space Filters: Data API', () => {
 
   let allPassed = true;
   let marty, participants;
-
-  before('start new sauce session', () => {
-    renameJob(jobNames.recentsFilterDataApi, browser);
-  });
 
   before('create test users and spaces', () => {
     participants = setupGroupTestUsers();
@@ -55,17 +49,20 @@ describe('Widget Recents Space Filters: Data API', () => {
         document.getElementById('webex-widget').appendChild(csmmDom);
         window.loadBundle('/dist-recents/bundle.js');
       }, marty.token.access_token);
-      browserLocal.waitForVisible(elements.recentsWidget);
+      browserLocal.$(elements.recentsWidget).waitForDisplayed();
     });
 
     beforeEach(() => {
-      browserLocal.waitForVisible(elements.listContainer);
-      browserLocal.waitForExist(elements.searchInput);
+      browserLocal.$(elements.listContainer).waitForDisplayed();
+      browserLocal.$(elements.searchInput).waitForExist();
     });
 
     it(`displays 2 items for keyword filter '${KEYWORD1}'`, () => {
       const result = enterKeywordAndWait({
-        browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+        browserLocal,
+        keyword: KEYWORD1,
+        expectedTotal: EXPECTED_RESULT_2.length,
+        timeout: TIMEOUT
       });
 
       result.map((x) => {
@@ -78,7 +75,10 @@ describe('Widget Recents Space Filters: Data API', () => {
 
     it(`displays 3 items for keyword filter '${KEYWORD2}'`, () => {
       const result = enterKeywordAndWait({
-        browserLocal, keyword: KEYWORD2, expectedTotal: EXPECTED_RESULT_3.length, timeout: TIMEOUT
+        browserLocal,
+        keyword: KEYWORD2,
+        expectedTotal: EXPECTED_RESULT_3.length,
+        timeout: TIMEOUT
       });
 
       result.map((x) => {
@@ -91,7 +91,10 @@ describe('Widget Recents Space Filters: Data API', () => {
 
     it(`displays 1 item for keyword filter '${KEYWORD3}'`, () => {
       const result = enterKeywordAndWait({
-        browserLocal, keyword: KEYWORD3, expectedTotal: 1, timeout: TIMEOUT
+        browserLocal,
+        keyword: KEYWORD3,
+        expectedTotal: 1,
+        timeout: TIMEOUT
       });
 
       expect(result).to.be.an('string').that.does.contain(SPACE1);
@@ -100,7 +103,10 @@ describe('Widget Recents Space Filters: Data API', () => {
 
     it('displays original list for backspaces to the 1st index', () => {
       const result = enterKeywordAndWait({
-        browserLocal, keyword: BACKSPACES, expectedTotal: EXPECTED_RESULT_4.length, timeout: TIMEOUT
+        browserLocal,
+        keyword: BACKSPACES,
+        expectedTotal: EXPECTED_RESULT_4.length,
+        timeout: TIMEOUT
       });
 
       result.map((x) => {
@@ -113,19 +119,29 @@ describe('Widget Recents Space Filters: Data API', () => {
 
     it('displays no result if keyword filter does not match items in list ', () => {
       const result = enterKeywordAndWait({
-        browserLocal, keyword: KEYWORD4, expectedTotal: 0, timeout: TIMEOUT
+        browserLocal,
+        keyword: KEYWORD4,
+        expectedTotal: 0,
+        timeout: TIMEOUT
       });
 
-      assert.equal(result.value.length, 0, 'result does not exist');
+      assert.equal(result.length, 0, 'result does not exist');
     });
 
     it('displays original list if clear icon is clicked', () => {
       enterKeywordAndWait({
-        browserLocal, keyword: KEYWORD1, expectedTotal: EXPECTED_RESULT_2.length, timeout: TIMEOUT
+        browserLocal,
+        keyword: KEYWORD1,
+        expectedTotal: EXPECTED_RESULT_2.length,
+        timeout: TIMEOUT
       });
-      browserLocal.click(elements.clearButton);
-      browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText().length === 4), TIMEOUT);
-      const result = browserLocal.waitUntil((() => browserLocal.elements(elements.title).getText()), TIMEOUT);
+      browserLocal.$(elements.clearButton).click();
+      browserLocal.waitUntil(() => browserLocal.$(elements.title).getText().length === 4, {
+        timeout: TIMEOUT
+      });
+      const result = browserLocal.waitUntil(() => browserLocal.$(elements.title).getText(), {
+        timeout: TIMEOUT
+      });
 
       result.map((x) => {
         const itemLabel = x.trim();
@@ -137,15 +153,11 @@ describe('Widget Recents Space Filters: Data API', () => {
 
     /* eslint-disable-next-line func-names */
     afterEach(function () {
-      if (browserLocal.element(elements.clearButton).isExisting()) {
-        browserLocal.click(elements.clearButton);
+      if (browserLocal.$(elements.clearButton).isExisting()) {
+        browserLocal.$(elements.clearButton).click();
       }
       allPassed = allPassed && (this.currentTest.state === 'passed');
     });
-  });
-
-  after(() => {
-    updateJobStatus(jobNames.recentsFilterDataApi, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));

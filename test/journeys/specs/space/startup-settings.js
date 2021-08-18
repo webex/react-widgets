@@ -3,18 +3,10 @@ import {assert} from 'chai';
 import {setupOneOnOneUsers} from '../../lib/test-users';
 import {elements} from '../../lib/test-helpers/space-widget/main';
 import {elements as rosterElements} from '../../lib/test-helpers/space-widget/roster';
-import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('Space Widget Startup Settings Tests', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.spaceStartup;
   let mccoy, spock;
   let allPassed = true;
-
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
 
   before('load browsers', () => {
     browser.url('/space.html?message');
@@ -39,8 +31,8 @@ describe('Space Widget Startup Settings Tests', () => {
         window.openSpaceWidget(options);
       }, spock.token.access_token, mccoy.id);
 
-      browserLocal.waitForVisible(elements.messageWidget);
-      browserLocal.waitForVisible(`[placeholder="Send a message to ${mccoy.displayName}"]`);
+      browserLocal.$(elements.messageWidget).waitForDisplayed();
+      browserLocal.$(`[placeholder="Send a message to ${mccoy.displayName}"]`).waitForDisplayed();
       browserLocal.refresh();
     });
   });
@@ -67,8 +59,8 @@ describe('Space Widget Startup Settings Tests', () => {
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
 
-      browserLocal.waitForVisible(elements.errorMessage);
-      assert.equal(browserLocal.getText(elements.errorMessage), 'Error: The selected initial activity is invalid', 'does not display error message for invalid activity');
+      browserLocal.$(elements.errorMessage).waitForDisplayed();
+      assert.equal(browserLocal.$(elements.errorMessage).getText(), 'Error: The selected initial activity is invalid', 'does not display error message for invalid activity');
       browserLocal.refresh();
       browserRemote.refresh();
     });
@@ -94,11 +86,11 @@ describe('Space Widget Startup Settings Tests', () => {
         window.openSpaceWidget(options);
       }, mccoy.token.access_token, spock.email);
 
-      browserLocal.waitForVisible(elements.menuButton);
-      browserLocal.click(elements.menuButton);
-      browserLocal.waitForVisible(elements.activityMenu);
-      browserLocal.waitForVisible(elements.messageActivityButton);
-      browserLocal.waitForVisible(rosterElements.peopleButton);
+      browserLocal.$(elements.menuButton).waitForDisplayed();
+      browserLocal.$(elements.menuButton).click();
+      browserLocal.$(elements.activityMenu).waitForDisplayed();
+      browserLocal.$(elements.messageActivityButton).waitForDisplayed();
+      browserLocal.$(rosterElements.peopleButton).waitForDisplayed();
       assert.isFalse(browserLocal.isExisting(elements.meetActivityButton), 'meet button exists in activity menu when it should be disabled');
       assert.isFalse(browserLocal.isExisting(elements.filesActivityButton), 'files button exists in activity menu when it should be disabled');
       browserLocal.refresh();
@@ -109,9 +101,5 @@ describe('Space Widget Startup Settings Tests', () => {
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobName, allPassed);
   });
 });
