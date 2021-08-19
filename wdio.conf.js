@@ -11,7 +11,6 @@ const argv = require('yargs').argv;
 
 const uuid = require('uuid');
 
-const {inject} = require('./scripts/tests/openh264');
 const beforeSuite = require('./scripts/tests/beforeSuite');
 
 const port = process.env.PORT || 4567;
@@ -22,16 +21,16 @@ if (!baseUrl) {
   baseUrl = process.env.TAP ? 'https://code.s4d.io' : `http://localhost:${port}`;
 }
 const browser = process.env.BROWSER || 'chrome';
-const version = process.env.VERSION || 'latest';
-const platform = process.env.PLATFORM || 'mac 10.12';
+const browserVersion = process.env.VERSION || 'latest';
+const platformName = process.env.PLATFORM || 'macOS 11';
 const build = process.env.BUILD_NUMBER || `local-${process.env.USER}-wdio-${Date.now()}`;
 
 process.env.BUILD_NUMBER = build;
 const tunnelId = uuid.v4();
 const suite = argv.suite || 'smoke';
-const screenResolutionMac = '2360x1770';
+const screenResolutionMac = '2048x1536';
 const screenResolutionWin = '1920x1080';
-const screenResolution = platform.toLowerCase().includes('os x') || platform === 'darwin' || platform.includes('mac') ? screenResolutionMac : screenResolutionWin;
+const screenResolution = platformName.toLowerCase().includes('os x') || platformName === 'darwin' || platformName.includes('mac') ? screenResolutionMac : screenResolutionWin;
 
 const chromeCapabilities = {
   browserName: 'chrome',
@@ -50,55 +49,139 @@ const firefoxCapabilities = {
   browserName: 'firefox',
   'moz:firefoxOptions': {
     prefs: {
-      'media.navigator.permission.disabled': true,
-      'media.peerconnection.video.h264_enabled': true,
-      'media.navigator.streams.fake': true,
-      'media.getusermedia.screensharing.enabled': true,
-      'media.getusermedia.screensharing.allowed_domains': 'localhost, 127.0.0.1',
       'dom.webnotifications.enabled': false,
-      'media.gmp-manager.updateEnabled': true
+      'media.webrtc.hw.h264.enabled': true,
+      'media.getusermedia.screensharing.enabled': true,
+      'media.navigator.permission.disabled': true,
+      'media.navigator.streams.fake': true,
+      'media.peerconnection.video.h264_enabled': true
     }
   }
 };
-let mochaTimeout = 60000;
+
+const sauceCapabilities = (remoteName) => {
+  if (remoteName === 'chrome') {
+    return Object.assign({}, chromeCapabilities, {
+      platformName,
+      browserVersion,
+      'sauce:options': {
+        build,
+        idleTimeout: 300,
+        commandTimeout: 600,
+        maxDuration: 3600,
+        extendedDebugging: true,
+        screenResolution
+      }
+    });
+  }
+
+  return Object.assign({}, firefoxCapabilities, {
+    platformName,
+    browserVersion,
+    'moz:firefoxOptions': {
+      args: [
+        '-start-debugger-server',
+        '9222'
+      ],
+      prefs: {
+        'devtools.chrome.enabled': true,
+        'devtools.debugger.prompt-connection': false,
+        'devtools.debugger.remote-enabled': true,
+        'dom.webnotifications.enabled': false,
+        'media.webrtc.hw.h264.enabled': true,
+        'media.getusermedia.screensharing.enabled': true,
+        'media.navigator.permission.disabled': true,
+        'media.navigator.streams.fake': true,
+        'media.peerconnection.video.h264_enabled': true
+      }
+    },
+    'sauce:options': {
+      build,
+      idleTimeout: 300,
+      commandTimeout: 600,
+      maxDuration: 3600,
+      extendedDebugging: true,
+      screenResolution
+    }
+  });
+};
+
+let mochaTimeout = 30000;
 
 if (process.env.DEBUG_JOURNEYS) {
   mochaTimeout = 99999999;
 }
 if (isSauceEnabled) {
-  mochaTimeout = 120000;
+  mochaTimeout = 60000;
 }
-const services = [];
+const services = ['intercept'];
 
-services.push('firefox-profile');
 if (isSauceEnabled) {
-  services.push('sauce');
+  services.push(['sauce', {
+    deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
+    build: process.env.BUILD_NUMBER,
+    sauceConnect: !process.env.TAP,
+    sauceConnectOpts: {
+      noSslBumpDomains: [
+        'idbroker.webex.com',
+        'idbrokerbts.webex.com',
+        '127.0.0.1',
+        'localhost',
+        '*.wbx2.com',
+        '*.ciscospark.com'
+      ],
+      tunnelDomains: [
+        '127.0.0.1',
+        'localhost'
+      ],
+      tunnelIdentifier: tunnelId
+    }
+  }]);
 }
 else {
-  services.push('selenium-standalone');
+  services.push(['selenium-standalone']);
 }
 if (!process.env.TAP) {
-  services.push('static-server');
-}
-
-let staticServerFolders = [
-  {mount: '/dist-space', path: './packages/node_modules/@webex/widget-space/dist'},
-  {mount: '/dist-recents', path: './packages/node_modules/@webex/widget-recents/dist'},
-  {mount: '/', path: './test/journeys/server/'},
-  {mount: '/axe-core', path: './node_modules/axe-core/'},
-  {mount: '/dist-demo', path: './packages/node_modules/@webex/widget-demo/dist'}
-];
-
-if (process.env.STATIC_SERVER_PATH) {
-  staticServerFolders = [
-    {mount: '/', path: process.env.STATIC_SERVER_PATH}
-  ];
+  services.push(['static-server', {
+    port,
+    folders: [
+      {mount: '/dist-space', path: './packages/node_modules/@webex/widget-space/dist'},
+      {mount: '/dist-recents', path: './packages/node_modules/@webex/widget-recents/dist'},
+      {mount: '/dist-demo', path: './packages/node_modules/@webex/widget-demo/dist'},
+      {mount: '/', path: './test/journeys/server/'},
+      {mount: '/axe-core', path: './node_modules/axe-core/'},
+      ...(process.env.STATIC_SERVER_PATH
+        ? [{mount: '/', path: process.env.STATIC_SERVER_PATH}]
+        : [])
+    ]
+  }]);
 }
 
 exports.config = {
-  build,
-  seleniumInstallArgs: {version: '3.4.0'},
-  seleniumArgs: {version: '3.4.0'},
+  //
+  // ====================
+  // Runner Configuration
+  // ====================
+  //
+  // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
+  // on a remote machine).
+  runner: 'local',
+  //
+  // =================
+  // Service Providers
+  // =================
+  // WebdriverIO supports Sauce Labs, Browserstack, Testing Bot and LambdaTest (other cloud providers
+  // should work too though). These services define specific user and key (or access key)
+  // values you need to put in here in order to connect to these services.
+  //
+  user: process.env.SAUCE_USERNAME,
+  key: process.env.SAUCE_ACCESS_KEY,
+  //
+  // If you run your tests on Sauce Labs you can specify the region you want to run your tests
+  // in via the `region` property. Available short handles for regions are `us` (default) and `eu`.
+  // These regions are used for the Sauce Labs VM cloud and the Sauce Labs Real Device Cloud.
+  // If you don't provide the region it will default for the `us`
+  region: 'us',
   //
   // ==================
   // Specify Test Files
@@ -111,26 +194,32 @@ exports.config = {
   specs: ['./test/journeys/specs/**/*.js'],
   suites: {
     smoke: [
-      './test/journeys/specs/smoke/widget-space/index.js',
-      './test/journeys/specs/smoke/widget-recents/index.js',
-      './test/journeys/specs/smoke/multiple/index.js',
-      './test/journeys/specs/smoke/demo.js'
+      [
+        './test/journeys/specs/smoke/widget-space/index.js',
+        './test/journeys/specs/smoke/widget-recents/index.js',
+        './test/journeys/specs/smoke/multiple/index.js',
+        './test/journeys/specs/smoke/demo.js'
+      ]
     ],
     tap: [
       './test/journeys/specs/tap/**/*.js'
     ],
     space: [
-      './test/journeys/specs/space/index.js',
-      './test/journeys/specs/space/guest.js',
-      './test/journeys/specs/space/startup-settings.js',
-      './test/journeys/specs/space/data-api.js'
+      [
+        './test/journeys/specs/space/index.js',
+        './test/journeys/specs/space/guest.js',
+        './test/journeys/specs/space/startup-settings.js',
+        './test/journeys/specs/space/data-api.js'
+      ]
     ],
     recents: [
-      './test/journeys/specs/recents/dataApi/basic.js',
-      './test/journeys/specs/recents/global/basic.js',
-      './test/journeys/specs/recents/dataApi/space-list-filter.js',
-      './test/journeys/specs/recents/global/space-list-filter.js',
-      './test/journeys/specs/recents/global/startup-settings.js'
+      [
+        './test/journeys/specs/recents/dataApi/basic.js',
+        './test/journeys/specs/recents/global/basic.js',
+        './test/journeys/specs/recents/dataApi/space-list-filter.js',
+        './test/journeys/specs/recents/global/space-list-filter.js',
+        './test/journeys/specs/recents/global/startup-settings.js'
+      ]
     ]
   },
   // Patterns to exclude.
@@ -151,24 +240,24 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
-  //
   capabilities: browser === 'chrome' ? {
     browserLocal: {
-      desiredCapabilities: chromeCapabilities
+      capabilities: isSauceEnabled ? sauceCapabilities('chrome') : chromeCapabilities
     },
     browserRemote: {
-      desiredCapabilities: chromeCapabilities
+      capabilities: isSauceEnabled ? sauceCapabilities('chrome') : chromeCapabilities
     }
   } : {
     browserLocal: {
-      desiredCapabilities: firefoxCapabilities
+      capabilities: isSauceEnabled ? sauceCapabilities('firefox') : firefoxCapabilities
     },
     browserRemote: {
-      desiredCapabilities: firefoxCapabilities
+      capabilities: isSauceEnabled ? sauceCapabilities('firefox') : firefoxCapabilities
     }
   },
   //
@@ -177,10 +266,6 @@ exports.config = {
   // ===================
   // Define all options that are relevant for the WebdriverIO instance here
   //
-  // By default WebdriverIO commands are executed in a synchronous way using
-  // the wdio-sync package. If you still want to run your tests in an async way
-  // e.g. using promises you can set the sync option to false.
-  sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'error',
@@ -190,7 +275,7 @@ exports.config = {
   //
   // If you only want to run your tests until a specific amount of tests have failed use
   // bail (default is 0 - don't bail, run all tests).
-  bail: 1,
+  bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
   // screenshotPath: './errorShots/',
@@ -200,11 +285,11 @@ exports.config = {
   baseUrl,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 120000,
+  waitforTimeout: 30000,
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
-  connectionRetryTimeout: 90000,
+  // connectionRetryTimeout: 90000,
   //
   // Default request retries count
   connectionRetryCount: 3,
@@ -245,25 +330,26 @@ exports.config = {
   // The only one supported by default is 'dot'
   // see also: http://webdriver.io/guide/testrunner/reporters.html
   // NOTE: Omitting `xunit` for now. We can revisit that on another pass
-  reporters: ['spec', 'junit'],
-  reporterOptions: {
-    junit: {
+  reporters: [
+    'spec',
+    ['junit', {
       outputDir: './reports/junit/wdio/',
       outputFileFormat() {
-        return `results-${suite}-${browser}-${platform}.xml`;
+        return `results-${suite}-${browser}-${platformName}.xml`;
       },
-      packageName: `${suite}-${browser}-${platform}`
-    }
-  },
+      packageName: `${suite}-${browser}-${platformName}`
+    }]
+  ],
 
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: mochaTimeout,
-    bail: 1,
-    retries: 3
+    timeout: mochaTimeout
+    // Retries here causes tests to become even more flaky and 100x slower
+    // than retrying flaky tests individually
+    // retries: 3
   },
 
   // =====
@@ -271,114 +357,33 @@ exports.config = {
   // =====
   beforeSuite,
 
-  // Static Server setup
-  staticServerFolders,
-  staticServerPort: port,
   onPrepare(config, capabilities) {
     const defs = [
-      capabilities.browserRemote.desiredCapabilities,
-      capabilities.browserLocal.desiredCapabilities
+      capabilities.browserRemote.capabilities,
+      capabilities.browserLocal.capabilities
     ];
 
     /* eslint-disable no-param-reassign */
     defs.forEach((d) => {
       if (isSauceEnabled) {
-        d.build = build;
-        // Set the base to SauceLabs so that inject() does its thing.
-        d.base = 'SauceLabs';
-
-        d.version = d.version || 'latest';
-        d.platform = d.platform || 'OS X 10.12';
+        d.browserVersion = d.browserVersion || 'latest';
+        d.platformName = d.platformName || 'macOS 11';
       }
       else {
         // Copy the base over so that inject() does its thing.
-        d.base = d.browserName;
-        d.platform = os.platform();
+        d.platformName = () => {
+          switch (os.type()) {
+            case 'Darwin':
+              return 'mac';
+            case 'Window_NT':
+              return 'windows';
+            case 'Linux':
+              return 'Linux';
+            default:
+              return os.type();
+          }
+        };
       }
     });
-    /* eslint-enable no-param-reassign */
-
-    return inject(defs)
-      .then(() => {
-        // Remove the base because it's not actually a selenium property
-        defs.forEach((d) => Reflect.deleteProperty(d, 'base'));
-      });
   }
 };
-
-if (isSauceEnabled) {
-  const sauceCapabilities = (remoteName = 'browser') => {
-    if (browser === 'chrome') {
-      return Object.assign({}, chromeCapabilities, {
-        name: `react-widget-${suite}-unnamed-${remoteName}`,
-        idleTimeout: 300,
-        commandTimeout: 600,
-        maxDuration: 3600,
-        seleniumVersion: '3.4.0',
-        extendedDebugging: true,
-        screenResolution,
-        platform,
-        version
-      });
-    }
-
-    return Object.assign({}, firefoxCapabilities, {
-      name: `react-widget-${suite}-unnamed-${remoteName}`,
-      idleTimeout: 300,
-      commandTimeout: 600,
-      maxDuration: 3600,
-      seleniumVersion: '3.4.0',
-      extendedDebugging: true,
-      // extended debugging
-      'moz:firefoxOptions': {
-        args: [
-          '-start-debugger-server',
-          '9222'
-        ],
-        prefs: {
-          'devtools.chrome.enabled': true,
-          'devtools.debugger.prompt-connection': false,
-          'devtools.debugger.remote-enabled': true
-        }
-      },
-      screenResolution,
-      platform,
-      version
-    });
-  };
-
-  exports.config = Object.assign(exports.config, {
-    deprecationWarnings: false, // Deprecation warnings on sauce just make the logs noisy
-    user: process.env.SAUCE_USERNAME,
-    key: process.env.SAUCE_ACCESS_KEY,
-    build: process.env.BUILD_NUMBER,
-    sauceConnect: !process.env.TAP,
-    sauceConnectOpts: {
-      noSslBumpDomains: [
-        'all'
-      ],
-      tunnelDomains: [
-        '127.0.0.1',
-        'localhost'
-      ],
-      tunnelIdentifier: tunnelId,
-      port: process.env.SAUCE_CONNECT_PORT || 4445,
-      // retry to establish a tunnel multiple times. (optional)
-      connectRetries: 4,
-      // time to wait between connection retries in ms. (optional)
-      connectRetryTimeout: 2000,
-      // retry to download the sauce connect archive multiple times. (optional)
-      downloadRetries: 4,
-      // time to wait between download retries in ms. (optional)
-      downloadRetryTimeout: 1000
-    },
-    capabilities: {
-      browserLocal: {
-        desiredCapabilities: sauceCapabilities('local')
-      },
-      browserRemote: {
-        desiredCapabilities: sauceCapabilities('remote')
-      }
-    }
-  });
-}

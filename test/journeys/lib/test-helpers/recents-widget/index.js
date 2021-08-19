@@ -5,6 +5,7 @@ import waitForPromise from '../../wait-for-promise';
 export const elements = {
   loadingScreen: '.webex-teams-loading',
   recentsWidget: '.webex-recents-widget',
+  meetWidget: '.webex-meet-wrapper',
   listContainer: '.webex-spaces-list',
   noSpacesTitle: '.webex-no-spaces-title',
   noSpacesMessage: '.webex-no-spaces-message',
@@ -40,12 +41,21 @@ export * from './space-list-filter';
 export function displayIncomingMessage(aBrowser, sender, conversation, message, isOneOnOne = false) {
   const spaceTitle = isOneOnOne ? sender.displayName : conversation.displayName;
 
-  waitForPromise(sender.spark.internal.conversation.post(conversation, {
-    displayName: message
-  }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).isVisible()
-    && aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle);
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
+  waitForPromise(
+    sender.spark.internal.conversation
+      .post(conversation, {
+        displayName: message
+      })
+  );
+  aBrowser.waitUntil(
+    () =>
+      aBrowser.$(`${elements.firstSpace} ${elements.title}`).isDisplayed() &&
+      aBrowser.$(`${elements.firstSpace} ${elements.title}`).getText() === spaceTitle
+  );
+  assert.isTrue(
+    aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed(),
+    'does not have unread indicator'
+  );
 }
 
 /**
@@ -63,16 +73,23 @@ export function displayIncomingMessage(aBrowser, sender, conversation, message, 
 export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
   let activity;
 
-  waitForPromise(sender.spark.internal.conversation.post(conversation, {
-    displayName: message
-  }).then((a) => {
-    activity = a;
-  }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
+  waitForPromise(
+    sender.spark.internal.conversation
+      .post(conversation, {
+        displayName: message
+      })
+      .then((a) => {
+        activity = a;
+      })
+  );
+  aBrowser.waitUntil(() => aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
+  assert.isTrue(
+    aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed(),
+    'does not have unread indicator'
+  );
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
-  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
+  aBrowser.waitUntil(() => !aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
 }
 
 /**
@@ -90,18 +107,31 @@ export function displayAndReadIncomingMessage(aBrowser, sender, receiver, conver
 export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message) {
   let activity;
 
-  waitForPromise(sender.spark.internal.conversation.post(conversation, {
-    displayName: message
-  }).then((a) => {
-    activity = a;
-  }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
-  assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/alert-muted(.*)/g), 'does not have muted indicator');
+  waitForPromise(
+    sender.spark.internal.conversation
+      .post(conversation, {
+        displayName: message
+      })
+      .then((a) => {
+        activity = a;
+      })
+  );
+  aBrowser.waitUntil(() => aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
+  assert.isTrue(
+    aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed(),
+    'does not have unread indicator'
+  );
+  assert.exists(
+    aBrowser
+      .$(`${elements.indicatorIcon}`)
+      .getAttribute('name')
+      .match(/alert-muted(.*)/g),
+    'does not have muted indicator'
+  );
 
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
-  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
+  aBrowser.waitUntil(() => !aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
 }
 
 /**
@@ -120,19 +150,32 @@ export function displayMutedIconAndReadIncomingMessage(aBrowser, sender, receive
 export function displayMentionIconAndReadIncomingMessage(aBrowser, sender, receiver, conversation, message, mentions) {
   let activity;
 
-  waitForPromise(sender.spark.internal.conversation.post(conversation, {
-    displayName: message,
-    mentions
-  }).then((a) => {
-    activity = a;
-  }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
-  assert.isTrue(aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible(), 'does not have unread indicator');
-  assert.exists(aBrowser.element(`${elements.indicatorIcon}`).getAttribute('name').match(/mention(.*)/g), 'does not have mention indicator');
+  waitForPromise(
+    sender.spark.internal.conversation
+      .post(conversation, {
+        displayName: message,
+        mentions
+      })
+      .then((a) => {
+        activity = a;
+      })
+  );
+  aBrowser.waitUntil(() => aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
+  assert.isTrue(
+    aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed(),
+    'does not have unread indicator'
+  );
+  assert.exists(
+    aBrowser
+      .$(`${elements.indicatorIcon}`)
+      .getAttribute('name')
+      .match(/mention(.*)/g),
+    'does not have mention indicator'
+  );
 
   // Acknowledge the activity to mark it read
   waitForPromise(receiver.spark.internal.conversation.acknowledge(conversation, activity));
-  aBrowser.waitUntil(() => !aBrowser.element(`${elements.firstSpace} ${elements.unreadIndicator}`).isVisible());
+  aBrowser.waitUntil(() => !aBrowser.$(`${elements.firstSpace} ${elements.unreadIndicator}`).isDisplayed());
 }
 
 /**
@@ -158,16 +201,20 @@ export function createSpaceAndPost(aBrowser, sender, participants, roomTitle, fi
   if (roomTitle) {
     createOptions.displayName = roomTitle;
   }
-  waitForPromise(sender.spark.internal.conversation.create(createOptions)
-    .then((c) => {
+  waitForPromise(
+    sender.spark.internal.conversation.create(createOptions).then((c) => {
       conversation = c;
 
       return sender.spark.internal.conversation.post(c, {
         displayName: firstPost
       });
-    }));
-  aBrowser.waitUntil(() => aBrowser.element(`${elements.firstSpace} ${elements.title}`).isVisible()
-    && aBrowser.element(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle));
+    })
+  );
+  aBrowser.waitUntil(
+    () =>
+      aBrowser.$(`${elements.firstSpace} ${elements.title}`).isDisplayed() &&
+      aBrowser.$(`${elements.firstSpace} ${elements.title}`).getText().includes(spaceTitle)
+  );
 
   return conversation;
 }

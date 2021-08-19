@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
-import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 
@@ -17,21 +16,16 @@ import {
 import {elements as meetElements, hangupDuringCallTest} from '../../../lib/test-helpers/space-widget/meet';
 
 describe('Smoke Tests - Space Widget', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.smokeSpace;
   let allPassed = true;
   let docbrown, lorraine, marty, participants;
   let conversation, local, remote;
 
-  it('start new sauce session', () => {
-    // This is the first test in the smoke suite, no need to reload the session here
-    // browser.reload();
-    browser.call(() => renameJob(jobName, browser));
+  before('loads the page', () => {
+    browser.refresh();
     browser.url('/space.html');
   });
 
-  it('create test users and spaces', () => {
+  before('create test users and spaces', () => {
     participants = setupGroupTestUsers();
     [docbrown, lorraine, marty] = participants;
     assert.lengthOf(participants, 3, 'Test users were not created');
@@ -66,7 +60,7 @@ describe('Smoke Tests - Space Widget', () => {
 
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.hydraId);
-    remote.browser.waitForVisible(`[placeholder="Send a message to ${local.displayName}"]`);
+    remote.browser.$(`[placeholder="Send a message to ${local.displayName}"]`).waitForDisplayed();
   });
 
   it('loads the test page', () => {
@@ -76,54 +70,59 @@ describe('Smoke Tests - Space Widget', () => {
   });
 
   it('loads the space name', () => {
-    browserLocal.waitForVisible(elements.widgetTitle);
-    assert.equal(browserLocal.getText(elements.widgetTitle), conversation.displayName);
+    browserLocal.$(elements.widgetTitle).waitForDisplayed();
+    browserLocal.waitUntil(() => browserLocal.$(elements.widgetTitle).getText() === conversation.displayName, {
+      timeout: 60000
+    });
   });
 
   describe('When conversation is established', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
 
-      browserLocal.waitForVisible(textInputField);
+      browserLocal.$(textInputField).waitForDisplayed();
     });
 
     describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.waitForVisible(elements.messageActivityButton);
+        browserLocal.$(elements.messageActivityButton).waitForDisplayed();
       });
 
       it('has a meet button', () => {
-        browserLocal.waitForVisible(elements.meetActivityButton);
+        browserLocal.$(elements.meetActivityButton).waitForDisplayed();
       });
 
       it('has a files button', () => {
-        browserLocal.waitForVisible(elements.filesActivityButton);
+        browserLocal.$(elements.filesActivityButton).waitForDisplayed();
       });
 
       it('has a roster button', () => {
-        browserLocal.waitForVisible(elements.peopleActivityButton);
+        browserLocal.$(elements.peopleActivityButton).waitForDisplayed();
       });
 
       it('switches to files widget', () => {
-        browserLocal.waitForVisible(elements.filesActivityButton);
-        browserLocal.click(elements.filesActivityButton);
-        browserLocal.waitForVisible(elements.filesWidget);
+        browserLocal.$(elements.filesActivityButton).waitForDisplayed();
+        browserLocal.$(elements.filesActivityButton).click();
+        browserLocal.$(elements.filesWidget).waitForDisplayed();
       });
 
       it('hides menu and switches to message widget', () => {
-        browserLocal.click(elements.messageActivityButton);
-        browserLocal.waitForVisible(elements.activityMenu, 60000, true);
-        assert.isTrue(browserLocal.isVisible(elements.messageWidget));
+        browserLocal.$(elements.messageActivityButton).click();
+        browserLocal.$(elements.activityMenu).waitForDisplayed({
+          timeout: 60000,
+          reverse: true
+        });
+        assert.isTrue(browserLocal.$(elements.messageWidget).isDisplayed());
       });
 
       describe('roster tests', () => {
         before('open roster widget', () => {
           openMenuAndClickButton(browserLocal, rosterElements.peopleButton);
-          browserLocal.waitForVisible(rosterElements.rosterWidget);
+          browserLocal.$(rosterElements.rosterWidget).waitForDisplayed();
         });
 
         it('has the total count of participants', () => {
-          assert.equal(browserLocal.getText(rosterElements.rosterTitle), 'People (3)');
+          assert.equal(browserLocal.$(rosterElements.rosterTitle).getText(), 'People (3)');
         });
 
         it('has the participants listed', () => {
@@ -133,26 +132,39 @@ describe('Smoke Tests - Space Widget', () => {
     });
 
     describe('messaging', () => {
-      it('sends and receives messages', () => {
-        const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-        const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
-        const lorraineText = 'Marty, will we ever see you again?';
-        const martyText2 = 'I guarantee it.';
+      const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
+      const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+      const lorraineText = 'Marty, will we ever see you again?';
+      const martyText2 = 'I guarantee it.';
 
+      it('switches to Messages', () => {
         switchToMessage(local.browser);
         switchToMessage(remote.browser);
+      });
 
+      it('marty sends a message', () => {
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
+      });
+
+      it('docbrown receives a message', () => {
         sendMessage(remote, local, docText);
         verifyMessageReceipt(local, remote, docText);
-        // Send a message from a 'client'
+      });
+
+      it('lorraine sends a message and verifies it was sent', () => {
+        // This request is flaky for some reason
+        // and the message won't get sent and the function doesn't throw if there's an error
         waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }));
+        // Send a message from a 'client'
         // Wait for both widgets to receive client message
         verifyMessageReceipt(local, remote, lorraineText);
         verifyMessageReceipt(remote, local, lorraineText);
+      }, 5);
+
+      it('marty sends another message', () => {
         sendMessage(local, remote, martyText2);
         verifyMessageReceipt(remote, local, martyText2);
       });
@@ -161,7 +173,7 @@ describe('Smoke Tests - Space Widget', () => {
     describe.skip('meet widget', () => {
       it('has a call button', () => {
         switchToMeet(browserLocal);
-        browserLocal.waitForVisible(meetElements.callButton);
+        browserLocal.$(meetElements.callButton).waitForDisplayed();
       });
 
       it('can place a call and hangup after answer', () => {
@@ -182,8 +194,6 @@ describe('Smoke Tests - Space Widget', () => {
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
-
-  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 
   after('disconnect', () => disconnectDevices(participants));
 });

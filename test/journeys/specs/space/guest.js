@@ -11,21 +11,13 @@ import {
   verifyMessageReceipt
 } from '../../lib/test-helpers/space-widget/messaging';
 import {elements as meetElements, declineIncomingCallTest, hangupDuringCallTest} from '../../lib/test-helpers/space-widget/meet';
-import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 
 describe('Space Widget Guest User Tests', () => {
   let mccoy, spock;
   let allPassed = true;
 
-  const jobName = jobNames.spaceGuest;
   const mccoyName = 'Bones Mccoy';
   const spockName = 'Mr Spock';
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
 
   before('create test users', () => {
     // create guest user
@@ -52,9 +44,9 @@ describe('Space Widget Guest User Tests', () => {
 
       window.openSpaceWidget(options);
     }, spock.jwt, mccoy.email);
-    browserLocal.waitForVisible(elements.widgetTitle);
-    browserLocal.waitUntil(() => browserLocal.getText(elements.widgetTitle) !== 'Loading...');
-    assert.equal(browserLocal.getText(elements.widgetTitle), mccoy.displayName);
+    browserLocal.$(elements.widgetTitle).waitForDisplayed();
+    browserLocal.waitUntil(() => browserLocal.$(elements.widgetTitle).getText() !== 'Loading...', {});
+    assert.equal(browserLocal.$(elements.widgetTitle).getText(), mccoy.displayName);
   });
 
   it('can load the widget for the standard user to the guest user', () => {
@@ -80,15 +72,15 @@ describe('Space Widget Guest User Tests', () => {
 
       window.openSpaceWidget(options);
     }, mccoy.token.access_token, spock.id);
-    browserRemote.waitForVisible(`[placeholder="Send a message to ${spock.displayName}"]`);
+    browserRemote.$(`[placeholder="Send a message to ${spock.displayName}"]`).waitForDisplayed();
   });
 
   describe('message widget', () => {
     let local, remote;
 
     before('create test objects for message suite', () => {
-      local = {browser: browser.select('browserLocal'), displayName: spockName, user: spock};
-      remote = {browser: browser.select('browserRemote'), displayName: mccoyName, user: mccoy};
+      local = {browser: browserLocal, displayName: spockName, user: spock};
+      remote = {browser: browserRemote, displayName: mccoyName, user: mccoy};
     });
 
     it('sends and receives messages', () => {
@@ -107,7 +99,7 @@ describe('Space Widget Guest User Tests', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
         switchToMeet(browserLocal);
-        browserLocal.waitForVisible(meetElements.callButton);
+        browserLocal.$(meetElements.callButton).waitForDisplayed();
       });
     });
 
@@ -125,9 +117,5 @@ describe('Space Widget Guest User Tests', () => {
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobName, allPassed);
   });
 });

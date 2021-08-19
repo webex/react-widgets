@@ -11,22 +11,18 @@ import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 
 describe('Widget Space: Group Space: TAP', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
   let docbrown, lorraine, marty;
   let conversation, local, remote, participants;
 
   before('load browsers', () => {
-    browserLocal
-      .url('/widget-demo/production/index.html?space&local')
-      .execute(() => {
-        localStorage.clear();
-      });
-    browserRemote
-      .url('/widget-demo/production/index.html?space&remote')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserLocal.url('/widget-demo/production/index.html?space&local');
+    browserLocal.execute(() => {
+      localStorage.clear();
+    });
+    browserRemote.url('/widget-demo/production/index.html?space&remote');
+    browserRemote.execute(() => {
+      localStorage.clear();
+    });
   });
 
   before('create test users and spaces', () => {
@@ -41,54 +37,64 @@ describe('Widget Space: Group Space: TAP', () => {
   before('inject marty token', () => {
     local = {browser: browserLocal, user: marty, displayName: conversation.displayName};
     loginAndOpenWidget(local.browser, marty.token.access_token, false, conversation.hydraId);
-    local.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+    local.browser.$(`[placeholder="Send a message to ${conversation.displayName}"]`).waitForExist({
+      timeout: 30000
+    });
   });
 
   before('inject docbrown token', () => {
     remote = {browser: browserRemote, user: docbrown, displayName: conversation.displayName};
     loginAndOpenWidget(remote.browser, docbrown.token.access_token, false, conversation.hydraId);
-    remote.browser.waitForExist(`[placeholder="Send a message to ${conversation.displayName}"]`, 30000);
+    remote.browser.$(`[placeholder="Send a message to ${conversation.displayName}"]`).waitForExist({
+      timeout: 30000
+    });
   });
 
   before('stick widgets to bottom of viewport', () => {
-    local.browser.waitForVisible(elements.stickyButton);
-    local.browser.click(elements.stickyButton);
-    remote.browser.waitForVisible(elements.stickyButton);
-    remote.browser.click(elements.stickyButton);
+    local.browser.$(elements.stickyButton).waitForDisplayed();
+    local.browser.$(elements.stickyButton).click();
+    remote.browser.$(elements.stickyButton).waitForDisplayed();
+    remote.browser.$(elements.stickyButton).click();
   });
 
   after('disconnect', () => Promise.all([
     disconnectDevices(participants),
     // Demos use cookies to save state, clear before moving on
-    browserLocal.deleteCookie(),
-    browserRemote.deleteCookie()
+    browserLocal.deleteCookies(),
+    browserRemote.deleteCookies()
   ]));
 
   describe('Activity Section', () => {
     it('has a message button', () => {
       local.browser
-        .element(elements.messageActivityButton)
-        .waitForVisible();
+        .$(elements.messageActivityButton)
+        .waitForDisplayed();
     });
 
     it('switches to message widget', () => {
-      local.browser.element(elements.messageActivityButton).click();
+      local.browser.$(elements.messageActivityButton).click();
       // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(elements.activityMenu, 1500, true);
-      assert.isTrue(local.browser.isVisible(elements.messageWidget));
-      assert.isFalse(local.browser.isVisible(elements.meetWidget));
+      local.browser.$(elements.activityMenu).waitForDisplayed({
+        timeout: 1500,
+        reverse: true
+      });
+      assert.isTrue(local.browser.$(elements.messageWidget).isDisplayed());
+      assert.isFalse(local.browser.$(elements.meetWidget).isDisplayed());
     });
 
     it('has a meet button', () => {
-      local.browser.element(elements.meetActivityButton).waitForVisible();
+      local.browser.$(elements.meetActivityButton).waitForDisplayed();
     });
 
     it('switches to meet widget', () => {
-      local.browser.element(elements.meetActivityButton).click();
+      local.browser.$(elements.meetActivityButton).click();
       // Activity menu animates the hide, wait for it to be gone
-      local.browser.waitForVisible(elements.activityMenu, 1500, true);
-      assert.isTrue(local.browser.isVisible(elements.meetWidget));
-      assert.isFalse(local.browser.isVisible(elements.messageWidget));
+      local.browser.$(elements.activityMenu).waitForDisplayed({
+        timeout: 1500,
+        reverse: true
+      });
+      assert.isTrue(local.browser.$(elements.meetWidget).isDisplayed());
+      assert.isFalse(local.browser.$(elements.messageWidget).isDisplayed());
     });
   });
 

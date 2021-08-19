@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.23.0](https://github.com/webex/react-widgets/compare/v0.22.0...v0.23.0) (2021-08-18)
+
+
+### Tests
+
+* **journey/recents:** webdriverio v7 migration ([a8d69bf](https://github.com/webex/react-widgets/commit/a8d69bf))
+* **journey/space:** webdriverio v7 migration ([a2f5a37](https://github.com/webex/react-widgets/commit/a2f5a37))
+* **smoke:** webdriverio v7 migration ([0a0c6cf](https://github.com/webex/react-widgets/commit/0a0c6cf))
+* **tap:** webdriverio v7 migration ([41dea25](https://github.com/webex/react-widgets/commit/41dea25))
+
+
+
 ## [0.22.0](https://github.com/webex/react-widgets/compare/v0.21.0...v0.22.0) (2021-08-16)
 
 

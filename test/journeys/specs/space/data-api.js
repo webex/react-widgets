@@ -1,5 +1,4 @@
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../lib/test-users';
-import {jobNames, renameJob, updateJobStatus} from '../../lib/test-helpers';
 import waitForPromise from '../../lib/wait-for-promise';
 import {switchToMeet} from '../../lib/test-helpers/space-widget/main';
 import {elements, declineIncomingCallTest, hangupBeforeAnswerTest, hangupDuringCallTest} from '../../lib/test-helpers/space-widget/meet';
@@ -9,19 +8,11 @@ import {
 } from '../../lib/test-helpers/space-widget/messaging';
 
 describe('Space Widget Data API Tests', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
   const spaceWidget = '.webex-space-widget';
-  const jobName = jobNames.spaceDataApi;
 
   let allPassed = true;
   let docbrown, lorraine, marty, participants;
   let conversation, local, remote;
-
-  before('start new sauce session', () => {
-    renameJob(jobName, browser);
-  });
-
 
   before('load browsers', () => {
     browser.url('/data-api/space.html');
@@ -48,7 +39,7 @@ describe('Space Widget Data API Tests', () => {
       document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, marty.token.access_token, conversation.hydraId);
-    local.browser.waitForVisible(spaceWidget);
+    local.browser.$(spaceWidget).waitForDisplayed();
   });
 
   before('inject docbrown token', () => {
@@ -65,7 +56,7 @@ describe('Space Widget Data API Tests', () => {
       document.getElementById('webex-widget').appendChild(csmmDom);
       window.loadBundle('/dist-space/bundle.js');
     }, docbrown.token.access_token, conversation.hydraId);
-    remote.browser.waitForVisible(spaceWidget);
+    remote.browser.$(spaceWidget).waitForDisplayed();
   });
 
   describe('messaging', () => {
@@ -95,7 +86,7 @@ describe('Space Widget Data API Tests', () => {
     describe('pre call experience', () => {
       it('has a call button', () => {
         switchToMeet(browserLocal);
-        browserLocal.waitForVisible(elements.callButton);
+        browserLocal.$(elements.callButton).waitForDisplayed();
       });
     });
 
@@ -117,10 +108,6 @@ describe('Space Widget Data API Tests', () => {
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobName, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));

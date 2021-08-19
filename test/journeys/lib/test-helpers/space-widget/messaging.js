@@ -2,7 +2,6 @@ import path from 'path';
 
 import {assert} from 'chai';
 
-import {moveMouse} from '../';
 import {clearEventLog, getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
 
@@ -51,9 +50,9 @@ export const messages = {
  * @returns {void}
  */
 export function sendMessage(sender, receiver, message) {
-  sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
-  sender.browser.waitForVisible(elements.systemMessage);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, message);
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).waitForDisplayed();
+  sender.browser.$(elements.systemMessage).waitForDisplayed();
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue(message);
   sender.browser.keys(['Enter', 'NULL']);
 }
 
@@ -66,18 +65,30 @@ export function sendMessage(sender, receiver, message) {
  * @returns {void}
  */
 export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt = true) {
-  receiver.browser.waitForVisible(`[placeholder="Send a message to ${sender.displayName}"]`);
-  receiver.browser.waitForExist(elements.pendingActivity, 60000, true);
-  receiver.browser.waitForExist(elements.lastActivityText);
-  receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityText) === message);
+  receiver.browser.$(`[placeholder="Send a message to ${sender.displayName}"]`).waitForDisplayed();
+  receiver.browser.$(elements.pendingActivity).waitForExist({
+    timeout: 60000,
+    timeoutMsg: 'Timed out waiting for pending activity to appear',
+    reverse: true
+  });
+  receiver.browser.$(elements.lastActivityText).waitForExist({
+    timeoutMsg: 'Timed out waiting for last activity text to appear'
+  });
+  receiver.browser.waitUntil(
+    () => receiver.browser.$(elements.lastActivityText).getText() === message,
+    {
+      timeout: 60000,
+      timeoutMsg: `last message ${receiver.browser.$(elements.lastActivityText).getText()} did not equal expected message ${message}`
+    }
+  );
   if (sendReadReceipt) {
     // Move mouse to send read receipt
-    moveMouse(receiver.browser, elements.lastActivityText);
+    receiver.browser.$(elements.lastActivityText).moveTo();
     // Verify read receipt comes across
-    sender.browser.waitForExist(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+    sender.browser.$(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`).waitForExist();
     // Move Mouse to text area so it doesn't cause any tool tips
-    receiver.browser.click(elements.messageComposer);
-    sender.browser.click(elements.messageComposer);
+    receiver.browser.$(elements.messageComposer).click();
+    sender.browser.$(elements.messageComposer).click();
   }
 }
 
@@ -90,11 +101,11 @@ export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt 
 export function verifyFilesActivityTab(aBrowser, fileName) {
   const fileTitle = `//span[text()="${fileName}"]`;
 
-  aBrowser.waitForVisible(mainElements.filesActivityButton);
-  aBrowser.click(mainElements.filesActivityButton);
-  aBrowser.waitForVisible(mainElements.filesWidget);
-  aBrowser.waitForExist(`${mainElements.filesWidget}${fileTitle}`);
-  aBrowser.click(mainElements.messageActivityButton);
+  aBrowser.$(mainElements.filesActivityButton).waitForDisplayed();
+  aBrowser.$(mainElements.filesActivityButton).click();
+  aBrowser.$(mainElements.filesWidget).waitForDisplayed();
+  aBrowser.$(`${mainElements.filesWidget}${fileTitle}`).waitForExist();
+  aBrowser.$(mainElements.messageActivityButton).click();
 }
 
 /**
@@ -104,17 +115,23 @@ export function verifyFilesActivityTab(aBrowser, fileName) {
  * @returns {void}
  */
 export function flagMessage(testObject, messageToFlag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
-  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToFlag);
-  moveMouse(testObject.browser, elements.lastActivityActions);
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.flagButton}`);
-  testObject.browser.click(`${elements.lastActivity} ${elements.flagButton}`);
+  testObject.browser.$(elements.pendingActivity).waitForExist({
+    timeout: 60000,
+    reverse: true
+  });
+  testObject.browser.waitUntil(() => testObject.browser.$(elements.lastActivityText).getText() === messageToFlag);
+  testObject.browser.$(elements.lastActivityActions).moveTo();
+  testObject.browser.$(`${elements.lastActivity} ${elements.flagButton}`).waitForDisplayed();
+  testObject.browser.$(`${elements.lastActivity} ${elements.flagButton}`).click();
 
   // Verify it is highlighted, showing it was flagged
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`);
+  testObject.browser.$(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`).waitForDisplayed();
 
   // Remove pending flag
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`, 60000, true);
+  testObject.browser.$(`${elements.lastActivity} ${elements.highlighted}${elements.pendingAction} ${elements.flagButton}`).waitForDisplayed({
+    timeout: 60000,
+    reverse: true
+  });
 }
 
 /**
@@ -124,14 +141,20 @@ export function flagMessage(testObject, messageToFlag) {
  * @returns {void}
  */
 export function removeFlagMessage(testObject, messageToUnflag) {
-  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
-  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToUnflag);
+  testObject.browser.$(elements.pendingActivity).waitForExist({
+    timeout: 60000,
+    reverse: true
+  });
+  testObject.browser.waitUntil(() => testObject.browser.$(elements.lastActivityText).getText() === messageToUnflag);
 
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`);
+  testObject.browser.$(`${elements.lastActivity} ${elements.highlighted} ${elements.flagButton}`).waitForDisplayed();
 
-  testObject.browser.click(`${elements.lastActivity} ${elements.flagButton}`);
+  testObject.browser.$(`${elements.lastActivity} ${elements.flagButton}`).click();
 
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.highlighted}`, 60000, true);
+  testObject.browser.$(`${elements.lastActivity} ${elements.highlighted}`).waitForDisplayed({
+    timeout: 60000,
+    reverse: true
+  });
 }
 
 /**
@@ -141,8 +164,11 @@ export function removeFlagMessage(testObject, messageToUnflag) {
  * @returns {boolean}
  */
 export function canDeleteMessage(testObject, messageToDelete) {
-  testObject.browser.waitForExist(elements.pendingActivity, 60000, true);
-  testObject.browser.waitUntil(() => testObject.browser.getText(elements.lastActivityText) === messageToDelete);
+  testObject.browser.$(elements.pendingActivity).waitForExist({
+    timeout: 60000,
+    reverse: true
+  });
+  testObject.browser.waitUntil(() => testObject.browser.$(elements.lastActivityText).getText() === messageToDelete);
 
   return testObject.browser.isExisting(`${elements.lastActivity} ${elements.deleteMessageButton}`);
 }
@@ -155,18 +181,18 @@ export function canDeleteMessage(testObject, messageToDelete) {
 export function deleteMessage(testObject, messageToDelete) {
   assert.isTrue(canDeleteMessage(testObject, messageToDelete));
 
-  moveMouse(testObject.browser, elements.lastActivityActions);
+  testObject.browser.$(elements.lastActivityActions).moveTo();
 
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.deleteMessageButton}`);
-  testObject.browser.click(`${elements.lastActivity} ${elements.deleteMessageButton}`);
+  testObject.browser.$(`${elements.lastActivity} ${elements.deleteMessageButton}`).waitForDisplayed();
+  testObject.browser.$(`${elements.lastActivity} ${elements.deleteMessageButton}`).click();
 
   // Click modal confirm
-  testObject.browser.waitForVisible(elements.modalWindow);
-  testObject.browser.waitForVisible(elements.modalDeleteButton);
-  testObject.browser.click(elements.modalDeleteButton);
+  testObject.browser.$(elements.modalWindow).waitForDisplayed();
+  testObject.browser.$(elements.modalDeleteButton).waitForDisplayed();
+  testObject.browser.$(elements.modalDeleteButton).click();
 
-  testObject.browser.waitForVisible(`${elements.lastActivity} ${elements.systemMessage}`);
-  testObject.browser.waitUntil(() => testObject.browser.getText(`${elements.lastActivity} ${elements.systemMessage}`).includes(messages.youDeleted));
+  testObject.browser.$(`${elements.lastActivity} ${elements.systemMessage}`).waitForDisplayed();
+  testObject.browser.waitUntil(() => testObject.browser.$(`${elements.lastActivity} ${elements.systemMessage}`).getText().includes(messages.youDeleted));
 }
 
 
@@ -182,10 +208,10 @@ const sendFileTest = (sender, receiver, fileName) => {
   const filePath = path.join(uploadDir, fileName);
 
   sender.browser.chooseFile(elements.inputFile, filePath);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, `Sending: ${fileName}`);
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue(`Sending: ${fileName}`);
   sender.browser.keys(['Enter', 'NULL']);
-  receiver.browser.waitForVisible(elements.lastActivityAttachments);
-  receiver.browser.waitUntil(() => receiver.browser.getText(elements.lastActivityAttachments).includes(fileName));
+  receiver.browser.$(elements.lastActivityAttachments).waitForDisplayed();
+  receiver.browser.waitUntil(() => receiver.browser.$(elements.lastActivityAttachments).getText().includes(fileName));
   // Send receipt acknowledgement and verify before moving on
   sendMessage(receiver, sender, `Received: ${fileName}`);
   verifyMessageReceipt(sender, receiver, `Received: ${fileName}`);
@@ -244,7 +270,7 @@ const bold = (sender, receiver) => {
   sendMessage(sender, receiver, '**Are you out of your Vulcan mind?** No human can tolerate the radiation that\'s in there!');
   verifyMessageReceipt(receiver, sender, 'Are you out of your Vulcan mind? No human can tolerate the radiation that\'s in there!');
   // Assert only the bolded text is in the strong tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > strong`), 'Are you out of your Vulcan mind?');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > strong`).getText(), 'Are you out of your Vulcan mind?');
 };
 
 /**
@@ -257,7 +283,7 @@ const italic = (sender, receiver) => {
   sendMessage(sender, receiver, 'As you are _so fond_ of observing, doctor, I am not human.');
   verifyMessageReceipt(receiver, sender, 'As you are so fond of observing, doctor, I am not human.');
   // Assert only the italicized text is in the em tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > em`), 'so fond');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > em`).getText(), 'so fond');
 };
 
 /**
@@ -267,7 +293,7 @@ const italic = (sender, receiver) => {
  * @returns {void}
  */
 const blockquote = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '> You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue('> You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
   // Quote break with two new lines
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
@@ -275,7 +301,7 @@ const blockquote = (sender, receiver) => {
   sender.browser.keys(['Enter', 'NULL']);
   verifyMessageReceipt(receiver, sender, 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.\nYou call this relaxing? I\'m a nervous wreck. I\'m not careful, I\'ll end up talking to myself.');
   // Assert only first half of message is in the blockquote tag
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > blockquote`), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > blockquote`).getText(), 'You\'ll have a great time, Bones. You\'ll enjoy your shore leave. You\'ll relax.');
 };
 
 /**
@@ -285,14 +311,14 @@ const blockquote = (sender, receiver) => {
  * @returns {void}
  */
 const orderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '1. ordered list item 1');
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue('1. ordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '2. ordered list item 2');
   sender.browser.keys(['Enter', 'NULL']);
   verifyMessageReceipt(receiver, sender, 'ordered list item 1\nordered list item 2');
   // Assert text matches for the first and second ordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(1)`), 'ordered list item 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ol > li:nth-child(2)`), 'ordered list item 2');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > ol > li:nth-child(1).getText()`), 'ordered list item 1');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > ol > li:nth-child(2).getText()`), 'ordered list item 2');
 };
 
 /**
@@ -302,14 +328,14 @@ const orderedList = (sender, receiver) => {
  * @returns {void}
  */
 const unorderedList = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 1');
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue('* unordered list item 1');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '* unordered list item 2');
   sender.browser.keys(['Enter', 'NULL']);
   verifyMessageReceipt(receiver, sender, 'unordered list item 1\nunordered list item 2');
   // Assert text matches for the first and second unordered list items
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(1)`), 'unordered list item 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > ul > li:nth-child(2)`), 'unordered list item 2');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > ul > li:nth-child(1).getText()`), 'unordered list item 1');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > ul > li:nth-child(2).getText()`), 'unordered list item 2');
 };
 
 /**
@@ -321,7 +347,7 @@ const unorderedList = (sender, receiver) => {
 const heading1 = (sender, receiver) => {
   sendMessage(sender, receiver, '# Heading 1');
   verifyMessageReceipt(receiver, sender, 'Heading 1');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h1`), 'Heading 1');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > h1`).getText(), 'Heading 1');
 };
 
 /**
@@ -333,7 +359,7 @@ const heading1 = (sender, receiver) => {
 const heading2 = (sender, receiver) => {
   sendMessage(sender, receiver, '## Heading 2');
   verifyMessageReceipt(receiver, sender, 'Heading 2');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h2`), 'Heading 2');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > h2`).getText(), 'Heading 2');
 };
 
 /**
@@ -345,7 +371,7 @@ const heading2 = (sender, receiver) => {
 const heading3 = (sender, receiver) => {
   sendMessage(sender, receiver, '### Heading 3');
   verifyMessageReceipt(receiver, sender, 'Heading 3');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > h3`), 'Heading 3');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > h3`).getText(), 'Heading 3');
 };
 
 /**
@@ -355,7 +381,7 @@ const heading3 = (sender, receiver) => {
  * @returns {void}
  */
 const hr = (sender, receiver) => {
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, 'test horizontal line');
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue('test horizontal line');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
   sender.browser.keys(['Enter', 'NULL']);
@@ -372,7 +398,7 @@ const hr = (sender, receiver) => {
 const link = (sender, receiver) => {
   sendMessage(sender, receiver, '[Cisco](http://www.cisco.com/)');
   verifyMessageReceipt(receiver, sender, 'Cisco');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > a`), 'Cisco');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > a`).getText(), 'Cisco');
   assert.equal(receiver.browser.getAttribute(`${elements.lastActivityText} > a`, 'href'), 'http://www.cisco.com/');
 };
 
@@ -385,7 +411,7 @@ const link = (sender, receiver) => {
 const inline = (sender, receiver) => {
   sendMessage(sender, receiver, 'this tests `inline.code();`');
   verifyMessageReceipt(receiver, sender, 'this tests inline.code();');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > code`), 'inline.code();');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > code`).getText(), 'inline.code();');
 };
 
 /**
@@ -395,16 +421,16 @@ const inline = (sender, receiver) => {
  * @returns {void}
  */
 const codeblock = (sender, receiver) => {
-  sender.browser.waitForVisible(`[placeholder="Send a message to ${receiver.displayName}"]`);
-  sender.browser.setValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '``` html');
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).waitForDisplayed();
+  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue('``` html');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '<h1>Hello World!</h1>');
   sender.browser.keys(['Shift', 'Enter', 'NULL']);
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '```');
   sender.browser.keys(['Enter', 'NULL']);
-  receiver.browser.waitForVisible(`${elements.lastActivityText} > pre > code`);
-  receiver.browser.waitUntil(() => receiver.browser.getText(`${elements.lastActivityText} > pre > code`) === '<h1>Hello World!</h1>');
-  assert.equal(receiver.browser.getText(`${elements.lastActivityText} > pre > code`), '<h1>Hello World!</h1>');
+  receiver.browser.$(`${elements.lastActivityText} > pre > code`).waitForDisplayed();
+  receiver.browser.waitUntil(() => receiver.browser.$(`${elements.lastActivityText} > pre > code`).getText() === '<h1>Hello World!</h1>');
+  assert.equal(receiver.browser.$(`${elements.lastActivityText} > pre > code`).getText(), '<h1>Hello World!</h1>');
 };
 
 export const messageTests = {

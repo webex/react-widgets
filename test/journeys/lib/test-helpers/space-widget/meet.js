@@ -2,7 +2,6 @@ import {assert} from 'chai';
 
 import {getEventLog} from '../../events';
 import {constructHydraId} from '../../hydra';
-import {moveMouse} from '../';
 
 import {switchToMeet} from './main';
 
@@ -33,7 +32,7 @@ export function answer(aBrowser) {
   aBrowser.waitUntil(() =>
     aBrowser.isVisible(elements.answerButton),
   5000, 'answer button is not visible while answering call');
-  aBrowser.click(elements.answerButton);
+  aBrowser.$(elements.answerButton).click();
   aBrowser.waitUntil(() =>
     aBrowser.isVisible(elements.remoteVideo),
   5000, 'remote video is not visible after answering call');
@@ -46,9 +45,9 @@ export function answer(aBrowser) {
  * @returns {void}
  */
 export function call(caller, reciever) {
-  caller.waitForVisible(elements.callButton);
-  caller.click(elements.callButton);
-  reciever.waitForVisible(elements.answerButton, 10000);
+  caller.$(elements.callButton).waitForDisplayed();
+  caller.$(elements.callButton).click();
+  reciever.$(elements.answerButton).waitForDisplayed({timeout: 1000});
 }
 
 /**
@@ -57,8 +56,8 @@ export function call(caller, reciever) {
  * @returns {void}
  */
 export function decline(aBrowser) {
-  aBrowser.waitForVisible(elements.declineButton);
-  aBrowser.click(elements.declineButton);
+  aBrowser.$(elements.declineButton).waitForDisplayed();
+  aBrowser.$(elements.declineButton).click();
 }
 
 /**
@@ -67,13 +66,13 @@ export function decline(aBrowser) {
  * @returns {void}
  */
 export function hangup(aBrowser) {
-  moveMouse(aBrowser, elements.callContainer);
-
-  aBrowser.waitUntil(() =>
-    aBrowser.isVisible(elements.hangupButton),
-  5000, 'hangup button is not visible when trying to hang up call');
-
-  aBrowser.click(elements.hangupButton);
+  aBrowser.execute((x) => {
+    document.querySelector(x).style.display = 'block';
+  }, elements.callContainer);
+  if (!aBrowser.$(elements.hangupButton).isDisplayed()) {
+    aBrowser.$(elements.hangupButton).scrollIntoView();
+  }
+  aBrowser.$(elements.hangupButton).click();
 }
 
 /**
@@ -87,7 +86,7 @@ export function hangupBeforeAnswerTest(browserLocal, browserRemote) {
   call(browserLocal, browserRemote);
   hangup(browserLocal);
   // Should switch back to message widget after hangup
-  browserLocal.waitForVisible(elements.messageWidget);
+  browserLocal.$(elements.messageWidget).waitForDisplayed();
 }
 
 /**
@@ -102,12 +101,12 @@ export function declineIncomingCallTest(browserLocal, browserRemote, isMeeting =
   call(browserRemote, browserLocal);
   decline(browserLocal);
   // Should switch back to message widget after hangup
-  browserLocal.waitForVisible(elements.messageWidget);
+  browserLocal.$(elements.messageWidget).waitForDisplayed();
   if (isMeeting) {
     // Meetings have to be manually disconnected (waiting for participants)
     hangup(browserRemote);
   }
-  browserRemote.waitForVisible(elements.messageWidget);
+  browserRemote.$(elements.messageWidget).waitForDisplayed();
 }
 
 /**
@@ -128,9 +127,9 @@ export function hangupDuringCallTest(browserLocal, browserRemote, isMeeting = fa
     // Meetings have to be manually disconnected (waiting for participants)
     hangup(browserRemote);
   }
-  browserLocal.waitForVisible(elements.messageWidget);
+  browserLocal.$(elements.messageWidget).waitForDisplayed();
   // Should switch back to message widget after hangup
-  browserRemote.waitForVisible(elements.messageWidget);
+  browserRemote.$(elements.messageWidget).waitForDisplayed();
 }
 
 /**
