@@ -23,8 +23,8 @@ export const elements = {
  * @returns {void}
  */
 export function switchToMessage(aBrowser) {
-  aBrowser.waitForVisible(elements.messageActivityButton);
-  aBrowser.click(elements.messageActivityButton);
+  aBrowser.$(elements.messageActivityButton).waitForDisplayed();
+  aBrowser.$(elements.messageActivityButton).click();
 }
 
 /**
@@ -33,8 +33,8 @@ export function switchToMessage(aBrowser) {
  * @returns {void}
  */
 export function switchToMeet(aBrowser) {
-  aBrowser.waitForVisible(elements.meetActivityButton);
-  aBrowser.click(elements.meetActivityButton);
+  aBrowser.$(elements.meetActivityButton).waitForDisplayed();
+  aBrowser.$(elements.meetActivityButton).click();
 }
 
 /**
@@ -43,5 +43,5 @@ export function switchToMeet(aBrowser) {
  * @param {string} buttonToClick element selector
  */
 export function openMenuAndClickButton(aBrowser, buttonToClick) {
-  aBrowser.click(buttonToClick);
+  aBrowser.$(buttonToClick).click();
 }
