@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.24.0](https://github.com/webex/react-widgets/compare/v0.23.0...v0.24.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **userAgent:** Added changes to identify user agent for widgets. ([9ae7104](https://github.com/webex/react-widgets/commit/9ae7104))
+* **userAgent:** Added changes to identify user agent for widgets. ([f87f760](https://github.com/webex/react-widgets/commit/f87f760))
+
+
+
 ## [0.23.0](https://github.com/webex/react-widgets/compare/v0.22.0...v0.23.0) (2021-08-18)
 
 
