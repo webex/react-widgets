@@ -27,10 +27,10 @@ export const runAxe = (aBrowser, elementId, rules = ['best-practice']) =>
       });
     }, elementId, rules);
 
-    if (axeResults.value.err) {
-      reject(axeResults.value.err);
+    if (axeResults.err) {
+      reject(axeResults.err);
     }
-    resolve(axeResults.value.results);
+    resolve(axeResults.results);
   });
 
 export default {

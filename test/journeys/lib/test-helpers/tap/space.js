@@ -15,13 +15,13 @@ export default function loginAndOpenWidget(aBrowser, accessToken, isOneOnOne, to
   saveToken(aBrowser, accessToken);
 
   if (isOneOnOne) {
-    aBrowser.element(elements.toPersonRadioButton).click();
-    aBrowser.element(elements.toPersonInput).setValue(to);
+    aBrowser.$(elements.toPersonRadioButton).click();
+    aBrowser.$(elements.toPersonInput).setValue(to);
   }
   else {
-    aBrowser.element(elements.toSpaceRadioButton).click();
-    aBrowser.element(elements.toSpaceInput).setValue(to);
+    aBrowser.$(elements.toSpaceRadioButton).click();
+    aBrowser.$(elements.toSpaceInput).setValue(to);
   }
-  aBrowser.element(elements.openSpaceWidgetButton).click();
-  aBrowser.waitUntil(() => aBrowser.element(elements.spaceWidgetContainer).isVisible(), 3500, 'widget failed to open');
+  aBrowser.$(elements.openSpaceWidgetButton).click();
+  aBrowser.waitUntil(() => aBrowser.$(elements.spaceWidgetContainer).isDisplayed(), 3500, 'widget failed to open');
 }

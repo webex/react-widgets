@@ -55,7 +55,7 @@ function platformToShortName(platform) {
  */
 async function injectProfile(def) {
   if (def.browserName.toLowerCase().includes('firefox')) {
-    const platform = platformToShortName(def.platform);
+    const platform = platformToShortName(def.platformName);
 
     if (platform !== 'mac') {
       throw new Error(`No tooling implemented for injecting h264 into ${platform} (${def.platform})`);
