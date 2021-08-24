@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.29.0](https://github.com/webex/react-widgets/compare/v0.28.0...v0.29.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** reduce thread border thickness ([a054cdc](https://github.com/webex/react-widgets/commit/a054cdc))
+
+
+
 ## [0.28.0](https://github.com/webex/react-widgets/compare/v0.27.0...v0.28.0) (2021-08-24)
 
 
