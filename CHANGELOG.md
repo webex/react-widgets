@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.26.0](https://github.com/webex/react-widgets/compare/v0.25.0...v0.26.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** remove extra padding between avatar and text ([f2d193f](https://github.com/webex/react-widgets/commit/f2d193f))
+
+
+
 ## [0.25.0](https://github.com/webex/react-widgets/compare/v0.24.0...v0.25.0) (2021-08-24)
 
 
