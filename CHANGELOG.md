@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.25.0](https://github.com/webex/react-widgets/compare/v0.24.0...v0.25.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **widget-space:** fixed startCall issue ([fe69c3b](https://github.com/webex/react-widgets/commit/fe69c3b))
+
+
+### Tests
+
+* **widget-space:** test for startCall ([0a92bd9](https://github.com/webex/react-widgets/commit/0a92bd9))
+
+
+
+## [0.24.0](https://github.com/webex/react-widgets/compare/v0.23.0...v0.24.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **userAgent:** Added changes to identify user agent for widgets. ([9ae7104](https://github.com/webex/react-widgets/commit/9ae7104))
+* **userAgent:** Added changes to identify user agent for widgets. ([f87f760](https://github.com/webex/react-widgets/commit/f87f760))
+
+
+
 ## [0.23.0](https://github.com/webex/react-widgets/compare/v0.22.0...v0.23.0) (2021-08-18)
 
 
