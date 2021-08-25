@@ -4,8 +4,12 @@ module.exports = {
     mocha: true
   },
   globals: {
-    browser: true,
-    $: true
+    browser: false,
+    browserLocal: false,
+    browserRemote: false,
+    $: false,
+    $$: false,
+    step: false
   },
   rules: {
     'no-console': 'off'

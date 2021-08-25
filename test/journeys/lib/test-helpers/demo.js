@@ -33,17 +33,17 @@ export const elements = {
  * @param {boolean} [useSdk=false] set use sdk instance
  */
 export function saveToken(aBrowser, accessToken, useSdk = false) {
-  if (aBrowser.element(elements.clearTokenButton).isVisible()) {
-    aBrowser.element(elements.clearTokenButton).click();
+  if (aBrowser.$(elements.clearTokenButton).isDisplayed()) {
+    aBrowser.$(elements.clearTokenButton).click();
   }
-  aBrowser.element(elements.accessTokenTypeTokenButton).click();
-  aBrowser.waitUntil(() => aBrowser.element(elements.accessTokenInput).isVisible(), 3500, 'access token input field not found');
-  aBrowser.setValue(elements.accessTokenInput, accessToken);
-  assert.equal(aBrowser.element(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
+  aBrowser.$(elements.accessTokenTypeTokenButton).click();
+  aBrowser.waitUntil(() => aBrowser.$(elements.accessTokenInput).isDisplayed(), 3500, 'access token input field not found');
+  aBrowser.$(elements.accessTokenInput).setValue(accessToken);
+  assert.equal(aBrowser.$(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
 
   if (useSdk) {
-    aBrowser.element(elements.generateSDKTrueButton).click();
+    aBrowser.$(elements.generateSDKTrueButton).click();
   }
 
-  aBrowser.element(elements.saveTokenButton).click();
+  aBrowser.$(elements.saveTokenButton).click();
 }

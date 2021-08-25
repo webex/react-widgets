@@ -10,7 +10,7 @@ import {saveToken, elements} from '../demo';
  */
 export default function loginAndOpenWidget(aBrowser, accessToken) {
   saveToken(aBrowser, accessToken);
-  aBrowser.waitUntil(() => aBrowser.element(elements.openRecentsWidgetButton).isVisible(), 3500, 'widget open button not visible');
-  aBrowser.element(elements.openRecentsWidgetButton).click();
-  aBrowser.waitUntil(() => aBrowser.element(elements.recentsWidgetContainer).isVisible(), 3500, 'widget failed to open');
+  aBrowser.waitUntil(() => aBrowser.$(elements.openRecentsWidgetButton).isDisplayed(), 3500, 'widget open button not visible');
+  aBrowser.$(elements.openRecentsWidgetButton).click();
+  aBrowser.waitUntil(() => aBrowser.$(elements.recentsWidgetContainer).isDisplayed(), 3500, 'widget failed to open');
 }

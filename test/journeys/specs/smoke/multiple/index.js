@@ -2,7 +2,6 @@ import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 import waitForPromise from '../../../lib/wait-for-promise';
-import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {elements as spaceElements} from '../../../lib/test-helpers/space-widget/main';
 import {sendMessage, verifyMessageReceipt} from '../../../lib/test-helpers/space-widget/messaging';
 
@@ -13,23 +12,18 @@ import {
 } from '../../../lib/test-helpers/recents-widget';
 
 describe('Multiple Widgets', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-  const jobName = jobNames.smokeMultiple;
-
   let docbrown, lorraine, marty, participants;
   let conversation;
   let local, remote;
   let allPassed = true;
 
-  it('start new sauce session', () => {
-    browser.reload();
-    browser.call(() => renameJob(jobName, browser));
+  before('loads the page', () => {
+    browser.refresh();
     browserLocal.url('/multiple.html?local');
     browserRemote.url('/multiple.html?remote');
   });
 
-  it('create test users and spaces', () => {
+  before('create test users and spaces', () => {
     participants = setupGroupTestUsers();
     [docbrown, lorraine, marty] = participants;
     assert.lengthOf(participants, 3, 'Test users were not created');
@@ -49,7 +43,7 @@ describe('Multiple Widgets', () => {
 
       window.openRecentsWidget(options);
     }, marty.token.access_token);
-    browserLocal.waitForVisible(recentsElements.recentsWidget);
+    browserLocal.$(recentsElements.recentsWidget).waitForDisplayed();
 
     browserLocal.execute((localAccessToken, spaceId) => {
       const options = {
@@ -63,7 +57,7 @@ describe('Multiple Widgets', () => {
 
       window.openSpaceWidget(options);
     }, marty.token.access_token, conversation.hydraId);
-    browserLocal.waitForVisible(spaceElements.spaceWidget);
+    browserLocal.$(spaceElements.spaceWidget).waitForDisplayed();
   });
 
   it('open widgets remote', () => {
@@ -78,7 +72,7 @@ describe('Multiple Widgets', () => {
 
       window.openRecentsWidget(options);
     }, docbrown.token.access_token);
-    browserRemote.waitForVisible(recentsElements.recentsWidget);
+    browserRemote.$(recentsElements.recentsWidget).waitForDisplayed();
 
     browserRemote.execute((localAccessToken, spaceId) => {
       const options = {
@@ -92,7 +86,7 @@ describe('Multiple Widgets', () => {
 
       window.openSpaceWidget(options);
     }, docbrown.token.access_token, conversation.hydraId);
-    browserRemote.waitForVisible(spaceElements.spaceWidget);
+    browserRemote.$(spaceElements.spaceWidget).waitForDisplayed();
   });
 
   it('has the page loaded', () => {
@@ -119,38 +113,49 @@ describe('Multiple Widgets', () => {
     before('wait for conversation to be ready', () => {
       const textInputField = `[placeholder="Send a message to ${conversation.displayName}"]`;
 
-      browserLocal.waitForVisible(textInputField);
+      browserLocal.$(textInputField).waitForDisplayed();
     });
 
     describe('Activity Section', () => {
       it('has a message button', () => {
-        browserLocal.waitForVisible(spaceElements.messageActivityButton);
+        browserLocal.$(spaceElements.messageActivityButton).waitForDisplayed();
       });
 
       it('switches to message widget', () => {
-        browserLocal.click(spaceElements.messageActivityButton);
-        assert.isTrue(browserLocal.isVisible(spaceElements.messageWidget));
+        browserLocal.$(spaceElements.messageActivityButton).click();
+        assert.isTrue(browserLocal.$(spaceElements.messageWidget).isDisplayed());
       });
     });
 
     describe('messaging', () => {
-      it('sends and receives messages', () => {
-        const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
-        const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
-        const lorraineText = 'Marty, will we ever see you again?';
-        const martyText2 = 'I guarantee it.';
+      const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
+      const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
+      const lorraineText = 'Marty, will we ever see you again?';
+      const martyText2 = 'I guarantee it.';
 
+      it('marty sends a message', () => {
         sendMessage(remote, local, martyText);
         verifyMessageReceipt(local, remote, martyText);
+      });
+
+      it('docbrown receives a message', () => {
         sendMessage(remote, local, docText);
         verifyMessageReceipt(local, remote, docText);
-        // Send a message from a 'client'
+      });
+
+      it('lorraine sends a message and verifies it was sent', () => {
+        // This request is flaky for some reason
+        // and the message won't get sent and the function doesn't throw if there's an error
         waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
           displayName: lorraineText
         }));
+        // Send a message from a 'client'
         // Wait for both widgets to receive client message
         verifyMessageReceipt(local, remote, lorraineText);
         verifyMessageReceipt(remote, local, lorraineText);
+      }, 5);
+
+      it('marty sends another message', () => {
         sendMessage(local, remote, martyText2);
         verifyMessageReceipt(remote, local, martyText2);
       });
@@ -163,6 +168,4 @@ describe('Multiple Widgets', () => {
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
   });
-
-  after(() => browser.call(() => updateJobStatus(jobName, allPassed)));
 });
