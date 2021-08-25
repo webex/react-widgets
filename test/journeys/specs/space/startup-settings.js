@@ -37,6 +37,27 @@ describe('Space Widget Startup Settings Tests', () => {
     });
   });
 
+  describe('startCall', () => {
+    it.skip('call is placed after startCall is set to true', () => {
+      browserLocal.execute((localAccessToken, localToPersonId) => {
+        const options = {
+          accessToken: localAccessToken,
+          onEvent: (eventName, detail) => {
+            window.ciscoSparkEvents.push({eventName, detail});
+          },
+          destinationId: localToPersonId,
+          destinationType: 'userId',
+          startCall: true
+        };
+
+        window.openSpaceWidget(options);
+      }, spock.token.access_token, mccoy.id);
+
+      browserLocal.$(`[placeholder="${mccoy.displayName}"]`).waitForDisplayed();
+      browserLocal.refresh();
+    });
+  });
+
   describe('spaceActivities setting', () => {
     it('displays error message for disabled initial activity', () => {
       browserLocal.execute((localAccessToken, localToUserEmail) => {

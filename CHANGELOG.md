@@ -2,6 +2,79 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.31.0](https://github.com/webex/react-widgets/compare/v0.30.0...v0.31.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** change title text size and font ([f67b993](https://github.com/webex/react-widgets/commit/f67b993))
+
+
+
+## [0.30.0](https://github.com/webex/react-widgets/compare/v0.29.0...v0.30.0) (2021-08-24)
+
+
+
+## [0.29.0](https://github.com/webex/react-widgets/compare/v0.28.0...v0.29.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** reduce thread border thickness ([a054cdc](https://github.com/webex/react-widgets/commit/a054cdc))
+
+
+
+## [0.28.0](https://github.com/webex/react-widgets/compare/v0.27.0...v0.28.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** reduce spacing between meta and message ([0e0fa1c](https://github.com/webex/react-widgets/commit/0e0fa1c))
+
+
+
+## [0.27.0](https://github.com/webex/react-widgets/compare/v0.26.0...v0.27.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** update metadata color ([3ac3d33](https://github.com/webex/react-widgets/commit/3ac3d33))
+
+
+
+## [0.26.0](https://github.com/webex/react-widgets/compare/v0.25.0...v0.26.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style:** remove extra padding between avatar and text ([f2d193f](https://github.com/webex/react-widgets/commit/f2d193f))
+
+
+
+## [0.25.0](https://github.com/webex/react-widgets/compare/v0.24.0...v0.25.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **widget-space:** fixed startCall issue ([fe69c3b](https://github.com/webex/react-widgets/commit/fe69c3b))
+
+
+### Tests
+
+* **widget-space:** test for startCall ([0a92bd9](https://github.com/webex/react-widgets/commit/0a92bd9))
+
+
+
+## [0.24.0](https://github.com/webex/react-widgets/compare/v0.23.0...v0.24.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **userAgent:** Added changes to identify user agent for widgets. ([9ae7104](https://github.com/webex/react-widgets/commit/9ae7104))
+* **userAgent:** Added changes to identify user agent for widgets. ([f87f760](https://github.com/webex/react-widgets/commit/f87f760))
+
+
+
 ## [0.23.0](https://github.com/webex/react-widgets/compare/v0.22.0...v0.23.0) (2021-08-18)
 
 
