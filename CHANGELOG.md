@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.33.0](https://github.com/webex/react-widgets/compare/v0.32.0...v0.33.0) (2021-08-26)
+
+
+### Features
+
+* **widget-space:** add ability to turn off flags ([0a79ef1](https://github.com/webex/react-widgets/commit/0a79ef1))
+
+
+
 ## [0.32.0](https://github.com/webex/react-widgets/compare/v0.31.0...v0.32.0) (2021-08-26)
 
 
