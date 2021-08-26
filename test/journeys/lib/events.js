@@ -30,7 +30,7 @@ export function getEventLog(myBrowser) {
     return events;
   });
 
-  return result.value;
+  return result;
 }
 
 /**

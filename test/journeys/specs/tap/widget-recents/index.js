@@ -17,16 +17,14 @@ import {
 } from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents', () => {
-  const browserLocal = browser.select('browserLocal');
   let docbrown, lorraine, marty;
   let conversation, oneOnOneConversation;
 
   before('load browser', () => {
-    browserLocal
-      .url('/widget-demo/production/index.html')
-      .execute(() => {
-        localStorage.clear();
-      });
+    browserLocal.url('/widget-demo/production/index.html');
+    browserLocal.execute(() => {
+      localStorage.clear();
+    });
   });
 
   before('create marty', () => testUsers.create({count: 1, config: {displayName: 'Marty McFly'}})
@@ -90,7 +88,7 @@ describe('Widget Recents', () => {
     lorraine.spark.internal.mercury.disconnect(),
     docbrown.spark.internal.mercury.disconnect(),
     // Demos use cookies to save state, clear before moving on
-    browser.deleteCookie()
+    browser.deleteCookies()
   ]));
 
   before('create group space', () => marty.spark.internal.conversation.create({
@@ -155,7 +153,7 @@ describe('Widget Recents', () => {
 
       it('rooms:selected', () => {
         clearEventLog(browserLocal);
-        browserLocal.click(elements.firstSpace);
+        browserLocal.$(elements.firstSpace).click();
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'rooms:selected'), 'event was not seen');
       });
 
@@ -183,7 +181,10 @@ describe('Widget Recents', () => {
         // Remove user from room
         clearEventLog(browserLocal);
         waitForPromise(lorraine.spark.internal.conversation.leave(kickedConversation, marty));
-        browserLocal.waitUntil(() => browserLocal.getText(`${elements.firstSpace} ${elements.title}`) !== roomTitle);
+        browserLocal.waitUntil(
+          () => browserLocal.$(`${elements.firstSpace} ${elements.title}`).getText() !== roomTitle,
+          {}
+        );
         assert.isTrue(getEventLog(browserLocal).some((event) => event.eventName === 'memberships:deleted'), 'event was not seen');
       });
     });

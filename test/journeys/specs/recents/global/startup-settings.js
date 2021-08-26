@@ -6,20 +6,12 @@ import {
   registerDevices,
   setupGroupTestUsers
 } from '../../../lib/test-users';
-import {jobNames, renameJob, updateJobStatus} from '../../../lib/test-helpers';
 import {findEventName, getEventLog} from '../../../lib/events';
 import {elements} from '../../../lib/test-helpers/recents-widget';
 
 describe('Widget Recents', () => {
-  const browserLocal = browser.select('browserLocal');
-  const browserRemote = browser.select('browserRemote');
-
   let allPassed = true;
   let lorraine, marty, participants;
-
-  before('start new sauce session', () => {
-    renameJob(jobNames.recentsStartupSettings, browser);
-  });
 
   before('load browser for recents widget', () => {
     browserLocal.url('/recents.html');
@@ -53,10 +45,13 @@ describe('Widget Recents', () => {
 
         window.openRecentsWidget(options);
       }, marty.token.access_token);
-      browserLocal.waitForVisible(elements.recentsWidget);
-      browserLocal.waitForVisible(elements.loadingScreen, 7500, true);
+      browserLocal.$(elements.recentsWidget).waitForDisplayed();
+      browserLocal.$(elements.loadingScreen).waitForDisplayed({
+        timeout: 10000,
+        reverse: true
+      });
 
-      assert.isFalse(browserLocal.elements(elements.headerBar).isVisible());
+      assert.isFalse(browserLocal.$(elements.headerBar).isDisplayed());
       browserLocal.refresh();
     });
 
@@ -76,31 +71,34 @@ describe('Widget Recents', () => {
 
           window.openRecentsWidget(options);
         }, lorraine.token.access_token);
-        browserRemote.waitForVisible(elements.recentsWidget);
-        browserRemote.waitForVisible(elements.loadingScreen, 7500, true);
+        browserRemote.$(elements.recentsWidget).waitForDisplayed();
+        browserRemote.$(elements.loadingScreen).waitForDisplayed({
+          timeout: 7500,
+          reverse: true
+        });
       });
 
       it('has a search bar for space filtering', () => {
-        assert.isTrue(browserRemote.element(elements.searchInput).isVisible(), 'does not have header search bar');
+        assert.isTrue(browserRemote.$(elements.searchInput).isDisplayed(), 'does not have header search bar');
       });
 
       it('has a user profile picture', () => {
-        assert.isTrue(browserRemote.element(elements.headerProfile).isVisible(), 'does not have header profile');
+        assert.isTrue(browserRemote.$(elements.headerProfile).isDisplayed(), 'does not have header profile');
       });
 
       it('has an add space button', () => {
-        assert.isTrue(browserRemote.element(elements.headerAddButton).isVisible(), 'does not have header add space button');
+        assert.isTrue(browserRemote.$(elements.headerAddButton).isDisplayed(), 'does not have header add space button');
       });
 
       it('has a user profile avatar setting menu', () => {
-        browserRemote.element(elements.headerProfile).click();
-        assert.isTrue(browserRemote.element(elements.headerSignout).isVisible(), 'does not have header sign out menu');
+        browserRemote.$(elements.headerProfile).click();
+        assert.isTrue(browserRemote.$(elements.headerSignout).isDisplayed(), 'does not have header sign out menu');
       });
 
       it('fires out the sign out event, if the user signs out', () => {
-        browserRemote.element(elements.headerProfile).click();
-        browserRemote.waitForVisible(elements.headerSignout);
-        browserRemote.element(elements.headerSignout).click();
+        browserRemote.$(elements.headerProfile).click();
+        browserRemote.$(elements.headerSignout).waitForDisplayed();
+        browserRemote.$(elements.headerSignout).click();
         const events = findEventName({
           eventName: 'user_signout:clicked',
           events: getEventLog(browserRemote)
@@ -124,20 +122,19 @@ describe('Widget Recents', () => {
 
         window.openRecentsWidget(options);
       }, marty.token.access_token);
-      browserLocal.waitForVisible(elements.recentsWidget);
-      browserLocal.waitForVisible(elements.loadingScreen, 7500, true);
+      browserLocal.$(elements.recentsWidget).waitForDisplayed();
+      browserLocal.$(elements.loadingScreen).waitForDisplayed({
+        timeout: 7500,
+        reverse: true
+      });
 
-      browserLocal.waitForVisible(elements.listContainer);
+      browserLocal.$(elements.listContainer).waitForDisplayed();
     });
   });
 
   /* eslint-disable-next-line func-names */
   afterEach(function () {
     allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
-
-  after(() => {
-    updateJobStatus(jobNames.recentsGlobal, allPassed);
   });
 
   after('disconnect', () => disconnectDevices(participants));
