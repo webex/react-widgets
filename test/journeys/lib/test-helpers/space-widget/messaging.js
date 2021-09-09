@@ -386,7 +386,7 @@ const hr = (sender, receiver) => {
   sender.browser.addValue(`[placeholder="Send a message to ${receiver.displayName}"]`, '- - -');
   sender.browser.keys(['Enter', 'NULL']);
   verifyMessageReceipt(receiver, sender, 'test horizontal line');
-  assert.isTrue(receiver.browser.isVisible(`${elements.lastActivityText} > hr`));
+  assert.isTrue(receiver.browser.$(`${elements.lastActivityText} > hr`).isDisplayed());
 };
 
 /**
