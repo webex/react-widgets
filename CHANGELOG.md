@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.38.0](https://github.com/webex/react-widgets/compare/v0.37.0...v0.38.0) (2021-09-17)
+
+
+### Bug Fixes
+
+* **styles:** reduced border size of thread ([df4adc8](https://github.com/webex/react-widgets/commit/df4adc8))
+
+
+
+## [0.37.0](https://github.com/webex/react-widgets/compare/v0.36.0...v0.37.0) (2021-09-14)
+
+
+### Bug Fixes
+
+* **react-redux-spark:** add proxy to existing sdk ([f21dbb4](https://github.com/webex/react-widgets/commit/f21dbb4))
+
+
+
 ## [0.36.0](https://github.com/webex/react-widgets/compare/v0.35.0...v0.36.0) (2021-09-04)
 
 
