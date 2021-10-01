@@ -49,11 +49,15 @@ export const messages = {
  * @param {string} message
  * @returns {void}
  */
-export function sendMessage(sender, receiver, message) {
-  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).waitForDisplayed();
-  sender.browser.$(elements.systemMessage).waitForDisplayed();
-  sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`).setValue(message);
-  sender.browser.keys(['Enter', 'NULL']);
+export async function sendMessage(sender, receiver, message) {
+  const messagePlaceholder = await sender.browser.$(`[placeholder="Send a message to ${receiver.displayName}"]`);
+  const messageEl = await sender.browser.$(elements.systemMessage);
+
+  await messagePlaceholder.waitForDisplayed();
+  await messageEl.waitForDisplayed();
+
+  await messagePlaceholder.setValue(message);
+  await sender.browser.keys(['Enter', 'NULL']);
 }
 
 /**
@@ -64,31 +68,42 @@ export function sendMessage(sender, receiver, message) {
  * @param {boolean} [sendReadReceipt=true]
  * @returns {void}
  */
-export function verifyMessageReceipt(receiver, sender, message, sendReadReceipt = true) {
-  receiver.browser.$(`[placeholder="Send a message to ${sender.displayName}"]`).waitForDisplayed();
-  receiver.browser.$(elements.pendingActivity).waitForExist({
+export async function verifyMessageReceipt(receiver, sender, message, sendReadReceipt = true) {
+  const messagePlaceholder = await receiver.browser.$(`[placeholder="Send a message to ${sender.displayName}"]`);
+  const pendingActivity = await receiver.browser.$(elements.pendingActivity);
+  const lastActivityText = await receiver.browser.$(elements.lastActivityText);
+
+  await messagePlaceholder.waitForDisplayed();
+  await pendingActivity.waitForExist({
     timeout: 60000,
     timeoutMsg: 'Timed out waiting for pending activity to appear',
     reverse: true
   });
-  receiver.browser.$(elements.lastActivityText).waitForExist({
+
+  await lastActivityText.waitForExist({
     timeoutMsg: 'Timed out waiting for last activity text to appear'
   });
-  receiver.browser.waitUntil(
-    () => receiver.browser.$(elements.lastActivityText).getText() === message,
+
+  await receiver.browser.waitUntil(
+    () => lastActivityText.getText() === message,
     {
       timeout: 60000,
       timeoutMsg: `last message ${receiver.browser.$(elements.lastActivityText).getText()} did not equal expected message ${message}`
     }
   );
+
   if (sendReadReceipt) {
+    const senderReadReceiptsArea = await sender.browser.$(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`);
+    const senderMessageComposer = await sender.browser.$(elements.messageComposer);
+    const recieveMessageCompoer = await receiver.browser.$(elements.messageComposer);
+
     // Move mouse to send read receipt
-    receiver.browser.$(elements.lastActivityText).moveTo();
+    await lastActivityText.moveTo();
     // Verify read receipt comes across
-    sender.browser.$(`${elements.readReceiptsArea} ${elements.readReceiptsAvatar}`).waitForExist();
+    await senderReadReceiptsArea.waitForExist();
     // Move Mouse to text area so it doesn't cause any tool tips
-    receiver.browser.$(elements.messageComposer).click();
-    sender.browser.$(elements.messageComposer).click();
+    await recieveMessageCompoer.click();
+    await senderMessageComposer.click();
   }
 }
 

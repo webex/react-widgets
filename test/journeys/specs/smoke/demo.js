@@ -9,17 +9,25 @@ describe('demo widget', () => {
   let allPassed = true;
   let mccoy, spock, local, remote;
 
-  before('loads the page', () => {
-    browser.refresh();
+  before('loads the page', async () => {
+    await browser.refresh();
 
-    browserLocal.url('/dist-demo/index.html?local');
-    browserRemote.url('/dist-demo/index.html?remote');
+    await browserLocal.url('/dist-demo/index.html?local');
+    await browserRemote.url('/dist-demo/index.html?remote');
   });
 
   before('create test users', () => {
     [mccoy, spock] = setupOneOnOneUsers();
-    local = {browser: browserLocal, user: mccoy, displayName: mccoy.displayName};
-    remote = {browser: browserRemote, user: spock, displayName: spock.displayName};
+    local = {
+      browser: browserLocal,
+      user: mccoy,
+      displayName: mccoy.displayName
+    };
+    remote = {
+      browser: browserRemote,
+      user: spock,
+      displayName: spock.displayName
+    };
   });
 
   describe('access token authentication', () => {
@@ -32,27 +40,36 @@ describe('demo widget', () => {
     }, 3);
 
     describe('space widget', () => {
-      it('opens space widget for mccoy in local', () => {
-        browserLocal.$(elements.toPersonRadioButton).click();
-        browserLocal.$(elements.toPersonInput).setValue(spock.email);
-        browserLocal.$(elements.openSpaceWidgetButton).click();
-        // Wait for conversation to be ready
-        const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
+      it('opens space widget for mccoy in local', async () => {
+        const toPersonRadioButton = await browserLocal.$(elements.toPersonRadioButton);
+        const toPersonInput = await browserLocal.$(elements.toPersonInput);
+        const openSpaceWidgetButton = await browserLocal.$(elements.openSpaceWidgetButton);
+        const textInputField = await browserLocal.$(`[placeholder="Send a message to ${spock.displayName}"]`);
 
-        browserLocal.$(textInputField).waitForDisplayed();
-        browserLocal.$(textInputField).scrollIntoView();
+        await toPersonRadioButton.click();
+        await toPersonInput.setValue(spock.email);
+        await openSpaceWidgetButton.click();
+
+        // Wait for conversation to be ready
+        await textInputField.waitForDisplayed();
+        await textInputField.scrollIntoView();
       });
 
-      it('opens space widget for spock in remote', () => {
-        browserRemote.$(elements.toPersonRadioButton).click();
-        browserRemote.$(elements.toPersonInput).setValue(mccoy.email);
-        browserRemote.$(elements.openSpaceWidgetButton).click();
-        // Wait for conversation to be ready
-        const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
+      it('opens space widget for spock in remote', async () => {
+        const toPersonRadioButton = await browserRemote.$(elements.toPersonRadioButton);
+        const toPersonInput = await browserRemote.$(elements.toPersonInput);
+        const openSpaceWidgetButton = await browserRemote.$(elements.openSpaceWidgetButton);
+        const textInputField = await browserRemote.$(`[placeholder="Send a message to ${mccoy.displayName}"]`);
 
-        browserRemote.$(textInputFieldRemote).waitForDisplayed();
-        browserRemote.$(textInputFieldRemote).scrollIntoView();
+        await toPersonRadioButton.click();
+        await toPersonInput.setValue(mccoy.email);
+        await openSpaceWidgetButton.click();
+
+        // Wait for conversation to be ready
+        await textInputField.waitForDisplayed();
+        await textInputField.scrollIntoView();
       });
+
 
       describe('space widget functionality', () => {
         describe('messaging', () => {
@@ -89,13 +106,12 @@ describe('demo widget', () => {
   });
 
   describe('sdk instance authentication', () => {
-    before('reloads demo page and stores access token', () => {
-      // Widget demo uses cookies to save info
-      browser.deleteCookies();
-      browser.refresh();
+    before('reloads demo page and stores access token', async () => {
+      await browser.deleteCookies();
+      await browser.refresh();
 
-      saveToken(browserLocal, mccoy.token.access_token, true);
-      saveToken(browserRemote, spock.token.access_token, true);
+      await saveToken(browserLocal, mccoy.token.access_token, true);
+      await saveToken(browserRemote, spock.token.access_token, true);
     }, 3);
 
     describe('space widget', () => {

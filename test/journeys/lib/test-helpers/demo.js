@@ -32,18 +32,36 @@ export const elements = {
  * @param {string} accessToken
  * @param {boolean} [useSdk=false] set use sdk instance
  */
-export function saveToken(aBrowser, accessToken, useSdk = false) {
-  if (aBrowser.$(elements.clearTokenButton).isDisplayed()) {
-    aBrowser.$(elements.clearTokenButton).click();
+export async function saveToken(aBrowser, accessToken, useSdk = false) {
+  const clearTokenButton = await aBrowser.$(elements.clearTokenButton);
+  const accessTokenTypeTokenButton = await aBrowser.$(elements.accessTokenTypeTokenButton);
+  const accessTokenInput = await aBrowser.$(elements.accessTokenInput);
+  const generateSDKTrueButton = await aBrowser.$(elements.generateSDKTrueButton);
+  const saveTokenButton = await aBrowser.$(elements.saveTokenButton);
+
+  if (await clearTokenButton.isDisplayed()) {
+    await clearTokenButton.click();
   }
-  aBrowser.$(elements.accessTokenTypeTokenButton).click();
-  aBrowser.waitUntil(() => aBrowser.$(elements.accessTokenInput).isDisplayed(), 3500, 'access token input field not found');
-  aBrowser.$(elements.accessTokenInput).setValue(accessToken);
-  assert.equal(aBrowser.$(elements.accessTokenInput).getValue(), accessToken, 'access token entry failed');
+
+  await accessTokenTypeTokenButton.click();
+
+  await aBrowser.waitUntil(
+    () => accessTokenInput.isDisplayed(),
+    3500,
+    'access token input field not found'
+  );
+
+  await accessTokenInput.setValue(accessToken);
+
+  assert.equal(
+    await accessTokenInput.getValue(),
+    accessToken,
+    'access token entry failed'
+  );
 
   if (useSdk) {
-    aBrowser.$(elements.generateSDKTrueButton).click();
+    await generateSDKTrueButton.click();
   }
 
-  aBrowser.$(elements.saveTokenButton).click();
+  await saveTokenButton.click();
 }
