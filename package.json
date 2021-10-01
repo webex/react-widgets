@@ -69,6 +69,7 @@
     "@webex/internal-plugin-metrics": "1.143.3",
     "@webex/internal-plugin-presence": "1.143.3",
     "@webex/internal-plugin-search": "1.143.3",
+    "@webex/internal-plugin-support": "1.143.3",
     "@webex/internal-plugin-team": "1.143.3",
     "@webex/internal-plugin-user": "1.143.3",
     "@webex/internal-plugin-wdm": "1.143.3",
