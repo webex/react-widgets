@@ -30,11 +30,11 @@ export const elements = {
  */
 export function answer(aBrowser) {
   aBrowser.waitUntil(() =>
-    aBrowser.isVisible(elements.answerButton),
+    aBrowser.$(elements.answerButton).isDisplayed(),
   5000, 'answer button is not visible while answering call');
   aBrowser.$(elements.answerButton).click();
   aBrowser.waitUntil(() =>
-    aBrowser.isVisible(elements.remoteVideo),
+    aBrowser.$(elements.remoteVideo).isDisplayed(),
   5000, 'remote video is not visible after answering call');
 }
 

@@ -18,17 +18,17 @@ export const elements = {
 
 
 function openSearch(aBrowser) {
-  assert.isTrue(aBrowser.isVisible(elements.rosterWidget), 'roster should be visible for this test');
-  assert.isTrue(aBrowser.isVisible(elements.addPeopleButton), 'add people button is not visible');
+  assert.isTrue(aBrowser.$(elements.rosterWidget).isDisplayed(), 'roster should be visible for this test');
+  assert.isTrue(aBrowser.$(elements.addPeopleButton).isDisplayed(), 'add people button is not visible');
   aBrowser.$(elements.addPeopleButton).click();
   aBrowser.$(elements.addParticipantArea).waitForDisplayed();
-  assert.isTrue(aBrowser.isVisible(elements.searchInput), 'does not have participant search input');
+  assert.isTrue(aBrowser.$(elements.searchInput).isDisplayed(), 'does not have participant search input');
 }
 
 function closeSearch(aBrowser) {
-  assert.isTrue(aBrowser.isVisible(elements.closeSearchButton), 'does not have a close search button');
+  assert.isTrue(aBrowser.$(elements.closeSearchButton).isDisplayed(), 'does not have a close search button');
   aBrowser.$(elements.closeSearchButton).click();
-  assert.isFalse(aBrowser.isVisible(elements.addParticipantArea), 'close button is not hiding search');
+  assert.isFalse(aBrowser.$(elements.addParticipantArea).isDisplayed(), 'close button is not hiding search');
 }
 
 
