@@ -30,7 +30,7 @@ module.exports = (env) => webpackConfigBase({
   entry: './index.js',
   mode: 'development',
   plugins,
-  devtool: 'source-map',
+  devtool: 'cheap-source-map',
   devServer: {
     host: 'localhost',
     port: process.env.PORT || 8000,
