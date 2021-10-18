@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.41.0](https://github.com/webex/react-widgets/compare/v0.40.0...v0.41.0) (2021-10-06)
+
+
+### Tests
+
+* **wdio:** add missed v4->v7 changes ([5886e58](https://github.com/webex/react-widgets/commit/5886e58))
+
+
+
+## [0.40.0](https://github.com/webex/react-widgets/compare/v0.39.0...v0.40.0) (2021-10-06)
+
+
+### Features
+
+* **space-widget:** add optional props for showSubmitButton and sendMessageOnReturnKey ([db2e226](https://github.com/webex/react-widgets/commit/db2e226))
+
+
+
+## [0.39.0](https://github.com/webex/react-widgets/compare/v0.38.0...v0.39.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* add internal-plugin-support for uploading logs ([4d64ed2](https://github.com/webex/react-widgets/commit/4d64ed2))
+* correctly listen to meetings related events ([8d542b7](https://github.com/webex/react-widgets/commit/8d542b7))
+* update sdk and correct lock issues ([54344d7](https://github.com/webex/react-widgets/commit/54344d7))
+* use correct locus properties instead of old locus object ([27d75f6](https://github.com/webex/react-widgets/commit/27d75f6))
+
+
+### Tests
+
+* update tests ([51ad68b](https://github.com/webex/react-widgets/commit/51ad68b))
+
+
+
 ## [0.38.0](https://github.com/webex/react-widgets/compare/v0.37.0...v0.38.0) (2021-09-17)
 
 
