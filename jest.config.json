@@ -21,7 +21,7 @@
   "testRegex": ".test.js$",
   "testURL": "http://localhost",
   "moduleDirectories": [
-    "/node_modules/",
+    "node_modules",
     "/packages/node_modules/"
   ],
   "modulePaths": [
