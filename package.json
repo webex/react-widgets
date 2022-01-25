@@ -195,7 +195,7 @@
     "node-sass": "^4.12.0",
     "output-file-sync": "^2.0.1",
     "package-json": "^6.4.0",
-    "postcss": "^6.0.3",
+    "postcss": "^8.2.13",
     "postcss-cli": "^4.1.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.1.1",
