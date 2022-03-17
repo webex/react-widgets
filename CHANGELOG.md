@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.48.0](https://github.com/webex/react-widgets/compare/v0.47.0...v0.48.0) (2022-03-17)
+
+
+### Features
+
+* **demo:** add option to enable fedramp ([a4c6184](https://github.com/webex/react-widgets/commit/a4c6184))
+* **r-r-s:** add option to enable fedramp ([6a2889d](https://github.com/webex/react-widgets/commit/6a2889d))
+
+
+
 ## [0.47.0](https://github.com/webex/react-widgets/compare/v0.46.0...v0.47.0) (2022-03-08)
 
 
