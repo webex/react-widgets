@@ -57,6 +57,28 @@ $ npm start
     ```
 1. The widget demo will be running on http://localhost:8000
 
+## localization
+This widget provides localization in portuguese. To run in portuguese change this lines:
+
+```js
+  withIntl({locale: 'en', messages: messages['en']})
+```
+
+  to this
+
+```js
+  withIntl({locale: 'pt-BR', messages: messages['pt-BR']})
+```
+
+In these files:
+
+`packages\node_modules\@webex\widget-files\src\index.js`
+`packages\node_modules\@webex\widget-meet\src\index.js`
+`packages\node_modules\@webex\widget-message\src\index.js`
+`packages\node_modules\@webex\widget-roster\src\index.js`
+`packages\node_modules\@webex\widget-space\src\index.js`
+
+
 ## Version
 
 When a widget is bundled and loaded via script tag, the version number is available in the following ways:
