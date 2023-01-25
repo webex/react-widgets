@@ -241,7 +241,7 @@
     "typescript": "^4.9.4",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-typescript": "^8.5.0",
+    "@rollup/plugin-typescript": "^8.5.0"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
