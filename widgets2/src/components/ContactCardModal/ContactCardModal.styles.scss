@@ -1,0 +1,30 @@
+$C: wxc-contact-card-modal;
+$horizontalModalPadding: 60px;
+
+.#{$C} {
+  position: relative;
+  padding: 0 $horizontalModalPadding 40px $horizontalModalPadding;
+
+  &__header {
+    height: 40px;
+    width: 100%;
+    position: relative;
+
+    &-text {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    &-close {
+      position: absolute;
+      right: ($horizontalModalPadding * -1) + 3px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+  }
+
+  .wxc-contact-card-widget {
+    margin-top: 32px;
+  }
+}

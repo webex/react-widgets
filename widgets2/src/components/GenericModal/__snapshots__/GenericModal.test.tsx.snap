@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenericModal should render - isOpen 1`] = `
+<div
+  className="wxc wxc-generic-modal undefined"
+>
+  <div
+    className="wxc-generic-modal__overlay md-overlay-wrapper"
+    data-color="primary"
+    data-fullscreen={true}
+  >
+    <div
+      className="wxc-generic-modal__container md-modal-container-wrapper"
+      data-color="primary"
+      data-elevation={4}
+      data-padded={true}
+      data-round={0}
+    />
+  </div>
+</div>
+`;
+
+exports[`GenericModal should render - isRound 1`] = `
+<div
+  className="wxc wxc-generic-modal undefined"
+>
+  <div
+    className="wxc-generic-modal__overlay md-overlay-wrapper"
+    data-color="primary"
+    data-fullscreen={true}
+  >
+    <div
+      className="wxc-generic-modal__container md-modal-container-wrapper"
+      data-color="primary"
+      data-elevation={4}
+      data-padded={true}
+      data-round={50}
+    />
+  </div>
+</div>
+`;

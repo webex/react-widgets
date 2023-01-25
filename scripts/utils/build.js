@@ -112,16 +112,18 @@ function buildCommonJS(pkgName, pkgPath) {
  * @param {String} pkg
  * @returns {undefined}
  */
-function buildES(pkg) {
+ function buildES(pkg) {
+  console.log('nisar',pkg)
   const targetPkgPath = getPackage(pkg);
 
   if (targetPkgPath) {
     try {
-      const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
-
+      // const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
+      const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
       // Rollup cleans the `es` folder automatically
-      console.info(`Packaging ${pkg}...`.cyan);
-      execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+      console.log(`Packaging ${pkg}...`.cyan);
+      // execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+      execSync(`cd widgets2 && rollup -c ${callingRollupConfigPath}`);  
       console.info(`${pkg}... Done\n\n`.cyan);
     }
     catch (err) {

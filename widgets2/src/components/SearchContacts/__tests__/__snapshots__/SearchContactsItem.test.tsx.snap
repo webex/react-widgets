@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchContactsItem should render 1`] = `
+<DocumentFragment>
+  <li
+    class="wxc wxc-search-contacts-item md-list-item-base-wrapper"
+    data-disabled="false"
+    data-interactive="true"
+    data-padded="true"
+    data-shape="isPilled"
+    data-size="50"
+    role="listitem"
+    tabindex="0"
+  >
+    <div
+      data-position="start"
+    >
+      <div
+        class="md-avatar-wrapper"
+        data-color="default"
+        data-size="32"
+        title="Mr. Jill D'Amore V"
+      >
+        <span>
+          MV
+        </span>
+      </div>
+    </div>
+    <div
+      data-position="fill"
+    >
+      Mr. Jill D'Amore V
+    </div>
+    <div
+      data-position="end"
+    >
+      <div
+        class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-search-contacts-item__actions"
+        data-xgap="true"
+        data-ygap="false"
+        style="--md-globals-flex-xgap-size: .5rem;"
+      >
+        <button
+          aria-expanded="false"
+          aria-label="makeAudioCallTo"
+          class="md-button-circle-wrapper md-button-simple-wrapper"
+          data-color="join"
+          data-disabled="false"
+          data-ghost="false"
+          data-multiple-children="false"
+          data-outline="false"
+          data-size="28"
+          type="button"
+        />
+        <button
+          aria-expanded="false"
+          aria-label="makeVideoCallTo"
+          class="md-button-circle-wrapper md-button-simple-wrapper"
+          data-color="join"
+          data-disabled="false"
+          data-ghost="false"
+          data-multiple-children="false"
+          data-outline="false"
+          data-size="28"
+          type="button"
+        />
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

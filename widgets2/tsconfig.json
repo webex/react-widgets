@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@webex-int/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../../packages/adapter-interfaces"
+    },
+    {
+      "path": "../../packages/logger"
+    }
+  ]
+}

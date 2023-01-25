@@ -1,0 +1,10 @@
+$C: wxc-generic-modal;
+
+.#{$C} {
+  &__container {
+    align-items: unset;
+  }
+  .md-modal-container-wrapper {
+    border: 0.0625rem var(--modal-secondary-border-color) var(--modal-secondary-border-color)
+  }
+}

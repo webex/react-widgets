@@ -1,0 +1,47 @@
+$C: wxc-voicemail-scrubbing-bar;
+
+.#{$C} {
+  $scrubber-thumb-size: 16px;
+  $track-radius: 5px;
+
+
+  flex-grow: 1;
+
+  &__thumb {
+    width: $scrubber-thumb-size;
+    height: $scrubber-thumb-size;
+    border-radius: 100%;
+    background-color: var(--theme-background-solid-primary-normal);
+    border: 1px solid var(--theme-outline-primary-normal);
+    box-shadow: var(--md-globals-elevation-1);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__track {
+    position: relative;
+    height: 2px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 100%;
+      border-radius: $track-radius;
+      background-color: var(--theme-control-inactive-normal);
+    }
+  }
+
+  &__viewed {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: $track-radius;
+    background-color: var(--theme-control-active-normal);
+  }
+}

@@ -1,0 +1,15 @@
+/* Custom styles */
+$C: wxc-speed-dial-widget;
+
+.#{$C} {
+  display: block;
+  background: var(--theme-background-solid-primary-normal, white);
+  color: var(--theme-text-primary-normal);
+  position: relative;
+  padding: .5rem;
+  height: 100%;
+
+  .md-modal-container-wrapper {
+    min-width: 425px;
+  }
+}
