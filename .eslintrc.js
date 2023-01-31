@@ -19,5 +19,5 @@ module.exports = {
     }],
     'react/jsx-no-bind': 'warn'
   },
-  ignorePatterns: ['node_modules/','**/*.js','adapter-interfaces/*.js'],
+  ignorePatterns: ['node_modules/'],
 }
