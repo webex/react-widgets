@@ -1,0 +1,1 @@
+{"version":3,"file":"IAdapterAggregator.d.ts","sourceRoot":"","sources":["IAdapterAggregator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,mBAAmB,EAAE,MAAM,uBAAuB,CAAC;AAC5D,OAAO,EAAE,sBAAsB,EAAE,MAAM,0BAA0B,CAAC;AAElE,8BAAsB,kBAAkB;IACtC,kBAAkB,CAAC,EAAE,mBAAmB,CAAC;IAEzC,iBAAiB,CAAC,EAAE,OAAO,CAAC;IAE5B,qBAAqB,CAAC,EAAE,sBAAsB,CAAC;CAChD"}

@@ -1,0 +1,105 @@
+$C: wxc-speed-dial-form;
+
+.#{$C} {
+  flex: 1;
+
+  #phone label,
+  #mail label {
+    visibility: hidden;
+  }
+
+  &--isContact {
+    #phone label {
+      visibility: visible;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+
+    .md-text-wrapper {
+      margin: 0;
+      padding: .5rem 0 0;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    padding: 1.5rem 0 1rem;
+  }
+
+
+  &__input-container {
+    margin-bottom: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: normal;
+    align-items: normal;
+    flex-flow: row wrap;
+    flex-direction: column;
+
+    &--row {
+      flex-direction: row;
+
+      > :first-child {
+        margin-right: 1rem;
+      }
+    }
+
+    &--required {
+      label:before {
+        content: '*';
+        color: var(--theme-text-error-normal);
+      }
+    }
+
+    // For icon in select dropdown
+    .md-list-item-base-wrapper {
+      > div {
+        display: flex;
+      }
+
+      .md-icon-wrapper {
+        margin-right: .5rem;
+      }
+    }
+
+    .md-text-input-wrapper {
+      margin: 0;
+      flex: 1;
+
+      label {
+        font-size: 14px;
+      }
+    }
+
+    .md-select-wrapper {
+      align-self: stretch;
+      min-width: unset;
+
+      label {
+        line-height: normal;
+      }
+
+      .md-select-dropdown-input {
+        > span:first-of-type {
+          display: flex;
+          min-height: 24px;
+        }
+      }
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      margin-left: 0.75rem;
+      display: flex;
+    }
+  }
+}
+
+
+

@@ -1,0 +1,7 @@
+$C: wxc-number-pad;
+
+.#{$C} {
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  grid-gap: 20px;
+}

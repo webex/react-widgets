@@ -18,5 +18,6 @@ module.exports = {
       'newlines-between': 'always-and-inside-groups'
     }],
     'react/jsx-no-bind': 'warn'
-  }
+  },
+  ignorePatterns: ['node_modules/','**/*.js','adapter-interfaces/*.js'],
 }
