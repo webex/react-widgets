@@ -37,9 +37,6 @@
     "<rootDir>/node_modules/@webex",
     "<rootDir>/packages/node_modules"
   ],
-  "haste": {
-    "providesModuleNodeModules": [".*"]
-  },
   "verbose": true,
   "setupFiles": [
     "<rootDir>/scripts/tests/jest-setup.js"
