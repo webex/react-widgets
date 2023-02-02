@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "experimentalDecorators": true,
-    "allowJs": true
+    "allowJs": true,
+    "noImplicitAny":true
   },
   "include": [
     "packages/node_modules/@ciscospark/**/*",
