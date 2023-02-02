@@ -3,3 +3,9 @@
 **/cjs/**
 **/node_modules/**
 adapter-interfaces/rollup.config.js
+logger/rollup.config.js
+react-widgets/rollup.calling-config.js
+samples
+scripts
+test
+widgets
