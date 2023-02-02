@@ -68,7 +68,7 @@ jobs:
           command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: Run all Jest test suites
-          command: npm run jest -- --ci -i --reporters="jest-junit"
+          command: npm run jest --silent --maxWorkers=2 -- --ci -i --reporters="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT_NAME: js-jest-results.xml
             JEST_JUNIT_OUTPUT_DIR: reports/junit/jest
