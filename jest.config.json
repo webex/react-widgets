@@ -19,14 +19,7 @@
     "@webex/webex-widget-base": "<rootDir>/packages/node_modules/@webex/webex-widget-base/src"
   },
   "testRegex": ".test.js$",
-  "testEnvironment": "jsdom",
-  "testEnvironmentOptions": {
-    "browsers": [
-      "chrome",
-      "firefox",
-      "safari"
-    ]
-  },
+  "testURL": "http://localhost",
   "moduleDirectories": [
     "node_modules",
     "/packages/node_modules/"
@@ -37,6 +30,9 @@
     "<rootDir>/node_modules/@webex",
     "<rootDir>/packages/node_modules"
   ],
+  "haste": {
+    "providesModuleNodeModules": [".*"]
+  },
   "verbose": true,
   "setupFiles": [
     "<rootDir>/scripts/tests/jest-setup.js"
