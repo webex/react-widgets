@@ -7,7 +7,9 @@
     "dist",
     "build",
     "node_modules",
-    "*.test.*"
+    "*.test.*",
+    "*.js",
+    "adapter-interfaces/rollup.config.js"
   ],
   "compilerOptions": {
     "outDir": "dist",

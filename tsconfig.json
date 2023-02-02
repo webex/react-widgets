@@ -17,6 +17,6 @@
     "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
     "dist",
-    "adapter-interfaces/rollup.config"
+    "adapter-interfaces/rollup.config.js"
   ]
 }

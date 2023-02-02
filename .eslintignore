@@ -2,4 +2,4 @@
 **/es/**
 **/cjs/**
 **/node_modules/**
-adapter-interfaces/rollup.config
+adapter-interfaces/rollup.config.js
