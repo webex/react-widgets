@@ -56,7 +56,7 @@
     "eslint": "8.22.0",
     "eslint-plugin-storybook": "^0.6.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^28.1.1",
+    "jest": "^24.9.0",
     "jest-config-webex-int": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
