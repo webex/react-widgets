@@ -9,3 +9,5 @@ samples
 scripts
 test
 widgets
+rollup.calling-config.js
+wdio.conf.js
