@@ -96,7 +96,7 @@ jobs:
       - restore_node_modules
       - run:
           name: Copy and build journey test static files
-          command: npm run build journey dist-test
+          command: npm run build --unhandled-rejections=strict journey dist-test
       - persist_to_workspace:
           root: ~/react-widgets
           paths:
