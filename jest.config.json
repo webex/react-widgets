@@ -19,7 +19,14 @@
     "@webex/webex-widget-base": "<rootDir>/packages/node_modules/@webex/webex-widget-base/src"
   },
   "testRegex": ".test.js$",
-  "testURL": "http://localhost",
+  "testEnvironment": "jsdom",
+  "testEnvironmentOptions": {
+    "browsers": [
+      "chrome",
+      "firefox",
+      "safari"
+    ]
+  },
   "moduleDirectories": [
     "node_modules",
     "/packages/node_modules/"
