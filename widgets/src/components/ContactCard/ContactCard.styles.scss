@@ -1,0 +1,19 @@
+$C: wxc-contact-card;
+
+.#{$C} {
+
+  &__name {
+    margin-bottom: 0;
+  }
+
+  &__select {
+    width: 280px;
+
+    .md-select-selected-item-wrapper {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

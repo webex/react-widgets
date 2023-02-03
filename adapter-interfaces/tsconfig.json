@@ -1,0 +1,19 @@
+{
+  "extends": "../ts-config-webex-int/library.json",
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "*.test.*",
+    "*.js",
+    "adapter-interfaces/rollup.config.js"
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "noImplicitAny": false,
+    "composite": true
+  }
+}

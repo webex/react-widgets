@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebexCallingDataProvider matches snapshot 1`] = `
+<div
+  className="md-theme-provider-wrapper md-theme-provider-globals md-theme-lightWebex"
+>
+  <div
+    className="test"
+  >
+    Test
+  </div>
+</div>
+`;

@@ -1,0 +1,7 @@
+$C: wxc-voicemail-playback-controls;
+
+.#{$C} {
+  &__play-icon {
+    margin-left: 3px; //fix off-centered play icon
+  }
+}
