@@ -55,6 +55,7 @@
     "@babel/runtime-corejs2": "^7.8.3",
     "@formatjs/intl-pluralrules": "^1.5.4",
     "@formatjs/intl-relativetimeformat": "^4.5.11",
+    "@momentum-ui/icons": "^8.32.0",
     "@momentum-ui/react": "23.24.5",
     "@webex/common": "1.157.0",
     "@webex/common-timers": "1.157.0",

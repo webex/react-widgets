@@ -36,5 +36,6 @@
   "verbose": true,
   "setupFiles": [
     "<rootDir>/scripts/tests/jest-setup.js"
-  ]
+  ],
+  "moduleFileExtensions": ["js", "json", "jsx", "ts", "tsx", "node"]
 }
