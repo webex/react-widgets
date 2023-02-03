@@ -17,13 +17,5 @@
     "packages/node_modules/@ciscospark/**/cjs/*",
     "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
-    "dist",
-    "adapter-interfaces/rollup.config.js",
-    "logger/rollup.config.js",
-    "react-widgets/rollup.calling-config.js",
-    "samples",
-    "scripts",
-    "test",
-    "widgets"
   ]
 }
