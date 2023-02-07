@@ -206,6 +206,7 @@ jobs:
             - packages/node_modules/@webex/widget-space/dist
             - packages/node_modules/@webex/widget-recents/dist
             - packages/node_modules/@webex/widget-demo/dist
+            - packages/node_modules/@webex/widget-calling/dist
 
   deploy_to_cdn:
     executor: main-executor
