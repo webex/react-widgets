@@ -1,0 +1,394 @@
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Item } from '@react-stately/collections';
+import { useTranslation } from 'react-i18next';
+import {
+  ButtonPill,
+  Flex,
+  IconNext as Icon,
+  SelectNext as Select,
+  TextInput,
+} from '@momentum-ui/react-collaboration';
+import useWebexClasses from '../../hooks/useWebexClasses';
+import {
+  IFormData,
+  ISelectItems,
+  ISpeedDialFormProps,
+} from './SpeedDialForm.types';
+
+import './SpeedDialForm.styles.scss';
+import {
+  fieldErrorToMessage,
+  getPhoneOptions,
+  getPhoneTypeOptions,
+  setPhoneOptions,
+} from './SpeedDial.utils';
+
+/**
+ * The form for creating/editing a speed dial.
+ *
+ * @param {string} cancelText The text for the cancel button
+ * @param {string} addText The the text for the add button
+ * @param {object} data The form data to populate with
+ * @param {Function} onSubmit Callback function when form submit
+ * @param {Function} onCancel Callback function when form reset
+ * @param {boolean} isEdit If the speed dial item is being edited
+ * @param {boolean} isContact If the speed dial item is existing contact
+ * @returns {React.Component} SpeedDialForm component
+ */
+export const SpeedDialForm = ({
+  cancelText = 'Cancel',
+  addText = 'Add',
+  data = {
+    id: '',
+    givenName: '',
+    surname: '',
+    displayName: '',
+    phone: '',
+    callType: 'handset',
+    phoneType: 'work',
+  },
+  onSubmit = undefined,
+  onCancel = undefined,
+  isEdit = false,
+  isContact = false,
+}: ISpeedDialFormProps) => {
+  const [cssClasses, sc] = useWebexClasses('speed-dial-form', undefined, {
+    isContact,
+    isEdit,
+  });
+
+  const [formData, setFormData] = useState(data);
+  const { t } = useTranslation('WebexSpeedDials');
+
+  const phoneOptions = getPhoneOptions(formData);
+
+  const phoneTypes: string[] = t('form.phoneTypes', {
+    returnObjects: true,
+    defaultValue: ['Work', 'Mobile', 'Email', 'Other'],
+  });
+  const phoneTypeOptions = getPhoneTypeOptions(phoneTypes);
+
+  const callTypeOptions: ISelectItems[] = t('form.callTypeOptions', {
+    returnObjects: true,
+    defaultValue: [
+      {
+        id: 'handset',
+        value: 'Audio call',
+      },
+      {
+        id: 'video',
+        value: 'Video call',
+      },
+    ],
+  });
+
+  const processSubmit = (d: IFormData) => {
+    const displayName = d.displayName || `${d.givenName} ${d.surname}`.trim();
+    const currentCallAddress =
+      d.currentCallAddress || d.phoneType === 'mail' ? d.mail : d.phone;
+
+    const payload = setPhoneOptions({
+      ...d,
+      displayName,
+      currentCallAddress,
+    });
+
+    setFormData(payload);
+    if (onSubmit) {
+      onSubmit(payload);
+    }
+  };
+
+  const getDisplayName = () => {
+    const name = formData?.displayName
+      ? formData.displayName
+      : `${formData?.givenName} ${formData?.surname}`;
+    return name.trim();
+  };
+
+  const { control, handleSubmit, register, reset, formState, setFocus } =
+    useForm<IFormData>({
+      defaultValues: {
+        ...data,
+      },
+      mode: 'onChange',
+    });
+
+  return (
+    <form
+      id="speedDialForm"
+      onSubmit={handleSubmit(processSubmit)}
+      className={cssClasses}
+    >
+      {/* Phone Select Input */}
+      {isContact && (
+        <div className={sc('input-container', [''])}>
+          <Controller
+            control={control}
+            name="phone"
+            render={({ field: { name, onChange } }) => (
+              <Select
+                id={name}
+                key={name}
+                style={{
+                  width: '100%',
+                }}
+                label={t('form.phone.label')}
+                disabledKeys={[formData?.currentCallAddress as React.Key]}
+                defaultSelectedKey={
+                  formData?.currentCallAddress || formData?.mobilePhone
+                }
+                onSelectionChange={(key) => {
+                  setFormData({
+                    ...formData,
+                    currentCallAddress: key.toString(),
+                  });
+                  // setValue('currentCallAddress', key.toString());
+                  onChange(key.toString());
+                }}
+              >
+                {phoneOptions.map((item) => (
+                  <Item
+                    textValue={item.value}
+                    key={item.key}
+                    title={item.value}
+                  >
+                    <span>{item.value}</span>
+                  </Item>
+                ))}
+              </Select>
+            )}
+          />
+        </div>
+      )}
+
+      {!isContact && (
+        <>
+          {/* First Name */}
+          <div className={sc('input-container', [])}>
+            <Controller
+              control={control}
+              rules={{
+                required: t('form.firstName.required'),
+              }}
+              name="givenName"
+              render={({
+                field: { name, ref, onChange, onBlur, value },
+                fieldState,
+              }) => (
+                <TextInput
+                  id={name}
+                  name={name}
+                  defaultValue={value}
+                  autoFocus
+                  label={t('form.firstName.label')}
+                  onBlur={onBlur}
+                  onInput={(e) => {
+                    // setAvatarName(e.currentTarget.value);
+                    setFormData({
+                      ...formData,
+                      givenName: e.currentTarget.value,
+                    });
+                    onChange(e);
+                  }}
+                  ref={ref}
+                  messageArr={
+                    fieldState.error
+                      ? [fieldErrorToMessage(fieldState.error)]
+                      : []
+                  }
+                />
+              )}
+            />
+          </div>
+
+          {/* Last Name */}
+          <div className={sc('input-container', [''])}>
+            <Controller
+              control={control}
+              name="surname"
+              render={({ field: { name, ref, onChange, onBlur, value } }) => (
+                <TextInput
+                  id={name}
+                  name={name}
+                  defaultValue={value}
+                  label={t('form.lastName.label')}
+                  onBlur={onBlur}
+                  onInput={(e) => {
+                    setFormData({
+                      ...formData,
+                      surname: e.currentTarget.value,
+                    });
+                    onChange(e);
+                  }}
+                  ref={ref}
+                />
+              )}
+            />
+          </div>
+
+          {/* Phone Input */}
+          <div className={sc('input-container', ['row', 'required'])}>
+            {/* Phone Type */}
+            <Controller
+              control={control}
+              name="phoneType"
+              rules={{ required: true }}
+              render={({ field: { name, onChange } }) => (
+                <Select
+                  id={name}
+                  style={{
+                    width: '150px',
+                  }}
+                  label={t('form.phoneType.label')}
+                  defaultSelectedKey={formData.phoneType}
+                  onSelectionChange={(key) => {
+                    setFormData({ ...formData, phoneType: key.toString() });
+                    onChange(key.toString());
+                    setFocus('phone');
+                  }}
+                >
+                  {phoneTypeOptions.map((item) => (
+                    <Item key={item.value}>{item.value}</Item>
+                  ))}
+                </Select>
+              )}
+            />
+            {/* Phone - Number */}
+            {formData.phoneType !== 'email' && (
+              <Controller
+                control={control}
+                name="phone"
+                rules={{
+                  required: t('form.phone.required'),
+                  pattern: {
+                    value: /^[+]?[(]?\d{3}[)]?[-\s.]?\d{3}[-\s.]?\d{4,6}$/,
+                    message: t('form.phone.invalid'),
+                  },
+                }}
+                render={({
+                  field: { name, ref, onChange, onBlur, value },
+                  fieldState,
+                }) => (
+                  <TextInput
+                    id={name}
+                    name={name}
+                    defaultValue={value}
+                    label={t('form.phone.label')}
+                    placeholder={t('form.phone.placeholder')}
+                    onBlur={onBlur}
+                    onInput={(e) => {
+                      setFormData({
+                        ...formData,
+                        phone: e.currentTarget.value,
+                      });
+                      onChange(e);
+                    }}
+                    ref={ref}
+                    messageArr={
+                      fieldState.error
+                        ? [fieldErrorToMessage(fieldState.error)]
+                        : []
+                    }
+                  />
+                )}
+              />
+            )}
+
+            {/* Phone - Email */}
+            {formData.phoneType === 'email' && (
+              <Controller
+                control={control}
+                name="mail"
+                rules={{
+                  required: t('form.mail.required'),
+                  pattern: {
+                    value: /[a-z\d._%+-]+@[a-z\d.-]+\.[a-z]{2,4}$/,
+                    message: t('form.mail.invalid'),
+                  },
+                }}
+                render={({
+                  field: { name, ref, onChange, onBlur, value },
+                  fieldState,
+                }) => (
+                  <TextInput
+                    id={name}
+                    name={name}
+                    defaultValue={value}
+                    label={t('form.mail.label')}
+                    placeholder={t('form.mail.placeholder')}
+                    onBlur={onBlur}
+                    onInput={onChange}
+                    ref={ref}
+                    messageArr={
+                      fieldState.error
+                        ? [fieldErrorToMessage(fieldState.error)]
+                        : []
+                    }
+                  />
+                )}
+              />
+            )}
+          </div>
+        </>
+      )}
+
+      {/* Call Type */}
+      <div className={sc('input-container', [''])}>
+        <Controller
+          control={control}
+          name="callType"
+          render={({ field: { name, onChange } }) => (
+            <Select
+              id={name}
+              key={name}
+              style={{
+                width: '100%',
+              }}
+              label={t('form.callType.label')}
+              defaultSelectedKey={formData.callType || 'handset'}
+              onSelectionChange={(key) => {
+                setFormData({ ...formData, callType: key.toString() });
+                onChange(key.toString());
+              }}
+            >
+              {callTypeOptions.map((item) => (
+                <Item textValue={item.value} key={item.id}>
+                  <Icon name={item.id} scale={22} />
+                  <span>{item.value}</span>
+                </Item>
+              ))}
+            </Select>
+          )}
+        />
+      </div>
+
+      {/* Cancel Submit Actions */}
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <input type="hidden" {...register('id')} />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <input type="hidden" {...register('currentCallAddress')} />
+
+      <Flex className={sc('footer')} justifyContent="flex-end" xgap="1rem">
+        <ButtonPill
+          size={32}
+          ghost
+          type="reset"
+          color={undefined}
+          onPress={() => {
+            if (onCancel) {
+              onCancel();
+            }
+            reset();
+          }}
+        >
+          {cancelText}
+        </ButtonPill>
+        <ButtonPill type="submit" size={32} disabled={!formState.isValid}>
+          {addText}
+        </ButtonPill>
+      </Flex>
+    </form>
+  );
+};

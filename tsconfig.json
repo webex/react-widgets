@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "allowJs": true
+    "allowJs": true,
+    "noImplicitAny":true
   },
   "include": [
     "packages/node_modules/@ciscospark/**/*",
@@ -15,6 +16,6 @@
     "packages/node_modules/@ciscospark/**/cjs/*",
     "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
-    "dist"
   ]
 }
+

@@ -1,0 +1,1109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpeedDials should render 1`] = `
+<DocumentFragment>
+  <div
+    class="wxc wxc-speed-dial"
+  >
+    <ul
+      class="wxc-speed-dial__list"
+    >
+      <li>
+        <div
+          class="react-contextmenu-wrapper"
+        >
+          <div
+            class="wxc wxc-speed-dial-item"
+          >
+            <div
+              class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__content"
+              data-xgap="false"
+              data-ygap="true"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="wxc-speed-dial-item__drag-handle"
+              >
+                <span
+                  class="wxc-speed-dial-item__drag-icon"
+                >
+                  <div
+                    class="wxc-speed-dial-item__draggable"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+              <div
+                class="wxc-speed-dial-item__actions"
+              >
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__avatar"
+                  data-xgap="true"
+                  data-ygap="false"
+                >
+                  <div
+                    class="md-avatar-wrapper"
+                    data-color="default"
+                    data-size="48"
+                    title="Georgette Rath"
+                  >
+                    <span>
+                      GR
+                    </span>
+                    <img
+                      class="md-avatar-image-hidden"
+                      src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/776.jpg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__action"
+                  data-xgap="true"
+                  data-ygap="false"
+                />
+              </div>
+              <div
+                class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__meta"
+                data-xgap="false"
+                data-ygap="true"
+              >
+                <p
+                  class="md-text-wrapper wxc-speed-dial-item__name"
+                  data-type="body-primary"
+                >
+                  Georgette R.
+                </p>
+                <small
+                  class="md-text-wrapper wxc-speed-dial-item__status"
+                  data-type="body-secondary"
+                >
+                  Home
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav
+          class="react-contextmenu wxc-speed-dial-item__context-menu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <ul
+            aria-label="Speed Dial Item Menu"
+            class="wxc-speed-dial-item__menu md-menu-wrapper"
+            role="menu"
+            tabindex="0"
+          >
+            <ul
+              role="presentation"
+            >
+              <ul
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$audioCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.audioCall.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$videoCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.videoCall.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+            <ul
+              role="presentation"
+            >
+              <li
+                class="md-list-header-wrapper md-list-item-base-wrapper"
+                data-bold="false"
+                data-disabled="false"
+                data-interactive="false"
+                data-outline="true"
+                data-outline-color="secondary"
+                data-outline-only="true"
+                data-outline-position="bottom"
+                data-padded="true"
+                data-shape="rectangle"
+                data-size="32"
+                id="react-aria-generated-id"
+                role="separator"
+                tabindex="0"
+              />
+              <ul
+                aria-labelledby="react-aria-generated-id"
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$edit"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.edit.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$remove"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.remove.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        <div
+          class="react-contextmenu-wrapper"
+        >
+          <div
+            class="wxc wxc-speed-dial-item"
+          >
+            <div
+              class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__content"
+              data-xgap="false"
+              data-ygap="true"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="wxc-speed-dial-item__drag-handle"
+              >
+                <span
+                  class="wxc-speed-dial-item__drag-icon"
+                >
+                  <div
+                    class="wxc-speed-dial-item__draggable"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+              <div
+                class="wxc-speed-dial-item__actions"
+              >
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__avatar"
+                  data-xgap="true"
+                  data-ygap="false"
+                >
+                  <div
+                    class="md-avatar-wrapper"
+                    data-color="default"
+                    data-size="48"
+                    title="Lorna Roberts"
+                  >
+                    <span>
+                      LR
+                    </span>
+                    <img
+                      class="md-avatar-image-hidden"
+                      src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/309.jpg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__action"
+                  data-xgap="true"
+                  data-ygap="false"
+                />
+              </div>
+              <div
+                class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__meta"
+                data-xgap="false"
+                data-ygap="true"
+              >
+                <p
+                  class="md-text-wrapper wxc-speed-dial-item__name"
+                  data-type="body-primary"
+                >
+                  Lorna R.
+                </p>
+                <small
+                  class="md-text-wrapper wxc-speed-dial-item__status"
+                  data-type="body-secondary"
+                >
+                  Home
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav
+          class="react-contextmenu wxc-speed-dial-item__context-menu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <ul
+            aria-label="Speed Dial Item Menu"
+            class="wxc-speed-dial-item__menu md-menu-wrapper"
+            role="menu"
+            tabindex="0"
+          >
+            <ul
+              role="presentation"
+            >
+              <ul
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$audioCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.audioCall.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$videoCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.videoCall.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+            <ul
+              role="presentation"
+            >
+              <li
+                class="md-list-header-wrapper md-list-item-base-wrapper"
+                data-bold="false"
+                data-disabled="false"
+                data-interactive="false"
+                data-outline="true"
+                data-outline-color="secondary"
+                data-outline-only="true"
+                data-outline-position="bottom"
+                data-padded="true"
+                data-shape="rectangle"
+                data-size="32"
+                id="react-aria-generated-id"
+                role="separator"
+                tabindex="0"
+              />
+              <ul
+                aria-labelledby="react-aria-generated-id"
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$edit"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.edit.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$remove"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.remove.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        <div
+          class="react-contextmenu-wrapper"
+        >
+          <div
+            class="wxc wxc-speed-dial-item"
+          >
+            <div
+              class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__content"
+              data-xgap="false"
+              data-ygap="true"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="wxc-speed-dial-item__drag-handle"
+              >
+                <span
+                  class="wxc-speed-dial-item__drag-icon"
+                >
+                  <div
+                    class="wxc-speed-dial-item__draggable"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+              <div
+                class="wxc-speed-dial-item__actions"
+              >
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__avatar"
+                  data-xgap="true"
+                  data-ygap="false"
+                >
+                  <div
+                    class="md-avatar-wrapper"
+                    data-color="default"
+                    data-size="48"
+                    title="Margret Bechtelar"
+                  >
+                    <span>
+                      MB
+                    </span>
+                    <img
+                      class="md-avatar-image-hidden"
+                      src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/422.jpg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__action"
+                  data-xgap="true"
+                  data-ygap="false"
+                />
+              </div>
+              <div
+                class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__meta"
+                data-xgap="false"
+                data-ygap="true"
+              >
+                <p
+                  class="md-text-wrapper wxc-speed-dial-item__name"
+                  data-type="body-primary"
+                >
+                  Margret B.
+                </p>
+                <small
+                  class="md-text-wrapper wxc-speed-dial-item__status"
+                  data-type="body-secondary"
+                >
+                  Work
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav
+          class="react-contextmenu wxc-speed-dial-item__context-menu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <ul
+            aria-label="Speed Dial Item Menu"
+            class="wxc-speed-dial-item__menu md-menu-wrapper"
+            role="menu"
+            tabindex="0"
+          >
+            <ul
+              role="presentation"
+            >
+              <ul
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$audioCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.audioCall.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$videoCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.videoCall.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+            <ul
+              role="presentation"
+            >
+              <li
+                class="md-list-header-wrapper md-list-item-base-wrapper"
+                data-bold="false"
+                data-disabled="false"
+                data-interactive="false"
+                data-outline="true"
+                data-outline-color="secondary"
+                data-outline-only="true"
+                data-outline-position="bottom"
+                data-padded="true"
+                data-shape="rectangle"
+                data-size="32"
+                id="react-aria-generated-id"
+                role="separator"
+                tabindex="0"
+              />
+              <ul
+                aria-labelledby="react-aria-generated-id"
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$edit"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.edit.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$remove"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.remove.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        <div
+          class="react-contextmenu-wrapper"
+        >
+          <div
+            class="wxc wxc-speed-dial-item"
+          >
+            <div
+              class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__content"
+              data-xgap="false"
+              data-ygap="true"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="wxc-speed-dial-item__drag-handle"
+              >
+                <span
+                  class="wxc-speed-dial-item__drag-icon"
+                >
+                  <div
+                    class="wxc-speed-dial-item__draggable"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+              <div
+                class="wxc-speed-dial-item__actions"
+              >
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__avatar"
+                  data-xgap="true"
+                  data-ygap="false"
+                >
+                  <div
+                    class="md-avatar-wrapper"
+                    data-color="default"
+                    data-size="48"
+                    title="Alexis Satterfield"
+                  >
+                    <span>
+                      AS
+                    </span>
+                    <img
+                      class="md-avatar-image-hidden"
+                      src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1079.jpg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__action"
+                  data-xgap="true"
+                  data-ygap="false"
+                />
+              </div>
+              <div
+                class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__meta"
+                data-xgap="false"
+                data-ygap="true"
+              >
+                <p
+                  class="md-text-wrapper wxc-speed-dial-item__name"
+                  data-type="body-primary"
+                >
+                  Alexis S.
+                </p>
+                <small
+                  class="md-text-wrapper wxc-speed-dial-item__status"
+                  data-type="body-secondary"
+                >
+                  Home
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav
+          class="react-contextmenu wxc-speed-dial-item__context-menu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <ul
+            aria-label="Speed Dial Item Menu"
+            class="wxc-speed-dial-item__menu md-menu-wrapper"
+            role="menu"
+            tabindex="0"
+          >
+            <ul
+              role="presentation"
+            >
+              <ul
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$audioCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.audioCall.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$videoCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.videoCall.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+            <ul
+              role="presentation"
+            >
+              <li
+                class="md-list-header-wrapper md-list-item-base-wrapper"
+                data-bold="false"
+                data-disabled="false"
+                data-interactive="false"
+                data-outline="true"
+                data-outline-color="secondary"
+                data-outline-only="true"
+                data-outline-position="bottom"
+                data-padded="true"
+                data-shape="rectangle"
+                data-size="32"
+                id="react-aria-generated-id"
+                role="separator"
+                tabindex="0"
+              />
+              <ul
+                aria-labelledby="react-aria-generated-id"
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$edit"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.edit.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$remove"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.remove.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        <div
+          class="react-contextmenu-wrapper"
+        >
+          <div
+            class="wxc wxc-speed-dial-item"
+          >
+            <div
+              class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__content"
+              data-xgap="false"
+              data-ygap="true"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="wxc-speed-dial-item__drag-handle"
+              >
+                <span
+                  class="wxc-speed-dial-item__drag-icon"
+                >
+                  <div
+                    class="wxc-speed-dial-item__draggable"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+              <div
+                class="wxc-speed-dial-item__actions"
+              >
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__avatar"
+                  data-xgap="true"
+                  data-ygap="false"
+                >
+                  <div
+                    class="md-avatar-wrapper"
+                    data-color="default"
+                    data-size="48"
+                    title="Loyal Herman"
+                  >
+                    <span>
+                      LH
+                    </span>
+                    <img
+                      class="md-avatar-image-hidden"
+                      src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/183.jpg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__action"
+                  data-xgap="true"
+                  data-ygap="false"
+                />
+              </div>
+              <div
+                class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-item__meta"
+                data-xgap="false"
+                data-ygap="true"
+              >
+                <p
+                  class="md-text-wrapper wxc-speed-dial-item__name"
+                  data-type="body-primary"
+                >
+                  Loyal H.
+                </p>
+                <small
+                  class="md-text-wrapper wxc-speed-dial-item__status"
+                  data-type="body-secondary"
+                >
+                  Work
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav
+          class="react-contextmenu wxc-speed-dial-item__context-menu"
+          role="menu"
+          style="position: fixed; opacity: 0; pointer-events: none;"
+          tabindex="-1"
+        >
+          <ul
+            aria-label="Speed Dial Item Menu"
+            class="wxc-speed-dial-item__menu md-menu-wrapper"
+            role="menu"
+            tabindex="0"
+          >
+            <ul
+              role="presentation"
+            >
+              <ul
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$audioCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.audioCall.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$videoCall"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.videoCall.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+            <ul
+              role="presentation"
+            >
+              <li
+                class="md-list-header-wrapper md-list-item-base-wrapper"
+                data-bold="false"
+                data-disabled="false"
+                data-interactive="false"
+                data-outline="true"
+                data-outline-color="secondary"
+                data-outline-only="true"
+                data-outline-position="bottom"
+                data-padded="true"
+                data-shape="rectangle"
+                data-size="32"
+                id="react-aria-generated-id"
+                role="separator"
+                tabindex="0"
+              />
+              <ul
+                aria-labelledby="react-aria-generated-id"
+                class="md-menu-section-wrapper"
+                role="group"
+              >
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$edit"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.edit.label
+                  </div>
+                </li>
+                <li
+                  aria-describedby="react-aria-generated-id react-aria-generated-id"
+                  aria-disabled="false"
+                  aria-labelledby="react-aria-generated-id"
+                  class="md-menu-item-wrapper md-list-item-base-wrapper"
+                  data-disabled="false"
+                  data-interactive="true"
+                  data-key=".$remove"
+                  data-padded="true"
+                  data-shape="rectangle"
+                  data-size="40"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  <div
+                    data-position="fill"
+                    title=""
+                  >
+                    item.remove.label
+                  </div>
+                </li>
+              </ul>
+            </ul>
+          </ul>
+        </nav>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,6 @@
+{
+  "audio": "Audio",
+  "video": "Video",
+  "makeAudioCallTo": "Make audio call to {{address}}",
+  "makeVideoCallTo": "Make video call to {{address}}"
+}

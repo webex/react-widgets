@@ -1,0 +1,30 @@
+$C: wxc-search-contacts-list;
+
+.#{$C} {
+
+  &--empty {
+    svg {
+      flex-shrink: 0;
+    }
+
+    &__text.md-text-wrapper {
+      font-size: 14px;
+      color: var(--theme-text-secondary-normal);
+    }
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    margin: 39px 0;
+  }
+
+  &__source-header:first-letter {
+    text-transform: lowercase;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+}
