@@ -1,0 +1,1 @@
+{"version":3,"file":"MakeCallJSONAdapter.d.ts","sourceRoot":"","sources":["MakeCallJSONAdapter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,+BAA+B,CAAC;AAEjE,qBAAa,mBAAoB,YAAW,gBAAgB;IAC1D,QAAQ,CAAC,OAAO,EAAE,MAAM,EAAE,OAAO,EAAE,OAAO,GAAG,OAAO,CAAC,IAAI,CAAC;CAM3D"}

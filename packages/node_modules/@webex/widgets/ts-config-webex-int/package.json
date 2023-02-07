@@ -1,0 +1,11 @@
+{
+  "name": "ts-config-webex-int",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "files": [
+    "base.json",
+    "react-library.json"
+  ]
+}

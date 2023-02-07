@@ -118,11 +118,16 @@ function buildES(pkg) {
   if (targetPkgPath) {
     try {
       const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
-
+      const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
       // Rollup cleans the `es` folder automatically
       console.info(`Packaging ${pkg}...`.cyan);
+
       execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+      
       console.info(`${pkg}... Done\n\n`.cyan);
+
+      execSync(`cd widgets && rollup -c ${callingRollupConfigPath}`);
+
     }
     catch (err) {
       throw new Error(`Error building ${pkg} package, ${err}`, err);

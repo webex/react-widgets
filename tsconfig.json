@@ -15,6 +15,8 @@
     "packages/node_modules/@ciscospark/**/cjs/*",
     "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
-    "dist"
+    "dist",
+    "rollup.calling-config.js",
+    "packages/node_modules/@webex/widgets/rollup.config.js"
   ]
 }

@@ -1,0 +1,290 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpeedDialForm should render 1`] = `
+<DocumentFragment>
+  <form
+    class="wxc wxc-speed-dial-form"
+    id="speedDialForm"
+  >
+    <div
+      class="wxc-speed-dial-form__input-container"
+    >
+      <div
+        class="md-text-input-wrapper"
+        data-focus="false"
+        data-level="none"
+        id="givenName"
+      >
+        <label
+          for="react-aria-generated-id"
+          id="react-aria-generated-id"
+        >
+          form.firstName.label
+        </label>
+        <div
+          class="md-text-input-container"
+        >
+          <input
+            aria-describedby="react-aria-generated-id react-aria-generated-id"
+            aria-labelledby="react-aria-generated-id"
+            id="givenName"
+            name="givenName"
+            type="text"
+            value="Georgette"
+          />
+          <button
+            class="clear-icon md-button-simple-wrapper"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="wxc-speed-dial-form__input-container wxc-speed-dial-form__input-container--"
+    >
+      <div
+        class="md-text-input-wrapper"
+        data-focus="false"
+        data-level="none"
+        id="surname"
+      >
+        <label
+          for="react-aria-generated-id"
+          id="react-aria-generated-id"
+        >
+          form.lastName.label
+        </label>
+        <div
+          class="md-text-input-container"
+        >
+          <input
+            aria-describedby="react-aria-generated-id react-aria-generated-id"
+            aria-labelledby="react-aria-generated-id"
+            id="surname"
+            name="surname"
+            type="text"
+            value="Rath"
+          />
+          <button
+            class="clear-icon md-button-simple-wrapper"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="wxc-speed-dial-form__input-container wxc-speed-dial-form__input-container--row wxc-speed-dial-form__input-container--required"
+    >
+      <div
+        class="md-select-wrapper"
+        id="phoneType"
+        style="width: 150px;"
+      >
+        <label
+          id="react-aria-generated-id"
+        >
+          form.phoneType.label
+        </label>
+        <div
+          aria-hidden="true"
+          style="border: 0px; clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            style="font-size: 16px;"
+            tabindex="-1"
+            type="text"
+          />
+          <label>
+            form.phoneType.label
+            <select
+              size="4"
+              tabindex="-1"
+            >
+              <option />
+              <option
+                value="Work"
+              >
+                Work
+              </option>
+              <option
+                value="Mobile"
+              >
+                Mobile
+              </option>
+              <option
+                value="Email"
+              >
+                Email
+              </option>
+              <option
+                value="Other"
+              >
+                Other
+              </option>
+            </select>
+          </label>
+        </div>
+        <button
+          aria-describedby="react-aria-generated-id react-aria-generated-id"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-labelledby="react-aria-generated-id react-aria-generated-id"
+          class="md-select-dropdown-input"
+          id="phoneType"
+          type="button"
+        >
+          <span
+            class="md-select-selected-item-wrapper"
+            id="react-aria-generated-id"
+          />
+          <span
+            aria-hidden="true"
+            class="md-select-icon-wrapper"
+          />
+        </button>
+      </div>
+      <div
+        class="md-text-input-wrapper"
+        data-focus="false"
+        data-level="none"
+        id="phone"
+      >
+        <label
+          for="react-aria-generated-id"
+          id="react-aria-generated-id"
+        >
+          form.phone.label
+        </label>
+        <div
+          class="md-text-input-container"
+        >
+          <input
+            aria-describedby="react-aria-generated-id react-aria-generated-id"
+            aria-labelledby="react-aria-generated-id"
+            id="phone"
+            name="phone"
+            placeholder="form.phone.placeholder"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="wxc-speed-dial-form__input-container wxc-speed-dial-form__input-container--"
+    >
+      <div
+        class="md-select-wrapper"
+        id="callType"
+        style="width: 100%;"
+      >
+        <label
+          id="react-aria-generated-id"
+        >
+          form.callType.label
+        </label>
+        <div
+          aria-hidden="true"
+          style="border: 0px; clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        >
+          <input
+            style="font-size: 16px;"
+            tabindex="-1"
+            type="text"
+          />
+          <label>
+            form.callType.label
+            <select
+              size="2"
+              tabindex="-1"
+            >
+              <option />
+              <option
+                value="handset"
+              >
+                Audio call
+              </option>
+              <option
+                value="video"
+              >
+                Video call
+              </option>
+            </select>
+          </label>
+        </div>
+        <button
+          aria-describedby="react-aria-generated-id react-aria-generated-id"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-labelledby="react-aria-generated-id react-aria-generated-id"
+          class="md-select-dropdown-input md-select-selected"
+          id="callType"
+          type="button"
+        >
+          <span
+            class="md-select-selected-item-wrapper"
+            id="react-aria-generated-id"
+            title="Audio call"
+          >
+            <span>
+              Audio call
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+            class="md-select-icon-wrapper"
+          />
+        </button>
+      </div>
+    </div>
+    <input
+      name="id"
+      type="hidden"
+      value="d2b16518-cb01-42b1-970a-a5337dffc155"
+    />
+    <input
+      name="currentCallAddress"
+      type="hidden"
+      value="1-120-177-7004"
+    />
+    <div
+      class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-end md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-speed-dial-form__footer"
+      data-xgap="true"
+      data-ygap="false"
+      style="--md-globals-flex-xgap-size: 1rem;"
+    >
+      <button
+        class="md-button-pill-wrapper md-button-simple-wrapper"
+        data-color="primary"
+        data-disabled="false"
+        data-ghost="true"
+        data-grown="false"
+        data-outline="false"
+        data-size="32"
+        data-solid="false"
+        type="reset"
+      >
+        <span>
+          Cancel
+        </span>
+      </button>
+      <button
+        class="md-button-pill-wrapper md-button-simple-wrapper"
+        data-color="primary"
+        data-disabled="true"
+        data-ghost="false"
+        data-grown="false"
+        data-outline="false"
+        data-size="32"
+        data-solid="false"
+        disabled=""
+        type="submit"
+      >
+        <span>
+          Add
+        </span>
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

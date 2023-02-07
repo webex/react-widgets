@@ -1,0 +1,28 @@
+$C: wxc-dialpad-widget;
+
+.#{$C} {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--theme-background-solid-primary-normal);
+  color: var(--theme-text-primary-normal);
+  padding: .75rem 0;
+
+  .wxc-search-contacts-widget {
+    width: 300px;
+  }
+
+  .wxc-number-pad {
+    margin-top: 65px;
+    margin-bottom: 60px;
+
+    &-call-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .wxc-search-contacts-widget {
+      width: 300px;
+    }
+  }
+}

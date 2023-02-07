@@ -1,0 +1,294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebexDialpad renders 1`] = `
+<DocumentFragment>
+  <div
+    class="wxc wxc-dialpad-widget"
+  >
+    <div
+      class="wxc wxc-search-contacts-widget"
+    >
+      <div
+        class="md-text-input-wrapper wxc-search-contacts-widget__input"
+        data-focus="false"
+        data-level="none"
+      >
+        <div
+          class="md-text-input-container"
+        >
+          <input
+            aria-describedby="react-aria-generated-id react-aria-generated-id"
+            aria-label="search"
+            autocomplete="off"
+            id="react-aria-generated-id"
+            placeholder="search"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="wxc wxc-number-pad"
+    >
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          1
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        />
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          2
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          ABC
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          3
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          DEF
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          4
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          GHI
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          5
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          JKL
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          6
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          MNO
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          7
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          PQRS
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          8
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          TUV
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          9
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          WXYZ
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          *
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          ,
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          0
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        >
+          +
+        </div>
+      </button>
+      <button
+        class="md-button-dialpad-wrapper md-button-simple-wrapper"
+        data-disabled="false"
+        data-size="64"
+        type="button"
+      >
+        <div
+          class="md-button-dialpad-primary-text"
+        >
+          #
+        </div>
+        <div
+          class="md-button-dialpad-secondary-text"
+        />
+      </button>
+    </div>
+    <div
+      class="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-dialpad-widget__call-buttons"
+      data-xgap="true"
+      data-ygap="false"
+      style="--md-globals-flex-xgap-size: 32px;"
+    >
+      <div
+        class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap"
+        data-xgap="false"
+        data-ygap="true"
+        style="--md-globals-flex-ygap-size: 8px;"
+      >
+        <button
+          aria-label="makeAudioCallTo"
+          class="md-button-circle-wrapper md-button-simple-wrapper"
+          data-color="join"
+          data-disabled="true"
+          data-ghost="false"
+          data-multiple-children="false"
+          data-outline="false"
+          data-size="52"
+          disabled=""
+          type="button"
+        />
+        <p
+          class="md-text-wrapper"
+          data-type="body-primary"
+        >
+          audio
+        </p>
+      </div>
+      <div
+        class="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap"
+        data-xgap="false"
+        data-ygap="true"
+        style="--md-globals-flex-ygap-size: 8px;"
+      >
+        <button
+          aria-label="makeVideoCallTo"
+          class="md-button-circle-wrapper md-button-simple-wrapper"
+          data-color="join"
+          data-disabled="true"
+          data-ghost="false"
+          data-multiple-children="false"
+          data-outline="false"
+          data-size="52"
+          disabled=""
+          type="button"
+        />
+        <p
+          class="md-text-wrapper"
+          data-type="body-primary"
+        >
+          video
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

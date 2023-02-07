@@ -1,0 +1,32 @@
+$C: wxc-call-history-widget;
+
+.#{$C} {
+  position: relative;
+  min-height: 500px;
+  height: 100%;
+  background: var(--theme-background-solid-primary-normal);
+  color: var(--theme-text-primary-normal);
+  display: grid;
+  grid-template-rows: 1fr auto;
+
+  &__name {
+    display: block;
+  }
+
+  &__header {
+    height: 60px;
+    box-shadow: rgb(0 0 0 / 10%) 0 1px 1px;
+    border-bottom: 1px solid var(--scrollbar-track-background, rgba(0, 0, 0, 0.1));
+    padding-left: 0.75rem;
+  }
+
+  &__content {
+    height: 100%;
+  }
+
+  &--loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

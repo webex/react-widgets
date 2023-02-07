@@ -1,0 +1,51 @@
+@mixin list-bordered {
+  border-bottom: 1px solid var(--scrollbar-track-background, rgba(0, 0, 0, 0.1));
+}
+
+@mixin list-squared {
+  border-radius: 0 !important;
+}
+
+@mixin list-avatar {
+  flex-shrink: 0;
+}
+
+@mixin list-primary-text {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin list-sub-text {
+  color: var(--label-secondary-text);
+  width: 100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin list-toggle-active($hideOnActiveClass, $showOnActiveClass) {
+  @include list-hide-on-active($hideOnActiveClass);
+  @include list-show-on-active($showOnActiveClass);
+}
+
+@mixin list-hide-on-active($hideOnActiveClass) {
+  &:hover,
+  &:focus,
+  &.active {
+    .#{$hideOnActiveClass} {
+      display: none;
+    }
+  }
+}
+
+@mixin list-show-on-active($showOnActiveClass) {
+  &:not(:hover):not(:focus):not(.active) {
+    .#{$showOnActiveClass} {
+      display: none;
+    }
+  }
+}

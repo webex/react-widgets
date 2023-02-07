@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CallHistory should match snapshot 1`] = `
+<div
+  className="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc wxc-call-history"
+  data-xgap={false}
+  data-ygap={true}
+  style={
+    Object {
+      "--md-globals-flex-xgap-size": undefined,
+      "--md-globals-flex-ygap-size": undefined,
+    }
+  }
+>
+  <ul
+    className="wxc-call-history__list md-list-wrapper"
+    onKeyDown={[Function]}
+    style={
+      Object {
+        "width": "100%",
+      }
+    }
+  >
+    <li
+      className="wxc wxc-call-history-item md-list-item-base-wrapper"
+      data-disabled={false}
+      data-interactive={true}
+      data-padded={true}
+      data-shape="rectangle"
+      data-size={50}
+      id="item1"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragStart={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchCancel={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="listitem"
+      tabIndex={0}
+    >
+      <div
+        className="wxc-call-history-item__icon"
+        data-position="start"
+      >
+        <div
+          className="md-avatar-wrapper"
+          data-color="default"
+          data-size={32}
+          title="Item 1"
+        >
+          <span>
+            I1
+          </span>
+        </div>
+      </div>
+      <div
+        className="wxc-call-history-item__content"
+        data-position="fill"
+      >
+        <div
+          className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap"
+          data-xgap={true}
+          data-ygap={false}
+          style={
+            Object {
+              "--md-globals-flex-xgap-size": undefined,
+              "--md-globals-flex-ygap-size": undefined,
+            }
+          }
+        >
+          <div
+            className="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__content-wrap"
+            data-xgap={false}
+            data-ygap={true}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": undefined,
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <p
+              className="md-text-wrapper wxc-call-history-item__name"
+              data-type="body-primary"
+            >
+              Item 1
+            </p>
+            <small
+              className="md-text-wrapper wxc-call-history-item__phoneNumber"
+              data-type="body-secondary"
+            >
+              +16695441558
+            </small>
+          </div>
+          <div
+            className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__direction"
+            data-xgap={true}
+            data-ygap={false}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": ".2rem",
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <small
+              className="md-text-wrapper wxc-call-history-item__duration"
+              data-type="body-secondary"
+            >
+              1m
+            </small>
+          </div>
+        </div>
+      </div>
+      <div
+        className="chromatic-ignore wxc-call-history-item__meta"
+        data-position="end"
+      >
+        <div
+          className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-end md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__meta"
+          data-xgap={true}
+          data-ygap={false}
+          style={
+            Object {
+              "--md-globals-flex-xgap-size": undefined,
+              "--md-globals-flex-ygap-size": undefined,
+            }
+          }
+        >
+          <div
+            className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__actions"
+            data-xgap={true}
+            data-ygap={false}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": ".5rem",
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <button
+              aria-label="Make a video call"
+              className="md-button-circle-wrapper wxc-call-history-item__video-btn md-button-simple-wrapper"
+              data-color="join"
+              data-disabled={false}
+              data-ghost={false}
+              data-multiple-children={false}
+              data-outline={false}
+              data-size={28}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragStart={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchCancel={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              title="Make a video call"
+              type="button"
+            />
+            <button
+              aria-label="Make an audio call"
+              className="md-button-circle-wrapper wxc-call-history-item__audio-btn md-button-simple-wrapper"
+              data-color="join"
+              data-disabled={false}
+              data-ghost={false}
+              data-multiple-children={false}
+              data-outline={false}
+              data-size={28}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragStart={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchCancel={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              title="Make an audio call"
+              type="button"
+            />
+          </div>
+          <div
+            className="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-flex-end md-flex-align-content-flex-end md-flex-nowrap wxc-call-history-item__datetime"
+            data-xgap={false}
+            data-ygap={true}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": undefined,
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <small
+              className="md-text-wrapper wxc-call-history-item__date"
+              data-type="body-secondary"
+            >
+              4/19/22
+            </small>
+            <small
+              className="md-text-wrapper wxc-call-history-item__time"
+              data-type="body-secondary"
+            >
+              9:21 PM
+            </small>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li
+      className="wxc wxc-call-history-item wxc-call-history-item--is-missed wxc-call-history-item--is-outgoing md-list-item-base-wrapper"
+      data-disabled={false}
+      data-interactive={true}
+      data-padded={true}
+      data-shape="rectangle"
+      data-size={50}
+      id="item2"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragStart={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchCancel={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="listitem"
+      tabIndex={-1}
+    >
+      <div
+        className="wxc-call-history-item__icon"
+        data-position="start"
+      >
+        <div
+          className="md-avatar-wrapper"
+          data-color="default"
+          data-size={32}
+          title="Item 2"
+        >
+          <span>
+            I2
+          </span>
+        </div>
+      </div>
+      <div
+        className="wxc-call-history-item__content"
+        data-position="fill"
+      >
+        <div
+          className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap"
+          data-xgap={true}
+          data-ygap={false}
+          style={
+            Object {
+              "--md-globals-flex-xgap-size": undefined,
+              "--md-globals-flex-ygap-size": undefined,
+            }
+          }
+        >
+          <div
+            className="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__content-wrap"
+            data-xgap={false}
+            data-ygap={true}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": undefined,
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <p
+              className="md-text-wrapper wxc-call-history-item__name"
+              data-type="body-primary"
+            >
+              Item 2
+            </p>
+            <small
+              className="md-text-wrapper wxc-call-history-item__phoneNumber"
+              data-type="body-secondary"
+            >
+              +15555555555
+            </small>
+          </div>
+          <div
+            className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__direction"
+            data-xgap={true}
+            data-ygap={false}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": ".2rem",
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <div
+              className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-center md-flex-align-items-flex-end md-flex-align-content-flex-start md-flex-nowrap"
+              data-xgap={true}
+              data-ygap={false}
+              style={
+                Object {
+                  "--md-globals-flex-xgap-size": "1rem",
+                  "--md-globals-flex-ygap-size": undefined,
+                }
+              }
+            />
+            <small
+              className="md-text-wrapper wxc-call-history-item__duration"
+              data-type="body-secondary"
+            >
+              Missed call
+            </small>
+          </div>
+        </div>
+      </div>
+      <div
+        className="chromatic-ignore wxc-call-history-item__meta"
+        data-position="end"
+      >
+        <div
+          className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-end md-flex-align-items-center md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__meta"
+          data-xgap={true}
+          data-ygap={false}
+          style={
+            Object {
+              "--md-globals-flex-xgap-size": undefined,
+              "--md-globals-flex-ygap-size": undefined,
+            }
+          }
+        >
+          <div
+            className="md-flex-wrapper md-flex-direction-row md-flex-justify-content-flex-start md-flex-align-items-flex-start md-flex-align-content-flex-start md-flex-nowrap wxc-call-history-item__actions"
+            data-xgap={true}
+            data-ygap={false}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": ".5rem",
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <button
+              aria-label="Make a video call"
+              className="md-button-circle-wrapper wxc-call-history-item__video-btn md-button-simple-wrapper"
+              data-color="join"
+              data-disabled={false}
+              data-ghost={false}
+              data-multiple-children={false}
+              data-outline={false}
+              data-size={28}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragStart={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchCancel={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              title="Make a video call"
+              type="button"
+            />
+            <button
+              aria-label="Make an audio call"
+              className="md-button-circle-wrapper wxc-call-history-item__audio-btn md-button-simple-wrapper"
+              data-color="join"
+              data-disabled={false}
+              data-ghost={false}
+              data-multiple-children={false}
+              data-outline={false}
+              data-size={28}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragStart={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchCancel={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              title="Make an audio call"
+              type="button"
+            />
+          </div>
+          <div
+            className="md-flex-wrapper md-flex-direction-column md-flex-justify-content-flex-start md-flex-align-items-flex-end md-flex-align-content-flex-end md-flex-nowrap wxc-call-history-item__datetime"
+            data-xgap={false}
+            data-ygap={true}
+            style={
+              Object {
+                "--md-globals-flex-xgap-size": undefined,
+                "--md-globals-flex-ygap-size": undefined,
+              }
+            }
+          >
+            <small
+              className="md-text-wrapper wxc-call-history-item__date"
+              data-type="body-secondary"
+            >
+              4/20/22
+            </small>
+            <small
+              className="md-text-wrapper wxc-call-history-item__time"
+              data-type="body-secondary"
+            >
+              9:21 PM
+            </small>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
