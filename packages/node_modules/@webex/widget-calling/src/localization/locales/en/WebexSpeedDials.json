@@ -1,0 +1,88 @@
+{
+  "webex.calling": "Webex Calling",
+  "modal": {
+    "add": {
+      "header": "Add a speed dial",
+      "label": "Add"
+    },
+    "edit": {
+      "header": "Edit speed dial",
+      "label": "Save"
+    },
+    "cancel": {
+      "label": "Cancel"
+    }
+  },
+  "item": {
+    "remove": {
+      "label": "Remove from speed dial"
+    },
+    "edit": {
+      "label": "Edit"
+    },
+    "audioCall": {
+      "label": "Audio Call"
+    },
+    "videoCall": {
+      "label": "Video Call"
+    }
+  },
+  "search": {
+    "label": "Search contacts",
+    "labels": {
+      "clear": "Clear",
+      "create": "Create speed dial for",
+      "header": "Not seeing the '{{searchValue}}' you're looking for?",
+      "directory": "Directory Contacts",
+      "outlook": "Outlook Contacts"
+    }
+  },
+  "form": {
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "",
+      "required": "First name is required"
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": ""
+    },
+    "phone": {
+      "label": "Phone",
+      "required": "Phone number is required",
+      "invalid": "Must be a valid number",
+      "placeholder": "Type number"
+    },
+    "mail": {
+      "label": "Email",
+      "required": "Email is required",
+      "invalid": "Must be a valid email",
+      "placeholder": "Type email"
+    },
+    "phoneType": {
+      "label": "Phone",
+      "placeholder": ""
+    },
+    "callType": {
+      "label": "Call type preference",
+      "placeholder": ""
+    },
+    "callTypeOptions": [
+      {
+        "id": "handset",
+        "value": "Audio Call"
+      },
+      {
+        "id": "video",
+        "value": "Video Call"
+      }
+    ],
+    "phoneTypes": [
+      "Work",
+      "Mobile",
+      "Email",
+      "Other",
+      "SIP"
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+export declare const useDebouncedEffect: (debouncedEffect: () => void, deps: unknown[], delay: number, immediateEffect?: (() => void) | undefined) => void;
+//# sourceMappingURL=useDebouncedEffect.d.ts.map
