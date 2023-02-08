@@ -23,6 +23,8 @@ if (process.env.BUILD_BUNDLE_PUBLIC_PATH) {
   styleBundle = `<link rel="stylesheet" href="${process.env.BUILD_BUNDLE_PUBLIC_PATH}main.css">`;
 }
 
+console.log('process.env.BUILD_BUNDLE_PUBLIC_PATH:',process.env.BUILD_BUNDLE_PUBLIC_PATH)
+
 // Only create html file when one exists in src/
 if (fs.existsSync('./src/index.html')) {
   plugins.push(
