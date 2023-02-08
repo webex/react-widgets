@@ -1,11 +1,32 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "experimentalDecorators": true,
-    "allowJs": true
+    "allowJs": true,
+    "lib": ["es6", "dom"],
+    "rootDir": "./src",
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
   },
   "include": [
     "packages/node_modules/@ciscospark/**/*",
-    "packages/node_modules/@webex/**/*"
+    "packages/node_modules/@webex/**/*",
+    "./src"
   ],
   "exclude": [
     "packages/node_modules/@ciscospark/**/dist/*",
@@ -15,6 +36,8 @@
     "packages/node_modules/@ciscospark/**/cjs/*",
     "packages/node_modules/@webex/**/cjs/*",
     "node_modules/**/*",
-    "dist"
+    "dist",
+    "rollup.calling-config.js",
+    "packages/node_modules/@webex/widgets/rollup.config.js"
   ]
 }

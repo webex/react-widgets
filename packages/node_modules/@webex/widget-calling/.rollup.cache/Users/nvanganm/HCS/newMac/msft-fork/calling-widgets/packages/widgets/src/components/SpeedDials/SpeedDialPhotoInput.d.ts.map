@@ -1,0 +1,1 @@
+{"version":3,"file":"SpeedDialPhotoInput.d.ts","sourceRoot":"","sources":["SpeedDialPhotoInput.tsx"],"names":[],"mappings":"AAQA,OAAO,mCAAmC,CAAC;AAE3C,aAAK,yBAAyB,GAAG;IAC/B,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,GAAG,CAAC,EAAE,MAAM,CAAC;IACb,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB,CAAC;AAeF;;;;;;;;GAQG;AACH,eAAO,MAAM,mBAAmB,qCAK7B,yBAAyB,gBA4C3B,CAAC"}

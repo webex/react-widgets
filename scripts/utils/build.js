@@ -70,8 +70,23 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
+  console.log('pkgPath:',`${pkgName}`)
+  if (`${pkgName}` === 'widget-call-history') {
+    try {
+      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
-  if (targetPkgPath) {
+      // Delete dist folder
+      console.info(`Cleaning ${pkgName} dist folder...`.cyan);
+      rimraf.sync(path.resolve(targetPkgPath, 'dist'));
+      console.info(`Bundling ${pkgName}...`.cyan);
+      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env.package=${pkgName}`);
+      console.info(`${pkgName}... Done\n\n`.cyan);
+    }
+    catch (err) {
+      throw new Error(`Error building ${pkgName} package, ${err}`, err);
+    }
+  }
+  else if (targetPkgPath) {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
 
@@ -118,11 +133,16 @@ function buildES(pkg) {
   if (targetPkgPath) {
     try {
       const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
-
+      const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
       // Rollup cleans the `es` folder automatically
       console.info(`Packaging ${pkg}...`.cyan);
+
       execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+
       console.info(`${pkg}... Done\n\n`.cyan);
+
+      // execSync(`cd widgets && rollup -c ${callingRollupConfigPath}`);
+
     }
     catch (err) {
       throw new Error(`Error building ${pkg} package, ${err}`, err);
