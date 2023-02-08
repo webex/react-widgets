@@ -70,7 +70,7 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
-
+  console.log('targetPkgPath:',targetPkgPath)
   if (targetPkgPath) {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
