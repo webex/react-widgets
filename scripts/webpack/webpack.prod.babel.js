@@ -23,7 +23,6 @@ if (process.env.BUILD_BUNDLE_PUBLIC_PATH) {
   styleBundle = `<link rel="stylesheet" href="${process.env.BUILD_BUNDLE_PUBLIC_PATH}main.css">`;
 }
 
-console.log('process.env.BUILD_BUNDLE_PUBLIC_PATH:',process.env.BUILD_BUNDLE_PUBLIC_PATH)
 
 // Only create html file when one exists in src/
 if (fs.existsSync('./src/index.html')) {
@@ -52,7 +51,7 @@ const publicPath = process.env.BUILD_PUBLIC_PATH;
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 module.exports = (env) => webpackBaseConfig({
   mode: 'production',
-  entry: ['./index.js','./index.ts'],
+  entry: './index.js',
   output: {
     filename: 'bundle.js',
     path: process.env.BUILD_DIST_PATH || path.resolve(process.cwd(), 'dist'),
