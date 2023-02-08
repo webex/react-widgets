@@ -70,8 +70,8 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
-  console.log('pkgPath:',pkgPath)
-  if (pkgPath === 'widget-call-history') {
+  console.log('pkgPath:',`${pkgName}`)
+  if (`${pkgName}` === 'widget-call-history') {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
