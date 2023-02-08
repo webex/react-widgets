@@ -33,7 +33,8 @@ module.exports = {
           execSync(`BUILD_DIST_PATH=${dest}/dist-space npm run build:package widget-space`);
           execSync(`BUILD_DIST_PATH=${dest}/dist-recents npm run build:package widget-recents`);
           execSync(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-demo`);
-          execSync(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-calling`);
+          // execSync(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-calling`);
+          execSync(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-call-history`);
         })
         .catch((err) => {
           console.log(err);
