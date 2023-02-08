@@ -27,7 +27,7 @@ const plugins = [
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 module.exports = (env) => webpackConfigBase({
-  entry: './index.js',
+  entry: './index.ts',
   mode: 'development',
   plugins,
   devtool: 'source-map',

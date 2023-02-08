@@ -50,7 +50,7 @@ const publicPath = process.env.BUILD_PUBLIC_PATH;
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 module.exports = (env) => webpackBaseConfig({
   mode: 'production',
-  entry: './index.js',
+  entry: './index.ts',
   output: {
     filename: 'bundle.js',
     path: process.env.BUILD_DIST_PATH || path.resolve(process.cwd(), 'dist'),

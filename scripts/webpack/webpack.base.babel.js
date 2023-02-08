@@ -62,10 +62,19 @@ module.exports = (options, env) => {
         path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
         'node_modules'
       ],
-      extensions: ['.js', '.css', '.json', '.scss']
+      extensions: ['.js', '.css', '.json', '.scss','.ts','.tsx']
     },
     module: {
       rules: [
+        {
+          test: /\.(ts|tsx)$/i,
+          loader: 'ts-loader',
+          exclude: ['/node_modules/'],
+          options: {
+            projectReferences: true,
+            configFile: 'tsconfig.json',
+          },
+        },
         {
           test: /\.js$/,
           include: [

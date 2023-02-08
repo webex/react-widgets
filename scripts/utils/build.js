@@ -123,10 +123,10 @@ function buildES(pkg) {
       console.info(`Packaging ${pkg}...`.cyan);
 
       execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
-      
+
       console.info(`${pkg}... Done\n\n`.cyan);
 
-      execSync(`cd widgets && rollup -c ${callingRollupConfigPath}`);
+      // execSync(`cd widgets && rollup -c ${callingRollupConfigPath}`);
 
     }
     catch (err) {
