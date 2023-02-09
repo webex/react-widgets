@@ -136,12 +136,10 @@ function buildES(pkg) {
       const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
     
 
-      
-
-      if(`${pkg}` === 'widget-call-history' ){
-        console.info(`Packaging ${pkg}...`.cyan);
+      if(`${pkg}` === '@webex/widget-call-history' ){
         // Rollup cleans the `es` folder automatically
-        execSync(`cd widgets && rollup -c ${callingRollupConfigPath}`);
+        console.info(`Packaging ${pkg}...`.cyan);
+        execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);
       }else{
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
