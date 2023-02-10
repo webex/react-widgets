@@ -37,6 +37,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "npm cache clean"
+          command: npm cache clean --force
+      - run:
           name: "Install dependencies"
           command: npm ci
       # Cache node_modules across different internal jobs in the workflow and across different circleci runs
@@ -206,7 +209,6 @@ jobs:
             - packages/node_modules/@webex/widget-space/dist
             - packages/node_modules/@webex/widget-recents/dist
             - packages/node_modules/@webex/widget-demo/dist
-            - packages/node_modules/@webex/widget-calling/dist
 
   deploy_to_cdn:
     executor: main-executor
