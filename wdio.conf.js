@@ -101,6 +101,7 @@ const sauceCapabilities = (remoteName) => {
       commandTimeout: 600,
       maxDuration: 3600,
       extendedDebugging: true,
+      geckodriverVersion: '0.30.0',
       screenResolution
     }
   });
