@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="533" failures="0" time="14.759">
+  <testsuite name="MessageComposer component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:42" time="3.632" tests="12">
+    <testcase classname="MessageComposer component snapshot tests renders properly" name="MessageComposer component snapshot tests renders properly" time="0.03">
+    </testcase>
+    <testcase classname="MessageComposer component snapshot tests renders submit button" name="MessageComposer component snapshot tests renders submit button" time="0.004">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests does not send empty message" name="MessageComposer component class method tests does not send empty message" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests sends message properly" name="MessageComposer component class method tests sends message properly" time="0.001">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests sending typing indicators sets user typing on text in field" name="MessageComposer component class method tests sending typing indicators sets user typing on text in field" time="0.001">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests sending typing indicators clears typing on blur" name="MessageComposer component class method tests sending typing indicators clears typing on blur" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests sending typing indicators clears typing when field is changed to empty" name="MessageComposer component class method tests sending typing indicators clears typing when field is changed to empty" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key when sendMessageOnReturnKey is false" name="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key when sendMessageOnReturnKey is false" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with shift modifiers" name="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with shift modifiers" time="0.001">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with alt modifiers" name="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with alt modifiers" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with ctrl modifiers" name="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with ctrl modifiers" time="0">
+    </testcase>
+    <testcase classname="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with meta modifiers" name="MessageComposer component class method tests enter key processing doesn&apos;t submit upon enter key with meta modifiers" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-space redux reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:46" time="0.361" tests="11">
+    <testcase classname="widget-space redux reducer should return initial state" name="widget-space redux reducer should return initial state" time="0.002">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle FETCHING_SPACE_DETAILS" name="widget-space redux reducer should handle FETCHING_SPACE_DETAILS" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle RELOAD_WIDGET" name="widget-space redux reducer should handle RELOAD_WIDGET" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle STORE_ACTIVITY_TYPES" name="widget-space redux reducer should handle STORE_ACTIVITY_TYPES" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle STORE_DESTINATION" name="widget-space redux reducer should handle STORE_DESTINATION" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle STORE_SPACE_DETAILS" name="widget-space redux reducer should handle STORE_SPACE_DETAILS" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle TOGGLE_ACTIVITY_MENU_VISIBLE" name="widget-space redux reducer should handle TOGGLE_ACTIVITY_MENU_VISIBLE" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle UPDATE_ACTIVITY_MENU_VISIBLE" name="widget-space redux reducer should handle UPDATE_ACTIVITY_MENU_VISIBLE" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle UPDATE_ACTIVITY_TYPE" name="widget-space redux reducer should handle UPDATE_ACTIVITY_TYPE" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle UPDATE_ACTIVITY_TYPE_SECONDARY" name="widget-space redux reducer should handle UPDATE_ACTIVITY_TYPE_SECONDARY" time="0">
+    </testcase>
+    <testcase classname="widget-space redux reducer should handle UPDATE_WIDGET_STATUS" name="widget-space redux reducer should handle UPDATE_WIDGET_STATUS" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ReadReceipts container" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:46" time="0.344" tests="1">
+    <testcase classname="ReadReceipts container renders properly" name="ReadReceipts container renders properly" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-message redux reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:47" time="0.221" tests="4">
+    <testcase classname="widget-message redux reducer should return initial state" name="widget-message redux reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="widget-message redux reducer should handle RESET_WIDGET_STATE" name="widget-message redux reducer should handle RESET_WIDGET_STATE" time="0.001">
+    </testcase>
+    <testcase classname="widget-message redux reducer should handle SET_SCROLL_POSITION" name="widget-message redux reducer should handle SET_SCROLL_POSITION" time="0">
+    </testcase>
+    <testcase classname="widget-message redux reducer should handle UPDATE_WIDGET_STATE" name="widget-message redux reducer should handle UPDATE_WIDGET_STATE" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="FileDownloader container" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:47" time="0.201" tests="1">
+    <testcase classname="FileDownloader container renders properly" name="FileDownloader container renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:47" time="0.206" tests="4">
+    <testcase classname="actions should create an action to update spark status" name="actions should create an action to update spark status" time="0.001">
+    </testcase>
+    <testcase classname="sdk actions should register this device with spark" name="sdk actions should register this device with spark" time="0.002">
+    </testcase>
+    <testcase classname="sdk actions should unregister this device with spark" name="sdk actions should unregister this device with spark" time="0.001">
+    </testcase>
+    <testcase classname="sdk actions should handle registration errors" name="sdk actions should handle registration errors" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="injectSpark" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:47" time="0.186" tests="1">
+    <testcase classname="injectSpark renders correctly" name="injectSpark renders correctly" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="SparkOAuth component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:48" time="0.255" tests="4">
+    <testcase classname="SparkOAuth component renders properly" name="SparkOAuth component renders properly" time="0.004">
+    </testcase>
+    <testcase classname="SparkOAuth functionality should call spark auth when told" name="SparkOAuth functionality should call spark auth when told" time="0.005">
+    </testcase>
+    <testcase classname="SparkOAuth functionality should call onAuth after a successful authorization" name="SparkOAuth functionality should call onAuth after a successful authorization" time="0.001">
+    </testcase>
+    <testcase classname="SparkOAuth functionality should not call onAuth when not authorized" name="SparkOAuth functionality should not call onAuth when not authorized" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="SDK" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:48" time="0.183" tests="2">
+    <testcase classname="SDK createSDKInstance should resolve instance with config defaults" name="SDK createSDKInstance should resolve instance with config defaults" time="0.022">
+    </testcase>
+    <testcase classname="SDK createSDKInstance should resolve instance with appName passed in" name="SDK createSDKInstance should resolve instance with appName passed in" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="Adaptive Card Util functions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:48" time="0.133" tests="6">
+    <testcase classname="Adaptive Card Util functions #isAdaptiveCard should return true when message contains adaptive card" name="Adaptive Card Util functions #isAdaptiveCard should return true when message contains adaptive card" time="0.001">
+    </testcase>
+    <testcase classname="Adaptive Card Util functions #isAdaptiveCard should return false when message does not contains adaptive card" name="Adaptive Card Util functions #isAdaptiveCard should return false when message does not contains adaptive card" time="0">
+    </testcase>
+    <testcase classname="Adaptive Card Util functions #getAdaptiveCard returns a new adaptive card instance when the card config is received" name="Adaptive Card Util functions #getAdaptiveCard returns a new adaptive card instance when the card config is received" time="0.026">
+    </testcase>
+    <testcase classname="Adaptive Card Util functions #getCardConfig returns the parsed card config when a strigified JSON is received" name="Adaptive Card Util functions #getCardConfig returns the parsed card config when a strigified JSON is received" time="0.001">
+    </testcase>
+    <testcase classname="Adaptive Card Util functions returns a proccesed adaptive card when the card json has markdown" name="Adaptive Card Util functions returns a proccesed adaptive card when the card json has markdown" time="0.015">
+    </testcase>
+    <testcase classname="Adaptive Card Util functions #getPatchedAdaptiveCard returns the custom element adaptive card" name="Adaptive Card Util functions #getPatchedAdaptiveCard returns the custom element adaptive card" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityList" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:48" time="0.228" tests="2">
+    <testcase classname="ActivityList renders properly" name="ActivityList renders properly" time="0.064">
+    </testcase>
+    <testcase classname="ActivityList renders threads properly" name="ActivityList renders threads properly" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-roster reducer tests" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:48" time="0.19" tests="2">
+    <testcase classname="widget-roster reducer tests should return initial state" name="widget-roster reducer tests should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="widget-roster reducer tests should handle UPDATE_WIDGET_STATE" name="widget-roster reducer tests should handle UPDATE_WIDGET_STATE" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="formatActivity function" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.142" tests="7">
+    <testcase classname="formatActivity function renders clean text properly" name="formatActivity function renders clean text properly" time="0.001">
+    </testcase>
+    <testcase classname="formatActivity function renders links from plaintext" name="formatActivity function renders links from plaintext" time="0.001">
+    </testcase>
+    <testcase classname="formatActivity function renders clean dangerous text properly" name="formatActivity function renders clean dangerous text properly" time="0.001">
+    </testcase>
+    <testcase classname="formatActivity function renders dirty dangerous text properly" name="formatActivity function renders dirty dangerous text properly" time="0.001">
+    </testcase>
+    <testcase classname="formatActivity function with links needing to be linkified renders links not encoded from the server" name="formatActivity function with links needing to be linkified renders links not encoded from the server" time="0.001">
+    </testcase>
+    <testcase classname="formatActivity function doesn&apos;t change links encoded from the server" name="formatActivity function doesn&apos;t change links encoded from the server" time="0">
+    </testcase>
+    <testcase classname="formatActivity function renders at mentions properly" name="formatActivity function renders at mentions properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="spark component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.246" tests="10">
+    <testcase classname="spark component #verifyPlugins() verifies all plugins to be injected properly to webex SDK instance" name="spark component #verifyPlugins() verifies all plugins to be injected properly to webex SDK instance" time="0.001">
+    </testcase>
+    <testcase classname="spark component #verifyPlugins() throws an error if one of the external plugin is not injected properly" name="spark component #verifyPlugins() throws an error if one of the external plugin is not injected properly" time="0">
+    </testcase>
+    <testcase classname="spark component #verifyPlugins() throws an error if one of the internal plugin is not injected properly" name="spark component #verifyPlugins() throws an error if one of the internal plugin is not injected properly" time="0">
+    </testcase>
+    <testcase classname="spark component #storeSDKInstance() stores the SDK instance if verification is true" name="spark component #storeSDKInstance() stores the SDK instance if verification is true" time="0.002">
+    </testcase>
+    <testcase classname="spark component #storeSDKInstance() does not store the SDK instance if verification is false" name="spark component #storeSDKInstance() does not store the SDK instance if verification is false" time="0">
+    </testcase>
+    <testcase classname="spark component #validateSDKInstance() when verifyPlugins is true returns true if the instance is an object" name="spark component #validateSDKInstance() when verifyPlugins is true returns true if the instance is an object" time="0">
+    </testcase>
+    <testcase classname="spark component #validateSDKInstance() when verifyPlugins is true returns false if the instance is not an object" name="spark component #validateSDKInstance() when verifyPlugins is true returns false if the instance is not an object" time="0">
+    </testcase>
+    <testcase classname="spark component #validateSDKInstance() when verifyPlugins is false returns false if the instance is an object" name="spark component #validateSDKInstance() when verifyPlugins is false returns false if the instance is an object" time="0">
+    </testcase>
+    <testcase classname="spark component #validateSDKInstance() when verifyPlugins is false returns false if the instance is not an object" name="spark component #validateSDKInstance() when verifyPlugins is false returns false if the instance is not an object" time="0">
+    </testcase>
+    <testcase classname="spark component renders correctly" name="spark component renders correctly" time="0.05">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityList component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.103" tests="3">
+    <testcase classname="ActivityList component renders properly" name="ActivityList component renders properly" time="0.004">
+    </testcase>
+    <testcase classname="ActivityList component renders properly if feature is not set" name="ActivityList component renders properly if feature is not set" time="0.002">
+    </testcase>
+    <testcase classname="ActivityList component renders properly if feature is  set" name="ActivityList component renders properly if feature is  set" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityItem post component is self" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.102" tests="7">
+    <testcase classname="ActivityItem post component is self renders properly" name="ActivityItem post component is self renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItem post component not self renders properly" name="ActivityItem post component not self renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItem post component not self with html renders properly" name="ActivityItem post component not self with html renders properly" time="0">
+    </testcase>
+    <testcase classname="ActivityItem post component is reply renders properly" name="ActivityItem post component is reply renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItem tombstone component renders properly" name="ActivityItem tombstone component renders properly" time="0">
+    </testcase>
+    <testcase classname="ActivityItem component when message contains adaptive card renders an AdaptiveCard with verb &quot;post&quot;" name="ActivityItem component when message contains adaptive card renders an AdaptiveCard with verb &quot;post&quot;" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItem component when message contains adaptive card renders an AdaptiveCard with verb &quot;share&quot;" name="ActivityItem component when message contains adaptive card renders an AdaptiveCard with verb &quot;share&quot;" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-space: enhancers: setup" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.103" tests="10">
+    <testcase classname="widget-space: enhancers: setup does not do anything until spark registration" name="widget-space: enhancers: setup does not do anything until spark registration" time="0.001">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration reloads the widget when required" name="widget-space: enhancers: setup after spark registration reloads the widget when required" time="0.001">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration connects to mercury" name="widget-space: enhancers: setup after spark registration connects to mercury" time="0">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration does not connect to mercury when already connected" name="widget-space: enhancers: setup after spark registration does not connect to mercury when already connected" time="0">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty stores the destination" name="widget-space: enhancers: setup after spark registration when space details are empty stores the destination" time="0.001">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty lowercases the email destination" name="widget-space: enhancers: setup after spark registration when space details are empty lowercases the email destination" time="0">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets space details" name="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets space details" time="0">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets user details for email type" name="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets user details for email type" time="0.001">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets user details for user id type" name="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets user details for user id type" time="0">
+    </testcase>
+    <testcase classname="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets space details for space id type" name="widget-space: enhancers: setup after spark registration when space details are empty when destination is populated gets space details for space id type" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityPost post component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:49" time="0.091" tests="2">
+    <testcase classname="ActivityPost post component renders properly" name="ActivityPost post component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityPost post component renders properly with adaptiveCard" name="ActivityPost post component renders properly with adaptiveCard" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-recents: enhancers: setup" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.139" tests="16">
+    <testcase classname="widget-recents: enhancers: setup #setup initial state does not do anything until spark registration" name="widget-recents: enhancers: setup #setup initial state does not do anything until spark registration" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after spark registration does not do any requests on error state" name="widget-recents: enhancers: setup #setup after spark registration does not do any requests on error state" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after spark registration gets feature flags" name="widget-recents: enhancers: setup #setup after spark registration gets feature flags" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after spark registration does not get feature flags after initial fetch" name="widget-recents: enhancers: setup #setup after spark registration does not get feature flags after initial fetch" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after spark registration connects to websockets" name="widget-recents: enhancers: setup #setup after spark registration connects to websockets" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should get initial spaces from hydra" name="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should get initial spaces from hydra" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should set hasFetchedInitialSpaces to true after load" name="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should set hasFetchedInitialSpaces to true after load" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should set hasFetchedAllSpaces to true after load" name="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should set hasFetchedAllSpaces to true after load" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should load the amount based on spaceLoadCount" name="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should load the amount based on spaceLoadCount" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should default the amount if not provided by spaceLoadCount to DEFAULT_SPACE_COUNT" name="widget-recents: enhancers: setup #setup after websocket connect with basic mode enabled should default the amount if not provided by spaceLoadCount to DEFAULT_SPACE_COUNT" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces again during all space load" name="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces again during all space load" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces again after all space load" name="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces again after all space load" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces in basic mode" name="widget-recents: enhancers: setup #setup after initial space fetch should not get all spaces in basic mode" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after all space fetch should get all avatars" name="widget-recents: enhancers: setup #setup after all space fetch should get all avatars" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after all space fetch should not get all avatars again during all avatar load" name="widget-recents: enhancers: setup #setup after all space fetch should not get all avatars again during all avatar load" time="0">
+    </testcase>
+    <testcase classname="widget-recents: enhancers: setup #setup after all space fetch should not get all avatars again after all avatar load" name="widget-recents: enhancers: setup #setup after all space fetch should not get all avatars again after all avatar load" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux module spaces reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.09" tests="7">
+    <testcase classname="redux module spaces reducer should return initial state" name="redux module spaces reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux module spaces reducer should handle STORE_SPACES" name="redux module spaces reducer should handle STORE_SPACES" time="0.001">
+    </testcase>
+    <testcase classname="redux module spaces reducer modifying existing spaces should handle ADD_SPACE_TAGS" name="redux module spaces reducer modifying existing spaces should handle ADD_SPACE_TAGS" time="0.001">
+    </testcase>
+    <testcase classname="redux module spaces reducer modifying existing spaces should handle REMOVE_SPACE" name="redux module spaces reducer modifying existing spaces should handle REMOVE_SPACE" time="0">
+    </testcase>
+    <testcase classname="redux module spaces reducer modifying existing spaces should handle REMOVE_SPACE_TAGS" name="redux module spaces reducer modifying existing spaces should handle REMOVE_SPACE_TAGS" time="0.001">
+    </testcase>
+    <testcase classname="redux module spaces reducer modifying existing spaces should handle UPDATE_SPACE_WITH_ACTIVITY" name="redux module spaces reducer modifying existing spaces should handle UPDATE_SPACE_WITH_ACTIVITY" time="0.001">
+    </testcase>
+    <testcase classname="redux module spaces reducer modifying existing spaces should handle UPDATE_SPACE_READ" name="redux module spaces reducer modifying existing spaces should handle UPDATE_SPACE_READ" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-conversation actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.121" tests="24">
+    <testcase classname="redux-module-conversation actions has exported actions" name="redux-module-conversation actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #acknowledgeActivityOnServer can acknowledge an activity" name="redux-module-conversation actions #acknowledgeActivityOnServer can acknowledge an activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #addParticipant can add a participant" name="redux-module-conversation actions #addParticipant can add a participant" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #addParticipantToConversation can start the request to add a participant to a conversation" name="redux-module-conversation actions #addParticipantToConversation can start the request to add a participant to a conversation" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #addParticipantToConversation can start the request to add a participant to a conversation via email" name="redux-module-conversation actions #addParticipantToConversation can start the request to add a participant to a conversation via email" time="0.003">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #addParticipantToConversation errors when sending a participant string that isn&apos;t an email" name="redux-module-conversation actions #addParticipantToConversation errors when sending a participant string that isn&apos;t an email" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #addParticipantToConversation can handle an error from adding a participant to a conversation" name="redux-module-conversation actions #addParticipantToConversation can handle an error from adding a participant to a conversation" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #createConversation can create a conversation" name="redux-module-conversation actions #createConversation can create a conversation" time="0.004">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #createConversation can create a conversation with hydra ids" name="redux-module-conversation actions #createConversation can create a conversation with hydra ids" time="0.002">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #createConversation handles errors during create a conversation" name="redux-module-conversation actions #createConversation handles errors during create a conversation" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #deleteActivity can delete an activity" name="redux-module-conversation actions #deleteActivity can delete an activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #getConversation can get a conversation by uuid" name="redux-module-conversation actions #getConversation can get a conversation by uuid" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #getConversation can get a conversation by hydra id" name="redux-module-conversation actions #getConversation can get a conversation by hydra id" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #getConversation sets the locked status of a room properly" name="redux-module-conversation actions #getConversation sets the locked status of a room properly" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #getConversation sets the moderator status of a room properly" name="redux-module-conversation actions #getConversation sets the moderator status of a room properly" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #getConversation handles errors during get a conversation" name="redux-module-conversation actions #getConversation handles errors during get a conversation" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #loadMissingActivities can load missing activities" name="redux-module-conversation actions #loadMissingActivities can load missing activities" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #loadPreviousMessages can load previous messages" name="redux-module-conversation actions #loadPreviousMessages can load previous messages" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #removeParticipant can remove a participant" name="redux-module-conversation actions #removeParticipant can remove a participant" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #removeParticipantFromConversation can start the request to remove a participant to a conversation" name="redux-module-conversation actions #removeParticipantFromConversation can start the request to remove a participant to a conversation" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #removeParticipantFromConversation can handle an error from adding a participant to a conversation" name="redux-module-conversation actions #removeParticipantFromConversation can handle an error from adding a participant to a conversation" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #resetConversation should reset the state back to initial state" name="redux-module-conversation actions #resetConversation should reset the state back to initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #updateConversationState can update state" name="redux-module-conversation actions #updateConversationState can update state" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation actions #submitAdaptiveCardActions can start request when card action submitted" name="redux-module-conversation actions #submitAdaptiveCardActions can start request when card action submitted" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux module conversation reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.112" tests="18">
+    <testcase classname="redux module conversation reducer should return initial state" name="redux module conversation reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle ACKNOWLEDGE_ACTIVITY" name="redux module conversation reducer should handle ACKNOWLEDGE_ACTIVITY" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle ACKNOWLEDGE_ACTIVITY" name="redux module conversation reducer should handle ACKNOWLEDGE_ACTIVITY" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should add activities to the conversation" name="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should add activities to the conversation" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should filter content update activities" name="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should filter content update activities" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should not filter content activities" name="redux module conversation reducer ADD_ACTIVITIES_TO_CONVERSATION should not filter content activities" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer ADD_PARTICIPANT should handle add participant and remove from in flight" name="redux module conversation reducer ADD_PARTICIPANT should handle add participant and remove from in flight" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer ADD_PARTICIPANT should handle add participant and remove side boarded user from in flight" name="redux module conversation reducer ADD_PARTICIPANT should handle add participant and remove side boarded user from in flight" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle ADD_PARTICIPANT_INFLIGHT" name="redux module conversation reducer should handle ADD_PARTICIPANT_INFLIGHT" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle CREATE_CONVERSATION" name="redux module conversation reducer should handle CREATE_CONVERSATION" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle CREATE_CONVERSATION_BEGIN" name="redux module conversation reducer should handle CREATE_CONVERSATION_BEGIN" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle RECEIVE_MERCURY_ACTIVITY" name="redux module conversation reducer should handle RECEIVE_MERCURY_ACTIVITY" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle RECEIVE_MERCURY_COMMENT" name="redux module conversation reducer should handle RECEIVE_MERCURY_COMMENT" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle REMOVE_PARTICIPANT" name="redux module conversation reducer should handle REMOVE_PARTICIPANT" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle REMOVE_PARTICIPANT_INFLIGHT" name="redux module conversation reducer should handle REMOVE_PARTICIPANT_INFLIGHT" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle RESET_CONVERSATION" name="redux module conversation reducer should handle RESET_CONVERSATION" time="0">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle UPDATE_CONVERSATION_STATE" name="redux module conversation reducer should handle UPDATE_CONVERSATION_STATE" time="0.001">
+    </testcase>
+    <testcase classname="redux module conversation reducer should handle ACKNOWLEDGE_ADAPTIVE_CARD_SUBMIT_ACTION" name="redux module conversation reducer should handle ACKNOWLEDGE_ADAPTIVE_CARD_SUBMIT_ACTION" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="FileStagingArea component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.083" tests="1">
+    <testcase classname="FileStagingArea component renders properly" name="FileStagingArea component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityShareFiles post component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.096" tests="4">
+    <testcase classname="ActivityShareFiles post component renders properly" name="ActivityShareFiles post component renders properly" time="0.002">
+    </testcase>
+    <testcase classname="ActivityShareFiles post component renders properly while pending" name="ActivityShareFiles post component renders properly while pending" time="0.001">
+    </testcase>
+    <testcase classname="ActivityShareFiles post component renders properly with adaptive card" name="ActivityShareFiles post component renders properly with adaptive card" time="0">
+    </testcase>
+    <testcase classname="ActivityShareFiles post component renders properly without adaptive card" name="ActivityShareFiles post component renders properly without adaptive card" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-avatar actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.101" tests="12">
+    <testcase classname="redux-module-avatar actions  has exported actions" name="redux-module-avatar actions  has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar user avatars can fetch an Avatar" name="redux-module-avatar actions  #fetchAvatar user avatars can fetch an Avatar" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar user avatars does not fetch an avatar already fetched" name="redux-module-avatar actions  #fetchAvatar user avatars does not fetch an avatar already fetched" time="0">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar user avatars does not fetch an avatar in flight" name="redux-module-avatar actions  #fetchAvatar user avatars does not fetch an avatar in flight" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar user avatars handles errors from the people plugin" name="redux-module-avatar actions  #fetchAvatar user avatars handles errors from the people plugin" time="0">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar space avatars can fetch avatars for spaces" name="redux-module-avatar actions  #fetchAvatar space avatars can fetch avatars for spaces" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar space avatars only fetches space avatars not in flight and fetched" name="redux-module-avatar actions  #fetchAvatar space avatars only fetches space avatars not in flight and fetched" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar space avatars should fetch a user avatar for one on one spaces" name="redux-module-avatar actions  #fetchAvatar space avatars should fetch a user avatar for one on one spaces" time="0">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar space avatars should throw error for one on one spaces without user id" name="redux-module-avatar actions  #fetchAvatar space avatars should throw error for one on one spaces without user id" time="0.004">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatar space avatars should mark the space as fetched if it doesn&apos;t have an avatar" name="redux-module-avatar actions  #fetchAvatar space avatars should mark the space as fetched if it doesn&apos;t have an avatar" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatarsForUsers can fetch avatars for all users" name="redux-module-avatar actions  #fetchAvatarsForUsers can fetch avatars for all users" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-avatar actions  #fetchAvatarsForUsers only fetches avatars not in flight and fetched" name="redux-module-avatar actions  #fetchAvatarsForUsers only fetches avatars not in flight and fetched" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="PeopleList component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.091" tests="4">
+    <testcase classname="PeopleList component renders empty array properly" name="PeopleList component renders empty array properly" time="0.001">
+    </testcase>
+    <testcase classname="PeopleList component renders a group of participants" name="PeopleList component renders a group of participants" time="0">
+    </testcase>
+    <testcase classname="PeopleList component renders a group of participants as moderator" name="PeopleList component renders a group of participants as moderator" time="0.001">
+    </testcase>
+    <testcase classname="PeopleList component renders a list of participants without a group" name="PeopleList component renders a list of participants without a group" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-space actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:50" time="0.115" tests="20">
+    <testcase classname="redux-module-space actions  has exported actions" name="redux-module-space actions  has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #addSpaceTags properly updates space tags" name="redux-module-space actions  #addSpaceTags properly updates space tags" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpaces properly fetches spaces" name="redux-module-space actions  #fetchSpaces properly fetches spaces" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpaces adds error when fetch fails" name="redux-module-space actions  #fetchSpaces adds error when fetch fails" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpacesEncrypted properly fetches encrypted spaces" name="redux-module-space actions  #fetchSpacesEncrypted properly fetches encrypted spaces" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpacesEncrypted adds error when fetch fails" name="redux-module-space actions  #fetchSpacesEncrypted adds error when fetch fails" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpace properly fetches a space" name="redux-module-space actions  #fetchSpace properly fetches a space" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpace filters delete messages from a space" name="redux-module-space actions  #fetchSpace filters delete messages from a space" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpace adds error when fetch fails" name="redux-module-space actions  #fetchSpace adds error when fetch fails" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpacesHydra properly fetches spaces from hydra" name="redux-module-space actions  #fetchSpacesHydra properly fetches spaces from hydra" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #fetchSpacesHydra adds error when fetch fails" name="redux-module-space actions  #fetchSpacesHydra adds error when fetch fails" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #removeSpace properly removes a space" name="redux-module-space actions  #removeSpace properly removes a space" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #removeSpaceTags properly updates space tags" name="redux-module-space actions  #removeSpaceTags properly updates space tags" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #storeSpaces properly stores spaces" name="redux-module-space actions  #storeSpaces properly stores spaces" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #storeSpaces handles spaces without a lastReadableActivityDate" name="redux-module-space actions  #storeSpaces handles spaces without a lastReadableActivityDate" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #updateSpaceWithActivity properly update space with self activity" name="redux-module-space actions  #updateSpaceWithActivity properly update space with self activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #updateSpaceWithActivity properly update space with readable self activity" name="redux-module-space actions  #updateSpaceWithActivity properly update space with readable self activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-space actions  #updateSpaceWithActivity properly update space with others activity" name="redux-module-space actions  #updateSpaceWithActivity properly update space with others activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #updateSpaceWithActivity properly update space with others readable activity" name="redux-module-space actions  #updateSpaceWithActivity properly update space with others readable activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-space actions  #updateSpaceRead properly updates lastSeenActivityDate for a space" name="redux-module-space actions  #updateSpaceRead properly updates lastSeenActivityDate for a space" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-activity actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.105" tests="13">
+    <testcase classname="redux-module-activity actions has exported actions" name="redux-module-activity actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #addFiles can create a share activity and add files to it" name="redux-module-activity actions #addFiles can create a share activity and add files to it" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #addFiles can add files to an existing share activity" name="redux-module-activity actions #addFiles can add files to an existing share activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #removeFile can remove files from a share activity" name="redux-module-activity actions #removeFile can remove files from a share activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity actions #retryFailedActivity retries a failed post activity" name="redux-module-activity actions #retryFailedActivity retries a failed post activity" time="0.004">
+    </testcase>
+    <testcase classname="redux-module-activity actions #retryFailedActivity retries a failed share activity" name="redux-module-activity actions #retryFailedActivity retries a failed share activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity does not submit an empty activity" name="redux-module-activity actions #submitActivity does not submit an empty activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity can submit a post activity" name="redux-module-activity actions #submitActivity can submit a post activity" time="0.005">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity can submit a share activity" name="redux-module-activity actions #submitActivity can submit a share activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity can submit a share activity with no text" name="redux-module-activity actions #submitActivity can submit a share activity with no text" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity saves a failed post activity" name="redux-module-activity actions #submitActivity saves a failed post activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #submitActivity saves a failed share activity" name="redux-module-activity actions #submitActivity saves a failed share activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity actions #setUserTyping should update the typing status" name="redux-module-activity actions #setUserTyping should update the typing status" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-space redux actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.093" tests="10">
+    <testcase classname="widget-space redux actions has exported actions" name="widget-space redux actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #reloadWidget should reload the widget" name="widget-space redux actions basic actions #reloadWidget should reload the widget" time="0">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #storeActivityTypes should store the activity types" name="widget-space redux actions basic actions #storeActivityTypes should store the activity types" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #storeDestination should store the destination type and id" name="widget-space redux actions basic actions #storeDestination should store the destination type and id" time="0">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #toggleActivityMenuVisible should toggle the activity menu visible" name="widget-space redux actions basic actions #toggleActivityMenuVisible should toggle the activity menu visible" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #updateActivityType should update an activity type" name="widget-space redux actions basic actions #updateActivityType should update an activity type" time="0">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #updateSecondaryActivityType should update a secondary activity type" name="widget-space redux actions basic actions #updateSecondaryActivityType should update a secondary activity type" time="0">
+    </testcase>
+    <testcase classname="widget-space redux actions basic actions #updateWidgetStatus should store the activity types" name="widget-space redux actions basic actions #updateWidgetStatus should store the activity types" time="0.001">
+    </testcase>
+    <testcase classname="widget-space redux actions thunked actions #getSpaceDetails should fetch and store details about a space" name="widget-space redux actions thunked actions #getSpaceDetails should fetch and store details about a space" time="0">
+    </testcase>
+    <testcase classname="widget-space redux actions thunked actions #getSpaceDetails should not fetch details about direct email spaces" name="widget-space redux actions thunked actions #getSpaceDetails should not fetch details about direct email spaces" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-users actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.09" tests="9">
+    <testcase classname="redux-module-users actions  has exported actions" name="redux-module-users actions  has exported actions" time="0">
+    </testcase>
+    <testcase classname="redux-module-users actions  #storeUser properly stores user from public API" name="redux-module-users actions  #storeUser properly stores user from public API" time="0">
+    </testcase>
+    <testcase classname="redux-module-users actions  #storeUser properly stores user from internal API" name="redux-module-users actions  #storeUser properly stores user from internal API" time="0.004">
+    </testcase>
+    <testcase classname="redux-module-users actions  #fetchCurrentUser properly fetches current user" name="redux-module-users actions  #fetchCurrentUser properly fetches current user" time="0.002">
+    </testcase>
+    <testcase classname="redux-module-users actions  #fetchCurrentUser subscribes to the presence of the current user" name="redux-module-users actions  #fetchCurrentUser subscribes to the presence of the current user" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-users actions  #fetchUser properly fetches a single user by email" name="redux-module-users actions  #fetchUser properly fetches a single user by email" time="0">
+    </testcase>
+    <testcase classname="redux-module-users actions  #fetchUser properly fetches a single user by id" name="redux-module-users actions  #fetchUser properly fetches a single user by id" time="0">
+    </testcase>
+    <testcase classname="redux-module-users actions  #getUser properly gets a single user by email" name="redux-module-users actions  #getUser properly gets a single user by email" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-users actions  #getUser properly gest a single user by id" name="redux-module-users actions  #getUser properly gest a single user by id" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="PeopleListItem component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.077" tests="4">
+    <testcase classname="PeopleListItem component renders a local participant properly" name="PeopleListItem component renders a local participant properly" time="0.001">
+    </testcase>
+    <testcase classname="PeopleListItem component renders a local participant with email properly" name="PeopleListItem component renders a local participant with email properly" time="0.001">
+    </testcase>
+    <testcase classname="PeopleListItem component renders an external participant properly" name="PeopleListItem component renders an external participant properly" time="0">
+    </testcase>
+    <testcase classname="PeopleListItem component renders an editable participant properly" name="PeopleListItem component renders an editable participant properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-space selectors" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.086" tests="7">
+    <testcase classname="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for email destination from users store" name="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for email destination from users store" time="0.001">
+    </testcase>
+    <testcase classname="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for userId destination from users store" name="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for userId destination from users store" time="0">
+    </testcase>
+    <testcase classname="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for spaceId destination from spaces store" name="widget-space selectors #getSpaceDetails selector should fetch avatar and display name for spaceId destination from spaces store" time="0.001">
+    </testcase>
+    <testcase classname="widget-space selectors #getCall selector should get the call specified by the conversation locus url" name="widget-space selectors #getCall selector should get the call specified by the conversation locus url" time="0">
+    </testcase>
+    <testcase classname="widget-space selectors #getCall selector should not get the call specified by the conversation locus url if dismissed" name="widget-space selectors #getCall selector should not get the call specified by the conversation locus url if dismissed" time="0">
+    </testcase>
+    <testcase classname="widget-space selectors #getCall selector should return empty if there is no call for conversation locus url" name="widget-space selectors #getCall selector should return empty if there is no call for conversation locus url" time="0.001">
+    </testcase>
+    <testcase classname="widget-space selectors #getCall selector should get call by destination when conversation is empty" name="widget-space selectors #getCall selector should get call by destination when conversation is empty" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="MeetingsWidget component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.096" tests="5">
+    <testcase classname="MeetingsWidget component when it has an error renders properly" name="MeetingsWidget component when it has an error renders properly" time="0.001">
+    </testcase>
+    <testcase classname="MeetingsWidget component when it is loading renders properly" name="MeetingsWidget component when it is loading renders properly" time="0">
+    </testcase>
+    <testcase classname="MeetingsWidget component when the widget is ready when the meeting does not exist renders properly" name="MeetingsWidget component when the widget is ready when the meeting does not exist renders properly" time="0">
+    </testcase>
+    <testcase classname="MeetingsWidget component when the widget is ready when the meeting exists but not joined renders properly" name="MeetingsWidget component when the widget is ready when the meeting exists but not joined renders properly" time="0">
+    </testcase>
+    <testcase classname="MeetingsWidget component when the widget is ready when the meeting is active renders properly" name="MeetingsWidget component when the widget is ready when the meeting is active renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="IncomingCall component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.072" tests="1">
+    <testcase classname="IncomingCall component renders properly" name="IncomingCall component renders properly" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-search" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.083" tests="8">
+    <testcase classname="redux-module-search actions has exported actions" name="redux-module-search actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-search actions #searchForUser can search a user" name="redux-module-search actions #searchForUser can search a user" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-search actions #searchForUser should search via hydra for emails" name="redux-module-search actions #searchForUser should search via hydra for emails" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-search reducer should return initial state" name="redux-module-search reducer should return initial state" time="0">
+    </testcase>
+    <testcase classname="redux-module-search reducer should handle STORE_SEARCH_TERM" name="redux-module-search reducer should handle STORE_SEARCH_TERM" time="0">
+    </testcase>
+    <testcase classname="redux-module-search reducer should handle STORE_SEARCH_ERROR" name="redux-module-search reducer should handle STORE_SEARCH_ERROR" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-search reducer should handle STORE_SEARCH_RESULTS" name="redux-module-search reducer should handle STORE_SEARCH_RESULTS" time="0">
+    </testcase>
+    <testcase classname="redux-module-search reducer should update existing results when calling STORE_SEARCH_RESULTS" name="redux-module-search reducer should update existing results when calling STORE_SEARCH_RESULTS" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-activity: helpers" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.09" tests="12">
+    <testcase classname="redux-module-activity: helpers #createMessageObject should send plain text without converting" name="redux-module-activity: helpers #createMessageObject should send plain text without converting" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should send plain text without converting special characters" name="redux-module-activity: helpers #createMessageObject should send plain text without converting special characters" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert a url to html link" name="redux-module-activity: helpers #createMessageObject should convert a url to html link" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert a url to html link" name="redux-module-activity: helpers #createMessageObject should convert a url to html link" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert mentions properly" name="redux-module-activity: helpers #createMessageObject should convert mentions properly" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert markdown properly" name="redux-module-activity: helpers #createMessageObject should convert markdown properly" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert markdown lists properly" name="redux-module-activity: helpers #createMessageObject should convert markdown lists properly" time="0.002">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert mentions and markdown properly" name="redux-module-activity: helpers #createMessageObject should convert mentions and markdown properly" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should not convert html submitted via plain text" name="redux-module-activity: helpers #createMessageObject should not convert html submitted via plain text" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should not remove html blocks from markdown code blocks" name="redux-module-activity: helpers #createMessageObject should not remove html blocks from markdown code blocks" time="0">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should not remove new lines from markdown code blocks" name="redux-module-activity: helpers #createMessageObject should not remove new lines from markdown code blocks" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-activity: helpers #createMessageObject should convert mentions and markdown with html properly" name="redux-module-activity: helpers #createMessageObject should convert mentions and markdown with html properly" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-message redux actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:51" time="0.08" tests="5">
+    <testcase classname="widget-message redux actions has exported actions" name="widget-message redux actions has exported actions" time="0">
+    </testcase>
+    <testcase classname="widget-message redux actions basic actions #resetWidgetState should reset the widget" name="widget-message redux actions basic actions #resetWidgetState should reset the widget" time="0.001">
+    </testcase>
+    <testcase classname="widget-message redux actions basic actions #setScrollPosition should set the scroll position" name="widget-message redux actions basic actions #setScrollPosition should set the scroll position" time="0">
+    </testcase>
+    <testcase classname="widget-message redux actions basic actions #updateWidgetState should store the activity types" name="widget-message redux actions basic actions #updateWidgetState should store the activity types" time="0.001">
+    </testcase>
+    <testcase classname="widget-message redux actions thunked actions #showScrollToBottomButton should update widget state to show scroll button" name="widget-message redux actions thunked actions #showScrollToBottomButton should update widget state to show scroll button" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ScrollingActivity container" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.07" tests="2">
+    <testcase classname="ScrollingActivity container renders properly" name="ScrollingActivity container renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ScrollingActivity container renders properly loading history" name="ScrollingActivity container renders properly loading history" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-message selectors" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.081" tests="3">
+    <testcase classname="widget-message selectors #getSpace selector should get a one on one conversation space" name="widget-message selectors #getSpace selector should get a one on one conversation space" time="0.001">
+    </testcase>
+    <testcase classname="widget-message selectors #getSpace selector should get a group conversation space" name="widget-message selectors #getSpace selector should get a group conversation space" time="0.001">
+    </testcase>
+    <testcase classname="widget-message selectors #getMessageWidgetProps selector should return message widget props" name="widget-message selectors #getMessageWidgetProps selector should return message widget props" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-users reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.078" tests="7">
+    <testcase classname="redux-module-users reducer should return initial state" name="redux-module-users reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle STORE_USER" name="redux-module-users reducer should handle STORE_USER" time="0">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle STORE_USERS" name="redux-module-users reducer should handle STORE_USERS" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle STORE_CURRENT_USER" name="redux-module-users reducer should handle STORE_CURRENT_USER" time="0">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle FETCH_USER_REQUEST with id" name="redux-module-users reducer should handle FETCH_USER_REQUEST with id" time="0">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle FETCH_USER_REQUEST with email" name="redux-module-users reducer should handle FETCH_USER_REQUEST with email" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-users reducer should handle FETCH_CURRENT_USER_REQUEST with id" name="redux-module-users reducer should handle FETCH_CURRENT_USER_REQUEST with id" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityShareThumbnail post component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.074" tests="4">
+    <testcase classname="ActivityShareThumbnail post component renders loading state properly" name="ActivityShareThumbnail post component renders loading state properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityShareThumbnail post component renders thumbnail properly" name="ActivityShareThumbnail post component renders thumbnail properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityShareThumbnail post component renders pending properly" name="ActivityShareThumbnail post component renders pending properly" time="0">
+    </testcase>
+    <testcase classname="ActivityShareThumbnail post component renders loaded thumbnail properly" name="ActivityShareThumbnail post component renders loaded thumbnail properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="InactiveMeeting component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.071" tests="1">
+    <testcase classname="InactiveMeeting component renders properly with all props" name="InactiveMeeting component renders properly with all props" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="RecentsHeader component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.086" tests="5">
+    <testcase classname="RecentsHeader component renders correctly" name="RecentsHeader component renders correctly" time="0.002">
+    </testcase>
+    <testcase classname="RecentsHeader component renders correctly without add button" name="RecentsHeader component renders correctly without add button" time="0.001">
+    </testcase>
+    <testcase classname="RecentsHeader component renders correctly without search filter" name="RecentsHeader component renders correctly without search filter" time="0">
+    </testcase>
+    <testcase classname="RecentsHeader component renders correctly without user profile" name="RecentsHeader component renders correctly without user profile" time="0.001">
+    </testcase>
+    <testcase classname="RecentsHeader component renders correctly without hiding bottom border" name="RecentsHeader component renders correctly without hiding bottom border" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityItemBase component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.145" tests="7">
+    <testcase classname="ActivityItemBase component renders properly" name="ActivityItemBase component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly when self" name="ActivityItemBase component renders properly when self" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly when pending" name="ActivityItemBase component renders properly when pending" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly when flagged" name="ActivityItemBase component renders properly when flagged" time="0">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly when flagged pending" name="ActivityItemBase component renders properly when flagged pending" time="0.001">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly with error" name="ActivityItemBase component renders properly with error" time="0">
+    </testcase>
+    <testcase classname="ActivityItemBase component renders properly when additional" name="ActivityItemBase component renders properly when additional" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-conversation helpers tests" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.101" tests="6">
+    <testcase classname="redux-module-conversation helpers tests #filterActivities should filter content update activities" name="redux-module-conversation helpers tests #filterActivities should filter content update activities" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation helpers tests #filterActivities should not filter content activities" name="redux-module-conversation helpers tests #filterActivities should not filter content activities" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation helpers tests #filterActivities should filter reply activities" name="redux-module-conversation helpers tests #filterActivities should filter reply activities" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation helpers tests #normalizeActivity should not convert a post activity" name="redux-module-conversation helpers tests #normalizeActivity should not convert a post activity" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-conversation helpers tests #normalizeActivity should convert a giphy share activity" name="redux-module-conversation helpers tests #normalizeActivity should convert a giphy share activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-conversation helpers tests #normalizeActivities should convert an array of activities" name="redux-module-conversation helpers tests #normalizeActivities should convert an array of activities" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="UserProfileAvatar component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.075" tests="2">
+    <testcase classname="UserProfileAvatar component renders correctly without user profile menu" name="UserProfileAvatar component renders correctly without user profile menu" time="0.001">
+    </testcase>
+    <testcase classname="UserProfileAvatar component renders correctly with user profile menu" name="UserProfileAvatar component renders correctly with user profile menu" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="TypingAvatar container" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:52" time="0.074" tests="2">
+    <testcase classname="TypingAvatar container renders properly" name="TypingAvatar container renders properly" time="0.001">
+    </testcase>
+    <testcase classname="TypingAvatar container renders properly when typing" name="TypingAvatar container renders properly when typing" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="widget-recents helpers file" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.07" tests="5">
+    <testcase classname="widget-recents helpers file #getSpaceAvatar should not fetch avatars for a decrypting space" name="widget-recents helpers file #getSpaceAvatar should not fetch avatars for a decrypting space" time="0.001">
+    </testcase>
+    <testcase classname="widget-recents helpers file #getSpaceAvatar should fetch the avatar for the group space id" name="widget-recents helpers file #getSpaceAvatar should fetch the avatar for the group space id" time="0">
+    </testcase>
+    <testcase classname="widget-recents helpers file #getSpaceAvatar should fetch the avatar for the to person id" name="widget-recents helpers file #getSpaceAvatar should fetch the avatar for the to person id" time="0">
+    </testcase>
+    <testcase classname="widget-recents helpers file #getToParticipant should find the user that is not the current user" name="widget-recents helpers file #getToParticipant should find the user that is not the current user" time="0">
+    </testcase>
+    <testcase classname="widget-recents helpers file #getToParticipant should return undefined if no user found" name="widget-recents helpers file #getToParticipant should return undefined if no user found" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="FileShareDisplay component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.07" tests="2">
+    <testcase classname="FileShareDisplay component renders properly" name="FileShareDisplay component renders properly" time="0.002">
+    </testcase>
+    <testcase classname="FileShareDisplay component renders properly while pending" name="FileShareDisplay component renders properly while pending" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Adaptive Card Component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.085" tests="1">
+    <testcase classname="Adaptive Card Component renders properly" name="Adaptive Card Component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Get has mentions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.069" tests="3">
+    <testcase classname="Get has mentions return true for @single person mention" name="Get has mentions return true for @single person mention" time="0.001">
+    </testcase>
+    <testcase classname="Get has mentions return true for @All mention" name="Get has mentions return true for @All mention" time="0">
+    </testcase>
+    <testcase classname="Get has mentions return false for no mentions" name="Get has mentions return false for no mentions" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityShareFile component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.068" tests="2">
+    <testcase classname="ActivityShareFile component renders properly" name="ActivityShareFile component renders properly" time="0.002">
+    </testcase>
+    <testcase classname="ActivityShareFile component renders properly while pending" name="ActivityShareFile component renders properly while pending" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="TitleBar component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.072" tests="1">
+    <testcase classname="TitleBar component renders correctly" name="TitleBar component renders correctly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Redux module users helpers" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.074" tests="7">
+    <testcase classname="Redux module users helpers #constructUserFromParticipant converts a participant object to user shape" name="Redux module users helpers #constructUserFromParticipant converts a participant object to user shape" time="0.001">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUserFromParticipant supports an empty displayName" name="Redux module users helpers #constructUserFromParticipant supports an empty displayName" time="0">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUserFromHydra converts a hydra object to user shape" name="Redux module users helpers #constructUserFromHydra converts a hydra object to user shape" time="0.001">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUserFromHydra converts a hydra object to user shape without a nickname" name="Redux module users helpers #constructUserFromHydra converts a hydra object to user shape without a nickname" time="0">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUserFromHydra supports an empty user" name="Redux module users helpers #constructUserFromHydra supports an empty user" time="0.001">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUser detects and converts a hydra user" name="Redux module users helpers #constructUser detects and converts a hydra user" time="0">
+    </testcase>
+    <testcase classname="Redux module users helpers #constructUser detects and converts a participant user" name="Redux module users helpers #constructUser detects and converts a participant user" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-media actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.068" tests="8">
+    <testcase classname="redux-module-media actions  has exported actions" name="redux-module-media actions  has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media actions  #acceptIncomingCall can successfully accept an incoming call" name="redux-module-media actions  #acceptIncomingCall can successfully accept an incoming call" time="0.003">
+    </testcase>
+    <testcase classname="redux-module-media actions  #declineIncomingCall can successfully decline an incoming call" name="redux-module-media actions  #declineIncomingCall can successfully decline an incoming call" time="0">
+    </testcase>
+    <testcase classname="redux-module-media actions  #dismissIncomingCall can successfully dismiss an incoming call" name="redux-module-media actions  #dismissIncomingCall can successfully dismiss an incoming call" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media actions  #hangupCall can successfully hangup active call" name="redux-module-media actions  #hangupCall can successfully hangup active call" time="0">
+    </testcase>
+    <testcase classname="redux-module-media actions  #listenForCalls can successfully attach call:incoming listener" name="redux-module-media actions  #listenForCalls can successfully attach call:incoming listener" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media actions  #placeCall can successfully call a user with email" name="redux-module-media actions  #placeCall can successfully call a user with email" time="0">
+    </testcase>
+    <testcase classname="redux-module-media actions  #storeCall stores a call" name="redux-module-media actions  #storeCall stores a call" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ButtonControls component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.057" tests="4">
+    <testcase classname="ButtonControls component renders properly with labels" name="ButtonControls component renders properly with labels" time="0.001">
+    </testcase>
+    <testcase classname="ButtonControls component renders properly without labels" name="ButtonControls component renders properly without labels" time="0">
+    </testcase>
+    <testcase classname="ButtonControls component when it has accessibility labels renders properly with labels" name="ButtonControls component when it has accessibility labels renders properly with labels" time="0.001">
+    </testcase>
+    <testcase classname="ButtonControls component when it has accessibility labels renders properly without labels" name="ButtonControls component when it has accessibility labels renders properly without labels" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-share actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.07" tests="2">
+    <testcase classname="redux-module-share actions  has exported actions" name="redux-module-share actions  has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-share actions  #retrieveSharedFile properly retrieves and returns file" name="redux-module-share actions  #retrieveSharedFile properly retrieves and returns file" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActiveMeeting component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.054" tests="4">
+    <testcase classname="ActiveMeeting component renders properly with all props" name="ActiveMeeting component renders properly with all props" time="0.001">
+    </testcase>
+    <testcase classname="ActiveMeeting component renders properly with inactive remote video" name="ActiveMeeting component renders properly with inactive remote video" time="0.001">
+    </testcase>
+    <testcase classname="ActiveMeeting component renders properly with no remote video" name="ActiveMeeting component renders properly with no remote video" time="0">
+    </testcase>
+    <testcase classname="ActiveMeeting component renders properly with no local video" name="ActiveMeeting component renders properly with no local video" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Avatar component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.061" tests="6">
+    <testcase classname="Avatar component when avatar is not a self type renders without presence" name="Avatar component when avatar is not a self type renders without presence" time="0.001">
+    </testcase>
+    <testcase classname="Avatar component when avatar is not a self type renders with active presence" name="Avatar component when avatar is not a self type renders with active presence" time="0">
+    </testcase>
+    <testcase classname="Avatar component when avatar is not a self type renders with ooo presence" name="Avatar component when avatar is not a self type renders with ooo presence" time="0.001">
+    </testcase>
+    <testcase classname="Avatar component when avatar is a self type renders without presence" name="Avatar component when avatar is a self type renders without presence" time="0">
+    </testcase>
+    <testcase classname="Avatar component when avatar is a self type renders with active presence" name="Avatar component when avatar is a self type renders with active presence" time="0">
+    </testcase>
+    <testcase classname="Avatar component when avatar is a self type renders with ooo presence" name="Avatar component when avatar is a self type renders with ooo presence" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityMenu component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.05" tests="1">
+    <testcase classname="ActivityMenu component renders properly" name="ActivityMenu component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityMenuHeader component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:53" time="0.053" tests="3">
+    <testcase classname="ActivityMenuHeader component renders properly with one activity" name="ActivityMenuHeader component renders properly with one activity" time="0.001">
+    </testcase>
+    <testcase classname="ActivityMenuHeader component renders properly with two activities" name="ActivityMenuHeader component renders properly with two activities" time="0">
+    </testcase>
+    <testcase classname="ActivityMenuHeader component renders properly with three activities" name="ActivityMenuHeader component renders properly with three activities" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="DaySeparator component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.052" tests="4">
+    <testcase classname="DaySeparator component renders properly for today" name="DaySeparator component renders properly for today" time="0.003">
+    </testcase>
+    <testcase classname="DaySeparator component renders properly for yesterday" name="DaySeparator component renders properly for yesterday" time="0.001">
+    </testcase>
+    <testcase classname="DaySeparator component renders properly for a month ago" name="DaySeparator component renders properly for a month ago" time="0.001">
+    </testcase>
+    <testcase classname="DaySeparator component renders properly for more than a year ago" name="DaySeparator component renders properly for more than a year ago" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivitySystemMessage tombstone component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.059" tests="8">
+    <testcase classname="ActivitySystemMessage tombstone component renders properly" name="ActivitySystemMessage tombstone component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivitySystemMessage tombstone component is self renders properly" name="ActivitySystemMessage tombstone component is self renders properly" time="0">
+    </testcase>
+    <testcase classname="ActivitySystemMessage create component renders properly" name="ActivitySystemMessage create component renders properly" time="0">
+    </testcase>
+    <testcase classname="ActivitySystemMessage update component renders properly" name="ActivitySystemMessage update component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivitySystemMessage roster component renders adds from self properly" name="ActivitySystemMessage roster component renders adds from self properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivitySystemMessage roster component renders adds properly" name="ActivitySystemMessage roster component renders adds properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivitySystemMessage roster component renders leaves from self properly" name="ActivitySystemMessage roster component renders leaves from self properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivitySystemMessage roster component renders leaves properly" name="ActivitySystemMessage roster component renders leaves properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Icon component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.045" tests="3">
+    <testcase classname="Icon component renders a default icon properly" name="Icon component renders a default icon properly" time="0.001">
+    </testcase>
+    <testcase classname="Icon component renders an icon with color properly" name="Icon component renders an icon with color properly" time="0.001">
+    </testcase>
+    <testcase classname="Icon component renders an icon with size properly" name="Icon component renders an icon with size properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-media reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.056" tests="9">
+    <testcase classname="redux-module-media reducer should return an initial state" name="redux-module-media reducer should return an initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle CHECKING_WEB_RTC_SUPPORT" name="redux-module-media reducer should handle CHECKING_WEB_RTC_SUPPORT" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle UPDATE_WEBRTC_SUPPORT" name="redux-module-media reducer should handle UPDATE_WEBRTC_SUPPORT" time="0">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle UPDATE_STATUS" name="redux-module-media reducer should handle UPDATE_STATUS" time="0">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle STORE_CALL" name="redux-module-media reducer should handle STORE_CALL" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle STORE_CALL with destination" name="redux-module-media reducer should handle STORE_CALL with destination" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle UPDATE_CALL_STATUS" name="redux-module-media reducer should handle UPDATE_CALL_STATUS" time="0">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle REMOVE_CALL" name="redux-module-media reducer should handle REMOVE_CALL" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-media reducer should handle DISMISS_INCOMING_CALL" name="redux-module-media reducer should handle DISMISS_INCOMING_CALL" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Activity Utilities" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.045" tests="2">
+    <testcase classname="Activity Utilities constructActivity() functionality creates a pending activity" name="Activity Utilities constructActivity() functionality creates a pending activity" time="0.001">
+    </testcase>
+    <testcase classname="Activity Utilities constructActivity() functionality sanitizes xss inputs" name="Activity Utilities constructActivity() functionality sanitizes xss inputs" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ChipFile component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.051" tests="1">
+    <testcase classname="ChipFile component renders properly" name="ChipFile component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="LoadingScreen component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.051" tests="1">
+    <testcase classname="LoadingScreen component renders properly" name="LoadingScreen component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ListSeparator component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.04" tests="2">
+    <testcase classname="ListSeparator component renders properly" name="ListSeparator component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ListSeparator component renders properly with classes" name="ListSeparator component renders properly with classes" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-features" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.047" tests="4">
+    <testcase classname="redux-module-features actions has exported actions" name="redux-module-features actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-features actions #getFeature can get a specific feature" name="redux-module-features actions #getFeature can get a specific feature" time="0">
+    </testcase>
+    <testcase classname="redux-module-features reducer should return initial state" name="redux-module-features reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-features reducer should handle STORE_FEATURE" name="redux-module-features reducer should handle STORE_FEATURE" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ChipBase component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.051" tests="1">
+    <testcase classname="ChipBase component renders properly" name="ChipBase component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityItemPostActions component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.041" tests="1">
+    <testcase classname="ActivityItemPostActions component renders properly" name="ActivityItemPostActions component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Notifications component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.047" tests="10">
+    <testcase classname="Notifications component should instantiate" name="Notifications component should instantiate" time="0.001">
+    </testcase>
+    <testcase classname="Notifications component should set supported true if true" name="Notifications component should set supported true if true" time="0">
+    </testcase>
+    <testcase classname="Notifications component should not set supported true if false" name="Notifications component should not set supported true if false" time="0">
+    </testcase>
+    <testcase classname="Notifications component should request permissions and set result if supported" name="Notifications component should request permissions and set result if supported" time="0.001">
+    </testcase>
+    <testcase classname="Notifications component should request permissions and set result" name="Notifications component should request permissions and set result" time="0">
+    </testcase>
+    <testcase classname="Notifications component should mark notification as sent after displaying" name="Notifications component should mark notification as sent after displaying" time="0">
+    </testcase>
+    <testcase classname="Notifications component should display the notification if the browser is hidden" name="Notifications component should display the notification if the browser is hidden" time="0">
+    </testcase>
+    <testcase classname="Notifications component should not display the notification if isMuted is true" name="Notifications component should not display the notification if isMuted is true" time="0">
+    </testcase>
+    <testcase classname="Notifications component should not display the notification if alertType is none" name="Notifications component should not display the notification if alertType is none" time="0.001">
+    </testcase>
+    <testcase classname="Notifications component should trigger onEvent when notification is created" name="Notifications component should trigger onEvent when notification is created" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ComposerButtons component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.053" tests="2">
+    <testcase classname="ComposerButtons component renders properly with attachFiles enabled" name="ComposerButtons component renders properly with attachFiles enabled" time="0.001">
+    </testcase>
+    <testcase classname="ComposerButtons component renders properly with attachFiles enabled" name="ComposerButtons component renders properly with attachFiles enabled" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-flags actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.051" tests="7">
+    <testcase classname="redux-module-flags actions  has exported actions" name="redux-module-flags actions  has exported actions" time="0">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #fetchFlags can successfully fetch Flags" name="redux-module-flags actions  #fetchFlags can successfully fetch Flags" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #fetchFlags can error correctly" name="redux-module-flags actions  #fetchFlags can error correctly" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #flagActivity can successfully flag an activity" name="redux-module-flags actions  #flagActivity can successfully flag an activity" time="0">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #flagActivity can error correctly" name="redux-module-flags actions  #flagActivity can error correctly" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #removeFlagFromServer can successfully remove flag" name="redux-module-flags actions  #removeFlagFromServer can successfully remove flag" time="0">
+    </testcase>
+    <testcase classname="redux-module-flags actions  #removeFlagFromServer can error correctly" name="redux-module-flags actions  #removeFlagFromServer can error correctly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Notification states" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.083" tests="29">
+    <testcase classname="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_UNREAD for a unread 1on1 space" name="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_UNREAD for a unread 1on1 space" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_NONE for a read 1on1 space" name="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_NONE for a read 1on1 space" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_MUTE for a muted 1on1 space" name="Notification states Get badge state one on one spaces returns NOTIFICATIONS_BADGE_MUTE for a muted 1on1 space" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces muted spaces returns MUTE for a read/unread group space (global ALL and space MENTION_ONLY)" name="Notification states Get badge state global spaces muted spaces returns MUTE for a read/unread group space (global ALL and space MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces muted spaces returns MUTE for a group space (global ALL and space OFF)" name="Notification states Get badge state global spaces muted spaces returns MUTE for a group space (global ALL and space OFF)" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNREAD for an unread group space (global ALL)" name="Notification states Get badge state global spaces returns UNREAD for an unread group space (global ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNREAD for an unread group space (global ALL and space ALL)" name="Notification states Get badge state global spaces returns UNREAD for an unread group space (global ALL and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL and space ALL)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global ALL and space MENTION_ONLY)" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global MENTION_ONLY)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns NONE for a read/unread group space (global MENTION_ONLY)" name="Notification states Get badge state global spaces returns NONE for a read/unread group space (global MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNREAD for an unread group space (global MENTION_ONLY and space ALL)" name="Notification states Get badge state global spaces returns UNREAD for an unread group space (global MENTION_ONLY and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNMUTE for a read group space (global MENTION_ONLY and space ALL)" name="Notification states Get badge state global spaces returns UNMUTE for a read group space (global MENTION_ONLY and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global MENTION_ONLY and space ALL)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global MENTION_ONLY and space ALL)" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNREAD for a unread group space (global MENTION_ONLY and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns UNREAD for a unread group space (global MENTION_ONLY and space MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global and space MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns NONE for a read/unread group space (global and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns NONE for a read/unread group space (global and space MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MUTE for a read/unread/mention group space (global MENTION_ONLY and space OFF)" name="Notification states Get badge state global spaces returns MUTE for a read/unread/mention group space (global MENTION_ONLY and space OFF)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MUTE for a read/unread/mention group space (global OFF)" name="Notification states Get badge state global spaces returns MUTE for a read/unread/mention group space (global OFF)" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNMUTE for a read group space (global OFF and space ALL)" name="Notification states Get badge state global spaces returns UNMUTE for a read group space (global OFF and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNREAD for an unread group space (global OFF and space ALL)" name="Notification states Get badge state global spaces returns UNREAD for an unread group space (global OFF and space ALL)" time="0.005">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global OFF and space ALL)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global OFF and space ALL)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns MENTION for a mention group space (global OFF and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns MENTION for a mention group space (global OFF and space MENTION_ONLY)" time="0.001">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns UNMUTE for a read/unread group space (global OFF and space MENTION_ONLY)" name="Notification states Get badge state global spaces returns UNMUTE for a read/unread group space (global OFF and space MENTION_ONLY)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get badge state global spaces returns NONE for a read/unread/mention group space (global OFF and space OFF)" name="Notification states Get badge state global spaces returns NONE for a read/unread/mention group space (global OFF and space OFF)" time="0">
+    </testcase>
+    <testcase classname="Notification states Get global notification state returns NOTIFICATIONS_OFF if features are not set" name="Notification states Get global notification state returns NOTIFICATIONS_OFF if features are not set" time="0">
+    </testcase>
+    <testcase classname="Notification states Get global notification state returns NOTIFICATIONS_ALL if user feature &quot;group-message-notifications&quot; is set " name="Notification states Get global notification state returns NOTIFICATIONS_ALL if user feature &quot;group-message-notifications&quot; is set " time="0">
+    </testcase>
+    <testcase classname="Notification states Get global notification state returns NOTIFICATIONS_MENTIONS if user feature &quot;mention-notifications&quot; is set" name="Notification states Get global notification state returns NOTIFICATIONS_MENTIONS if user feature &quot;mention-notifications&quot; is set" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="uuid-utils" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:54" time="0.052" tests="6">
+    <testcase classname="uuid-utils validateAndDecodeId returns an id object for a uuid input" name="uuid-utils validateAndDecodeId returns an id object for a uuid input" time="0">
+    </testcase>
+    <testcase classname="uuid-utils validateAndDecodeId deconstructs a hydra ID" name="uuid-utils validateAndDecodeId deconstructs a hydra ID" time="0.001">
+    </testcase>
+    <testcase classname="uuid-utils validateAndDecodeId returns an empty object on invalid input: [null]" name="uuid-utils validateAndDecodeId returns an empty object on invalid input: [null]" time="0.001">
+    </testcase>
+    <testcase classname="uuid-utils validateAndDecodeId returns an empty object on invalid input: [empty string]" name="uuid-utils validateAndDecodeId returns an empty object on invalid input: [empty string]" time="0">
+    </testcase>
+    <testcase classname="uuid-utils validateAndDecodeId returns an empty object on invalid input [AB%CD]" name="uuid-utils validateAndDecodeId returns an empty object on invalid input [AB%CD]" time="0">
+    </testcase>
+    <testcase classname="uuid-utils validateAndDecodeId returns an empty object on invalid hydra ID" name="uuid-utils validateAndDecodeId returns an empty object on invalid hydra ID" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="CallDataActivityMessage component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.043" tests="2">
+    <testcase classname="CallDataActivityMessage component renders properly for having a call" name="CallDataActivityMessage component renders properly for having a call" time="0.002">
+    </testcase>
+    <testcase classname="CallDataActivityMessage component renders properly for having a meeting" name="CallDataActivityMessage component renders properly for having a meeting" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Avatar component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.048" tests="4">
+    <testcase classname="Avatar component renders properly without image" name="Avatar component renders properly without image" time="0.001">
+    </testcase>
+    <testcase classname="Avatar component renders properly as self avatar" name="Avatar component renders properly as self avatar" time="0.001">
+    </testcase>
+    <testcase classname="Avatar component renders empty with no name" name="Avatar component renders empty with no name" time="0">
+    </testcase>
+    <testcase classname="Avatar component uppercases a lowercase name" name="Avatar component uppercases a lowercase name" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-indicators actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.042" tests="5">
+    <testcase classname="redux-module-indicators actions  has exported actions" name="redux-module-indicators actions  has exported actions" time="0">
+    </testcase>
+    <testcase classname="redux-module-indicators actions  #addTyping can successfully add typing indicator" name="redux-module-indicators actions  #addTyping can successfully add typing indicator" time="0">
+    </testcase>
+    <testcase classname="redux-module-indicators actions  #deleteTyping can successfully delete typing indicator" name="redux-module-indicators actions  #deleteTyping can successfully delete typing indicator" time="0">
+    </testcase>
+    <testcase classname="redux-module-indicators actions  #setTyping can successfully setTyping with value" name="redux-module-indicators actions  #setTyping can successfully setTyping with value" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-indicators actions  #setTyping can successfully setTyping without value" name="redux-module-indicators actions  #setTyping can successfully setTyping without value" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ScrollToBottomButton component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.044" tests="2">
+    <testcase classname="ScrollToBottomButton component basic renders properly" name="ScrollToBottomButton component basic renders properly" time="0.001">
+    </testcase>
+    <testcase classname="ScrollToBottomButton component with text renders properly" name="ScrollToBottomButton component with text renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-presence actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.046" tests="6">
+    <testcase classname="redux-module-presence actions has exported actions" name="redux-module-presence actions has exported actions" time="0">
+    </testcase>
+    <testcase classname="redux-module-presence actions can set user status" name="redux-module-presence actions can set user status" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-presence actions can get user status" name="redux-module-presence actions can get user status" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-presence actions #subscribeToPresenceUpdates() can subscribe to updates" name="redux-module-presence actions #subscribeToPresenceUpdates() can subscribe to updates" time="0">
+    </testcase>
+    <testcase classname="redux-module-presence actions #subscribeToPresenceUpdates() does not subscribe to items already subscribed" name="redux-module-presence actions #subscribeToPresenceUpdates() does not subscribe to items already subscribed" time="0">
+    </testcase>
+    <testcase classname="redux-module-presence actions can unsubscribe from updates" name="redux-module-presence actions can unsubscribe from updates" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="NoSpaces component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.036" tests="1">
+    <testcase classname="NoSpaces component renders correctly" name="NoSpaces component renders correctly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Button component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.036" tests="5">
+    <testcase classname="Button component renders properly with icon type" name="Button component renders properly with icon type" time="0.001">
+    </testcase>
+    <testcase classname="Button component renders properly with icon type and color" name="Button component renders properly with icon type and color" time="0.001">
+    </testcase>
+    <testcase classname="Button component renders properly with label" name="Button component renders properly with label" time="0.001">
+    </testcase>
+    <testcase classname="Button component renders properly with label and position" name="Button component renders properly with label and position" time="0">
+    </testcase>
+    <testcase classname="Button component renders properly with children" name="Button component renders properly with children" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-errors actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.034" tests="4">
+    <testcase classname="redux-module-errors actions has exported actions" name="redux-module-errors actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-errors actions #addError can save an application error" name="redux-module-errors actions #addError can save an application error" time="0">
+    </testcase>
+    <testcase classname="redux-module-errors actions #removeError can remove existing errors" name="redux-module-errors actions #removeError can remove existing errors" time="0">
+    </testcase>
+    <testcase classname="redux-module-errors actions #resetErrors can reset errors" name="redux-module-errors actions #resetErrors can reset errors" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="TypingIndicator component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.032" tests="1">
+    <testcase classname="TypingIndicator component renders correctly" name="TypingIndicator component renders correctly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="AddFileButton component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.038" tests="1">
+    <testcase classname="AddFileButton component renders properly" name="AddFileButton component renders properly" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="ConfirmationModal component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.031" tests="1">
+    <testcase classname="ConfirmationModal component renders properly" name="ConfirmationModal component renders properly" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="files utilities" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.037" tests="4">
+    <testcase classname="files utilities checkMaxFileSize() when all files are under file size limit returns true when all files are under file size limit" name="files utilities checkMaxFileSize() when all files are under file size limit returns true when all files are under file size limit" time="0">
+    </testcase>
+    <testcase classname="files utilities checkMaxFileSize() when all files are under file size limit does not call addError" name="files utilities checkMaxFileSize() when all files are under file size limit does not call addError" time="0">
+    </testcase>
+    <testcase classname="files utilities checkMaxFileSize() when a file is over the file size limit returns false" name="files utilities checkMaxFileSize() when a file is over the file size limit returns false" time="0.001">
+    </testcase>
+    <testcase classname="files utilities checkMaxFileSize() when a file is over the file size limit calls addError" name="files utilities checkMaxFileSize() when a file is over the file size limit calls addError" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="spark reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.04" tests="4">
+    <testcase classname="spark reducer should return initial state" name="spark reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="spark reducer should handle SET_ERROR" name="spark reducer should handle SET_ERROR" time="0">
+    </testcase>
+    <testcase classname="spark reducer should handle SET_PRESENCE_STATUS" name="spark reducer should handle SET_PRESENCE_STATUS" time="0.001">
+    </testcase>
+    <testcase classname="spark reducer should handle UPDATE_MODULE_STATUS" name="spark reducer should handle UPDATE_MODULE_STATUS" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-teams reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.04" tests="4">
+    <testcase classname="redux-module-teams reducer should return initial state" name="redux-module-teams reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-teams reducer should handle FETCH_TEAMS" name="redux-module-teams reducer should handle FETCH_TEAMS" time="0">
+    </testcase>
+    <testcase classname="redux-module-teams reducer should handle STORE_TEAMS" name="redux-module-teams reducer should handle STORE_TEAMS" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-teams reducer should handle STORE_TEAMS_ERROR" name="redux-module-teams reducer should handle STORE_TEAMS_ERROR" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="spark reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.041" tests="5">
+    <testcase classname="spark reducer should return initial state" name="spark reducer should return initial state" time="0">
+    </testcase>
+    <testcase classname="spark reducer should handle STORE_SPARK_INSTANCE" name="spark reducer should handle STORE_SPARK_INSTANCE" time="0.001">
+    </testcase>
+    <testcase classname="spark reducer should handle UPDATE_SPARK_STATUS" name="spark reducer should handle UPDATE_SPARK_STATUS" time="0">
+    </testcase>
+    <testcase classname="spark reducer should handle REGISTER_DEVICE_FAILURE" name="spark reducer should handle REGISTER_DEVICE_FAILURE" time="0">
+    </testcase>
+    <testcase classname="spark reducer should handle UNREGISTER_DEVICE_FAILURE" name="spark reducer should handle UNREGISTER_DEVICE_FAILURE" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-mercury actions " errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.043" tests="4">
+    <testcase classname="redux-module-mercury actions  has exported actions" name="redux-module-mercury actions  has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-mercury actions  #connectToMercury can successfully connect to Mercury" name="redux-module-mercury actions  #connectToMercury can successfully connect to Mercury" time="0">
+    </testcase>
+    <testcase classname="redux-module-mercury actions  #connectToMercury fails to connect if device is not registered" name="redux-module-mercury actions  #connectToMercury fails to connect if device is not registered" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-mercury actions  #connectToMercury does not connect if already connected" name="redux-module-mercury actions  #connectToMercury does not connect if already connected" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="ActivityText component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.037" tests="3">
+    <testcase classname="ActivityText component renders clean text properly" name="ActivityText component renders clean text properly" time="0.001">
+    </testcase>
+    <testcase classname="ActivityText component renders clean dangerous text properly" name="ActivityText component renders clean dangerous text properly" time="0">
+    </testcase>
+    <testcase classname="ActivityText component renders dirty dangerous text properly" name="ActivityText component renders dirty dangerous text properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ErrorDisplay component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.039" tests="4">
+    <testcase classname="ErrorDisplay component renders properly with just title" name="ErrorDisplay component renders properly with just title" time="0.001">
+    </testcase>
+    <testcase classname="ErrorDisplay component renders properly with transparency" name="ErrorDisplay component renders properly with transparency" time="0.001">
+    </testcase>
+    <testcase classname="ErrorDisplay component renders properly with title and secondary" name="ErrorDisplay component renders properly with title and secondary" time="0.001">
+    </testcase>
+    <testcase classname="ErrorDisplay component renders properly with title and action" name="ErrorDisplay component renders properly with title and action" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="redux-module-teams actions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.04" tests="2">
+    <testcase classname="redux-module-teams actions has exported actions" name="redux-module-teams actions has exported actions" time="0.001">
+    </testcase>
+    <testcase classname="redux-module-teams actions #fetchTeams can successfully fetch teams" name="redux-module-teams actions #fetchTeams can successfully fetch teams" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="spark reducer" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.04" tests="4">
+    <testcase classname="spark reducer should return initial state" name="spark reducer should return initial state" time="0.001">
+    </testcase>
+    <testcase classname="spark reducer should handle ADD_ERROR" name="spark reducer should handle ADD_ERROR" time="0">
+    </testcase>
+    <testcase classname="spark reducer should handle REMOVE_ERROR" name="spark reducer should handle REMOVE_ERROR" time="0.001">
+    </testcase>
+    <testcase classname="spark reducer should handle RESET_ERRORS" name="spark reducer should handle RESET_ERRORS" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Cover component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.029" tests="1">
+    <testcase classname="Cover component renders properly" name="Cover component renders properly" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Spinner component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:55" time="0.034" tests="2">
+    <testcase classname="Spinner component renders properly" name="Spinner component renders properly" time="0">
+    </testcase>
+    <testcase classname="Spinner component renders with the bright property" name="Spinner component renders with the bright property" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Audio component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.032" tests="1">
+    <testcase classname="Audio component renders properly" name="Audio component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helper functions" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.036" tests="1">
+    <testcase classname="helper functions replaceIndexWithBlobURL should return cards object by replacing index with blob url" name="helper functions replaceIndexWithBlobURL should return cards object by replacing index with blob url" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="isActivityVisible function" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.038" tests="8">
+    <testcase classname="isActivityVisible function returns true if tombstone activity" name="isActivityVisible function returns true if tombstone activity" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if post activity" name="isActivityVisible function returns true if post activity" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if share activity" name="isActivityVisible function returns true if share activity" time="0.001">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if create activity" name="isActivityVisible function returns true if create activity" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if update activities" name="isActivityVisible function returns true if update activities" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if add activity" name="isActivityVisible function returns true if add activity" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns true if leave activity" name="isActivityVisible function returns true if leave activity" time="0">
+    </testcase>
+    <testcase classname="isActivityVisible function returns false if activity type is lyra space" name="isActivityVisible function returns false if activity type is lyra space" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="TextArea component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.038" tests="1">
+    <testcase classname="TextArea component renders properly" name="TextArea component renders properly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="SparkLogo component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.037" tests="1">
+    <testcase classname="SparkLogo component renders properly" name="SparkLogo component renders properly" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="NewMessagesSeparator component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.034" tests="1">
+    <testcase classname="NewMessagesSeparator component renders properly" name="NewMessagesSeparator component renders properly" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Get Adaptive Card Feature State" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.038" tests="2">
+    <testcase classname="Get Adaptive Card Feature State returns WIDGET_ADAPTIVE_CARD_OFF if features are not set" name="Get Adaptive Card Feature State returns WIDGET_ADAPTIVE_CARD_OFF if features are not set" time="0">
+    </testcase>
+    <testcase classname="Get Adaptive Card Feature State returns WIDGET_ADAPTIVE_CARD_ON if developer feature &quot;WIDGET_ADAPTIVE_CARD&quot; is set " name="Get Adaptive Card Feature State returns WIDGET_ADAPTIVE_CARD_ON if developer feature &quot;WIDGET_ADAPTIVE_CARD&quot; is set " time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Badge component" errors="0" failures="0" skipped="0" timestamp="2023-02-13T07:01:56" time="0.033" tests="2">
+    <testcase classname="Badge component renders properly" name="Badge component renders properly" time="0.001">
+    </testcase>
+    <testcase classname="Badge component renders properly with tooltip" name="Badge component renders properly with tooltip" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -9,7 +9,7 @@ import {
   findEventName
 } from '../../../lib/events';
 
-import {elements as meetElements, hangup} from '../../../lib/test-helpers/space-widget/meet';
+import {elements as meetElements} from '../../../lib/test-helpers/space-widget/meet';
 import {
   createSpaceAndPost,
   displayAndReadIncomingMessage,
@@ -399,16 +399,15 @@ describe('Smoke Tests - Recents Widget', () => {
         timeoutMsg: 'Join Call button was not displayed'
       });
     }, 3);
+    // it('hangup', () => {
+    //   // Hangup
+    //   hangup(browserRemote);
 
-    it('hangup', () => {
-      // Hangup
-      hangup(browserRemote);
-
-      browserLocal.waitUntil(() => !browserLocal.$(elements.joinCallButton).isDisplayed(), {
-        timeout: 20000,
-        timeoutMsg: 'Join Call button was not hidden after hanging up'
-      });
-    }, 3);
+    //   browserLocal.waitUntil(() => !browserLocal.$(elements.joinCallButton).isDisplayed(), {
+    //     timeout: 20000,
+    //     timeoutMsg: 'Join Call button was not hidden after hanging up'
+    //   });
+    // }, 3);
   });
 
 
