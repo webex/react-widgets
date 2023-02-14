@@ -1,6 +1,6 @@
 {
   "name": "@webex/react-widgets",
-  "version": "0.55.0",
+  "version": "0.56.0",
   "description": "The Webex for React library allows developers to easily incorporate Webex functionality into an application.",
   "scripts": {
     "build": "babel-node ./scripts/build/index.js",
@@ -128,7 +128,7 @@
     "typescript": "^4.5.3",
     "uuid": "^3.0.1",
     "validator": "^9.0.0",
-    "@webex/component-adapter-interfaces":"^1.29.3",
+    "@webex/component-adapter-interfaces": "^1.29.3",
     "luxon": "^3.0.1",
     "react-stately": "^3.17.0",
     "react-hook-form": "^7.35.0",
