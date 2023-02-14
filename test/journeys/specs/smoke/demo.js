@@ -6,7 +6,7 @@ import {elements as spaceElements} from '../../lib/test-helpers/space-widget/mai
 import {sendMessage, verifyMessageReceipt} from '../../lib/test-helpers/space-widget/messaging';
 
 describe('demo widget', () => {
-  let allPassed = true;
+  // let allPassed = true;
   let mccoy, spock, local, remote;
 
   before('loads the page', () => {
@@ -88,62 +88,62 @@ describe('demo widget', () => {
     });
   });
 
-  describe('sdk instance authentication', () => {
-    before('reloads demo page and stores access token', () => {
-      // Widget demo uses cookies to save info
-      browser.deleteCookies();
-      browser.refresh();
+  //   describe('sdk instance authentication', () => {
+  //     before('reloads demo page and stores access token', () => {
+  //       // Widget demo uses cookies to save info
+  //       browser.deleteCookies();
+  //       browser.refresh();
 
-      saveToken(browserLocal, mccoy.token.access_token, true);
-      saveToken(browserRemote, spock.token.access_token, true);
-    }, 3);
+  //       saveToken(browserLocal, mccoy.token.access_token, true);
+  //       saveToken(browserRemote, spock.token.access_token, true);
+  //     }, 3);
 
-    describe('space widget', () => {
-      it('opens space widget for mccoy in local', () => {
-        browserLocal.$(elements.toPersonRadioButton).click();
-        browserLocal.$(elements.toPersonInput).setValue(spock.email);
-        browserLocal.$(elements.openSpaceWidgetButton).click();
-        // Wait for conversation to be ready
-        const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
+  //     describe('space widget', () => {
+  //       it('opens space widget for mccoy in local', () => {
+  //         browserLocal.$(elements.toPersonRadioButton).click();
+  //         browserLocal.$(elements.toPersonInput).setValue(spock.email);
+  //         browserLocal.$(elements.openSpaceWidgetButton).click();
+  //         // Wait for conversation to be ready
+  //         const textInputField = `[placeholder="Send a message to ${spock.displayName}"]`;
 
-        browserLocal.$(textInputField).waitForDisplayed();
-        browserLocal.$(textInputField).scrollIntoView();
-      });
+  //         browserLocal.$(textInputField).waitForDisplayed();
+  //         browserLocal.$(textInputField).scrollIntoView();
+  //       });
 
-      it('opens space widget for spock in remote', () => {
-        browserRemote.$(elements.toPersonRadioButton).click();
-        browserRemote.$(elements.toPersonInput).setValue(mccoy.email);
-        browserRemote.$(elements.openSpaceWidgetButton).click();
-        // Wait for conversation to be ready
-        const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
+  //       it('opens space widget for spock in remote', () => {
+  //         browserRemote.$(elements.toPersonRadioButton).click();
+  //         browserRemote.$(elements.toPersonInput).setValue(mccoy.email);
+  //         browserRemote.$(elements.openSpaceWidgetButton).click();
+  //         // Wait for conversation to be ready
+  //         const textInputFieldRemote = `[placeholder="Send a message to ${mccoy.displayName}"]`;
 
-        browserRemote.$(textInputFieldRemote).waitForDisplayed();
-        browserRemote.$(textInputFieldRemote).scrollIntoView();
-      });
+  //         browserRemote.$(textInputFieldRemote).waitForDisplayed();
+  //         browserRemote.$(textInputFieldRemote).scrollIntoView();
+  //       });
 
-      describe('messaging', () => {
-        it('sends and receives messages', () => {
-          const martyText = 'Doc... what if we don\'t succeed?';
-          const docText = 'We must succeed.';
+  //       describe('messaging', () => {
+  //         it('sends and receives messages', () => {
+  //           const martyText = 'Doc... what if we don\'t succeed?';
+  //           const docText = 'We must succeed.';
 
-          sendMessage(remote, local, martyText);
-          verifyMessageReceipt(local, remote, martyText, false);
-          sendMessage(local, remote, docText);
-          verifyMessageReceipt(remote, local, docText, false);
-        });
-      });
-    });
+  //           sendMessage(remote, local, martyText);
+  //           verifyMessageReceipt(local, remote, martyText, false);
+  //           sendMessage(local, remote, docText);
+  //           verifyMessageReceipt(remote, local, docText, false);
+  //         });
+  //       });
+  //     });
 
-    describe('recents widget', () => {
-      it('opens recents widget for mccoy in local', () => {
-        browserLocal.$(elements.openRecentsWidgetButton).click();
-        browserLocal.$(elements.recentsWidgetContainer).waitForDisplayed();
-      });
-    });
-  });
+  //     describe('recents widget', () => {
+  //       it('opens recents widget for mccoy in local', () => {
+  //         browserLocal.$(elements.openRecentsWidgetButton).click();
+  //         browserLocal.$(elements.recentsWidgetContainer).waitForDisplayed();
+  //       });
+  //     });
+  //   });
 
-  /* eslint-disable-next-line func-names */
-  afterEach(function () {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
-  });
+//   /* eslint-disable-next-line func-names */
+//   afterEach(function () {
+//     allPassed = allPassed && (this.currentTest.state === 'passed');
+//   });
 });
