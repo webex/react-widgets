@@ -38,6 +38,8 @@ module.exports = {
           execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package webex-sign-in-page`);
           execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-voice-mail`);
           execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-speed-dial`);
+          execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-number-pad`);
+          
 
           
           
