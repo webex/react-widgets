@@ -56,6 +56,7 @@
     "@formatjs/intl-pluralrules": "^1.5.4",
     "@formatjs/intl-relativetimeformat": "^4.5.11",
     "@momentum-ui/react": "23.27.11",
+    "@momentum-ui/react-collaboration": "^26.22.0",
     "@webex/common": "1.157.0",
     "@webex/common-timers": "1.157.0",
     "@webex/components": "1.264.2",

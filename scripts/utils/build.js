@@ -71,7 +71,7 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
   console.log('pkgPath:',`${pkgName}`)
-  if (`${pkgName}` === 'widget-call-history') {
+  if (`${pkgName}` === 'widget-call-history'|| `${pkgName}` === 'webex-sign-in-page') {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
@@ -136,7 +136,7 @@ function buildES(pkg) {
       const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
     
 
-      if(`${pkg}` === '@webex/widget-call-history' ){
+      if(`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/webex-sign-in-page'){
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);
