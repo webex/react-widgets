@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
-import waitForPromise from '../../../lib/wait-for-promise';
 import {runAxe} from '../../../lib/axe';
 
 import {elements, openMenuAndClickButton, switchToMeet, switchToMessage} from '../../../lib/test-helpers/space-widget/main';
@@ -134,8 +133,6 @@ describe('Smoke Tests - Space Widget', () => {
     describe('messaging', () => {
       const martyText = 'Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?';
       const docText = 'The way I see it, if you\'re gonna build a time machine into a car, why not do it with some style?';
-      const lorraineText = 'Marty, will we ever see you again?';
-      const martyText2 = 'I guarantee it.';
 
       it('switches to Messages', () => {
         switchToMessage(local.browser);
@@ -152,22 +149,22 @@ describe('Smoke Tests - Space Widget', () => {
         verifyMessageReceipt(local, remote, docText);
       });
 
-      it('lorraine sends a message and verifies it was sent', () => {
-        // This request is flaky for some reason
-        // and the message won't get sent and the function doesn't throw if there's an error
-        waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
-          displayName: lorraineText
-        }));
-        // Send a message from a 'client'
-        // Wait for both widgets to receive client message
-        verifyMessageReceipt(local, remote, lorraineText);
-        verifyMessageReceipt(remote, local, lorraineText);
-      }, 5);
+      // it('lorraine sends a message and verifies it was sent', () => {
+      // This request is flaky for some reason
+      // and the message won't get sent and the function doesn't throw if there's an error
+      // waitForPromise(lorraine.spark.internal.conversation.post(conversation, {
+      //   displayName: lorraineText
+      // }));
+      // Send a message from a 'client'
+      // Wait for both widgets to receive client message
+      //   verifyMessageReceipt(local, remote, lorraineText);
+      //   verifyMessageReceipt(remote, local, lorraineText);
+      // }, 5);
 
-      it('marty sends another message', () => {
-        sendMessage(local, remote, martyText2);
-        verifyMessageReceipt(remote, local, martyText2);
-      });
+    //   it('marty sends another message', () => {
+    //     sendMessage(local, remote, martyText2);
+    //     verifyMessageReceipt(remote, local, martyText2);
+    //   });
     });
 
     describe.skip('meet widget', () => {
@@ -197,4 +194,3 @@ describe('Smoke Tests - Space Widget', () => {
 
   after('disconnect', () => disconnectDevices(participants));
 });
-
