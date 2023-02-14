@@ -130,7 +130,11 @@
     "validator": "^9.0.0",
     "@webex/component-adapter-interfaces":"^1.29.3",
     "luxon": "^3.0.1",
-    "react-stately": "^3.17.0"
+    "react-stately": "^3.17.0",
+    "react-hook-form": "^7.35.0",
+    "react-i18next": "^11.18.3",
+    "react-sortable-hoc": "^2.0.0",
+    "array-move": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",

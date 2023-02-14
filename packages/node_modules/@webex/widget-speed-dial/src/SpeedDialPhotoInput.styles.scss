@@ -1,0 +1,52 @@
+$C: wxc-speed-dial-photo-input;
+
+
+.#{$C} {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    box-sizing: border-box;
+  }
+
+  &__image-container {
+    position: relative;
+  }
+
+  &__image {
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+  }
+
+  &__file {
+    display: none;
+  }
+
+  &__button-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: white;
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(8px, 8px);
+  }
+
+  .md-button-circle-wrapper {
+    background-color: var(--videoSupport-controls-button-background) !important;
+    border-color: var(--button-secondary-text) !important;
+    color: var(--button-secondary-text) !important;
+    border-width: 2px;
+    svg {
+      fill: currentColor !important;
+    }
+  }
+
+}

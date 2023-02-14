@@ -1,0 +1,60 @@
+$C: wxc-speed-dial-modal;
+
+.#{$C} {
+  align-items: unset;
+  border-radius: 6px;
+
+  > * {
+    box-sizing: border-box;
+  }
+
+  &__header {
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    padding-left: .5rem;
+
+    p, h3 {
+      padding: 0;
+      margin: 0;
+    }
+
+    > div {
+      flex: 1;
+      width: 100%;
+    }
+
+    &-text {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .md-text-wrapper {
+      font-weight: normal;
+    }
+
+  }
+
+  &__subheader-text {
+    padding-bottom: 1rem;
+  }
+
+  &__content {
+    max-width: 425px;
+    padding: 1.5rem 0.5rem 0.5rem;
+  }
+
+  &__footer {
+    display: flex;
+    padding: 1rem;
+
+    button {
+      flex: 1;
+
+      &:first-child {
+        margin-right: 0.75rem;
+      }
+    }
+  }
+
+}
