@@ -70,8 +70,9 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
-  console.log('pkgPath:',`${pkgName}`)
-  if (`${pkgName}` === 'widget-call-history'||`${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
+
+  console.log('pkgPath:', `${pkgName}`);
+  if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
@@ -134,19 +135,18 @@ function buildES(pkg) {
     try {
       const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
       const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
-    
 
-      if(`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` ===  'widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` ==='@webex/widget-voice-mail'){
+
+      if (`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` === 'widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` === '@webex/widget-voice-mail') {
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);
-      }else{
+      }
+      else {
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
-         execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
+        execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
       }
-       
-
     }
     catch (err) {
       throw new Error(`Error building ${pkg} package, ${err}`, err);
