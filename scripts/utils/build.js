@@ -136,7 +136,7 @@ function buildES(pkg) {
       const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
     
 
-      if(`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` ===  'widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` ==='@webex/widget-voice-mail'){
+      if(`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` ===  '@webex/widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` ==='@webex/widget-voice-mail'){
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);
