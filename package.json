@@ -56,6 +56,7 @@
     "@formatjs/intl-pluralrules": "^1.5.4",
     "@formatjs/intl-relativetimeformat": "^4.5.11",
     "@momentum-ui/react": "23.27.11",
+    "@momentum-ui/react-collaboration": "^26.22.0",
     "@webex/common": "1.157.0",
     "@webex/common-timers": "1.157.0",
     "@webex/components": "1.264.2",
@@ -126,7 +127,14 @@
     "tslib": "^2.2.0",
     "typescript": "^4.5.3",
     "uuid": "^3.0.1",
-    "validator": "^9.0.0"
+    "validator": "^9.0.0",
+    "@webex/component-adapter-interfaces":"^1.29.3",
+    "luxon": "^3.0.1",
+    "react-stately": "^3.17.0",
+    "react-hook-form": "^7.35.0",
+    "react-i18next": "^11.18.3",
+    "react-sortable-hoc": "^2.0.0",
+    "array-move": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -234,7 +242,10 @@
     "rollup-plugin-license": "^2.8.1",
     "rollup-plugin-scss": "3",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-visualizer": "^5.6.0"
+    "rollup-plugin-visualizer": "^5.6.0",
+    "@faker-js/faker": "^7.3.0",
+    "@storybook/react": "6.5.11",
+    "@types/luxon": "^3"
   },
   "lint-staged": {
     "*.js": "lint:eslint"

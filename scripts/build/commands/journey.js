@@ -35,6 +35,12 @@ module.exports = {
           execSync(`BUILD_DIST_PATH=${dest}/dist-demo npm run build:package widget-demo`);
           // execSync(`BUILD_DIST_PATH=${dest}/dist-widget-calling npm run build:package widget-calling`);
           execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-call-history`);
+          execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package webex-sign-in-page`);
+          execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-voice-mail`);
+          execSync(`BUILD_DIST_PATH=${dest}/dist-call-history npm run build:package widget-speed-dial`);
+
+          
+          
         })
         .catch((err) => {
           console.log(err);
