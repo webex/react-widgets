@@ -127,7 +127,9 @@
     "tslib": "^2.2.0",
     "typescript": "^4.5.3",
     "uuid": "^3.0.1",
-    "validator": "^9.0.0"
+    "validator": "^9.0.0",
+    "@webex/component-adapter-interfaces":"^1.29.3",
+    "luxon": "^3.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -235,7 +237,10 @@
     "rollup-plugin-license": "^2.8.1",
     "rollup-plugin-scss": "3",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-visualizer": "^5.6.0"
+    "rollup-plugin-visualizer": "^5.6.0",
+    "@faker-js/faker": "^7.3.0",
+    "@storybook/react": "6.5.11",
+    "@types/luxon": "^3"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
