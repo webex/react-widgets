@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.60.0](https://github.com/webex/react-widgets/compare/v0.59.0...v0.60.0) (2023-02-23)
+
+
+### Bug Fixes
+
+* **dependencies:** added react collab in external ([#1268](https://github.com/webex/react-widgets/issues/1268)) ([ae6a96a](https://github.com/webex/react-widgets/commit/ae6a96a))
+
+
+
 ## [0.59.0](https://github.com/webex/react-widgets/compare/v0.58.0...v0.59.0) (2023-02-14)
 
 
