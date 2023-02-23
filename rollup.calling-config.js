@@ -118,7 +118,7 @@ export default {
         generateScopedName: (name, filename, css) => {
           const cssHash = base64.encode(css).substring(0, 8);
           const paths = filename.split('/');
-          const index = paths.indexOf('widget-call-history');
+          const index = paths.indexOf('@webex');
           let componentName;
 
           if (index !== -1) {
@@ -169,6 +169,6 @@ export default {
     format: 'esm',
     sourcemap: true
   }],
-  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react']
+  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react','@momentum-ui/react-collaboration']
 };
 
