@@ -97,6 +97,10 @@ module.exports = (options, env) => {
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules')
           ],
+          exclude: [
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules','@momentum-ui','react-collaboration'),
+            path.resolve(__dirname, '..', '..',  'packages', 'node_modules','@momentum-ui/react-collaboration')
+          ],
           use: [
             {
               loader: MiniCssExtractPlugin.loader
@@ -128,6 +132,10 @@ module.exports = (options, env) => {
           // Do not transform vendor`s CSS with CSS-modules
           test: /\.css$/,
           include: [path.resolve(__dirname, '..', '..', 'node_modules')],
+          exclude: [
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules','@momentum-ui','react-collaboration'),
+            path.resolve(__dirname, '..', '..',  'packages', 'node_modules','@momentum-ui/react-collaboration')
+          ],
           use: ['style-loader', 'css-loader']
         },
         {
@@ -135,6 +143,10 @@ module.exports = (options, env) => {
           include: [
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'samples')
+          ],
+          exclude: [
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules','@momentum-ui','react-collaboration'),
+            path.resolve(__dirname, '..', '..',  'packages', 'node_modules','@momentum-ui/react-collaboration')
           ],
           use: [
             {
