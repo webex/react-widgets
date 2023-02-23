@@ -71,5 +71,5 @@ export default {
     format: 'esm',
     sourcemap: true
   }],
-  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react']
+  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react', '@momentum-ui/react-collaboration']
 };

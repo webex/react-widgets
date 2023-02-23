@@ -136,6 +136,10 @@ module.exports = (options, env) => {
             path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
             path.resolve(__dirname, '..', '..', 'samples')
           ],
+          exclude: [
+            path.resolve(__dirname, '..', '..', 'packages', 'node_modules','@momentum-ui','react-collaboration'),
+            path.resolve(__dirname, '..', '..',  'packages', 'node_modules','@momentum-ui/react-collaboration')
+          ],
           use: [
             {
               // Adding sass converted files to our main.css does not work on IE/Edge
