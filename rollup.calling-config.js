@@ -77,7 +77,8 @@
 //         banner: `
 //         Webex Calling
 //         Copyright (c) <%= new Date().toISOString() %> Cisco Systems, Inc and its affiliates.
-//         This source code is licensed under the MIT license found in the LICENSE file in the root directory of this source tree.
+//         This source code is licensed under the MIT license found in the
+//          LICENSE file in the root directory of this source tree.
 //         `,
 //       }),
 //       visualizer({
@@ -169,6 +170,6 @@ export default {
     format: 'esm',
     sourcemap: true
   }],
-  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react']
+  external: ['react', 'react-dom', 'prop-types', 'classnames', '@momentum-ui/react', '@momentum-ui/react-collaboration']
 };
 
