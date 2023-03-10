@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.66.0](https://github.com/webex/react-widgets/compare/v0.65.0...v0.66.0) (2023-03-10)
+
+
+
 ## [0.65.0](https://github.com/webex/react-widgets/compare/v0.64.0...v0.65.0) (2023-03-03)
 
 
