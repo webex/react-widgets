@@ -201,7 +201,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "output-file-sync": "^2.0.1",
     "package-json": "^6.4.0",
     "postcss": "^6.0.3",
