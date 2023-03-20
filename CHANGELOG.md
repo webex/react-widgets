@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.69.0](https://github.com/webex/react-widgets/compare/v0.68.0...v0.69.0) (2023-03-20)
+
+
+### Bug Fixes
+
+* **speedDialForm:** uncommented ([#1277](https://github.com/webex/react-widgets/issues/1277)) ([70dbd3d](https://github.com/webex/react-widgets/commit/70dbd3d))
+
+
+
 ## [0.68.0](https://github.com/webex/react-widgets/compare/v0.67.0...v0.68.0) (2023-03-16)
 
 
