@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.70.0](https://github.com/webex/react-widgets/compare/v0.69.0...v0.70.0) (2023-03-21)
+
+
+### Bug Fixes
+
+* **VM:** auto refresh voice mail bold unread issue ([#1278](https://github.com/webex/react-widgets/issues/1278)) ([088dc1f](https://github.com/webex/react-widgets/commit/088dc1f))
+
+
+
 ## [0.69.0](https://github.com/webex/react-widgets/compare/v0.68.0...v0.69.0) (2023-03-20)
 
 
