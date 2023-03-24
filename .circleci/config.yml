@@ -14,6 +14,7 @@ executors:
 
 # Orb to grab `s3` capability for us
 orbs:
+  aws-cli: circleci/aws-cli@3.1.4
   aws-s3: circleci/aws-s3@3.0.0
   jq: circleci/jq@1.9.0
 
@@ -30,6 +31,17 @@ commands:
           keys:
             - node-modules-cache-node-fermium-npm-6-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
             - node-modules-cache-node-fermium-npm-6-{{ .Environment.CACHE_VERSION }}-
+  aws-cloudfront-invalidation:
+    parameters:
+      cloudfront-id:
+        description: AWS CloudFront ID
+        type: string
+        default: E2IU0JVSGDL1DE
+    steps:
+      - aws-cli/install
+      - run:
+          name: Create AWS CloudFront invalidation
+          command: aws cloudfront create-invalidation --distribution-id << parameters.cloudfront-id >> --paths "/*"
 
 jobs:
   install:
@@ -213,6 +225,11 @@ jobs:
   deploy_to_cdn:
     executor: main-executor
     working_directory: ~/react-widgets
+    parameters:
+      cloudfront-id:
+        description: AWS CloudFront ID
+        type: string
+        default: E2IU0JVSGDL1DE
     steps:
       - checkout
       - restore_workspace
@@ -250,6 +267,11 @@ jobs:
       - aws-s3/sync:
           from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
+      - when:
+          condition: << parameters.cloudfront-id >>
+          steps:
+            - aws-cloudfront-invalidation:
+                cloudfront-id: << parameters.cloudfront-id >>
 
   promote_alpha_to_beta:
     executor: main-executor
