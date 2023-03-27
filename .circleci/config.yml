@@ -36,12 +36,11 @@ commands:
       cloudfront-id:
         description: AWS CloudFront ID
         type: string
-        default: E2IU0JVSGDL1DE
     steps:
       - aws-cli/install
       - run:
           name: Create AWS CloudFront invalidation
-          command: aws cloudfront create-invalidation --distribution-id << parameters.cloudfront-id >> --paths "/*"
+          command: aws cloudfront create-invalidation --distribution-id ${AWS_DISTRIBUTION_ID} --paths "/*"
 
 jobs:
   install:
@@ -229,7 +228,6 @@ jobs:
       cloudfront-id:
         description: AWS CloudFront ID
         type: string
-        default: E2IU0JVSGDL1DE
     steps:
       - checkout
       - restore_workspace
@@ -268,10 +266,10 @@ jobs:
           from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
       - when:
-          condition: << parameters.cloudfront-id >>
+          condition: ${AWS_DISTRIBUTION_ID}
           steps:
             - aws-cloudfront-invalidation:
-                cloudfront-id: << parameters.cloudfront-id >>
+                cloudfront-id: ${AWS_DISTRIBUTION_ID}
 
   promote_alpha_to_beta:
     executor: main-executor
