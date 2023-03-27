@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.71.0](https://github.com/webex/react-widgets/compare/v0.70.0...v0.71.0) (2023-03-27)
+
+
+### Bug Fixes
+
+* WebexCalling Call Histrory callBack Address ([#1280](https://github.com/webex/react-widgets/issues/1280)) ([aa74119](https://github.com/webex/react-widgets/commit/aa74119))
+
+
+
 ## [0.70.0](https://github.com/webex/react-widgets/compare/v0.69.0...v0.70.0) (2023-03-21)
 
 
