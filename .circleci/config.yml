@@ -228,6 +228,7 @@ jobs:
       cloudfront-id:
         description: AWS CloudFront ID
         type: string
+        default: ""
     steps:
       - checkout
       - restore_workspace
