@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.73.0](https://github.com/webex/react-widgets/compare/v0.72.0...v0.73.0) (2023-03-27)
+
+
+### Build System
+
+* add default to cloudfront id ([abed0ce](https://github.com/webex/react-widgets/commit/abed0ce))
+* **circle-ci:** provide valid distribution id through env ([74188de](https://github.com/webex/react-widgets/commit/74188de))
+
+
+
 ## [0.72.0](https://github.com/webex/react-widgets/compare/v0.71.0...v0.72.0) (2023-03-27)
 
 
