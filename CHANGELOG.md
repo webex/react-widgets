@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.74.0](https://github.com/webex/react-widgets/compare/v0.73.0...v0.74.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* **crossLaunchToken:** crossLaunchToken ([#1284](https://github.com/webex/react-widgets/issues/1284)) ([f0ffd74](https://github.com/webex/react-widgets/commit/f0ffd74))
+
+
+
 ## [0.73.0](https://github.com/webex/react-widgets/compare/v0.72.0...v0.73.0) (2023-03-27)
 
 
