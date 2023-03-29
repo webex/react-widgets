@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.75.0](https://github.com/webex/react-widgets/compare/v0.74.0...v0.75.0) (2023-03-29)
+
+
+### Bug Fixes
+
+* **iconValidation:** iconValidation ([#1285](https://github.com/webex/react-widgets/issues/1285)) ([f2ff097](https://github.com/webex/react-widgets/commit/f2ff097))
+
+
+
 ## [0.74.0](https://github.com/webex/react-widgets/compare/v0.73.0...v0.74.0) (2023-03-28)
 
 
