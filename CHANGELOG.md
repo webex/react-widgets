@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.79.0](https://github.com/webex/react-widgets/compare/v0.78.0...v0.79.0) (2023-03-31)
+
+
+### Build System
+
+* pr to trigger build in circle ci ([72a15a9](https://github.com/webex/react-widgets/commit/72a15a9))
+
+
+
 ## [0.78.0](https://github.com/webex/react-widgets/compare/v0.77.0...v0.78.0) (2023-03-31)
 
 
