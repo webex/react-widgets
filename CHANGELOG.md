@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.83.0](https://github.com/webex/react-widgets/compare/v0.82.0...v0.83.0) (2023-04-08)
+
+
+### Bug Fixes
+
+* **Dialpad:** Dialpad ([#1293](https://github.com/webex/react-widgets/issues/1293)) ([6f0ddf7](https://github.com/webex/react-widgets/commit/6f0ddf7))
+
+
+
 ## [0.82.0](https://github.com/webex/react-widgets/compare/v0.81.0...v0.82.0) (2023-04-06)
 
 
