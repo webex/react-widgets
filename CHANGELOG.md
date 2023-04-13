@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.86.0](https://github.com/webex/react-widgets/compare/v0.85.0...v0.86.0) (2023-04-13)
+
+
+### Bug Fixes
+
+* **sdScrollFix:** SDscroll fix ([7b8dc9c](https://github.com/webex/react-widgets/commit/7b8dc9c))
+
+
+
 ## [0.85.0](https://github.com/webex/react-widgets/compare/v0.84.0...v0.85.0) (2023-04-12)
 
 
