@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.91.0](https://github.com/webex/react-widgets/compare/v0.90.0...v0.91.0) (2023-05-05)
+
+
+### Bug Fixes
+
+* **AvatarFix:** Avatar Fix ([f0cbd96](https://github.com/webex/react-widgets/commit/f0cbd96))
+
+
+
 ## [0.90.0](https://github.com/webex/react-widgets/compare/v0.89.0...v0.90.0) (2023-04-28)
 
 
