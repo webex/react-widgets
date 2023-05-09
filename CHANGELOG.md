@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.92.0](https://github.com/webex/react-widgets/compare/v0.91.0...v0.92.0) (2023-05-09)
+
+
+### Bug Fixes
+
+* **makeAcall:** added the logger ([c84f294](https://github.com/webex/react-widgets/commit/c84f294))
+* **makeAcall:** make a call calling issue ([4794da4](https://github.com/webex/react-widgets/commit/4794da4))
+
+
+
 ## [0.91.0](https://github.com/webex/react-widgets/compare/v0.90.0...v0.91.0) (2023-05-05)
 
 
