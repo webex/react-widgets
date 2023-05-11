@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.93.0](https://github.com/webex/react-widgets/compare/v0.92.0...v0.93.0) (2023-05-11)
+
+
+### Bug Fixes
+
+* **disablePhonetypes:** Disable Phone Types ([d4ea593](https://github.com/webex/react-widgets/commit/d4ea593))
+
+
+
 ## [0.92.0](https://github.com/webex/react-widgets/compare/v0.91.0...v0.92.0) (2023-05-09)
 
 
