@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.94.0](https://github.com/webex/react-widgets/compare/v0.93.0...v0.94.0) (2023-05-15)
+
+
+### Bug Fixes
+
+* **contactCard:** added contact card ([3b9a42e](https://github.com/webex/react-widgets/commit/3b9a42e))
+
+
+
 ## [0.93.0](https://github.com/webex/react-widgets/compare/v0.92.0...v0.93.0) (2023-05-11)
 
 
