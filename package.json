@@ -1,7 +1,7 @@
 {
   "name": "@webex/react-widgets",
   "version": "0.95.0",
-  "description": "Webex for React library allows developers to easily incorporate Webex functionality into an application.",
+  "description": "The Webex for React library allows developers to easily incorporate Webex functionality into an application.",
   "scripts": {
     "build": "babel-node ./scripts/build/index.js",
     "build:all": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 npm run build all",
