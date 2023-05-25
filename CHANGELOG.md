@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.96.0](https://github.com/webex/react-widgets/compare/v0.95.0...v0.96.0) (2023-05-25)
+
+
+### Bug Fixes
+
+* **keyboard:** keyboard acsess ([91637c4](https://github.com/webex/react-widgets/commit/91637c4))
+
+
+
 ## [0.95.0](https://github.com/webex/react-widgets/compare/v0.94.0...v0.95.0) (2023-05-24)
 
 
