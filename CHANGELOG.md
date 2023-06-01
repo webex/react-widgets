@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.98.0](https://github.com/webex/react-widgets/compare/v0.97.0...v0.98.0) (2023-06-01)
+
+
+### Bug Fixes
+
+* **RedesignPages:** fillOpacity ([d51c7fb](https://github.com/webex/react-widgets/commit/d51c7fb))
+
+
+
 ## [0.97.0](https://github.com/webex/react-widgets/compare/v0.96.0...v0.97.0) (2023-05-31)
 
 
