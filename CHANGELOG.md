@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.100.0](https://github.com/webex/react-widgets/compare/v0.99.0...v0.100.0) (2023-06-08)
+
+
+### Bug Fixes
+
+* **CHMakeCallchanges:** CH Make Call Changes ([99a12c5](https://github.com/webex/react-widgets/commit/99a12c5))
+
+
+
 ## [0.99.0](https://github.com/webex/react-widgets/compare/v0.98.0...v0.99.0) (2023-06-05)
 
 
