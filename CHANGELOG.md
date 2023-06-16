@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.104.0](https://github.com/webex/react-widgets/compare/v0.103.0...v0.104.0) (2023-06-16)
+
+
+### Bug Fixes
+
+* **momemtumversion:** upgrading momentumversion ([4e34851](https://github.com/webex/react-widgets/commit/4e34851))
+
+
+
 ## [0.103.0](https://github.com/webex/react-widgets/compare/v0.102.0...v0.103.0) (2023-06-13)
 
 
