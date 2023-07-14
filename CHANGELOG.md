@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.111.0](https://github.com/webex/react-widgets/compare/v0.110.0...v0.111.0) (2023-07-14)
+
+
+### Bug Fixes
+
+* **sdTruncationFix:** speeddial truncation fix ([37985f5](https://github.com/webex/react-widgets/commit/37985f5))
+
+
+
 ## [0.110.0](https://github.com/webex/react-widgets/compare/v0.109.0...v0.110.0) (2023-07-10)
 
 
