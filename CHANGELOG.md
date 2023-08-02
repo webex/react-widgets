@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.114.0](https://github.com/webex/react-widgets/compare/v0.113.0...v0.114.0) (2023-08-02)
+
+
+### Bug Fixes
+
+* **speedDial:** sipAddress ([0c0dad1](https://github.com/webex/react-widgets/commit/0c0dad1))
+
+
+
 ## [0.113.0](https://github.com/webex/react-widgets/compare/v0.112.0...v0.113.0) (2023-08-01)
 
 
