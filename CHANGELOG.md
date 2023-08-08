@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.115.0](https://github.com/webex/react-widgets/compare/v0.114.0...v0.115.0) (2023-08-08)
+
+
+### Bug Fixes
+
+* **VM_Avatar_Fix:** VM Avatar Fix with CH Voiceover Changes ([c34bd99](https://github.com/webex/react-widgets/commit/c34bd99))
+
+
+
 ## [0.114.0](https://github.com/webex/react-widgets/compare/v0.113.0...v0.114.0) (2023-08-02)
 
 
