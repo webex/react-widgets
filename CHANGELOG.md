@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.116.0](https://github.com/webex/react-widgets/compare/v0.115.0...v0.116.0) (2023-08-10)
+
+
+### Bug Fixes
+
+* **VMnullCheck:** Voicemail null check fix ([3d7caf9](https://github.com/webex/react-widgets/commit/3d7caf9))
+
+
+
 ## [0.115.0](https://github.com/webex/react-widgets/compare/v0.114.0...v0.115.0) (2023-08-08)
 
 
