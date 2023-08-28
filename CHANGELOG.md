@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.117.0](https://github.com/webex/react-widgets/compare/v0.116.0...v0.117.0) (2023-08-28)
+
+
+### Bug Fixes
+
+* **speedDial:** IconsMissing ([e45df92](https://github.com/webex/react-widgets/commit/e45df92))
+
+
+
 ## [0.116.0](https://github.com/webex/react-widgets/compare/v0.115.0...v0.116.0) (2023-08-10)
 
 
