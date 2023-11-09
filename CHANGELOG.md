@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.120.0](https://github.com/webex/react-widgets/compare/v0.119.0...v0.120.0) (2023-11-09)
+
+
+### Features
+
+* space id code change in space widget and demo ([c11c13a](https://github.com/webex/react-widgets/commit/c11c13a))
+
+
+
 ## [0.119.0](https://github.com/webex/react-widgets/compare/v0.118.0...v0.119.0) (2023-10-09)
 
 
