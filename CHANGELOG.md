@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.121.0](https://github.com/webex/react-widgets/compare/v0.120.0...v0.121.0) (2023-11-15)
+
+
+### Bug Fixes
+
+* **speeddial:** sdOesia ([4ed9215](https://github.com/webex/react-widgets/commit/4ed9215))
+
+
+
 ## [0.120.0](https://github.com/webex/react-widgets/compare/v0.119.0...v0.120.0) (2023-11-09)
 
 
