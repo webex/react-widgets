@@ -3,7 +3,7 @@
     "<rootDir>/packages/node_modules/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
-  "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@webex/sdk-component-adapter)"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@webex/sdk-component-adapter)", "<rootDir>/node_modules/(?!swiper)"],
   "moduleNameMapper": {
     "^.+\\.(css|scss|less)$": "identity-obj-proxy",
     "^.+\\.(mp3|wav)$": "<rootDir>/__mocks__/sound-mock.js",

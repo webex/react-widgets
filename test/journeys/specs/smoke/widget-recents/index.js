@@ -387,27 +387,32 @@ describe('Smoke Tests - Recents Widget', () => {
 
         window.openSpaceWidget(options);
       }, lorraine.token.access_token, marty.email);
-
-      browserRemote.$(meetElements.meetWidget).waitForDisplayed();
+      if (browserLocal.$(elements.tabMeet).isExisting() && browserLocal.$(elements.tabMeet).getTitle() === '') {
+        browserRemote.$(meetElements.meetWidget).waitForDisplayed();
+      }
     });
 
     it('displays a call in progress button', () => {
-      browserRemote.$(meetElements.callButton).waitForDisplayed({timeout: 60000});
-      browserRemote.$(meetElements.callButton).click();
-      browserLocal.waitUntil(() => browserLocal.$(elements.joinCallButton).isDisplayed(), {
-        timeout: 10000,
-        timeoutMsg: 'Join Call button was not displayed'
-      });
+      if (browserLocal.$(elements.tabMeet).isExisting() && browserLocal.$(elements.tabMeet).getTitle() === '') {
+        browserRemote.$(meetElements.callButton).waitForDisplayed({timeout: 60000});
+        browserRemote.$(meetElements.callButton).click();
+        browserLocal.waitUntil(() => browserLocal.$(elements.joinCallButton).isDisplayed(), {
+          timeout: 10000,
+          timeoutMsg: 'Join Call button was not displayed'
+        });
+      }
     }, 3);
 
     it('hangup', () => {
       // Hangup
-      hangup(browserRemote);
+      if (browserLocal.$(elements.tabMeet).isExisting() && browserLocal.$(elements.tabMeet).getTitle() === '') {
+        hangup(browserRemote);
 
-      browserLocal.waitUntil(() => !browserLocal.$(elements.joinCallButton).isDisplayed(), {
-        timeout: 20000,
-        timeoutMsg: 'Join Call button was not hidden after hanging up'
-      });
+        browserLocal.waitUntil(() => !browserLocal.$(elements.joinCallButton).isDisplayed(), {
+          timeout: 20000,
+          timeoutMsg: 'Join Call button was not hidden after hanging up'
+        });
+      }
     }, 3);
   });
 

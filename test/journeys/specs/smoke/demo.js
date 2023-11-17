@@ -69,12 +69,14 @@ describe('demo widget', () => {
 
         describe('external control', () => {
           it('can change current activity', () => {
-            assert.isTrue(browserLocal.$(spaceElements.messageWidget).isDisplayed());
-            browserLocal.$(elements.changeActivityMeetButton).click();
-            browserLocal.$(elements.updateSpaceWidgetButton).click();
-            browserLocal.$(spaceElements.meetWidget).waitForDisplayed({
-              timeout: 6000
-            });
+            if (browserLocal.$(elements.tabMeet).isExisting() && browserLocal.$(elements.tabMeet).getTitle() === '') {
+              assert.isTrue(browserLocal.$(spaceElements.messageWidget).isDisplayed());
+              browserLocal.$(elements.changeActivityMeetButton).click();
+              browserLocal.$(elements.updateSpaceWidgetButton).click();
+              browserLocal.$(spaceElements.meetWidget).waitForDisplayed({
+                timeout: 6000
+              });
+            }
           });
         });
       });

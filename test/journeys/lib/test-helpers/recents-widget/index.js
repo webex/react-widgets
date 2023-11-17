@@ -15,6 +15,7 @@ export const elements = {
   indicatorIcon: '.md-list-item--unread .md-list-item__right .md-icon',
   lastActivity: '.space-last-activity',
   callButton: 'button[aria-label="Call Space"]',
+  tabMeet: '.webex-tab-meet',
   joinCallButton: 'button[aria-label="Join Call"]',
   answerButton: 'button[aria-label="Answer"]',
   searchInput: '#pillSearchInput',
