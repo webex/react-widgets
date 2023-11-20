@@ -21,7 +21,8 @@ export const elements = {
   spaceWidgetContainer: '#my-webex-space-widget',
   recentsWidgetContainer: '#my-webex-recents-widget',
   changeActivityMeetButton: 'label[for="changeActivityMeet"]',
-  updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]'
+  updateSpaceWidgetButton: 'button[aria-label="Update Space Widget"]',
+  tabMeet: '.webex-tab-meet'
 };
 
 /**
