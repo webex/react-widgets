@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.122.0](https://github.com/webex/react-widgets/compare/v0.121.0...v0.122.0) (2023-11-20)
+
+
+### Bug Fixes
+
+* fix journey test for widget ([0ef7e41](https://github.com/webex/react-widgets/commit/0ef7e41))
+
+
+
 ## [0.121.0](https://github.com/webex/react-widgets/compare/v0.120.0...v0.121.0) (2023-11-15)
 
 
