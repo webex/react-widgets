@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.123.0](https://github.com/webex/react-widgets/compare/v0.122.0...v0.123.0) (2023-11-23)
+
+
+### Bug Fixes
+
+* **contextmenu:** Speed dial context menu issue ([767f4b0](https://github.com/webex/react-widgets/commit/767f4b0))
+
+
+
 ## [0.122.0](https://github.com/webex/react-widgets/compare/v0.121.0...v0.122.0) (2023-11-20)
 
 
