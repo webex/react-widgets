@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.126.0](https://github.com/webex/react-widgets/compare/v0.125.0...v0.126.0) (2023-12-05)
+
+
+### Bug Fixes
+
+* **feature:** phonenumber check ([31c2c4d](https://github.com/webex/react-widgets/commit/31c2c4d))
+* **huntgroup_callqueue:** feature ([69b2313](https://github.com/webex/react-widgets/commit/69b2313))
+
+
+
 ## [0.125.0](https://github.com/webex/react-widgets/compare/v0.124.0...v0.125.0) (2023-12-01)
 
 
