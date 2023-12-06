@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.127.0](https://github.com/webex/react-widgets/compare/v0.126.0...v0.127.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **darkTheme:** darktheme momentumcolorchanges ([380c9ae](https://github.com/webex/react-widgets/commit/380c9ae))
+
+
+
 ## [0.126.0](https://github.com/webex/react-widgets/compare/v0.125.0...v0.126.0) (2023-12-05)
 
 
