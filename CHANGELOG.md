@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.129.0](https://github.com/webex/react-widgets/compare/v0.128.0...v0.129.0) (2024-01-12)
+
+
+### Bug Fixes
+
+* **VMandCHRowSelected:** fixed CH and VM row selected issue ([34e46c6](https://github.com/webex/react-widgets/commit/34e46c6))
+
+
+
 ## [0.128.0](https://github.com/webex/react-widgets/compare/v0.127.0...v0.128.0) (2023-12-18)
 
 
