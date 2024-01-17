@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.130.0](https://github.com/webex/react-widgets/compare/v0.129.0...v0.130.0) (2024-01-17)
+
+
+### Bug Fixes
+
+* **speeddialissue:** dragNdrop issue ([7633b7a](https://github.com/webex/react-widgets/commit/7633b7a))
+
+
+
 ## [0.129.0](https://github.com/webex/react-widgets/compare/v0.128.0...v0.129.0) (2024-01-12)
 
 
