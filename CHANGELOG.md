@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.132.0](https://github.com/webex/react-widgets/compare/v0.131.0...v0.132.0) (2024-01-31)
+
+
+### Bug Fixes
+
+* **speeddial:** default audiocall issue ([ae82905](https://github.com/webex/react-widgets/commit/ae82905))
+* **speeddial:** default audiocall issue ([5c159f3](https://github.com/webex/react-widgets/commit/5c159f3))
+* **speeddial:** ui bugs ([6c43708](https://github.com/webex/react-widgets/commit/6c43708))
+
+
+
 ## [0.131.0](https://github.com/webex/react-widgets/compare/v0.130.0...v0.131.0) (2024-01-25)
 
 
