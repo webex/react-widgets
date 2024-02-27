@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.138.0](https://github.com/webex/react-widgets/compare/v0.137.0...v0.138.0) (2024-02-27)
+
+
+### Bug Fixes
+
+* **designChange:** design change ([7479afa](https://github.com/webex/react-widgets/commit/7479afa))
+* **designChange:** design change ([99c35dc](https://github.com/webex/react-widgets/commit/99c35dc))
+
+
+
 ## [0.137.0](https://github.com/webex/react-widgets/compare/v0.136.0...v0.137.0) (2024-02-23)
 
 
