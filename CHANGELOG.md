@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.139.0](https://github.com/webex/react-widgets/compare/v0.138.0...v0.139.0) (2024-02-28)
+
+
+### Bug Fixes
+
+* **callhistory:** spaceIssueFixed ([797a819](https://github.com/webex/react-widgets/commit/797a819))
+
+
+
 ## [0.138.0](https://github.com/webex/react-widgets/compare/v0.137.0...v0.138.0) (2024-02-27)
 
 
