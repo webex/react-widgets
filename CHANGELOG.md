@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.147.0](https://github.com/webex/react-widgets/compare/v0.146.0...v0.147.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* **loginChanges:** review phase1 login changes ([7845064](https://github.com/webex/react-widgets/commit/7845064))
+
+
+
 ## [0.146.0](https://github.com/webex/react-widgets/compare/v0.145.0...v0.146.0) (2024-03-12)
 
 
