@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.145.0](https://github.com/webex/react-widgets/compare/v0.144.0...v0.145.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* **speeddial:** Fixed double tab issue ([106e724](https://github.com/webex/react-widgets/commit/106e724))
+
+
+
 ## [0.144.0](https://github.com/webex/react-widgets/compare/v0.143.0...v0.144.0) (2024-03-08)
 
 
