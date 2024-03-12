@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.146.0](https://github.com/webex/react-widgets/compare/v0.145.0...v0.146.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* **germanFormatDateandTime:** Fix for German date and time issue ([f977f7c](https://github.com/webex/react-widgets/commit/f977f7c))
+
+
+
 ## [0.145.0](https://github.com/webex/react-widgets/compare/v0.144.0...v0.145.0) (2024-03-12)
 
 
