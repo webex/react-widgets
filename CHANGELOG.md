@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.149.0](https://github.com/webex/react-widgets/compare/v0.148.0...v0.149.0) (2024-03-14)
+
+
+### Bug Fixes
+
+* **padding:** padding correction ([f6bf9f1](https://github.com/webex/react-widgets/commit/f6bf9f1))
+
+
+
 ## [0.148.0](https://github.com/webex/react-widgets/compare/v0.147.0...v0.148.0) (2024-03-14)
 
 
