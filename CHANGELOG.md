@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.148.0](https://github.com/webex/react-widgets/compare/v0.147.0...v0.148.0) (2024-03-14)
+
+
+### Bug Fixes
+
+* **darkTheme:** dark theme ([bc0170e](https://github.com/webex/react-widgets/commit/bc0170e))
+
+
+
 ## [0.147.0](https://github.com/webex/react-widgets/compare/v0.146.0...v0.147.0) (2024-03-12)
 
 
