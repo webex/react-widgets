@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.150.0](https://github.com/webex/react-widgets/compare/v0.149.0...v0.150.0) (2024-03-15)
+
+
+### Bug Fixes
+
+* **buttonSize:** button size correct ([1ebe08b](https://github.com/webex/react-widgets/commit/1ebe08b))
+
+
+
 ## [0.149.0](https://github.com/webex/react-widgets/compare/v0.148.0...v0.149.0) (2024-03-14)
 
 
