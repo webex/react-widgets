@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.152.0](https://github.com/webex/react-widgets/compare/v0.151.0...v0.152.0) (2024-03-21)
+
+
+### Bug Fixes
+
+* **vmLoader:** VM Loader ([f3aba04](https://github.com/webex/react-widgets/commit/f3aba04))
+
+
+
 ## [0.151.0](https://github.com/webex/react-widgets/compare/v0.150.0...v0.151.0) (2024-03-19)
 
 
