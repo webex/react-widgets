@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.154.0](https://github.com/webex/react-widgets/compare/v0.153.0...v0.154.0) (2024-04-08)
+
+
+### Bug Fixes
+
+* **speeddial:** call type selection ([6c7a5fd](https://github.com/webex/react-widgets/commit/6c7a5fd))
+* **speeddial:** made input field dynamic ([c40b593](https://github.com/webex/react-widgets/commit/c40b593))
+
+
+### Features
+
+* **speeddial:** remove console log ([d2edb79](https://github.com/webex/react-widgets/commit/d2edb79))
+* **speeddial:** voiceover for forms ([8cfef57](https://github.com/webex/react-widgets/commit/8cfef57))
+
+
+
 ## [0.153.0](https://github.com/webex/react-widgets/compare/v0.152.0...v0.153.0) (2024-03-28)
 
 
