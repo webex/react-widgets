@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.155.0](https://github.com/webex/react-widgets/compare/v0.154.0...v0.155.0) (2024-04-10)
+
+
+### Features
+
+* **speeddial:** Voiceover Accessibility for Speed Dial items ([89e4801](https://github.com/webex/react-widgets/commit/89e4801))
+
+
+
 ## [0.154.0](https://github.com/webex/react-widgets/compare/v0.153.0...v0.154.0) (2024-04-08)
 
 
