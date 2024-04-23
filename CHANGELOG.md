@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.157.0](https://github.com/webex/react-widgets/compare/v0.156.0...v0.157.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* **dialpad:** allow longpress for '0' and '*' ([4adabe7](https://github.com/webex/react-widgets/commit/4adabe7))
+
+
+
 ## [0.156.0](https://github.com/webex/react-widgets/compare/v0.155.0...v0.156.0) (2024-04-12)
 
 
