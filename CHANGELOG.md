@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.158.0](https://github.com/webex/react-widgets/compare/v0.157.0...v0.158.0) (2024-05-02)
+
+
+### Bug Fixes
+
+* **voiceover:** reordered item voicover text not reinitializing ([c568438](https://github.com/webex/react-widgets/commit/c568438))
+* **voiceover:** reordered item voicover text not reinitializing ([5621320](https://github.com/webex/react-widgets/commit/5621320))
+
+
+
 ## [0.157.0](https://github.com/webex/react-widgets/compare/v0.156.0...v0.157.0) (2024-04-23)
 
 
