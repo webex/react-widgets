@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.159.0](https://github.com/webex/react-widgets/compare/v0.158.0...v0.159.0) (2024-05-02)
+
+
+### Bug Fixes
+
+* **dialpad:** empty address fix ([da4d663](https://github.com/webex/react-widgets/commit/da4d663))
+* **dialpad:** review comments addressed ([88091b0](https://github.com/webex/react-widgets/commit/88091b0))
+
+
+
 ## [0.158.0](https://github.com/webex/react-widgets/compare/v0.157.0...v0.158.0) (2024-05-02)
 
 
