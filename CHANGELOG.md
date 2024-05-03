@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.160.0](https://github.com/webex/react-widgets/compare/v0.159.0...v0.160.0) (2024-05-03)
+
+
+### Bug Fixes
+
+* **voiceover:** add breaks bw announcements ([9a9220e](https://github.com/webex/react-widgets/commit/9a9220e))
+
+
+
 ## [0.159.0](https://github.com/webex/react-widgets/compare/v0.158.0...v0.159.0) (2024-05-02)
 
 
