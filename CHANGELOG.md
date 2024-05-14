@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.161.0](https://github.com/webex/react-widgets/compare/v0.160.0...v0.161.0) (2024-05-14)
+
+
+### Bug Fixes
+
+* **callHistory:** badge counter ([23f4bfe](https://github.com/webex/react-widgets/commit/23f4bfe))
+
+
+
 ## [0.160.0](https://github.com/webex/react-widgets/compare/v0.159.0...v0.160.0) (2024-05-03)
 
 
