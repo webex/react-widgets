@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.164.0](https://github.com/webex/react-widgets/compare/v0.163.0...v0.164.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* **remove_ms:** Remove MS sign in page ([f10a3ec](https://github.com/webex/react-widgets/commit/f10a3ec))
+
+
+
 ## [0.163.0](https://github.com/webex/react-widgets/compare/v0.162.0...v0.163.0) (2024-05-21)
 
 
