@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.168.0](https://github.com/webex/react-widgets/compare/v0.167.0...v0.168.0) (2024-06-04)
+
+
+### Bug Fixes
+
+* **voiceover:** dialpad grouping relationship ([f15d792](https://github.com/webex/react-widgets/commit/f15d792))
+
+
+
 ## [0.167.0](https://github.com/webex/react-widgets/compare/v0.166.0...v0.167.0) (2024-06-03)
 
 
