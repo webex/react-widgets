@@ -164,7 +164,7 @@
     "@wdio/selenium-standalone-service": "^7.8.0",
     "@wdio/spec-reporter": "^7.9.0",
     "@wdio/static-server-service": "^7.8.0",
-    "@wdio/sync": "^7.9.0",
+    "@wdio/sync": "7.9.0",
     "@webex/eslint-config-base": "^0.8.0",
     "@webex/eslint-config-react": "^0.8.0",
     "@webex/test-helper-appid": "1.157.0",
