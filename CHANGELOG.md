@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.170.0](https://github.com/webex/react-widgets/compare/v0.169.0...v0.170.0) (2024-06-11)
+
+
+### Bug Fixes
+
+* **SPARK-526772:** focus lost once play button activated ([db7a470](https://github.com/webex/react-widgets/commit/db7a470))
+* **SPARK-526780:** No visual/announced on buttons ([7f28ad9](https://github.com/webex/react-widgets/commit/7f28ad9))
+* **SPARK-526780:** removed the setTimeout ([5f391f3](https://github.com/webex/react-widgets/commit/5f391f3))
+* **SPARK-526780:** review comments changes ([736853a](https://github.com/webex/react-widgets/commit/736853a))
+* **spark:526782:** callhistory item aria lable for date and time ([9913274](https://github.com/webex/react-widgets/commit/9913274))
+* **spark:526782:** Media seek slider focus ([d30870b](https://github.com/webex/react-widgets/commit/d30870b))
+* **spark:526782:** unread voicemail ([6887686](https://github.com/webex/react-widgets/commit/6887686))
+* **spark:526782:** voicemail item aira label ([c50e91c](https://github.com/webex/react-widgets/commit/c50e91c))
+
+
+
 ## [0.169.0](https://github.com/webex/react-widgets/compare/v0.168.0...v0.169.0) (2024-06-10)
 
 
