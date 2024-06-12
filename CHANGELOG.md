@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.173.0](https://github.com/webex/react-widgets/compare/v0.172.0...v0.173.0) (2024-06-12)
+
+
+### Bug Fixes
+
+* **space-widgets:** fix for joining meeting using SIP destination ([#1388](https://github.com/webex/react-widgets/issues/1388)) ([9b94d09](https://github.com/webex/react-widgets/commit/9b94d09))
+
+
+
 ## [0.172.0](https://github.com/webex/react-widgets/compare/v0.171.0...v0.172.0) (2024-06-12)
 
 
