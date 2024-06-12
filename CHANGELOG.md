@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.172.0](https://github.com/webex/react-widgets/compare/v0.171.0...v0.172.0) (2024-06-12)
+
+
+
+## [0.171.0](https://github.com/webex/react-widgets/compare/v0.170.0...v0.171.0) (2024-06-12)
+
+
+### Bug Fixes
+
+* **momemtumversion:** upgrading momentumversion ([56fa65b](https://github.com/webex/react-widgets/commit/56fa65b))
+
+
+
+## [0.170.0](https://github.com/webex/react-widgets/compare/v0.169.0...v0.170.0) (2024-06-11)
+
+
+### Bug Fixes
+
+* **SPARK-526772:** focus lost once play button activated ([db7a470](https://github.com/webex/react-widgets/commit/db7a470))
+* **SPARK-526780:** No visual/announced on buttons ([7f28ad9](https://github.com/webex/react-widgets/commit/7f28ad9))
+* **SPARK-526780:** removed the setTimeout ([5f391f3](https://github.com/webex/react-widgets/commit/5f391f3))
+* **SPARK-526780:** review comments changes ([736853a](https://github.com/webex/react-widgets/commit/736853a))
+* **spark:526782:** callhistory item aria lable for date and time ([9913274](https://github.com/webex/react-widgets/commit/9913274))
+* **spark:526782:** Media seek slider focus ([d30870b](https://github.com/webex/react-widgets/commit/d30870b))
+* **spark:526782:** unread voicemail ([6887686](https://github.com/webex/react-widgets/commit/6887686))
+* **spark:526782:** voicemail item aira label ([c50e91c](https://github.com/webex/react-widgets/commit/c50e91c))
+
+
+
+## [0.169.0](https://github.com/webex/react-widgets/compare/v0.168.0...v0.169.0) (2024-06-10)
+
+
+### Bug Fixes
+
+* **footer:** fix footer ([0c9f0c5](https://github.com/webex/react-widgets/commit/0c9f0c5))
+
+
+
+## [0.168.0](https://github.com/webex/react-widgets/compare/v0.167.0...v0.168.0) (2024-06-04)
+
+
+### Bug Fixes
+
+* **voiceover:** dialpad grouping relationship ([f15d792](https://github.com/webex/react-widgets/commit/f15d792))
+
+
+
 ## [0.167.0](https://github.com/webex/react-widgets/compare/v0.166.0...v0.167.0) (2024-06-03)
 
 
