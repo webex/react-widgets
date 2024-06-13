@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.174.0](https://github.com/webex/react-widgets/compare/v0.173.0...v0.174.0) (2024-06-13)
+
+
+### Bug Fixes
+
+* **voiceover:** callhistory and voicemail SR announce changes ([2269985](https://github.com/webex/react-widgets/commit/2269985))
+
+
+
 ## [0.173.0](https://github.com/webex/react-widgets/compare/v0.172.0...v0.173.0) (2024-06-12)
 
 
