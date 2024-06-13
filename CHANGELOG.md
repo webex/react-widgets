@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.175.0](https://github.com/webex/react-widgets/compare/v0.174.0...v0.175.0) (2024-06-13)
+
+
+### Bug Fixes
+
+* **speeddial:** phone number maximum length change ([414d96d](https://github.com/webex/react-widgets/commit/414d96d))
+
+
+
 ## [0.174.0](https://github.com/webex/react-widgets/compare/v0.173.0...v0.174.0) (2024-06-13)
 
 
