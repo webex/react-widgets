@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.178.0](https://github.com/webex/react-widgets/compare/v0.177.0...v0.178.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **SPARK-526771:** changed the classname ([7ed0375](https://github.com/webex/react-widgets/commit/7ed0375))
+* **SPARK-526771:** Media seek slider focus ([8675cd7](https://github.com/webex/react-widgets/commit/8675cd7))
+
+
+
 ## [0.177.0](https://github.com/webex/react-widgets/compare/v0.176.0...v0.177.0) (2024-06-20)
 
 
