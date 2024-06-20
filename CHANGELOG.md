@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.176.0](https://github.com/webex/react-widgets/compare/v0.175.0...v0.176.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **voiceover:** removed info toggletip ([a73c6bf](https://github.com/webex/react-widgets/commit/a73c6bf))
+* **voiceover:** removed info toggletip ([aa091c6](https://github.com/webex/react-widgets/commit/aa091c6))
+
+
+
 ## [0.175.0](https://github.com/webex/react-widgets/compare/v0.174.0...v0.175.0) (2024-06-13)
 
 
