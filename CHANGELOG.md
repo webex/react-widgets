@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.179.0](https://github.com/webex/react-widgets/compare/v0.178.0...v0.179.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **speeddial:** hover effect on keyboard focus ([1ece26a](https://github.com/webex/react-widgets/commit/1ece26a))
+
+
+
 ## [0.178.0](https://github.com/webex/react-widgets/compare/v0.177.0...v0.178.0) (2024-06-20)
 
 
