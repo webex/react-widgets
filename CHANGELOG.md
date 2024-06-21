@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.180.0](https://github.com/webex/react-widgets/compare/v0.179.0...v0.180.0) (2024-06-21)
+
+
+### Bug Fixes
+
+* **spark:526772:** callhistory date annuouncement ([655021f](https://github.com/webex/react-widgets/commit/655021f))
+* **spark:526772:** updated the method to support all language ([12a71aa](https://github.com/webex/react-widgets/commit/12a71aa))
+
+
+
 ## [0.179.0](https://github.com/webex/react-widgets/compare/v0.178.0...v0.179.0) (2024-06-20)
 
 
