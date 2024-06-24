@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.181.0](https://github.com/webex/react-widgets/compare/v0.180.0...v0.181.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **speeddial:** phone number regex change ([e049c70](https://github.com/webex/react-widgets/commit/e049c70))
+
+
+
 ## [0.180.0](https://github.com/webex/react-widgets/compare/v0.179.0...v0.180.0) (2024-06-21)
 
 
