@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.182.0](https://github.com/webex/react-widgets/compare/v0.181.0...v0.182.0) (2024-06-25)
+
+
+### Bug Fixes
+
+* **voicemail:** removed time text ([5d1bf14](https://github.com/webex/react-widgets/commit/5d1bf14))
+* **voicemail:** removed unused Prop ([24de369](https://github.com/webex/react-widgets/commit/24de369))
+* **voicemail:** start from lowercase ([a4e09c1](https://github.com/webex/react-widgets/commit/a4e09c1))
+* **voicemail:** vm date announcement ([ccfa444](https://github.com/webex/react-widgets/commit/ccfa444))
+
+
+
 ## [0.181.0](https://github.com/webex/react-widgets/compare/v0.180.0...v0.181.0) (2024-06-24)
 
 
