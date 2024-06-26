@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.183.0](https://github.com/webex/react-widgets/compare/v0.182.0...v0.183.0) (2024-06-26)
+
+
+### Bug Fixes
+
+* **voiceover:** speed dial modal annoncement ([5cf3509](https://github.com/webex/react-widgets/commit/5cf3509))
+
+
+
 ## [0.182.0](https://github.com/webex/react-widgets/compare/v0.181.0...v0.182.0) (2024-06-25)
 
 
