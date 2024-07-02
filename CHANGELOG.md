@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.187.0](https://github.com/webex/react-widgets/compare/v0.186.0...v0.187.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* **voicemail:** voiceover text for the plyabutton ([acce624](https://github.com/webex/react-widgets/commit/acce624))
+
+
+
 ## [0.186.0](https://github.com/webex/react-widgets/compare/v0.185.0...v0.186.0) (2024-07-01)
 
 
