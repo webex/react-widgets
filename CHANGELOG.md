@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.188.0](https://github.com/webex/react-widgets/compare/v0.187.0...v0.188.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **voiceover:** dial pad announcement ([edc7192](https://github.com/webex/react-widgets/commit/edc7192))
+
+
+
 ## [0.187.0](https://github.com/webex/react-widgets/compare/v0.186.0...v0.187.0) (2024-07-02)
 
 
