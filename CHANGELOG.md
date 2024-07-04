@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.190.0](https://github.com/webex/react-widgets/compare/v0.189.0...v0.190.0) (2024-07-04)
+
+
+### Bug Fixes
+
+* **voicemail:** Media seek slider announces no role and confusing label and value ([674ca50](https://github.com/webex/react-widgets/commit/674ca50))
+
+
+
 ## [0.189.0](https://github.com/webex/react-widgets/compare/v0.188.0...v0.189.0) (2024-07-04)
 
 
