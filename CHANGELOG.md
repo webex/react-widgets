@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.189.0](https://github.com/webex/react-widgets/compare/v0.188.0...v0.189.0) (2024-07-04)
+
+
+### Bug Fixes
+
+* **voiceover:** speed dial dialog role and label ([41f479c](https://github.com/webex/react-widgets/commit/41f479c))
+
+
+
 ## [0.188.0](https://github.com/webex/react-widgets/compare/v0.187.0...v0.188.0) (2024-07-03)
 
 
