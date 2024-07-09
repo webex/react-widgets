@@ -2,6 +2,157 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.191.0](https://github.com/webex/react-widgets/compare/v0.190.0...v0.191.0) (2024-07-08)
+
+
+### Bug Fixes
+
+* **voiceover:** add speed dial modal annoucement issue ([f8d82c4](https://github.com/webex/react-widgets/commit/f8d82c4))
+* **voiceover:** add speed dial modal annoucement issue ([b3045cb](https://github.com/webex/react-widgets/commit/b3045cb))
+
+
+
+## [0.190.0](https://github.com/webex/react-widgets/compare/v0.189.0...v0.190.0) (2024-07-04)
+
+
+### Bug Fixes
+
+* **voicemail:** Media seek slider announces no role and confusing label and value ([674ca50](https://github.com/webex/react-widgets/commit/674ca50))
+
+
+
+## [0.189.0](https://github.com/webex/react-widgets/compare/v0.188.0...v0.189.0) (2024-07-04)
+
+
+### Bug Fixes
+
+* **voiceover:** speed dial dialog role and label ([41f479c](https://github.com/webex/react-widgets/commit/41f479c))
+
+
+
+## [0.188.0](https://github.com/webex/react-widgets/compare/v0.187.0...v0.188.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **voiceover:** dial pad announcement ([edc7192](https://github.com/webex/react-widgets/commit/edc7192))
+
+
+
+## [0.187.0](https://github.com/webex/react-widgets/compare/v0.186.0...v0.187.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* **voicemail:** voiceover text for the plyabutton ([acce624](https://github.com/webex/react-widgets/commit/acce624))
+
+
+
+## [0.186.0](https://github.com/webex/react-widgets/compare/v0.185.0...v0.186.0) (2024-07-01)
+
+
+### Bug Fixes
+
+* **SPARK-526745:** screen reader for blue dot indication ([e6420e0](https://github.com/webex/react-widgets/commit/e6420e0))
+
+
+
+## [0.185.0](https://github.com/webex/react-widgets/compare/v0.184.0...v0.185.0) (2024-07-01)
+
+
+### Bug Fixes
+
+* **voieover:** add speed dial modal label,number pad, call history ([c2cf87b](https://github.com/webex/react-widgets/commit/c2cf87b))
+
+
+
+## [0.184.0](https://github.com/webex/react-widgets/compare/v0.183.0...v0.184.0) (2024-06-27)
+
+
+### Bug Fixes
+
+* **callhistory:** emails will not be transformed to uppercase ([196da63](https://github.com/webex/react-widgets/commit/196da63))
+
+
+
+## [0.183.0](https://github.com/webex/react-widgets/compare/v0.182.0...v0.183.0) (2024-06-26)
+
+
+### Bug Fixes
+
+* **voiceover:** speed dial modal annoncement ([5cf3509](https://github.com/webex/react-widgets/commit/5cf3509))
+
+
+
+## [0.182.0](https://github.com/webex/react-widgets/compare/v0.181.0...v0.182.0) (2024-06-25)
+
+
+### Bug Fixes
+
+* **voicemail:** removed time text ([5d1bf14](https://github.com/webex/react-widgets/commit/5d1bf14))
+* **voicemail:** removed unused Prop ([24de369](https://github.com/webex/react-widgets/commit/24de369))
+* **voicemail:** start from lowercase ([a4e09c1](https://github.com/webex/react-widgets/commit/a4e09c1))
+* **voicemail:** vm date announcement ([ccfa444](https://github.com/webex/react-widgets/commit/ccfa444))
+
+
+
+## [0.181.0](https://github.com/webex/react-widgets/compare/v0.180.0...v0.181.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **speeddial:** phone number regex change ([e049c70](https://github.com/webex/react-widgets/commit/e049c70))
+
+
+
+## [0.180.0](https://github.com/webex/react-widgets/compare/v0.179.0...v0.180.0) (2024-06-21)
+
+
+### Bug Fixes
+
+* **spark:526772:** callhistory date annuouncement ([655021f](https://github.com/webex/react-widgets/commit/655021f))
+* **spark:526772:** updated the method to support all language ([12a71aa](https://github.com/webex/react-widgets/commit/12a71aa))
+
+
+
+## [0.179.0](https://github.com/webex/react-widgets/compare/v0.178.0...v0.179.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **speeddial:** hover effect on keyboard focus ([1ece26a](https://github.com/webex/react-widgets/commit/1ece26a))
+
+
+
+## [0.178.0](https://github.com/webex/react-widgets/compare/v0.177.0...v0.178.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **SPARK-526771:** changed the classname ([7ed0375](https://github.com/webex/react-widgets/commit/7ed0375))
+* **SPARK-526771:** Media seek slider focus ([8675cd7](https://github.com/webex/react-widgets/commit/8675cd7))
+
+
+
+## [0.177.0](https://github.com/webex/react-widgets/compare/v0.176.0...v0.177.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **speeddial:** hover effect on keyboard focus ([0bc85b3](https://github.com/webex/react-widgets/commit/0bc85b3))
+
+
+
+## [0.176.0](https://github.com/webex/react-widgets/compare/v0.175.0...v0.176.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* **voiceover:** removed info toggletip ([a73c6bf](https://github.com/webex/react-widgets/commit/a73c6bf))
+* **voiceover:** removed info toggletip ([aa091c6](https://github.com/webex/react-widgets/commit/aa091c6))
+
+
+
 ## [0.175.0](https://github.com/webex/react-widgets/compare/v0.174.0...v0.175.0) (2024-06-13)
 
 
