@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.192.0](https://github.com/webex/react-widgets/compare/v0.191.0...v0.192.0) (2024-07-09)
+
+
+### Bug Fixes
+
+* **meetings:** add-package-lock.json ([5c8f7e6](https://github.com/webex/react-widgets/commit/5c8f7e6))
+* **space-widget:** dont-join-if-password-is-required ([d4f5441](https://github.com/webex/react-widgets/commit/d4f5441))
+
+
+### Features
+
+* **meetings:** udpate-adapter-and-components ([51ca8b2](https://github.com/webex/react-widgets/commit/51ca8b2))
+* **widget-space:** add-password-captcha-flow ([cb0ac89](https://github.com/webex/react-widgets/commit/cb0ac89))
+
+
+
 ## [0.191.0](https://github.com/webex/react-widgets/compare/v0.190.0...v0.191.0) (2024-07-08)
 
 
