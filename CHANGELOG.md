@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.193.0](https://github.com/webex/react-widgets/compare/v0.192.0...v0.193.0) (2024-07-18)
+
+
+### Bug Fixes
+
+* **SPARK-543157:** unread and voicemailplaybutton ([34bed1c](https://github.com/webex/react-widgets/commit/34bed1c))
+
+
+
 ## [0.192.0](https://github.com/webex/react-widgets/compare/v0.191.0...v0.192.0) (2024-07-09)
 
 
