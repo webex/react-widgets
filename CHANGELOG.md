@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.194.0](https://github.com/webex/react-widgets/compare/v0.193.0...v0.194.0) (2024-07-23)
+
+
+### Bug Fixes
+
+* **speeddial:** speed dial edit, directory contact focus ([03347ee](https://github.com/webex/react-widgets/commit/03347ee))
+
+
+
 ## [0.193.0](https://github.com/webex/react-widgets/compare/v0.192.0...v0.193.0) (2024-07-18)
 
 
