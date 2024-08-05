@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.198.0](https://github.com/webex/react-widgets/compare/v0.197.0...v0.198.0) (2024-08-05)
+
+
+
+## [0.197.0](https://github.com/webex/react-widgets/compare/v0.196.0...v0.197.0) (2024-08-02)
+
+
+
+## [0.196.0](https://github.com/webex/react-widgets/compare/v0.195.0...v0.196.0) (2024-08-02)
+
+
+
+## [0.195.0](https://github.com/webex/react-widgets/compare/v0.194.0...v0.195.0) (2024-07-30)
+
+
+### Bug Fixes
+
+* **sdDialogIssue:** Providing Fix For SD Dialog Issue ([6d18d51](https://github.com/webex/react-widgets/commit/6d18d51))
+
+
+
 ## [0.194.0](https://github.com/webex/react-widgets/compare/v0.193.0...v0.194.0) (2024-07-23)
 
 
