@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.200.0](https://github.com/webex/react-widgets/compare/v0.199.0...v0.200.0) (2024-08-05)
+
+
+### Bug Fixes
+
+* **spacewidget:** add focus to the attach file button ([#1415](https://github.com/webex/react-widgets/issues/1415)) ([9d118ce](https://github.com/webex/react-widgets/commit/9d118ce))
+
+
+
 ## [0.199.0](https://github.com/webex/react-widgets/compare/v0.198.0...v0.199.0) (2024-08-05)
 
 
