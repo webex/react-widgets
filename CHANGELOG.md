@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.199.0](https://github.com/webex/react-widgets/compare/v0.198.0...v0.199.0) (2024-08-05)
+
+
+### Bug Fixes
+
+* **DragandDropIcon:** Showing Drag and Drop Icon ([4179f61](https://github.com/webex/react-widgets/commit/4179f61))
+* **SPARK-526788:** Dialpad nstructions for keyboard users ([2e114a5](https://github.com/webex/react-widgets/commit/2e114a5))
+* **SPARK-548628:** popover control on press of ESC key ([d342c65](https://github.com/webex/react-widgets/commit/d342c65))
+
+
+
 ## [0.198.0](https://github.com/webex/react-widgets/compare/v0.197.0...v0.198.0) (2024-08-05)
 
 
