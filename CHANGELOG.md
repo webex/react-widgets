@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.201.0](https://github.com/webex/react-widgets/compare/v0.200.0...v0.201.0) (2024-08-06)
+
+
+### Bug Fixes
+
+* **space-widget:** add-snapshots ([68e3463](https://github.com/webex/react-widgets/commit/68e3463))
+* **space-widget:** improve-accessibility ([d982213](https://github.com/webex/react-widgets/commit/d982213))
+
+
+
 ## [0.200.0](https://github.com/webex/react-widgets/compare/v0.199.0...v0.200.0) (2024-08-05)
 
 
