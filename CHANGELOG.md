@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.202.0](https://github.com/webex/react-widgets/compare/v0.201.0...v0.202.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* **comsetic:** changed-subtitle-style-color ([2650a32](https://github.com/webex/react-widgets/commit/2650a32))
+* **cosmetic:** changed-button-hover ([914db16](https://github.com/webex/react-widgets/commit/914db16))
+* **cosmetic:** changed-other-styles ([df238be](https://github.com/webex/react-widgets/commit/df238be))
+
+
+
 ## [0.201.0](https://github.com/webex/react-widgets/compare/v0.200.0...v0.201.0) (2024-08-06)
 
 
