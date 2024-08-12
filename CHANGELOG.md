@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.204.0](https://github.com/webex/react-widgets/compare/v0.203.0...v0.204.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **spark-526773:** Voicemail seekbar implementation ([8a30ec3](https://github.com/webex/react-widgets/commit/8a30ec3))
+
+
+
 ## [0.203.0](https://github.com/webex/react-widgets/compare/v0.202.0...v0.203.0) (2024-08-12)
 
 
