@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.203.0](https://github.com/webex/react-widgets/compare/v0.202.0...v0.203.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **ActivityShare:** accessibility for download buttons ([9bbb0e6](https://github.com/webex/react-widgets/commit/9bbb0e6)), closes [#1421](https://github.com/webex/react-widgets/issues/1421)
+* **ActivityShare:** accessibility for download buttons ([6bf8728](https://github.com/webex/react-widgets/commit/6bf8728))
+
+
+
 ## [0.202.0](https://github.com/webex/react-widgets/compare/v0.201.0...v0.202.0) (2024-08-09)
 
 
