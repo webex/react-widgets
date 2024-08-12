@@ -15,17 +15,17 @@ process.env.REACT_WEBEX_VERSION = version;
 module.exports = (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'WEBEX_CLIENT_ID',
-      'REACT_WEBEX_VERSION',
-      'WDM_SERVICE_URL',
-      'IDBROKER_BASE_URL',
-      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
-      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
-      'FEDERATION',
-      'U2C_SERVICE_URL'
-    ]),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      WEBEX_CLIENT_ID: '',
+      REACT_WEBEX_VERSION: process.env.REACT_WEBEX_VERSION,
+      WDM_SERVICE_URL: 'https://wdm-intb.ciscospark.com/wdm/api/v1',
+      IDBROKER_BASE_URL: 'https://idbrokerbts.webex.com',
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: 'https://conv-a.wbx2.com/conversation/api/v1',
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: 'urn:TEAM:us-east-1_int13:identityLookup',
+      FEDERATION: true,
+      U2C_SERVICE_URL: 'https://u2c-intb.ciscospark.com/u2c/api/v1'
+    }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
     new webpack.BannerPlugin(`react-widgets v${packageJson.version}`)
@@ -47,14 +47,25 @@ module.exports = (options, env) => {
       children: false,
       chunks: false,
       modules: false,
-      maxModules: 0,
+      modulesSpace: 0,
       chunkOrigins: false,
-      colors: true
+      colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: true,
+      reasons: false,
+      source: false,
+      errors: true,
+      errorDetails: true,
+      warnings: true,
+      publicPath: false
     },
     target: 'web',
     resolve: {
       alias: {
-        node_modules: path.resolve(__dirname, '..', '..', 'node_modules')
+        node_modules: path.resolve(__dirname, '..', '..', 'node_modules'),
+        fs: 'browserify-fs'
       },
       mainFields: ['src', 'browser', 'module', 'main'],
       modules: [
@@ -62,7 +73,13 @@ module.exports = (options, env) => {
         path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
         'node_modules'
       ],
-      extensions: ['.js', '.css', '.json', '.scss','.ts','.tsx']
+      extensions: ['.js', '.css', '.json', '.scss', '.ts', '.tsx'],
+      fallback: {
+        stream: require.resolve('stream-browserify'),
+        crypto: require.resolve('crypto-browserify'),
+        os: require.resolve('os-browserify/browser'),
+        path: require.resolve('path-browserify')
+      }
     },
     module: {
       rules: [
@@ -72,8 +89,8 @@ module.exports = (options, env) => {
           exclude: ['/node_modules/'],
           options: {
             projectReferences: true,
-            configFile: 'tsconfig.json',
-          },
+            configFile: 'tsconfig.json'
+          }
         },
         {
           test: /\.js$/,
@@ -104,9 +121,10 @@ module.exports = (options, env) => {
             {
               loader: 'css-loader',
               options: {
-                camelCase: true,
-                modules: true,
-                localIdentName: `${env && env.package ? env.package : 'widget'}--[local]--[hash:base64:5]`,
+                modules: {
+                  exportLocalsConvention: 'camelCase',
+                  localIdentName: `${env && env.package ? env.package : 'widget'}--[local]--[hash:base64:5]`
+                },
                 importLoaders: 1
               }
             },
@@ -154,7 +172,7 @@ module.exports = (options, env) => {
           use: [{
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name].[ext]'
+              name: 'fonts/[name].[hash].[ext]'
             }
           }]
         },
@@ -162,21 +180,19 @@ module.exports = (options, env) => {
           test: /\.mp3$|\.wav$/,
           use: [{
             loader: 'file-loader',
-            query: {
-              name: 'media/[name].[ext]'
+            options: {
+              name: 'media/[name].[hash].[ext]'
             }
           }]
         },
         {
           test: /.*\.(gif|png|jpg)$/,
           use: [
-            'file-loader?name=[name].[ext]'
+            'file-loader?name=[name].[hash].[ext]'
           ]
         }
       ]
     },
-    node: {
-      fs: 'empty'
-    }
+    node: {}
   };
 };

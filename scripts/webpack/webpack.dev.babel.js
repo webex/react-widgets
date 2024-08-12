@@ -16,13 +16,13 @@ const plugins = [
       styleBundle: '<!-- Style should be in main bundle -->'
     }
   }),
-  new webpack.EnvironmentPlugin([
-    'WEBEX_ACCESS_TOKEN',
-    'WEBEX_CLIENT_ID',
-    'SPACE_ID',
-    'TO_PERSON_EMAIL',
-    'TO_PERSON_ID'
-  ])
+  new webpack.EnvironmentPlugin({
+    WEBEX_ACCESS_TOKEN: '',
+    WEBEX_CLIENT_ID: '',
+    SPACE_ID: '',
+    TO_PERSON_EMAIL: '',
+    TO_PERSON_ID: ''
+  })
 ];
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
@@ -34,22 +34,6 @@ module.exports = (env) => webpackConfigBase({
   devServer: {
     host: 'localhost',
     port: process.env.PORT || 8000,
-    stats: {
-      colors: true,
-      hash: false,
-      version: false,
-      timings: false,
-      assets: true,
-      chunks: false,
-      modules: false,
-      reasons: false,
-      children: false,
-      source: false,
-      errors: true,
-      errorDetails: true,
-      warnings: true,
-      publicPath: false
-    },
     headers: {
       'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.s4d.io; "
         + "style-src 'self' 'unsafe-inline' https://code.s4d.io; "
