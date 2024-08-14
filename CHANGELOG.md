@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.205.0](https://github.com/webex/react-widgets/compare/v0.204.0...v0.205.0) (2024-08-14)
+
+
+### Bug Fixes
+
+* **accessibility:** added-pressed-aria ([82fbccd](https://github.com/webex/react-widgets/commit/82fbccd))
+* **accessibility:** fixed-button-show-on-focus-for-messages ([27fca21](https://github.com/webex/react-widgets/commit/27fca21))
+* **accessibility:** removed-dead-css ([56faa61](https://github.com/webex/react-widgets/commit/56faa61))
+
+
+
 ## [0.204.0](https://github.com/webex/react-widgets/compare/v0.203.0...v0.204.0) (2024-08-12)
 
 
