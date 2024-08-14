@@ -28,7 +28,11 @@ module.exports = (options, env) => {
     }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
-    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`)
+    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
   ];
 
   return {
@@ -163,7 +167,10 @@ module.exports = (options, env) => {
               loader: 'css-loader'
             },
             {
-              loader: 'sass-loader'
+              loader: 'sass-loader',
+              options: {
+                implementation: require('node-sass')
+              }
             }
           ]
         },
@@ -192,7 +199,6 @@ module.exports = (options, env) => {
           ]
         }
       ]
-    },
-    node: {}
+    }
   };
 };

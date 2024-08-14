@@ -34,6 +34,8 @@ module.exports = (env) => webpackConfigBase({
   devServer: {
     host: 'localhost',
     port: process.env.PORT || 8000,
+    hot: true,
+    historyApiFallback: true,
     headers: {
       'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.s4d.io; "
         + "style-src 'self' 'unsafe-inline' https://code.s4d.io; "
