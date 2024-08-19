@@ -2,6 +2,89 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.205.0](https://github.com/webex/react-widgets/compare/v0.204.0...v0.205.0) (2024-08-14)
+
+
+### Bug Fixes
+
+* **accessibility:** added-pressed-aria ([82fbccd](https://github.com/webex/react-widgets/commit/82fbccd))
+* **accessibility:** fixed-button-show-on-focus-for-messages ([27fca21](https://github.com/webex/react-widgets/commit/27fca21))
+* **accessibility:** removed-dead-css ([56faa61](https://github.com/webex/react-widgets/commit/56faa61))
+
+
+
+## [0.204.0](https://github.com/webex/react-widgets/compare/v0.203.0...v0.204.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **spark-526773:** Voicemail seekbar implementation ([8a30ec3](https://github.com/webex/react-widgets/commit/8a30ec3))
+
+
+
+## [0.203.0](https://github.com/webex/react-widgets/compare/v0.202.0...v0.203.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **ActivityShare:** accessibility for download buttons ([9bbb0e6](https://github.com/webex/react-widgets/commit/9bbb0e6)), closes [#1421](https://github.com/webex/react-widgets/issues/1421)
+* **ActivityShare:** accessibility for download buttons ([6bf8728](https://github.com/webex/react-widgets/commit/6bf8728))
+
+
+
+## [0.202.0](https://github.com/webex/react-widgets/compare/v0.201.0...v0.202.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* **comsetic:** changed-subtitle-style-color ([2650a32](https://github.com/webex/react-widgets/commit/2650a32))
+* **cosmetic:** changed-button-hover ([914db16](https://github.com/webex/react-widgets/commit/914db16))
+* **cosmetic:** changed-other-styles ([df238be](https://github.com/webex/react-widgets/commit/df238be))
+
+
+
+## [0.201.0](https://github.com/webex/react-widgets/compare/v0.200.0...v0.201.0) (2024-08-06)
+
+
+### Bug Fixes
+
+* **space-widget:** add-snapshots ([68e3463](https://github.com/webex/react-widgets/commit/68e3463))
+* **space-widget:** improve-accessibility ([d982213](https://github.com/webex/react-widgets/commit/d982213))
+
+
+
+## [0.200.0](https://github.com/webex/react-widgets/compare/v0.199.0...v0.200.0) (2024-08-05)
+
+
+### Bug Fixes
+
+* **spacewidget:** add focus to the attach file button ([#1415](https://github.com/webex/react-widgets/issues/1415)) ([9d118ce](https://github.com/webex/react-widgets/commit/9d118ce))
+
+
+
+## [0.199.0](https://github.com/webex/react-widgets/compare/v0.198.0...v0.199.0) (2024-08-05)
+
+
+### Bug Fixes
+
+* **DragandDropIcon:** Showing Drag and Drop Icon ([4179f61](https://github.com/webex/react-widgets/commit/4179f61))
+* **SPARK-526788:** Dialpad nstructions for keyboard users ([2e114a5](https://github.com/webex/react-widgets/commit/2e114a5))
+* **SPARK-548628:** popover control on press of ESC key ([d342c65](https://github.com/webex/react-widgets/commit/d342c65))
+
+
+
+## [0.198.0](https://github.com/webex/react-widgets/compare/v0.197.0...v0.198.0) (2024-08-05)
+
+
+
+## [0.197.0](https://github.com/webex/react-widgets/compare/v0.196.0...v0.197.0) (2024-08-02)
+
+
+
+## [0.196.0](https://github.com/webex/react-widgets/compare/v0.195.0...v0.196.0) (2024-08-02)
+
+
+
 ## [0.195.0](https://github.com/webex/react-widgets/compare/v0.194.0...v0.195.0) (2024-07-30)
 
 
