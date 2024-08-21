@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.207.0](https://github.com/webex/react-widgets/compare/v0.206.0...v0.207.0) (2024-08-20)
+
+
+
+## [0.206.0](https://github.com/webex/react-widgets/compare/v0.205.0...v0.206.0) (2024-08-19)
+
+
+### Bug Fixes
+
+* **voicemail_callhistory:** added the aria label for buttons ([8d082e5](https://github.com/webex/react-widgets/commit/8d082e5))
+
+
+
 ## [0.205.0](https://github.com/webex/react-widgets/compare/v0.204.0...v0.205.0) (2024-08-14)
 
 
