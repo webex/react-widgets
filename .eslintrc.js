@@ -1,6 +1,12 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: '@webex/eslint-config-react',
+  extends: [
+  '@webex/eslint-config-react',
+  'eslint:recommended'
+  ],
+  plugins: [
+    'import'
+  ],
   env: {
     jest: true,
     browser: true
@@ -17,6 +23,7 @@ module.exports = {
       groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
       'newlines-between': 'always-and-inside-groups'
     }],
-    'react/jsx-no-bind': 'warn'
+    'react/jsx-no-bind': 'warn',
+    'import/no-cycle': [2, { "maxDepth": Infinity }]
   }
 }

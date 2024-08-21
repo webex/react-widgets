@@ -1,7 +1,7 @@
 **/dist/**
 **/es/**
 **/cjs/**
-**/node_modules/**
+./node_modules/**
 adapter-interfaces/rollup.config.js
 logger/rollup.config.js
 samples
@@ -11,7 +11,6 @@ widgets
 rollup.calling-config.js
 wdio.conf.js
 react-widgets/rollup.calling-config.js
-packages/node_modules/@webex
 react-widgets/packages/node_modules/@webex/widgets/jest.config.js
 react-widgets/packages/node_modules/@webex/widgets/babel.config.js
 react-widgets/packages/node_modules/@webex/widgets/.storybook/preview.js
