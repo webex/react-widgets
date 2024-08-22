@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.208.0](https://github.com/webex/react-widgets/compare/v0.207.0...v0.208.0) (2024-08-22)
+
+
+### Bug Fixes
+
+* **accessibility:** address feedback ([7b3de72](https://github.com/webex/react-widgets/commit/7b3de72))
+* **gitattributes:** try another fix for hidden components in node_modules ([7eb0e91](https://github.com/webex/react-widgets/commit/7eb0e91))
+* **gitattributes:** try unhide files in github PR ui ([d23f880](https://github.com/webex/react-widgets/commit/d23f880))
+* **indentation:** re-indent ([ab8865a](https://github.com/webex/react-widgets/commit/ab8865a))
+* **spacewidget:** fix reflow of content in 320px wide browsers ([f184561](https://github.com/webex/react-widgets/commit/f184561))
+* **styles:** re-indent ([df4bc27](https://github.com/webex/react-widgets/commit/df4bc27))
+* **whitespace:** Remove extra line ([6d66035](https://github.com/webex/react-widgets/commit/6d66035))
+
+
+
 ## [0.207.0](https://github.com/webex/react-widgets/compare/v0.206.0...v0.207.0) (2024-08-20)
 
 
