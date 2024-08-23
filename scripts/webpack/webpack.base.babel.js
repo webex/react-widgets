@@ -15,20 +15,24 @@ process.env.REACT_WEBEX_VERSION = version;
 module.exports = (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
-      WEBEX_CLIENT_ID: '',
-      REACT_WEBEX_VERSION: process.env.REACT_WEBEX_VERSION,
-      WDM_SERVICE_URL: 'https://wdm-intb.ciscospark.com/wdm/api/v1',
-      IDBROKER_BASE_URL: 'https://idbrokerbts.webex.com',
-      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: 'https://conv-a.wbx2.com/conversation/api/v1',
-      WEBEX_CONVERSATION_DEFAULT_CLUSTER: 'urn:TEAM:us-east-1_int13:identityLookup',
-      FEDERATION: true,
-      U2C_SERVICE_URL: 'https://u2c-intb.ciscospark.com/u2c/api/v1'
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'WEBEX_CLIENT_ID',
+      'REACT_WEBEX_VERSION',
+      'WDM_SERVICE_URL',
+      'IDBROKER_BASE_URL',
+      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
+      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
+      'FEDERATION',
+      'U2C_SERVICE_URL'
+  ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
-    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`)
+    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
   ];
 
   return {
@@ -163,7 +167,10 @@ module.exports = (options, env) => {
               loader: 'css-loader'
             },
             {
-              loader: 'sass-loader'
+              loader: 'sass-loader',
+              options: {
+                implementation: require('node-sass')
+              }
             }
           ]
         },
@@ -192,7 +199,6 @@ module.exports = (options, env) => {
           ]
         }
       ]
-    },
-    node: {}
+    }
   };
 };
