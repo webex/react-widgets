@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.209.0](https://github.com/webex/react-widgets/compare/v0.208.0...v0.209.0) (2024-08-27)
+
+
+### Bug Fixes
+
+* **typing-avatar:** hide tooltip from screen reader ([#1429](https://github.com/webex/react-widgets/issues/1429)) ([88730cd](https://github.com/webex/react-widgets/commit/88730cd))
+
+
+
 ## [0.208.0](https://github.com/webex/react-widgets/compare/v0.207.0...v0.208.0) (2024-08-22)
 
 
