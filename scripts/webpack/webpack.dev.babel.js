@@ -16,13 +16,13 @@ const plugins = [
       styleBundle: '<!-- Style should be in main bundle -->'
     }
   }),
-  new webpack.EnvironmentPlugin([
-    'WEBEX_ACCESS_TOKEN',
-    'WEBEX_CLIENT_ID',
-    'SPACE_ID',
-    'TO_PERSON_EMAIL',
-    'TO_PERSON_ID'
-  ])
+  new webpack.EnvironmentPlugin({
+    WEBEX_ACCESS_TOKEN: process.env.WEBEX_ACCESS_TOKEN || '',
+    WEBEX_CLIENT_ID: process.env.WEBEX_ACCESS_TOKEN || '',
+    SPACE_ID: process.env.WEBEX_ACCESS_TOKEN || '',
+    TO_PERSON_EMAIL: process.env.TO_PERSON_EMAIL || '',
+    TO_PERSON_ID: process.env.TO_PERSON_ID || ''
+  })
 ];
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
@@ -33,6 +33,12 @@ module.exports = (env) => webpackConfigBase({
   devtool: 'source-map',
   devServer: {
     host: 'localhost',
+    client: {
+      overlay: {
+        warnings: false, // Disable warnings overlay
+        errors: false // Disable errors overlay
+      }
+    },
     port: process.env.PORT || 8000,
     hot: true,
     historyApiFallback: true,
