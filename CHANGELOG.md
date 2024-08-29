@@ -2,6 +2,94 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.209.0](https://github.com/webex/react-widgets/compare/v0.208.0...v0.209.0) (2024-08-27)
+
+
+### Bug Fixes
+
+* **typing-avatar:** hide tooltip from screen reader ([#1429](https://github.com/webex/react-widgets/issues/1429)) ([88730cd](https://github.com/webex/react-widgets/commit/88730cd))
+
+
+
+## [0.208.0](https://github.com/webex/react-widgets/compare/v0.207.0...v0.208.0) (2024-08-22)
+
+
+### Bug Fixes
+
+* **accessibility:** address feedback ([7b3de72](https://github.com/webex/react-widgets/commit/7b3de72))
+* **gitattributes:** try another fix for hidden components in node_modules ([7eb0e91](https://github.com/webex/react-widgets/commit/7eb0e91))
+* **gitattributes:** try unhide files in github PR ui ([d23f880](https://github.com/webex/react-widgets/commit/d23f880))
+* **indentation:** re-indent ([ab8865a](https://github.com/webex/react-widgets/commit/ab8865a))
+* **spacewidget:** fix reflow of content in 320px wide browsers ([f184561](https://github.com/webex/react-widgets/commit/f184561))
+* **styles:** re-indent ([df4bc27](https://github.com/webex/react-widgets/commit/df4bc27))
+* **whitespace:** Remove extra line ([6d66035](https://github.com/webex/react-widgets/commit/6d66035))
+
+
+
+## [0.207.0](https://github.com/webex/react-widgets/compare/v0.206.0...v0.207.0) (2024-08-20)
+
+
+
+## [0.206.0](https://github.com/webex/react-widgets/compare/v0.205.0...v0.206.0) (2024-08-19)
+
+
+### Bug Fixes
+
+* **voicemail_callhistory:** added the aria label for buttons ([8d082e5](https://github.com/webex/react-widgets/commit/8d082e5))
+
+
+
+## [0.205.0](https://github.com/webex/react-widgets/compare/v0.204.0...v0.205.0) (2024-08-14)
+
+
+### Bug Fixes
+
+* **accessibility:** added-pressed-aria ([82fbccd](https://github.com/webex/react-widgets/commit/82fbccd))
+* **accessibility:** fixed-button-show-on-focus-for-messages ([27fca21](https://github.com/webex/react-widgets/commit/27fca21))
+* **accessibility:** removed-dead-css ([56faa61](https://github.com/webex/react-widgets/commit/56faa61))
+
+
+
+## [0.204.0](https://github.com/webex/react-widgets/compare/v0.203.0...v0.204.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **spark-526773:** Voicemail seekbar implementation ([8a30ec3](https://github.com/webex/react-widgets/commit/8a30ec3))
+
+
+
+## [0.203.0](https://github.com/webex/react-widgets/compare/v0.202.0...v0.203.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* **ActivityShare:** accessibility for download buttons ([9bbb0e6](https://github.com/webex/react-widgets/commit/9bbb0e6)), closes [#1421](https://github.com/webex/react-widgets/issues/1421)
+* **ActivityShare:** accessibility for download buttons ([6bf8728](https://github.com/webex/react-widgets/commit/6bf8728))
+
+
+
+## [0.202.0](https://github.com/webex/react-widgets/compare/v0.201.0...v0.202.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* **comsetic:** changed-subtitle-style-color ([2650a32](https://github.com/webex/react-widgets/commit/2650a32))
+* **cosmetic:** changed-button-hover ([914db16](https://github.com/webex/react-widgets/commit/914db16))
+* **cosmetic:** changed-other-styles ([df238be](https://github.com/webex/react-widgets/commit/df238be))
+
+
+
+## [0.201.0](https://github.com/webex/react-widgets/compare/v0.200.0...v0.201.0) (2024-08-06)
+
+
+### Bug Fixes
+
+* **space-widget:** add-snapshots ([68e3463](https://github.com/webex/react-widgets/commit/68e3463))
+* **space-widget:** improve-accessibility ([d982213](https://github.com/webex/react-widgets/commit/d982213))
+
+
+
 ## [0.200.0](https://github.com/webex/react-widgets/compare/v0.199.0...v0.200.0) (2024-08-05)
 
 
