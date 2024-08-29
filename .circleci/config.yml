@@ -6,7 +6,7 @@ executors:
   main-executor:
     working_directory: ~/react-widgets
     docker:
-      - image: circleci/node:20.13.1-browsers
+      - image: cimg/node:20.13.1-browsers
         # environment variables for all commands executed in the main-executor
         environment:
           AWS_BUCKET: code.s4d.io
@@ -29,8 +29,8 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - node-modules-cache-node-fermium-npm-6-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
-            - node-modules-cache-node-fermium-npm-6-{{ .Environment.CACHE_VERSION }}-
+            - node-modules-cache-node-iron-npm-10-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
+            - node-modules-cache-node-iron-npm-10-{{ .Environment.CACHE_VERSION }}-
   aws-cloudfront-invalidation:
     parameters:
       cloudfront-id:
