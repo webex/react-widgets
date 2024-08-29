@@ -252,6 +252,10 @@
     "webpack-dev-server": "^5.0.4",
     "yargs": "^17.1.0"
   },
+  "overrides": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-mocha": "^6.2.2"
+  },
   "lint-staged": {
     "*.js": "lint:eslint"
   },
