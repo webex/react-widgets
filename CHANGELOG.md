@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.210.0](https://github.com/webex/react-widgets/compare/v0.209.0...v0.210.0) (2024-08-30)
+
+
+### Features
+
+* **acc-bug:** remove-transparency-placeholder ([96acfcf](https://github.com/webex/react-widgets/commit/96acfcf))
+
+
+
 ## [0.209.0](https://github.com/webex/react-widgets/compare/v0.208.0...v0.209.0) (2024-08-27)
 
 
