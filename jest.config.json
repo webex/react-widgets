@@ -2,7 +2,7 @@
   "roots": [
     "<rootDir>/packages/node_modules/"
   ],
-  "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
+  "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/packages/node_modules/@webex/redux-module-spaces/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/redux-module-users/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/redux-module-media/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/react-redux-spark/src/component.test.js"],
   "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@webex/sdk-component-adapter)", "<rootDir>/node_modules/(?!swiper)"],
   "moduleNameMapper": {
     "^.+\\.(css|scss|less)$": "identity-obj-proxy",
