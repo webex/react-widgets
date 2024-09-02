@@ -36,7 +36,8 @@ module.exports = (env) => webpackConfigBase({
     client: {
       overlay: {
         warnings: false, // Disable warnings overlay
-        errors: false // Disable errors overlay
+        errors: false, // Disable errors overlay
+        runtimeErrors: false
       }
     },
     port: process.env.PORT || 8000,
