@@ -52,7 +52,7 @@ jobs:
           command: npm cache clean --force
       - run:
           name: "Install dependencies"
-          command: npm ci --legacy-peer-deps
+          command: npm ci --force
       # Cache node_modules across different internal jobs in the workflow and across different circleci runs
       - save_cache:
           key: node-modules-cache-node-iron-npm-10-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
