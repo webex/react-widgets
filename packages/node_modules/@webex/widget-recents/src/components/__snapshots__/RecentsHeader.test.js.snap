@@ -32,7 +32,7 @@ exports[`RecentsHeader component renders correctly 1`] = `
   <div
     className="webex-recents-header-right headerSideItem"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Contact a person or create a space"
       circle={true}
       color="white"
@@ -57,7 +57,7 @@ exports[`RecentsHeader component renders correctly 1`] = `
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
 </div>
 `;
@@ -129,7 +129,7 @@ exports[`RecentsHeader component renders correctly without hiding bottom border 
   <div
     className="webex-recents-header-right headerSideItem"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Contact a person or create a space"
       circle={true}
       color="white"
@@ -154,7 +154,7 @@ exports[`RecentsHeader component renders correctly without hiding bottom border 
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
 </div>
 `;
@@ -177,7 +177,7 @@ exports[`RecentsHeader component renders correctly without search filter 1`] = `
   <div
     className="webex-recents-header-right headerSideItem"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Contact a person or create a space"
       circle={true}
       color="white"
@@ -202,7 +202,7 @@ exports[`RecentsHeader component renders correctly without search filter 1`] = `
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
 </div>
 `;
@@ -234,7 +234,7 @@ exports[`RecentsHeader component renders correctly without user profile 1`] = `
   <div
     className="webex-recents-header-right headerSideItem"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Contact a person or create a space"
       circle={true}
       color="white"
@@ -259,7 +259,7 @@ exports[`RecentsHeader component renders correctly without user profile 1`] = `
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
 </div>
 `;

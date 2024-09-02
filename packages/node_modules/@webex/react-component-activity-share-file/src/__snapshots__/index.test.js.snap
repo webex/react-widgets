@@ -56,7 +56,7 @@ exports[`ActivityShareFile component renders properly 1`] = `
     <div
       className="webex-share-action-item shareActionItem"
     >
-      <ForwardRef(ContextTransform(Button))
+      <ForwardRef(render)
         ariaLabel="Download testImage.js"
         circle={true}
         onClick={[Function]}
@@ -84,7 +84,7 @@ exports[`ActivityShareFile component renders properly 1`] = `
           title=""
           type=""
         />
-      </ForwardRef(ContextTransform(Button))>
+      </ForwardRef(render)>
     </div>
   </div>
 </div>
