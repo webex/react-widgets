@@ -15,17 +15,17 @@ process.env.REACT_WEBEX_VERSION = version;
 module.exports = (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: process.env.NODE_ENV || 'development',
-      WEBEX_CLIENT_ID: process.env.WEBEX_CLIENT_ID || '',
-      REACT_WEBEX_VERSION: process.env.REACT_WEBEX_VERSION,
-      WDM_SERVICE_URL: process.env.WDM_SERVICE_URL || 'https://wdm-a.wbx2.com/wdm/api/v1',
-      IDBROKER_BASE_URL: process.env.IDBROKER_BASE_URL || 'https://idbroker.webex.com',
-      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: process.env.WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL || 'https://conv-a.wbx2.com/conversation/api/v1',
-      WEBEX_CONVERSATION_DEFAULT_CLUSTER: process.env.WEBEX_CONVERSATION_DEFAULT_CLUSTER || 'urn:TEAM:us-east-1_a:identityLookup',
-      FEDERATION: process.env.FEDERATION || '',
-      U2C_SERVICE_URL: process.env.U2C_SERVICE_URL || 'https://u2c.wbx2.com/u2c/api/v1'
-    }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+      'WEBEX_CLIENT_ID',
+      'REACT_WEBEX_VERSION',
+      'WDM_SERVICE_URL',
+      'IDBROKER_BASE_URL',
+      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
+      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
+      'FEDERATION',
+      'U2C_SERVICE_URL'
+    ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
     new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),
