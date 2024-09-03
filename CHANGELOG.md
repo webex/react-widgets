@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.211.0](https://github.com/webex/react-widgets/compare/v0.210.0...v0.211.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **space-widget:** links in messages should open in new tab ([#1431](https://github.com/webex/react-widgets/issues/1431)) ([3658eb0](https://github.com/webex/react-widgets/commit/3658eb0))
+
+
+
 ## [0.210.0](https://github.com/webex/react-widgets/compare/v0.209.0...v0.210.0) (2024-08-30)
 
 
