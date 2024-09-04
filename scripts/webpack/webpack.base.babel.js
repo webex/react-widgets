@@ -28,7 +28,11 @@ module.exports = (options, env) => {
     ]),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
-    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`)
+    new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
   ];
 
   return {
@@ -47,14 +51,25 @@ module.exports = (options, env) => {
       children: false,
       chunks: false,
       modules: false,
-      maxModules: 0,
+      modulesSpace: 0,
       chunkOrigins: false,
-      colors: true
+      colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: true,
+      reasons: false,
+      source: false,
+      errors: true,
+      errorDetails: true,
+      warnings: true,
+      publicPath: false
     },
     target: 'web',
     resolve: {
       alias: {
-        node_modules: path.resolve(__dirname, '..', '..', 'node_modules')
+        node_modules: path.resolve(__dirname, '..', '..', 'node_modules'),
+        fs: 'browserify-fs'
       },
       mainFields: ['src', 'browser', 'module', 'main'],
       modules: [
@@ -62,7 +77,15 @@ module.exports = (options, env) => {
         path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
         'node_modules'
       ],
-      extensions: ['.js', '.css', '.json', '.scss','.ts','.tsx']
+      extensions: ['.js', '.css', '.json', '.scss', '.ts', '.tsx'],
+      fallback: {
+        stream: require.resolve('stream-browserify'),
+        crypto: require.resolve('crypto-browserify'),
+        os: require.resolve('os-browserify/browser'),
+        path: require.resolve('path-browserify'),
+        querystring: require.resolve('querystring-es3'),
+        vm: false
+      }
     },
     module: {
       rules: [
@@ -72,8 +95,8 @@ module.exports = (options, env) => {
           exclude: ['/node_modules/'],
           options: {
             projectReferences: true,
-            configFile: 'tsconfig.json',
-          },
+            configFile: 'tsconfig.json'
+          }
         },
         {
           test: /\.js$/,
@@ -145,7 +168,10 @@ module.exports = (options, env) => {
               loader: 'css-loader'
             },
             {
-              loader: 'sass-loader'
+              loader: 'sass-loader',
+              options: {
+                implementation: require('node-sass')
+              }
             }
           ]
         },
@@ -154,7 +180,7 @@ module.exports = (options, env) => {
           use: [{
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name].[ext]'
+              name: 'fonts/[name].[hash].[ext]'
             }
           }]
         },
@@ -162,21 +188,18 @@ module.exports = (options, env) => {
           test: /\.mp3$|\.wav$/,
           use: [{
             loader: 'file-loader',
-            query: {
-              name: 'media/[name].[ext]'
+            options: {
+              name: 'media/[name].[hash].[ext]'
             }
           }]
         },
         {
           test: /.*\.(gif|png|jpg)$/,
           use: [
-            'file-loader?name=[name].[ext]'
+            'file-loader?name=[name].[hash].[ext]'
           ]
         }
       ]
-    },
-    node: {
-      fs: 'empty'
     }
   };
 };
