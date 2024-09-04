@@ -83,7 +83,8 @@ module.exports = (options, env) => {
         crypto: require.resolve('crypto-browserify'),
         os: require.resolve('os-browserify/browser'),
         path: require.resolve('path-browserify'),
-        querystring: require.resolve('querystring-es3')
+        querystring: require.resolve('querystring-es3'),
+        vm: false
       }
     },
     module: {
