@@ -12,8 +12,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackBaseConfig = require('./webpack.base.babel');
 
 const plugins = [
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-];
+  new webpack.IgnorePlugin({
+    resourceRegExp: /^\.\/locale$/, // Regex to match the resource to ignore
+    contextRegExp: /moment$/ // Optional: restricts the context for the resource
+  })
+]; 
 
 // Bundle paths are used for demos only
 let scriptBundle, styleBundle;

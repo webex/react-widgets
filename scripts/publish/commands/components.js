@@ -9,11 +9,12 @@ module.exports = {
   builder: {},
   handler: () =>
     getAllPackagePaths().map((pkgPath) => {
+      console.log(pkgPath)
       try {
         const pkgJson = require(path.resolve(pkgPath, 'package.json'));
         const pkgName = pkgJson.name.split('/').pop();
         const isDemo = pkgName.endsWith('-demo');
-
+        console.log(pkgJson,pkgName,isDemo)
         if (!isDemo && !pkgJson.private) {
           return npmPublishPackage(pkgName, pkgPath);
         }

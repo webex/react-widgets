@@ -1,34 +1,33 @@
 {
   "roots": [
-    "<rootDir>/packages/node_modules/"
+    "<rootDir>/packages/"
   ],
-  "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/packages/node_modules/@webex/redux-module-spaces/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/redux-module-users/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/redux-module-media/src/actions.test.js", "<rootDir>/packages/node_modules/@webex/react-redux-spark/src/component.test.js"],
-  "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@webex/sdk-component-adapter)", "<rootDir>/node_modules/(?!swiper)"],
+  "testPathIgnorePatterns": ["<rootDir>/packages/@webex/redux-module-spaces/src/actions.test.js", "<rootDir>/packages/@webex/redux-module-users/src/actions.test.js", "<rootDir>/packages/@webex/redux-module-media/src/actions.test.js", "<rootDir>/packages/@webex/react-redux-spark/src/component.test.js"],
+  "transformIgnorePatterns": ["<rootDir>/(?!@webex/sdk-component-adapter)", "<rootDir>/(?!swiper)"],
   "moduleNameMapper": {
     "^.+\\.(css|scss|less)$": "identity-obj-proxy",
     "^.+\\.(mp3|wav)$": "<rootDir>/__mocks__/sound-mock.js",
     "^.+\\.(gif|ttf|eot|svg|png|jpg)$": "<rootDir>/__mocks__/file-mock.js",
-    "@ciscospark/react-(.*)": "<rootDir>/packages/node_modules/@ciscospark/react-$1/src",
-    "@ciscospark/redux-(.*)": "<rootDir>/packages/node_modules/@ciscospark/redux-$1/src",
-    "@ciscospark/widget-(.*)": "<rootDir>/packages/node_modules/@ciscospark/widget-$1/src",
-    "@ciscospark/spark-widget-base": "<rootDir>/packages/node_modules/@ciscospark/spark-widget-base/src",
-    "@webex/react-(.*)": "<rootDir>/packages/node_modules/@webex/react-$1/src",
-    "@webex/redux-(.*)": "<rootDir>/packages/node_modules/@webex/redux-$1/src",
-    "@webex/widget-(.*)": "<rootDir>/packages/node_modules/@webex/widget-$1/src",
-    "@webex/components": "<rootDir>/node_modules/@webex/components/dist/umd/webex-components.umd.js",
-    "@webex/webex-widget-base": "<rootDir>/packages/node_modules/@webex/webex-widget-base/src"
+    "@ciscospark/react-(.*)": "<rootDir>/packages/@ciscospark/react-$1/src",
+    "@ciscospark/redux-(.*)": "<rootDir>/packages/@ciscospark/redux-$1/src",
+    "@ciscospark/widget-(.*)": "<rootDir>/packages/@ciscospark/widget-$1/src",
+    "@ciscospark/spark-widget-base": "<rootDir>/packages/@ciscospark/spark-widget-base/src",
+    "@webex/react-(.*)": "<rootDir>/packages/@webex/react-$1/src",
+    "@webex/redux-(.*)": "<rootDir>/packages/@webex/redux-$1/src",
+    "@webex/widget-(.*)": "<rootDir>/packages/@webex/widget-$1/src",
+    "@webex/components": "<rootDir>/@webex/components/dist/umd/webex-components.umd.js",
+    "@webex/webex-widget-base": "<rootDir>/packages/@webex/webex-widget-base/src"
   },
   "testRegex": ".test.js$",
   "testURL": "http://localhost",
   "moduleDirectories": [
     "node_modules",
-    "/packages/node_modules/"
+    "/packages/"
   ],
   "modulePaths": [
-    "<rootDir>/node_modules",
-    "<rootDir>/node_modules/@ciscospark",
-    "<rootDir>/node_modules/@webex",
-    "<rootDir>/packages/node_modules"
+    "node_modules",
+    "<rootDir>/@webex",
+    "<rootDir>/packages"
   ],
   "haste": {
     "providesModuleNodeModules": [".*"]

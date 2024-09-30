@@ -1,0 +1,50 @@
+{
+  "name": "@webex/webex-widget-base",
+  "description": "Webex React Widget Base",
+  "main": "./cjs/index.js",
+  "src": "./src/index.js",
+  "module": "./es/index.js",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "dependencies": {
+    "@formatjs/intl-pluralrules": "^1.5.4",
+    "@formatjs/intl-relativetimeformat": "^4.5.11",
+    "@webex/react-component-spark-fonts": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/react-redux-spark": "workspace:*",
+    "@webex/redux-module-users": "workspace:*",
+    "ampersand-events": "^2.0.2",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.5.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.15.7",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.1.0",
+    "reselect": "^3.0.0",
+    "uuid": "^3.0.1"
+  },
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist webex-widget-base",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package webex-widget-base",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package webex-widget-base"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
+}

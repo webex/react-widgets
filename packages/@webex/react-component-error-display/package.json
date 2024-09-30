@@ -1,0 +1,34 @@
+{
+  "name": "@webex/react-component-error-display",
+  "description": "Webex React Error Display",
+  "main": "./cjs/index.js",
+  "src": "./src/index.js",
+  "module": "./es/index.js",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-component-error-display",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-component-error-display",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-component-error-display"
+  }
+}

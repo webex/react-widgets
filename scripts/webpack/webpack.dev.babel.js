@@ -16,13 +16,13 @@ const plugins = [
       styleBundle: '<!-- Style should be in main bundle -->'
     }
   }),
-  new webpack.EnvironmentPlugin([
-    'WEBEX_ACCESS_TOKEN',
-    'WEBEX_CLIENT_ID',
-    'SPACE_ID',
-    'TO_PERSON_EMAIL',
-    'TO_PERSON_ID'
-  ])
+  new webpack.EnvironmentPlugin({
+    WEBEX_ACCESS_TOKEN: "",
+    WEBEX_CLIENT_ID: "",
+    SPACE_ID: "",
+    TO_PERSON_EMAIL: "",
+    TO_PERSON_ID: "",
+  }),
 ];
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/

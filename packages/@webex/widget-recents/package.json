@@ -1,0 +1,60 @@
+{
+  "name": "@webex/widget-recents",
+  "description": "Webex React Recents Widget",
+  "main": "./cjs/index.js",
+  "src": "./src/index.js",
+  "module": "./es/index.js",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist widget-recents",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package widget-recents",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package widget-recents"
+  },
+  "version": "0.211.0",
+  "dependencies": {
+    "@momentum-ui/react": "23.27.11",
+    "@webex/react-component-error-display": "workspace:*",
+    "@webex/react-component-loading-screen": "workspace:*",
+    "@webex/react-component-spaces-list": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/react-container-presence-avatar": "workspace:*",
+    "@webex/redux-module-activities": "workspace:*",
+    "@webex/redux-module-avatar": "workspace:*",
+    "@webex/redux-module-errors": "workspace:*",
+    "@webex/redux-module-features": "workspace:*",
+    "@webex/redux-module-media": "workspace:*",
+    "@webex/redux-module-mercury": "workspace:*",
+    "@webex/redux-module-presence": "workspace:*",
+    "@webex/redux-module-spaces": "workspace:*",
+    "@webex/redux-module-teams": "workspace:*",
+    "@webex/redux-module-users": "workspace:*",
+    "@webex/webex-widget-base": "workspace:*",
+    "classnames": "^2.2.5",
+    "core-decorators": "^0.20.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.17.1",
+    "prop-types": "^15.5.10",
+    "react": "^17.0.2",
+    "react-intl": "^5.15.7",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
+}
