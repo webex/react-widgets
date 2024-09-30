@@ -1,0 +1,29 @@
+{
+  "name": "@webex/react-test-utils",
+  "description": "Webex React Test Utilities",
+  "main": "./cjs/index.js",
+  "src": "./src/index.js",
+  "module": "./es/index.js",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-test-utils",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-test-utils",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-test-utils"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
+}

@@ -4,18 +4,13 @@
   "description": "Webex for React library allows developers to easily incorporate Webex functionality into an application.",
   "private": true,
   "workspaces": [
-    "packages/node_modules/@webex/widget-space",
-    "packages/node_modules/@webex/widget-recents"
+    "packages/@webex/*"
   ],
   "scripts": {
     "build": "babel-node ./scripts/build/index.js",
-    "build:all": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build all",
-    "build:package": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build dist",
-    "build:components": "yarn run build components",
+    "build:all": "yarn workspaces foreach -A run build:src",
     "build:esm": "yarn run build esm",
     "build:transpile": "yarn run build transpile",
-    "build:packagejson": "yarn run build package.json",
-    "build:widgets": "cross-env NODE_ENV=${NODE_ENV:-production}  NODE_OPTIONS=--max-old-space-size=2048 yarn run build widgets",
     "build:sri": "yarn run build sri",
     "clean": "yarn run clean:dist && yarn run clean:transpile",
     "clean:dist": "rimraf \"packages/**/dist/\"",
@@ -36,7 +31,7 @@
     "serve": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ./scripts/start/index.js",
     "serve:package": "yarn run serve package",
     "serve:samples": "yarn run serve samples",
-    "start": "yarn run serve demo widget-demo",
+    "start": "yarn workspace @webex/widget-demo serve",
     "publish": "cross-env-shell NODE_ENV='' babel-node ./scripts/publish/index.js",
     "publish:components": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=2048 yarn run build:packagejson && yarn run build:transpile all && yarn run publish components",
     "release": "standard-version -m 'chore(release): %s [skip ci]'",

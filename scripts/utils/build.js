@@ -72,23 +72,7 @@ function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
   
   console.log('pkgPath:', `${pkgName}`);
-  if(`${pkgName}` === 'widget-space' || `${pkgName}` === 'widget-recents'){
-    try{
-      const workspaceTargetPkgPath = path.resolve(__dirname, '../..', 'packages/node_modules', '@webex',pkgName);
-      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
-      
-      // Delete dist folder
-      console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(workspaceTargetPkgPath, 'dist'));
-      console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${workspaceTargetPkgPath} && webpack --config ${webpackConfigPath} `);
-      console.info(`${pkgName}... Done1\n\n`.cyan);
-    }
-      catch (err) {
-      throw new Error(`Error building ${pkgName} package, ${err}`, err);
-    }
-  }
-  else if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
+   if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
@@ -104,17 +88,18 @@ function webpackBuild(pkgName, pkgPath) {
     }
   }
   else {
-    try {
+    try{
+      const workspaceTargetPkgPath = path.resolve(__dirname, '../..', 'packages', '@webex',pkgName);
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
-
+      
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(targetPkgPath, 'dist'));
+      rimraf.sync(path.resolve(workspaceTargetPkgPath, 'dist'));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env package=${pkgName}`);
-      console.info(`${pkgName}... Done3\n\n`.cyan);
+      execSync(`cd ${workspaceTargetPkgPath} && webpack --config ${webpackConfigPath} `);
+      console.info(`${pkgName}... Done1\n\n`.cyan);
     }
-    catch (err) {
+      catch (err) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
   }

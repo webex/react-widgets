@@ -104,7 +104,7 @@ module.exports = (options, env) => {
         {
           test: /\.js$/,
           include: [
-            path.resolve(__dirname, "..", "..", "packages", "node_modules"),
+            path.resolve(__dirname, "..", "..", "packages"),
             path.resolve(__dirname, "..", "..", "samples"),
           ],
           exclude: ["/__fixtures__/", "/__mocks__/"],
@@ -117,9 +117,7 @@ module.exports = (options, env) => {
         },
         {
           test: /\.css$/,
-          include: [
-            path.resolve(__dirname, "..", "..", "packages", "node_modules"),
-          ],
+          include: [path.resolve(__dirname, "..", "..", "packages")],
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -158,7 +156,7 @@ module.exports = (options, env) => {
         {
           test: /\.scss$/,
           include: [
-            path.resolve(__dirname, "..", "..", "packages", "node_modules"),
+            path.resolve(__dirname, "..", "..", "packages"),
             path.resolve(__dirname, "..", "..", "samples"),
           ],
           use: [

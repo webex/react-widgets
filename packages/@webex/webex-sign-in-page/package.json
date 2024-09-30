@@ -1,0 +1,34 @@
+{
+  "name": "@webex/webex-sign-in-page",
+  "description": "webex sign in page",
+  "main": "./dist/cjs/index.ts",
+  "src": "./src/index.ts",
+  "module": "./dist/es/index.ts",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "dependencies": {
+    "@formatjs/intl-pluralrules": "^1.5.4",
+    "@formatjs/intl-relativetimeformat": "^4.5.11",
+    "@momentum-ui/react-collaboration": "26.82.1"
+  },
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist webex-sign-in-page",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package webex-sign-in-page",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package webex-sign-in-page"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
+}

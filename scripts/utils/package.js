@@ -1,9 +1,9 @@
-const path = require('path');
-const {statSync, readdirSync} = require('fs');
+const path = require("path");
+const { statSync, readdirSync } = require("fs");
 
-const debug = require('debug')('scripts');
+const debug = require("debug")("scripts");
 
-const {execSync} = require('./exec');
+const { execSync } = require("./exec");
 
 /**
  * Determines if a given path is a directory
@@ -16,8 +16,7 @@ function isDirectory(dirPath) {
     if (statSync(dirPath).isDirectory()) {
       return true;
     }
-  }
-  catch (err) {
+  } catch (err) {
     return false;
   }
 
@@ -37,11 +36,10 @@ function isPackageDirectory(packageDirectory) {
   try {
     const fullpath = path.resolve(packageDirectory);
 
-    if (statSync(path.resolve(fullpath, 'package.json')).isFile()) {
+    if (statSync(path.resolve(fullpath, "package.json")).isFile()) {
       return true;
     }
-  }
-  catch (err) {
+  } catch (err) {
     return false;
   }
 
@@ -62,21 +60,17 @@ function getPackage(pkg) {
   }
   // Attempt to determine path by pkg name
   let calculatedPackagesDir;
-  const fullPathWithPrefix = path.resolve('packages/node_modules', pkg);
-  const webexFullPath = path.resolve('packages/node_modules/@webex', pkg);
-  const fullPathWithPrefixExists = isDirectory(fullPathWithPrefix);
-  const webexPathExists = isDirectory(webexFullPath);
-
-  if (fullPathWithPrefixExists) {
-    calculatedPackagesDir = fullPathWithPrefix;
-  }
-  else if (webexPathExists) {
-    calculatedPackagesDir = webexFullPath;
+  const componentPath = path.resolve();
+  const componentPathExists = isDirectory(componentPath);
+  if (componentPathExists) {
+    calculatedPackagesDir = componentPath;
   }
   if (!isPackageDirectory(calculatedPackagesDir)) {
-    console.error(`Unable to determine package path, no matching directory found for ${pkg}`);
+    console.error(
+      `Unable to determine package path, no matching directory found for ${pkg}`
+    );
 
-    return '';
+    return "";
   }
 
   return calculatedPackagesDir;
@@ -90,9 +84,10 @@ function getPackage(pkg) {
  */
 function runInPackage({ constructCommand, commandName, pkgName, pkgPath }) {
   const outputPkgPath = getPackage(pkgPath || pkgName);
+  console.log(outputPkgPath);
   try {
     debug(`${commandName} ${pkgName} ...`);
-    const command = constructCommand(outputPkgPath ? outputPkgPath : "");
+    const command = constructCommand(outputPkgPath);
     execSync(command);
   } catch (err) {
     throw new Error(`Error ${commandName} ${pkgName} package`, err);
@@ -106,7 +101,7 @@ function runInPackage({ constructCommand, commandName, pkgName, pkgPath }) {
  */
 function getAllPackagePaths() {
   const fullPaths = [];
-  const packagesDirs = ['packages/node_modules/@ciscospark', 'packages/node_modules/@webex'];
+  const packagesDirs = ["packages/@ciscospark", "packages/@webex"];
 
   packagesDirs.forEach((packagesDir) => {
     debug(`Reading Directory: ${packagesDir}`);
@@ -127,26 +122,30 @@ function getAllPackagePaths() {
   return fullPaths;
 }
 
-
 function getAllPackages(omitPrivate) {
   let pkgPaths = getAllPackagePaths();
 
   if (omitPrivate) {
-    pkgPaths = pkgPaths.filter((pkgPath) => !require(path.resolve(pkgPath, 'package.json')).private);
+    pkgPaths = pkgPaths.filter(
+      (pkgPath) => !require(path.resolve(pkgPath, "package.json")).private
+    );
   }
 
-  return pkgPaths.map((pkgPath) => require(path.resolve(pkgPath, 'package.json')).name);
+  return pkgPaths.map(
+    (pkgPath) => require(path.resolve(pkgPath, "package.json")).name
+  );
 }
 
 function getWidgetPackages() {
   const pkgPaths = getAllPackagePaths();
 
-  return pkgPaths
-    .filter((pkgPath) => {
-      const pkgName = require(path.resolve(pkgPath, 'package.json')).name;
+  return pkgPaths.filter((pkgPath) => {
+    const pkgName = require(path.resolve(pkgPath, "package.json")).name;
 
-      return pkgName.startsWith('@ciscospark/widget') && !pkgName.endsWith('-demo');
-    });
+    return (
+      pkgName.startsWith("@ciscospark/widget") && !pkgName.endsWith("-demo")
+    );
+  });
 }
 
 /**
@@ -156,13 +155,8 @@ function getWidgetPackages() {
  * @returns {Promise}
  */
 function startPackage(pkgName, pkgPath) {
-  const isWorkspacePkg =
-    pkgName == "widget-space" || pkgName === "widget-recents";
+  const webpackConfig = "../../../scripts/webpack/webpack.dev.babel.js";
 
-  const webpackConfig = isWorkspacePkg
-    ? "../../../../scripts/webpack/webpack.dev.babel.js"
-    : "scripts/webpack/webpack.dev.babel.js";
-    
   return runInPackage({
     constructCommand: (targetPath) =>
       `webpack serve --config ${webpackConfig} --context ${path.resolve(
@@ -181,5 +175,5 @@ module.exports = {
   getAllPackages,
   getAllPackagePaths,
   runInPackage,
-  startPackage
+  startPackage,
 };

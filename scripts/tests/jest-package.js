@@ -9,6 +9,7 @@ import {execSync} from './utils/exec';
  * @returns {Promise}
  */
 export default function jestPackage(pkgName, pkgPath) {
+  console.log(pkgName, pkgPath);
   const targetPkgPath = pkgPath || getPackage(pkgName);
 
   if (targetPkgPath) {

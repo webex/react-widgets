@@ -1,0 +1,35 @@
+{
+  "name": "@webex/redux-module-activity",
+  "description": "Cisco Spark Redux Module Activity",
+  "main": "./cjs/index.js",
+  "src": "./src/index.js",
+  "module": "./es/index.js",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ],
+  "dependencies": {
+    "@webex/helper-html": "^2.59.6",
+    "@webex/react-component-utils": "workspace:*",
+    "immutable": "^3.8.1",
+    "marked": "^0.7.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist redux-module-activity",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package redux-module-activity",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package redux-module-activity"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
+}
