@@ -82,34 +82,22 @@ function getPackage(pkg) {
   return calculatedPackagesDir;
 }
 
-
 /**
  * Starts a specific package with Webpack Dev Server
  * @param  {string} pkgName
  * @param  {string} pkgPath
  * @returns {undefined}
  */
-function runInPackage({
-  constructCommand,
-  commandName,
-  pkgName,
-  pkgPath
-}) {
+function runInPackage({ constructCommand, commandName, pkgName, pkgPath }) {
   const outputPkgPath = getPackage(pkgPath || pkgName);
-
-  if (outputPkgPath) {
-    try {
-      debug(`${commandName} ${pkgName} ...`);
-      const command = constructCommand(outputPkgPath);
-
-      execSync(command);
-    }
-    catch (err) {
-      throw new Error(`Error ${commandName} ${pkgName} package`, err);
-    }
+  try {
+    debug(`${commandName} ${pkgName} ...`);
+    const command = constructCommand(outputPkgPath ? outputPkgPath : "");
+    execSync(command);
+  } catch (err) {
+    throw new Error(`Error ${commandName} ${pkgName} package`, err);
   }
 }
-
 
 /**
  * Get a list of all package paths
@@ -168,14 +156,24 @@ function getWidgetPackages() {
  * @returns {Promise}
  */
 function startPackage(pkgName, pkgPath) {
+  const isWorkspacePkg =
+    pkgName == "widget-space" || pkgName === "widget-recents";
+
+  const webpackConfig = isWorkspacePkg
+    ? "../../../../scripts/webpack/webpack.dev.babel.js"
+    : "scripts/webpack/webpack.dev.babel.js";
+    
   return runInPackage({
-    constructCommand: (targetPath) => `webpack serve --config scripts/webpack/webpack.dev.babel.js --context ${path.resolve(targetPath, 'src')} --env package=${pkgName}`,
-    commandName: 'Start Package',
+    constructCommand: (targetPath) =>
+      `webpack serve --config ${webpackConfig} --context ${path.resolve(
+        targetPath,
+        "src"
+      )} --env package=${pkgName}`,
+    commandName: "Start Package",
     pkgName,
-    pkgPath
+    pkgPath,
   });
 }
-
 
 module.exports = {
   getWidgetPackages,
