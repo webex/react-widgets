@@ -1,0 +1,17 @@
+{
+  "name": "@webex/widget-speed-dial",
+  "description": "widget speed dial",
+  "main": "./dist/cjs/index.ts",
+  "src": "./src/index.ts",
+  "module": "./dist/es/index.ts",
+  "keywords": [],
+  "author": "devsupport@webex.com",
+  "license": "MIT",
+  "repository": "https://github.com/webex/react-widgets",
+  "files": [
+    "src",
+    "dist",
+    "cjs",
+    "es"
+  ]
+}

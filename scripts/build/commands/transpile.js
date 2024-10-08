@@ -11,14 +11,14 @@ module.exports = {
         const omitPrivatePackages = true;
 
         getAllPackages(omitPrivatePackages).forEach((pkg) => {
-          transpile(pkg, `./packages/node_modules/${pkg}`);
+          transpile(pkg, `./packages/${pkg}`);
         });
       }
       else {
         if (packagePath) {
           transpile(packageName, packagePath);
         }
-        transpile(packageName, `./packages/node_modules/@webex/${packageName}`);
+        transpile(packageName, `./packages/@webex/${packageName}`);
       }
     }
   }
