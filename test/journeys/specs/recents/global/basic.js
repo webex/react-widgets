@@ -148,7 +148,7 @@ describe('Widget Recents', () => {
   });
 
   describe('events', () => {
-    // https://github.com/webex/react-widgets/blob/master/packages/node_modules/%40ciscospark/widget-recents/events.md
+    // https://github.com/webex/react-widgets/blob/master/packages/%40ciscospark/widget-recents/events.md
     it('messages:created - group space', () => {
       clearEventLog(browserLocal);
       const lorraineText = 'Don\'t be such a square';

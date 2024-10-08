@@ -140,7 +140,7 @@ npm test
 And to run the tests for a specific package:
 
 ```bash
-npm run jest -- packages/node_modules/@webex/PACKAGE_NAME
+npm run jest -- packages/@webex/PACKAGE_NAME
 ```
 
 #### Static Analysis

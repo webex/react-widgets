@@ -73,6 +73,9 @@ function webpackBuild(pkgName, pkgPath) {
 
   console.log('pkgPath:', `${pkgName}`);
   if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
+    if(`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-voice-mail' || `${pkgName}` === 'widget-speed-dial'){
+      return;
+    }
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
@@ -129,6 +132,9 @@ function buildCommonJS(pkgName, pkgPath) {
  * @returns {undefined}
  */
 function buildES(pkg) {
+  if (`${pkg}` === 'widget-demo' || `${pkg}` === 'widget-recents-demo'|| `${pkg}` === 'widget-space-demo') {
+    return;
+  }
   const targetPkgPath = getPackage(pkg);
 
   if (targetPkgPath) {
@@ -136,7 +142,7 @@ function buildES(pkg) {
       const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
       const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
 
-      if (`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` === '@webex/widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` === '@webex/widget-voice-mail') {
+      if (`${pkg}` === 'widget-call-history' || `${pkg}` === 'widget-number-pad' || `${pkg}` === 'widget-speed-dial' || `${pkg}` === 'webex-sign-in-page' || `${pkg}` === 'widget-voice-mail') {
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);

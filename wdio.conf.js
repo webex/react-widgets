@@ -145,9 +145,9 @@ if (!process.env.TAP) {
   services.push(['static-server', {
     port,
     folders: [
-      {mount: '/dist-space', path: './packages/node_modules/@webex/widget-space/dist'},
-      {mount: '/dist-recents', path: './packages/node_modules/@webex/widget-recents/dist'},
-      {mount: '/dist-demo', path: './packages/node_modules/@webex/widget-demo/dist'},
+      {mount: '/dist-space', path: './packages/@webex/widget-space/dist'},
+      {mount: '/dist-recents', path: './packages/@webex/widget-recents/dist'},
+      {mount: '/dist-demo', path: './packages/@webex/widget-demo/dist'},
       {mount: '/', path: './test/journeys/server/'},
       {mount: '/axe-core', path: './node_modules/axe-core/'},
       ...(process.env.STATIC_SERVER_PATH

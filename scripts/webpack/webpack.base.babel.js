@@ -74,7 +74,7 @@ module.exports = (options, env) => {
       mainFields: ['src', 'browser', 'module', 'main'],
       modules: [
         'src',
-        path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
+        path.resolve(__dirname, '..', '..', 'packages'),
         'node_modules'
       ],
       extensions: ['.js', '.css', '.json', '.scss', '.ts', '.tsx'],
@@ -101,7 +101,7 @@ module.exports = (options, env) => {
         {
           test: /\.js$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
+            path.resolve(__dirname, '..', '..', 'packages'),
             path.resolve(__dirname, '..', '..', 'samples')
           ],
           exclude: [
@@ -118,7 +118,7 @@ module.exports = (options, env) => {
         {
           test: /\.css$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages', 'node_modules')
+            path.resolve(__dirname, '..', '..', 'packages')
           ],
           use: [
             {
@@ -156,7 +156,7 @@ module.exports = (options, env) => {
         {
           test: /\.scss$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
+            path.resolve(__dirname, '..', '..', 'packages'),
             path.resolve(__dirname, '..', '..', 'samples')
           ],
           use: [

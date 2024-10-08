@@ -217,9 +217,9 @@ jobs:
           root: ~/react-widgets
           paths:
             - package.json
-            - packages/node_modules/@webex/widget-space/dist
-            - packages/node_modules/@webex/widget-recents/dist
-            - packages/node_modules/@webex/widget-demo/dist
+            - packages/@webex/widget-space/dist
+            - packages/@webex/widget-recents/dist
+            - packages/@webex/widget-demo/dist
 
   deploy_to_cdn:
     executor: main-executor
@@ -240,31 +240,31 @@ jobs:
           name: "Verify version number"
           command: echo ${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
+          from: ~/react-widgets/packages/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/alpha
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
+          from: ~/react-widgets/packages/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/latest
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-space/dist
+          from: ~/react-widgets/packages/@webex/widget-space/dist
           to: s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
+          from: ~/react-widgets/packages/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/alpha
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
+          from: ~/react-widgets/packages/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/latest
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-recents/dist
+          from: ~/react-widgets/packages/@webex/widget-recents/dist
           to: s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
+          from: ~/react-widgets/packages/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/alpha
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
+          from: ~/react-widgets/packages/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/latest
       - aws-s3/sync:
-          from: ~/react-widgets/packages/node_modules/@webex/widget-demo/dist
+          from: ~/react-widgets/packages/@webex/widget-demo/dist
           to: s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}
       - when:
           condition: ${AWS_DISTRIBUTION_ID}
