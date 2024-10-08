@@ -73,6 +73,9 @@ function webpackBuild(pkgName, pkgPath) {
 
   console.log('pkgPath:', `${pkgName}`);
   if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
+    if(`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-voice-mail' || `${pkgName}` === 'widget-speed-dial'){
+      return;
+    }
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
