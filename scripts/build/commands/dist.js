@@ -7,7 +7,6 @@ module.exports = {
   handler: ({packageName, packagePath}) => {
     if (packageName) {
       if (packagePath) {
-        console.log(packageName, packagePath);
         return webpackBuild(packageName, packagePath);
       }
       console.log(packageName,'IN script');
