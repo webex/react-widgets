@@ -14,5 +14,48 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@babel/polyfill": "^7.8.3",
+    "@momentum-ui/react": "23.27.11",
+    "@webex/internal-plugin-conversation": "^2.59.6",
+    "@webex/internal-plugin-feature": "^2.59.6",
+    "@webex/internal-plugin-flag": "^2.59.6",
+    "@webex/internal-plugin-mercury": "^2.59.6",
+    "@webex/internal-plugin-presence": "^2.59.6",
+    "@webex/internal-plugin-search": "^2.59.6",
+    "@webex/internal-plugin-support": "^2.59.6",
+    "@webex/internal-plugin-team": "^2.59.6",
+    "@webex/plugin-authorization": "^2.59.6",
+    "@webex/plugin-logger": "^2.59.6",
+    "@webex/plugin-meetings": "^2.59.6",
+    "@webex/plugin-people": "^2.59.6",
+    "@webex/plugin-rooms": "^2.59.6",
+    "@webex/private-react-component-example-code": "workspace:*",
+    "@webex/private-react-component-space-destination": "workspace:*",
+    "@webex/private-react-component-token-input": "workspace:*",
+    "@webex/storage-adapter-local-forage": "^2.59.6",
+    "@webex/webex-core": "^2.59.6",
+    "@webex/widget-recents": "workspace:*",
+    "@webex/widget-space": "workspace:*",
+    "classnames": "^2.2.5",
+    "core-decorators": "^0.20.0",
+    "prop-types": "^15.5.10",
+    "react": "^17.0.2",
+    "react-cookie": "^2.0.7",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.15.7"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist widget-demo",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package widget-demo",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package widget-demo"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

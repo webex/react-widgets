@@ -1,49 +1,52 @@
-const path = require('path');
+const path = require("path");
 
-const webpack = require('webpack');
-const dotenv = require('dotenv');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require("webpack");
+const dotenv = require("dotenv");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const postcssPresetEnv = require('postcss-preset-env');
+const postcssPresetEnv = require("postcss-preset-env");
 
-const {version} = require('../../package.json');
+const { version } = require("../../package.json");
 
 dotenv.config();
 
 process.env.REACT_WEBEX_VERSION = version;
 
 module.exports = (options, env) => {
-  const packageJson = require('../../package.json');
+  const packageJson = require("../../package.json");
   const plugins = [
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'WEBEX_CLIENT_ID',
-      'REACT_WEBEX_VERSION',
-      'WDM_SERVICE_URL',
-      'IDBROKER_BASE_URL',
-      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
-      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
-      'FEDERATION',
-      'U2C_SERVICE_URL'
-    ]),
-    new MiniCssExtractPlugin({filename: '[name].css'}),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: "production",
+      REACT_WEBEX_VERSION: "",
+      FEDERATION: "",
+      IDBROKER_BASE_URL: "",
+      U2C_SERVICE_URL: "",
+      WEBEX_CLIENT_ID: "",
+      WDM_SERVICE_URL: "",
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: "",
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: "",
+    }),
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
     new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
-      Buffer: ['buffer', 'Buffer']
-    })
+      process: "process/browser",
+      Buffer: ["buffer", "Buffer"],
+    }),
   ];
 
   return {
-    context: options.context || path.resolve(process.cwd(), 'src'),
+    context: options.context || path.resolve(process.cwd(), "src"),
     mode: options.mode,
     entry: options.entry,
-    output: Object.assign({
-      filename: 'bundle.js',
-      path: path.resolve(__dirname, '..', '..', 'dist'),
-      sourceMapFilename: '[file].map'
-    }, options.output),
+    output: Object.assign(
+      {
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "..", "..", "dist"),
+        sourceMapFilename: "[file].map",
+      },
+      options.output
+    ),
     devtool: options.devtool,
     devServer: options.devServer,
     plugins: options.plugins ? plugins.concat(options.plugins) : plugins,
@@ -63,143 +66,142 @@ module.exports = (options, env) => {
       errors: true,
       errorDetails: true,
       warnings: true,
-      publicPath: false
+      publicPath: false,
     },
-    target: 'web',
+    target: "web",
     resolve: {
       alias: {
-        node_modules: path.resolve(__dirname, '..', '..', 'node_modules'),
-        fs: 'browserify-fs'
+        node_modules: path.resolve(__dirname, "..", "..", "node_modules"),
+        fs: "browserify-fs",
       },
-      mainFields: ['src', 'browser', 'module', 'main'],
+      mainFields: ["src", "browser", "module", "main"],
       modules: [
-        'src',
-        path.resolve(__dirname, '..', '..', 'packages'),
-        'node_modules'
+        "src",
+        path.resolve(__dirname, "..", "..", "packages", "node_modules"),
+        "node_modules",
       ],
-      extensions: ['.js', '.css', '.json', '.scss', '.ts', '.tsx'],
+      extensions: [".js", ".css", ".json", ".scss", ".ts", ".tsx"],
       fallback: {
-        stream: require.resolve('stream-browserify'),
-        crypto: require.resolve('crypto-browserify'),
-        os: require.resolve('os-browserify/browser'),
-        path: require.resolve('path-browserify'),
-        querystring: require.resolve('querystring-es3'),
-        vm: false
-      }
+        stream: require.resolve("stream-browserify"),
+        crypto: require.resolve("crypto-browserify"),
+        os: require.resolve("os-browserify/browser"),
+        path: require.resolve("path-browserify"),
+        querystring: require.resolve("querystring-es3"),
+        vm: false,
+      },
     },
     module: {
       rules: [
         {
           test: /\.(ts|tsx)$/i,
-          loader: 'ts-loader',
-          exclude: ['/node_modules/'],
+          loader: "ts-loader",
+          exclude: ["/node_modules/"],
           options: {
             projectReferences: true,
-            configFile: 'tsconfig.json'
-          }
+            configFile: "tsconfig.json",
+          },
         },
         {
           test: /\.js$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages'),
-            path.resolve(__dirname, '..', '..', 'samples')
+            path.resolve(__dirname, "..", "..", "packages"),
+            path.resolve(__dirname, "..", "..", "samples"),
           ],
-          exclude: [
-            '/__fixtures__/',
-            '/__mocks__/'
-          ],
+          exclude: ["/__fixtures__/", "/__mocks__/"],
           use: {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              rootMode: 'upward'
-            }
-          }
+              rootMode: "upward",
+            },
+          },
         },
         {
           test: /\.css$/,
-          include: [
-            path.resolve(__dirname, '..', '..', 'packages')
-          ],
+          include: [path.resolve(__dirname, "..", "..", "packages")],
           use: [
             {
-              loader: MiniCssExtractPlugin.loader
+              loader: MiniCssExtractPlugin.loader,
             },
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 camelCase: true,
                 modules: true,
-                localIdentName: `${env && env.package ? env.package : 'widget'}--[local]--[hash:base64:5]`,
-                importLoaders: 1
-              }
+                localIdentName: `${
+                  env && env.package ? env.package : "widget"
+                }--[local]--[hash:base64:5]`,
+                importLoaders: 1,
+              },
             },
             {
-              loader: 'postcss-loader',
+              loader: "postcss-loader",
               options: {
-                ident: 'postcss',
+                ident: "postcss",
                 plugins: () => [
                   postcssPresetEnv({
                     stage: 0,
-                    browsers: ['last 2 versions', 'IE > 10']
-                  })
-                ]
-              }
-            }
-          ]
+                    browsers: ["last 2 versions", "IE > 10"],
+                  }),
+                ],
+              },
+            },
+          ],
         },
         {
           // Do not transform vendor`s CSS with CSS-modules
           test: /\.css$/,
-          include: [path.resolve(__dirname, '..', '..', 'node_modules')],
-          use: ['style-loader', 'css-loader']
+          include: [path.resolve(__dirname, "..", "..", "node_modules")],
+          use: ["style-loader", "css-loader"],
         },
         {
           test: /\.scss$/,
           include: [
-            path.resolve(__dirname, '..', '..', 'packages'),
-            path.resolve(__dirname, '..', '..', 'samples')
+            path.resolve(__dirname, "..", "..", "packages"),
+            path.resolve(__dirname, "..", "..", "samples"),
           ],
           use: [
             {
               // Adding sass converted files to our main.css does not work on IE/Edge
-              loader: 'style-loader'
+              loader: "style-loader",
             },
             {
-              loader: 'css-loader'
+              loader: "css-loader",
             },
             {
-              loader: 'sass-loader',
+              loader: "sass-loader",
               options: {
-                implementation: require('node-sass')
-              }
-            }
-          ]
+                implementation: require("node-sass"),
+              },
+            },
+          ],
         },
         {
           test: /\.woff$|\.woff2$|.ttf$|\.otf$|\.eot$|\.svg$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name].[hash].[ext]'
-            }
-          }]
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "fonts/[name].[hash].[ext]",
+              },
+            },
+          ],
         },
         {
           test: /\.mp3$|\.wav$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: 'media/[name].[hash].[ext]'
-            }
-          }]
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "media/[name].[hash].[ext]",
+              },
+            },
+          ],
         },
         {
           test: /.*\.(gif|png|jpg)$/,
-          use: [
-            'file-loader?name=[name].[hash].[ext]'
-          ]
-        }
-      ]
-    }
+          use: ["file-loader?name=[name].[hash].[ext]"],
+        },
+      ],
+    },
   };
 };

@@ -13,5 +13,36 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@momentum-ui/react": "23.27.11",
+    "@webex/react-component-file-staging-area": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/react-container-presence-avatar": "workspace:*",
+    "@webex/redux-module-activity": "workspace:*",
+    "@webex/redux-module-errors": "workspace:*",
+    "@webex/redux-module-search": "workspace:*",
+    "classnames": "^2.2.5",
+    "core-decorators": "^0.20.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.5.10",
+    "react": "^17.0.2",
+    "react-mentions": "^1.2.1",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "uuid": "^3.0.1"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-container-message-composer",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-container-message-composer",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-container-message-composer"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }
