@@ -11,6 +11,7 @@ import loginAndOpenWidget from '../../../lib/test-helpers/tap/space';
 import {createSpace, disconnectDevices, registerDevices, setupGroupTestUsers} from '../../../lib/test-users';
 
 describe('Widget Space: Group Space: TAP', () => {
+  console.log("Soemthing")
   let docbrown, lorraine, marty;
   let conversation, local, remote, participants;
 
