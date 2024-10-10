@@ -33,7 +33,8 @@
     "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
     "serve": "yarn run serve:src package react-container-read-receipts",
     "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
-    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-container-read-receipts"
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-container-read-receipts",
+    "test:unit": "cd ../../ && yarn run test:unit react-container-read-receipts"
   },
   "devDependencies": {
     "@babel/node": "^7.8.3",

@@ -20,7 +20,8 @@
     "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
     "serve": "yarn run serve:src package react-test-utils",
     "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
-    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-test-utils"
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-test-utils",
+    "test:unit": "cd ../../ && yarn run test:unit react-test-utils"
   },
   "devDependencies": {
     "@babel/node": "^7.8.3",
