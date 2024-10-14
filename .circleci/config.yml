@@ -52,7 +52,10 @@ jobs:
           command: yarn cache clean
       - run:
           name: "Install dependencies"
-          command: yarn install
+          command: |
+            corepack enable
+            yarn set version berry
+            yarn install
       # Cache node_modules across different internal jobs in the workflow and across different circleci runs
       - save_cache:
           key: node-modules-cache-yarn-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
