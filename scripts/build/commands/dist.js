@@ -9,7 +9,6 @@ module.exports = {
       if (packagePath) {
         return webpackBuild(packageName, packagePath);
       }
-      console.log(packageName,'IN script');
       return webpackBuild(packageName);
     }
 
