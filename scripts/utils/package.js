@@ -101,7 +101,7 @@ function runInPackage({ constructCommand, commandName, pkgName, pkgPath }) {
  */
 function getAllPackagePaths() {
   const fullPaths = [];
-  const packagesDirs = ["packages/@ciscospark", "packages/@webex"];
+  const packagesDirs = ["packages/@webex"];
 
   packagesDirs.forEach((packagesDir) => {
     debug(`Reading Directory: ${packagesDir}`);

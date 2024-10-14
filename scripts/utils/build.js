@@ -1,32 +1,31 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const rimraf = require('rimraf');
-const {transform} = require('@babel/core');
-const outputFileSync = require('output-file-sync');
+const rimraf = require("rimraf");
+const { transform } = require("@babel/core");
+const outputFileSync = require("output-file-sync");
 
-const babelConfig = require('../../babel.config');
+const babelConfig = require("../../babel.config");
 
-const {getPackage} = require('./package');
-const {execSync} = require('./exec');
-
+const { getPackage } = require("./package");
+const { execSync } = require("./exec");
 
 function buildFile(filename, destination, babelOptions = {}) {
   const options = Object.assign({}, babelOptions);
-  const content = fs.readFileSync(filename, {encoding: 'utf8'});
+  const content = fs.readFileSync(filename, { encoding: "utf8" });
   const ext = path.extname(filename);
   const outputPath = path.join(destination, path.basename(filename));
 
   // Ignore non-JS files and test scripts
-  if (!filename.includes('.test.')) {
-    if (ext === '.js') {
+  if (!filename.includes(".test.")) {
+    if (ext === ".js") {
       options.filename = filename;
       const result = transform(content, options);
 
-      return outputFileSync(outputPath, result.code, {encoding: 'utf8'});
+      return outputFileSync(outputPath, result.code, { encoding: "utf8" });
     }
     // process with postcss if it's a css file
-    if (ext === '.css') {
+    if (ext === ".css") {
       return execSync(`postcss ${filename} -o ${outputPath}`);
     }
 
@@ -37,30 +36,36 @@ function buildFile(filename, destination, babelOptions = {}) {
   return false;
 }
 
-function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = true) {
+function babelBuild(
+  folderPath,
+  destination,
+  babelOptions = {},
+  firstFolder = true
+) {
   const stats = fs.statSync(folderPath);
 
   if (stats.isFile()) {
     try {
       buildFile(folderPath, destination, babelOptions);
-    }
-    catch (err) {
+    } catch (err) {
       throw new Error(`Error transpiling ${folderPath} package, ${err}`, err);
     }
-  }
-  else if (stats.isDirectory()) {
-    const outputPath = firstFolder ? destination : path.join(destination, path.basename(folderPath));
-    const files = fs.readdirSync(folderPath).map((file) => path.join(folderPath, file));
+  } else if (stats.isDirectory()) {
+    const outputPath = firstFolder
+      ? destination
+      : path.join(destination, path.basename(folderPath));
+    const files = fs
+      .readdirSync(folderPath)
+      .map((file) => path.join(folderPath, file));
 
     files.forEach((filename) => {
       // Ignore fixtures, mocks, and snapshots
-      if (!filename.includes('__')) {
+      if (!filename.includes("__")) {
         babelBuild(filename, outputPath, babelOptions, false);
       }
     });
   }
 }
-
 
 /**
  * Builds a specific package with Webpack
@@ -70,43 +75,65 @@ function babelBuild(folderPath, destination, babelOptions = {}, firstFolder = tr
  */
 function webpackBuild(pkgName, pkgPath) {
   const targetPkgPath = pkgPath || getPackage(pkgName);
-  
-  console.log('pkgPath:', `${pkgName}`);
-   if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
+
+  console.log("pkgPath:", `${pkgName}`);
+  if (
+    `${pkgName}` === "widget-call-history" ||
+    `${pkgName}` === "widget-number-pad" ||
+    `${pkgName}` === "widget-speed-dial" ||
+    `${pkgName}` === "webex-sign-in-page" ||
+    `${pkgName}` === "widget-voice-mail"
+  ) {
     try {
-      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
+      const webpackConfigPath = path.resolve(
+        __dirname,
+        "..",
+        "webpack",
+        "webpack-calling.prod.babel.js"
+      );
 
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(targetPkgPath, 'dist'));
+      rimraf.sync(path.resolve(targetPkgPath, "dist"));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env package=${pkgName}`);
+      execSync(
+        `cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env package=${pkgName}`
+      );
       console.info(`${pkgName}... Done2\n\n`.cyan);
-    }
-    catch (err) {
+    } catch (err) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
-  }
-  else {
-    try{
-      const workspaceTargetPkgPath = path.resolve(__dirname, '../..', 'packages', '@webex',pkgName);
-      const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
-      
+  } else {
+    try {
+      const workspaceTargetPkgPath = path.resolve(
+        __dirname,
+        "../..",
+        "packages",
+        "@webex",
+        pkgName
+      );
+      const webpackConfigPath = path.resolve(
+        __dirname,
+        "..",
+        "webpack",
+        "webpack.prod.babel.js"
+      );
+
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(workspaceTargetPkgPath, 'dist'));
+      rimraf.sync(path.resolve(workspaceTargetPkgPath, "dist"));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${workspaceTargetPkgPath} && webpack --config ${webpackConfigPath} `);
+      execSync(
+        `cd ${workspaceTargetPkgPath} && webpack --config ${webpackConfigPath} `
+      );
       console.info(`${pkgName}... Done1\n\n`.cyan);
-    }
-      catch (err) {
+    } catch (err) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
   }
 
   return false;
 }
-
 
 /**
  * Build a package to CommonJS
@@ -116,13 +143,12 @@ function webpackBuild(pkgName, pkgPath) {
  */
 function buildCommonJS(pkgName, pkgPath) {
   console.info(`Cleaning ${pkgName} cjs folder...`.cyan);
-  rimraf.sync(path.resolve(pkgPath, 'cjs'));
+  rimraf.sync(path.resolve(pkgPath, "cjs"));
   console.info(`Transpiling ${pkgName} to CommonJS...`.cyan);
 
-  babelConfig.plugins.push('transform-postcss');
+  babelConfig.plugins.push("transform-postcss");
   babelBuild(`${pkgPath}/src`, `${pkgPath}/cjs`, babelConfig);
 }
-
 
 /**
  * Build a package to ES5 with import/export
@@ -130,14 +156,37 @@ function buildCommonJS(pkgName, pkgPath) {
  * @returns {undefined}
  */
 function buildES(pkg) {
+  if (
+    `${pkg}` === "widget-demo" ||
+    `${pkg}` === "widget-recents-demo" ||
+    `${pkg}` === "widget-space-demo"
+  ) {
+    return;
+  }
   const targetPkgPath = getPackage(pkg);
 
   if (targetPkgPath) {
     try {
-      const rollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.config.js');
-      const callingRollupConfigPath = path.resolve(__dirname, '..', '..', 'rollup.calling-config.js');
+      const rollupConfigPath = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "rollup.config.js"
+      );
+      const callingRollupConfigPath = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "rollup.calling-config.js"
+      );
 
-      if (`${pkg}` === '@webex/widget-call-history' || `${pkg}` === '@webex/widget-number-pad' || `${pkg}` === '@webex/widget-speed-dial' || `${pkg}` === '@webex/webex-sign-in-page' || `${pkg}` === '@webex/widget-voice-mail') {
+      if (
+        `${pkg}` === "widget-call-history" ||
+        `${pkg}` === "widget-number-pad" ||
+        `${pkg}` === "widget-speed-dial" ||
+        `${pkg}` === "webex-sign-in-page" ||
+        `${pkg}` === "widget-voice-mail"
+      ) {
         // Rollup cleans the `es` folder automatically
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${callingRollupConfigPath}`);
@@ -146,15 +195,13 @@ function buildES(pkg) {
         console.info(`Packaging ${pkg}...`.cyan);
         execSync(`cd ${targetPkgPath} && rollup -c ${rollupConfigPath}`);
       }
-    }
-    catch (err) {
+    } catch (err) {
       throw new Error(`Error building ${pkg} package, ${err}`, err);
     }
   }
 
   return false;
 }
-
 
 /**
  * Build a package to ES5 and CommonJS
@@ -165,14 +212,13 @@ function buildES(pkg) {
 function transpile(pkgName, pkgPath) {
   return Promise.all([
     buildES(pkgName, pkgPath),
-    buildCommonJS(pkgName, pkgPath)
+    buildCommonJS(pkgName, pkgPath),
   ]);
 }
-
 
 module.exports = {
   webpackBuild,
   buildCommonJS,
   buildES,
-  transpile
+  transpile,
 };

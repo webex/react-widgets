@@ -1,6 +1,6 @@
 {
   "roots": [
-    "<rootDir>/packages/"
+    "<rootDir>/packages/node_modules/"
   ],
   "testPathIgnorePatterns": ["<rootDir>/packages/@webex/redux-module-spaces/src/actions.test.js", "<rootDir>/packages/@webex/redux-module-users/src/actions.test.js", "<rootDir>/packages/@webex/redux-module-media/src/actions.test.js", "<rootDir>/packages/@webex/react-redux-spark/src/component.test.js"],
   "transformIgnorePatterns": ["<rootDir>/(?!@webex/sdk-component-adapter)", "<rootDir>/(?!swiper)"],
@@ -15,13 +15,14 @@
     "@webex/react-(.*)": "<rootDir>/packages/@webex/react-$1/src",
     "@webex/redux-(.*)": "<rootDir>/packages/@webex/redux-$1/src",
     "@webex/widget-(.*)": "<rootDir>/packages/@webex/widget-$1/src",
-    "@webex/components": "<rootDir>/@webex/components/dist/umd/webex-components.umd.js",
+    "@webex/components": "<rootDir>/node_modules/@webex/components/dist/umd/webex-components.umd.js",
     "@webex/webex-widget-base": "<rootDir>/packages/@webex/webex-widget-base/src"
   },
   "testRegex": ".test.js$",
   "testURL": "http://localhost",
   "moduleDirectories": [
     "node_modules",
+    "/packages/"
     "/packages/"
   ],
   "modulePaths": [

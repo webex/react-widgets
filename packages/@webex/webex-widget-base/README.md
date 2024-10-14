@@ -96,8 +96,8 @@ When your widget instantiates, it will get receive props from our main store. So
 This package also provides some additional enhancers to make your widget setup a bit easier:
 
 - `withInitialState` (_default_): Establishes widget initial states with Redux and injects the React-Redux store `Provider` component
-- `withBrowserGlobals` (_default_): Enables widgets to be instantiated globally using `window.webex.widget(el).widgetName` ([usage example](https://github.com/webex/react-widgets/tree/master/packages/node_modules/@webex/widget-space#browser-globals))
-- `withDataAPI` (_default_): Enables widgets to be instantiated using a data API ([usage example](https://github.com/webex/react-widgets/tree/master/packages/node_modules/@webex/widget-space#data-api))
+- `withBrowserGlobals` (_default_): Enables widgets to be instantiated globally using `window.webex.widget(el).widgetName` ([usage example](https://github.com/webex/react-widgets/tree/master/packages/@webex/widget-space#browser-globals))
+- `withDataAPI` (_default_): Enables widgets to be instantiated using a data API ([usage example](https://github.com/webex/react-widgets/tree/master/packages/@webex/widget-space#data-api))
 - `withIntl`: A helper for enabling [react-intl](https://github.com/yahoo/react-intl) in your widget. You can pass a config object that will make intl available to you: `{locale: 'en', messages}`
 
 To use any of these enhancers you can apply them directly to a Component: `withIntl(MyComponent)`.

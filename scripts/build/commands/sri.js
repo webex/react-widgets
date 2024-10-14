@@ -26,7 +26,7 @@ module.exports = {
 
     if (packageName) {
       return generateDistSRI({
-        packagePath: `./packages/node_modules/@webex/${packageName}`,
+        packagePath: `./packages/@webex/${packageName}`,
         privateKey,
         publicKey
       });

@@ -72,7 +72,7 @@ Type a message and send it to the space. You should see it reflected in both you
 
 ## References
 
-1. Bender, Brian, et al. Spark Space Widget (@webex/Widget-Space). GitHub, 11 Apr. 2017, github.com/webex/react-widgets/blob/master/packages/node_modules/@webex/widget-space/README.md.
+1. Bender, Brian, et al. Spark Space Widget (@webex/Widget-Space). GitHub, 11 Apr. 2017, github.com/webex/react-widgets/blob/master/packages/@webex/widget-space/README.md.
 
 ## External links
 

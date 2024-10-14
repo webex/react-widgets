@@ -306,7 +306,7 @@ export function placeCall(sdkAdapter, { destination, cleanUp }) {
       })
       .then(
         tap((meeting) => {
-          if (meeting.passwordStatus !== "REQUIRED") {
+          if (meeting.passwordStatus != "REQUIRED") {
             meetingsAdapter.joinMeeting(meeting.id);
           }
         })

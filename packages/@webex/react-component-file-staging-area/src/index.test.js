@@ -13,7 +13,7 @@ const renderer = new ShallowRenderer();
 // Grabbed from @webex/test-helper-file in the SDK repo
 const fetchWithoutMagic = (filename) =>
   new Promise((resolve, reject) => {
-    const filepath = join(__dirname, '../../../../../node_modules/@webex/test-helper-server/static/', filename);
+    const filepath = join(__dirname, '../../../../node_modules/@webex/test-helper-server/static/', filename);
 
     readFile(filepath, (err, data) => {
       if (err) {
