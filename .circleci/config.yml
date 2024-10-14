@@ -1,24 +1,19 @@
-# Main Config
 version: 2.1
 
-# reusable environment for all jobs
 executors:
   main-executor:
     working_directory: ~/react-widgets
     docker:
       - image: cimg/node:20.13.1-browsers
-        # environment variables for all commands executed in the main-executor
         environment:
           AWS_BUCKET: code.s4d.io
           AWS_REGION: us-east-1
 
-# Orb to grab `s3` capability for us
 orbs:
   aws-cli: circleci/aws-cli@3.1.4
   aws-s3: circleci/aws-s3@3.0.0
   jq: circleci/jq@1.9.0
 
-# Reusable commands for jobs
 commands:
   restore_workspace:
     steps:
@@ -29,7 +24,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - node-modules-cache-yarn{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.json" }}
+            - node-modules-cache-yarn{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
             - node-modules-cache-yarn{{ .Environment.CACHE_VERSION }}-
   aws-cloudfront-invalidation:
     parameters:
@@ -51,16 +46,20 @@ jobs:
           name: "yarn cache clean"
           command: yarn cache clean
       - run:
-          name: "Install dependencies"
+          name: "Install dependencies with Yarn Workspaces"
           command: |
             corepack enable
             yarn set version berry
-            yarn install
-      # Cache node_modules across different internal jobs in the workflow and across different circleci runs
+            yarn install --immutable
       - save_cache:
           key: node-modules-cache-yarn-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+      - persist_to_workspace:
+          root: ~/react-widgets
+          paths:
+            - node_modules
+            - packages
       - run:
           name: Save Yarn install log
           command: yarn list --json > /tmp/yarn_install.log || true
@@ -76,10 +75,10 @@ jobs:
       - restore_node_modules
       - run:
           name: Run eslint
-          command: yarn run eslint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn workspaces run eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: Run all Jest test suites
-          command: yarn run jest -- --ci -i --reporters="jest-junit"
+          command: yarn workspaces run jest -- --ci -i --reporters="jest-junit"
           environment:
             JEST_JUNIT_OUTPUT_NAME: js-jest-results.xml
             JEST_JUNIT_OUTPUT_DIR: reports/junit/jest
@@ -106,14 +105,14 @@ jobs:
       - restore_workspace
       - restore_node_modules
       - run:
-          name: Copy and build journey test static files
+          name: Build journey test static files
           command: yarn run build journey dist-test
       - persist_to_workspace:
           root: ~/react-widgets
           paths:
             - dist-test
 
-  journey_tests_chrome:
+journey_tests_chrome:
     executor: main-executor
     environment:
       SAUCE: true
