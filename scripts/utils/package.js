@@ -62,8 +62,8 @@ function getPackage(pkg) {
   }
   // Attempt to determine path by pkg name
   let calculatedPackagesDir;
-  const fullPathWithPrefix = path.resolve('packages/node_modules', pkg);
-  const webexFullPath = path.resolve('packages/node_modules/@webex', pkg);
+  const fullPathWithPrefix = path.resolve('packages', pkg);
+  const webexFullPath = path.resolve('packages/@webex', pkg);
   const fullPathWithPrefixExists = isDirectory(fullPathWithPrefix);
   const webexPathExists = isDirectory(webexFullPath);
 
@@ -118,7 +118,7 @@ function runInPackage({
  */
 function getAllPackagePaths() {
   const fullPaths = [];
-  const packagesDirs = ['packages/node_modules/@ciscospark', 'packages/node_modules/@webex'];
+  const packagesDirs = [ 'packages/@webex'];
 
   packagesDirs.forEach((packagesDir) => {
     debug(`Reading Directory: ${packagesDir}`);

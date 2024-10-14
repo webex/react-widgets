@@ -33,8 +33,8 @@ The basic components are just presentational React <https://github.com/facebook/
 
 While many of our components are purely presentational, some have extended functionality that provide a piece of the full Webex experience. These fully self contained elements are called `Widgets` and are available here:
 
-- [Space Widget](./packages/node_modules/@webex/widget-space)
-- [Recents Widget](./packages/node_modules/@webex/widget-recents)
+- [Space Widget](./packages/@webex/widget-space)
+- [Recents Widget](./packages/@webex/widget-recents)
 
 ## Usage
 
