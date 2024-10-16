@@ -103,7 +103,6 @@ function updateAllPackageJson() {
   const packages = getAllPackages();
   const pkgPaths = getAllPackagePaths();
   const topPkgJson = JSON.parse(readFileSync('./package.json', 'utf8'));
-
   console.log(packages);
 
   pkgPaths.forEach((pkgPath) => updatePackageJson(pkgPath, packages, topPkgJson));
