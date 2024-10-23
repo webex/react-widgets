@@ -5,7 +5,7 @@ exports[`PeopleListItem component renders a local participant properly 1`] = `
   className="webex-people-list-item item"
   title="Dr Dre"
 >
-  <ForwardRef(ContextTransform(ListItem))
+  <ForwardRef(render)
     onClick={[Function]}
     title="Dr Dre"
     type="small"
@@ -38,7 +38,7 @@ exports[`PeopleListItem component renders a local participant properly 1`] = `
       className=""
       position="right"
     />
-  </ForwardRef(ContextTransform(ListItem))>
+  </ForwardRef(render)>
 </div>
 `;
 
@@ -47,7 +47,7 @@ exports[`PeopleListItem component renders a local participant with email properl
   className="webex-people-list-item item"
   title="Dr Dre (dreday@deathrowrecords.net)"
 >
-  <ForwardRef(ContextTransform(ListItem))
+  <ForwardRef(render)
     onClick={[Function]}
     title="Dr Dre"
     type="small"
@@ -80,7 +80,7 @@ exports[`PeopleListItem component renders a local participant with email properl
       className=""
       position="right"
     />
-  </ForwardRef(ContextTransform(ListItem))>
+  </ForwardRef(render)>
 </div>
 `;
 
@@ -89,7 +89,7 @@ exports[`PeopleListItem component renders an editable participant properly 1`] =
   className="webex-people-list-item item"
   title="Jimmy Iovine"
 >
-  <ForwardRef(ContextTransform(ListItem))
+  <ForwardRef(render)
     onClick={[Function]}
     title="Jimmy Iovine"
     type="small"
@@ -134,13 +134,13 @@ exports[`PeopleListItem component renders an editable participant properly 1`] =
             <span
               className="webex-people-list-item-popover popover"
             >
-              <ForwardRef(ContextTransform(Button))
+              <ForwardRef(render)
                 ariaLabel="Remove from space"
                 onClick={[Function]}
                 removeStyle={true}
               >
                 Remove from space
-              </ForwardRef(ContextTransform(Button))>
+              </ForwardRef(render)>
             </span>
           }
           delay={0}
@@ -157,7 +157,7 @@ exports[`PeopleListItem component renders an editable participant properly 1`] =
           showDelay={0}
           startOpen={false}
         >
-          <ForwardRef(ContextTransform(Button))
+          <ForwardRef(render)
             ariaLabel="More Details"
             circle={true}
           >
@@ -178,11 +178,11 @@ exports[`PeopleListItem component renders an editable participant properly 1`] =
               title=""
               type=""
             />
-          </ForwardRef(ContextTransform(Button))>
+          </ForwardRef(render)>
         </Popover>
       </div>
     </ListItemSection>
-  </ForwardRef(ContextTransform(ListItem))>
+  </ForwardRef(render)>
 </div>
 `;
 
@@ -191,7 +191,7 @@ exports[`PeopleListItem component renders an external participant properly 1`] =
   className="webex-people-list-item item external webex-people-list-item-external"
   title="Jimmy Iovine"
 >
-  <ForwardRef(ContextTransform(ListItem))
+  <ForwardRef(render)
     onClick={[Function]}
     title="Jimmy Iovine"
     type="small"
@@ -224,6 +224,6 @@ exports[`PeopleListItem component renders an external participant properly 1`] =
       className=""
       position="right"
     />
-  </ForwardRef(ContextTransform(ListItem))>
+  </ForwardRef(render)>
 </div>
 `;

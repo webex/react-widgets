@@ -60,13 +60,13 @@ exports[`UserProfileAvatar component renders correctly with user profile menu 1`
       </div>
     </div>
   </MenuContent>
-  <ForwardRef(ContextTransform(Menu))>
-    <ForwardRef(ContextTransform(MenuItem))
+  <ForwardRef(render)>
+    <ForwardRef(render)
       className="webex-recents-header-profile-menu-signout signout"
       label="Sign Out"
       onClick={[MockFunction]}
     />
-  </ForwardRef(ContextTransform(Menu))>
+  </ForwardRef(render)>
 </MenuOverlay>
 `;
 

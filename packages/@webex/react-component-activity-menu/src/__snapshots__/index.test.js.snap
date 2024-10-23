@@ -7,7 +7,7 @@ exports[`ActivityMenu component renders properly 1`] = `
   <div
     className="webex-activity-menu-exit menuExit"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Exit"
       circle={true}
       onClick={[Function]}
@@ -29,7 +29,7 @@ exports[`ActivityMenu component renders properly 1`] = `
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
   <div
     className="webex-main-menu mainMenu"
