@@ -10,6 +10,8 @@ import {destinationTypes} from './constants';
 
 const {eventNames} = events;
 
+
+// Some text
 export {eventNames};
 
 export {reducers};
