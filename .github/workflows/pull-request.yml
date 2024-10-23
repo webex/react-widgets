@@ -66,7 +66,7 @@ jobs:
         env:
           JEST_JUNIT_OUTPUT_NAME: js-jest-results.xml
           JEST_JUNIT_OUTPUT_DIR: reports/junit/jest
-        run: yarn run jest --reporters="jest-junit"
+        run: yarn workspaces foreach -A run test:unit
 
       - name: Upload Jest test results
         uses: actions/upload-artifact@v3
