@@ -41,9 +41,7 @@ exports[`ActivityItemPostActions component renders properly 1`] = `
           </svg>
         </div>
       </div>
-      
     </button>
-    
   </div>
 </div>
 `;

@@ -9,13 +9,10 @@ exports[`Button component renders properly with children 1`] = `
     className="webex-button button"
     onKeyPress={[Function]}
   >
-    
-    
     <div>
       Children
     </div>
   </button>
-  
 </div>
 `;
 
@@ -57,9 +54,7 @@ exports[`Button component renders properly with icon type 1`] = `
         </svg>
       </div>
     </div>
-    
   </button>
-  
 </div>
 `;
 
@@ -101,9 +96,7 @@ exports[`Button component renders properly with icon type and color 1`] = `
         </svg>
       </div>
     </div>
-    
   </button>
-  
 </div>
 `;
 
@@ -116,7 +109,6 @@ exports[`Button component renders properly with label 1`] = `
     className="webex-button button"
     onKeyPress={[Function]}
   >
-    
     button label
   </button>
 </div>
@@ -130,9 +122,7 @@ exports[`Button component renders properly with label and position 1`] = `
     aria-label="button label"
     className="webex-button button"
     onKeyPress={[Function]}
-  >
-    
-  </button>
+  />
   <div
     className="webex-label label labelBottom"
   >

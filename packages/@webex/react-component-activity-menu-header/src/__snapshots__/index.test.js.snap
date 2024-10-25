@@ -69,7 +69,7 @@ exports[`ActivityMenuHeader component renders properly with three activities 1`]
   <div
     className="webex-widget-menu menuButton"
   >
-    <ForwardRef(ContextTransform(Button))
+    <ForwardRef(render)
       ariaLabel="Main Menu"
       circle={true}
       onClick={[MockFunction]}
@@ -92,7 +92,7 @@ exports[`ActivityMenuHeader component renders properly with three activities 1`]
         title=""
         type=""
       />
-    </ForwardRef(ContextTransform(Button))>
+    </ForwardRef(render)>
   </div>
 </div>
 `;
