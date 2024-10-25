@@ -23,7 +23,7 @@
     "@webex/redux-module-activity": "workspace:*",
     "adaptivecards": "^2.0.0",
     "moment": "^2.17.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "18.3.1",
     "recompose": "^0.26.0",
     "uuid": "^3.0.1"
   },

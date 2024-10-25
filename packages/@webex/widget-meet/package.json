@@ -34,7 +34,7 @@
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.10",
-    "react": "^17.0.2",
+    "react": "18.3.1",
     "react-intl": "^5.15.7",
     "react-redux": "^5.0.1",
     "recompose": "^0.26.0",

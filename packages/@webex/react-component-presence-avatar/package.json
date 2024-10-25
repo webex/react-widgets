@@ -18,7 +18,7 @@
     "@momentum-ui/react": "23.27.11",
     "@webex/redux-module-presence": "workspace:*",
     "prop-types": "^15.5.10",
-    "react": "^17.0.2"
+    "react": "18.3.1"
   },
   "version": "0.211.0",
   "scripts": {
