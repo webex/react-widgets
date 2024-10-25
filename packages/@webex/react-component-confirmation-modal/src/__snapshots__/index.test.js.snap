@@ -13,28 +13,20 @@ exports[`ConfirmationModal component renders properly 1`] = `
     >
       <div
         className="webex-dialogue-modal-title-text dialogueModalTitleText"
-      >
-        
-      </div>
+      />
       <div
         className="webex-dialogue-modal-body-subtext dialogueModalBodySubtext"
-      >
-        
-      </div>
+      />
       <button
         className="dialogue-modal-btn dialogue-modal-action-btn dialogueModalBtn dialogueModalActionBtn"
         onClick={[MockFunction]}
         title=""
-      >
-        
-      </button>
+      />
       <button
         className="dialogue-modal-btn dialogue-modal-exit-btn dialogueModalBtn dialogueModalExitBtn"
         onClick={[MockFunction]}
         title=""
-      >
-        
-      </button>
+      />
     </div>
   </div>
   <div

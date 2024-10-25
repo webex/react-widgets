@@ -13,8 +13,6 @@ exports[`ScrollToBottomButton component basic renders properly 1`] = `
       onClick={[MockFunction]}
       onKeyPress={[Function]}
     >
-      
-      
       <div
         className="webex-scroll-to-bottom-icon icon"
       >
@@ -46,7 +44,6 @@ exports[`ScrollToBottomButton component basic renders properly 1`] = `
         </div>
       </div>
     </button>
-    
   </div>
 </div>
 `;
@@ -64,8 +61,6 @@ exports[`ScrollToBottomButton component with text renders properly 1`] = `
       onClick={[MockFunction]}
       onKeyPress={[Function]}
     >
-      
-      
       <div
         className="webex-scroll-to-bottom-icon icon"
       >
@@ -102,7 +97,6 @@ exports[`ScrollToBottomButton component with text renders properly 1`] = `
         Test Label
       </span>
     </button>
-    
   </div>
 </div>
 `;
