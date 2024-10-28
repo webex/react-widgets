@@ -13,5 +13,25 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@momentum-ui/react": "23.27.11",
+    "@webex/react-component-timer": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-component-space-item",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-component-space-item",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-component-space-item",
+    "test:unit": "cd ../../ && yarn run test:unit react-component-space-item"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

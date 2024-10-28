@@ -13,5 +13,29 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@webex/react-component-activity-item-base": "workspace:*",
+    "@webex/react-component-activity-text": "workspace:*",
+    "@webex/react-component-adaptive-card": "workspace:*",
+    "@webex/react-component-file-share-display": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/react-container-file-downloader": "workspace:*",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  },
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-component-activity-share-files",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-component-activity-share-files",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-component-activity-share-files",
+    "test:unit": "cd ../../ && yarn run test:unit react-component-activity-share-files"
+  },
+  "version": "0.211.0"
 }

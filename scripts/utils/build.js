@@ -73,9 +73,7 @@ function webpackBuild(pkgName, pkgPath) {
 
   console.log('pkgPath:', `${pkgName}`);
   if (`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-speed-dial' || `${pkgName}` === 'webex-sign-in-page' || `${pkgName}` === 'widget-voice-mail') {
-    if(`${pkgName}` === 'widget-call-history' || `${pkgName}` === 'widget-number-pad' || `${pkgName}` === 'widget-voice-mail' || `${pkgName}` === 'widget-speed-dial'){
       return;
-    }
     try {
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack-calling.prod.babel.js');
 
@@ -90,15 +88,16 @@ function webpackBuild(pkgName, pkgPath) {
       throw new Error(`Error building ${pkgName} package, ${err}`, err);
     }
   }
-  else if (targetPkgPath) {
-    try {
+  else {
+    try{
+      const workspaceTargetPkgPath = path.resolve(__dirname, '../..', 'packages', '@webex',pkgName);
       const webpackConfigPath = path.resolve(__dirname, '..', 'webpack', 'webpack.prod.babel.js');
 
       // Delete dist folder
       console.info(`Cleaning ${pkgName} dist folder...`.cyan);
-      rimraf.sync(path.resolve(targetPkgPath, 'dist'));
+      rimraf.sync(path.resolve(workspaceTargetPkgPath, 'dist'));
       console.info(`Bundling ${pkgName}...`.cyan);
-      execSync(`cd ${targetPkgPath} && webpack --config ${webpackConfigPath} --env package=${pkgName}`);
+      execSync(`cd ${workspaceTargetPkgPath} && webpack --config ${webpackConfigPath} `);
       console.info(`${pkgName}... Done\n\n`.cyan);
     }
     catch (err) {

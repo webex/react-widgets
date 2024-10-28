@@ -13,5 +13,28 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@webex/react-component-presence-avatar": "workspace:*",
+    "@webex/redux-module-avatar": "workspace:*",
+    "@webex/redux-module-presence": "workspace:*",
+    "moment": "^2.17.1",
+    "prop-types": "^15.5.10",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-container-presence-avatar",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-container-presence-avatar",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-container-presence-avatar",
+    "test:unit": "cd ../../ && yarn run test:unit react-container-presence-avatar"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

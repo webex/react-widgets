@@ -62,19 +62,15 @@ function getPackage(pkg) {
   }
   // Attempt to determine path by pkg name
   let calculatedPackagesDir;
-  const fullPathWithPrefix = path.resolve('packages', pkg);
-  const webexFullPath = path.resolve('packages/@webex', pkg);
-  const fullPathWithPrefixExists = isDirectory(fullPathWithPrefix);
-  const webexPathExists = isDirectory(webexFullPath);
-
-  if (fullPathWithPrefixExists) {
-    calculatedPackagesDir = fullPathWithPrefix;
-  }
-  else if (webexPathExists) {
-    calculatedPackagesDir = webexFullPath;
+  const componentPath = path.resolve();
+  const componentPathExists = isDirectory(componentPath);
+  if (componentPathExists) {
+    calculatedPackagesDir = componentPath;
   }
   if (!isPackageDirectory(calculatedPackagesDir)) {
-    console.error(`Unable to determine package path, no matching directory found for ${pkg}`);
+    console.error(
+      `Unable to determine package path, no matching directory found for ${pkg}`
+    );
 
     return '';
   }
@@ -118,7 +114,7 @@ function runInPackage({
  */
 function getAllPackagePaths() {
   const fullPaths = [];
-  const packagesDirs = [ 'packages/@webex'];
+  const packagesDirs = ['packages/@webex'];
 
   packagesDirs.forEach((packagesDir) => {
     debug(`Reading Directory: ${packagesDir}`);
@@ -168,8 +164,14 @@ function getWidgetPackages() {
  * @returns {Promise}
  */
 function startPackage(pkgName, pkgPath) {
+  const webpackConfig = "../../../scripts/webpack/webpack.dev.babel.js";
+
   return runInPackage({
-    constructCommand: (targetPath) => `webpack serve --config scripts/webpack/webpack.dev.babel.js --context ${path.resolve(targetPath, 'src')} --env package=${pkgName}`,
+    constructCommand: (targetPath) =>
+      `webpack serve --config ${webpackConfig} --context ${path.resolve(
+        targetPath,
+        "src"
+      )} --env package=${pkgName}`,
     commandName: 'Start Package',
     pkgName,
     pkgPath

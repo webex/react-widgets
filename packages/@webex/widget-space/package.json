@@ -13,5 +13,50 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist widget-space",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package widget-space",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package widget-space",
+    "test:unit": "cd ../../ && yarn run test:unit widget-space"
+  },
+  "version": "0.211.0",
+  "dependencies": {
+    "@momentum-ui/react": "23.27.11",
+    "@webex/react-component-activity-menu": "workspace:*",
+    "@webex/react-component-error-display": "workspace:*",
+    "@webex/react-component-loading-screen": "workspace:*",
+    "@webex/react-component-timer": "workspace:*",
+    "@webex/react-component-title-bar": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/redux-module-avatar": "workspace:*",
+    "@webex/redux-module-conversation": "workspace:*",
+    "@webex/redux-module-errors": "workspace:*",
+    "@webex/redux-module-features": "workspace:*",
+    "@webex/redux-module-media": "workspace:*",
+    "@webex/redux-module-mercury": "workspace:*",
+    "@webex/redux-module-spaces": "workspace:*",
+    "@webex/redux-module-users": "workspace:*",
+    "@webex/webex-widget-base": "workspace:*",
+    "@webex/widget-files": "workspace:*",
+    "@webex/widget-meet": "workspace:*",
+    "@webex/widget-message": "workspace:*",
+    "@webex/widget-roster": "workspace:*",
+    "classnames": "^2.2.5",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1",
+    "react-intl": "^5.15.7",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0",
+    "jest": "^24.9.0"
+  }
 }

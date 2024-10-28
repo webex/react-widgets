@@ -12,5 +12,40 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@webex/react-component-button-controls": "workspace:*",
+    "@webex/react-component-error-display": "workspace:*",
+    "@webex/react-component-loading-screen": "workspace:*",
+    "@webex/react-component-video": "workspace:*",
+    "@webex/react-container-presence-avatar": "workspace:*",
+    "@webex/redux-module-avatar": "workspace:*",
+    "@webex/redux-module-errors": "workspace:*",
+    "@webex/redux-module-meetings": "workspace:*",
+    "@webex/redux-module-mercury": "workspace:*",
+    "@webex/redux-module-presence": "workspace:*",
+    "@webex/redux-module-users": "workspace:*",
+    "@webex/webex-widget-base": "workspace:*",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1",
+    "react-intl": "^5.15.7",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist widget-meetings",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package widget-meetings",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package widget-meetings",
+    "test:unit": "cd ../../ && yarn run test:unit widget-meetings"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

@@ -49,7 +49,7 @@ if (fs.existsSync('./src/index.html')) {
   );
 }
 
-const publicPath = process.env.BUILD_PUBLIC_PATH;
+const publicPath = process.env.BUILD_PUBLIC_PATH || '/';
 
 // env config object from command line: https://webpack.js.org/guides/environment-variables/
 module.exports = (env) => webpackBaseConfig({

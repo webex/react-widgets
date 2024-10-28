@@ -15,17 +15,17 @@ process.env.REACT_WEBEX_VERSION = version;
 module.exports = (options, env) => {
   const packageJson = require('../../package.json');
   const plugins = [
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'WEBEX_CLIENT_ID',
-      'REACT_WEBEX_VERSION',
-      'WDM_SERVICE_URL',
-      'IDBROKER_BASE_URL',
-      'WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL',
-      'WEBEX_CONVERSATION_DEFAULT_CLUSTER',
-      'FEDERATION',
-      'U2C_SERVICE_URL'
-    ]),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: "production",
+      REACT_WEBEX_VERSION: "",
+      FEDERATION: "",
+      IDBROKER_BASE_URL: "",
+      U2C_SERVICE_URL: "",
+      WEBEX_CLIENT_ID: "",
+      WDM_SERVICE_URL: "",
+      WEBEX_CONVERSATION_DEFAULT_CLUSTER: "",
+      WEBEX_TEST_USERS_CONVERSATION_SERVICE_URL: "",
+    }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     // Adds use strict to prevent catch global namespace issues outside of chunks.
     new webpack.BannerPlugin(`react-widgets v${packageJson.version}`),

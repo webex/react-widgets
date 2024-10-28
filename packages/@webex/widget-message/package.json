@@ -13,5 +13,55 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@momentum-ui/react": "23.27.11",
+    "@webex/react-component-confirmation-modal": "workspace:*",
+    "@webex/react-component-cover": "workspace:*",
+    "@webex/react-component-error-display": "workspace:*",
+    "@webex/react-component-loading-screen": "workspace:*",
+    "@webex/react-component-utils": "workspace:*",
+    "@webex/react-container-activity-list": "workspace:*",
+    "@webex/react-container-message-composer": "workspace:*",
+    "@webex/react-container-notifications": "workspace:*",
+    "@webex/react-container-read-receipts": "workspace:*",
+    "@webex/react-container-scrolling-activity": "workspace:*",
+    "@webex/react-hoc-conversation-mercury": "workspace:*",
+    "@webex/react-redux-spark": "workspace:*",
+    "@webex/redux-module-activity": "workspace:*",
+    "@webex/redux-module-avatar": "workspace:*",
+    "@webex/redux-module-conversation": "workspace:*",
+    "@webex/redux-module-features": "workspace:*",
+    "@webex/redux-module-flags": "workspace:*",
+    "@webex/redux-module-indicators": "workspace:*",
+    "@webex/redux-module-mercury": "workspace:*",
+    "@webex/redux-module-presence": "workspace:*",
+    "@webex/redux-module-share": "workspace:*",
+    "@webex/webex-widget-base": "workspace:*",
+    "classnames": "^2.2.5",
+    "core-decorators": "^0.20.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1",
+    "react-dropzone": "^4.1.3",
+    "react-intl": "^5.15.7",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist widget-message",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package widget-message",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package widget-message",
+    "test:unit": "cd ../../ && yarn run test:unit widget-message"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

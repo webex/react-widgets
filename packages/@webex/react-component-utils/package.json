@@ -13,5 +13,31 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@webex/common": "^2.59.6",
+    "@webex/helper-html": "^2.59.6",
+    "@webex/react-component-md-choiceset-input": "workspace:*",
+    "@webex/react-component-md-text-input": "workspace:*",
+    "@webex/react-component-md-toggle-input": "workspace:*",
+    "@webex/redux-module-activity": "workspace:*",
+    "adaptivecards": "^2.0.0",
+    "moment": "^2.17.1",
+    "react-dom": "18.3.1",
+    "recompose": "^0.26.0",
+    "uuid": "^3.0.1"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-component-utils",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-component-utils",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-component-utils",
+    "test:unit": "cd ../../ && yarn run test:unit react-component-utils"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }

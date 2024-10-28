@@ -13,5 +13,43 @@
     "dist",
     "cjs",
     "es"
-  ]
+  ],
+  "dependencies": {
+    "@webex/internal-plugin-conversation": "^2.59.6",
+    "@webex/internal-plugin-feature": "^2.59.6",
+    "@webex/internal-plugin-flag": "^2.59.6",
+    "@webex/internal-plugin-mercury": "^2.59.6",
+    "@webex/internal-plugin-presence": "^2.59.6",
+    "@webex/internal-plugin-search": "^2.59.6",
+    "@webex/internal-plugin-support": "^2.59.6",
+    "@webex/internal-plugin-team": "^2.59.6",
+    "@webex/plugin-authorization": "^2.59.6",
+    "@webex/plugin-logger": "^2.59.6",
+    "@webex/plugin-meetings": "^2.59.6",
+    "@webex/plugin-people": "^2.59.6",
+    "@webex/plugin-rooms": "^2.59.6",
+    "@webex/redux-module-errors": "workspace:*",
+    "@webex/sdk-component-adapter": "^1.112.8",
+    "@webex/storage-adapter-local-forage": "^2.59.6",
+    "@webex/webex-core": "^2.59.6",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.10",
+    "react": "18.3.1",
+    "react-redux": "^5.0.1",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0"
+  },
+  "version": "0.211.0",
+  "scripts": {
+    "build": "babel-node ../../../scripts/build/index.js dist react-redux-spark",
+    "build:src": "cross-env NODE_ENV=${NODE_ENV:-production} NODE_OPTIONS=--max-old-space-size=2048 yarn run build",
+    "serve": "yarn run serve:src package react-redux-spark",
+    "serve:src": "cross-env NODE_ENV=${NODE_ENV:-development} babel-node ../../../scripts/start/index.js",
+    "publish": "cross-env-shell NODE_ENV='' babel-node ../../../scripts/publish/index.js package react-redux-spark",
+    "test:unit": "cd ../../ && yarn run test:unit react-redux-spark"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.8.3",
+    "cross-env": "^5.0.0"
+  }
 }
