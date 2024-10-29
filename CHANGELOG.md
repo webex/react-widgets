@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.212.0](https://github.com/webex/react-widgets/compare/v0.211.0...v0.212.0) (2024-09-17)
+
+
+### Bug Fixes
+
+* **Space Widget:** added comments ([e2d9e35](https://github.com/webex/react-widgets/commit/e2d9e35))
+* **Space Widget:** review comments has been addressed. ([b834c0f](https://github.com/webex/react-widgets/commit/b834c0f))
+* **Space Widget:** review comments has been addressed. ([48cdf72](https://github.com/webex/react-widgets/commit/48cdf72))
+* **Space Widget:** review comments has been addressed. ([f3f737b](https://github.com/webex/react-widgets/commit/f3f737b))
+* **Space Widget:** review comments has been addressed. ([7e77142](https://github.com/webex/react-widgets/commit/7e77142))
+* **Space Widget:** review comments has been addressed. ([3e53ea2](https://github.com/webex/react-widgets/commit/3e53ea2))
+* **Space Widget:** review comments has been addressed. ([cec05fb](https://github.com/webex/react-widgets/commit/cec05fb))
+
+
+
 ## [0.211.0](https://github.com/webex/react-widgets/compare/v0.210.0...v0.211.0) (2024-09-03)
 
 
