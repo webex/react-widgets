@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.213.0](https://github.com/webex/react-widgets/compare/v0.212.0...v0.213.0) (2024-11-26)
+
+
+### Bug Fixes
+
+* **fcc:** Focus unnecessary moves to various elements. ([5bad13e](https://github.com/webex/react-widgets/commit/5bad13e))
+
+
+
 ## [0.212.0](https://github.com/webex/react-widgets/compare/v0.211.0...v0.212.0) (2024-09-17)
 
 
