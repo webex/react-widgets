@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.216.0](https://github.com/webex/react-widgets/compare/v0.215.0...v0.216.0) (2025-06-06)
+
+
+### Bug Fixes
+
+* **widget-files:** make download button always visible for a11y ([#1454](https://github.com/webex/react-widgets/issues/1454)) ([a139215](https://github.com/webex/react-widgets/commit/a139215))
+
+
+
 ## [0.215.0](https://github.com/webex/react-widgets/compare/v0.214.0...v0.215.0) (2025-05-16)
 
 
