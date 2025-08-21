@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.217.0](https://github.com/webex/react-widgets/compare/v0.216.0...v0.217.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* **space-widget:** adjust colors for links, system message and external space message ([#1455](https://github.com/webex/react-widgets/issues/1455)) ([65c3327](https://github.com/webex/react-widgets/commit/65c3327))
+
+
+
 ## [0.216.0](https://github.com/webex/react-widgets/compare/v0.215.0...v0.216.0) (2025-06-06)
 
 
