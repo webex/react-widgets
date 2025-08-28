@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.218.0](https://github.com/webex/react-widgets/compare/v0.217.0...v0.218.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **space-widget:** improve the tab accessibility voiceover behavior ([614aeab](https://github.com/webex/react-widgets/commit/614aeab))
+
+
+
 ## [0.217.0](https://github.com/webex/react-widgets/compare/v0.216.0...v0.217.0) (2025-08-19)
 
 
