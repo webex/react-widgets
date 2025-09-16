@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.221.0](https://github.com/webex/react-widgets/compare/v0.220.0...v0.221.0) (2025-09-16)
+
+
+### Bug Fixes
+
+* **space widget:** Voiceover announcement in peoplelist item ([708fd58](https://github.com/webex/react-widgets/commit/708fd58))
+
+
+
 ## [0.220.0](https://github.com/webex/react-widgets/compare/v0.219.0...v0.220.0) (2025-09-15)
 
 
