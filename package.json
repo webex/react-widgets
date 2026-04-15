@@ -248,6 +248,9 @@
     "webpack-dev-server": "^3.10.1",
     "yargs": "^17.1.0"
   },
+  "overrides": {
+    "fibers": "npm:empty-npm-package@1.0.0"
+  },
   "lint-staged": {
     "*.js": "lint:eslint"
   },
