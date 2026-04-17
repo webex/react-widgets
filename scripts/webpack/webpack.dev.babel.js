@@ -32,8 +32,29 @@ module.exports = (env) => webpackConfigBase({
   plugins,
   devtool: 'source-map',
   devServer: {
-    host: 'localhost',
+    host: 'local-dev.cisco.com',
     port: process.env.PORT || 8000,
+    disableHostCheck: true,
+    public: 'local-dev.cisco.com:8000',
+    proxy: {
+      '/v1': {
+        target: 'https://api.ciscospark.com',
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'debug'
+      }
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+      'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.s4d.io; "
+        + "style-src 'self' 'unsafe-inline' https://code.s4d.io; "
+        + "media-src 'self' https://code.s4d.io https://*.clouddrive.com https://*.giphy.com https://*.webexcontent.com data: blob:; "
+        + "font-src 'self' https://code.s4d.io; "
+        + "img-src 'self' https://*.clouddrive.com https://code.s4d.io https://*.webexcontent.com data: blob: https://*.rackcdn.com https://cisco.webex.com; "
+        + "connect-src 'self' localhost local-dev.cisco.com ws://localhost:8000 ws://local-dev.cisco.com:8000 wss://*.ciscospark.com wss://*.wbx.com wss://*.wbx2.com https://*.ciscospark.com https://*.clouddrive.com/ https://code.s4d.io https://*.giphy.com https://*.wbx2.com https://*.webex.com https://*.webexcontent.com https://*.cisco.com https://myspark.cisco.com;"
+    },
     stats: {
       colors: true,
       hash: false,
@@ -49,14 +70,6 @@ module.exports = (env) => webpackConfigBase({
       errorDetails: true,
       warnings: true,
       publicPath: false
-    },
-    headers: {
-      'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.s4d.io; "
-        + "style-src 'self' 'unsafe-inline' https://code.s4d.io; "
-        + "media-src 'self' https://code.s4d.io https://*.clouddrive.com https://*.giphy.com https://*.webexcontent.com data: blob:; "
-        + "font-src 'self' https://code.s4d.io; "
-        + "img-src 'self' https://*.clouddrive.com https://code.s4d.io https://*.webexcontent.com data: blob: https://*.rackcdn.com https://cisco.webex.com; "
-        + "connect-src 'self' localhost ws://localhost:8000 wss://*.ciscospark.com wss://*.wbx.com wss://*.wbx2.com https://*.ciscospark.com https://*.clouddrive.com/ https://code.s4d.io https://*.giphy.com https://*.wbx2.com https://*.webex.com  https://*.webexcontent.com;"
     }
   }
 }, env);
