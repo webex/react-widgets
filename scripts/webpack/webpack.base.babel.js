@@ -62,7 +62,7 @@ module.exports = (options, env) => {
         path.resolve(__dirname, '..', '..', 'packages', 'node_modules'),
         'node_modules'
       ],
-      extensions: ['.js', '.css', '.json', '.scss','.ts','.tsx']
+      extensions: ['.js', '.css', '.json', '.scss', '.ts', '.tsx']
     },
     module: {
       rules: [
@@ -72,8 +72,8 @@ module.exports = (options, env) => {
           exclude: ['/node_modules/'],
           options: {
             projectReferences: true,
-            configFile: 'tsconfig.json',
-          },
+            configFile: 'tsconfig.json'
+          }
         },
         {
           test: /\.js$/,
@@ -89,6 +89,30 @@ module.exports = (options, env) => {
             loader: 'babel-loader',
             options: {
               rootMode: 'upward'
+            }
+          }
+        },
+        {
+          test: /\.js$/,
+          include: [
+            path.resolve(__dirname, '..', '..', 'node_modules', '@webex', 'components', 'node_modules', 'react-draggable')
+          ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: {
+                    browsers: ['last 2 versions', 'IE > 10']
+                  },
+                  modules: 'commonjs'
+                }]
+              ],
+              plugins: [
+                '@babel/plugin-proposal-optional-chaining',
+                '@babel/plugin-proposal-nullish-coalescing-operator'
+              ],
+              sourceType: 'unambiguous'
             }
           }
         },
