@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.223.0](https://github.com/webex/react-widgets/compare/v0.222.0...v0.223.0) (2026-05-25)
+
+
+### Bug Fixes
+
+* **build:** override fibers with empty stub for Node 22 compat ([7cd32f9](https://github.com/webex/react-widgets/commit/7cd32f9))
+* **build:** replace node-sass with Dart Sass for Node 22 + Apple Silicon support ([9c5564f](https://github.com/webex/react-widgets/commit/9c5564f))
+* **ci:** update CircleCI config for Node 22 ([4e5a209](https://github.com/webex/react-widgets/commit/4e5a209))
+* **security:** remove global object exposure and fix device controls ([fa97579](https://github.com/webex/react-widgets/commit/fa97579))
+
+
+### Features
+
+* **widget-meet:** implement unified space meetings and fix meeting controls ([5997d3f](https://github.com/webex/react-widgets/commit/5997d3f))
+* upgrade Webex SDK to 2.60.4 and add webpack fixes ([4f735b3](https://github.com/webex/react-widgets/commit/4f735b3))
+
+
+
 ## [0.222.0](https://github.com/webex/react-widgets/compare/v0.221.0...v0.222.0) (2025-12-02)
 
 
