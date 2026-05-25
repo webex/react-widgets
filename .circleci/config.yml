@@ -5,6 +5,7 @@ version: 2.1
 executors:
   main-executor:
     working_directory: ~/react-widgets
+    resource_class: large
     docker:
       - image: cimg/node:22.22
         # environment variables for all commands executed in the main-executor
