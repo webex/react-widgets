@@ -397,6 +397,9 @@ workflows:
             branches:
               ignore:
                 - master
+      - version_and_publish:
+          requires:
+            - install
       - build_for_tests:
           requires:
             - install
