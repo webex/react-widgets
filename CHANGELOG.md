@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* **build:** raise Node heap limit from 2048 MB to 8192 MB for `build:all` and `build:package` scripts to prevent OOM kills during widget builds ([7a41f62](https://github.com/webex/react-widgets/commit/7a41f62c5c48166905025cdbdf055eb252128f06))
+* **build:** raise Node heap limit from 2048 MB to 8192 MB for `build:all` and `build:package` scripts to prevent Out Of Memory kills during widget builds ([7a41f62](https://github.com/webex/react-widgets/commit/7a41f62c5c48166905025cdbdf055eb252128f06))
 * **build:** override fibers with empty stub for Node 22 compat ([7cd32f9](https://github.com/webex/react-widgets/commit/7cd32f9))
 * **build:** replace node-sass with Dart Sass for Node 22 + Apple Silicon support ([9c5564f](https://github.com/webex/react-widgets/commit/9c5564f))
 * **ci:** update CircleCI config for Node 22 ([4e5a209](https://github.com/webex/react-widgets/commit/4e5a209))
