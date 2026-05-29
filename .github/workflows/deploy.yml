@@ -1,0 +1,105 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build Publish And Deploy
+    runs-on: ubuntu-latest
+    env:
+      AWS_BUCKET: code.s4d.io
+      AWS_REGION: us-east-1
+      WEBEX_SCOPE: Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      AWS_DISTRIBUTION_ID: ${{ secrets.AWS_DISTRIBUTION_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "14"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure git for release commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+      - name: Generate version number
+        run: npm run release -- --release-as minor --no-verify
+
+      - name: Read version number
+        run: echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")" >> "$GITHUB_ENV"
+
+      - name: Build for npm
+        run: |
+          npm run build:packagejson
+          npm run build:transpile all
+
+      - name: Build CDN bundles
+        env:
+          NODE_ENV: production
+        run: |
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:package widget-space
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:sri widget-space
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:package widget-recents
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:sri widget-recents
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
+
+      - name: Push release commit and tags
+        run: |
+          git push origin HEAD:master
+          git push --tags origin
+
+      - name: Publish to npm
+        run: npm run publish:components
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload widget-space to CDN
+        run: |
+          aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/alpha"
+          aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/latest"
+          aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}"
+
+      - name: Upload widget-recents to CDN
+        run: |
+          aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/alpha"
+          aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/latest"
+          aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}"
+
+      - name: Upload widget-demo to CDN
+        run: |
+          aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/alpha"
+          aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/latest"
+          aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}"
+
+      - name: Invalidate CloudFront cache
+        if: ${{ env.AWS_DISTRIBUTION_ID != '' }}
+        run: aws cloudfront create-invalidation --distribution-id "${AWS_DISTRIBUTION_ID}" --paths "/*"
