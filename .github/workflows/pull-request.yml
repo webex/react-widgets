@@ -39,11 +39,8 @@ jobs:
         with:
           node-version: "14"
           cache: npm
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node-modules
-          path: node_modules
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
       - name: Upload dependencies artifact
         uses: actions/upload-artifact@v4
         with:
@@ -131,6 +128,7 @@ jobs:
       WEBEX_CLIENT_ID: ${{ secrets.WEBEX_CLIENT_ID }}
       WEBEX_CLIENT_SECRET: ${{ secrets.WEBEX_CLIENT_SECRET }}
       SKIP_FLAKY_TESTS: ${{ secrets.SKIP_FLAKY_TESTS }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -182,6 +180,7 @@ jobs:
       WEBEX_CLIENT_ID: ${{ secrets.WEBEX_CLIENT_ID }}
       WEBEX_CLIENT_SECRET: ${{ secrets.WEBEX_CLIENT_SECRET }}
       SKIP_FLAKY_TESTS: ${{ secrets.SKIP_FLAKY_TESTS }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
