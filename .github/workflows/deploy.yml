@@ -5,6 +5,15 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run (no publish) or release"
+        required: true
+        default: dry-run
+        type: choice
+        options:
+          - dry-run
+          - release
 
 permissions:
   contents: write
@@ -38,19 +47,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Resolve deploy mode
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "DEPLOY_MODE=release" >> "$GITHUB_ENV"
+          else
+            echo "DEPLOY_MODE=${{ inputs.mode }}" >> "$GITHUB_ENV"
+          fi
+
       - name: Configure git for release commit
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Configure npm auth
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Generate version number
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: npm run release -- --release-as minor --no-verify
 
       - name: Read version number
-        run: echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")" >> "$GITHUB_ENV"
+        run: |
+          if [ "${DEPLOY_MODE}" = "release" ]; then
+            echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")" >> "$GITHUB_ENV"
+          else
+            echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")-dryrun.${{ github.run_number }}" >> "$GITHUB_ENV"
+          fi
 
       - name: Build for npm
         run: |
@@ -68,14 +93,21 @@ jobs:
           BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
 
       - name: Push release commit and tags
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           git push origin HEAD:master
           git push --tags origin
 
       - name: Publish to npm
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: npm run publish:components
 
+      - name: Dry-run npm publish
+        if: ${{ env.DEPLOY_MODE != 'release' }}
+        run: npm pack --dry-run
+
       - name: Configure AWS credentials
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -83,23 +115,37 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload widget-space to CDN
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/alpha"
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/latest"
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}"
 
       - name: Upload widget-recents to CDN
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/alpha"
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/latest"
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}"
 
       - name: Upload widget-demo to CDN
+        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/alpha"
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/latest"
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}"
 
       - name: Invalidate CloudFront cache
-        if: ${{ env.AWS_DISTRIBUTION_ID != '' }}
+        if: ${{ env.DEPLOY_MODE == 'release' && env.AWS_DISTRIBUTION_ID != '' }}
         run: aws cloudfront create-invalidation --distribution-id "${AWS_DISTRIBUTION_ID}" --paths "/*"
+
+      - name: Upload deploy dry-run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-artifacts-${{ github.run_number }}
+          path: |
+            packages/node_modules/@webex/widget-space/dist
+            packages/node_modules/@webex/widget-recents/dist
+            packages/node_modules/@webex/widget-demo/dist
+          if-no-files-found: ignore
