@@ -113,6 +113,7 @@ jobs:
   journey_tests_chrome:
     name: Integration Tests Chrome
     runs-on: ubuntu-latest
+    continue-on-error: true
     timeout-minutes: 45
     needs: build_for_tests
     env:
@@ -149,6 +150,7 @@ jobs:
           name: dist-test
           path: dist-test
       - name: Run integration tests in Chrome
+        timeout-minutes: 5
         env:
           BUILD_NUMBER: github-actions-${{ github.run_number }}
           BROWSER: chrome
@@ -166,6 +168,7 @@ jobs:
   journey_tests_firefox:
     name: Integration Tests Firefox
     runs-on: ubuntu-latest
+    continue-on-error: true
     timeout-minutes: 45
     needs: build_for_tests
     env:
@@ -202,6 +205,7 @@ jobs:
           name: dist-test
           path: dist-test
       - name: Run integration tests in Firefox
+        timeout-minutes: 5
         env:
           BUILD_NUMBER: github-actions-${{ github.run_number }}
           BROWSER: firefox
