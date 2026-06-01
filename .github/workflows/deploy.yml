@@ -161,13 +161,14 @@ jobs:
       - name: Generate version number
         run: npm run release -- --release-as minor --no-verify
 
+      - name: Publish to npm
+        run: npm run publish:components
+
       - name: Push release commit and tags
+        if: ${{ success() }}
         run: |
           git push origin HEAD:master
           git push --tags origin
-
-      - name: Publish to npm
-        run: npm run publish:components
 
   publish_cdn:
     name: Publish CDN
