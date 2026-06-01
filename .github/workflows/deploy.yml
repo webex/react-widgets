@@ -32,8 +32,6 @@ jobs:
       dryrun_version: ${{ steps.versions.outputs.dryrun_version }}
       release_version: ${{ steps.versions.outputs.release_version }}
       active_version: ${{ steps.versions.outputs.active_version }}
-    env:
-      NODE_ENV: production
     steps:
       - uses: actions/checkout@v4
         with:
