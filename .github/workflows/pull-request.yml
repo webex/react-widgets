@@ -41,12 +41,11 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      - name: Upload dependencies artifact
-        uses: actions/upload-artifact@v4
+      - name: Save node_modules cache
+        uses: actions/cache/save@v4
         with:
-          name: node-modules
           path: node_modules
-          if-no-files-found: error
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
 
   tests:
     name: Unit Tests And Linting
@@ -59,11 +58,12 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          name: node-modules
-          path: .
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Run eslint
         run: npm run eslint
       - name: Run Jest suites
@@ -96,11 +96,12 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          name: node-modules
-          path: .
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Build journey test static files
         run: npm run build -- journey dist-test
       - name: Upload dist-test artifacts
@@ -136,11 +137,12 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          name: node-modules
-          path: .
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Download dist-test artifacts
         uses: actions/download-artifact@v4
         with:
@@ -188,11 +190,12 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          name: node-modules
-          path: .
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Download dist-test artifacts
         uses: actions/download-artifact@v4
         with:
