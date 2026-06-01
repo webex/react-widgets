@@ -24,15 +24,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Build Publish And Deploy
+  prepare:
+    name: Prepare Deploy Mode
     runs-on: ubuntu-latest
+    outputs:
+      deploy_mode: ${{ steps.resolve_mode.outputs.deploy_mode }}
+      dryrun_version: ${{ steps.versions.outputs.dryrun_version }}
     env:
-      AWS_BUCKET: code.s4d.io
-      AWS_REGION: us-east-1
-      WEBEX_SCOPE: Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      AWS_DISTRIBUTION_ID: ${{ secrets.AWS_DISTRIBUTION_ID }}
+      NODE_ENV: production
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,37 +44,66 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Resolve deploy mode
+        id: resolve_mode
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo "DEPLOY_MODE=release" >> "$GITHUB_ENV"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "deploy_mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ github.repository }}" = "webex/react-widgets" ]; then
+            echo "deploy_mode=release" >> "$GITHUB_OUTPUT"
           else
-            echo "DEPLOY_MODE=${{ inputs.mode }}" >> "$GITHUB_ENV"
+            echo "deploy_mode=dry-run" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Set dry-run version
+        id: versions
+        run: |
+          BASE_VERSION="$(node -p "require('./package.json').version")"
+          echo "dryrun_version=${BASE_VERSION}-dryrun.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+  publish_npm:
+    name: Release And Publish NPM
+    runs-on: ubuntu-latest
+    needs: prepare
+    if: ${{ needs.prepare.outputs.deploy_mode == 'release' }}
+    outputs:
+      release_version: ${{ steps.release_version.outputs.release_version }}
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      WEBEX_SCOPE: Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
       - name: Configure git for release commit
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Configure npm auth
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Generate version number
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: npm run release -- --release-as minor --no-verify
 
-      - name: Read version number
+      - name: Read release version
+        id: release_version
         run: |
-          if [ "${DEPLOY_MODE}" = "release" ]; then
-            echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")" >> "$GITHUB_ENV"
-          else
-            echo "VERSION_NUMBER=$(node -p \"require('./package.json').version\")-dryrun.${{ github.run_number }}" >> "$GITHUB_ENV"
-          fi
+          RELEASE_VERSION="$(node -p "require('./package.json').version")"
+          echo "release_version=${RELEASE_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "VERSION_NUMBER=${RELEASE_VERSION}" >> "$GITHUB_ENV"
 
       - name: Build for npm
         run: |
@@ -93,21 +121,41 @@ jobs:
           BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
 
       - name: Push release commit and tags
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           git push origin HEAD:master
           git push --tags origin
 
       - name: Publish to npm
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: npm run publish:components
 
-      - name: Dry-run npm publish
-        if: ${{ env.DEPLOY_MODE != 'release' }}
-        run: npm pack --dry-run
+      - name: Upload deploy artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-artifacts-${{ github.run_number }}
+          path: |
+            packages/node_modules/@webex/widget-space/dist
+            packages/node_modules/@webex/widget-recents/dist
+            packages/node_modules/@webex/widget-demo/dist
+          if-no-files-found: error
+
+  deploy_cdn:
+    name: Deploy CDN
+    runs-on: ubuntu-latest
+    needs: publish_npm
+    if: ${{ needs.publish_npm.result == 'success' }}
+    env:
+      AWS_BUCKET: code.s4d.io
+      AWS_REGION: us-east-1
+      AWS_DISTRIBUTION_ID: ${{ secrets.AWS_DISTRIBUTION_ID }}
+      VERSION_NUMBER: ${{ needs.publish_npm.outputs.release_version }}
+    steps:
+      - name: Download deploy artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-artifacts-${{ github.run_number }}
+          path: .
 
       - name: Configure AWS credentials
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -115,32 +163,68 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload widget-space to CDN
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/alpha"
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/latest"
           aws s3 sync packages/node_modules/@webex/widget-space/dist "s3://${AWS_BUCKET}/widget-space/archives/${VERSION_NUMBER}"
 
       - name: Upload widget-recents to CDN
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/alpha"
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/latest"
           aws s3 sync packages/node_modules/@webex/widget-recents/dist "s3://${AWS_BUCKET}/widget-recents/archives/${VERSION_NUMBER}"
 
       - name: Upload widget-demo to CDN
-        if: ${{ env.DEPLOY_MODE == 'release' }}
         run: |
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/alpha"
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/latest"
           aws s3 sync packages/node_modules/@webex/widget-demo/dist "s3://${AWS_BUCKET}/widget-demo/archives/${VERSION_NUMBER}"
 
       - name: Invalidate CloudFront cache
-        if: ${{ env.DEPLOY_MODE == 'release' && env.AWS_DISTRIBUTION_ID != '' }}
+        if: ${{ env.AWS_DISTRIBUTION_ID != '' }}
         run: aws cloudfront create-invalidation --distribution-id "${AWS_DISTRIBUTION_ID}" --paths "/*"
 
+  dry_run_build:
+    name: Dry-Run Build Validation
+    runs-on: ubuntu-latest
+    needs: prepare
+    if: ${{ needs.prepare.outputs.deploy_mode != 'release' }}
+    env:
+      WEBEX_SCOPE: Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms
+      VERSION_NUMBER: ${{ needs.prepare.outputs.dryrun_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build for npm
+        run: |
+          npm run build:packagejson
+          npm run build:transpile all
+
+      - name: Build CDN bundles
+        env:
+          NODE_ENV: production
+        run: |
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:package widget-space
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-space/archives/${VERSION_NUMBER}/" npm run build:sri widget-space
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:package widget-recents
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-recents/archives/${VERSION_NUMBER}/" npm run build:sri widget-recents
+          BUILD_PUBLIC_PATH="https://code.s4d.io/widget-demo/archives/${VERSION_NUMBER}/" npm run build:package widget-demo
+
+      - name: Dry-run npm publish
+        run: npm pack --dry-run
+
       - name: Upload deploy dry-run artifacts
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: deploy-artifacts-${{ github.run_number }}
