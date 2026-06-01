@@ -4,16 +4,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
-    inputs:
-      mode:
-        description: "dry-run (no publish) or release"
-        required: true
-        default: dry-run
-        type: choice
-        options:
-          - dry-run
-          - release
 
 permissions:
   contents: write
@@ -28,10 +18,7 @@ jobs:
     name: Prepare for deploy workflow
     runs-on: ubuntu-latest
     outputs:
-      deploy_mode: ${{ steps.resolve_mode.outputs.deploy_mode }}
-      dryrun_version: ${{ steps.versions.outputs.dryrun_version }}
       release_version: ${{ steps.versions.outputs.release_version }}
-      active_version: ${{ steps.versions.outputs.active_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,37 +39,16 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-deploy-node-modules-${{ github.run_id }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Resolve deploy mode
-        id: resolve_mode
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "deploy_mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ github.repository }}" = "webex/react-widgets" ]; then
-            echo "deploy_mode=release" >> "$GITHUB_OUTPUT"
-          else
-            echo "deploy_mode=dry-run" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Set dry-run version
+      - name: Set release version
         id: versions
-        env:
-          DEPLOY_MODE: ${{ steps.resolve_mode.outputs.deploy_mode }}
         run: |
-          BASE_VERSION="$(node -p "require('./package.json').version")"
           RELEASE_VERSION="$(node -e "const semver = require('semver'); const v = require('./package.json').version; process.stdout.write(semver.inc(v, 'minor'));")"
-          echo "dryrun_version=${BASE_VERSION}-dryrun.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
           echo "release_version=${RELEASE_VERSION}" >> "$GITHUB_OUTPUT"
-          if [ "${DEPLOY_MODE}" = "release" ]; then
-            echo "active_version=${RELEASE_VERSION}" >> "$GITHUB_OUTPUT"
-          else
-            echo "active_version=${BASE_VERSION}-dryrun.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
-          fi
 
   build_cdn:
     name: Build For CDN
     runs-on: ubuntu-latest
     needs: prepare
-    if: ${{ needs.prepare.outputs.deploy_mode == 'release' }}
     env:
       WEBEX_SCOPE: Identity:OAuthClient webexsquare:get_conversation webexsquare:admin spark:people_read spark:rooms_read spark:rooms_write spark:memberships_read spark:memberships_write spark:messages_read spark:messages_write spark:applications_read spark:applications_write spark:teams_read spark:teams_write spark:team_memberships_read spark:team_memberships_write spark:bots_read spark:bots_write spark:kms
       VERSION_NUMBER: ${{ needs.prepare.outputs.release_version }}
@@ -129,7 +95,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - prepare
-    if: ${{ needs.prepare.outputs.deploy_mode == 'release' }}
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
@@ -176,7 +141,7 @@ jobs:
     needs:
       - prepare
       - build_cdn
-    if: ${{ needs.prepare.outputs.deploy_mode == 'release' && needs.build_cdn.result == 'success' }}
+    if: ${{ needs.build_cdn.result == 'success' }}
     env:
       AWS_BUCKET: code.s4d.io
       AWS_REGION: us-east-1
