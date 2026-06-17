@@ -117,7 +117,6 @@
     "react-i18next": "^11.18.3",
     "react-image": "^4.0.3",
     "react-intl": "^5.15.7",
-    "react-mentions": "^1.2.1",
     "react-redux": "^5.0.1",
     "react-sortable-hoc": "^2.0.0",
     "react-stately": "^3.17.0",
