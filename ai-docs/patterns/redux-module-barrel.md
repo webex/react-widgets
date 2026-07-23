@@ -1,0 +1,36 @@
+# Pattern: Redux module barrel
+
+> Navigation: [`AGENTS.md`](../../AGENTS.md) · [`SPEC_INDEX.md`](../SPEC_INDEX.md).
+
+## When to use
+
+**When to use:** exposing a legacy Redux capability package to widgets/containers.
+
+## Correct
+
+```js
+// Shape used by packages/node_modules/@webex/redux-module-spaces/src/index.js
+export * from './actions';
+export {default, initialState} from './reducer';
+```
+
+## Incorrect
+
+```js
+// Consumers reach into internal files and bypass the package contract
+import reducer from '@webex/redux-module-spaces/src/reducer';
+```
+
+**Why wrong:** deep imports couple consumers to internal layout and make action/reducer/export changes harder to version safely.
+
+## Where it appears
+
+- `packages/node_modules/@webex/redux-module-spaces/src/index.js`
+- `packages/node_modules/@webex/redux-module-users/src/index.js`
+- `packages/node_modules/@webex/redux-module-teams/src/index.js`
+- `packages/node_modules/@webex/redux-module-conversation/src/index.js`
+
+## Edge cases / exceptions
+
+- Existing repository-internal deep imports are legacy exceptions; do not create new ones without a boundary rationale.
+- Small modules such as features/search implement reducer/actions together in `index.js` but retain the same public concepts.
