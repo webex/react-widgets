@@ -21,7 +21,7 @@
 | Coverage score | 93% assessed 2026-07-22; enhancer order, host APIs, auth, teardown, and demo boundaries covered |
 | Generated from | `module-spec` @ SDLC template library `0.2.1` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | not-run; independent validation pending at the repaired PR commit |
+| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
 
 ## Evidence Rules
 

@@ -21,7 +21,7 @@
 | Coverage score | 92% assessed 2026-07-22; every package and lifecycle boundary covered, with gaps around repeated subscription cleanup |
 | Generated from | `module-spec` @ SDLC template library `0.2.1` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | not-run; independent validation pending at the repaired PR commit |
+| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
 
 ## Evidence Rules
 

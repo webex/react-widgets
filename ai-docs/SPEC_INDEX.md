@@ -26,7 +26,7 @@
 | Build and release tooling | Build/transpile/bundle/SRI/serve/publish/deploy/release workflows. | Partial (95%) | `modules/build-release-tooling-spec.md` |
 | Test automation | Jest, journeys, smoke/TAP/integration/accessibility, CI test reporting. | Partial (96%) | `modules/test-automation-spec.md` |
 
-All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent validation is pending at the repaired PR commit. Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
+All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent Cursor validation passed with warnings on 2026-08-07 at `67390b52` (0 Blocking; 2 warnings). Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
 
 ## Task Routing
 

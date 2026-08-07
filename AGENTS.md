@@ -117,6 +117,6 @@ For SDD bootstrap, validation, CI, and release work, load the affected specs up 
 
 ---
 
-Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent validation is pending at the repaired PR commit; the bootstrap specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
+Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent Cursor validation passed with warnings on 2026-08-07 at `67390b52`; the bootstrap specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
 
 Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.
