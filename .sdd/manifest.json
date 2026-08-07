@@ -58,7 +58,7 @@
     {
       "path": "packages/node_modules/@webex/widget-space/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 94%: public exports, events, configuration, state, UI, error paths, and journey intent are covered; independent Cursor validation passed, while the last-five-PR drift gate still blocks promotion.",
+      "coverage_evidence": "Documentation assessment 94%: public exports, events, configuration, state, UI, error paths, and journey intent are covered; independent validation is pending at the repaired PR commit, and the last-five-PR drift gate still blocks promotion.",
       "canonical_spec": "ai-docs/modules/space-messaging-spec.md",
       "contracts": {
         "provides": ["Space, Message, Files, and Roster widget package entrypoints", "current rooms/messages/calls/activity host events"],
@@ -95,7 +95,7 @@
     {
       "path": "packages/node_modules/@webex/widget-recents/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 95%: exports, filters, events, state transitions, host forms, and journey intent are covered; independent Cursor validation passed, while the last-five-PR drift gate still blocks promotion.",
+      "coverage_evidence": "Documentation assessment 95%: exports, filters, events, state transitions, host forms, and journey intent are covered; independent validation is pending at the repaired PR commit, and the last-five-PR drift gate still blocks promotion.",
       "canonical_spec": "ai-docs/modules/recents-spec.md",
       "contracts": {
         "provides": ["Recents widget package entrypoint", "current room/message/call/membership/action host events"],
@@ -132,7 +132,7 @@
     {
       "path": "packages/node_modules/@webex/widget-meet/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 92%: meeting creation, join/media/leave state, call UI, errors, and available tests are covered; independent Cursor validation passed, while sparse lifecycle tests and the last-five-PR drift gate block promotion.",
+      "coverage_evidence": "Documentation assessment 92%: meeting creation, join/media/leave state, call UI, errors, and available tests are covered; independent validation is pending at the repaired PR commit, while sparse lifecycle tests and the last-five-PR drift gate block promotion.",
       "canonical_spec": "ai-docs/modules/meetings-spec.md",
       "contracts": {
         "provides": ["Meet and Meetings widget package entrypoints", "meeting Redux actions/reducer"],
@@ -169,7 +169,7 @@
     {
       "path": "packages/node_modules/@webex/widget-call-history/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 91%: all typed calling widgets, adapters, state/UI/error contracts, and compatibility hazards are inventoried; independent Cursor validation passed, while sparse direct tests and the last-five-PR drift gate block promotion.",
+      "coverage_evidence": "Documentation assessment 91%: all typed calling widgets, adapters, state/UI/error contracts, and compatibility hazards are inventoried; independent validation is pending at the repaired PR commit, while sparse direct tests and the last-five-PR drift gate block promotion.",
       "canonical_spec": "ai-docs/modules/calling-spec.md",
       "contracts": {
         "provides": ["Call History, Speed Dial, Voice Mail, and Number Pad entrypoints"],
@@ -206,7 +206,7 @@
     {
       "path": "packages/node_modules/@webex/react-component-activity-item/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 93%: 54 public component entrypoints, key coupling, lifecycle, accessibility, host, and test rules are covered; independent Cursor validation passed, while export automation and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 93%: 54 public component entrypoints, key coupling, lifecycle, accessibility, host, and test rules are covered; independent validation is pending at the repaired PR commit, while export automation and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/shared-ui-components-spec.md",
       "contracts": {
         "provides": ["public react-component package entrypoints", "shared component utility barrel"],
@@ -243,7 +243,7 @@
     {
       "path": "packages/node_modules/@webex/redux-module-activities/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 94%: all Redux package barrels, async/state conventions, meeting authority, errors, and tests are covered; independent Cursor validation passed, while late-result characterization and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 94%: all Redux package barrels, async/state conventions, meeting authority, errors, and tests are covered; independent validation is pending at the repaired PR commit, while late-result characterization and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/state-management-spec.md",
       "contracts": {
         "provides": ["Redux reducers, actions, thunks, selectors, SDK/auth state"],
@@ -280,7 +280,7 @@
     {
       "path": "packages/node_modules/@webex/react-container-activity-list/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 92%: all container/HOC entrypoints, projections, state, scrolling, Mercury filters, errors, and lifecycle risks are covered; independent Cursor validation passed, while teardown characterization and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 92%: all container/HOC entrypoints, projections, state, scrolling, Mercury filters, errors, and lifecycle risks are covered; independent validation is pending at the repaired PR commit, while teardown characterization and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/containers-hooks-spec.md",
       "contracts": {
         "provides": ["connected component package entrypoints", "conversation Mercury and scrollable HOCs"],
@@ -317,7 +317,7 @@
     {
       "path": "packages/node_modules/@webex/webex-widget-base/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 93%: enhancer order, object-shaped constructor, host APIs, auth/current-user state, removal, demos, and README conflict are covered; independent Cursor validation passed, while direct lifecycle tests and promotion-history evidence still block promotion.",
+      "coverage_evidence": "Documentation assessment 93%: enhancer order, object-shaped constructor, host APIs, auth/current-user state, removal, demos, and README conflict are covered; independent validation is pending at the repaired PR commit, while direct lifecycle tests and promotion-history evidence still block promotion.",
       "canonical_spec": "ai-docs/modules/widget-runtime-auth-spec.md",
       "contracts": {
         "provides": ["widget enhancer/runtime entrypoint", "browser/data APIs and registry", "sign-in and demo host surfaces"],
@@ -354,7 +354,7 @@
     {
       "path": "scripts/build/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 95%: every npm/build/publish target, package filter, artifact path, CI promotion gate, SRI rule, and known legacy-script hazard is covered; independent Cursor validation passed, while publish-recovery and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 95%: every npm/build/publish target, package filter, artifact path, CI promotion gate, SRI rule, and known legacy-script hazard is covered; independent validation is pending at the repaired PR commit, while publish-recovery and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/build-release-tooling-spec.md",
       "contracts": {
         "provides": ["repository build/start/test/publish/deploy commands", "package and CDN artifacts"],
@@ -391,7 +391,7 @@
     {
       "path": "test/journeys/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 96%: Jest and WDIO topology, every protected test-plan suite/scenario family, environment, helpers, async behavior, CI use, and known gaps are covered; independent Cursor validation passed, while calling-journey gaps and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 96%: Jest and WDIO topology, every protected test-plan suite/scenario family, environment, helpers, async behavior, CI use, and known gaps are covered; independent validation is pending at the repaired PR commit, while calling-journey gaps and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/test-automation-spec.md",
       "contracts": {
         "provides": ["Jest unit suites", "WDIO smoke/Space/Recents/TAP journeys", "JUnit/browser diagnostics"],
@@ -593,13 +593,8 @@
   "validation": {
     "generator_runtime": "codex-desktop",
     "generator_runtime_source": "host-metadata",
-    "validator_runtime": "cursor-agent",
-    "validator_run_id": "ccfd0bb3-f62d-4c12-8782-7ee3cdf85e63",
-    "validator_runtime_source": "host-metadata",
-    "runtime_fallback_tier": "different-runtime",
     "minimum_independence": "different-runtime",
     "blocking_severities": ["Blocking"],
-    "source_commit": "145a23ef33af4e74d8790832062d9910cd66b3de",
     "base_ref": "master",
     "head_ref": "react-widgets-migrate-into-sdd-bootstrap"
   },

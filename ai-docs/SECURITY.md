@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Security Baseline
+  Template-ID:  security
+  Generates:    ai-docs/SECURITY.md
+  Description:  Standing security posture — trust boundaries, authn/authz, secret handling, data classification.
+  Library ver:  0.2.1
+  Last updated: 2026-07-11
+─────────────────────────────── -->
+
 # Security Baseline — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), [`SPEC_INDEX.md`](SPEC_INDEX.md), and [`ARCHITECTURE.md`](ARCHITECTURE.md). Read this before changing authentication, host input, SDK calls, rendered content, or deployment credentials.
@@ -70,4 +79,4 @@
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

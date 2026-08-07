@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     RULES
+  Template-ID:  rules
+  Generates:    ai-docs/RULES.md
+  Description:  Enforceable do/don't beyond AGENTS — coverage, autonomy, naming, logging, errors, testing, security, drift, secrets.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Rules — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and use detailed rules under `rules/` only when relevant.
@@ -6,7 +15,7 @@
 
 | Module | Manifest coverage state | What it means here |
 |---|---|---|
-| Space and messaging | Partial | High first-pass coverage; independent validation passed, but code cross-checking and the history promotion gate still apply. |
+| Space and messaging | Partial | High first-pass coverage; independent validation is pending, and code cross-checking plus the history promotion gate still apply. |
 | Recents | Partial | High first-pass coverage; verify event names/payloads against current constants and listeners. |
 | Meetings | Partial | High first-pass coverage; verify SDK lifecycle behavior and known unimplemented lifecycle branches in code. |
 | Calling widgets | Partial | High first-pass coverage; verify typed adapter/component contracts and sparse tests. |
@@ -99,4 +108,4 @@
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-23`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

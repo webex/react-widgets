@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Module Spec
+  Template-ID:  module-spec
+  Generates:    ai-docs/modules/test-automation-spec.md
+  Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
+  Library ver:  0.2.1
+  Last updated: 2026-07-11
+─────────────────────────────── -->
+
 # Test Automation — SPEC
 
 > Start with root [`AGENTS.md`](../../AGENTS.md), router [`SPEC_INDEX.md`](../SPEC_INDEX.md), and repository [`REVIEW_CHECKLIST.md`](../REVIEW_CHECKLIST.md).
@@ -11,8 +20,8 @@
 | Doc kind | Module spec |
 | Coverage score | 96% assessed 2026-07-22; unit/journey topology, protected plan intent, suites, environment, fixtures, and CI use covered |
 | Generated from | `module-spec` @ SDLC template library `0.2.1` |
-| generated_by / approved_by / updated_at | `codex-desktop` / repository owner / 2026-07-23 |
-| Validation status | independent Cursor validation passed on 2026-07-23 with zero Blocking findings |
+| generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
+| Validation status | not-run; independent validation pending at the repaired PR commit |
 
 ## Evidence Rules
 

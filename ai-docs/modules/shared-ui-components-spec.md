@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Module Spec
+  Template-ID:  module-spec
+  Generates:    ai-docs/modules/shared-ui-components-spec.md
+  Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
+  Library ver:  0.2.1
+  Last updated: 2026-07-11
+─────────────────────────────── -->
+
 # Shared UI Components — SPEC
 
 > Start with root [`AGENTS.md`](../../AGENTS.md), router [`SPEC_INDEX.md`](../SPEC_INDEX.md), and system [`ARCHITECTURE.md`](../ARCHITECTURE.md).
@@ -11,8 +20,8 @@
 | Doc kind | Module spec |
 | Coverage score | 93% assessed 2026-07-22; all entrypoints and component families covered, with direct behavior detail concentrated on high-coupling components |
 | Generated from | `module-spec` @ SDLC template library `0.2.1` |
-| generated_by / approved_by / updated_at | `codex-desktop` / repository owner / 2026-07-23 |
-| Validation status | independent Cursor validation passed on 2026-07-23 with zero Blocking findings |
+| generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
+| Validation status | not-run; independent validation pending at the repaired PR commit |
 
 ## Evidence Rules
 

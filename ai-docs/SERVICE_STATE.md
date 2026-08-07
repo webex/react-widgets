@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Service State (living)
+  Template-ID:  service-state
+  Generates:    ai-docs/SERVICE_STATE.md
+  Description:  Living as-built registry — current endpoints/events/stores/deps/limits/metrics/flags; read first to avoid duplicates.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Service State (living) — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), [`SPEC_INDEX.md`](SPEC_INDEX.md), and [`ARCHITECTURE.md`](ARCHITECTURE.md). Despite the template name, this is the library's current as-built surface registry.
@@ -56,4 +65,4 @@ Space declares `calls:memberships:*` constants and legacy Meet declares `members
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

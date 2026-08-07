@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Spec Index
+  Template-ID:  spec-index
+  Generates:    ai-docs/SPEC_INDEX.md
+  Description:  Router — which docs to load for which task and the canonical module registry.
+  Library ver:  0.2.1
+  Last updated: 2026-07-11
+─────────────────────────────── -->
+
 # Spec Index — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md). This is the human router; `.sdd/manifest.json` is the machine source of truth.
@@ -17,7 +26,7 @@
 | Build and release tooling | Build/transpile/bundle/SRI/serve/publish/deploy/release workflows. | Partial (95%) | `modules/build-release-tooling-spec.md` |
 | Test automation | Jest, journeys, smoke/TAP/integration/accessibility, CI test reporting. | Partial (96%) | `modules/test-automation-spec.md` |
 
-All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent Cursor validation passed on 2026-07-23. Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
+All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent validation is pending at the repaired PR commit. Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
 
 ## Task Routing
 
@@ -61,4 +70,4 @@ No tracked incident/RCA index exists in this repository. Do not infer incidents 
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-23`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

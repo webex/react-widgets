@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Review-Check Catalog
+  Template-ID:  review-checklist
+  Generates:    ai-docs/REVIEW_CHECKLIST.md
+  Description:  The review checks — 6 core + 4 coverage-conditional + 3 cross-cutting — selected by manifest coverage state.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Review-Check Catalog — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and apply this catalog before merge.
@@ -45,4 +54,4 @@ Each finding records severity, check id, file path, impact, and a concrete fix. 
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

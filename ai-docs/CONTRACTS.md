@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Contracts Catalog
+  Template-ID:  contracts
+  Generates:    ai-docs/CONTRACTS.md
+  Description:  Standing as-built public-surface catalog (Provides/Requires) + compatibility policy.
+  Library ver:  0.2.1
+  Last updated: 2026-07-11
+─────────────────────────────── -->
+
 # Contracts Catalog — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and use this as the root public-surface index. Exact declarations live at package entrypoints; `.sdd/manifest.json` carries the machine baseline.
@@ -175,7 +184,7 @@ Legacy event guides also describe notification and mention events that are not p
 
 ## Requires — what this repo depends on
 
-| Dependency | What is consumed | Detail | Availability assumption | Fallback | Version floor |
+| Dependency (service / package / datastore) | What is consumed | Schema / detail link | Availability assumption | Fallback on failure | Version floor |
 |---|---|---|---|---|---|
 | React/ReactDOM | component/rendering contract | `package.json` | host/build provides compatible runtime | none | `^16.8.4` |
 | Webex SDK plugin family | auth, rooms, people, conversations, Mercury, meetings, teams, search, flags, metrics | `package.json` | network and valid credentials available for live behavior | loading/error UI; supplied SDK instance supported | `^2.60.4` family |
@@ -201,4 +210,4 @@ Legacy event guides also describe notification and mention events that are not p
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

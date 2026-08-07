@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     ADR (example)
+  Template-ID:  adr
+  Generates:    ai-docs/adr/0001-centralize-capability-sdd-docs.md
+  Description:  Standing architecture decision record — context, decision, alternatives rejected, consequences.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # ADR-0001 — Centralize capability-grouped SDD documentation
 
 > Navigation: [`AGENTS.md`](../../AGENTS.md) · [`SPEC_INDEX.md`](../SPEC_INDEX.md) · [`ARCHITECTURE.md`](../ARCHITECTURE.md).

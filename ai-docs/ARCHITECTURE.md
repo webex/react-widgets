@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     ARCHITECTURE
+  Template-ID:  architecture
+  Generates:    ai-docs/ARCHITECTURE.md
+  Description:  Repo/component architecture — components, responsibilities, interactions, cross-cutting posture.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # ARCHITECTURE — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), then route through [`SPEC_INDEX.md`](SPEC_INDEX.md). Module detail lives under `ai-docs/modules/`.
@@ -209,4 +218,4 @@ No WS6/platform architecture document is tracked in this repository. External ar
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

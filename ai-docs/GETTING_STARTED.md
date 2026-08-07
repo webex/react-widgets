@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Getting Started
+  Template-ID:  getting-started
+  Generates:    ai-docs/GETTING_STARTED.md
+  Description:  Clone/build/run loop, config/secrets, and multi-repo workspace layout.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Getting Started — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and use this page for the local build/test loop.
@@ -56,4 +65,4 @@ npm install --legacy-peer-deps
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     AGENTS.md
+  Template-ID:  agents
+  Generates:    AGENTS.md
+  Description:  Agent entry contract — first file every AI agent reads (commands, rules, boundaries, routing).
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # AGENTS.md — react-widgets
 
 > Read first. Next: [`ai-docs/SPEC_INDEX.md`](ai-docs/SPEC_INDEX.md) for routing and [`ai-docs/ARCHITECTURE.md`](ai-docs/ARCHITECTURE.md) for system shape. Load only the module specs needed for the task.
@@ -108,6 +117,6 @@ For SDD bootstrap, validation, CI, and release work, load the affected specs up 
 
 ---
 
-Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent Cursor validation passed on 2026-07-23; the bootstrap specs remain `Partial` until their documented weak-evidence gaps and the promotion-history gate are satisfied.
+Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent validation is pending at the repaired PR commit; the bootstrap specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-23`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

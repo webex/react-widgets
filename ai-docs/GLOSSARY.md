@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Glossary
+  Template-ID:  glossary
+  Generates:    ai-docs/GLOSSARY.md
+  Description:  Ubiquitous language — domain term → definition → authoritative code location.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Glossary — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md) and [`SPEC_INDEX.md`](SPEC_INDEX.md). Use these code-grounded terms rather than inventing synonyms.
@@ -56,4 +65,4 @@
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `repository owner`; updated_at `2026-07-22`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.

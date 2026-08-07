@@ -1,3 +1,12 @@
+<!-- ───────────────────────────────
+  Template:     Rule (example)
+  Template-ID:  rule
+  Generates:    ai-docs/rules/clean-up-runtime-listeners.md
+  Description:  One enforceable repo rule — the rule, its rationale, how to follow it, and how it's enforced.
+  Library ver:  0.2.1
+  Last updated: 2026-06-30
+─────────────────────────────── -->
+
 # Rule: Clean up runtime listeners and mounted state
 
 > Navigation: [`AGENTS.md`](../../AGENTS.md) · [`SPEC_INDEX.md`](../SPEC_INDEX.md).
