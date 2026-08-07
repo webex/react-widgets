@@ -598,15 +598,15 @@
     "base_ref": "master",
     "head_ref": "react-widgets-migrate-into-sdd-bootstrap",
     "validator_runtime": "cursor-agent",
-    "validator_run_id": "81141092-78fa-43b7-bed8-7503bfb4e8d9",
+    "validator_run_id": "a7bed62e-d018-4a4f-9588-3aeb07c5159a",
     "validator_runtime_source": "host-metadata",
     "runtime_fallback_tier": "different-runtime",
-    "source_commit": "67390b52b3a04449aedab9be04575b03e5b82063",
+    "source_commit": "2004c129bd811189059e33404d0f8eea858b61e5",
     "status": "pass-with-warnings",
     "validated_at": "2026-08-07",
     "blocking_count": 0,
-    "warning_count": 2,
-    "evidence_summary": "PR-1468 repair pass-with-warnings: conformance 30/30, source-fidelity 10/10, Axis A+B zero Blocking at 67390b52; 1 Medium + 1 Minor documented"
+    "warning_count": 1,
+    "evidence_summary": "PR-1468 final pass-with-warnings: conformance 30/30, source-fidelity 10/10, Axis A+B zero Blocking at 2004c129; metadata-refresh recheck resolved; 1 Minor schema lag"
   },
   "layout": {
     "sdd_root": ".sdd",
