@@ -26,15 +26,15 @@
 
 ## Evidence Rules
 
-Reducer initial state, action constants/creators, selectors, thunks, tests, and widget composition define this module. Redux state is client-side representation, never evidence that the repository owns durable Webex data.
+Reducer initial state, action constants/creators, thunks, tests, and widget composition define this module. View selectors live in widget or container packages where they exist. Redux state is client-side representation, never evidence that the repository owns durable Webex data.
 
 ## Source Material Register
 
 | Source material | Scope | Decision | Detail location or disposition |
 |---|---|---|---|
 | Legacy `@ciscospark/redux-module-*` READMEs | namespace migration | verified | Export Stability records the suffix-preserving move to `@webex`. |
-| Source barrels/actions/reducers/selectors | state contract | authoritative | Public Surface through State Model. |
-| Adjacent reducer/action/selector tests | transitions | verified | Test-Case Strategy. |
+| Source barrels/actions/reducers | state contract | authoritative | Public Surface through State Model. |
+| Adjacent reducer/action tests and widget/container selector tests | transitions | verified | Test-Case Strategy. |
 
 ## Overview
 
@@ -55,7 +55,6 @@ packages/node_modules/@webex/
 ├── redux-module-*/src/
 │   ├── actions.js
 │   ├── reducer.js
-│   ├── selectors.js
 │   └── index.js
 ├── react-redux-spark/src/          # SDK/auth state and enhancer
 ├── react-redux-spark-metrics/src/  # metrics state/actions
@@ -66,7 +65,7 @@ packages/node_modules/@webex/
 
 | File | Holds |
 |---|---|
-| `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js`, `packages/node_modules/@webex/redux-module-users/src/index.js` | representative public action/reducer/selector barrels; every exact package path is indexed in `../CONTRACTS.md` |
+| `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js`, `packages/node_modules/@webex/redux-module-users/src/index.js` | representative public action/reducer barrels; every exact package path is indexed in `../CONTRACTS.md` |
 | `packages/node_modules/@webex/redux-module-spaces/src/actions.js` | representative action types, creators, and async SDK work |
 | `packages/node_modules/@webex/redux-module-spaces/src/reducer.js` | representative initial state and transitions |
 | `packages/node_modules/@webex/react-redux-spark/src/index.js` | SDK Redux integration surface |
@@ -76,7 +75,7 @@ packages/node_modules/@webex/
 
 | Contract ID | Type | Surface | Purpose | Compatibility / deprecation | Schema / detail link | Root index |
 |---|---|---|---|---|---|---|
-| `rw.state.modules` | SDK | `@webex/redux-module-*` barrels | capability reducers/actions/thunks/selectors | public semver; action/export changes require compatibility review | exact `rw.state.*` catalog paths; representative: `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js` | `../CONTRACTS.md` |
+| `rw.state.modules` | SDK | `@webex/redux-module-*` barrels | capability reducers/actions/thunks | public semver; action/export changes require compatibility review; view selectors live in widget/container packages | exact `rw.state.*` catalog paths; representative: `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js` | `../CONTRACTS.md` |
 | `rw.state.sdk` | SDK | `@webex/react-redux-spark*` barrels | SDK/auth, metrics, and fixture integration | public semver; fixtures remain test-oriented | `packages/node_modules/@webex/react-redux-spark/src/index.js`, `packages/node_modules/@webex/react-redux-spark-metrics/src/index.js`, `packages/node_modules/@webex/react-redux-spark-fixtures/src/index.js` | `../CONTRACTS.md` |
 
 Compatibility notes:
@@ -87,23 +86,23 @@ The public state packages include activities, activity, avatar, conversation, er
 
 - Redux store/provider and thunk middleware assembled by the widget runtime.
 - Webex SDK plugins for remote operations and Mercury events.
-- Immutable.js-compatible state supplied to selectors/reducers.
+- Immutable.js-compatible state supplied to reducers and to widget/container selectors.
 - Consumer widgets/containers to select and dispatch module behavior.
 
 ## Requirements
 
 | ID | WHAT | WHY | Source Evidence | Test / Example Evidence | Assumptions / Gaps | Confidence |
 |---|---|---|---|---|---|---|
-| `STATE-R-001` | Each module exports a stable reducer/actions/selectors surface through its package barrel. | Widgets compose capability-specific stores and external packages import named operations. | `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js`, `packages/node_modules/@webex/redux-module-users/src/index.js` | `packages/node_modules/@webex/redux-module-activity/src/actions.test.js`, `packages/node_modules/@webex/redux-module-spaces/src/reducer.test.js` | Some modules intentionally export only selectors/constants. | PRESENT |
+| `STATE-R-001` | Each module exports a stable actions/reducer surface through its package barrel, plus optional constants, helpers, or thunks. View selectors live in consuming widget or container packages, not in `redux-module-*` barrels. | Widgets compose capability-specific stores and external packages import named operations. | `packages/node_modules/@webex/redux-module-activity/src/index.js`, `packages/node_modules/@webex/redux-module-spaces/src/index.js`, `packages/node_modules/@webex/redux-module-users/src/index.js` | `packages/node_modules/@webex/redux-module-activity/src/actions.test.js`, `packages/node_modules/@webex/redux-module-spaces/src/reducer.test.js` | Some modules export only a subset of those members. No `redux-module-*/src/selectors.js` files exist. | PRESENT |
 | `STATE-R-002` | Async operations dispatch observable request/success/failure transitions around SDK promises. | UI needs deterministic loading and error state. | `packages/node_modules/@webex/redux-module-spaces/src/actions.js`, `packages/node_modules/@webex/redux-module-spaces/src/reducer.js` | `packages/node_modules/@webex/redux-module-spaces/src/actions.test.js`, `packages/node_modules/@webex/redux-module-spaces/src/reducer.test.js` | Exact status vocabulary varies by older module. | PRESENT |
 | `STATE-R-003` | Remote resources are keyed/normalized and merged without replacing unrelated entities. | Realtime and request responses arrive incrementally. | `packages/node_modules/@webex/redux-module-activities/src/reducer.js`, `packages/node_modules/@webex/redux-module-spaces/src/reducer.js`, `packages/node_modules/@webex/redux-module-users/src/reducer.js` | `packages/node_modules/@webex/redux-module-spaces/src/reducer.test.js`, `packages/node_modules/@webex/redux-module-users/src/reducer.test.js` | Server conflict resolution remains SDK-owned. | PRESENT |
 | `STATE-R-004` | Meetings store identifiers and readiness projections while the SDK meeting collection remains the live object authority. | SDK meeting/media instances are mutable event emitters unsuitable as canonical Redux data. | `packages/node_modules/@webex/redux-module-meetings/src/actions.js`, `packages/node_modules/@webex/redux-module-meetings/src/reducer.js` | `packages/node_modules/@webex/widget-meetings/src/components/MeetingsWidget.test.js` | Some lifecycle branches remain unimplemented. | PRESENT |
 | `STATE-R-005` | Errors are exposed to views and reset when a new destination/operation begins where owning logic requests it. | Stale failures must not contaminate a new widget context. | `packages/node_modules/@webex/redux-module-errors/src/reducer.js`, `packages/node_modules/@webex/widget-space/src/enhancers/setup.js` | `packages/node_modules/@webex/redux-module-errors/src/reducer.test.js`, `packages/node_modules/@webex/widget-space/src/enhancers/setup.test.js` | Reset ownership is distributed. | PRESENT |
-| `STATE-R-006` | SDK auth and instance state are isolated in `react-redux-spark` and shared through enhancers/selectors. | Avoid parallel SDK instances and inconsistent authentication state inside one widget. | `packages/node_modules/@webex/react-redux-spark/src/index.js`, `packages/node_modules/@webex/react-redux-spark/src/reducer.js` | `packages/node_modules/@webex/react-redux-spark/src/reducer.test.js`, `packages/node_modules/@webex/react-redux-spark/src/sdk.test.js` | Separate widgets may intentionally own separate stores. | PRESENT |
+| `STATE-R-006` | SDK auth and instance state are isolated in `react-redux-spark` and shared through its enhancers and connected consumers. | Avoid parallel SDK instances and inconsistent authentication state inside one widget. | `packages/node_modules/@webex/react-redux-spark/src/index.js`, `packages/node_modules/@webex/react-redux-spark/src/reducer.js` | `packages/node_modules/@webex/react-redux-spark/src/reducer.test.js`, `packages/node_modules/@webex/react-redux-spark/src/sdk.test.js` | Separate widgets may intentionally own separate stores. | PRESENT |
 
 ## Design Overview
 
-Packages follow a small Redux module convention: constants/action creators and thunks produce actions; an Immutable reducer owns a slice; selectors project UI-ready data; `index.js` exposes the supported boundary. Widgets explicitly merge only required reducers, which keeps independently published packages composable.
+Packages follow a small Redux module convention: constants/action creators and thunks produce actions; an Immutable reducer owns a slice; `index.js` exposes the supported boundary. View selectors, where present, live in widget or container packages. Widgets explicitly merge only required reducers, which keeps independently published packages composable.
 
 ## Data Flow
 
@@ -115,7 +114,7 @@ flowchart LR
   SDK -->|promise/event data| Thunk
   Mercury[Mercury event] --> Reducer
   Reducer --> State[Widget store]
-  State --> Selector[Selector]
+  State --> Selector[Widget/container selector]
   Selector --> UI
 ```
 
@@ -153,13 +152,13 @@ classDiagram
   class WidgetStore
   class ThunkActions
   class ImmutableReducer
-  class Selectors
+  class WidgetOrContainerSelectors
   class WebexSDK
   WidgetStore --> ThunkActions
   ThunkActions --> WebexSDK
   ThunkActions --> ImmutableReducer
   ImmutableReducer --> WidgetStore
-  Selectors --> WidgetStore
+  WidgetOrContainerSelectors --> WidgetStore
 ```
 
 ## Use Cases
@@ -182,7 +181,7 @@ classDiagram
 - Reducers are pure and retain unrelated state for unknown actions.
 - Entity IDs, not mutable SDK objects, are preferred when referencing live meetings/resources.
 - A success/failure action corresponds to its owning request and preserves enough context for the view to decide recovery.
-- Selectors do not mutate state and tolerate the initial/unloaded state expected by their consumers.
+- Widget/container selectors do not mutate state and tolerate the initial/unloaded state expected by their consumers. They are not a `redux-module-*` barrel export.
 
 ## Concurrency & Reactive Flow
 
@@ -211,20 +210,20 @@ stateDiagram-v2
 
 ## Pitfalls
 
-- Similar modules use older, non-uniform status shapes; inspect the owning reducer before reusing a selector.
+- Similar modules use older, non-uniform status shapes; inspect the owning reducer before projecting state in a widget or container selector.
 - Redux does not imply persistence or cross-widget sharing.
 - Never serialize live SDK meeting/media objects into documentation or new reducer state without an explicit design change.
 
 ## Module Do's / Don'ts
 
-- Do add action/reducer/selector tests together for a new transition.
+- Do add action/reducer tests together for a new transition, and widget/container selector tests when those packages own the projection.
 - Do compose reducers explicitly at the consuming widget boundary.
 - Don't mutate Immutable state or SDK objects in reducers.
 - Don't bypass exported barrels from another package without a documented internal reason.
 
 ## Export Stability
 
-All non-private `@webex/redux-module-*` and `react-redux-spark*` entrypoints are public package contracts. Protected `@ciscospark` rename notices record the same-suffix move to `@webex`; maintain named action/reducer/selector compatibility under semver.
+All non-private `@webex/redux-module-*` and `react-redux-spark*` entrypoints are public package contracts. Protected `@ciscospark` rename notices record the same-suffix move to `@webex`; maintain named action/reducer/helper compatibility under semver.
 
 ## Key Design Trade-off
 

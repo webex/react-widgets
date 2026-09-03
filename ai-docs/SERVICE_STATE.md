@@ -32,7 +32,7 @@ Space declares `calls:memberships:*` constants and legacy Meet declares `members
 
 | Store | Purpose | Owned by this library? |
 |---|---|---|
-| per-widget Redux store | immutable client resource/status state | yes, in-memory only |
+| per-widget Redux store | immutable client resource/status state on the default Provider path; `withInitialState` skips Provider when `props.spark` is supplied | yes, in-memory only |
 | `window.webex.widgetStore` | mounted browser-widget registry | yes, in-memory only |
 | browser `localStorage` focus flags | number-pad focus handoff | yes, temporary keys only |
 | Webex service data | conversations, spaces, users, teams, calls, meetings | no; consumed through SDK/services |

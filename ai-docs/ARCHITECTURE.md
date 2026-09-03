@@ -26,7 +26,7 @@ The repository is one build and release unit containing a package forest. Small 
 | Meetings packages | Resolve destinations and manage create/join/media/leave state and UI. | `modules/meetings-spec.md` |
 | Calling packages | Render call history, dial pad, speed dials, voicemail, and adapter-driven call actions. | `modules/calling-spec.md` |
 | Shared UI components | Provide presentational building blocks and UI utilities. | `modules/shared-ui-components-spec.md` |
-| Redux/state packages | Own immutable client state, SDK thunks, event reducers, selectors, and metrics queues. | `modules/state-management-spec.md` |
+| Redux/state packages | Own immutable client state, SDK thunks, event reducers, and metrics queues. View selectors live in widget/container packages. | `modules/state-management-spec.md` |
 | Containers/HOCs | Bind UI to Redux, SDK operations, file retrieval, notifications, presence, scrolling, and Mercury. | `modules/containers-hooks-spec.md` |
 | Widget runtime/auth/demos | Mount widgets, establish auth/SDK context, expose browser/data APIs, and provide demos/samples. | `modules/widget-runtime-auth-spec.md` |
 | Build/release tooling | Discover packages and build, transpile, sign, publish, deploy, and serve artifacts. | `modules/build-release-tooling-spec.md` |

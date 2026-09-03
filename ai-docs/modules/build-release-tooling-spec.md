@@ -39,7 +39,7 @@ Root scripts, yargs command handlers, package metadata, bundler/transpiler confi
 
 ## Overview
 
-Root yargs CLIs discover packages beneath `packages/node_modules`, transpile package sources, build widget bundles, generate journey distributions and SRI metadata, start local demos/samples, and publish eligible packages. CircleCI installs with Node 22.22, runs lint/Jest and browser journeys, versions the repository, publishes packages, and deploys selected widget assets.
+Root yargs CLIs discover packages beneath `packages/node_modules`, transpile package sources, build widget bundles, generate journey distributions and SRI metadata, start local demos/samples, and publish eligible packages. CircleCI installs with Node 22.22, then runs lint/Jest, browser journeys, and version/publish as sibling jobs; publish does not wait for the test jobs.
 
 ## Purpose / Responsibility
 
@@ -105,12 +105,12 @@ Locked npm dependencies, a supported Node/npm runtime, package `name`/`private` 
 | `BUILD-R-002` | Public widgets receive distributable bundles while packages receive transpiled/module outputs appropriate to the selected command. | Consumers use both embeddable bundles and package imports. | `scripts/build/commands/all.js`, `scripts/build/commands/widgets.js`, `scripts/utils/build.js` | `.circleci/config.yml` | Artifact snapshots are limited. | PRESENT |
 | `BUILD-R-003` | Journey builds copy static servers/axe and build Space, Recents, Demo, and current calling distributions into the requested target. | Browser tests require a self-contained served tree. | `scripts/build/commands/journey.js` | `.circleci/config.yml` | Some calling output paths share `dist-call-history`; validate before altering. | PRESENT |
 | `BUILD-R-004` | SRI generation fails safely when `PRIVATE_KEY` is absent and signs package distributions with the repository public key when present. | CDN consumers need verifiable assets without exposing signing material. | `scripts/build/commands/sri.js`, `scripts/utils/sri.js` | `.circleci/config.yml` | Secret provisioning is external. | PRESENT |
-| `BUILD-R-005` | CI gates release on dependency install, lint, Jest, built journey assets, and configured Chrome/Firefox journeys before version/publish/deploy. | Published packages and CDN assets must derive from a verified commit. | `.circleci/config.yml` | CI workflow itself | External services/credentials can block. | PRESENT |
+| `BUILD-R-005` | CI starts `version_and_publish` after `install` only. Lint/Jest (`unit_tests_and_linting`) and Chrome/Firefox journeys are sibling jobs and do not gate version/publish. The master `build_for_cdn` workflow is `install` → `version_and_publish` → `deploy_to_cdn` with the same install-only publish dependency. | Hosts and operators need the actual workflow dependencies, not an assumed test gate. | `.circleci/config.yml` | CI workflow itself | Lint/Jest and journeys can fail independently of publish; external services/credentials can still block a job. | PRESENT |
 | `BUILD-R-006` | Version/publish changes preserve package dependency/version consistency and publish only non-private eligible packages. | The repository releases many interdependent packages from one versioned source. | `scripts/utils/deps.js`, `scripts/publish/commands/components.js`, `.circleci/config.yml` | `package.json` | Rollback is operational/manual. | PRESENT |
 
 ## Design Overview
 
-Root npm aliases dispatch to small yargs command handlers. Package utilities enumerate the nonstandard `packages/node_modules` tree; build helpers centralize Babel, Rollup, and Webpack invocation. CI persists dependencies and built journey assets between jobs, then versions/publishes/deploys from the tested repository state.
+Root npm aliases dispatch to small yargs command handlers. Package utilities enumerate the nonstandard `packages/node_modules` tree; build helpers centralize Babel, Rollup, and Webpack invocation. CI persists dependencies and built journey assets between jobs. `version_and_publish` requires only `install`; lint/Jest and journeys run in parallel and do not gate publish or CDN deploy.
 
 ## Data Flow
 
@@ -134,7 +134,7 @@ Sequence coverage:
 | Operation group | Diagram | Failure / recovery coverage |
 |---|---|---|
 | package artifact build | Artifact build | invalid target/build failure stops artifact production |
-| CI verify, version, publish, deploy | Verified promotion | failed required gate prevents promotion; partial external failure requires operator review |
+| CI verify, version, publish, deploy | Parallel promotion | install failure prevents publish; test-job failures do not; partial external failure requires operator review |
 
 ```mermaid
 sequenceDiagram
@@ -162,14 +162,15 @@ sequenceDiagram
   participant T as Tests
   participant R as Registries/CDN
   C->>N: install locked dependencies
-  C->>T: lint + Jest
-  C->>N: build journey assets
-  C->>T: Chrome/Firefox integration suites
-  alt all required jobs pass
+  par after install
+    C->>T: lint + Jest
+    C->>N: build journey assets then Chrome/Firefox suites
     C->>N: version + production builds + SRI
-    C->>R: push upstream/tag, publish npm, deploy CDN
-  else failure
-    C-->>R: no promotion
+  end
+  alt version_and_publish succeeds
+    C->>R: push upstream/tag, publish npm; master CDN deploy follows publish
+  else install or publish job fails
+    C-->>R: no promotion from that failed job
   end
 ```
 
@@ -202,7 +203,7 @@ classDiagram
 
 - `private: true` packages and demo packages are never published by the bulk component command.
 - Build output is generated; source remains under package `src`.
-- Release promotion uses the tested commit/version and requires credentials from CI, never committed files.
+- Release promotion uses the installed commit/version and requires credentials from CI, never committed files. Lint/Jest and journeys are not `requires` of `version_and_publish`.
 - SRI private keys come only from the environment.
 
 ## Concurrency & Reactive Flow
