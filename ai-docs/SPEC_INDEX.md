@@ -26,7 +26,7 @@
 | Build and release tooling | Build/transpile/bundle/SRI/serve/publish/deploy/release workflows. | Partial (95%) | `modules/build-release-tooling-spec.md` |
 | Test automation | Jest, journeys, smoke/TAP/integration/accessibility, CI test reporting. | Partial (96%) | `modules/test-automation-spec.md` |
 
-All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent spec-validator is **not-run** after the 0.2.2 upgrade; committed reconcile/conformance summary is in [`SDD_BOOTSTRAP_EVIDENCE.md`](SDD_BOOTSTRAP_EVIDENCE.md). Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
+All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent spec-validator **Pass** at `548a0312` (validator `codex-desktop`); committed reconcile/conformance summary is in [`SDD_BOOTSTRAP_EVIDENCE.md`](SDD_BOOTSTRAP_EVIDENCE.md). Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
 
 ## Task Routing
 

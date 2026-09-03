@@ -727,15 +727,23 @@
     }
   },
   "validation": {
-    "generator_runtime": "codex-desktop",
-    "generator_runtime_source": "host-metadata",
+    "generator_runtime": "cursor-agent",
+    "generator_runtime_source": "invocation-input",
+    "validator_runtime": "codex-desktop",
+    "validator_runtime_source": "invocation-input",
+    "runtime_fallback_tier": "different-runtime",
     "minimum_independence": "different-runtime",
     "blocking_severities": [
       "Blocking"
     ],
     "base_ref": "master",
     "head_ref": "react-widgets-sdd-022",
-    "status": "not-run"
+    "source_commit": "548a0312718835b08faf225187951a05eabc42ba",
+    "status": "pass",
+    "validated_at": "2026-09-03",
+    "blocking_count": 0,
+    "warning_count": 0,
+    "evidence_summary": "Independent Codex Session B Pass at 548a0312; Axis A/B 0 findings; 10 modules remain Partial"
   },
   "layout": {
     "sdd_root": ".sdd",

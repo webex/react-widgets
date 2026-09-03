@@ -22,7 +22,7 @@
 | Coverage score | 91% assessed 2026-07-22; all typed entrypoints, adapter/call/audio/form flows, UI state and risks covered; automated tests are sparse outside GenericModal |
 | Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | not-run |
+| Validation status | pass, validator `codex-desktop`, assessed 2026-09-03; 0 Blocking, 0 warnings; source `548a0312` |
 
 ## Evidence Rules
 
