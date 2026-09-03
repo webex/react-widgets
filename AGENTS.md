@@ -54,7 +54,7 @@ packages/node_modules/@webex/
 ├── react-component-*        # reusable UI components
 ├── react-container-*        # state/SDK-connected components
 ├── react-hoc-*              # reusable higher-order behavior
-├── redux-module-*           # actions, reducers, selectors, async thunks
+├── redux-module-*           # actions, reducers, constants, helpers, and/or thunks; view selectors live in widget/container packages
 ├── react-redux-*            # SDK/store integration, fixtures, metrics
 └── webex-widget-base/       # common host/runtime composition
 scripts/                     # build, start, publish, deploy, and tooling commands

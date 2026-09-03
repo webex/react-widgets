@@ -15,7 +15,7 @@
 
 | Module | Manifest coverage state | What it means here |
 |---|---|---|
-| Space and messaging | Partial | High first-pass coverage; independent validation passed with warnings, but code cross-checking and the history promotion gate still apply. |
+| Space and messaging | Partial | High first-pass coverage; independent spec-validator is not-run after the 0.2.2 upgrade; code cross-checking and the history promotion gate still apply. |
 | Recents | Partial | High first-pass coverage; verify event names/payloads against current constants and listeners. |
 | Meetings | Partial | High first-pass coverage; verify SDK lifecycle behavior and known unimplemented lifecycle branches in code. |
 | Calling widgets | Partial | High first-pass coverage; verify typed adapter/component contracts and sparse tests. |
