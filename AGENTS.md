@@ -3,8 +3,8 @@
   Template-ID:  agents
   Generates:    AGENTS.md
   Description:  Agent entry contract — first file every AI agent reads (commands, rules, boundaries, routing).
-  Library ver:  0.2.1
-  Last updated: 2026-06-30
+  Library ver:  0.2.2
+  Last updated: 2026-07-22
 ─────────────────────────────── -->
 
 # AGENTS.md — react-widgets
@@ -76,14 +76,14 @@ Module routing: [`ai-docs/SPEC_INDEX.md`](ai-docs/SPEC_INDEX.md).
 
 ## Essential Commands
 
-| Task | Command |
+| Role | Command |
 |---|---|
 | Install | `npm install --legacy-peer-deps` |
-| Build all packages | `npm run build:all` |
-| Run local demo | `npm start` |
-| Unit tests | `npm run jest` |
-| Static analysis | `npm run static-analysis` |
-| Full local verification | `npm test` |
+| Build | `npm run build:all` |
+| Unit test | `npm run jest` |
+| Lint/format | `npm run static-analysis` |
+
+→ Full command surface, toolchain, and registries: **[GETTING_STARTED.md](./ai-docs/GETTING_STARTED.md)** · test tiers and coverage gate: **[TEST_INDEX.md](./ai-docs/TEST_INDEX.md)**
 
 ## Common Gotchas
 
@@ -117,6 +117,6 @@ For SDD bootstrap, validation, CI, and release work, load the affected specs up 
 
 ---
 
-Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent Cursor validation passed with warnings on 2026-08-07 at `67390b52`; the bootstrap specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
+Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent spec-validator is **not-run** after the 0.2.2 upgrade; see [`ai-docs/SDD_BOOTSTRAP_EVIDENCE.md`](ai-docs/SDD_BOOTSTRAP_EVIDENCE.md). Specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
 
-Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-09-03`.

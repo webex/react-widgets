@@ -2,9 +2,9 @@
   Template:     Getting Started
   Template-ID:  getting-started
   Generates:    ai-docs/GETTING_STARTED.md
-  Description:  Clone/build/run loop, config/secrets, and multi-repo workspace layout.
-  Library ver:  0.2.1
-  Last updated: 2026-06-30
+  Description:  Clone/build/run loop, toolchain, config/secrets, artifact registries, and multi-repo workspace layout.
+  Library ver:  0.2.2
+  Last updated: 2026-07-22
 ─────────────────────────────── -->
 
 # Getting Started — react-widgets
@@ -13,8 +13,19 @@
 
 ## Prerequisites
 
-- Node.js 22 LTS (`nvm use` reads `lts/jod` from `.nvmrc`) and npm; CI currently uses Node 22.22 with npm 10.
-- Git and network access to npm. Webex integration credentials are required only for authenticated demos/journeys; Sauce credentials are required only for remote browser runs.
+### Toolchain
+
+| Tool | Version | Where it's pinned |
+|---|---|---|
+| Node.js | 22 LTS (`lts/jod`) | `.nvmrc`; CI uses Node 22.22 |
+| npm | 10 (CI) | `.circleci/config.yml` |
+
+### Access
+
+- Public npm registry read access for install.
+- Webex integration credentials only for authenticated demos/journeys.
+- Sauce credentials only for remote browser runs.
+- npm publish token (`NPM_TOKEN`) only for release jobs.
 
 ## Clone & Install
 
@@ -29,16 +40,16 @@ npm install --legacy-peer-deps
 
 ## Build / Run / Test
 
-| Task | Command |
+| Role | Command |
 |---|---|
-| Build all packages | `npm run build:all` |
-| Run local Space + Recents demo | `npm start` |
-| Unit tests | `npm run jest` |
-| Static analysis | `npm run static-analysis` |
+| Install | `npm install --legacy-peer-deps` |
+| Build (full packages) | `npm run build:all` |
+| Package (one bundle) | `npm run build:package {package-name}` |
+| Run (local) | `npm start` |
+| Unit test | `npm run jest` |
+| Integration / journey | `npm run test:automation:smoke` |
+| Lint / format | `npm run static-analysis` |
 | Combined static analysis + Jest | `npm test` |
-| Build one package bundle | `npm run build:package {package-name}` |
-| Serve one package | `npm run serve:package {package-name}` |
-| Browser smoke journeys | `npm run test:automation:smoke` |
 
 ## First-Run Verification
 
@@ -52,6 +63,12 @@ npm install --legacy-peer-deps
 - Never commit populated `WEBEX_ACCESS_TOKEN`, `WEBEX_CLIENT_SECRET`, `SAUCE_ACCESS_KEY`, `NETLIFY_ACCESS_TOKEN`, npm tokens, AWS credentials, or private signing material.
 - The Webex SDK/test helpers consume service URLs from environment configuration; use team-approved integration/test environments.
 
+### Artifact Registries
+
+| Registry | Host | Settings file | Auth env-var names (values NOT stored) |
+|---|---|---|---|
+| npm public | `registry.npmjs.org` | `.circleci/config.yml` (publish job writes `~/.npmrc`) | `NPM_TOKEN` |
+
 ## Dev Environment
 
 - `npm start` runs `npm run serve demo widget-demo` through the Babel/yargs start tooling.
@@ -60,9 +77,10 @@ npm install --legacy-peer-deps
 
 ## Where to Go Next
 
-- Agent rules: `../AGENTS.md`; system shape: `ARCHITECTURE.md`; module routing: `SPEC_INDEX.md`.
+- Agent rules: `../AGENTS.md`; system shape: `ARCHITECTURE.md`; module routing: `SPEC_INDEX.md`; test surface: `TEST_INDEX.md`.
 - Build details: `modules/build-release-tooling-spec.md`; test setup: `modules/test-automation-spec.md`; conventions: `patterns/` and `rules/`.
+- Committed SDD gate summary: [`SDD_BOOTSTRAP_EVIDENCE.md`](SDD_BOOTSTRAP_EVIDENCE.md).
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-09-03`.

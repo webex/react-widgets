@@ -3,8 +3,8 @@
   Template-ID:  module-spec
   Generates:    ai-docs/modules/widget-runtime-auth-spec.md
   Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
-  Library ver:  0.2.1
-  Last updated: 2026-07-11
+  Library ver:  0.2.2
+  Last updated: 2026-07-30
 ─────────────────────────────── -->
 
 # Widget Runtime, Authentication, and Demos — SPEC
@@ -17,11 +17,12 @@
 |---|---|
 | Module id | `widget-runtime-auth` |
 | Source path(s) | `packages/node_modules/@webex/webex-widget-base/`, `webex-sign-in-page/`, `widget-*-demo/`, `samples/` |
+| Parent spec | — |
 | Doc kind | Module spec |
 | Coverage score | 93% assessed 2026-07-22; enhancer order, host APIs, auth, teardown, and demo boundaries covered |
-| Generated from | `module-spec` @ SDLC template library `0.2.1` |
+| Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
+| Validation status | not-run |
 
 ## Evidence Rules
 

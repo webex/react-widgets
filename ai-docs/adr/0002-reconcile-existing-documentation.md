@@ -3,7 +3,7 @@
   Template-ID:  adr
   Generates:    ai-docs/adr/0002-reconcile-existing-documentation.md
   Description:  Standing architecture decision record — context, decision, alternatives rejected, consequences.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
@@ -17,7 +17,7 @@
 | Date | 2026-07-22 |
 | Deciders | repository owner |
 | Supersedes / Superseded by | none |
-| Generated from | `adr` @ SDLC template library `0.2.1` |
+| Generated from | `adr` @ SDLC template library `0.2.2` |
 
 ## Context
 
@@ -25,7 +25,7 @@ The root README, package READMEs, widget event guides, and journey test plan con
 
 ## Decision
 
-Preserve protected source documents unchanged. Reorganize supported meaning into canonical SDD sections, use current source/tests to resolve conflicts, and keep unit-level disposition in ignored source-fidelity inventories. Canonical specs do not embed full-file snapshots.
+Preserve protected source documents unchanged. Reorganize supported meaning into canonical SDD sections, use current source/tests to resolve conflicts, and keep unit-level disposition in ignored source-fidelity inventories. Canonical specs do not embed full-file snapshots. Reviewable unit counts and gate outcomes live in [`SDD_BOOTSTRAP_EVIDENCE.md`](../SDD_BOOTSTRAP_EVIDENCE.md).
 
 ## Alternatives Considered
 
@@ -39,7 +39,7 @@ Preserve protected source documents unchanged. Reorganize supported meaning into
 
 - **Positive:** reviewed source intent remains available while canonical docs describe current behavior.
 - **Negative / cost:** future edits to protected source material require another fidelity/reconciliation pass.
-- **Agents must:** never overwrite protected sources as a shortcut; resolve contradictions explicitly and cite stable code/test paths.
+- **Agents must:** never overwrite protected sources as a shortcut; resolve contradictions explicitly and cite stable code/test paths. Use [`SDD_BOOTSTRAP_EVIDENCE.md`](../SDD_BOOTSTRAP_EVIDENCE.md) for the committed reconcile summary; do not treat gitignored `.generated/` paths as PR evidence.
 
 ## Revisit When
 

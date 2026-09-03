@@ -3,7 +3,7 @@
   Template-ID:  architecture
   Generates:    ai-docs/ARCHITECTURE.md
   Description:  Repo/component architecture — components, responsibilities, interactions, cross-cutting posture.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

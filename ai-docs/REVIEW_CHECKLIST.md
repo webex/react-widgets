@@ -3,7 +3,7 @@
   Template-ID:  review-checklist
   Generates:    ai-docs/REVIEW_CHECKLIST.md
   Description:  The review checks — 6 core + 4 coverage-conditional + 3 cross-cutting — selected by manifest coverage state.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

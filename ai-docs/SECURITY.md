@@ -3,7 +3,7 @@
   Template-ID:  security
   Generates:    ai-docs/SECURITY.md
   Description:  Standing security posture — trust boundaries, authn/authz, secret handling, data classification.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-07-11
 ─────────────────────────────── -->
 

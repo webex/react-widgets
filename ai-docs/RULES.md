@@ -3,7 +3,7 @@
   Template-ID:  rules
   Generates:    ai-docs/RULES.md
   Description:  Enforceable do/don't beyond AGENTS — coverage, autonomy, naming, logging, errors, testing, security, drift, secrets.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

@@ -3,8 +3,8 @@
   Template-ID:  spec-index
   Generates:    ai-docs/SPEC_INDEX.md
   Description:  Router — which docs to load for which task and the canonical module registry.
-  Library ver:  0.2.1
-  Last updated: 2026-07-11
+  Library ver:  0.2.2
+  Last updated: 2026-07-31
 ─────────────────────────────── -->
 
 # Spec Index — react-widgets
@@ -26,7 +26,7 @@
 | Build and release tooling | Build/transpile/bundle/SRI/serve/publish/deploy/release workflows. | Partial (95%) | `modules/build-release-tooling-spec.md` |
 | Test automation | Jest, journeys, smoke/TAP/integration/accessibility, CI test reporting. | Partial (96%) | `modules/test-automation-spec.md` |
 
-All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent Cursor validation passed with warnings on 2026-08-07 at `67390b52` (0 Blocking; 2 warnings). Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
+All scores were assessed 2026-07-22 from package entrypoints, events/commands, implementation flows, tests, and reconciled sources. Independent spec-validator is **not-run** after the 0.2.2 upgrade; committed reconcile/conformance summary is in [`SDD_BOOTSTRAP_EVIDENCE.md`](SDD_BOOTSTRAP_EVIDENCE.md). Status remains Partial because documented weak-evidence gaps and the five-PR promotion-history gate remain.
 
 ## Task Routing
 
@@ -37,7 +37,8 @@ All scores were assessed 2026-07-22 from package entrypoints, events/commands, i
 | Changing host/browser/data API or auth | `modules/widget-runtime-auth-spec.md` + `SECURITY.md` |
 | Changing exported events | owning widget spec + `CONTRACTS.md` + `SERVICE_STATE.md` |
 | Changing build/release/CDN behavior | `modules/build-release-tooling-spec.md` + `SECURITY.md` |
-| Changing tests or CI verification | `modules/test-automation-spec.md` + `REVIEW_CHECKLIST.md` |
+| Changing tests or CI verification | `TEST_INDEX.md` + `modules/test-automation-spec.md` + `REVIEW_CHECKLIST.md` |
+| Running or changing tests | `TEST_INDEX.md` + the affected module spec |
 | Updating docs after code | affected module specs, standing indexes, manifest, and source-fidelity policy if protected docs are involved |
 
 ## Incident History
@@ -64,10 +65,11 @@ No tracked incident/RCA index exists in this repository. Do not infer incidents 
 | Security | `SECURITY.md` | trust boundaries, credentials, rendered data, release secrets |
 | Contracts | `CONTRACTS.md` | package, event, browser/data API, and command catalog |
 | Service state | `SERVICE_STATE.md` | living events/stores/dependencies/flags registry |
+| Test index | `TEST_INDEX.md` | test tiers, canonical commands, locations, frameworks, dependencies, and quality gates |
 | Getting started | `GETTING_STARTED.md` | install/build/run/test loop |
 | Decisions | `adr/` | durable architecture decisions |
 | Review catalog | `REVIEW_CHECKLIST.md` | merge gate selection and finding format |
 
 ---
 
-Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-08-07`.
+Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-09-03`.

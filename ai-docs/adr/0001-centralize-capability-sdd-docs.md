@@ -3,7 +3,7 @@
   Template-ID:  adr
   Generates:    ai-docs/adr/0001-centralize-capability-sdd-docs.md
   Description:  Standing architecture decision record — context, decision, alternatives rejected, consequences.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
@@ -17,7 +17,7 @@
 | Date | 2026-07-22 |
 | Deciders | repository owner |
 | Supersedes / Superseded by | none |
-| Generated from | `adr` @ SDLC template library `0.2.1` |
+| Generated from | `adr` @ SDLC template library `0.2.2` |
 
 ## Context
 

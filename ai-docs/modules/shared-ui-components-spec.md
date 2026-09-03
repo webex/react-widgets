@@ -3,8 +3,8 @@
   Template-ID:  module-spec
   Generates:    ai-docs/modules/shared-ui-components-spec.md
   Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
-  Library ver:  0.2.1
-  Last updated: 2026-07-11
+  Library ver:  0.2.2
+  Last updated: 2026-07-30
 ─────────────────────────────── -->
 
 # Shared UI Components — SPEC
@@ -17,11 +17,12 @@
 |---|---|
 | Module id | `shared-ui-components` |
 | Source path(s) | `packages/node_modules/@webex/react-component-*/`, `private-react-component-*/` |
+| Parent spec | — |
 | Doc kind | Module spec |
 | Coverage score | 93% assessed 2026-07-22; all entrypoints and component families covered, with direct behavior detail concentrated on high-coupling components |
-| Generated from | `module-spec` @ SDLC template library `0.2.1` |
+| Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
+| Validation status | not-run |
 
 ## Evidence Rules
 

@@ -3,7 +3,7 @@
   Template-ID:  service-state
   Generates:    ai-docs/SERVICE_STATE.md
   Description:  Living as-built registry — current endpoints/events/stores/deps/limits/metrics/flags; read first to avoid duplicates.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

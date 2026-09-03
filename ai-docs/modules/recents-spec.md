@@ -3,8 +3,8 @@
   Template-ID:  module-spec
   Generates:    ai-docs/modules/recents-spec.md
   Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
-  Library ver:  0.2.1
-  Last updated: 2026-07-11
+  Library ver:  0.2.2
+  Last updated: 2026-07-30
 ─────────────────────────────── -->
 
 # Recents — SPEC
@@ -17,11 +17,12 @@
 |---|---|
 | Module id | `recents` |
 | Source path(s) | `packages/node_modules/@webex/widget-recents/` |
+| Parent spec | — |
 | Doc kind | Module spec |
 | Coverage score | 95% assessed 2026-07-22; entrypoint, options, current events, setup/listener flows, state, failure modes, and journey intent covered |
-| Generated from | `module-spec` @ SDLC template library `0.2.1` |
+| Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
+| Validation status | not-run |
 
 ## Evidence Rules
 

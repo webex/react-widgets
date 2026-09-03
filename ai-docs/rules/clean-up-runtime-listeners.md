@@ -3,7 +3,7 @@
   Template-ID:  rule
   Generates:    ai-docs/rules/clean-up-runtime-listeners.md
   Description:  One enforceable repo rule — the rule, its rationale, how to follow it, and how it's enforced.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

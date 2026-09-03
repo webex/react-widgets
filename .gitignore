@@ -16,3 +16,7 @@ reports/*
 .cache
 coverage/
 .generated/
+.agents/
+.claude/
+.cursor/skills/
+.cursor/sdlc-plugins/

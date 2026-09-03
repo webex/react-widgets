@@ -4,7 +4,11 @@
     "name": "react-widgets",
     "purpose": "A single Git repository containing independently consumable React, Redux, and embeddable Webex widget packages plus their build and test tooling.",
     "category": "cat1-legacy",
-    "primary_languages": ["javascript", "typescript", "scss"]
+    "primary_languages": [
+      "javascript",
+      "typescript",
+      "scss"
+    ]
   },
   "topology": "Single-repo",
   "commands": {
@@ -58,11 +62,19 @@
     {
       "path": "packages/node_modules/@webex/widget-space/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 94%: public exports, events, configuration, state, UI, error paths, and journey intent are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while the last-five-PR drift gate still blocks promotion.",
+      "coverage_evidence": "Documentation assessment 94%: public exports, events, configuration, state, UI, error paths, and journey intent are covered; the last-five-PR drift gate still blocks promotion.",
       "canonical_spec": "ai-docs/modules/space-messaging-spec.md",
       "contracts": {
-        "provides": ["Space, Message, Files, and Roster widget package entrypoints", "current rooms/messages/calls/activity host events"],
-        "requires": ["widget runtime/auth", "Redux resource modules", "Webex SDK and Mercury", "shared UI and containers"]
+        "provides": [
+          "Space, Message, Files, and Roster widget package entrypoints",
+          "current rooms/messages/calls/activity host events"
+        ],
+        "requires": [
+          "widget runtime/auth",
+          "Redux resource modules",
+          "Webex SDK and Mercury",
+          "shared UI and containers"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -83,11 +95,17 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@webex/widget-space/README.md", "packages/node_modules/@webex/widget-space/events.md", "test/journeys/testplan.md", "packages/node_modules/@ciscospark/widget-*/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-space/README.md",
+          "packages/node_modules/@webex/widget-space/events.md",
+          "test/journeys/testplan.md",
+          "packages/node_modules/@ciscospark/widget-*/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -95,11 +113,18 @@
     {
       "path": "packages/node_modules/@webex/widget-recents/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 95%: exports, filters, events, state transitions, host forms, and journey intent are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while the last-five-PR drift gate still blocks promotion.",
+      "coverage_evidence": "Documentation assessment 95%: exports, filters, events, state transitions, host forms, and journey intent are covered; the last-five-PR drift gate still blocks promotion.",
       "canonical_spec": "ai-docs/modules/recents-spec.md",
       "contracts": {
-        "provides": ["Recents widget package entrypoint", "current room/message/call/membership/action host events"],
-        "requires": ["widget runtime/auth", "spaces/conversation/meeting state", "Webex SDK and Mercury"]
+        "provides": [
+          "Recents widget package entrypoint",
+          "current room/message/call/membership/action host events"
+        ],
+        "requires": [
+          "widget runtime/auth",
+          "spaces/conversation/meeting state",
+          "Webex SDK and Mercury"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -120,11 +145,17 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@webex/widget-recents/README.md", "packages/node_modules/@webex/widget-recents/events.md", "test/journeys/testplan.md", "packages/node_modules/@ciscospark/widget-recents/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-recents/README.md",
+          "packages/node_modules/@webex/widget-recents/events.md",
+          "test/journeys/testplan.md",
+          "packages/node_modules/@ciscospark/widget-recents/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -132,11 +163,18 @@
     {
       "path": "packages/node_modules/@webex/widget-meet/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 92%: meeting creation, join/media/leave state, call UI, errors, and available tests are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while sparse lifecycle tests and the last-five-PR drift gate block promotion.",
+      "coverage_evidence": "Documentation assessment 92%: meeting creation, join/media/leave state, call UI, errors, and available tests are covered; sparse lifecycle tests and the last-five-PR drift gate block promotion.",
       "canonical_spec": "ai-docs/modules/meetings-spec.md",
       "contracts": {
-        "provides": ["Meet and Meetings widget package entrypoints", "meeting Redux actions/reducer"],
-        "requires": ["Webex meetings SDK collection", "media components", "widget runtime and Space integration"]
+        "provides": [
+          "Meet and Meetings widget package entrypoints",
+          "meeting Redux actions/reducer"
+        ],
+        "requires": [
+          "Webex meetings SDK collection",
+          "media components",
+          "widget runtime and Space integration"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -157,11 +195,15 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@ciscospark/widget-meet/README.md", "test/journeys/testplan.md"],
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/widget-meet/README.md",
+          "test/journeys/testplan.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -169,11 +211,16 @@
     {
       "path": "packages/node_modules/@webex/widget-call-history/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 91%: all typed calling widgets, adapters, state/UI/error contracts, and compatibility hazards are inventoried; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while sparse direct tests and the last-five-PR drift gate block promotion.",
+      "coverage_evidence": "Documentation assessment 91%: all typed calling widgets, adapters, state/UI/error contracts, and compatibility hazards are inventoried; sparse direct tests and the last-five-PR drift gate block promotion.",
       "canonical_spec": "ai-docs/modules/calling-spec.md",
       "contracts": {
-        "provides": ["Call History, Speed Dial, Voice Mail, and Number Pad entrypoints"],
-        "requires": ["Webex component adapter interfaces/SDK adapter", "React Hook Form and shared calling UI"]
+        "provides": [
+          "Call History, Speed Dial, Voice Mail, and Number Pad entrypoints"
+        ],
+        "requires": [
+          "Webex component adapter interfaces/SDK adapter",
+          "React Hook Form and shared calling UI"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -194,11 +241,16 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@webex/widget-call-history/README.md", "packages/node_modules/@webex/widget-speed-dial/src/README.md", "packages/node_modules/@webex/widget-speed-dial/src/GenericModal/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-call-history/README.md",
+          "packages/node_modules/@webex/widget-speed-dial/src/README.md",
+          "packages/node_modules/@webex/widget-speed-dial/src/GenericModal/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -206,11 +258,19 @@
     {
       "path": "packages/node_modules/@webex/react-component-activity-item/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 93%: 54 public component entrypoints, key coupling, lifecycle, accessibility, host, and test rules are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while export automation and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 93%: 54 public component entrypoints, key coupling, lifecycle, accessibility, host, and test rules are covered; export automation and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/shared-ui-components-spec.md",
       "contracts": {
-        "provides": ["public react-component package entrypoints", "shared component utility barrel"],
-        "requires": ["React/DOM", "Momentum UI", "CSS/SCSS pipeline", "selected Redux/SDK integrations"]
+        "provides": [
+          "public react-component package entrypoints",
+          "shared component utility barrel"
+        ],
+        "requires": [
+          "React/DOM",
+          "Momentum UI",
+          "CSS/SCSS pipeline",
+          "selected Redux/SDK integrations"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -231,11 +291,14 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@ciscospark/react-component-*/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/react-component-*/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -243,11 +306,17 @@
     {
       "path": "packages/node_modules/@webex/redux-module-activities/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 94%: all Redux package barrels, async/state conventions, meeting authority, errors, and tests are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while late-result characterization and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 94%: all Redux package barrels, async/state conventions, meeting authority, errors, and tests are covered; late-result characterization and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/state-management-spec.md",
       "contracts": {
-        "provides": ["Redux reducers, actions, thunks, selectors, SDK/auth state"],
-        "requires": ["Redux/Immutable.js", "Webex SDK plugins and Mercury", "widget store composition"]
+        "provides": [
+          "Redux reducers, actions, thunks, selectors, SDK/auth state"
+        ],
+        "requires": [
+          "Redux/Immutable.js",
+          "Webex SDK plugins and Mercury",
+          "widget store composition"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -268,11 +337,15 @@
         "embedded_in_host": false,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@ciscospark/redux-module-*/README.md", "packages/node_modules/@ciscospark/react-redux-spark*/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/redux-module-*/README.md",
+          "packages/node_modules/@ciscospark/react-redux-spark*/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -280,11 +353,19 @@
     {
       "path": "packages/node_modules/@webex/react-container-activity-list/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 92%: all container/HOC entrypoints, projections, state, scrolling, Mercury filters, errors, and lifecycle risks are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while teardown characterization and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 92%: all container/HOC entrypoints, projections, state, scrolling, Mercury filters, errors, and lifecycle risks are covered; teardown characterization and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/containers-hooks-spec.md",
       "contracts": {
-        "provides": ["connected component package entrypoints", "conversation Mercury and scrollable HOCs"],
-        "requires": ["Redux slices/actions", "shared components", "Webex SDK/Mercury", "browser DOM"]
+        "provides": [
+          "connected component package entrypoints",
+          "conversation Mercury and scrollable HOCs"
+        ],
+        "requires": [
+          "Redux slices/actions",
+          "shared components",
+          "Webex SDK/Mercury",
+          "browser DOM"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -305,11 +386,15 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["packages/node_modules/@ciscospark/react-container-*/README.md", "packages/node_modules/@ciscospark/react-hoc-*/README.md"],
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/react-container-*/README.md",
+          "packages/node_modules/@ciscospark/react-hoc-*/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -317,11 +402,20 @@
     {
       "path": "packages/node_modules/@webex/webex-widget-base/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 93%: enhancer order, object-shaped constructor, host APIs, auth/current-user state, removal, demos, and README conflict are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while direct lifecycle tests and promotion-history evidence still block promotion.",
+      "coverage_evidence": "Documentation assessment 93%: enhancer order, object-shaped constructor, host APIs, auth/current-user state, removal, demos, and README conflict are covered; direct lifecycle tests and promotion-history evidence still block promotion.",
       "canonical_spec": "ai-docs/modules/widget-runtime-auth-spec.md",
       "contracts": {
-        "provides": ["widget enhancer/runtime entrypoint", "browser/data APIs and registry", "sign-in and demo host surfaces"],
-        "requires": ["React/Redux", "Webex SDK/auth", "browser DOM and CustomEvent", "widget reducer maps and capability HOCs"]
+        "provides": [
+          "widget enhancer/runtime entrypoint",
+          "browser/data APIs and registry",
+          "sign-in and demo host surfaces"
+        ],
+        "requires": [
+          "React/Redux",
+          "Webex SDK/auth",
+          "browser DOM and CustomEvent",
+          "widget reducer maps and capability HOCs"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -342,11 +436,18 @@
         "embedded_in_host": true,
         "holds_client_state": true,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["README.md", "packages/node_modules/@webex/webex-widget-base/README.md", "packages/node_modules/@webex/widget-demo/README.md", "packages/node_modules/@ciscospark/spark-widget-base/README.md", "packages/node_modules/@ciscospark/widget-*-demo/README.md"],
+        "existing_sources": [
+          "README.md",
+          "packages/node_modules/@webex/webex-widget-base/README.md",
+          "packages/node_modules/@webex/widget-demo/README.md",
+          "packages/node_modules/@ciscospark/spark-widget-base/README.md",
+          "packages/node_modules/@ciscospark/widget-*-demo/README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -354,11 +455,18 @@
     {
       "path": "scripts/build/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 95%: every npm/build/publish target, package filter, artifact path, CI promotion gate, SRI rule, and known legacy-script hazard is covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while publish-recovery and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 95%: every npm/build/publish target, package filter, artifact path, CI promotion gate, SRI rule, and known legacy-script hazard is covered; publish-recovery and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/build-release-tooling-spec.md",
       "contracts": {
-        "provides": ["repository build/start/test/publish/deploy commands", "package and CDN artifacts"],
-        "requires": ["Node/npm lockfile", "Babel/Webpack/Rollup", "CI registry/CDN/Git credentials"]
+        "provides": [
+          "repository build/start/test/publish/deploy commands",
+          "package and CDN artifacts"
+        ],
+        "requires": [
+          "Node/npm lockfile",
+          "Babel/Webpack/Rollup",
+          "CI registry/CDN/Git credentials"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -379,11 +487,14 @@
         "embedded_in_host": false,
         "holds_client_state": false,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["README.md"],
+        "existing_sources": [
+          "README.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved; root README build/release units are accounted for by the repository-scope source-fidelity inventory and routed into this module"
       }
@@ -391,11 +502,19 @@
     {
       "path": "test/journeys/",
       "coverage_status": "Partial",
-      "coverage_evidence": "Documentation assessment 96%: Jest and WDIO topology, every protected test-plan suite/scenario family, environment, helpers, async behavior, CI use, and known gaps are covered; independent Cursor validation passed with warnings on 2026-08-07 at 67390b52, while calling-journey gaps and promotion-history evidence remain.",
+      "coverage_evidence": "Documentation assessment 96%: Jest and WDIO topology, every protected test-plan suite/scenario family, environment, helpers, async behavior, CI use, and known gaps are covered; calling-journey gaps and promotion-history evidence remain.",
       "canonical_spec": "ai-docs/modules/test-automation-spec.md",
       "contracts": {
-        "provides": ["Jest unit suites", "WDIO smoke/Space/Recents/TAP journeys", "JUnit/browser diagnostics"],
-        "requires": ["built widget assets", "local Selenium or Sauce Labs", "Webex test users and integration services"]
+        "provides": [
+          "Jest unit suites",
+          "WDIO smoke/Space/Recents/TAP journeys",
+          "JUnit/browser diagnostics"
+        ],
+        "requires": [
+          "built widget assets",
+          "local Selenium or Sauce Labs",
+          "Webex test users and integration services"
+        ]
       },
       "last_assessed": "2026-07-22",
       "section_profile": {
@@ -416,11 +535,14 @@
         "embedded_in_host": false,
         "holds_client_state": false,
         "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
-        "resolved_at": "2026-07-22T00:00:00+05:30"
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
       },
       "source_policy": {
         "mode": "reconcile",
-        "existing_sources": ["test/journeys/testplan.md"],
+        "existing_sources": [
+          "test/journeys/testplan.md"
+        ],
         "conflict_status": "resolved",
         "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
       }
@@ -583,30 +705,37 @@
       "ai-docs/SECURITY.md",
       "ai-docs/SERVICE_STATE.md",
       "ai-docs/SPEC_INDEX.md",
-      "ai-docs/modules/*.md"
+      "ai-docs/modules/*.md",
+      "ai-docs/TEST_INDEX.md",
+      "ai-docs/SDD_BOOTSTRAP_EVIDENCE.md"
     ],
     "required_sections_by_change_class": {
-      "core_always": ["Intent (WHAT)", "Rationale (WHY)", "Scope/Out-of-scope", "Acceptance criteria", "Contracts delta"],
-      "security_or_contract_or_perf_critical": ["Data", "Error Matrix", "Resilience", "Observability", "Operations"]
+      "core_always": [
+        "Intent (WHAT)",
+        "Rationale (WHY)",
+        "Scope/Out-of-scope",
+        "Acceptance criteria",
+        "Contracts delta"
+      ],
+      "security_or_contract_or_perf_critical": [
+        "Data",
+        "Error Matrix",
+        "Resilience",
+        "Observability",
+        "Operations"
+      ]
     }
   },
   "validation": {
     "generator_runtime": "codex-desktop",
     "generator_runtime_source": "host-metadata",
     "minimum_independence": "different-runtime",
-    "blocking_severities": ["Blocking"],
+    "blocking_severities": [
+      "Blocking"
+    ],
     "base_ref": "master",
-    "head_ref": "react-widgets-migrate-into-sdd-bootstrap",
-    "validator_runtime": "cursor-agent",
-    "validator_run_id": "a7bed62e-d018-4a4f-9588-3aeb07c5159a",
-    "validator_runtime_source": "host-metadata",
-    "runtime_fallback_tier": "different-runtime",
-    "source_commit": "2004c129bd811189059e33404d0f8eea858b61e5",
-    "status": "pass-with-warnings",
-    "validated_at": "2026-08-07",
-    "blocking_count": 0,
-    "warning_count": 1,
-    "evidence_summary": "PR-1468 final pass-with-warnings: conformance 30/30, source-fidelity 10/10, Axis A+B zero Blocking at 2004c129; metadata-refresh recheck resolved; 1 Minor schema lag"
+    "head_ref": "react-widgets-sdd-022",
+    "status": "not-run"
   },
   "layout": {
     "sdd_root": ".sdd",
@@ -619,14 +748,17 @@
     "module_docs_folder_name": "ai-docs",
     "template_roots": {
       "canonical": ".sdd/templates",
-      "extensions": [".sdd/templates/extensions"]
+      "extensions": [
+        ".sdd/templates/extensions"
+      ]
     },
     "repo_skills_root": ".agents/skills",
     "runtime_skill_entrypoints": {
       "codex": ".agents/skills",
       "cursor": ".cursor/skills"
     },
-    "contracts_strategy": "root-index-module-detail"
+    "contracts_strategy": "root-index-module-detail",
+    "test_index_path": "ai-docs/TEST_INDEX.md"
   },
   "tooling": {
     "sdlc_skills": {
@@ -634,8 +766,12 @@
       "source_ref": "d5ec17e136514addc76df19760f1f00b05ba9c70",
       "source_branch": "main",
       "install_mode": "copy",
-      "installed_at": "2026-07-22T00:00:00+05:30",
-      "plugins": ["sdd-bootstrap@0.4.3", "template-library@0.2.1"]
+      "installed_at": "2026-09-03T00:00:00+05:30",
+      "plugins": [
+        "sdd-bootstrap@0.4.3"
+      ],
+      "template_library_version": "0.2.2",
+      "template_library_ref": "0aa65d93f019e5313ec2ddfac9b0c7352a2882cc"
     }
   },
   "coverage_ratchet": {
@@ -644,7 +780,11 @@
   },
   "substrate": {
     "source": "existing react-widgets repository conventions and CI configuration",
-    "consumed": ["ESLint/Babel/build configs", "README and contribution conventions", "CircleCI quality and release workflow"],
+    "consumed": [
+      "ESLint/Babel/build configs",
+      "README and contribution conventions",
+      "CircleCI quality and release workflow"
+    ],
     "compliance_tier": "legacy"
   },
   "section_profiles": {

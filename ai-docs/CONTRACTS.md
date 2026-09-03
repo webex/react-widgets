@@ -3,7 +3,7 @@
   Template-ID:  contracts
   Generates:    ai-docs/CONTRACTS.md
   Description:  Standing as-built public-surface catalog (Provides/Requires) + compatibility policy.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-07-11
 ─────────────────────────────── -->
 

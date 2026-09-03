@@ -3,8 +3,8 @@
   Template-ID:  module-spec
   Generates:    ai-docs/modules/build-release-tooling-spec.md
   Description:  Per-module canonical spec — orientation plus requirements, design, invariants, flows, pitfalls, and tests.
-  Library ver:  0.2.1
-  Last updated: 2026-07-11
+  Library ver:  0.2.2
+  Last updated: 2026-07-30
 ─────────────────────────────── -->
 
 # Build and Release Tooling — SPEC
@@ -17,11 +17,12 @@
 |---|---|
 | Module id | `build-release-tooling` |
 | Source path(s) | `scripts/`, root build configs, `.circleci/config.yml`, package metadata |
+| Parent spec | — |
 | Doc kind | Module spec |
 | Coverage score | 95% assessed 2026-07-22; commands, selection rules, outputs, CI promotion, and failure gates covered |
-| Generated from | `module-spec` @ SDLC template library `0.2.1` |
+| Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | pass-with-warnings, validator `cursor-agent`, assessed 2026-08-07 (0 Blocking; 2 warnings) |
+| Validation status | not-run |
 
 ## Evidence Rules
 

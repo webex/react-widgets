@@ -3,7 +3,7 @@
   Template-ID:  glossary
   Generates:    ai-docs/GLOSSARY.md
   Description:  Ubiquitous language — domain term → definition → authoritative code location.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 

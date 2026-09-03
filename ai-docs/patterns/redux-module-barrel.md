@@ -3,7 +3,7 @@
   Template-ID:  pattern
   Generates:    ai-docs/patterns/redux-module-barrel.md
   Description:  A repo convention from real code — correct vs incorrect form, with where it appears.
-  Library ver:  0.2.1
+  Library ver:  0.2.2
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
