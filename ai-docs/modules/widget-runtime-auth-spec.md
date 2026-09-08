@@ -14,7 +14,7 @@ generator_plugin: sdd-bootstrap@0.4.3
 generated_by: cursor-agent
 approved_by: pending PR approval
 updated_at: 2026-09-08
-validation_status: not-run
+validation_status: pass
 -->
 
 
@@ -33,7 +33,7 @@ validation_status: not-run
 | Coverage score | 93% assessed 2026-07-22; enhancer order, host APIs, auth, teardown, and demo boundaries covered |
 | Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | not-run |
+| Validation status | pass, validator `codex-desktop`, assessed 2026-09-08; 0 Blocking, 0 warnings; source `e4722152` |
 
 ## Evidence Rules
 

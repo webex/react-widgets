@@ -10,8 +10,8 @@
 | Mode | SDD Stage 0 rigorous, **reconcile** policy |
 | Template library | **0.2.2** (`0aa65d9`) |
 | Generator runtime | cursor-agent (0.2.2 follow-up / Session B preflight) |
-| Validator runtime | pending Codex Session B (different-runtime from `cursor-agent`) |
-| Validated source commit | not-run at current HEAD |
+| Validator runtime | codex-desktop |
+| Validated source commit | `e4722152caaa49f10e1851b8ee397fa0622fe245` |
 | Branch | `react-widgets-migrate-into-sdd-bootstrap` (PR #1468 head) |
 | PR | https://github.com/webex/react-widgets/pull/1468 |
 
@@ -43,13 +43,13 @@ Protected README, event-guide, namespace-migration, and journey-testplan source 
 | Generated-doc-conformance | **Pass, 0 Blocking** | 28/28 template-backed files; 0.2.2 headers, Parent spec, TEST_INDEX, standing-doc shape; assessed 2026-09-03 by cursor-agent |
 | Manifest schema | Pass | Validates against repo-pinned [`.sdd/config/sdd-manifest.schema.json`](../.sdd/config/sdd-manifest.schema.json) (0.2.2 extensions: `test_index_path`, `template_library_*`, `has_submodules`, validation status fields) |
 | Coverage review | Partial retained | 91–96% documentation scores; last-five-PR promotion-history gate and characterization gaps remain |
-| Spec-validator (Axis A + B) | **not-run** | Reset after rarajes2 review-closure edit; Codex Session B must re-validate at HEAD |
+| Spec-validator (Axis A + B) | **Pass** | Codex Session B at `e4722152`; 0 Blocking, 0 warnings; 10 modules remain Partial |
 
 ## akulakum PR #1468 review closure (2026-09-03)
 
 | Thread | Fix |
 |---|---|
-| Validation provenance / SHA drift | Reset to `not-run` after rarajes2 review-closure edit; Session B must re-pin at HEAD |
+| Validation provenance / SHA drift | Pinned after Session B: `source_commit` `e4722152`, status `pass`, 10 module Validation rows aligned |
 | Template metadata blocks | Restored/upgraded hidden blocks to template-library **0.2.2** on generated Markdown |
 | Reconcile evidence | This file records the 709-unit summary so A14 is reviewable without `.generated/` paths |
 | CONTRACTS Requires columns | Kept template headers; library version bumped to 0.2.2 |

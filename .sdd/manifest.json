@@ -738,7 +738,13 @@
     ],
     "base_ref": "master",
     "head_ref": "react-widgets-migrate-into-sdd-bootstrap",
-    "status": "not-run"
+    "source_commit": "e4722152caaa49f10e1851b8ee397fa0622fe245",
+    "status": "pass",
+    "validated_at": "2026-09-08",
+    "blocking_count": 0,
+    "warning_count": 0,
+    "validator_run_id": "01a08199-2afe-7962-9ddf-f10fea9b04a6",
+    "evidence_summary": "Independent Codex Session B Pass at e4722152; Axis A/B 0 findings; 10 modules remain Partial"
   },
   "layout": {
     "sdd_root": ".sdd",

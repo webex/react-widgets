@@ -14,7 +14,7 @@ generator_plugin: sdd-bootstrap@0.4.3
 generated_by: cursor-agent
 approved_by: pending PR approval
 updated_at: 2026-09-08
-validation_status: not-run
+validation_status: pass
 -->
 
 

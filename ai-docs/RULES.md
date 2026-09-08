@@ -14,7 +14,7 @@ generator_plugin: sdd-bootstrap@0.4.3
 generated_by: cursor-agent
 approved_by: pending PR approval
 updated_at: 2026-09-08
-validation_status: not-run
+validation_status: pass
 -->
 
 
@@ -26,7 +26,7 @@ validation_status: not-run
 
 | Module | Manifest coverage state | What it means here |
 |---|---|---|
-| Space and messaging | Partial | High first-pass coverage; independent spec-validator is not-run after the rarajes2 review-closure edit; code cross-checking and the history promotion gate still apply. |
+| Space and messaging | Partial | High first-pass coverage; independent spec-validator Pass at `e4722152`; code cross-checking and the history promotion gate still apply. |
 | Recents | Partial | High first-pass coverage; verify event names/payloads against current constants and listeners. |
 | Meetings | Partial | High first-pass coverage; verify SDK lifecycle behavior and known unimplemented lifecycle branches in code. |
 | Calling widgets | Partial | High first-pass coverage; verify typed adapter/component contracts and sparse tests. |
