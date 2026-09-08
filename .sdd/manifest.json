@@ -1,0 +1,819 @@
+{
+  "manifest_version": 1,
+  "repository": {
+    "name": "react-widgets",
+    "purpose": "A single Git repository containing independently consumable React, Redux, and embeddable Webex widget packages plus their build and test tooling.",
+    "category": "cat1-legacy",
+    "primary_languages": [
+      "javascript",
+      "typescript",
+      "scss"
+    ]
+  },
+  "topology": "Single-repo",
+  "commands": {
+    "install": {
+      "command": "npm install --legacy-peer-deps",
+      "source_file": ".circleci/config.yml"
+    },
+    "build": {
+      "command": "npm run build:all",
+      "source_file": "package.json"
+    },
+    "build_widgets": {
+      "command": "npm run build:widgets",
+      "source_file": "package.json"
+    },
+    "serve": {
+      "command": "npm start",
+      "source_file": "package.json"
+    },
+    "lint": {
+      "command": "npm run static-analysis",
+      "source_file": "package.json"
+    },
+    "test": {
+      "command": "npm run jest",
+      "source_file": "package.json"
+    },
+    "test_smoke": {
+      "command": "npm run test:automation:smoke",
+      "source_file": "package.json"
+    },
+    "test_space": {
+      "command": "npm run test:automation:space",
+      "source_file": "package.json"
+    },
+    "test_recents": {
+      "command": "npm run test:automation:recents",
+      "source_file": "package.json"
+    },
+    "publish": {
+      "command": "npm run publish:components",
+      "source_file": "package.json"
+    }
+  },
+  "coverage_status_definitions": {
+    "specced": ">=80% public surface specced, drift <5%, independent validation complete, and last 5 PRs have zero unresolved MODIFIED requirements",
+    "partial": "40-80% documented, or documentation exceeds 80% but an independent validation/promotion gate is still pending",
+    "untracked": "<40% specced; code is the source of truth"
+  },
+  "modules": [
+    {
+      "path": "packages/node_modules/@webex/widget-space/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 94%: public exports, events, configuration, state, UI, error paths, and journey intent are covered; the last-five-PR drift gate still blocks promotion.",
+      "canonical_spec": "ai-docs/modules/space-messaging-spec.md",
+      "contracts": {
+        "provides": [
+          "Space, Message, Files, and Roster widget package entrypoints",
+          "current rooms/messages/calls/activity host events"
+        ],
+        "requires": [
+          "widget runtime/auth",
+          "Redux resource modules",
+          "Webex SDK and Mercury",
+          "shared UI and containers"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": true,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-space/README.md",
+          "packages/node_modules/@webex/widget-space/events.md",
+          "test/journeys/testplan.md",
+          "packages/node_modules/@ciscospark/widget-*/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-recents/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 95%: exports, filters, events, state transitions, host forms, and journey intent are covered; the last-five-PR drift gate still blocks promotion.",
+      "canonical_spec": "ai-docs/modules/recents-spec.md",
+      "contracts": {
+        "provides": [
+          "Recents widget package entrypoint",
+          "current room/message/call/membership/action host events"
+        ],
+        "requires": [
+          "widget runtime/auth",
+          "spaces/conversation/meeting state",
+          "Webex SDK and Mercury"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-recents/README.md",
+          "packages/node_modules/@webex/widget-recents/events.md",
+          "test/journeys/testplan.md",
+          "packages/node_modules/@ciscospark/widget-recents/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-meet/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 92%: meeting creation, join/media/leave state, call UI, errors, and available tests are covered; sparse lifecycle tests and the last-five-PR drift gate block promotion.",
+      "canonical_spec": "ai-docs/modules/meetings-spec.md",
+      "contracts": {
+        "provides": [
+          "Meet and Meetings widget package entrypoints",
+          "meeting Redux actions/reducer"
+        ],
+        "requires": [
+          "Webex meetings SDK collection",
+          "media components",
+          "widget runtime and Space integration"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/widget-meet/README.md",
+          "test/journeys/testplan.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-call-history/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 91%: all typed calling widgets, adapters, state/UI/error contracts, and compatibility hazards are inventoried; sparse direct tests and the last-five-PR drift gate block promotion.",
+      "canonical_spec": "ai-docs/modules/calling-spec.md",
+      "contracts": {
+        "provides": [
+          "Call History, Speed Dial, Voice Mail, and Number Pad entrypoints"
+        ],
+        "requires": [
+          "Webex component adapter interfaces/SDK adapter",
+          "React Hook Form and shared calling UI"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": true,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@webex/widget-call-history/README.md",
+          "packages/node_modules/@webex/widget-speed-dial/src/README.md",
+          "packages/node_modules/@webex/widget-speed-dial/src/GenericModal/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/react-component-activity-item/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 93%: 54 public component entrypoints, key coupling, lifecycle, accessibility, host, and test rules are covered; export automation and promotion-history evidence remain.",
+      "canonical_spec": "ai-docs/modules/shared-ui-components-spec.md",
+      "contracts": {
+        "provides": [
+          "public react-component package entrypoints",
+          "shared component utility barrel"
+        ],
+        "requires": [
+          "React/DOM",
+          "Momentum UI",
+          "CSS/SCSS pipeline",
+          "selected Redux/SDK integrations"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": false,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": false,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/react-component-*/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/redux-module-activities/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 94%: all Redux package barrels, async/state conventions, meeting authority, errors, and tests are covered; late-result characterization and promotion-history evidence remain.",
+      "canonical_spec": "ai-docs/modules/state-management-spec.md",
+      "contracts": {
+        "provides": [
+          "Redux reducers, actions, thunks, selectors, SDK/auth state"
+        ],
+        "requires": [
+          "Redux/Immutable.js",
+          "Webex SDK plugins and Mercury",
+          "widget store composition"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": false,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": false,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/redux-module-*/README.md",
+          "packages/node_modules/@ciscospark/react-redux-spark*/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/react-container-activity-list/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 92%: all container/HOC entrypoints, projections, state, scrolling, Mercury filters, errors, and lifecycle risks are covered; teardown characterization and promotion-history evidence remain.",
+      "canonical_spec": "ai-docs/modules/containers-hooks-spec.md",
+      "contracts": {
+        "provides": [
+          "connected component package entrypoints",
+          "conversation Mercury and scrollable HOCs"
+        ],
+        "requires": [
+          "Redux slices/actions",
+          "shared components",
+          "Webex SDK/Mercury",
+          "browser DOM"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "packages/node_modules/@ciscospark/react-container-*/README.md",
+          "packages/node_modules/@ciscospark/react-hoc-*/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "packages/node_modules/@webex/webex-widget-base/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 93%: enhancer order, object-shaped constructor, host APIs, auth/current-user state, removal, demos, and README conflict are covered; direct lifecycle tests and promotion-history evidence still block promotion.",
+      "canonical_spec": "ai-docs/modules/widget-runtime-auth-spec.md",
+      "contracts": {
+        "provides": [
+          "widget enhancer/runtime entrypoint",
+          "browser/data APIs and registry",
+          "sign-in and demo host surfaces"
+        ],
+        "requires": [
+          "React/Redux",
+          "Webex SDK/auth",
+          "browser DOM and CustomEvent",
+          "widget reducer maps and capability HOCs"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": true,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": true,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": true,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": true,
+        "embedded_in_host": true,
+        "holds_client_state": true,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "README.md",
+          "packages/node_modules/@webex/webex-widget-base/README.md",
+          "packages/node_modules/@webex/widget-demo/README.md",
+          "packages/node_modules/@ciscospark/spark-widget-base/README.md",
+          "packages/node_modules/@ciscospark/widget-*-demo/README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    },
+    {
+      "path": "scripts/build/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 95%: every npm/build/publish target, package filter, artifact path, CI promotion gate, SRI rule, and known legacy-script hazard is covered; publish-recovery and promotion-history evidence remain.",
+      "canonical_spec": "ai-docs/modules/build-release-tooling-spec.md",
+      "contracts": {
+        "provides": [
+          "repository build/start/test/publish/deploy commands",
+          "package and CDN artifacts"
+        ],
+        "requires": [
+          "Node/npm lockfile",
+          "Babel/Webpack/Rollup",
+          "CI registry/CDN/Git credentials"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": false,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": false,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": false,
+        "embedded_in_host": false,
+        "holds_client_state": false,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "README.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved; root README build/release units are accounted for by the repository-scope source-fidelity inventory and routed into this module"
+      }
+    },
+    {
+      "path": "test/journeys/",
+      "coverage_status": "Partial",
+      "coverage_evidence": "Documentation assessment 96%: Jest and WDIO topology, every protected test-plan suite/scenario family, environment, helpers, async behavior, CI use, and known gaps are covered; calling-journey gaps and promotion-history evidence remain.",
+      "canonical_spec": "ai-docs/modules/test-automation-spec.md",
+      "contracts": {
+        "provides": [
+          "Jest unit suites",
+          "WDIO smoke/Space/Recents/TAP journeys",
+          "JUnit/browser diagnostics"
+        ],
+        "requires": [
+          "built widget assets",
+          "local Selenium or Sauce Labs",
+          "Webex test users and integration services"
+        ]
+      },
+      "last_assessed": "2026-07-22",
+      "section_profile": {
+        "has_ui": false,
+        "crosses_service_boundaries": true,
+        "enforces_domain_rules": true,
+        "is_concurrent_async": true,
+        "owns_persistence": false,
+        "returns_caller_errors": true,
+        "has_design_tradeoff": true,
+        "stateful_transitions": false,
+        "exposes_wire_protocol": false,
+        "ui_multi_screen": false,
+        "large_data_model": false,
+        "has_tiers": false,
+        "module_specific_conventions": true,
+        "published_package": false,
+        "embedded_in_host": false,
+        "holds_client_state": false,
+        "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+        "resolved_at": "2026-07-22T00:00:00+05:30",
+        "has_submodules": false
+      },
+      "source_policy": {
+        "mode": "reconcile",
+        "existing_sources": [
+          "test/journeys/testplan.md"
+        ],
+        "conflict_status": "resolved",
+        "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+      }
+    }
+  ],
+  "spec_source_policy": {
+    "mode": "reconcile",
+    "decided_by": "repository owner",
+    "decided_at": "2026-07-22T00:00:00+05:30",
+    "decision_record": "reconcile selected by repository owner on 2026-07-22; protected sources preserved and code-right conflicts resolved"
+  },
+  "spec_sources": [
+    {
+      "path": "README.md",
+      "scope": "repo",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/GETTING_STARTED.md",
+      "notes": "Preserved unchanged; supported setup and host API guidance was reconciled, while the limited widget list is retained as historical source wording."
+    },
+    {
+      "path": "packages/node_modules/@ciscospark/*/README.md",
+      "scope": "reference",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/CONTRACTS.md",
+      "notes": "Ninety-three protected same-suffix namespace migration notices are preserved and represented by package-family Export Stability sections."
+    },
+    {
+      "path": "packages/node_modules/@webex/webex-widget-base/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/webex-widget-base/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/widget-runtime-auth-spec.md",
+      "notes": "Preserved unchanged; current code contradicts its default two-argument construction example, so the object-shaped named constructor is canonical."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-space/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-space/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/space-messaging-spec.md",
+      "notes": "Preserved unchanged; configuration and UI intent were checked against current props/constants."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-space/events.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-space/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/space-messaging-spec.md",
+      "notes": "Preserved unchanged; only names present in current event constants are canonical, and obsolete notification/mention examples are flagged."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-recents/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-recents/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/recents-spec.md",
+      "notes": "Preserved unchanged and reconciled with current configuration, filters, state, and host forms."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-recents/events.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-recents/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/recents-spec.md",
+      "notes": "Preserved unchanged; current source event constants are canonical and obsolete notification examples are flagged."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-call-history/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-call-history/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/calling-spec.md",
+      "notes": "Preserved unchanged and reconciled with the TypeScript entrypoint and adapter contracts."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-speed-dial/src/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-speed-dial/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/calling-spec.md",
+      "notes": "Preserved unchanged and reconciled with current speed-dial implementation."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-speed-dial/src/GenericModal/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-speed-dial/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/calling-spec.md",
+      "notes": "Preserved unchanged and reconciled with current modal tests/types."
+    },
+    {
+      "path": "packages/node_modules/@webex/widget-demo/README.md",
+      "scope": "module",
+      "module": "packages/node_modules/@webex/widget-demo/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/widget-runtime-auth-spec.md",
+      "notes": "Preserved unchanged as development/demo guidance."
+    },
+    {
+      "path": "test/journeys/testplan.md",
+      "scope": "module",
+      "module": "test/journeys/",
+      "role": "source-material",
+      "canonical": false,
+      "use_by_agents": "source-for-reconciliation",
+      "canonical_target": "ai-docs/modules/test-automation-spec.md",
+      "notes": "Preserved unchanged; every suite and scenario family is represented, while executable tests/config decide current proof."
+    }
+  ],
+  "spec_policy": {
+    "delta_grammar": {
+      "added": "## ADDED Requirements",
+      "modified": "## MODIFIED Requirements",
+      "removed": "## REMOVED Requirements"
+    },
+    "require_what_and_why": true,
+    "require_provenance": true,
+    "protected_specs": [
+      "README.md",
+      "packages/node_modules/@ciscospark/*/README.md",
+      "packages/node_modules/@webex/webex-widget-base/README.md",
+      "packages/node_modules/@webex/widget-call-history/README.md",
+      "packages/node_modules/@webex/widget-demo/README.md",
+      "packages/node_modules/@webex/widget-recents/README.md",
+      "packages/node_modules/@webex/widget-recents/events.md",
+      "packages/node_modules/@webex/widget-space/README.md",
+      "packages/node_modules/@webex/widget-space/events.md",
+      "packages/node_modules/@webex/widget-speed-dial/src/README.md",
+      "packages/node_modules/@webex/widget-speed-dial/src/GenericModal/README.md",
+      "test/journeys/testplan.md",
+      "AGENTS.md",
+      "ai-docs/ARCHITECTURE.md",
+      "ai-docs/CONTRACTS.md",
+      "ai-docs/GETTING_STARTED.md",
+      "ai-docs/GLOSSARY.md",
+      "ai-docs/REVIEW_CHECKLIST.md",
+      "ai-docs/RULES.md",
+      "ai-docs/SECURITY.md",
+      "ai-docs/SERVICE_STATE.md",
+      "ai-docs/SPEC_INDEX.md",
+      "ai-docs/modules/*.md",
+      "ai-docs/TEST_INDEX.md",
+      "ai-docs/SDD_BOOTSTRAP_EVIDENCE.md"
+    ],
+    "required_sections_by_change_class": {
+      "core_always": [
+        "Intent (WHAT)",
+        "Rationale (WHY)",
+        "Scope/Out-of-scope",
+        "Acceptance criteria",
+        "Contracts delta"
+      ],
+      "security_or_contract_or_perf_critical": [
+        "Data",
+        "Error Matrix",
+        "Resilience",
+        "Observability",
+        "Operations"
+      ]
+    }
+  },
+  "validation": {
+    "generator_runtime": "cursor-agent",
+    "generator_runtime_source": "invocation-input",
+    "validator_runtime": "codex-desktop",
+    "validator_runtime_source": "invocation-input",
+    "runtime_fallback_tier": "different-runtime",
+    "minimum_independence": "different-runtime",
+    "blocking_severities": [
+      "Blocking"
+    ],
+    "base_ref": "master",
+    "head_ref": "react-widgets-migrate-into-sdd-bootstrap",
+    "source_commit": "e4722152caaa49f10e1851b8ee397fa0622fe245",
+    "status": "pass",
+    "validated_at": "2026-09-08",
+    "blocking_count": 0,
+    "warning_count": 0,
+    "validator_run_id": "01a08199-2afe-7962-9ddf-f10fea9b04a6",
+    "evidence_summary": "Independent Codex Session B Pass at e4722152; Axis A/B 0 findings; 10 modules remain Partial"
+  },
+  "layout": {
+    "sdd_root": ".sdd",
+    "docs_root": "ai-docs",
+    "agent_entry_path": "AGENTS.md",
+    "standing_docs_root": "ai-docs",
+    "spec_index_path": "ai-docs/SPEC_INDEX.md",
+    "module_docs_strategy": "central",
+    "module_docs_root": "ai-docs/modules",
+    "module_docs_folder_name": "ai-docs",
+    "template_roots": {
+      "canonical": ".sdd/templates",
+      "extensions": [
+        ".sdd/templates/extensions"
+      ]
+    },
+    "repo_skills_root": ".agents/skills",
+    "runtime_skill_entrypoints": {
+      "codex": ".agents/skills",
+      "cursor": ".cursor/skills"
+    },
+    "contracts_strategy": "root-index-module-detail",
+    "test_index_path": "ai-docs/TEST_INDEX.md"
+  },
+  "tooling": {
+    "sdlc_skills": {
+      "source_repo": "git@sqbu-github.cisco.com:WebexDevPlatform/SDLC-Skills.git",
+      "source_ref": "d5ec17e136514addc76df19760f1f00b05ba9c70",
+      "source_branch": "main",
+      "install_mode": "copy",
+      "installed_at": "2026-09-03T00:00:00+05:30",
+      "plugins": [
+        "sdd-bootstrap@0.4.3"
+      ],
+      "template_library_version": "0.2.2",
+      "template_library_ref": "0aa65d93f019e5313ec2ddfac9b0c7352a2882cc"
+    }
+  },
+  "coverage_ratchet": {
+    "enabled": true,
+    "waivers": []
+  },
+  "substrate": {
+    "source": "existing react-widgets repository conventions and CI configuration",
+    "consumed": [
+      "ESLint/Babel/build configs",
+      "README and contribution conventions",
+      "CircleCI quality and release workflow"
+    ],
+    "compliance_tier": "legacy"
+  },
+  "section_profiles": {
+    "repo": {
+      "owns_datastore": false,
+      "holds_client_state": true,
+      "components_interact": true,
+      "domain_data_across_components": true,
+      "caches_data": true,
+      "observability_convention": true,
+      "deploys_to_infra": true,
+      "shared_base_libs": true,
+      "is_monorepo": true,
+      "multi_platform": false,
+      "published_package": true,
+      "embedded_in_host": true,
+      "cross_repo_deps_material": true,
+      "security_arch_warranted": true
+    },
+    "resolved_by": "codex-desktop with repository-owner approved plan and code-grounded questionnaire",
+    "resolved_at": "2026-07-22T00:00:00+05:30"
+  }
+}

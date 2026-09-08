@@ -1,0 +1,1133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wbx.example/sdd/sdd-manifest.schema.json",
+  "title": "SDD Manifest",
+  "description": "Machine-readable contract for a spec-driven repository: coverage status, delta specs, WHAT+WHY, provenance, and validation runtime separation. The validator's methodology axis (spec-validator Axis-A) checks specs against this file. Lives at .sdd/manifest.json in the target repo. Repo-pinned 0.2.2 extension at .sdd/config/sdd-manifest.schema.json (test_index_path, template_library_*, has_submodules, validation status fields) until upstream plugin schema catches up.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "repository",
+    "topology",
+    "commands",
+    "modules",
+    "spec_policy",
+    "validation",
+    "substrate"
+  ],
+  "properties": {
+    "manifest_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version this manifest targets."
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "purpose",
+        "category"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One sentence: what this repo is."
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "greenfield",
+            "cat1-legacy",
+            "cat2-legacy"
+          ],
+          "description": "History-depth axis (NOT part of the topology/mode classifier). greenfield | cat1-legacy (rich commit/PR history) | cat2-legacy (>10yr, history/tribal-knowledge lost). Drives only whether doc-backfill may use commit history for WHY. See config/classification.md."
+        },
+        "primary_languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Drives patterns/ and rules/ CONTENT (not section shape)."
+        }
+      }
+    },
+    "topology": {
+      "type": "string",
+      "enum": [
+        "Multi-repo-workspace",
+        "Orchestrator-plus-components",
+        "Single-repo"
+      ],
+      "description": "The doc tree mirrors this. Set by repo-bootstrap."
+    },
+    "commands": {
+      "type": "object",
+      "description": "Real, runnable commands read from the repo's actual build config (never guessed). Keys are task names. String values are retained for backward compatibility; object values carry provenance for validator checks.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command",
+              "source_file"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_file": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Build/config file where this command was discovered."
+              },
+              "verified_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "coverage_status_definitions": {
+      "type": "object",
+      "description": "SDD coverage status = how complete the SPEC is for a module (distinct from AI-autonomy zones \u2014 do not conflate). Defaults shown; a repo may tighten thresholds, never loosen below these.",
+      "additionalProperties": false,
+      "properties": {
+        "specced": {
+          "type": "string",
+          "default": ">=80% public surface specced, drift <5% \u2014 spec is authoritative"
+        },
+        "partial": {
+          "type": "string",
+          "default": "40-80% specced \u2014 spec is a hint, cross-check code"
+        },
+        "untracked": {
+          "type": "string",
+          "default": "<40% specced \u2014 code is the source of truth"
+        }
+      }
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every module that gets (or will get) dedicated SDD docs.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "coverage_status",
+          "coverage_evidence"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "coverage_status": {
+            "type": "string",
+            "enum": [
+              "Specced",
+              "Partial",
+              "Untracked"
+            ]
+          },
+          "coverage_evidence": {
+            "type": "string",
+            "minLength": 1,
+            "description": "WHY this status \u2014 e.g. 'public API 82% documented, last 5 PRs zero MODIFIED requirements'. Not a bare percentage and not a path to a local generated report."
+          },
+          "canonical_spec": {
+            "type": "string",
+            "description": "Path to the module's canonical spec, combining orientation and detailed behavior, or omitted if none yet (Untracked)."
+          },
+          "architecture_doc": {
+            "type": "string",
+            "description": "Optional path to a separate module architecture document for legacy or unusually large modules. New SDD bootstrap runs should normally use canonical_spec only."
+          },
+          "contracts": {
+            "type": "object",
+            "description": "The module's current Provides/Requires baseline. Later code and spec changes are measured against this.",
+            "additionalProperties": false,
+            "properties": {
+              "provides": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "requires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "characterization_baseline": {
+            "type": "string",
+            "description": "Path to the characterization-test suite pinning current behavior. Required before modifying a Partial/Untracked module."
+          },
+          "last_assessed": {
+            "type": "string",
+            "format": "date"
+          },
+          "section_profile": {
+            "type": "object",
+            "description": "Per-module section-selection profile resolving module-spec Include-if conditions (M-1 through M-16). true = KEEP, false = DROP, null = PENDING (needs human input). Written by brownfield-questionnaire; consumed by doc-emitting skills and spec-validator A11. Per-field audit trail lives in the decision log.",
+            "additionalProperties": false,
+            "properties": {
+              "has_ui": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-1: Does this module have a UI? Resolves module-spec \u00a7 UI flow per use case."
+              },
+              "crosses_service_boundaries": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-2: Does this module call other services over the network? Resolves module-spec \u00a7 cross-service flow."
+              },
+              "enforces_domain_rules": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-3: Does it enforce domain rules or entity invariants? Resolves module-spec \u00a7 Business Rules & Invariants."
+              },
+              "is_concurrent_async": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-4: Is it concurrent, async, reactive, or event-driven? Resolves module-spec \u00a7 Concurrency & Reactive Flow."
+              },
+              "owns_persistence": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-5: Does it own persistence (its own tables/store)? Resolves module-spec \u00a7 Data / Schema + \u00a7 Schema / Migration Discipline."
+              },
+              "returns_caller_errors": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-6: Does it return/raise errors a caller must handle? Resolves module-spec \u00a7 Error Handling & Failure Modes."
+              },
+              "has_design_tradeoff": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-7: Is there a non-obvious design trade-off a consumer must know? Resolves module-spec \u00a7 Key Design Trade-off. Typically requires human input."
+              },
+              "stateful_transitions": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-8: Does the module have non-trivial state transitions? Resolves module-spec \u00a7 State Machine."
+              },
+              "exposes_wire_protocol": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-9: Does it expose a wire protocol or binary format? Resolves module-spec \u00a7 Protocol / Wire Format."
+              },
+              "ui_multi_screen": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-10: Is it a UI with a multi-screen flow? Resolves module-spec \u00a7 UI Flow."
+              },
+              "large_data_model": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-11: Does it own a large or complex data model? Resolves module-spec \u00a7 Data Model."
+              },
+              "has_tiers": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-12: Does the repo tier its modules? Resolves module-spec \u00a7 Tier."
+              },
+              "module_specific_conventions": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-13: Does it have conventions beyond repo-wide rules? Resolves module-spec \u00a7 Module Do's / Don'ts."
+              },
+              "published_package": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-14: Is it published/consumed as a package? Resolves module-spec \u00a7 Export Stability."
+              },
+              "embedded_in_host": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-15: Is it embedded into a host application? Resolves module-spec \u00a7 Host Integration & Theming."
+              },
+              "holds_client_state": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "M-16 [INFERRED \u2014 template has this condition but plan omits it from M-1..M-15]: Does this module hold client-side state? Resolves module-spec \u00a7 State Model."
+              },
+              "resolved_by": {
+                "type": "string",
+                "description": "Who resolved this module's profile (agent + runtime, or human)."
+              },
+              "resolved_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When this module's profile was last resolved."
+              },
+              "has_submodules": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Does this module contain child modules that own their own specs? Resolves module-spec \u00a7 Sub-modules."
+              }
+            }
+          },
+          "source_policy": {
+            "type": "object",
+            "description": "Module-specific routing for older specs/docs discovered before SDD onboarding. Agents use canonical_spec; this object explains how older material was handled.",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "conflict_status"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "keep-separate",
+                  "migrate-existing",
+                  "reconcile"
+                ]
+              },
+              "existing_sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "conflict_status": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "pending",
+                  "resolved"
+                ],
+                "description": "pending means reconciliation found a conflict that must be resolved before this module's canonical spec can be promoted."
+              },
+              "decision_record": {
+                "type": "string",
+                "description": "Decision log or run record that explains this module's policy choice and any conflict resolution."
+              }
+            }
+          }
+        }
+      }
+    },
+    "spec_source_policy": {
+      "type": "object",
+      "description": "Explicit policy chosen when onboarding detected existing specs/docs. If existing specs are present and this object is absent, spec-source-policy must stop and ask for a decision.",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "decided_by",
+        "decided_at",
+        "decision_record"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "keep-separate",
+            "migrate-existing",
+            "reconcile"
+          ],
+          "description": "No default is allowed. The user must choose the policy before spec-writing continues."
+        },
+        "decided_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "decision_record": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "spec_sources": {
+      "type": "array",
+      "description": "Existing specs/docs or native contract/API sources discovered before SDD onboarding. Entries route old material as context/source only unless explicitly made canonical through the normal canonical_spec fields. Native schema/API sources may remain authoritative for exact contracts while SDD markdown links to them.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "scope",
+          "role",
+          "canonical",
+          "use_by_agents"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "repo",
+              "module",
+              "feature",
+              "reference"
+            ],
+            "description": "Classification of an existing source document. feature is retained only so migration can route legacy change-specific source material."
+          },
+          "module": {
+            "type": "string",
+            "description": "Module path when scope is module."
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "reference-only",
+              "source-material",
+              "superseded",
+              "conflict-pending"
+            ]
+          },
+          "canonical": {
+            "type": "boolean",
+            "description": "False for preserved older specs. Agents use modules[].canonical_spec and manifest-routed standing docs."
+          },
+          "use_by_agents": {
+            "type": "string",
+            "enum": [
+              "context-only",
+              "source-for-migration",
+              "source-for-reconciliation",
+              "ignore"
+            ]
+          },
+          "canonical_target": {
+            "type": "string",
+            "description": "Canonical SDD path selected by onboarding or migration routing for this source, when applicable."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Use this to record how an older spec or native contract/API source is linked from the generated SDD docs."
+          }
+        }
+      }
+    },
+    "spec_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delta_grammar",
+        "require_what_and_why",
+        "require_provenance",
+        "required_sections_by_change_class"
+      ],
+      "properties": {
+        "delta_grammar": {
+          "type": "object",
+          "description": "Every spec change is a delta against canonical spec sections.",
+          "additionalProperties": false,
+          "required": [
+            "added",
+            "modified",
+            "removed"
+          ],
+          "properties": {
+            "added": {
+              "type": "string",
+              "default": "## ADDED Requirements"
+            },
+            "modified": {
+              "type": "string",
+              "default": "## MODIFIED Requirements"
+            },
+            "removed": {
+              "type": "string",
+              "default": "## REMOVED Requirements"
+            }
+          }
+        },
+        "require_what_and_why": {
+          "type": "boolean",
+          "default": true,
+          "description": "Every requirement (incl. ADDED, not only MODIFIED) must state WHAT and WHY. Validator Axis-A fails the spec otherwise."
+        },
+        "require_provenance": {
+          "type": "boolean",
+          "default": true,
+          "description": "Every spec/delta records author, approver, date."
+        },
+        "protected_specs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Canonical specs that must never be overwritten in place. A change to one must go through spec-reconcile and land as a MODIFIED delta with migration. This is the no-override guard."
+        },
+        "required_sections_by_change_class": {
+          "type": "object",
+          "description": "Conditional section library: which spec sections are required for which class of change. Core is always required; the rest are gated so a trivial change isn't taxed with a 12-section spec.",
+          "additionalProperties": false,
+          "properties": {
+            "core_always": {
+              "type": "array",
+              "default": [
+                "Intent (WHAT)",
+                "Rationale (WHY)",
+                "Scope/Out-of-scope",
+                "Acceptance criteria",
+                "Contracts delta"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "security_or_contract_or_perf_critical": {
+              "type": "array",
+              "default": [
+                "Data",
+                "Error Matrix",
+                "Resilience",
+                "Observability",
+                "Operations"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generator_runtime",
+        "blocking_severities"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "generator_runtime_source",
+            "minimum_independence"
+          ]
+        },
+        {
+          "required": [
+            "must_differ"
+          ]
+        }
+      ],
+      "properties": {
+        "generator_runtime": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque runtime identifier resolved from the active generation context when execution begins. Runtime names are not enumerated or inferred from model families, credential variables, or skill installation paths."
+        },
+        "generator_model": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque model identifier supplied by the active generation context, when available."
+        },
+        "generator_runtime_source": {
+          "type": "string",
+          "enum": [
+            "host-metadata",
+            "invocation-input",
+            "environment",
+            "human-provided"
+          ],
+          "description": "How generator_runtime was obtained. Environment resolution uses explicit SDD_RUNTIME_ID input only; provider credentials and model-family heuristics are not runtime identity."
+        },
+        "validator_runtime": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque runtime identifier independently resolved from the active validation context. Written during validator preflight and absent until validation runs."
+        },
+        "validator_model": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque model identifier supplied by the active validation context, when available."
+        },
+        "validator_runtime_source": {
+          "type": "string",
+          "enum": [
+            "host-metadata",
+            "invocation-input",
+            "environment",
+            "human-provided"
+          ],
+          "description": "How validator_runtime was independently obtained."
+        },
+        "minimum_independence": {
+          "type": "string",
+          "enum": [
+            "different-runtime",
+            "different-model",
+            "different-session"
+          ],
+          "default": "different-runtime",
+          "description": "Repository-approved minimum separation. different-runtime is the default. Lower levels must be explicitly selected by a human before validation; the validator never silently weakens this policy."
+        },
+        "must_differ": {
+          "type": "boolean",
+          "const": true,
+          "description": "Deprecated compatibility field from earlier manifests. When present it means generation and validation execution identities must differ; minimum_independence defines the enforceable level."
+        },
+        "runtime_fallback_tier": {
+          "type": "string",
+          "enum": [
+            "different-runtime",
+            "different-model",
+            "different-session"
+          ],
+          "description": "Separation established by validator preflight. Different-model requires both model ids and different-session requires both run ids; self-asserted freshness is not evidence. The value must satisfy minimum_independence."
+        },
+        "blocking_severities": {
+          "type": "array",
+          "default": [
+            "Blocking"
+          ],
+          "items": {
+            "type": "string",
+            "enum": [
+              "Blocking",
+              "Important",
+              "Medium",
+              "Minor"
+            ]
+          },
+          "description": "Severities that fail the gate."
+        },
+        "generator_run_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque generation run or session id supplied by the active execution context, when available; do not use a local report path."
+        },
+        "validator_run_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque validation run or session id independently supplied by the active execution context, when available; required to establish different-session separation."
+        },
+        "source_commit": {
+          "type": "string",
+          "description": "Target repo commit SHA used for generation/validation."
+        },
+        "base_ref": {
+          "type": "string"
+        },
+        "head_ref": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not-run",
+            "pass",
+            "pass-with-warnings",
+            "blocked"
+          ],
+          "description": "Latest independent validator verdict. not-run until Session B records a HEAD result."
+        },
+        "validated_at": {
+          "type": "string",
+          "description": "Date or timestamp of the recorded validator run."
+        },
+        "blocking_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warning_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence_summary": {
+          "type": "string",
+          "description": "Short measured evidence summary. Must not cite local .generated/ report paths."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "validator_runtime"
+            ]
+          },
+          "then": {
+            "required": [
+              "validator_runtime_source",
+              "runtime_fallback_tier"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "runtime_fallback_tier"
+            ],
+            "properties": {
+              "runtime_fallback_tier": {
+                "const": "different-model"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "generator_model",
+              "validator_model"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "runtime_fallback_tier"
+            ],
+            "properties": {
+              "runtime_fallback_tier": {
+                "const": "different-session"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "generator_run_id",
+              "validator_run_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "minimum_independence",
+              "runtime_fallback_tier"
+            ],
+            "properties": {
+              "minimum_independence": {
+                "const": "different-runtime"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "runtime_fallback_tier": {
+                "const": "different-runtime"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "minimum_independence",
+              "runtime_fallback_tier"
+            ],
+            "properties": {
+              "minimum_independence": {
+                "const": "different-model"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "runtime_fallback_tier": {
+                "enum": [
+                  "different-runtime",
+                  "different-model"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "layout": {
+      "type": "object",
+      "description": "Repository-specific SDD layout. Default generated docs live under ai-docs; generators must honor these paths and rewrite template navigation links accordingly instead of assuming docs/templates or docs/modules.",
+      "additionalProperties": false,
+      "properties": {
+        "sdd_root": {
+          "type": "string",
+          "default": ".sdd"
+        },
+        "docs_root": {
+          "type": "string",
+          "default": "ai-docs"
+        },
+        "agent_entry_path": {
+          "type": "string",
+          "default": "AGENTS.md",
+          "description": "Root agent entry file kept at repo root for tool auto-discovery."
+        },
+        "standing_docs_root": {
+          "type": "string",
+          "default": "ai-docs",
+          "description": "Default root folder for standing SDD docs such as ARCHITECTURE, RULES, CONTRACTS, and SPEC_INDEX."
+        },
+        "spec_index_path": {
+          "type": "string",
+          "default": "ai-docs/SPEC_INDEX.md"
+        },
+        "module_docs_strategy": {
+          "type": "string",
+          "enum": [
+            "source-local",
+            "central",
+            "existing-convention"
+          ],
+          "default": "source-local"
+        },
+        "module_docs_root": {
+          "type": "string",
+          "description": "Only used when module_docs_strategy is central or a repo explicitly chooses a shared docs folder."
+        },
+        "module_docs_folder_name": {
+          "type": "string",
+          "default": "ai-docs"
+        },
+        "template_roots": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "canonical": {
+              "type": "string",
+              "default": ".sdd/templates"
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                ".sdd/templates/extensions"
+              ],
+              "description": "Template extension roots loaded after canonical templates, recursively and in lexical order. Mirrored relative paths override canonical files; extension-only templates use .ext.template.md and a Template-ID ending in -ext."
+            },
+            "legacy_compat": {
+              "type": "string",
+              "description": "Optional read-only migration path for older repos. The canonical template root remains template_roots.canonical, not ai-docs."
+            }
+          }
+        },
+        "repo_skills_root": {
+          "type": "string",
+          "default": ".sdd/skills"
+        },
+        "runtime_skill_entrypoints": {
+          "type": "object",
+          "description": "Optional map from an opaque runtime id to the skill entrypoint used by that installation. Runtime ids and paths are discovered or supplied at installation/execution time; the plugin does not enumerate them.",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "contracts_strategy": {
+          "type": "string",
+          "enum": [
+            "root-index-module-detail",
+            "root-catalog",
+            "module-only"
+          ],
+          "default": "root-index-module-detail"
+        },
+        "test_index_path": {
+          "type": "string",
+          "description": "Path to the repo-wide TEST_INDEX.md standing doc."
+        }
+      }
+    },
+    "tooling": {
+      "type": "object",
+      "description": "Tool/source provenance for generated SDD assets. Records which SDD-Bootstrap checkout produced the repo state.",
+      "additionalProperties": false,
+      "properties": {
+        "sdlc_skills": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "source_repo": {
+              "type": "string",
+              "description": "Git remote URL or local source identifier for the SDD-Bootstrap checkout used to generate assets."
+            },
+            "source_ref": {
+              "type": "string"
+            },
+            "source_branch": {
+              "type": "string"
+            },
+            "install_mode": {
+              "type": "string",
+              "enum": [
+                "copy",
+                "symlink",
+                "unknown"
+              ]
+            },
+            "installed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "plugins": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "template_library_version": {
+              "type": "string",
+              "description": "Pinned SDLC template-library semver used to generate standing docs and module specs."
+            },
+            "template_library_ref": {
+              "type": "string",
+              "description": "Pinned SDLC template-library git SHA."
+            }
+          }
+        }
+      }
+    },
+    "coverage_ratchet": {
+      "type": "object",
+      "description": "Once a module reaches a coverage status, it cannot be downgraded except via an expiring, approver-signed waiver. Direction of travel is up.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "waivers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "reason",
+              "expires",
+              "approved_by"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expires": {
+                "type": "string",
+                "format": "date"
+              },
+              "approved_by": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "substrate": {
+      "type": "object",
+      "description": "The repo-standards layer this repo CONSUMES (does not author). Bootstrap detects and leaves these alone.",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "consumed"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "default": "WebexTools/repo-standards"
+        },
+        "consumed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "e.g. ['lint/format configs', 'standard files (README/SECURITY/CODEOWNERS)', 'base AGENTS.md']"
+        },
+        "compliance_tier": {
+          "type": "string",
+          "enum": [
+            "legacy",
+            "baseline",
+            "standard",
+            "strict"
+          ],
+          "description": "The repo-standards tier this repo runs at, if any. Recorded for cross-reference only; coverage status is the SDD axis and is tracked separately."
+        }
+      }
+    },
+    "section_profiles": {
+      "type": "object",
+      "description": "Questionnaire-resolved section-selection profiles for repo-level Include-if conditions. Per-module profiles live inside each module item. true = KEEP section, false = DROP section, null = PENDING (emit as scaffold with [NEEDS HUMAN INPUT]). Written by brownfield-questionnaire; consumed by doc-emitting skills and spec-validator A11.",
+      "additionalProperties": false,
+      "properties": {
+        "repo": {
+          "type": "object",
+          "description": "Repo-level profile resolving ARCHITECTURE.template.md Include-if conditions (R-1 through R-14).",
+          "additionalProperties": false,
+          "properties": {
+            "owns_datastore": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-1: Does this repo own a datastore (persists its own data)? Resolves ARCHITECTURE \u00a7 Data & Schema."
+            },
+            "holds_client_state": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-2: Does this repo hold client-side state (UI store, in-memory model)? Resolves ARCHITECTURE \u00a7 State Model."
+            },
+            "components_interact": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-3: Do components/services call each other or exchange events? Resolves ARCHITECTURE \u00a7 Dependency / Interaction Topology."
+            },
+            "domain_data_across_components": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-4: Does the repo own domain data spread across components? Resolves ARCHITECTURE \u00a7 Object / Data Ownership."
+            },
+            "caches_data": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-5: Does this repo cache data? Resolves ARCHITECTURE \u00a7 Caching Catalog."
+            },
+            "observability_convention": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-6: Is there a logging/metrics/audit convention worth standardizing? Resolves ARCHITECTURE \u00a7 Observability Patterns."
+            },
+            "deploys_to_infra": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-7: Does this repo deploy to or depend on infrastructure? Resolves ARCHITECTURE \u00a7 Infrastructure Matrix."
+            },
+            "shared_base_libs": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-8: Does the repo inherit a shared/base library stack? Resolves ARCHITECTURE \u00a7 Shared / Base Libraries."
+            },
+            "is_monorepo": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-9: Is this repo a monorepo (multiple packages in one tree)? Resolves ARCHITECTURE \u00a7 Package Map & Inter-Package Dependencies."
+            },
+            "multi_platform": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-10: Does the repo target multiple platforms? Resolves ARCHITECTURE \u00a7 Platform Matrix."
+            },
+            "published_package": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-11: Is this repo published/consumed as a package? Resolves ARCHITECTURE \u00a7 Release & Versioning."
+            },
+            "embedded_in_host": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-12: Is this repo embedded into a host application? Resolves ARCHITECTURE \u00a7 Host Integration & Theming."
+            },
+            "cross_repo_deps_material": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-13: Are cross-repo dependencies material? Resolves ARCHITECTURE \u00a7 Cross-Repo Dependency Graph."
+            },
+            "security_arch_warranted": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "description": "R-14: Does the security architecture warrant its own view? Resolves ARCHITECTURE \u00a7 Security Architecture."
+            }
+          }
+        },
+        "resolved_by": {
+          "type": "string",
+          "description": "Who resolved the repo-level profile (agent + runtime, or human)."
+        },
+        "resolved_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the repo-level profile was last resolved."
+        }
+      }
+    }
+  }
+}
