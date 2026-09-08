@@ -267,7 +267,8 @@ stateDiagram-v2
 - Loading precedes available space data; the list, empty, or error view follows.
 - Optional header contains filter, Add, profile, and sign-out/menu controls when configured.
 - List rows show unread and call indicators; row select or call control emits `rooms:selected` for the host.
-- Incoming call and unrecovered fetch failures remain visible; host remove/unmount tears the widget down.
+- Incoming calls are detected and emitted as `calls:created`; Recents does not render answer/decline UI. Visible incoming-call UI belongs to the Meet/Space flow.
+- Unrecovered fetch failures remain visible via `ErrorDisplay`; host remove/unmount tears the widget down.
 
 ## Error Handling & Failure Modes
 
