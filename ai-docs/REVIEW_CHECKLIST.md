@@ -7,6 +7,17 @@
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: review-checklist
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Review-Check Catalog — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and apply this catalog before merge.

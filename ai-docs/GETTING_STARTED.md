@@ -7,6 +7,17 @@
   Last updated: 2026-07-22
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: getting-started
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Getting Started — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), route through [`SPEC_INDEX.md`](SPEC_INDEX.md), and use this page for the local build/test loop.

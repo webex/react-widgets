@@ -7,6 +7,17 @@
   Last updated: 2026-07-11
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: security
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Security Baseline — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), [`SPEC_INDEX.md`](SPEC_INDEX.md), and [`ARCHITECTURE.md`](ARCHITECTURE.md). Read this before changing authentication, host input, SDK calls, rendered content, or deployment credentials.

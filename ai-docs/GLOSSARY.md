@@ -7,6 +7,17 @@
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: glossary
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Glossary — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md) and [`SPEC_INDEX.md`](SPEC_INDEX.md). Use these code-grounded terms rather than inventing synonyms.

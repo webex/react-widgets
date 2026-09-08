@@ -7,6 +7,17 @@
   Last updated: 2026-07-22
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: agent-entry
+generated_from: agents
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # AGENTS.md — react-widgets
 
 > Read first. Next: [`ai-docs/SPEC_INDEX.md`](ai-docs/SPEC_INDEX.md) for routing and [`ai-docs/ARCHITECTURE.md`](ai-docs/ARCHITECTURE.md) for system shape. Load only the module specs needed for the task.
@@ -117,6 +128,6 @@ For SDD bootstrap, validation, CI, and release work, load the affected specs up 
 
 ---
 
-Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent spec-validator **Pass** at `548a0312` (validator `codex-desktop`); see [`ai-docs/SDD_BOOTSTRAP_EVIDENCE.md`](ai-docs/SDD_BOOTSTRAP_EVIDENCE.md). Specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
+Per-module coverage state lives in `.sdd/manifest.json` and is mirrored in `ai-docs/SPEC_INDEX.md`. Independent spec-validator is **not-run** after the rarajes2 review-closure edit; see [`ai-docs/SDD_BOOTSTRAP_EVIDENCE.md`](ai-docs/SDD_BOOTSTRAP_EVIDENCE.md). Specs remain `Partial` because of documented weak-evidence gaps and the promotion-history gate.
 
 Provenance: generated_by `codex-desktop`; approved_by `pending PR approval`; updated_at `2026-09-03`.

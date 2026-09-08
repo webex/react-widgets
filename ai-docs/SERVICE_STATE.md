@@ -7,6 +7,17 @@
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: service-state
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Service State (living) — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), [`SPEC_INDEX.md`](SPEC_INDEX.md), and [`ARCHITECTURE.md`](ARCHITECTURE.md). Despite the template name, this is the library's current as-built surface registry.

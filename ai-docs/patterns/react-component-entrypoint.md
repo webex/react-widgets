@@ -7,6 +7,17 @@
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: pattern
+generated_from: pattern
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Pattern: React component entrypoint
 
 > Navigation: [`AGENTS.md`](../../AGENTS.md) · [`SPEC_INDEX.md`](../SPEC_INDEX.md).

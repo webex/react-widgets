@@ -7,6 +7,17 @@
   Last updated: 2026-06-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: standing-doc
+generated_from: architecture
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # ARCHITECTURE — react-widgets
 
 > Start with root [`AGENTS.md`](../AGENTS.md), then route through [`SPEC_INDEX.md`](SPEC_INDEX.md). Module detail lives under `ai-docs/modules/`.

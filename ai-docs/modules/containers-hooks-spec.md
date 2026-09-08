@@ -7,6 +7,17 @@
   Last updated: 2026-07-30
 ─────────────────────────────── -->
 
+<!-- sdd-generated-metadata
+doc_kind: module-spec
+generated_from: module-spec
+generator_plugin: sdd-bootstrap@0.4.3
+generated_by: cursor-agent
+approved_by: pending PR approval
+updated_at: 2026-09-08
+validation_status: not-run
+-->
+
+
 # Containers and HOCs — SPEC
 
 > Start with root [`AGENTS.md`](../../AGENTS.md), router [`SPEC_INDEX.md`](../SPEC_INDEX.md), and system [`ARCHITECTURE.md`](../ARCHITECTURE.md).
@@ -22,7 +33,7 @@
 | Coverage score | 92% assessed 2026-07-22; every package and lifecycle boundary covered, with gaps around repeated subscription cleanup |
 | Generated from | `module-spec` @ SDLC template library `0.2.2` |
 | generated_by / approved_by / updated_at | `codex-desktop` / pending PR approval / 2026-08-07 |
-| Validation status | pass, validator `codex-desktop`, assessed 2026-09-03; 0 Blocking, 0 warnings; source `548a0312` |
+| Validation status | not-run |
 
 ## Evidence Rules
 

@@ -737,13 +737,8 @@
       "Blocking"
     ],
     "base_ref": "master",
-    "head_ref": "react-widgets-sdd-022",
-    "source_commit": "548a0312718835b08faf225187951a05eabc42ba",
-    "status": "pass",
-    "validated_at": "2026-09-03",
-    "blocking_count": 0,
-    "warning_count": 0,
-    "evidence_summary": "Independent Codex Session B Pass at 548a0312; Axis A/B 0 findings; 10 modules remain Partial"
+    "head_ref": "react-widgets-migrate-into-sdd-bootstrap",
+    "status": "not-run"
   },
   "layout": {
     "sdd_root": ".sdd",
