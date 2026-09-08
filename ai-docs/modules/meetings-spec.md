@@ -263,6 +263,12 @@ stateDiagram-v2
   Leaving --> Error: leave rejected
 ```
 
+## UI Flow
+
+- Loading or error precedes the inactive call control; start/join moves the UI to an active meeting with media and leave controls.
+- Leave, decline, or hang up returns the UI to inactive after the SDK lifecycle succeeds.
+- An incoming Recents call mounts the Space/Meet flow with that call object; media-permission and create/join failures stay on error/retry.
+
 ## Error Handling & Failure Modes
 
 | Condition | Signal (error/code/result) | Caller recovery |

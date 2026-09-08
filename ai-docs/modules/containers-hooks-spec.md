@@ -216,6 +216,14 @@ stateDiagram-v2
   Listening --> Disposed: unmount/teardown
 ```
 
+## UI Flow
+
+- Activity list projects normalized activities and renders a bounded empty/loading state when selected state is not loaded.
+- Message composer keeps local draft text/files, then submits through bound operations.
+- File downloader reports in-progress and failure while the parent owns retry.
+- Presence avatar, read receipts, and notifications stay connected projections of their Redux slices.
+- Scrollable HOC measures, sets, and classifies scroll position on the wrapped node; the conversation Mercury HOC updates only the matching conversation.
+
 ## Error Handling & Failure Modes
 
 | Condition | Signal (error/code/result) | Caller recovery |

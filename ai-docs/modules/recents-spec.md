@@ -262,6 +262,13 @@ stateDiagram-v2
   Error --> LoadingSpaces: retry/remount
 ```
 
+## UI Flow
+
+- Loading precedes available space data; the list, empty, or error view follows.
+- Optional header contains filter, Add, profile, and sign-out/menu controls when configured.
+- List rows show unread and call indicators; row select or call control emits `rooms:selected` for the host.
+- Incoming call and unrecovered fetch failures remain visible; host remove/unmount tears the widget down.
+
 ## Error Handling & Failure Modes
 
 | Condition | Signal (error/code/result) | Caller recovery |

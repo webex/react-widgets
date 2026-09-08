@@ -201,6 +201,14 @@ stateDiagram-v2
   ErrorView --> Disposed: unmount
 ```
 
+## UI Flow
+
+- Activity items select post, share, ECM-link, or system-message presentation from the activity verb and content; unknown verbs render empty.
+- Audio and Video bind a supplied `MediaStream` to the element `srcObject` and detach on unmount; no stream yields no playback element.
+- Button and incoming-call controls compose labeled Momentum actions from descriptors and invoke caller callbacks only.
+- AdaptiveCard waits for decrypted image URLs, then shows sending, success, or failure; child React roots are unmounted on dispose.
+- Loading, error, avatar, badge, list, input, and separator primitives remain presentational; they do not own widget authentication or routing.
+
 ## Pitfalls
 
 - Some “component” packages connect Redux and are not pure.
